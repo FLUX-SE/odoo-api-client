@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/9.2/phpunit.xsd"
+         backupGlobals="false"
+         colors="true"
+         bootstrap="vendor/autoload.php"
+>
+    <!--
+    Use those env vars to test your project
+    <php>
+        <env name="ODOO_API_DATABASE" value="" />
+        <env name="ODOO_API_USERNAME" value="" />
+        <env name="ODOO_API_PASSWORD" value="" />
+        <env name="ODOO_API_HOST" value="" />
+    </php>
+    -->
+
+    <testsuites>
+        <testsuite name="Odoo API client Test Suite">
+            <directory>./tests/</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

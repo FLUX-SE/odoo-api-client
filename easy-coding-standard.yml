@@ -1,0 +1,10 @@
+imports:
+    - { resource: 'vendor/symplify/easy-coding-standard/config/set/psr12.yaml' }
+
+# parameters:
+#     exclude_files:
+#         - 'src/Model/*'
+#         - 'src/Operations/*'
+
+services:
+    PhpCsFixer\Fixer\PhpTag\BlankLineAfterOpeningTagFixer: ~
