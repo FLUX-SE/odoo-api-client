@@ -31,8 +31,7 @@ class ObjectOperationsTest extends TestCase
             $_ENV['ODOO_API_DATABASE'],
             $_ENV['ODOO_API_USERNAME'],
             $_ENV['ODOO_API_PASSWORD'],
-            $commonOperations,
-            $odooApi
+            $commonOperations
         );
     }
 

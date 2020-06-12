@@ -2,6 +2,8 @@
 
 namespace Tests\Flux\OdooApiClient\Operations\Object\ExecuteKw;
 
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptionsInterface;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
 use PHPUnit\Framework\TestCase;
 
@@ -22,28 +24,33 @@ class RecordListOperationsTest extends TestCase
     public function testSearch_count()
     {
         $count = $this->recordListOperations->search_count('ir.model');
-        dump($count);
         $this->assertIsInt($count);
     }
 
     public function testRead()
     {
         $result = $this->recordListOperations->read('ir.model');
-        dump($result);
         $this->assertIsArray($result);
     }
 
     public function testSearch()
     {
         $result = $this->recordListOperations->search('ir.model');
-        dump($result);
         $this->assertIsArray($result);
     }
 
     public function testSearch_read()
     {
-        $result = $this->recordListOperations->search_read('ir.model');
-        dump($result);
+        $searchReadOptions = new SearchReadOptions();
+        $searchReadOptions->setLimit(1);
+        $searchReadOptions->addField('name');
+
+        $result = $this->recordListOperations->search_read(
+            'res.partner',
+            [[]],
+            $searchReadOptions
+        );
+
         $this->assertIsArray($result);
     }
 }

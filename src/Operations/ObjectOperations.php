@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Flux\OdooApiClient\Operations;
 
-use Flux\OdooApiClient\Api\OdooApiInterface;
 use Flux\OdooApiClient\XmlRpc\ResponseBodyInterface;
 
 final class ObjectOperations extends AbstractOperations implements ObjectOperationsInterface
@@ -25,15 +24,14 @@ final class ObjectOperations extends AbstractOperations implements ObjectOperati
         string $database,
         string $username,
         string $password,
-        CommonOperationsInterface $commonOperations,
-        OdooApiInterface $api
+        CommonOperationsInterface $commonOperations
     ) {
         $this->database = $database;
         $this->username = $username;
         $this->password = $password;
         $this->commonOperations = $commonOperations;
 
-        parent::__construct($api);
+        parent::__construct($commonOperations->getApi());
     }
 
     public function getEndpointPath(): string
