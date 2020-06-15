@@ -15,28 +15,28 @@ final class DbOperations extends AbstractOperations implements DbOperationsInter
     {
         $responseBody = $this->request(__FUNCTION__, [$document]);
 
-        return $responseBody->decodeArray();
+        return $this->deserializeArrayOf($responseBody);
     }
 
     public function server_version(): string
     {
         $responseBody = $this->request(__FUNCTION__);
 
-        return $responseBody->decodeString();
+        return $this->deserializeString($responseBody);
     }
 
     public function db_exist(string $dbName): bool
     {
         $responseBody = $this->request(__FUNCTION__, [$dbName]);
 
-        return $responseBody->decodeBool();
+        return $this->deserializeBoolean($responseBody);
     }
 
     public function list_lang(): array
     {
         $responseBody = $this->request(__FUNCTION__);
 
-        return $responseBody->decodeArray();
+        return $this->decode($responseBody);
     }
 
     public function create_database(
@@ -60,7 +60,7 @@ final class DbOperations extends AbstractOperations implements DbOperationsInter
             $phone,
         ]);
 
-        return $responseBody->decodeArray();
+        return $this->deserializeArrayOf($responseBody);
     }
 
     public function duplicate_database(
@@ -74,7 +74,7 @@ final class DbOperations extends AbstractOperations implements DbOperationsInter
             $dbName,
         ]);
 
-        return $responseBody->decodeBool();
+        return $this->deserializeBoolean($responseBody);
     }
 
     public function drop(
@@ -86,7 +86,7 @@ final class DbOperations extends AbstractOperations implements DbOperationsInter
             $dbName,
         ]);
 
-        return $responseBody->decodeBool();
+        return $this->deserializeBoolean($responseBody);
     }
 
     public function dump(
@@ -100,7 +100,7 @@ final class DbOperations extends AbstractOperations implements DbOperationsInter
             $format,
         ]);
 
-        return $responseBody->decodeString();
+        return $this->deserializeString($responseBody);
     }
 
     public function restore(
@@ -116,7 +116,7 @@ final class DbOperations extends AbstractOperations implements DbOperationsInter
             $copy,
         ]);
 
-        return $responseBody->decodeBool();
+        return $this->deserializeBoolean($responseBody);
     }
 
     public function rename(
@@ -130,7 +130,7 @@ final class DbOperations extends AbstractOperations implements DbOperationsInter
             $newName,
         ]);
 
-        return $responseBody->decodeBool();
+        return $this->deserializeBoolean($responseBody);
     }
 
     public function change_admin_password(
@@ -142,7 +142,7 @@ final class DbOperations extends AbstractOperations implements DbOperationsInter
             $newPassword,
         ]);
 
-        return $responseBody->decodeBool();
+        return $this->deserializeBoolean($responseBody);
     }
 
     public function migrate_databases(
@@ -154,13 +154,13 @@ final class DbOperations extends AbstractOperations implements DbOperationsInter
             $databases,
         ]);
 
-        return $responseBody->decodeBool();
+        return $this->deserializeBoolean($responseBody);
     }
 
     public function list_countries(string $masterPassword): array
     {
         $responseBody = $this->request(__FUNCTION__, [$masterPassword]);
 
-        return $responseBody->decodeArray();
+        return $this->decode($responseBody);
     }
 }

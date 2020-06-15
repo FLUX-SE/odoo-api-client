@@ -27,7 +27,7 @@ final class RecordListOperations extends AbstractOperations implements RecordLis
             $options
         );
 
-        return $response->decodeArray();
+        return $this->getObjectOperations()->decode($response);
     }
 
     public function search_count(
@@ -40,7 +40,7 @@ final class RecordListOperations extends AbstractOperations implements RecordLis
             $criteria
         );
 
-        return $response->decodeInt();
+        return $this->getObjectOperations()->deserializeInteger($response);
     }
 
     public function read(
@@ -60,7 +60,7 @@ final class RecordListOperations extends AbstractOperations implements RecordLis
             $options
         );
 
-        return $response->decodeArray();
+        return $this->getObjectOperations()->decode($response);
     }
 
     public function search_read(
@@ -80,6 +80,6 @@ final class RecordListOperations extends AbstractOperations implements RecordLis
             $options
         );
 
-        return $response->decodeArray();
+        return $this->getObjectOperations()->decode($response);
     }
 }

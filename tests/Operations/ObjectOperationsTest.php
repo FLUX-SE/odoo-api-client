@@ -2,8 +2,7 @@
 
 namespace Tests\Flux\OdooApiClient\Operations;
 
-use Flux\OdooApiClient\Api\OdooApi;
-use Flux\OdooApiClient\Builder\OdooHttpMethodsClientBuilder;
+use Flux\OdooApiClient\Builder\OdooApiClientBuilder;
 use Flux\OdooApiClient\Operations\CommonOperations;
 use Flux\OdooApiClient\Operations\ObjectOperations;
 use PHPUnit\Framework\TestCase;
@@ -18,14 +17,13 @@ class ObjectOperationsTest extends TestCase
      */
     protected function setUp(): void
     {
-        $httpMethodsClientBuilder = new OdooHttpMethodsClientBuilder(
-            $_ENV['ODOO_API_HOST']
+        $odooApiClientBuilder = new OdooApiClientBuilder($_ENV['ODOO_API_HOST']);
+
+        $commonOperations = new CommonOperations(
+            $odooApiClientBuilder->buildApiRequestMaker(),
+            $odooApiClientBuilder->buildRequestBodyFactory(),
+            $odooApiClientBuilder->buildXmlRpcSerializerHelper()
         );
-        $httpMethodsClient = $httpMethodsClientBuilder->build();
-
-        $odooApi = new OdooApi($httpMethodsClient);
-
-        $commonOperations = new CommonOperations($odooApi);
 
         $this->objectOperations = new ObjectOperations(
             $_ENV['ODOO_API_DATABASE'],
@@ -44,6 +42,6 @@ class ObjectOperationsTest extends TestCase
             ['raise_exception' => false]
         );
 
-        $this->assertIsBool($response->decodeBool());
+        $this->assertIsBool($this->objectOperations->deserializeBoolean($response));
     }
 }

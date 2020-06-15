@@ -2,16 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\XmlRpc;
+namespace Flux\OdooApiClient\Api;
 
 interface RequestBodyInterface
 {
-    public function encode(): string;
-
-    public function getEncoding(): string;
-
-    public function setEncoding(string $encoding): void;
-
     public function getMethod(): string;
 
     public function setMethod(string $method): void;

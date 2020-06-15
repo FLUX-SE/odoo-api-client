@@ -39,8 +39,8 @@ List your first partner (Contact) :
 ```php
 $loader = require_once( __DIR__.'/vendor/autoload.php');
 
-use Flux\OdooApiClient\Api\OdooApi;
-use Flux\OdooApiClient\Builder\OdooHttpMethodsClientBuilder;
+use Flux\OdooApiClient\Api\OdooApiRequestMaker;
+use Flux\OdooApiClient\Builder\OdooHttpClientFactory;
 use Flux\OdooApiClient\Operations\CommonOperations;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
@@ -52,11 +52,11 @@ $username = 'myemail@mydomain.tld';
 $password = 'myOdooPassword';
 
 // 1 - HttPlug configuration
-$httpMethodsClientBuilder = new OdooHttpMethodsClientBuilder($host);
+$httpMethodsClientBuilder = new OdooHttpClientFactory($host);
 $httpMethodsClient = $httpMethodsClientBuilder->build();
 
 // 2 - Base API consumer handling the de/normalize of the `Request/Response` content body
-$odooApi = new OdooApi($httpMethodsClient);
+$odooApi = new OdooApiRequestMaker($httpMethodsClient);
 
 // 3 - The endpoints consumers
 // 3.1 - Dedicated "Common" endpoint API consumer used to make the authentication

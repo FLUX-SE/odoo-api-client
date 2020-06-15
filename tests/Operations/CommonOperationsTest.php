@@ -2,8 +2,8 @@
 
 namespace Tests\Flux\OdooApiClient\Operations;
 
-use Flux\OdooApiClient\Api\OdooApi;
-use Flux\OdooApiClient\Builder\OdooHttpMethodsClientBuilder;
+use Flux\OdooApiClient\Builder\OdooApiClientBuilder;
+use Flux\OdooApiClient\Model\Common\Version;
 use Flux\OdooApiClient\Operations\CommonOperations;
 use PHPUnit\Framework\TestCase;
 
@@ -17,24 +17,20 @@ class CommonOperationsTest extends TestCase
      */
     protected function setUp(): void
     {
-        $httpMethodsClientBuilder = new OdooHttpMethodsClientBuilder(
-            $_ENV['ODOO_API_HOST']
+        $odooApiClientBuilder = new OdooApiClientBuilder($_ENV['ODOO_API_HOST']);
+
+        $this->commonOperations = new CommonOperations(
+            $odooApiClientBuilder->buildApiRequestMaker(),
+            $odooApiClientBuilder->buildRequestBodyFactory(),
+            $odooApiClientBuilder->buildXmlRpcSerializerHelper()
         );
-        $httpMethodsClient = $httpMethodsClientBuilder->build();
-
-        $odooApi = new OdooApi($httpMethodsClient);
-
-        $this->commonOperations = new CommonOperations($odooApi);
     }
 
     public function testVersion()
     {
         $version = $this->commonOperations->version();
 
-        $this->assertArrayHasKey('server_version', $version);
-        $this->assertArrayHasKey('server_version_info', $version);
-        $this->assertArrayHasKey('server_serie', $version);
-        $this->assertArrayHasKey('protocol_version', $version);
+        $this->assertInstanceOf(Version::class, $version);
     }
 
     public function testAbout()

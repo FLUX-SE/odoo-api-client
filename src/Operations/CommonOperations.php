@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Flux\OdooApiClient\Operations;
 
+use Flux\OdooApiClient\Model\Common\Version;
+
 final class CommonOperations extends AbstractOperations implements CommonOperationsInterface
 {
     public function getEndpointPath(): string
@@ -11,25 +13,25 @@ final class CommonOperations extends AbstractOperations implements CommonOperati
         return '/common';
     }
 
-    public function version(): array
+    public function version(): Version
     {
         $responseBody = $this->request(__FUNCTION__);
 
-        return $responseBody->decodeArray();
+        return $this->deserializeModel($responseBody, Version::class);
     }
 
     public function about(): string
     {
         $responseBody = $this->request(__FUNCTION__);
 
-        return $responseBody->decodeString();
+        return $this->deserializeString($responseBody);
     }
 
     public function aboutExtended(): array
     {
         $responseBody = $this->request('about', [true]);
 
-        return $responseBody->decodeArray();
+        return $this->deserializeArrayOf($responseBody);
     }
 
     public function authenticate(
@@ -45,6 +47,6 @@ final class CommonOperations extends AbstractOperations implements CommonOperati
                 $userAgentEnv,
         ]);
 
-        return $responseBody->decodeInt();
+        return $this->deserializeInteger($responseBody);
     }
 }

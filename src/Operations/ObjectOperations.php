@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Flux\OdooApiClient\Operations;
 
-use Flux\OdooApiClient\XmlRpc\ResponseBodyInterface;
+use Psr\Http\Message\ResponseInterface;
 
 final class ObjectOperations extends AbstractOperations implements ObjectOperationsInterface
 {
@@ -31,7 +31,11 @@ final class ObjectOperations extends AbstractOperations implements ObjectOperati
         $this->password = $password;
         $this->commonOperations = $commonOperations;
 
-        parent::__construct($commonOperations->getApi());
+        parent::__construct(
+            $commonOperations->getApiRequestMaker(),
+            $commonOperations->getRequestBodyFactory(),
+            $commonOperations->getXmlRpcSerializerHelper()
+        );
     }
 
     public function getEndpointPath(): string
@@ -47,7 +51,7 @@ final class ObjectOperations extends AbstractOperations implements ObjectOperati
         string $methodName,
         array $arguments = [],
         array $options = []
-    ): ResponseBodyInterface {
+    ): ResponseInterface {
         $this->retrieveUid();
 
         return $this->request(__FUNCTION__, [

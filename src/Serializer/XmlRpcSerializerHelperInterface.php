@@ -1,0 +1,35 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Flux\OdooApiClient\Serializer;
+
+use Flux\OdooApiClient\Api\RequestBodyInterface;
+use Psr\Http\Message\StreamInterface;
+use Symfony\Component\Serializer\Serializer;
+
+interface XmlRpcSerializerHelperInterface
+{
+    /**
+     * @param RequestBodyInterface $requestBody
+     *
+     * @return StreamInterface
+     */
+    public function serializeRequestBody(RequestBodyInterface $requestBody): StreamInterface;
+
+    /**
+     * @param StreamInterface $body
+     * @param string $type
+     *
+     * @return mixed
+     */
+    public function deserializeResponseBody(StreamInterface $body, string $type);
+
+    public function decodeResponseBody(StreamInterface $body);
+
+    public function getEncoding(): string;
+
+    public function setEncoding(string $encoding): void;
+
+    public function getSerializer(): Serializer;
+}

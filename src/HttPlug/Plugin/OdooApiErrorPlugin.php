@@ -4,21 +4,32 @@ declare(strict_types=1);
 
 namespace Flux\OdooApiClient\HttPlug\Plugin;
 
-use Flux\OdooApiClient\XmlRpc\ResponseBody;
+use Flux\OdooApiClient\Api\Fault;
+use Flux\OdooApiClient\Serializer\XmlRpcSerializerHelperInterface;
 use Http\Client\Common\Exception\ClientErrorException;
 use Http\Client\Common\Plugin;
 use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 
 final class OdooApiErrorPlugin implements Plugin
 {
     /** @var Plugin */
     private $errorPluginDecorated;
 
-    public function __construct(Plugin $errorPluginDecorated)
-    {
+    /** @var XmlRpcSerializerHelperInterface */
+    private $xmlRpcSerializerHelper;
+
+    /** @var Fault|null */
+    private $fault;
+
+    public function __construct(
+        Plugin $errorPluginDecorated,
+        XmlRpcSerializerHelperInterface $xmlRpcSerializerHelper
+    ) {
         $this->errorPluginDecorated = $errorPluginDecorated;
+        $this->xmlRpcSerializerHelper = $xmlRpcSerializerHelper;
     }
 
     public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
@@ -48,17 +59,26 @@ final class OdooApiErrorPlugin implements Plugin
             return $response;
         }
 
-        $responseBody = new ResponseBody($response);
-        if (false === $responseBody->isFault()) {
+        if (false === $this->isFaultResponse($response)) {
             return $response;
         }
 
-        $body = $responseBody->decodeArray();
-
         throw new ClientErrorException(
-            sprintf("%s\n\n%s", $body['faultCode'], $body['faultString']),
+            sprintf("%s\n\n%s", $this->fault->getFaultCode(), $this->fault->getFaultString()),
             $request,
             $response
         );
+    }
+
+    private function isFaultResponse(ResponseInterface $response): bool
+    {
+        $this->fault = $this->xmlRpcSerializerHelper->deserializeResponseBody($response->getBody(), Fault::class);
+
+        if ($this->fault->getFaultCode() === -1) {
+            $this->fault = null;
+            return false;
+        }
+
+        return true;
     }
 }

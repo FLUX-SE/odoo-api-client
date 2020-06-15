@@ -1,0 +1,62 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Flux\OdooApiClient\Serializer;
+
+use Symfony\Component\Serializer\Encoder\EncoderInterface;
+use Symfony\Component\Serializer\Exception\UnexpectedValueException;
+
+final class XmlRpcEncoder implements EncoderInterface
+{
+    public const FORMAT = 'xmlrpc';
+
+    public const CTX_XMLRPC_ENCODING = 'xmlrpc_encoding';
+
+    private $defaultContext = [
+        self::CTX_XMLRPC_ENCODING => 'UTF-8',
+    ];
+
+    public function __construct(array $defaultContext = [])
+    {
+        $this->defaultContext = array_merge($this->defaultContext, $defaultContext);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function supportsEncoding(string $format)
+    {
+        return $format === self::FORMAT;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function encode($data, string $format, array $context = [])
+    {
+        if (false === is_array($data)) {
+            throw new UnexpectedValueException(sprintf(
+                'The $data should be an array, "%s" given !',
+                gettype($data)
+            ));
+        }
+
+        $method = $data['method'] ?? null;
+        if (null === $method) {
+            throw new UnexpectedValueException('A "method" is required required !');
+        }
+
+        $encoding = $context[self::CTX_XMLRPC_ENCODING] ?? $this->defaultContext[self::CTX_XMLRPC_ENCODING];
+        $params = $data['params'] ?? [];
+
+        return xmlrpc_encode_request(
+            $method,
+            $params,
+            [
+                'version' => self::FORMAT,
+                'encoding' => $encoding,
+            ]
+        );
+    }
+}

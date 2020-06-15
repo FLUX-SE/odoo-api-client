@@ -2,8 +2,7 @@
 
 namespace Tests\Flux\OdooApiClient\Operations;
 
-use Flux\OdooApiClient\Api\OdooApi;
-use Flux\OdooApiClient\Builder\OdooHttpMethodsClientBuilder;
+use Flux\OdooApiClient\Builder\OdooApiClientBuilder;
 use Flux\OdooApiClient\Operations\DbOperations;
 use Http\Client\Common\Exception\ClientErrorException;
 use PHPUnit\Framework\TestCase;
@@ -18,14 +17,13 @@ class DbOperationsTest extends TestCase
      */
     protected function setUp(): void
     {
-        $httpMethodsClientBuilder = new OdooHttpMethodsClientBuilder(
-            $_ENV['ODOO_API_HOST']
+        $odooApiClientBuilder = new OdooApiClientBuilder($_ENV['ODOO_API_HOST']);
+
+        $this->dbOperations = new DbOperations(
+            $odooApiClientBuilder->buildApiRequestMaker(),
+            $odooApiClientBuilder->buildRequestBodyFactory(),
+            $odooApiClientBuilder->buildXmlRpcSerializerHelper()
         );
-        $httpMethodsClient = $httpMethodsClientBuilder->build();
-
-        $odooApi = new OdooApi($httpMethodsClient);
-
-        $this->dbOperations = new DbOperations($odooApi);
     }
 
     public function testServer_version()

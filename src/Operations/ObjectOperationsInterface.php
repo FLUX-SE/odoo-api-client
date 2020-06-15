@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Flux\OdooApiClient\Operations;
 
-use Flux\OdooApiClient\XmlRpc\ResponseBodyInterface;
+use Psr\Http\Message\ResponseInterface;
 
 interface ObjectOperationsInterface extends OperationsInterface
 {
@@ -13,7 +13,7 @@ interface ObjectOperationsInterface extends OperationsInterface
         string $methodName,
         array $arguments = [],
         array $options = []
-    ): ResponseBodyInterface;
+    ): ResponseInterface;
 
     public function retrieveUid(): int;
 }
