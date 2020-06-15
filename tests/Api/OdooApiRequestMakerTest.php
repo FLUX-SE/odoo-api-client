@@ -8,7 +8,6 @@ use Flux\OdooApiClient\Builder\OdooApiClientBuilder;
 use Flux\OdooApiClient\Serializer\XmlRpcSerializerHelperInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
-use Symfony\Component\Serializer\Exception\ExceptionInterface;
 
 class OdooApiRequestMakerTest extends TestCase
 {

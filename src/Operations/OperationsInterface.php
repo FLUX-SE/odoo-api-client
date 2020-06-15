@@ -17,6 +17,12 @@ interface OperationsInterface
 
     public function decode(ResponseInterface $response): array;
 
+    /**
+     * @param ResponseInterface $response
+     * @param string $model
+     *
+     * @return mixed
+     */
     public function deserializeModel(ResponseInterface $response, string $model);
 
     public function deserializeArrayOf(ResponseInterface $response, string $type): array;

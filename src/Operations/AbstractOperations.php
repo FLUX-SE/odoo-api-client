@@ -60,6 +60,9 @@ abstract class AbstractOperations implements OperationsInterface
         return $body;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function deserializeModel(ResponseInterface $response, string $model)
     {
         $body = $this->xmlRpcSerializerHelper->deserializeResponseBody(

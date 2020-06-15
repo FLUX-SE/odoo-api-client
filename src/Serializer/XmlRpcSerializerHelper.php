@@ -63,6 +63,9 @@ final class XmlRpcSerializerHelper implements XmlRpcSerializerHelperInterface
         );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function decodeResponseBody(StreamInterface $body)
     {
         return $this->serializer->decode(

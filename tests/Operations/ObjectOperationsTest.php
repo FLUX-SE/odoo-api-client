@@ -3,7 +3,6 @@
 namespace Tests\Flux\OdooApiClient\Operations;
 
 use Flux\OdooApiClient\Builder\OdooApiClientBuilder;
-use Flux\OdooApiClient\Operations\CommonOperations;
 use Flux\OdooApiClient\Operations\ObjectOperations;
 use PHPUnit\Framework\TestCase;
 

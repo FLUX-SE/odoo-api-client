@@ -25,6 +25,11 @@ interface XmlRpcSerializerHelperInterface
      */
     public function deserializeResponseBody(StreamInterface $body, string $type);
 
+    /**
+     * @param StreamInterface $body
+     *
+     * @return mixed
+     */
     public function decodeResponseBody(StreamInterface $body);
 
     public function getEncoding(): string;

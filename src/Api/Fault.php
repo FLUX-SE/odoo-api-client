@@ -11,23 +11,29 @@ final class Fault implements FaultInterface
     /** @var string */
     private $faultString = '';
 
-    public function getFaultCode(): int
-    {
-        return $this->faultCode;
-    }
-
+    /**
+     * @param int $faultCode
+     */
     public function setFaultCode(int $faultCode): void
     {
         $this->faultCode = $faultCode;
     }
 
-    public function getFaultString(): string
-    {
-        return $this->faultString;
-    }
-
+    /**
+     * @param string $faultString
+     */
     public function setFaultString(string $faultString): void
     {
         $this->faultString = $faultString;
+    }
+
+    public function getFaultCode(): int
+    {
+        return $this->faultCode;
+    }
+
+    public function getFaultString(): string
+    {
+        return $this->faultString;
     }
 }

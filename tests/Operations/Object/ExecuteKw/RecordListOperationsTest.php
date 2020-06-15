@@ -3,7 +3,6 @@
 namespace Tests\Flux\OdooApiClient\Operations\Object\ExecuteKw;
 
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptionsInterface;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
 use PHPUnit\Framework\TestCase;
 

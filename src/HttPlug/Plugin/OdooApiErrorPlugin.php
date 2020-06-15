@@ -11,7 +11,6 @@ use Http\Client\Common\Plugin;
 use Http\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Symfony\Component\Serializer\Exception\ExceptionInterface;
 
 final class OdooApiErrorPlugin implements Plugin
 {
@@ -21,7 +20,7 @@ final class OdooApiErrorPlugin implements Plugin
     /** @var XmlRpcSerializerHelperInterface */
     private $xmlRpcSerializerHelper;
 
-    /** @var Fault|null */
+    /** @var Fault */
     private $fault;
 
     public function __construct(
@@ -72,10 +71,13 @@ final class OdooApiErrorPlugin implements Plugin
 
     private function isFaultResponse(ResponseInterface $response): bool
     {
-        $this->fault = $this->xmlRpcSerializerHelper->deserializeResponseBody($response->getBody(), Fault::class);
+        $body = $response->getBody()->__toString();
+        if (preg_match('#.*<methodResponse>.*<fault>.*#s', $body)) {
+            dump($body);
+            $this->fault = $this->xmlRpcSerializerHelper->deserializeResponseBody($response->getBody(), Fault::class);
+        }
 
-        if ($this->fault->getFaultCode() === -1) {
-            $this->fault = null;
+        if (null === $this->fault) {
             return false;
         }
 

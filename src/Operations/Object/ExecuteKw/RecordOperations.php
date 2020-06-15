@@ -14,7 +14,7 @@ final class RecordOperations extends AbstractOperations implements RecordOperati
             $model
         );
 
-        return $response->decodeInt();
+        return $this->getObjectOperations()->deserializeInteger($response);
     }
 
     public function write(string $modelName, int $id, array $model): array
@@ -28,7 +28,7 @@ final class RecordOperations extends AbstractOperations implements RecordOperati
             ]
         );
 
-        return $response->decodeArray();
+        return $this->getObjectOperations()->decode($response);
     }
 
     public function unlink(string $modelName, int $id): array
@@ -41,6 +41,6 @@ final class RecordOperations extends AbstractOperations implements RecordOperati
             ]
         );
 
-        return $response->decodeArray();
+        return $this->getObjectOperations()->decode($response);
     }
 }

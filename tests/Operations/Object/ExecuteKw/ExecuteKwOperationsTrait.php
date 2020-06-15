@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Tests\Flux\OdooApiClient\Operations\Object\ExecuteKw;
 
 use Flux\OdooApiClient\Builder\OdooApiClientBuilder;
-use Flux\OdooApiClient\Operations\CommonOperations;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\OperationsInterface;
-use Flux\OdooApiClient\Operations\ObjectOperations;
 
 trait ExecuteKwOperationsTrait
 {

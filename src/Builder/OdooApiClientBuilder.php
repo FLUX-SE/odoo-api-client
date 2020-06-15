@@ -111,7 +111,6 @@ final class OdooApiClientBuilder implements OdooApiClientBuilderInterface
     {
         $operations = $this->operations[$className] ?? null;
         if (null === $operations) {
-
             $this->operations[$className] = new $className(
                 $this->buildApiRequestMaker(),
                 $this->buildRequestBodyFactory(),
@@ -154,7 +153,6 @@ final class OdooApiClientBuilder implements OdooApiClientBuilderInterface
         $className = ObjectOperations::class;
         $operations = $this->operations[$className] ?? null;
         if (null === $operations) {
-
             $this->operations[$className] = new ObjectOperations(
                 $database,
                 $username,
