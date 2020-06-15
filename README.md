@@ -39,40 +39,26 @@ List your first partner (Contact) :
 ```php
 $loader = require_once( __DIR__.'/vendor/autoload.php');
 
-use Flux\OdooApiClient\Api\OdooApiRequestMaker;
-use Flux\OdooApiClient\Builder\OdooHttpClientFactory;
-use Flux\OdooApiClient\Operations\CommonOperations;
+use Flux\OdooApiClient\Builder\OdooApiClientBuilder;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
-use Flux\OdooApiClient\Operations\ObjectOperations;
 
 $host = 'https://myapp.odoo.com';
 $database = 'myapp';
 $username = 'myemail@mydomain.tld';
 $password = 'myOdooPassword';
 
-// 1 - HttPlug configuration
-$httpMethodsClientBuilder = new OdooHttpClientFactory($host);
-$httpMethodsClient = $httpMethodsClientBuilder->build();
+// 1 - instantiate the Odoo API client helper
+$odooApiClientBuilder = new OdooApiClientBuilder($host);
 
-// 2 - Base API consumer handling the de/normalize of the `Request/Response` content body
-$odooApi = new OdooApiRequestMaker($httpMethodsClient);
-
-// 3 - The endpoints consumers
-// 3.1 - Dedicated "Common" endpoint API consumer used to make the authentication
-$commonOperations = new CommonOperations($odooApi);
-// 3.2 - Object endpoint operations, only one available : `execute_kw`
-$objectOperations = new ObjectOperations(
+// 2 - "Object" endpoint XMLRPC "execute_kw" call with method name like "search*" or "read")
+$recordListOperations = $odooApiClientBuilder->buildExecuteKwOperations(
+    RecordListOperations::class,
     $database,
     $username,
-    $password,
-    $commonOperations
+    $password
 );
-
-// 4 - "Object" endpoint XMLRPC "execute_kw" call with method name like "search*" or "read")
-$recordListOperations = new RecordListOperations($objectOperations);
-
-// 4.1 - Helper class to set options to your request
+// 2.1 - Helper class to set options to your request
 $searchReadOptions = new SearchReadOptions();
 $searchReadOptions->setLimit(1);
 $searchReadOptions->addField('name');

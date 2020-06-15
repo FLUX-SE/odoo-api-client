@@ -19,11 +19,7 @@ class CommonOperationsTest extends TestCase
     {
         $odooApiClientBuilder = new OdooApiClientBuilder($_ENV['ODOO_API_HOST']);
 
-        $this->commonOperations = new CommonOperations(
-            $odooApiClientBuilder->buildApiRequestMaker(),
-            $odooApiClientBuilder->buildRequestBodyFactory(),
-            $odooApiClientBuilder->buildXmlRpcSerializerHelper()
-        );
+        $this->commonOperations = $odooApiClientBuilder->buildCommonOperations();
     }
 
     public function testVersion()

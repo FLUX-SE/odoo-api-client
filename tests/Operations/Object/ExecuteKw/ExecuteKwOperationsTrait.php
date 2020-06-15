@@ -15,19 +15,11 @@ trait ExecuteKwOperationsTrait
     {
         $odooApiClientBuilder = new OdooApiClientBuilder($_ENV['ODOO_API_HOST']);
 
-        $commonOperations = new CommonOperations(
-            $odooApiClientBuilder->buildApiRequestMaker(),
-            $odooApiClientBuilder->buildRequestBodyFactory(),
-            $odooApiClientBuilder->buildXmlRpcSerializerHelper()
-        );
-
-        $objectOperations = new ObjectOperations(
+        return $odooApiClientBuilder->buildExecuteKwOperations(
+            $operationsClass,
             $_ENV['ODOO_API_DATABASE'],
             $_ENV['ODOO_API_USERNAME'],
-            $_ENV['ODOO_API_PASSWORD'],
-            $commonOperations
+            $_ENV['ODOO_API_PASSWORD']
         );
-
-        return new $operationsClass($objectOperations);
     }
 }

@@ -19,11 +19,7 @@ class DbOperationsTest extends TestCase
     {
         $odooApiClientBuilder = new OdooApiClientBuilder($_ENV['ODOO_API_HOST']);
 
-        $this->dbOperations = new DbOperations(
-            $odooApiClientBuilder->buildApiRequestMaker(),
-            $odooApiClientBuilder->buildRequestBodyFactory(),
-            $odooApiClientBuilder->buildXmlRpcSerializerHelper()
-        );
+        $this->dbOperations = $odooApiClientBuilder->buildDbOperations();
     }
 
     public function testServer_version()

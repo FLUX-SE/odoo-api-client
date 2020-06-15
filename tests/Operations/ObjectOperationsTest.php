@@ -19,17 +19,10 @@ class ObjectOperationsTest extends TestCase
     {
         $odooApiClientBuilder = new OdooApiClientBuilder($_ENV['ODOO_API_HOST']);
 
-        $commonOperations = new CommonOperations(
-            $odooApiClientBuilder->buildApiRequestMaker(),
-            $odooApiClientBuilder->buildRequestBodyFactory(),
-            $odooApiClientBuilder->buildXmlRpcSerializerHelper()
-        );
-
-        $this->objectOperations = new ObjectOperations(
+        $this->objectOperations = $odooApiClientBuilder->buildObjectOperations(
             $_ENV['ODOO_API_DATABASE'],
             $_ENV['ODOO_API_USERNAME'],
-            $_ENV['ODOO_API_PASSWORD'],
-            $commonOperations
+            $_ENV['ODOO_API_PASSWORD']
         );
     }
 
