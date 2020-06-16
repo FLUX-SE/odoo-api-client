@@ -48,7 +48,7 @@ $database = 'myapp';
 $username = 'myemail@mydomain.tld';
 $password = 'myOdooPassword';
 
-// 1 - instantiate the Odoo API client helper
+// 1 - instantiate the Odoo API client builder
 $odooApiClientBuilder = new OdooApiClientBuilder($host);
 
 // 2 - "Object" endpoint XMLRPC "execute_kw" call with method name like "search*" or "read")
