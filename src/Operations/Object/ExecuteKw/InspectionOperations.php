@@ -10,7 +10,7 @@ final class InspectionOperations extends AbstractOperations implements Inspectio
 {
     public function fields_get(
         string $modelName,
-        array $criteria = [],
+        array $fields = [],
         ?FieldsGetOptionsInterface $fieldsGetOptions = null
     ): array {
         $options = [];
@@ -21,7 +21,7 @@ final class InspectionOperations extends AbstractOperations implements Inspectio
         $response = $this->getObjectOperations()->execute_kw(
             $modelName,
             __FUNCTION__,
-            $criteria,
+            $fields,
             $options
         );
 

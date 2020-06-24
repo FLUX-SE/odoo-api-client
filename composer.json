@@ -20,13 +20,15 @@
         "symfony/serializer": "^4.4|^5.0",
         "symfony/property-access": "^4.4|^5.0",
         "symfony/property-info": "^4.4|^5.0",
-        "php-http/logger-plugin": "^1.1"
+        "php-http/logger-plugin": "^1.1",
+        "symfony/string": "^5.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^9",
         "php-http/guzzle6-adapter":     "^2.0",
         "http-interop/http-factory-guzzle": "^1.0",
-        "symplify/easy-coding-standard": "^7.3"
+        "symplify/easy-coding-standard": "^7.3",
+        "prometee/php-class-generator": "dev-master"
     },
     "autoload": {
         "psr-4": { "Flux\\OdooApiClient\\": "src/" }

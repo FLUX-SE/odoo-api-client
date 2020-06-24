@@ -41,20 +41,29 @@ class DbOperationsTest extends TestCase
 
     public function testList()
     {
-        $this->expectException(ClientErrorException::class);
-        $dbs = $this->dbOperations->list();
-        $this->assertIsArray($dbs);
+        try {
+            $dbs = $this->dbOperations->list();
+            $this->assertIsArray($dbs);
+        } catch (ClientErrorException $e) {
+            $this->assertStringContainsString('Access denied', $e->getMessage());
+        }
 
-        $this->expectException(ClientErrorException::class);
-        $dbs = $this->dbOperations->list(true);
-        $this->assertIsArray($dbs);
+        try {
+            $dbs = $this->dbOperations->list(true);
+            $this->assertIsArray($dbs);
+        } catch (ClientErrorException $e) {
+            $this->assertStringContainsString('Access denied', $e->getMessage());
+        }
     }
 
     public function testList_countries()
     {
-        $countries = $this->dbOperations->list_countries('admin');
-
-        $this->assertIsArray($countries);
+        try {
+            $countries = $this->dbOperations->list_countries('admin');
+            $this->assertIsArray($countries);
+        } catch (ClientErrorException $e) {
+            $this->assertStringContainsString('Access denied', $e->getMessage());
+        }
     }
 
     public function testList_lang()

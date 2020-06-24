@@ -1,0 +1,19 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Flux\OdooApiClient\Model\Object\Ir;
+
+use Flux\OdooApiClient\Model\Object\Base;
+
+/**
+ * Odoo model : ir.qweb
+ * Name : ir.qweb
+ *
+ * allows to render reports with full branding on every node, including the context available
+ * to evaluate every node. The context is composed of all the variables available at this point
+ * in the report, and their type.
+ */
+final class Qweb extends Base
+{
+}

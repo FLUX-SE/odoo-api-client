@@ -8,9 +8,16 @@ use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\FieldsGetOptionsInter
 
 interface InspectionOperationsInterface extends OperationsInterface
 {
+    /**
+     * @param string $modelName
+     * @param array<int, string> $fields
+     * @param FieldsGetOptionsInterface|null $fieldsGetOptions
+     *
+     * @return array<string, array>
+     */
     public function fields_get(
         string $modelName,
-        array $criteria = [],
+        array $fields = [],
         ?FieldsGetOptionsInterface $fieldsGetOptions = null
     ): array;
 }

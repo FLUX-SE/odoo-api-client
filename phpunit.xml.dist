@@ -6,15 +6,12 @@
          colors="true"
          bootstrap="vendor/autoload.php"
 >
-    <!--
-    Use those env vars to test your project
     <php>
-        <env name="ODOO_API_DATABASE" value="" />
-        <env name="ODOO_API_USERNAME" value="" />
-        <env name="ODOO_API_PASSWORD" value="" />
-        <env name="ODOO_API_HOST" value="" />
+        <env name="ODOO_API_DATABASE" value="demo5" />
+        <env name="ODOO_API_USERNAME" value="admin" />
+        <env name="ODOO_API_PASSWORD" value="admin" />
+        <env name="ODOO_API_HOST" value="https://demo5.odoo.com" />
     </php>
-    -->
 
     <testsuites>
         <testsuite name="Odoo API client Test Suite">

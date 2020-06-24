@@ -43,9 +43,6 @@ final class ObjectOperations extends AbstractOperations implements ObjectOperati
         return '/object';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function execute_kw(
         string $modelName,
         string $methodName,
@@ -76,5 +73,20 @@ final class ObjectOperations extends AbstractOperations implements ObjectOperati
         }
 
         return $this->uid;
+    }
+
+    public function setDatabase(string $database): void
+    {
+        $this->database = $database;
+    }
+
+    public function setUsername(string $username): void
+    {
+        $this->username = $username;
+    }
+
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
     }
 }

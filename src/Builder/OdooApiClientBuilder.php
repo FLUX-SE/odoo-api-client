@@ -10,6 +10,7 @@ use Flux\OdooApiClient\Api\OdooApiRequestMaker;
 use Flux\OdooApiClient\Api\OdooApiRequestMakerInterface;
 use Flux\OdooApiClient\Api\RequestBody;
 use Flux\OdooApiClient\HttPlug\Factory\OdooHttpClientFactory;
+use Flux\OdooApiClient\HttPlug\Factory\OdooHttpClientFactoryInterface;
 use Flux\OdooApiClient\Operations\CommonOperations;
 use Flux\OdooApiClient\Operations\CommonOperationsInterface;
 use Flux\OdooApiClient\Operations\DbOperations;
@@ -23,14 +24,21 @@ use Flux\OdooApiClient\Serializer\XmlRpcSerializerHelper;
 use Flux\OdooApiClient\Serializer\XmlRpcSerializerHelperInterface;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\UriInterface;
 use Symfony\Component\Serializer\Serializer;
 use UnexpectedValueException;
 
 final class OdooApiClientBuilder implements OdooApiClientBuilderInterface
 {
     /** @var string */
-    private $hostname;
+    private $baseHostname;
+    /** @var string */
+    private $basePath;
 
+    /** @var OdooHttpClientFactoryInterface */
+    private $odooHttpClientFactory;
+    /** @var UriInterface */
+    private $baseUri;
     /** @var OdooApiRequestMakerInterface */
     private $odooApiRequestMaker;
     /** @var XmlRpcSerializerHelperInterface|null */
@@ -46,9 +54,12 @@ final class OdooApiClientBuilder implements OdooApiClientBuilderInterface
     /** @var ExecuteKwOperationsInterface[] */
     private $executeKwOperations = [];
 
-    public function __construct(string $hostname)
-    {
-        $this->hostname = $hostname;
+    public function __construct(
+        string $baseHostname,
+        string $basePath = OdooApiRequestMakerInterface::BASE_PATH
+    ) {
+        $this->baseHostname = rtrim($baseHostname, '/');
+        $this->basePath = trim($basePath, '/');
     }
 
     public function buildApiRequestMaker(): OdooApiRequestMakerInterface
@@ -56,20 +67,43 @@ final class OdooApiClientBuilder implements OdooApiClientBuilderInterface
         if (null === $this->odooApiRequestMaker) {
             $this->odooApiRequestMaker = new OdooApiRequestMaker(
                 $this->buildHttpClient(),
-                Psr17FactoryDiscovery::findRequestFactory()
+                Psr17FactoryDiscovery::findRequestFactory(),
+                $this->buildBaseUri()
             );
         }
 
         return $this->odooApiRequestMaker;
     }
 
+    public function buildBaseUri(): UriInterface
+    {
+        if (null === $this->baseUri) {
+            $uriFactory = Psr17FactoryDiscovery::findUrlFactory();
+            $this->baseUri = $uriFactory->createUri(sprintf(
+                '%s/%s',
+                $this->baseHostname,
+                OdooApiRequestMakerInterface::BASE_PATH
+            ));
+        }
+
+        return $this->baseUri;
+    }
+
+    public function buildOdooHttpClientFactory(): OdooHttpClientFactoryInterface
+    {
+        if (null === $this->odooHttpClientFactory) {
+            $this->odooHttpClientFactory = new OdooHttpClientFactory(
+                $this->buildXmlRpcSerializerHelper()
+            );
+        }
+
+        return $this->odooHttpClientFactory;
+    }
+
     public function buildHttpClient(): ClientInterface
     {
         if (null === $this->httpClient) {
-            $odooHttpClientFactory = new OdooHttpClientFactory(
-                $this->buildXmlRpcSerializerHelper(),
-                $this->hostname
-            );
+            $odooHttpClientFactory = $this->buildOdooHttpClientFactory();
             $this->httpClient = $odooHttpClientFactory->create();
         }
 
@@ -192,13 +226,23 @@ final class OdooApiClientBuilder implements OdooApiClientBuilderInterface
         return $this->executeKwOperations[$className];
     }
 
-    public function getHostname(): string
+    public function getBaseHostname(): string
     {
-        return $this->hostname;
+        return $this->baseHostname;
     }
 
-    public function setHostname(string $hostname): void
+    public function setBaseHostname(string $baseHostname): void
     {
-        $this->hostname = $hostname;
+        $this->baseHostname = $baseHostname;
+    }
+
+    public function getBasePath(): string
+    {
+        return $this->basePath;
+    }
+
+    public function setBasePath(string $basePath): void
+    {
+        $this->basePath = $basePath;
     }
 }

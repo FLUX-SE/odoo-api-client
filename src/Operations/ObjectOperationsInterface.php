@@ -16,4 +16,10 @@ interface ObjectOperationsInterface extends OperationsInterface
     ): ResponseInterface;
 
     public function retrieveUid(): int;
+
+    public function setDatabase(string $database): void;
+
+    public function setUsername(string $username): void;
+
+    public function setPassword(string $password): void;
 }

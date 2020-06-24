@@ -73,7 +73,6 @@ final class OdooApiErrorPlugin implements Plugin
     {
         $body = $response->getBody()->__toString();
         if (preg_match('#.*<methodResponse>.*<fault>.*#s', $body)) {
-            dump($body);
             $this->fault = $this->xmlRpcSerializerHelper->deserializeResponseBody($response->getBody(), Fault::class);
         }
 

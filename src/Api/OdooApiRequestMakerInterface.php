@@ -8,6 +8,7 @@ use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\UriInterface;
 
 interface OdooApiRequestMakerInterface
 {
@@ -20,4 +21,8 @@ interface OdooApiRequestMakerInterface
     public function getRequestFactory(): RequestFactoryInterface;
 
     public function getHttpClient(): ClientInterface;
+
+    public function getBaseUri(): UriInterface;
+
+    public function setBaseUri(UriInterface $baseUri): void;
 }

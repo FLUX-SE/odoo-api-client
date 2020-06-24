@@ -16,46 +16,36 @@ use Http\Client\Common\PluginClient;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\UriInterface;
 use Symfony\Component\HttpKernel\Log\Logger;
 
 final class OdooHttpClientFactory implements OdooHttpClientFactoryInterface
 {
-    /** @var string */
-    protected $baseHostUri;
     /** @var string */
     protected $basePath;
     /** @var XmlRpcSerializerHelperInterface */
     private $xmlRpcSerializerHelper;
 
     public function __construct(
-        XmlRpcSerializerHelperInterface $xmlRpcSerializerHelper,
-        string $baseHostUri,
-        string $basePath = OdooApiRequestMakerInterface::BASE_PATH
+        XmlRpcSerializerHelperInterface $xmlRpcSerializerHelper
     ) {
         $this->xmlRpcSerializerHelper = $xmlRpcSerializerHelper;
-        $this->baseHostUri = rtrim($baseHostUri, '/');
-        $this->basePath = trim($basePath, '/');
     }
 
     public function create(): ClientInterface
     {
         return new PluginClient(
             HttpClientDiscovery::find(),
-            $this->setupPlugins()
+            $this->buildPlugins()
         );
     }
 
     /**
      * @return Plugin[]
      */
-    public function setupPlugins(): array
+    public function buildPlugins(): array
     {
         $plugins = [];
-
-        $baseUriPlugin = $this->setupBaseUriPlugin();
-        if (null !== $baseUriPlugin) {
-            $plugins[] = $baseUriPlugin;
-        }
 
         $loggerPlugin = $this->setupLoggerPlugin();
         if (null !== $loggerPlugin) {
@@ -73,18 +63,6 @@ final class OdooHttpClientFactory implements OdooHttpClientFactoryInterface
         }
 
         return $plugins;
-    }
-
-    public function setupBaseUriPlugin(): ?Plugin
-    {
-        $uriFactory = Psr17FactoryDiscovery::findUrlFactory();
-        $uri = $uriFactory->createUri(sprintf(
-            '%s/%s',
-            $this->baseHostUri,
-            $this->basePath
-        ));
-
-        return new BaseUriPlugin($uri);
     }
 
     public function setupContentTypePlugin(): ?Plugin

@@ -15,9 +15,7 @@ interface OdooHttpClientFactoryInterface
     /**
      * @return Plugin[]
      */
-    public function setupPlugins(): array;
-
-    public function setupBaseUriPlugin(): ?Plugin;
+    public function buildPlugins(): array;
 
     public function setupLoggerPlugin(): ?Plugin;
 

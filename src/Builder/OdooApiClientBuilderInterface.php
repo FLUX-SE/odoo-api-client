@@ -6,6 +6,7 @@ namespace Flux\OdooApiClient\Builder;
 
 use Flux\OdooApiClient\Api\Factory\RequestBodyFactoryInterface;
 use Flux\OdooApiClient\Api\OdooApiRequestMakerInterface;
+use Flux\OdooApiClient\HttPlug\Factory\OdooHttpClientFactoryInterface;
 use Flux\OdooApiClient\Operations\CommonOperationsInterface;
 use Flux\OdooApiClient\Operations\DbOperationsInterface;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\OperationsInterface as ExecuteKwOperationsInterface;
@@ -13,11 +14,16 @@ use Flux\OdooApiClient\Operations\ObjectOperationsInterface;
 use Flux\OdooApiClient\Operations\OperationsInterface;
 use Flux\OdooApiClient\Serializer\XmlRpcSerializerHelperInterface;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\UriInterface;
 use Symfony\Component\Serializer\Serializer;
 
 interface OdooApiClientBuilderInterface
 {
     public function buildApiRequestMaker(): OdooApiRequestMakerInterface;
+
+    public function buildBaseUri(): UriInterface;
+
+    public function buildOdooHttpClientFactory(): OdooHttpClientFactoryInterface;
 
     public function buildHttpClient(): ClientInterface;
 
@@ -42,7 +48,11 @@ interface OdooApiClientBuilderInterface
         string $password
     ): ExecuteKwOperationsInterface;
 
-    public function setHostname(string $hostname): void;
+    public function setBaseHostname(string $hostname): void;
 
-    public function getHostname(): string;
+    public function getBaseHostname(): string;
+
+    public function getBasePath(): string;
+
+    public function setBasePath(string $basePath): void;
 }

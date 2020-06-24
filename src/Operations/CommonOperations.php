@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Operations;
 
 use Flux\OdooApiClient\Model\Common\Version;
+use Flux\OdooApiClient\Operations\Exception\AuthenticationFailedException;
 
 final class CommonOperations extends AbstractOperations implements CommonOperationsInterface
 {
@@ -34,19 +35,35 @@ final class CommonOperations extends AbstractOperations implements CommonOperati
         return $this->deserializeArrayOf($responseBody);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws AuthenticationFailedException
+     */
     public function authenticate(
         string $database,
         string $username,
         string $password,
         array $userAgentEnv = []
     ): int {
-        $responseBody = $this->request(__FUNCTION__, [
+        $response = $this->request(__FUNCTION__, [
                 $database,
                 $username,
                 $password,
                 $userAgentEnv,
         ]);
 
-        return $this->deserializeInteger($responseBody);
+        $body = $this->xmlRpcSerializerHelper->decodeResponseBody(
+            $response->getBody()
+        );
+
+        if (false === $body) {
+            throw new AuthenticationFailedException(sprintf(
+                'Unable to found the UID of the user "%s" !',
+                $username
+            ));
+        }
+
+        return $this->deserializeInteger($response);
     }
 }
