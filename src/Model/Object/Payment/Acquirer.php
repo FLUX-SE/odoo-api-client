@@ -17,7 +17,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : payment.acquirer
  * Name : payment.acquirer
- *
+ * Info :
  * Acquirer Model. Each specific acquirer can extend the model by adding
  * its own fields, using the acquirer_name as a prefix for the new fields.
  * Using the required_if_provider='<name>' attribute on fields it is possible
@@ -49,602 +49,751 @@ final class Acquirer extends Base
     /**
      * Name
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Color
      *
-     * @var int
+     * @var null|int
      */
     private $color;
 
     /**
      * Displayed as
+     * How the acquirer is displayed to the customers.
      *
-     * @var string
+     * @var null|string
      */
     private $display_as;
 
     /**
      * Description
      *
-     * @var string
+     * @var null|string
      */
     private $description;
 
     /**
      * Sequence
+     * Determine the display order
      *
-     * @var int
+     * @var null|int
      */
     private $sequence;
 
     /**
      * Company
      *
-     * @var null|Company
+     * @var Company
      */
     private $company_id;
 
     /**
      * Form Button Template
+     * This template renders the acquirer button with all necessary values.
+     * It is rendered with qWeb with the following evaluation context:
+     * tx_url: transaction URL to post the form
+     * acquirer: payment.acquirer browse record
+     * user: current user browse record
+     * reference: the transaction reference number
+     * currency: the transaction currency browse record
+     * amount: the transaction amount, a float
+     * partner: the buyer partner browse record, not necessarily set
+     * partner_values: specific values about the buyer, for example coming from a shipping form
+     * tx_values: transaction values
+     * context: the current context dictionary
      *
-     * @var View
+     * @var null|View
      */
     private $view_template_id;
 
     /**
      * S2S Form Template
+     * Template for method registration
      *
-     * @var View
+     * @var null|View
      */
     private $registration_view_template_id;
 
     /**
      * State
+     * In test mode, a fake payment is processed through a test
+     * payment interface. This mode is advised when setting up the
+     * acquirer. Watch out, test and production modes require
+     * different credentials.
      *
-     * @var null|array
+     * @var array
      */
     private $state;
 
     /**
      * Capture Amount Manually
+     * Capture the amount from Odoo, when the delivery is completed.
      *
-     * @var bool
+     * @var null|bool
      */
     private $capture_manually;
 
     /**
      * Payment Journal
+     * Journal where the successful transactions will be posted
      *
-     * @var Journal
+     * @var null|Journal
      */
     private $journal_id;
 
     /**
      * Verify Card Validity
+     * Trigger a transaction of 1 currency unit and its refund to check the validity of new credit cards entered in
+     * the customer portal.
+     * Without this check, the validity will be verified at the very first transaction.
      *
-     * @var bool
+     * @var null|bool
      */
     private $check_validity;
 
     /**
      * Countries
+     * This payment gateway is available for selected countries. If none is selected it is available for all
+     * countries.
      *
-     * @var Country
+     * @var null|Country[]
      */
     private $country_ids;
 
     /**
      * Help Message
+     * Message displayed to explain and help the payment process.
      *
-     * @var string
+     * @var null|string
      */
     private $pre_msg;
 
     /**
      * Authorize Message
+     * Message displayed if payment is authorized.
      *
-     * @var string
+     * @var null|string
      */
     private $auth_msg;
 
     /**
      * Pending Message
+     * Message displayed, if order is in pending state after having done the payment process.
      *
-     * @var string
+     * @var null|string
      */
     private $pending_msg;
 
     /**
      * Done Message
+     * Message displayed, if order is done successfully after having done the payment process.
      *
-     * @var string
+     * @var null|string
      */
     private $done_msg;
 
     /**
      * Cancel Message
+     * Message displayed, if order is cancel during the payment process.
      *
-     * @var string
+     * @var null|string
      */
     private $cancel_msg;
 
     /**
      * Save Cards
+     * This option allows customers to save their credit card as a payment token and to reuse it for a later
+     * purchase. If you manage subscriptions (recurring invoicing), you need it to automatically charge the customer
+     * when you issue an invoice.
      *
-     * @var array
+     * @var null|array
      */
     private $save_token;
 
     /**
      * Saving Card Data supported
      *
-     * @var bool
+     * @var null|bool
      */
     private $token_implemented;
 
     /**
      * Authorize Mechanism Supported
      *
-     * @var bool
+     * @var null|bool
      */
     private $authorize_implemented;
 
     /**
      * Fees Computation Supported
      *
-     * @var bool
+     * @var null|bool
      */
     private $fees_implemented;
 
     /**
      * Add Extra Fees
      *
-     * @var bool
+     * @var null|bool
      */
     private $fees_active;
 
     /**
      * Fixed domestic fees
      *
-     * @var float
+     * @var null|float
      */
     private $fees_dom_fixed;
 
     /**
      * Variable domestic fees (in percents)
      *
-     * @var float
+     * @var null|float
      */
     private $fees_dom_var;
 
     /**
      * Fixed international fees
      *
-     * @var float
+     * @var null|float
      */
     private $fees_int_fixed;
 
     /**
      * Variable international fees (in percents)
      *
-     * @var float
+     * @var null|float
      */
     private $fees_int_var;
 
     /**
      * Use SEPA QR Code
      *
-     * @var bool
+     * @var null|bool
      */
     private $qr_code;
 
     /**
      * Corresponding Module
      *
-     * @var Module
+     * @var null|Module
      */
     private $module_id;
 
     /**
      * Installation State
      *
-     * @var array
+     * @var null|array
      */
     private $module_state;
 
     /**
      * Odoo Enterprise Module
      *
-     * @var bool
+     * @var null|bool
      */
     private $module_to_buy;
 
     /**
      * Image
      *
-     * @var int
+     * @var null|int
      */
     private $image_128;
 
     /**
      * Supported Payment Icons
      *
-     * @var Icon
+     * @var null|Icon[]
      */
     private $payment_icon_ids;
 
     /**
      * Payment Flow
+     * Note: Subscriptions does not take this field in account, it uses server to server by default.
      *
-     * @var null|array
+     * @var array
      */
     private $payment_flow;
 
     /**
      * For Incoming Payments
+     * Manual: Get paid by cash, check or any other method outside of Odoo.
+     * Electronic: Get paid automatically through a payment acquirer by requesting a transaction on a card saved by
+     * the customer when buying or subscribing online (payment token).
+     * Batch Deposit: Encase several customer checks at once by generating a batch deposit to submit to your bank.
+     * When encoding the bank statement in Odoo,you are suggested to reconcile the transaction with the batch
+     * deposit. Enable this option from the settings.
      *
-     * @var Method
+     * @var null|Method[]
      */
     private $inbound_payment_method_ids;
 
     /**
      * Provider
      *
-     * @var null|array
+     * @var array
      */
     private $provider;
 
     /**
      * Communication
+     * You can set here the communication type that will appear on sales orders.The communication will be given to
+     * the customer when they choose the payment method.
      *
-     * @var array
+     * @var null|array
      */
     private $so_reference_type;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @param string $name Name
+     * @param Company $company_id Company
+     * @param array $state State
+     *        In test mode, a fake payment is processed through a test
+     *        payment interface. This mode is advised when setting up the
+     *        acquirer. Watch out, test and production modes require
+     *        different credentials.
+     * @param array $payment_flow Payment Flow
+     *        Note: Subscriptions does not take this field in account, it uses server to server by default.
+     * @param array $provider Provider
      */
-    public function setName(?string $name): void
-    {
+    public function __construct(
+        string $name,
+        Company $company_id,
+        array $state,
+        array $payment_flow,
+        array $provider
+    ) {
         $this->name = $name;
+        $this->company_id = $company_id;
+        $this->state = $state;
+        $this->payment_flow = $payment_flow;
+        $this->provider = $provider;
     }
 
     /**
-     * @param ?array $payment_flow
+     * @param mixed $item
      */
-    public function removePaymentFlow(?array $payment_flow): void
+    public function removePaymentFlow($item): void
     {
-        if ($this->hasPaymentFlow($payment_flow)) {
-            $index = array_search($payment_flow, $this->payment_flow);
+        if ($this->hasPaymentFlow($item)) {
+            $index = array_search($item, $this->payment_flow);
             unset($this->payment_flow[$index]);
         }
     }
 
     /**
-     * @param float $fees_int_fixed
+     * @param null|float $fees_int_var
      */
-    public function setFeesIntFixed(float $fees_int_fixed): void
-    {
-        $this->fees_int_fixed = $fees_int_fixed;
-    }
-
-    /**
-     * @param float $fees_int_var
-     */
-    public function setFeesIntVar(float $fees_int_var): void
+    public function setFeesIntVar(?float $fees_int_var): void
     {
         $this->fees_int_var = $fees_int_var;
     }
 
     /**
-     * @param bool $qr_code
+     * @param null|bool $qr_code
      */
-    public function setQrCode(bool $qr_code): void
+    public function setQrCode(?bool $qr_code): void
     {
         $this->qr_code = $qr_code;
     }
 
     /**
-     * @param Module $module_id
+     * @param null|Module $module_id
      */
-    public function setModuleId(Module $module_id): void
+    public function setModuleId(?Module $module_id): void
     {
         $this->module_id = $module_id;
     }
 
     /**
-     * @return array
+     * @return null|array
      */
-    public function getModuleState(): array
+    public function getModuleState(): ?array
     {
         return $this->module_state;
     }
 
     /**
-     * @return bool
+     * @return null|bool
      */
-    public function isModuleToBuy(): bool
+    public function isModuleToBuy(): ?bool
     {
         return $this->module_to_buy;
     }
 
     /**
-     * @param int $image_128
+     * @param null|int $image_128
      */
-    public function setImage128(int $image_128): void
+    public function setImage128(?int $image_128): void
     {
         $this->image_128 = $image_128;
     }
 
     /**
-     * @param Icon $payment_icon_ids
+     * @param null|Icon[] $payment_icon_ids
      */
-    public function setPaymentIconIds(Icon $payment_icon_ids): void
+    public function setPaymentIconIds(?array $payment_icon_ids): void
     {
         $this->payment_icon_ids = $payment_icon_ids;
     }
 
     /**
-     * @param null|array $payment_flow
+     * @param Icon $item
+     * @param bool $strict
+     *
+     * @return bool
      */
-    public function setPaymentFlow(?array $payment_flow): void
+    public function hasPaymentIconIds(Icon $item, bool $strict = true): bool
+    {
+        if (null === $this->payment_icon_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->payment_icon_ids, $strict);
+    }
+
+    /**
+     * @param Icon $item
+     */
+    public function addPaymentIconIds(Icon $item): void
+    {
+        if ($this->hasPaymentIconIds($item)) {
+            return;
+        }
+
+        if (null === $this->payment_icon_ids) {
+            $this->payment_icon_ids = [];
+        }
+
+        $this->payment_icon_ids[] = $item;
+    }
+
+    /**
+     * @param Icon $item
+     */
+    public function removePaymentIconIds(Icon $item): void
+    {
+        if (null === $this->payment_icon_ids) {
+            $this->payment_icon_ids = [];
+        }
+
+        if ($this->hasPaymentIconIds($item)) {
+            $index = array_search($item, $this->payment_icon_ids);
+            unset($this->payment_icon_ids[$index]);
+        }
+    }
+
+    /**
+     * @param array $payment_flow
+     */
+    public function setPaymentFlow(array $payment_flow): void
     {
         $this->payment_flow = $payment_flow;
     }
 
     /**
-     * @param ?array $payment_flow
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasPaymentFlow(?array $payment_flow, bool $strict = true): bool
+    public function hasPaymentFlow($item, bool $strict = true): bool
     {
-        if (null === $this->payment_flow) {
-            return false;
-        }
-
-        return in_array($payment_flow, $this->payment_flow, $strict);
+        return in_array($item, $this->payment_flow, $strict);
     }
 
     /**
-     * @param ?array $payment_flow
+     * @param mixed $item
      */
-    public function addPaymentFlow(?array $payment_flow): void
+    public function addPaymentFlow($item): void
     {
-        if ($this->hasPaymentFlow($payment_flow)) {
+        if ($this->hasPaymentFlow($item)) {
             return;
         }
 
-        if (null === $this->payment_flow) {
-            $this->payment_flow = [];
-        }
-
-        $this->payment_flow[] = $payment_flow;
+        $this->payment_flow[] = $item;
     }
 
     /**
-     * @param Method $inbound_payment_method_ids
+     * @param null|Method[] $inbound_payment_method_ids
      */
-    public function setInboundPaymentMethodIds(Method $inbound_payment_method_ids): void
+    public function setInboundPaymentMethodIds(?array $inbound_payment_method_ids): void
     {
         $this->inbound_payment_method_ids = $inbound_payment_method_ids;
     }
 
     /**
-     * @param float $fees_dom_fixed
+     * @param null|float $fees_dom_var
      */
-    public function setFeesDomFixed(float $fees_dom_fixed): void
-    {
-        $this->fees_dom_fixed = $fees_dom_fixed;
-    }
-
-    /**
-     * @param null|array $provider
-     */
-    public function setProvider(?array $provider): void
-    {
-        $this->provider = $provider;
-    }
-
-    /**
-     * @param ?array $provider
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasProvider(?array $provider, bool $strict = true): bool
-    {
-        if (null === $this->provider) {
-            return false;
-        }
-
-        return in_array($provider, $this->provider, $strict);
-    }
-
-    /**
-     * @param ?array $provider
-     */
-    public function addProvider(?array $provider): void
-    {
-        if ($this->hasProvider($provider)) {
-            return;
-        }
-
-        if (null === $this->provider) {
-            $this->provider = [];
-        }
-
-        $this->provider[] = $provider;
-    }
-
-    /**
-     * @param ?array $provider
-     */
-    public function removeProvider(?array $provider): void
-    {
-        if ($this->hasProvider($provider)) {
-            $index = array_search($provider, $this->provider);
-            unset($this->provider[$index]);
-        }
-    }
-
-    /**
-     * @param array $so_reference_type
-     */
-    public function setSoReferenceType(array $so_reference_type): void
-    {
-        $this->so_reference_type = $so_reference_type;
-    }
-
-    /**
-     * @param array $so_reference_type
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasSoReferenceType(array $so_reference_type, bool $strict = true): bool
-    {
-        return in_array($so_reference_type, $this->so_reference_type, $strict);
-    }
-
-    /**
-     * @param array $so_reference_type
-     */
-    public function addSoReferenceType(array $so_reference_type): void
-    {
-        if ($this->hasSoReferenceType($so_reference_type)) {
-            return;
-        }
-
-        $this->so_reference_type[] = $so_reference_type;
-    }
-
-    /**
-     * @param array $so_reference_type
-     */
-    public function removeSoReferenceType(array $so_reference_type): void
-    {
-        if ($this->hasSoReferenceType($so_reference_type)) {
-            $index = array_search($so_reference_type, $this->so_reference_type);
-            unset($this->so_reference_type[$index]);
-        }
-    }
-
-    /**
-     * @return Users
-     */
-    public function getCreateUid(): Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getCreateDate(): DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getWriteUid(): Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param float $fees_dom_var
-     */
-    public function setFeesDomVar(float $fees_dom_var): void
+    public function setFeesDomVar(?float $fees_dom_var): void
     {
         $this->fees_dom_var = $fees_dom_var;
     }
 
     /**
-     * @param bool $fees_active
+     * @param Method $item
+     * @param bool $strict
+     *
+     * @return bool
      */
-    public function setFeesActive(bool $fees_active): void
+    public function hasInboundPaymentMethodIds(Method $item, bool $strict = true): bool
     {
-        $this->fees_active = $fees_active;
+        if (null === $this->inbound_payment_method_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->inbound_payment_method_ids, $strict);
     }
 
     /**
-     * @return int
+     * @param Method $item
      */
-    public function getColor(): int
+    public function addInboundPaymentMethodIds(Method $item): void
+    {
+        if ($this->hasInboundPaymentMethodIds($item)) {
+            return;
+        }
+
+        if (null === $this->inbound_payment_method_ids) {
+            $this->inbound_payment_method_ids = [];
+        }
+
+        $this->inbound_payment_method_ids[] = $item;
+    }
+
+    /**
+     * @param Method $item
+     */
+    public function removeInboundPaymentMethodIds(Method $item): void
+    {
+        if (null === $this->inbound_payment_method_ids) {
+            $this->inbound_payment_method_ids = [];
+        }
+
+        if ($this->hasInboundPaymentMethodIds($item)) {
+            $index = array_search($item, $this->inbound_payment_method_ids);
+            unset($this->inbound_payment_method_ids[$index]);
+        }
+    }
+
+    /**
+     * @param array $provider
+     */
+    public function setProvider(array $provider): void
+    {
+        $this->provider = $provider;
+    }
+
+    /**
+     * @param mixed $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasProvider($item, bool $strict = true): bool
+    {
+        return in_array($item, $this->provider, $strict);
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addProvider($item): void
+    {
+        if ($this->hasProvider($item)) {
+            return;
+        }
+
+        $this->provider[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeProvider($item): void
+    {
+        if ($this->hasProvider($item)) {
+            $index = array_search($item, $this->provider);
+            unset($this->provider[$index]);
+        }
+    }
+
+    /**
+     * @param null|array $so_reference_type
+     */
+    public function setSoReferenceType(?array $so_reference_type): void
+    {
+        $this->so_reference_type = $so_reference_type;
+    }
+
+    /**
+     * @param mixed $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasSoReferenceType($item, bool $strict = true): bool
+    {
+        if (null === $this->so_reference_type) {
+            return false;
+        }
+
+        return in_array($item, $this->so_reference_type, $strict);
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addSoReferenceType($item): void
+    {
+        if ($this->hasSoReferenceType($item)) {
+            return;
+        }
+
+        if (null === $this->so_reference_type) {
+            $this->so_reference_type = [];
+        }
+
+        $this->so_reference_type[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeSoReferenceType($item): void
+    {
+        if (null === $this->so_reference_type) {
+            $this->so_reference_type = [];
+        }
+
+        if ($this->hasSoReferenceType($item)) {
+            $index = array_search($item, $this->so_reference_type);
+            unset($this->so_reference_type[$index]);
+        }
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getCreateUid(): ?Users
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getWriteUid(): ?Users
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param null|float $fees_int_fixed
+     */
+    public function setFeesIntFixed(?float $fees_int_fixed): void
+    {
+        $this->fees_int_fixed = $fees_int_fixed;
+    }
+
+    /**
+     * @param null|float $fees_dom_fixed
+     */
+    public function setFeesDomFixed(?float $fees_dom_fixed): void
+    {
+        $this->fees_dom_fixed = $fees_dom_fixed;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param null|Country[] $country_ids
+     */
+    public function setCountryIds(?array $country_ids): void
+    {
+        $this->country_ids = $country_ids;
+    }
+
+    /**
+     * @return null|int
+     */
+    public function getColor(): ?int
     {
         return $this->color;
     }
 
     /**
-     * @param Journal $journal_id
+     * @param null|string $display_as
      */
-    public function setJournalId(Journal $journal_id): void
-    {
-        $this->journal_id = $journal_id;
-    }
-
-    /**
-     * @param string $display_as
-     */
-    public function setDisplayAs(string $display_as): void
+    public function setDisplayAs(?string $display_as): void
     {
         $this->display_as = $display_as;
     }
 
     /**
-     * @param string $description
+     * @param null|string $description
      */
-    public function setDescription(string $description): void
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
 
     /**
-     * @param int $sequence
+     * @param null|int $sequence
      */
-    public function setSequence(int $sequence): void
+    public function setSequence(?int $sequence): void
     {
         $this->sequence = $sequence;
     }
 
     /**
-     * @param null|Company $company_id
+     * @param Company $company_id
      */
     public function setCompanyId(Company $company_id): void
     {
@@ -652,205 +801,263 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param View $view_template_id
+     * @param null|View $view_template_id
      */
-    public function setViewTemplateId(View $view_template_id): void
+    public function setViewTemplateId(?View $view_template_id): void
     {
         $this->view_template_id = $view_template_id;
     }
 
     /**
-     * @param View $registration_view_template_id
+     * @param null|View $registration_view_template_id
      */
-    public function setRegistrationViewTemplateId(View $registration_view_template_id): void
+    public function setRegistrationViewTemplateId(?View $registration_view_template_id): void
     {
         $this->registration_view_template_id = $registration_view_template_id;
     }
 
     /**
-     * @param null|array $state
+     * @param array $state
      */
-    public function setState(?array $state): void
+    public function setState(array $state): void
     {
         $this->state = $state;
     }
 
     /**
-     * @param ?array $state
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasState(?array $state, bool $strict = true): bool
+    public function hasState($item, bool $strict = true): bool
     {
-        if (null === $this->state) {
-            return false;
-        }
-
-        return in_array($state, $this->state, $strict);
+        return in_array($item, $this->state, $strict);
     }
 
     /**
-     * @param ?array $state
+     * @param mixed $item
      */
-    public function addState(?array $state): void
+    public function addState($item): void
     {
-        if ($this->hasState($state)) {
+        if ($this->hasState($item)) {
             return;
         }
 
-        if (null === $this->state) {
-            $this->state = [];
-        }
-
-        $this->state[] = $state;
+        $this->state[] = $item;
     }
 
     /**
-     * @param ?array $state
+     * @param mixed $item
      */
-    public function removeState(?array $state): void
+    public function removeState($item): void
     {
-        if ($this->hasState($state)) {
-            $index = array_search($state, $this->state);
+        if ($this->hasState($item)) {
+            $index = array_search($item, $this->state);
             unset($this->state[$index]);
         }
     }
 
     /**
-     * @param bool $capture_manually
+     * @param null|bool $capture_manually
      */
-    public function setCaptureManually(bool $capture_manually): void
+    public function setCaptureManually(?bool $capture_manually): void
     {
         $this->capture_manually = $capture_manually;
     }
 
     /**
-     * @param bool $check_validity
+     * @param null|Journal $journal_id
      */
-    public function setCheckValidity(bool $check_validity): void
+    public function setJournalId(?Journal $journal_id): void
+    {
+        $this->journal_id = $journal_id;
+    }
+
+    /**
+     * @param null|bool $check_validity
+     */
+    public function setCheckValidity(?bool $check_validity): void
     {
         $this->check_validity = $check_validity;
     }
 
     /**
+     * @param Country $item
+     * @param bool $strict
+     *
      * @return bool
      */
-    public function isFeesImplemented(): bool
+    public function hasCountryIds(Country $item, bool $strict = true): bool
     {
-        return $this->fees_implemented;
+        if (null === $this->country_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->country_ids, $strict);
     }
 
     /**
-     * @param Country $country_ids
+     * @param null|bool $fees_active
      */
-    public function setCountryIds(Country $country_ids): void
+    public function setFeesActive(?bool $fees_active): void
     {
-        $this->country_ids = $country_ids;
+        $this->fees_active = $fees_active;
     }
 
     /**
-     * @param string $pre_msg
+     * @param Country $item
      */
-    public function setPreMsg(string $pre_msg): void
+    public function addCountryIds(Country $item): void
+    {
+        if ($this->hasCountryIds($item)) {
+            return;
+        }
+
+        if (null === $this->country_ids) {
+            $this->country_ids = [];
+        }
+
+        $this->country_ids[] = $item;
+    }
+
+    /**
+     * @param Country $item
+     */
+    public function removeCountryIds(Country $item): void
+    {
+        if (null === $this->country_ids) {
+            $this->country_ids = [];
+        }
+
+        if ($this->hasCountryIds($item)) {
+            $index = array_search($item, $this->country_ids);
+            unset($this->country_ids[$index]);
+        }
+    }
+
+    /**
+     * @param null|string $pre_msg
+     */
+    public function setPreMsg(?string $pre_msg): void
     {
         $this->pre_msg = $pre_msg;
     }
 
     /**
-     * @param string $auth_msg
+     * @param null|string $auth_msg
      */
-    public function setAuthMsg(string $auth_msg): void
+    public function setAuthMsg(?string $auth_msg): void
     {
         $this->auth_msg = $auth_msg;
     }
 
     /**
-     * @param string $pending_msg
+     * @param null|string $pending_msg
      */
-    public function setPendingMsg(string $pending_msg): void
+    public function setPendingMsg(?string $pending_msg): void
     {
         $this->pending_msg = $pending_msg;
     }
 
     /**
-     * @param string $done_msg
+     * @param null|string $done_msg
      */
-    public function setDoneMsg(string $done_msg): void
+    public function setDoneMsg(?string $done_msg): void
     {
         $this->done_msg = $done_msg;
     }
 
     /**
-     * @param string $cancel_msg
+     * @param null|string $cancel_msg
      */
-    public function setCancelMsg(string $cancel_msg): void
+    public function setCancelMsg(?string $cancel_msg): void
     {
         $this->cancel_msg = $cancel_msg;
     }
 
     /**
-     * @param array $save_token
+     * @param null|array $save_token
      */
-    public function setSaveToken(array $save_token): void
+    public function setSaveToken(?array $save_token): void
     {
         $this->save_token = $save_token;
     }
 
     /**
-     * @param array $save_token
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasSaveToken(array $save_token, bool $strict = true): bool
+    public function hasSaveToken($item, bool $strict = true): bool
     {
-        return in_array($save_token, $this->save_token, $strict);
+        if (null === $this->save_token) {
+            return false;
+        }
+
+        return in_array($item, $this->save_token, $strict);
     }
 
     /**
-     * @param array $save_token
+     * @param mixed $item
      */
-    public function addSaveToken(array $save_token): void
+    public function addSaveToken($item): void
     {
-        if ($this->hasSaveToken($save_token)) {
+        if ($this->hasSaveToken($item)) {
             return;
         }
 
-        $this->save_token[] = $save_token;
+        if (null === $this->save_token) {
+            $this->save_token = [];
+        }
+
+        $this->save_token[] = $item;
     }
 
     /**
-     * @param array $save_token
+     * @param mixed $item
      */
-    public function removeSaveToken(array $save_token): void
+    public function removeSaveToken($item): void
     {
-        if ($this->hasSaveToken($save_token)) {
-            $index = array_search($save_token, $this->save_token);
+        if (null === $this->save_token) {
+            $this->save_token = [];
+        }
+
+        if ($this->hasSaveToken($item)) {
+            $index = array_search($item, $this->save_token);
             unset($this->save_token[$index]);
         }
     }
 
     /**
-     * @return bool
+     * @return null|bool
      */
-    public function isTokenImplemented(): bool
+    public function isTokenImplemented(): ?bool
     {
         return $this->token_implemented;
     }
 
     /**
-     * @return bool
+     * @return null|bool
      */
-    public function isAuthorizeImplemented(): bool
+    public function isAuthorizeImplemented(): ?bool
     {
         return $this->authorize_implemented;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|bool
      */
-    public function getWriteDate(): DateTimeInterface
+    public function isFeesImplemented(): ?bool
+    {
+        return $this->fees_implemented;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

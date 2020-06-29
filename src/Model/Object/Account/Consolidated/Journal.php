@@ -9,7 +9,7 @@ use Flux\OdooApiClient\Model\Object\Base;
 /**
  * Odoo model : account.consolidated.journal
  * Name : account.consolidated.journal
- *
+ * Info :
  * The base model, which is implicitly inherited by all models.
  */
 final class Journal extends Base

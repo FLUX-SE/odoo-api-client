@@ -12,7 +12,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : account.payment.term.line
  * Name : account.payment.term.line
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -27,139 +27,148 @@ final class Line extends Base
 {
     /**
      * Type
+     * Select here the kind of valuation related to this payment terms line.
      *
-     * @var null|array
+     * @var array
      */
     private $value;
 
     /**
      * Value
+     * For percent enter a ratio between 0-100.
      *
-     * @var float
+     * @var null|float
      */
     private $value_amount;
 
     /**
      * Number of Days
      *
-     * @var null|int
+     * @var int
      */
     private $days;
 
     /**
      * Day of the month
+     * Day of the month on which the invoice must come to its term. If zero or negative, this value will be ignored,
+     * and no specific day will be set. If greater than the last day of a month, this number will instead select the
+     * last day of this month.
      *
-     * @var int
+     * @var null|int
      */
     private $day_of_the_month;
 
     /**
      * Options
      *
-     * @var null|array
+     * @var array
      */
     private $option;
 
     /**
      * Payment Terms
      *
-     * @var null|Term
+     * @var Term
      */
     private $payment_id;
 
     /**
      * Sequence
+     * Gives the sequence order when displaying a list of payment terms lines.
      *
-     * @var int
+     * @var null|int
      */
     private $sequence;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|array $value
+     * @param array $value Type
+     *        Select here the kind of valuation related to this payment terms line.
+     * @param int $days Number of Days
+     * @param array $option Options
+     * @param Term $payment_id Payment Terms
      */
-    public function setValue(?array $value): void
+    public function __construct(array $value, int $days, array $option, Term $payment_id)
     {
         $this->value = $value;
+        $this->days = $days;
+        $this->option = $option;
+        $this->payment_id = $payment_id;
     }
 
     /**
-     * @param ?array $option
+     * @param mixed $item
      */
-    public function addOption(?array $option): void
+    public function addOption($item): void
     {
-        if ($this->hasOption($option)) {
+        if ($this->hasOption($item)) {
             return;
         }
 
-        if (null === $this->option) {
-            $this->option = [];
-        }
-
-        $this->option[] = $option;
+        $this->option[] = $item;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @param int $sequence
+     * @param null|int $sequence
      */
-    public function setSequence(int $sequence): void
+    public function setSequence(?int $sequence): void
     {
         $this->sequence = $sequence;
     }
 
     /**
-     * @param null|Term $payment_id
+     * @param Term $payment_id
      */
     public function setPaymentId(Term $payment_id): void
     {
@@ -167,109 +176,105 @@ final class Line extends Base
     }
 
     /**
-     * @param ?array $option
+     * @param mixed $item
      */
-    public function removeOption(?array $option): void
+    public function removeOption($item): void
     {
-        if ($this->hasOption($option)) {
-            $index = array_search($option, $this->option);
+        if ($this->hasOption($item)) {
+            $index = array_search($item, $this->option);
             unset($this->option[$index]);
         }
     }
 
     /**
-     * @param ?array $option
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasOption(?array $option, bool $strict = true): bool
+    public function hasOption($item, bool $strict = true): bool
     {
-        if (null === $this->option) {
-            return false;
-        }
-
-        return in_array($option, $this->option, $strict);
+        return in_array($item, $this->option, $strict);
     }
 
     /**
-     * @param ?array $value
-     * @param bool $strict
-     *
-     * @return bool
+     * @param array $value
      */
-    public function hasValue(?array $value, bool $strict = true): bool
+    public function setValue(array $value): void
     {
-        if (null === $this->value) {
-            return false;
-        }
-
-        return in_array($value, $this->value, $strict);
+        $this->value = $value;
     }
 
     /**
-     * @param null|array $option
+     * @param array $option
      */
-    public function setOption(?array $option): void
+    public function setOption(array $option): void
     {
         $this->option = $option;
     }
 
     /**
-     * @param int $day_of_the_month
+     * @param null|int $day_of_the_month
      */
-    public function setDayOfTheMonth(int $day_of_the_month): void
+    public function setDayOfTheMonth(?int $day_of_the_month): void
     {
         $this->day_of_the_month = $day_of_the_month;
     }
 
     /**
-     * @param null|int $days
+     * @param int $days
      */
-    public function setDays(?int $days): void
+    public function setDays(int $days): void
     {
         $this->days = $days;
     }
 
     /**
-     * @param float $value_amount
+     * @param null|float $value_amount
      */
-    public function setValueAmount(float $value_amount): void
+    public function setValueAmount(?float $value_amount): void
     {
         $this->value_amount = $value_amount;
     }
 
     /**
-     * @param ?array $value
+     * @param mixed $item
      */
-    public function removeValue(?array $value): void
+    public function removeValue($item): void
     {
-        if ($this->hasValue($value)) {
-            $index = array_search($value, $this->value);
+        if ($this->hasValue($item)) {
+            $index = array_search($item, $this->value);
             unset($this->value[$index]);
         }
     }
 
     /**
-     * @param ?array $value
+     * @param mixed $item
      */
-    public function addValue(?array $value): void
+    public function addValue($item): void
     {
-        if ($this->hasValue($value)) {
+        if ($this->hasValue($item)) {
             return;
         }
 
-        if (null === $this->value) {
-            $this->value = [];
-        }
-
-        $this->value[] = $value;
+        $this->value[] = $item;
     }
 
     /**
-     * @return DateTimeInterface
+     * @param mixed $item
+     * @param bool $strict
+     *
+     * @return bool
      */
-    public function getWriteDate(): DateTimeInterface
+    public function hasValue($item, bool $strict = true): bool
+    {
+        return in_array($item, $this->value, $strict);
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

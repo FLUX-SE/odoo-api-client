@@ -11,7 +11,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : bus.bus
  * Name : bus.bus
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -27,89 +27,89 @@ final class Bus extends Base
     /**
      * Channel
      *
-     * @var string
+     * @var null|string
      */
     private $channel;
 
     /**
      * Message
      *
-     * @var string
+     * @var null|string
      */
     private $message;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getChannel(): string
+    public function getChannel(): ?string
     {
         return $this->channel;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getMessage(): string
+    public function getMessage(): ?string
     {
         return $this->message;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

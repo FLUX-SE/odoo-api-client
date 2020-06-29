@@ -11,7 +11,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : account.analytic.distribution
  * Name : account.analytic.distribution
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -27,61 +27,73 @@ final class Distribution extends Base
     /**
      * Analytic Account
      *
-     * @var null|Account
+     * @var Account
      */
     private $account_id;
 
     /**
      * Percentage
      *
-     * @var null|float
+     * @var float
      */
     private $percentage;
 
     /**
      * Name
      *
-     * @var string
+     * @var null|string
      */
     private $name;
 
     /**
      * Parent tag
      *
-     * @var null|Tag
+     * @var Tag
      */
     private $tag_id;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @return null|Account
+     * @param Account $account_id Analytic Account
+     * @param float $percentage Percentage
+     * @param Tag $tag_id Parent tag
+     */
+    public function __construct(Account $account_id, float $percentage, Tag $tag_id)
+    {
+        $this->account_id = $account_id;
+        $this->percentage = $percentage;
+        $this->tag_id = $tag_id;
+    }
+
+    /**
+     * @return Account
      */
     public function getAccountId(): Account
     {
@@ -89,23 +101,23 @@ final class Distribution extends Base
     }
 
     /**
-     * @return null|float
+     * @return float
      */
-    public function getPercentage(): ?float
+    public function getPercentage(): float
     {
         return $this->percentage;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
     /**
-     * @return null|Tag
+     * @return Tag
      */
     public function getTagId(): Tag
     {
@@ -113,33 +125,33 @@ final class Distribution extends Base
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

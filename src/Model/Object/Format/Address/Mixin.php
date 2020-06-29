@@ -9,7 +9,7 @@ use Flux\OdooApiClient\Model\Object\Base;
 /**
  * Odoo model : format.address.mixin
  * Name : format.address.mixin
- *
+ * Info :
  * The base model, which is implicitly inherited by all models.
  */
 final class Mixin extends Base

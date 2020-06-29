@@ -9,7 +9,7 @@ use Flux\OdooApiClient\Model\Object\Base;
 /**
  * Odoo model : ir.qweb.field.monetary
  * Name : ir.qweb.field.monetary
- *
+ * Info :
  * ``monetary`` converter, has a mandatory option
  * ``display_currency`` only if field is not of type Monetary.
  * Otherwise, if we are in presence of a monetary field, the field definition must

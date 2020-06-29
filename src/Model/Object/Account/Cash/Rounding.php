@@ -13,7 +13,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : account.cash.rounding
  * Name : account.cash.rounding
- *
+ * Info :
  * In some countries, we need to be able to make appear on an invoice a rounding line, appearing there only
  * because the
  * smallest coinage has been removed from the circulation. For example, in Switzerland invoices have to be
@@ -26,233 +26,237 @@ final class Rounding extends Base
     /**
      * Name
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Rounding Precision
+     * Represent the non-zero value smallest coinage (for example, 0.05).
      *
-     * @var null|float
+     * @var float
      */
     private $rounding;
 
     /**
      * Rounding Strategy
+     * Specify which way will be used to round the invoice amount to the rounding precision
      *
-     * @var null|array
+     * @var array
      */
     private $strategy;
 
     /**
      * Account
      *
-     * @var Account
+     * @var null|Account
      */
     private $account_id;
 
     /**
      * Rounding Method
+     * The tie-breaking rule used for float rounding operations
      *
-     * @var null|array
+     * @var array
      */
     private $rounding_method;
 
     /**
      * Company
      *
-     * @var Company
+     * @var null|Company
      */
     private $company_id;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @param string $name Name
+     * @param float $rounding Rounding Precision
+     *        Represent the non-zero value smallest coinage (for example, 0.05).
+     * @param array $strategy Rounding Strategy
+     *        Specify which way will be used to round the invoice amount to the rounding precision
+     * @param array $rounding_method Rounding Method
+     *        The tie-breaking rule used for float rounding operations
      */
-    public function setName(?string $name): void
+    public function __construct(string $name, float $rounding, array $strategy, array $rounding_method)
     {
         $this->name = $name;
-    }
-
-    /**
-     * @param null|float $rounding
-     */
-    public function setRounding(?float $rounding): void
-    {
         $this->rounding = $rounding;
-    }
-
-    /**
-     * @param null|array $strategy
-     */
-    public function setStrategy(?array $strategy): void
-    {
         $this->strategy = $strategy;
-    }
-
-    /**
-     * @param ?array $strategy
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasStrategy(?array $strategy, bool $strict = true): bool
-    {
-        if (null === $this->strategy) {
-            return false;
-        }
-
-        return in_array($strategy, $this->strategy, $strict);
-    }
-
-    /**
-     * @param ?array $strategy
-     */
-    public function addStrategy(?array $strategy): void
-    {
-        if ($this->hasStrategy($strategy)) {
-            return;
-        }
-
-        if (null === $this->strategy) {
-            $this->strategy = [];
-        }
-
-        $this->strategy[] = $strategy;
-    }
-
-    /**
-     * @param ?array $strategy
-     */
-    public function removeStrategy(?array $strategy): void
-    {
-        if ($this->hasStrategy($strategy)) {
-            $index = array_search($strategy, $this->strategy);
-            unset($this->strategy[$index]);
-        }
-    }
-
-    /**
-     * @param Account $account_id
-     */
-    public function setAccountId(Account $account_id): void
-    {
-        $this->account_id = $account_id;
-    }
-
-    /**
-     * @param null|array $rounding_method
-     */
-    public function setRoundingMethod(?array $rounding_method): void
-    {
         $this->rounding_method = $rounding_method;
     }
 
     /**
-     * @param ?array $rounding_method
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasRoundingMethod(?array $rounding_method, bool $strict = true): bool
+    public function hasRoundingMethod($item, bool $strict = true): bool
     {
-        if (null === $this->rounding_method) {
-            return false;
-        }
-
-        return in_array($rounding_method, $this->rounding_method, $strict);
+        return in_array($item, $this->rounding_method, $strict);
     }
 
     /**
-     * @param ?array $rounding_method
+     * @return null|Users
      */
-    public function addRoundingMethod(?array $rounding_method): void
-    {
-        if ($this->hasRoundingMethod($rounding_method)) {
-            return;
-        }
-
-        if (null === $this->rounding_method) {
-            $this->rounding_method = [];
-        }
-
-        $this->rounding_method[] = $rounding_method;
-    }
-
-    /**
-     * @param ?array $rounding_method
-     */
-    public function removeRoundingMethod(?array $rounding_method): void
-    {
-        if ($this->hasRoundingMethod($rounding_method)) {
-            $index = array_search($rounding_method, $this->rounding_method);
-            unset($this->rounding_method[$index]);
-        }
-    }
-
-    /**
-     * @return Company
-     */
-    public function getCompanyId(): Company
-    {
-        return $this->company_id;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getCreateUid(): Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getCreateDate(): DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getCreateUid(): ?Users
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @return null|Company
+     */
+    public function getCompanyId(): ?Company
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeRoundingMethod($item): void
+    {
+        if ($this->hasRoundingMethod($item)) {
+            $index = array_search($item, $this->rounding_method);
+            unset($this->rounding_method[$index]);
+        }
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addRoundingMethod($item): void
+    {
+        if ($this->hasRoundingMethod($item)) {
+            return;
+        }
+
+        $this->rounding_method[] = $item;
+    }
+
+    /**
+     * @param array $rounding_method
+     */
+    public function setRoundingMethod(array $rounding_method): void
+    {
+        $this->rounding_method = $rounding_method;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param null|Account $account_id
+     */
+    public function setAccountId(?Account $account_id): void
+    {
+        $this->account_id = $account_id;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeStrategy($item): void
+    {
+        if ($this->hasStrategy($item)) {
+            $index = array_search($item, $this->strategy);
+            unset($this->strategy[$index]);
+        }
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addStrategy($item): void
+    {
+        if ($this->hasStrategy($item)) {
+            return;
+        }
+
+        $this->strategy[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasStrategy($item, bool $strict = true): bool
+    {
+        return in_array($item, $this->strategy, $strict);
+    }
+
+    /**
+     * @param array $strategy
+     */
+    public function setStrategy(array $strategy): void
+    {
+        $this->strategy = $strategy;
+    }
+
+    /**
+     * @param float $rounding
+     */
+    public function setRounding(float $rounding): void
+    {
+        $this->rounding = $rounding;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

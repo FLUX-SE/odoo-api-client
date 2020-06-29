@@ -13,7 +13,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : product.attribute
  * Name : product.attribute
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -29,263 +29,364 @@ final class Attribute extends Base
     /**
      * Attribute
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Values
      *
-     * @var Value
+     * @var null|Value[]
      */
     private $value_ids;
 
     /**
      * Sequence
+     * Determine the display order
      *
-     * @var int
+     * @var null|int
      */
     private $sequence;
 
     /**
      * Lines
      *
-     * @var Line
+     * @var null|Line[]
      */
     private $attribute_line_ids;
 
     /**
      * Variants Creation Mode
+     * - Instantly: All possible variants are created as soon as the attribute and its values are added to a product.
+     * - Dynamically: Each variant is created only when its corresponding attributes and values are added to a sales
+     * order.
+     * - Never: Variants are never created for the attribute.
+     * Note: the variants creation mode cannot be changed once the attribute is used on at least one product.
      *
-     * @var null|array
+     * @var array
      */
     private $create_variant;
 
     /**
      * Used on Products
      *
-     * @var bool
+     * @var null|bool
      */
     private $is_used_on_products;
 
     /**
      * Related Products
      *
-     * @var Template
+     * @var null|Template[]
      */
     private $product_tmpl_ids;
 
     /**
      * Display Type
+     * The display type used in the Product Configurator.
      *
-     * @var null|array
+     * @var array
      */
     private $display_type;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @param string $name Attribute
+     * @param array $create_variant Variants Creation Mode
+     *        - Instantly: All possible variants are created as soon as the attribute and its values are added to a product.
+     *        - Dynamically: Each variant is created only when its corresponding attributes and values are added to a sales
+     *        order.
+     *        - Never: Variants are never created for the attribute.
+     *        Note: the variants creation mode cannot be changed once the attribute is used on at least one product.
+     * @param array $display_type Display Type
+     *        The display type used in the Product Configurator.
      */
-    public function setName(?string $name): void
+    public function __construct(string $name, array $create_variant, array $display_type)
     {
         $this->name = $name;
-    }
-
-    /**
-     * @param null|array $display_type
-     */
-    public function setDisplayType(?array $display_type): void
-    {
+        $this->create_variant = $create_variant;
         $this->display_type = $display_type;
     }
 
     /**
-     * @return Users
+     * @param mixed $item
      */
-    public function getWriteUid(): Users
+    public function addCreateVariant($item): void
+    {
+        if ($this->hasCreateVariant($item)) {
+            return;
+        }
+
+        $this->create_variant[] = $item;
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @param ?array $display_type
+     * @param mixed $item
      */
-    public function removeDisplayType(?array $display_type): void
+    public function removeDisplayType($item): void
     {
-        if ($this->hasDisplayType($display_type)) {
-            $index = array_search($display_type, $this->display_type);
+        if ($this->hasDisplayType($item)) {
+            $index = array_search($item, $this->display_type);
             unset($this->display_type[$index]);
         }
     }
 
     /**
-     * @param ?array $display_type
+     * @param mixed $item
      */
-    public function addDisplayType(?array $display_type): void
+    public function addDisplayType($item): void
     {
-        if ($this->hasDisplayType($display_type)) {
+        if ($this->hasDisplayType($item)) {
             return;
         }
 
-        if (null === $this->display_type) {
-            $this->display_type = [];
-        }
-
-        $this->display_type[] = $display_type;
+        $this->display_type[] = $item;
     }
 
     /**
-     * @param ?array $display_type
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasDisplayType(?array $display_type, bool $strict = true): bool
+    public function hasDisplayType($item, bool $strict = true): bool
     {
-        if (null === $this->display_type) {
-            return false;
-        }
-
-        return in_array($display_type, $this->display_type, $strict);
+        return in_array($item, $this->display_type, $strict);
     }
 
     /**
-     * @return Template
+     * @param array $display_type
      */
-    public function getProductTmplIds(): Template
+    public function setDisplayType(array $display_type): void
+    {
+        $this->display_type = $display_type;
+    }
+
+    /**
+     * @return null|Template[]
+     */
+    public function getProductTmplIds(): ?array
     {
         return $this->product_tmpl_ids;
     }
 
     /**
-     * @param Value $value_ids
+     * @return null|bool
      */
-    public function setValueIds(Value $value_ids): void
-    {
-        $this->value_ids = $value_ids;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isIsUsedOnProducts(): bool
+    public function isIsUsedOnProducts(): ?bool
     {
         return $this->is_used_on_products;
     }
 
     /**
-     * @param ?array $create_variant
+     * @param mixed $item
      */
-    public function removeCreateVariant(?array $create_variant): void
+    public function removeCreateVariant($item): void
     {
-        if ($this->hasCreateVariant($create_variant)) {
-            $index = array_search($create_variant, $this->create_variant);
+        if ($this->hasCreateVariant($item)) {
+            $index = array_search($item, $this->create_variant);
             unset($this->create_variant[$index]);
         }
     }
 
     /**
-     * @param ?array $create_variant
-     */
-    public function addCreateVariant(?array $create_variant): void
-    {
-        if ($this->hasCreateVariant($create_variant)) {
-            return;
-        }
-
-        if (null === $this->create_variant) {
-            $this->create_variant = [];
-        }
-
-        $this->create_variant[] = $create_variant;
-    }
-
-    /**
-     * @param ?array $create_variant
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasCreateVariant(?array $create_variant, bool $strict = true): bool
+    public function hasCreateVariant($item, bool $strict = true): bool
     {
-        if (null === $this->create_variant) {
-            return false;
-        }
-
-        return in_array($create_variant, $this->create_variant, $strict);
+        return in_array($item, $this->create_variant, $strict);
     }
 
     /**
-     * @param null|array $create_variant
+     * @param string $name
      */
-    public function setCreateVariant(?array $create_variant): void
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param array $create_variant
+     */
+    public function setCreateVariant(array $create_variant): void
     {
         $this->create_variant = $create_variant;
     }
 
     /**
-     * @param Line $attribute_line_ids
+     * @param Line $item
      */
-    public function setAttributeLineIds(Line $attribute_line_ids): void
+    public function removeAttributeLineIds(Line $item): void
+    {
+        if (null === $this->attribute_line_ids) {
+            $this->attribute_line_ids = [];
+        }
+
+        if ($this->hasAttributeLineIds($item)) {
+            $index = array_search($item, $this->attribute_line_ids);
+            unset($this->attribute_line_ids[$index]);
+        }
+    }
+
+    /**
+     * @param Line $item
+     */
+    public function addAttributeLineIds(Line $item): void
+    {
+        if ($this->hasAttributeLineIds($item)) {
+            return;
+        }
+
+        if (null === $this->attribute_line_ids) {
+            $this->attribute_line_ids = [];
+        }
+
+        $this->attribute_line_ids[] = $item;
+    }
+
+    /**
+     * @param Line $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasAttributeLineIds(Line $item, bool $strict = true): bool
+    {
+        if (null === $this->attribute_line_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->attribute_line_ids, $strict);
+    }
+
+    /**
+     * @param null|Line[] $attribute_line_ids
+     */
+    public function setAttributeLineIds(?array $attribute_line_ids): void
     {
         $this->attribute_line_ids = $attribute_line_ids;
     }
 
     /**
-     * @param int $sequence
+     * @param null|int $sequence
      */
-    public function setSequence(int $sequence): void
+    public function setSequence(?int $sequence): void
     {
         $this->sequence = $sequence;
     }
 
     /**
-     * @return DateTimeInterface
+     * @param Value $item
      */
-    public function getWriteDate(): DateTimeInterface
+    public function removeValueIds(Value $item): void
+    {
+        if (null === $this->value_ids) {
+            $this->value_ids = [];
+        }
+
+        if ($this->hasValueIds($item)) {
+            $index = array_search($item, $this->value_ids);
+            unset($this->value_ids[$index]);
+        }
+    }
+
+    /**
+     * @param Value $item
+     */
+    public function addValueIds(Value $item): void
+    {
+        if ($this->hasValueIds($item)) {
+            return;
+        }
+
+        if (null === $this->value_ids) {
+            $this->value_ids = [];
+        }
+
+        $this->value_ids[] = $item;
+    }
+
+    /**
+     * @param Value $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasValueIds(Value $item, bool $strict = true): bool
+    {
+        if (null === $this->value_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->value_ids, $strict);
+    }
+
+    /**
+     * @param null|Value[] $value_ids
+     */
+    public function setValueIds(?array $value_ids): void
+    {
+        $this->value_ids = $value_ids;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

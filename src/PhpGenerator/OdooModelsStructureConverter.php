@@ -1,0 +1,335 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Flux\OdooApiClient\PhpGenerator;
+
+use DateTimeInterface;
+use Exception;
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\InspectionOperationsInterface;
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\FieldsGetOptions;
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterface;
+use Flux\OdooApiClient\PhpGenerator\ModelFixer\ModelFixerInterface;
+use LogicException;
+use Prometee\PhpClassGenerator\Builder\ClassBuilderInterface;
+use Prometee\PhpClassGenerator\Helper\PhpReservedWordsHelperInterface;
+use Prometee\PhpClassGenerator\Model\PhpDoc\PhpDocInterface;
+use function Symfony\Component\String\u;
+
+final class OdooModelsStructureConverter implements OdooModelsStructureConverterInterface
+{
+    /** @var RecordListOperationsInterface */
+    private $recordListOperations;
+    /** @var InspectionOperationsInterface */
+    private $inspectionOperations;
+    /** @var PhpReservedWordsHelperInterface */
+    private $phpReservedWordsHelper;
+    /** @var ModelFixerInterface[] */
+    private $modelFixers = [];
+
+    /** @var array */
+    private $inheritedPropertiesCache = [];
+    /** @var array<int, string> **/
+    private $modelIdToModelName = [];
+    /** @var array */
+    private $fields_getCache = [];
+    /** @var array<string, string> */
+    private $modelNameToClass = [];
+
+    /**
+     * @param RecordListOperationsInterface $recordListOperations
+     * @param InspectionOperationsInterface $inspectionOperations
+     * @param PhpReservedWordsHelperInterface $phpReservedWordsHelper
+     * @param ModelFixerInterface[] $modelFixers
+     */
+    public function __construct(
+        RecordListOperationsInterface $recordListOperations,
+        InspectionOperationsInterface $inspectionOperations,
+        PhpReservedWordsHelperInterface $phpReservedWordsHelper,
+        array $modelFixers = []
+    ) {
+        $this->recordListOperations = $recordListOperations;
+        $this->inspectionOperations = $inspectionOperations;
+        $this->phpReservedWordsHelper = $phpReservedWordsHelper;
+        ksort($modelFixers);
+        $this->modelFixers = $modelFixers;
+    }
+
+    public function convert(string $baseModelNamespace): array
+    {
+        $config = [];
+        $baseClass = $this->buildClassNameFormModelName(self::BASE_MODEL_NAME);
+        $baseModelClass = sprintf('%s\\%s', $baseModelNamespace, $baseClass);
+
+        $search_read = $this->recordListOperations->search_read('ir.model');
+
+        $this->initConvert($search_read);
+
+        foreach ($search_read as $item) {
+            $config[] = $this->convertModel(
+                $baseModelNamespace,
+                $item,
+                $baseModelClass
+            );
+        }
+
+        return $config;
+    }
+
+    /**
+     * @param array<string, string> $fieldInfo
+     * @param string $baseNamespace
+     *
+     * @return array<int, string>
+     */
+    private function transformTypes(array $fieldInfo, string $baseNamespace): array
+    {
+        $phpTypes = [];
+
+        $required = (bool) ($fieldInfo['required'] ?? false);
+        if (false === $required) {
+            $phpTypes[] = 'null';
+        }
+
+        $odooType = $fieldInfo['type'] ?? null;
+        switch ($odooType) {
+            case 'binary':
+            case 'integer':
+            case 'many2one_reference':
+                $phpTypes[] = 'int';
+                break;
+            case 'boolean':
+                $phpTypes[] = 'bool';
+                break;
+            case 'char':
+            case 'html':
+            case 'text':
+                $phpTypes[] = 'string';
+                break;
+            case 'date':
+            case 'datetime':
+                $phpTypes[] = DateTimeInterface::class;
+                break;
+            case 'float':
+            case 'monetary':
+                $phpTypes[] = 'float';
+                break;
+            case 'selection':
+                $phpTypes[] = 'array';
+                break;
+            case 'many2one':
+                $phpTypes[] = $baseNamespace.'\\'.$this->getClassNameFormModelName($fieldInfo['relation']);
+                break;
+            case 'many2many':
+            case 'one2many':
+                $relatedClass = $baseNamespace . '\\' . $this->getClassNameFormModelName($fieldInfo['relation']);
+                $phpTypes[] = $relatedClass .'[]';
+                break;
+            default:
+                $phpTypes[] = 'mixed';
+                break;
+        }
+
+        return $phpTypes;
+    }
+
+    private function buildClassNameFormModelName(string $modelName): string
+    {
+        $path = explode('.', $modelName);
+        array_walk($path, function (string &$item) {
+            $u = u($item)->camel()->title();
+            $item = $u->toString();
+            if ($this->phpReservedWordsHelper->check($item)) {
+                $item .= '_';
+            }
+        });
+        $builtClass = implode('\\', $path);
+
+        $class = $builtClass;
+        $i = 1;
+        $modelNameToClassLowerCase = array_map('strtolower', $this->modelNameToClass);
+        while(false !== array_search(strtolower($class), $modelNameToClassLowerCase)) {
+            $class = $builtClass . ++$i;
+        }
+
+        return $class;
+    }
+
+    public function getClassNameFormModelName(string $modelName): string
+    {
+        if (isset($this->modelNameToClass[$modelName])) {
+            return $this->modelNameToClass[$modelName];
+        }
+
+        throw new LogicException('The model name has not been found !');
+    }
+
+    private function isInheritedField(array $currentItem, string $fieldName): bool
+    {
+        $modelName = $currentItem['model'];
+        if ($modelName === self::BASE_MODEL_NAME) {
+            return false;
+        }
+
+        $inheritedModelIds = $currentItem['inherited_model_ids'];
+
+        // Add "base" model id because all models inherit from it
+        $inheritedModelIds[] = $this->getModelIdFromModelName(self::BASE_MODEL_NAME);
+
+        foreach ($inheritedModelIds as $inheritedModelId) {
+            $inheritedModel = $this->modelIdToModelName[$inheritedModelId];
+            $properties = $this->inheritedPropertiesCache[$inheritedModel];
+            if (in_array($fieldName, $properties)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $modelName
+     *
+     * @return int
+     *
+     * @throws Exception
+     */
+    private function getModelIdFromModelName(string $modelName): int
+    {
+        $modelId = array_search($modelName, $this->modelIdToModelName);
+        if (false === $modelId) {
+            throw new Exception(sprintf(
+                'Unable to found the model id of the model named : "%s" !',
+                $modelName
+            ));
+        }
+
+        return $modelId;
+    }
+
+    private function fields_get(string $modelName): array
+    {
+        if (false === isset($this->fields_getCache[$modelName])) {
+            $fieldGetOptions = new FieldsGetOptions();
+            $fieldGetOptions->setAttributes([
+                'type',
+                'string',
+                'help',
+                'readonly',
+                'relation',
+                'required',
+                'selection',
+                'inherited_model_ids'
+            ]);
+
+            $this->fields_getCache[$modelName] = $this->inspectionOperations->fields_get(
+                $modelName/*,
+                [],
+                $fieldGetOptions*/
+            );
+
+            foreach ($this->modelFixers as $modelFixer) {
+                $modelFixer->fix($modelName, $this->fields_getCache[$modelName]);
+            }
+        }
+
+        return $this->fields_getCache[$modelName];
+    }
+
+    private function initConvert(array $search_read): void
+    {
+        // Store all model name indexed by there id
+        foreach ($search_read as $item) {
+            $this->modelIdToModelName[$item['id']] = $item['model'];
+        }
+
+        // Store properties cache of "base" model
+        $fieldsInfos = $this->fields_get(self::BASE_MODEL_NAME);
+        $this->inheritedPropertiesCache[self::BASE_MODEL_NAME] = array_keys($fieldsInfos);
+
+        foreach ($search_read as $item) {
+            // Store properties cache of all inherited models
+            if (false === empty($item['inherited_model_ids'])) {
+                foreach ($item['inherited_model_ids'] as $inheritedModelId) {
+                    $inheritedModel = $this->modelIdToModelName[$inheritedModelId];
+                    $fieldsInfos = $this->fields_get($inheritedModel);
+                    $this->inheritedPropertiesCache[$inheritedModel] = array_keys($fieldsInfos);
+                }
+            }
+
+            // Avoid name collisions
+            $modelName = $item['model'];
+            $this->modelNameToClass[$modelName] = $this->buildClassNameFormModelName($modelName);
+        }
+    }
+
+    private function convertModel(string $baseModelNamespace, array $item, string $baseModelClass): array
+    {
+        $modelName = $item['model'];
+        $className = $this->getClassNameFormModelName($modelName);
+        $classType = ClassBuilderInterface::CLASS_TYPE_FINAL;
+        $extends = $baseModelClass;
+
+        foreach ($item['inherited_model_ids'] as $inheritedModelId) {
+            $inheritedModel = $this->modelIdToModelName[$inheritedModelId];
+            $extends = $baseModelNamespace.'\\'.$this->getClassNameFormModelName($inheritedModel);
+            break; // one and only extends allowed
+        }
+
+        $fieldsInfos = $this->fields_get($modelName);
+
+        $properties = $this->convertModelProperties($fieldsInfos, $baseModelNamespace, $item);
+
+        if ($item['abstract'] ?? false) {
+            $classType = ClassBuilderInterface::CLASS_TYPE_ABSTRACT;
+        }
+
+        if (isset($this->inheritedPropertiesCache[$modelName])) {
+            $classType = ClassBuilderInterface::CLASS_TYPE_CLASS;
+        }
+
+        if ($modelName === self::BASE_MODEL_NAME) {
+            $extends = null;
+        }
+
+        $info = trim($item['info'], '"');
+        $info = trim($info);
+
+        return  [
+            'class' => $className,
+            'type' => $classType,
+            'extends' => $extends,
+            'description' => [
+                PhpDocInterface::TYPE_DESCRIPTION => [
+                    sprintf('Odoo model : %s', $modelName),
+                    sprintf('Name : %s', $item['model']),
+                    'Info :',
+                    $info,
+                ]
+            ],
+            'properties' => $properties,
+        ];
+    }
+
+    private function convertModelProperties(array $fieldsInfos, string $baseModelNamespace, array $item): array
+    {
+        $properties = [];
+        foreach ($fieldsInfos as $fieldName => $fieldInfo) {
+            $readonly = $fieldInfo['readonly'] ?? false;
+            $types = $this->transformTypes($fieldInfo, $baseModelNamespace);
+            $description = $fieldInfo['string'];
+            $description .= !empty($fieldInfo['help']) ? "\n" . $fieldInfo['help'] : '';
+            $properties[] = [
+                'name' => $fieldName,
+                'types' => $types,
+                'default' => null,
+                'description' => $description,
+                'readable' => false !== $readonly,
+                'writable' => false === $readonly,
+                'inherited' => $this->isInheritedField($item, $fieldName)
+            ];
+        }
+
+        return $properties;
+    }
+}

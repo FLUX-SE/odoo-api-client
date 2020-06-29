@@ -12,7 +12,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : mail.alias
  * Name : mail.alias
- *
+ * Info :
  * A Mail Alias is a mapping of an email address with a given Odoo Document
  * model. It is used by Odoo's mail gateway when processing incoming emails
  * sent to the system. If the recipient address (To) of the message matches
@@ -29,105 +29,254 @@ class Alias extends Base
 {
     /**
      * Alias Name
+     * The name of the email alias, e.g. 'jobs' if you want to catch emails for <jobs@example.odoo.com>
      *
-     * @var string
+     * @var null|string
      */
     protected $alias_name;
 
     /**
      * Aliased Model
+     * The model (Odoo Document Kind) to which this alias corresponds. Any incoming email that does not reply to an
+     * existing record will cause the creation of a new record of this model (e.g. a Project Task)
      *
-     * @var null|Model
+     * @var Model
      */
     protected $alias_model_id;
 
     /**
      * Owner
+     * The owner of records created upon receiving emails on this alias. If this field is not set the system will
+     * attempt to find the right owner based on the sender (From) address, or will use the Administrator account if
+     * no system user is found for that address.
      *
-     * @var Users
+     * @var null|Users
      */
     protected $alias_user_id;
 
     /**
      * Default Values
+     * A Python dictionary that will be evaluated to provide default values when creating new records for this alias.
      *
-     * @var null|string
+     * @var string
      */
     protected $alias_defaults;
 
     /**
      * Record Thread ID
+     * Optional ID of a thread (record) to which all incoming messages will be attached, even if they did not reply
+     * to it. If set, this will disable the creation of new records completely.
      *
-     * @var int
+     * @var null|int
      */
     protected $alias_force_thread_id;
 
     /**
      * Alias domain
      *
-     * @var string
+     * @var null|string
      */
     protected $alias_domain;
 
     /**
      * Parent Model
+     * Parent model holding the alias. The model holding the alias reference is not necessarily the model given by
+     * alias_model_id (example: project (parent_model) and task (model))
      *
-     * @var Model
+     * @var null|Model
      */
     protected $alias_parent_model_id;
 
     /**
      * Parent Record Thread ID
+     * ID of the parent record holding the alias (example: project holding the task creation alias)
      *
-     * @var int
+     * @var null|int
      */
     protected $alias_parent_thread_id;
 
     /**
      * Alias Contact Security
+     * Policy to post a message on the document using the mailgateway.
+     * - everyone: everyone can post
+     * - partners: only authenticated partners
+     * - followers: only followers of the related document or members of following channels
      *
-     * @var null|array
+     * @var array
      */
     protected $alias_contact;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     protected $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     protected $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     protected $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     protected $write_date;
 
     /**
-     * @param string $alias_name
+     * @param Model $alias_model_id Aliased Model
+     *        The model (Odoo Document Kind) to which this alias corresponds. Any incoming email that does not reply to an
+     *        existing record will cause the creation of a new record of this model (e.g. a Project Task)
+     * @param string $alias_defaults Default Values
+     *        A Python dictionary that will be evaluated to provide default values when creating new records for this alias.
+     * @param array $alias_contact Alias Contact Security
+     *        Policy to post a message on the document using the mailgateway.
+     *        - everyone: everyone can post
+     *        - partners: only authenticated partners
+     *        - followers: only followers of the related document or members of following channels
      */
-    public function setAliasName(string $alias_name): void
+    public function __construct(Model $alias_model_id, string $alias_defaults, array $alias_contact)
+    {
+        $this->alias_model_id = $alias_model_id;
+        $this->alias_defaults = $alias_defaults;
+        $this->alias_contact = $alias_contact;
+    }
+
+    /**
+     * @param array $alias_contact
+     */
+    public function setAliasContact(array $alias_contact): void
+    {
+        $this->alias_contact = $alias_contact;
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getWriteUid(): ?Users
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getCreateUid(): ?Users
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeAliasContact($item): void
+    {
+        if ($this->hasAliasContact($item)) {
+            $index = array_search($item, $this->alias_contact);
+            unset($this->alias_contact[$index]);
+        }
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addAliasContact($item): void
+    {
+        if ($this->hasAliasContact($item)) {
+            return;
+        }
+
+        $this->alias_contact[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasAliasContact($item, bool $strict = true): bool
+    {
+        return in_array($item, $this->alias_contact, $strict);
+    }
+
+    /**
+     * @param null|int $alias_parent_thread_id
+     */
+    public function setAliasParentThreadId(?int $alias_parent_thread_id): void
+    {
+        $this->alias_parent_thread_id = $alias_parent_thread_id;
+    }
+
+    /**
+     * @param null|string $alias_name
+     */
+    public function setAliasName(?string $alias_name): void
     {
         $this->alias_name = $alias_name;
     }
 
     /**
-     * @param null|Model $alias_model_id
+     * @param null|Model $alias_parent_model_id
+     */
+    public function setAliasParentModelId(?Model $alias_parent_model_id): void
+    {
+        $this->alias_parent_model_id = $alias_parent_model_id;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getAliasDomain(): ?string
+    {
+        return $this->alias_domain;
+    }
+
+    /**
+     * @param null|int $alias_force_thread_id
+     */
+    public function setAliasForceThreadId(?int $alias_force_thread_id): void
+    {
+        $this->alias_force_thread_id = $alias_force_thread_id;
+    }
+
+    /**
+     * @param string $alias_defaults
+     */
+    public function setAliasDefaults(string $alias_defaults): void
+    {
+        $this->alias_defaults = $alias_defaults;
+    }
+
+    /**
+     * @param null|Users $alias_user_id
+     */
+    public function setAliasUserId(?Users $alias_user_id): void
+    {
+        $this->alias_user_id = $alias_user_id;
+    }
+
+    /**
+     * @param Model $alias_model_id
      */
     public function setAliasModelId(Model $alias_model_id): void
     {
@@ -135,131 +284,9 @@ class Alias extends Base
     }
 
     /**
-     * @param Users $alias_user_id
+     * @return null|DateTimeInterface
      */
-    public function setAliasUserId(Users $alias_user_id): void
-    {
-        $this->alias_user_id = $alias_user_id;
-    }
-
-    /**
-     * @param null|string $alias_defaults
-     */
-    public function setAliasDefaults(?string $alias_defaults): void
-    {
-        $this->alias_defaults = $alias_defaults;
-    }
-
-    /**
-     * @param int $alias_force_thread_id
-     */
-    public function setAliasForceThreadId(int $alias_force_thread_id): void
-    {
-        $this->alias_force_thread_id = $alias_force_thread_id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAliasDomain(): string
-    {
-        return $this->alias_domain;
-    }
-
-    /**
-     * @param Model $alias_parent_model_id
-     */
-    public function setAliasParentModelId(Model $alias_parent_model_id): void
-    {
-        $this->alias_parent_model_id = $alias_parent_model_id;
-    }
-
-    /**
-     * @param int $alias_parent_thread_id
-     */
-    public function setAliasParentThreadId(int $alias_parent_thread_id): void
-    {
-        $this->alias_parent_thread_id = $alias_parent_thread_id;
-    }
-
-    /**
-     * @param null|array $alias_contact
-     */
-    public function setAliasContact(?array $alias_contact): void
-    {
-        $this->alias_contact = $alias_contact;
-    }
-
-    /**
-     * @param ?array $alias_contact
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasAliasContact(?array $alias_contact, bool $strict = true): bool
-    {
-        if (null === $this->alias_contact) {
-            return false;
-        }
-
-        return in_array($alias_contact, $this->alias_contact, $strict);
-    }
-
-    /**
-     * @param ?array $alias_contact
-     */
-    public function addAliasContact(?array $alias_contact): void
-    {
-        if ($this->hasAliasContact($alias_contact)) {
-            return;
-        }
-
-        if (null === $this->alias_contact) {
-            $this->alias_contact = [];
-        }
-
-        $this->alias_contact[] = $alias_contact;
-    }
-
-    /**
-     * @param ?array $alias_contact
-     */
-    public function removeAliasContact(?array $alias_contact): void
-    {
-        if ($this->hasAliasContact($alias_contact)) {
-            $index = array_search($alias_contact, $this->alias_contact);
-            unset($this->alias_contact[$index]);
-        }
-    }
-
-    /**
-     * @return Users
-     */
-    public function getCreateUid(): Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getCreateDate(): DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getWriteUid(): Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

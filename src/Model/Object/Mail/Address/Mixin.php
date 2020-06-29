@@ -9,7 +9,7 @@ use Flux\OdooApiClient\Model\Object\Base;
 /**
  * Odoo model : mail.address.mixin
  * Name : mail.address.mixin
- *
+ * Info :
  * Purpose of this mixin is to store a normalized email based on the primary email field.
  * A normalized email is considered as :
  * - having a left part + @ + a right part (the domain can be without '.something')
@@ -26,15 +26,17 @@ final class Mixin extends Base
 {
     /**
      * Normalized Email
+     * This field is used to search on email address as the primary email field can contain more than strictly an
+     * email address.
      *
-     * @var string
+     * @var null|string
      */
     private $email_normalized;
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getEmailNormalized(): string
+    public function getEmailNormalized(): ?string
     {
         return $this->email_normalized;
     }

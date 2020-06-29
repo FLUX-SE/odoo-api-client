@@ -12,7 +12,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : ir.actions.actions
  * Name : ir.actions.actions
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -28,206 +28,212 @@ final class Actions extends Base
     /**
      * Name
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Action Type
      *
-     * @var null|string
+     * @var string
      */
     private $type;
 
     /**
      * External ID
      *
-     * @var string
+     * @var null|string
      */
     private $xml_id;
 
     /**
      * Action Description
+     * Optional help text for the users with a description of the target view, such as its usage and purpose.
      *
-     * @var string
+     * @var null|string
      */
     private $help;
 
     /**
      * Binding Model
+     * Setting a value makes this action available in the sidebar for the given model.
      *
-     * @var Model
+     * @var null|Model
      */
     private $binding_model_id;
 
     /**
      * Binding Type
      *
-     * @var null|array
+     * @var array
      */
     private $binding_type;
 
     /**
      * Binding View Types
      *
-     * @var string
+     * @var null|string
      */
     private $binding_view_types;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @param string $name Name
+     * @param string $type Action Type
+     * @param array $binding_type Binding Type
      */
-    public function setName(?string $name): void
+    public function __construct(string $name, string $type, array $binding_type)
+    {
+        $this->name = $name;
+        $this->type = $type;
+        $this->binding_type = $binding_type;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * @param null|string $type
+     * @param string $type
      */
-    public function setType(?string $type): void
+    public function setType(string $type): void
     {
         $this->type = $type;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getXmlId(): string
+    public function getXmlId(): ?string
     {
         return $this->xml_id;
     }
 
     /**
-     * @param string $help
+     * @param null|string $help
      */
-    public function setHelp(string $help): void
+    public function setHelp(?string $help): void
     {
         $this->help = $help;
     }
 
     /**
-     * @param Model $binding_model_id
+     * @param null|Model $binding_model_id
      */
-    public function setBindingModelId(Model $binding_model_id): void
+    public function setBindingModelId(?Model $binding_model_id): void
     {
         $this->binding_model_id = $binding_model_id;
     }
 
     /**
-     * @param null|array $binding_type
+     * @param array $binding_type
      */
-    public function setBindingType(?array $binding_type): void
+    public function setBindingType(array $binding_type): void
     {
         $this->binding_type = $binding_type;
     }
 
     /**
-     * @param ?array $binding_type
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasBindingType(?array $binding_type, bool $strict = true): bool
+    public function hasBindingType($item, bool $strict = true): bool
     {
-        if (null === $this->binding_type) {
-            return false;
-        }
-
-        return in_array($binding_type, $this->binding_type, $strict);
+        return in_array($item, $this->binding_type, $strict);
     }
 
     /**
-     * @param ?array $binding_type
+     * @param mixed $item
      */
-    public function addBindingType(?array $binding_type): void
+    public function addBindingType($item): void
     {
-        if ($this->hasBindingType($binding_type)) {
+        if ($this->hasBindingType($item)) {
             return;
         }
 
-        if (null === $this->binding_type) {
-            $this->binding_type = [];
-        }
-
-        $this->binding_type[] = $binding_type;
+        $this->binding_type[] = $item;
     }
 
     /**
-     * @param ?array $binding_type
+     * @param mixed $item
      */
-    public function removeBindingType(?array $binding_type): void
+    public function removeBindingType($item): void
     {
-        if ($this->hasBindingType($binding_type)) {
-            $index = array_search($binding_type, $this->binding_type);
+        if ($this->hasBindingType($item)) {
+            $index = array_search($item, $this->binding_type);
             unset($this->binding_type[$index]);
         }
     }
 
     /**
-     * @param string $binding_view_types
+     * @param null|string $binding_view_types
      */
-    public function setBindingViewTypes(string $binding_view_types): void
+    public function setBindingViewTypes(?string $binding_view_types): void
     {
         $this->binding_view_types = $binding_view_types;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

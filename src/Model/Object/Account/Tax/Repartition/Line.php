@@ -16,7 +16,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : account.tax.repartition.line
  * Name : account.tax.repartition.line
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -31,159 +31,176 @@ final class Line extends Base
 {
     /**
      * %
+     * Factor to apply on the account move lines generated from this repartition line, in percents
      *
-     * @var null|float
+     * @var float
      */
     private $factor_percent;
 
     /**
      * Factor Ratio
+     * Factor to apply on the account move lines generated from this repartition line
      *
-     * @var float
+     * @var null|float
      */
     private $factor;
 
     /**
      * Based On
+     * Base on which the factor will be applied.
      *
-     * @var null|array
+     * @var array
      */
     private $repartition_type;
 
     /**
      * Account
+     * Account on which to post the tax amount
      *
-     * @var Account
+     * @var null|Account
      */
     private $account_id;
 
     /**
      * Tax Grids
      *
-     * @var Tag
+     * @var null|Tag[]
      */
     private $tag_ids;
 
     /**
      * Invoice Tax
+     * The tax set to apply this repartition on invoices. Mutually exclusive with refund_tax_id
      *
-     * @var Tax
+     * @var null|Tax
      */
     private $invoice_tax_id;
 
     /**
      * Refund Tax
+     * The tax set to apply this repartition on refund invoices. Mutually exclusive with invoice_tax_id
      *
-     * @var Tax
+     * @var null|Tax
      */
     private $refund_tax_id;
 
     /**
      * Tax
      *
-     * @var Tax
+     * @var null|Tax
      */
     private $tax_id;
 
     /**
      * Country
+     * Technical field used to restrict tags domain in form view.
      *
-     * @var Country
+     * @var null|Country
      */
     private $country_id;
 
     /**
      * Company
+     * The company this repartition line belongs to.
      *
-     * @var null|Company
+     * @var Company
      */
     private $company_id;
 
     /**
      * Sequence
+     * The order in which display and match repartition lines. For refunds to work properly, invoice repartition
+     * lines should be arranged in the same order as the credit note repartition lines they correspond to.
      *
-     * @var int
+     * @var null|int
      */
     private $sequence;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|float $factor_percent
+     * @param float $factor_percent %
+     *        Factor to apply on the account move lines generated from this repartition line, in percents
+     * @param array $repartition_type Based On
+     *        Base on which the factor will be applied.
+     * @param Company $company_id Company
+     *        The company this repartition line belongs to.
      */
-    public function setFactorPercent(?float $factor_percent): void
+    public function __construct(float $factor_percent, array $repartition_type, Company $company_id)
     {
         $this->factor_percent = $factor_percent;
+        $this->repartition_type = $repartition_type;
+        $this->company_id = $company_id;
     }
 
     /**
-     * @return Tax
+     * @param null|Tax $invoice_tax_id
      */
-    public function getTaxId(): Tax
+    public function setInvoiceTaxId(?Tax $invoice_tax_id): void
     {
-        return $this->tax_id;
+        $this->invoice_tax_id = $invoice_tax_id;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @param int $sequence
+     * @param null|int $sequence
      */
-    public function setSequence(int $sequence): void
+    public function setSequence(?int $sequence): void
     {
         $this->sequence = $sequence;
     }
 
     /**
-     * @param null|Company $company_id
+     * @param Company $company_id
      */
     public function setCompanyId(Company $company_id): void
     {
@@ -191,107 +208,153 @@ final class Line extends Base
     }
 
     /**
-     * @return Country
+     * @return null|Country
      */
-    public function getCountryId(): Country
+    public function getCountryId(): ?Country
     {
         return $this->country_id;
     }
 
     /**
-     * @param Tax $refund_tax_id
+     * @return null|Tax
      */
-    public function setRefundTaxId(Tax $refund_tax_id): void
+    public function getTaxId(): ?Tax
+    {
+        return $this->tax_id;
+    }
+
+    /**
+     * @param null|Tax $refund_tax_id
+     */
+    public function setRefundTaxId(?Tax $refund_tax_id): void
     {
         $this->refund_tax_id = $refund_tax_id;
     }
 
     /**
-     * @return float
+     * @param Tag $item
      */
-    public function getFactor(): float
+    public function removeTagIds(Tag $item): void
     {
-        return $this->factor;
+        if (null === $this->tag_ids) {
+            $this->tag_ids = [];
+        }
+
+        if ($this->hasTagIds($item)) {
+            $index = array_search($item, $this->tag_ids);
+            unset($this->tag_ids[$index]);
+        }
     }
 
     /**
-     * @param Tax $invoice_tax_id
+     * @param float $factor_percent
      */
-    public function setInvoiceTaxId(Tax $invoice_tax_id): void
+    public function setFactorPercent(float $factor_percent): void
     {
-        $this->invoice_tax_id = $invoice_tax_id;
+        $this->factor_percent = $factor_percent;
     }
 
     /**
-     * @param Tag $tag_ids
+     * @param Tag $item
      */
-    public function setTagIds(Tag $tag_ids): void
+    public function addTagIds(Tag $item): void
+    {
+        if ($this->hasTagIds($item)) {
+            return;
+        }
+
+        if (null === $this->tag_ids) {
+            $this->tag_ids = [];
+        }
+
+        $this->tag_ids[] = $item;
+    }
+
+    /**
+     * @param Tag $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasTagIds(Tag $item, bool $strict = true): bool
+    {
+        if (null === $this->tag_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->tag_ids, $strict);
+    }
+
+    /**
+     * @param null|Tag[] $tag_ids
+     */
+    public function setTagIds(?array $tag_ids): void
     {
         $this->tag_ids = $tag_ids;
     }
 
     /**
-     * @param Account $account_id
+     * @param null|Account $account_id
      */
-    public function setAccountId(Account $account_id): void
+    public function setAccountId(?Account $account_id): void
     {
         $this->account_id = $account_id;
     }
 
     /**
-     * @param ?array $repartition_type
+     * @param mixed $item
      */
-    public function removeRepartitionType(?array $repartition_type): void
+    public function removeRepartitionType($item): void
     {
-        if ($this->hasRepartitionType($repartition_type)) {
-            $index = array_search($repartition_type, $this->repartition_type);
+        if ($this->hasRepartitionType($item)) {
+            $index = array_search($item, $this->repartition_type);
             unset($this->repartition_type[$index]);
         }
     }
 
     /**
-     * @param ?array $repartition_type
+     * @param mixed $item
      */
-    public function addRepartitionType(?array $repartition_type): void
+    public function addRepartitionType($item): void
     {
-        if ($this->hasRepartitionType($repartition_type)) {
+        if ($this->hasRepartitionType($item)) {
             return;
         }
 
-        if (null === $this->repartition_type) {
-            $this->repartition_type = [];
-        }
-
-        $this->repartition_type[] = $repartition_type;
+        $this->repartition_type[] = $item;
     }
 
     /**
-     * @param ?array $repartition_type
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasRepartitionType(?array $repartition_type, bool $strict = true): bool
+    public function hasRepartitionType($item, bool $strict = true): bool
     {
-        if (null === $this->repartition_type) {
-            return false;
-        }
-
-        return in_array($repartition_type, $this->repartition_type, $strict);
+        return in_array($item, $this->repartition_type, $strict);
     }
 
     /**
-     * @param null|array $repartition_type
+     * @param array $repartition_type
      */
-    public function setRepartitionType(?array $repartition_type): void
+    public function setRepartitionType(array $repartition_type): void
     {
         $this->repartition_type = $repartition_type;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|float
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getFactor(): ?float
+    {
+        return $this->factor;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

@@ -11,7 +11,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : change.password.user
  * Name : change.password.user
- *
+ * Info :
  * A model to configure users in the change password wizard.
  */
 final class User extends Base
@@ -19,61 +19,71 @@ final class User extends Base
     /**
      * Wizard
      *
-     * @var null|Wizard
+     * @var Wizard
      */
     private $wizard_id;
 
     /**
      * User
      *
-     * @var null|Users
+     * @var Users
      */
     private $user_id;
 
     /**
      * User Login
      *
-     * @var string
+     * @var null|string
      */
     private $user_login;
 
     /**
      * New Password
      *
-     * @var string
+     * @var null|string
      */
     private $new_passwd;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|Wizard $wizard_id
+     * @param Wizard $wizard_id Wizard
+     * @param Users $user_id User
+     */
+    public function __construct(Wizard $wizard_id, Users $user_id)
+    {
+        $this->wizard_id = $wizard_id;
+        $this->user_id = $user_id;
+    }
+
+    /**
+     * @param Wizard $wizard_id
      */
     public function setWizardId(Wizard $wizard_id): void
     {
@@ -81,7 +91,7 @@ final class User extends Base
     }
 
     /**
-     * @param null|Users $user_id
+     * @param Users $user_id
      */
     public function setUserId(Users $user_id): void
     {
@@ -89,49 +99,49 @@ final class User extends Base
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getUserLogin(): string
+    public function getUserLogin(): ?string
     {
         return $this->user_login;
     }
 
     /**
-     * @param string $new_passwd
+     * @param null|string $new_passwd
      */
-    public function setNewPasswd(string $new_passwd): void
+    public function setNewPasswd(?string $new_passwd): void
     {
         $this->new_passwd = $new_passwd;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

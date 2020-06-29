@@ -13,7 +13,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : account.fiscal.position.account.template
  * Name : account.fiscal.position.account.template
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -29,54 +29,69 @@ final class Template extends Base
     /**
      * Fiscal Mapping
      *
-     * @var null|TemplateAlias
+     * @var TemplateAlias
      */
     private $position_id;
 
     /**
      * Account Source
      *
-     * @var null|TemplateAliasAlias
+     * @var TemplateAliasAlias
      */
     private $account_src_id;
 
     /**
      * Account Destination
      *
-     * @var null|TemplateAliasAlias
+     * @var TemplateAliasAlias
      */
     private $account_dest_id;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|TemplateAlias $position_id
+     * @param TemplateAlias $position_id Fiscal Mapping
+     * @param TemplateAliasAlias $account_src_id Account Source
+     * @param TemplateAliasAlias $account_dest_id Account Destination
+     */
+    public function __construct(
+        TemplateAlias $position_id,
+        TemplateAliasAlias $account_src_id,
+        TemplateAliasAlias $account_dest_id
+    ) {
+        $this->position_id = $position_id;
+        $this->account_src_id = $account_src_id;
+        $this->account_dest_id = $account_dest_id;
+    }
+
+    /**
+     * @param TemplateAlias $position_id
      */
     public function setPositionId(TemplateAlias $position_id): void
     {
@@ -84,7 +99,7 @@ final class Template extends Base
     }
 
     /**
-     * @param null|TemplateAliasAlias $account_src_id
+     * @param TemplateAliasAlias $account_src_id
      */
     public function setAccountSrcId(TemplateAliasAlias $account_src_id): void
     {
@@ -92,7 +107,7 @@ final class Template extends Base
     }
 
     /**
-     * @param null|TemplateAliasAlias $account_dest_id
+     * @param TemplateAliasAlias $account_dest_id
      */
     public function setAccountDestId(TemplateAliasAlias $account_dest_id): void
     {
@@ -100,33 +115,33 @@ final class Template extends Base
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

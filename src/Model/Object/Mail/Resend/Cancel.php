@@ -11,7 +11,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : mail.resend.cancel
  * Name : mail.resend.cancel
- *
+ * Info :
  * Model super-class for transient records, meant to be temporarily
  * persistent, and regularly vacuum-cleaned.
  *
@@ -24,89 +24,89 @@ final class Cancel extends Base
     /**
      * Model
      *
-     * @var string
+     * @var null|string
      */
     private $model;
 
     /**
      * Help message
      *
-     * @var string
+     * @var null|string
      */
     private $help_message;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param string $model
+     * @param null|string $model
      */
-    public function setModel(string $model): void
+    public function setModel(?string $model): void
     {
         $this->model = $model;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getHelpMessage(): string
+    public function getHelpMessage(): ?string
     {
         return $this->help_message;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

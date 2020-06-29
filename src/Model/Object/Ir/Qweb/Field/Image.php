@@ -9,7 +9,7 @@ use Flux\OdooApiClient\Model\Object\Base;
 /**
  * Odoo model : ir.qweb.field.image
  * Name : ir.qweb.field.image
- *
+ * Info :
  * Widget options:
  *
  * ``class``

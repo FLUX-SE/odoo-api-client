@@ -14,7 +14,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : mail.channel.partner
  * Name : mail.channel.partner
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -30,228 +30,240 @@ final class Partner extends Base
     /**
      * Custom channel name
      *
-     * @var string
+     * @var null|string
      */
     private $custom_channel_name;
 
     /**
      * Recipient
      *
-     * @var PartnerAlias
+     * @var null|PartnerAlias
      */
     private $partner_id;
 
     /**
      * Email
      *
-     * @var string
+     * @var null|string
      */
     private $partner_email;
 
     /**
      * Channel
      *
-     * @var Channel
+     * @var null|Channel
      */
     private $channel_id;
 
     /**
      * Last Fetched
      *
-     * @var Message
+     * @var null|Message
      */
     private $fetched_message_id;
 
     /**
      * Last Seen
      *
-     * @var Message
+     * @var null|Message
      */
     private $seen_message_id;
 
     /**
      * Conversation Fold State
      *
-     * @var array
+     * @var null|array
      */
     private $fold_state;
 
     /**
      * Conversation is minimized
      *
-     * @var bool
+     * @var null|bool
      */
     private $is_minimized;
 
     /**
      * Is pinned on the interface
      *
-     * @var bool
+     * @var null|bool
      */
     private $is_pinned;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param string $custom_channel_name
+     * @param null|string $custom_channel_name
      */
-    public function setCustomChannelName(string $custom_channel_name): void
+    public function setCustomChannelName(?string $custom_channel_name): void
     {
         $this->custom_channel_name = $custom_channel_name;
     }
 
     /**
-     * @param PartnerAlias $partner_id
+     * @param null|PartnerAlias $partner_id
      */
-    public function setPartnerId(PartnerAlias $partner_id): void
+    public function setPartnerId(?PartnerAlias $partner_id): void
     {
         $this->partner_id = $partner_id;
     }
 
     /**
-     * @param string $partner_email
+     * @param null|string $partner_email
      */
-    public function setPartnerEmail(string $partner_email): void
+    public function setPartnerEmail(?string $partner_email): void
     {
         $this->partner_email = $partner_email;
     }
 
     /**
-     * @param Channel $channel_id
+     * @param null|Channel $channel_id
      */
-    public function setChannelId(Channel $channel_id): void
+    public function setChannelId(?Channel $channel_id): void
     {
         $this->channel_id = $channel_id;
     }
 
     /**
-     * @param Message $fetched_message_id
+     * @param null|Message $fetched_message_id
      */
-    public function setFetchedMessageId(Message $fetched_message_id): void
+    public function setFetchedMessageId(?Message $fetched_message_id): void
     {
         $this->fetched_message_id = $fetched_message_id;
     }
 
     /**
-     * @param Message $seen_message_id
+     * @param null|Message $seen_message_id
      */
-    public function setSeenMessageId(Message $seen_message_id): void
+    public function setSeenMessageId(?Message $seen_message_id): void
     {
         $this->seen_message_id = $seen_message_id;
     }
 
     /**
-     * @param array $fold_state
+     * @param null|array $fold_state
      */
-    public function setFoldState(array $fold_state): void
+    public function setFoldState(?array $fold_state): void
     {
         $this->fold_state = $fold_state;
     }
 
     /**
-     * @param array $fold_state
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasFoldState(array $fold_state, bool $strict = true): bool
+    public function hasFoldState($item, bool $strict = true): bool
     {
-        return in_array($fold_state, $this->fold_state, $strict);
+        if (null === $this->fold_state) {
+            return false;
+        }
+
+        return in_array($item, $this->fold_state, $strict);
     }
 
     /**
-     * @param array $fold_state
+     * @param mixed $item
      */
-    public function addFoldState(array $fold_state): void
+    public function addFoldState($item): void
     {
-        if ($this->hasFoldState($fold_state)) {
+        if ($this->hasFoldState($item)) {
             return;
         }
 
-        $this->fold_state[] = $fold_state;
+        if (null === $this->fold_state) {
+            $this->fold_state = [];
+        }
+
+        $this->fold_state[] = $item;
     }
 
     /**
-     * @param array $fold_state
+     * @param mixed $item
      */
-    public function removeFoldState(array $fold_state): void
+    public function removeFoldState($item): void
     {
-        if ($this->hasFoldState($fold_state)) {
-            $index = array_search($fold_state, $this->fold_state);
+        if (null === $this->fold_state) {
+            $this->fold_state = [];
+        }
+
+        if ($this->hasFoldState($item)) {
+            $index = array_search($item, $this->fold_state);
             unset($this->fold_state[$index]);
         }
     }
 
     /**
-     * @param bool $is_minimized
+     * @param null|bool $is_minimized
      */
-    public function setIsMinimized(bool $is_minimized): void
+    public function setIsMinimized(?bool $is_minimized): void
     {
         $this->is_minimized = $is_minimized;
     }
 
     /**
-     * @param bool $is_pinned
+     * @param null|bool $is_pinned
      */
-    public function setIsPinned(bool $is_pinned): void
+    public function setIsPinned(?bool $is_pinned): void
     {
         $this->is_pinned = $is_pinned;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

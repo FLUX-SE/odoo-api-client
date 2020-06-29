@@ -9,7 +9,7 @@ use Flux\OdooApiClient\Model\Object\Base;
 /**
  * Odoo model : ir.qweb.field.many2many
  * Name : ir.qweb.field.many2many
- *
+ * Info :
  * Used to convert a t-field specification into an output HTML field.
  *
  * :meth:`~.to_html` is the entry point of this conversion from QWeb, it:

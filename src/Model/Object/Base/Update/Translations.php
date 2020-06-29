@@ -11,7 +11,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : base.update.translations
  * Name : base.update.translations
- *
+ * Info :
  * Model super-class for transient records, meant to be temporarily
  * persistent, and regularly vacuum-cleaned.
  *
@@ -24,116 +24,116 @@ final class Translations extends Base
     /**
      * Language
      *
-     * @var null|array
+     * @var array
      */
     private $lang;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|array $lang
+     * @param array $lang Language
      */
-    public function setLang(?array $lang): void
+    public function __construct(array $lang)
     {
         $this->lang = $lang;
     }
 
     /**
-     * @param ?array $lang
+     * @param array $lang
+     */
+    public function setLang(array $lang): void
+    {
+        $this->lang = $lang;
+    }
+
+    /**
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasLang(?array $lang, bool $strict = true): bool
+    public function hasLang($item, bool $strict = true): bool
     {
-        if (null === $this->lang) {
-            return false;
-        }
-
-        return in_array($lang, $this->lang, $strict);
+        return in_array($item, $this->lang, $strict);
     }
 
     /**
-     * @param ?array $lang
+     * @param mixed $item
      */
-    public function addLang(?array $lang): void
+    public function addLang($item): void
     {
-        if ($this->hasLang($lang)) {
+        if ($this->hasLang($item)) {
             return;
         }
 
-        if (null === $this->lang) {
-            $this->lang = [];
-        }
-
-        $this->lang[] = $lang;
+        $this->lang[] = $item;
     }
 
     /**
-     * @param ?array $lang
+     * @param mixed $item
      */
-    public function removeLang(?array $lang): void
+    public function removeLang($item): void
     {
-        if ($this->hasLang($lang)) {
-            $index = array_search($lang, $this->lang);
+        if ($this->hasLang($item)) {
+            $index = array_search($item, $this->lang);
             unset($this->lang[$index]);
         }
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

@@ -9,52 +9,53 @@ use Flux\OdooApiClient\Model\Object\Base;
 /**
  * Odoo model : portal.mixin
  * Name : portal.mixin
- *
+ * Info :
  * The base model, which is implicitly inherited by all models.
  */
 final class Mixin extends Base
 {
     /**
      * Portal Access URL
+     * Customer Portal URL
      *
-     * @var string
+     * @var null|string
      */
     private $access_url;
 
     /**
      * Security Token
      *
-     * @var string
+     * @var null|string
      */
     private $access_token;
 
     /**
      * Access warning
      *
-     * @var string
+     * @var null|string
      */
     private $access_warning;
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getAccessUrl(): string
+    public function getAccessUrl(): ?string
     {
         return $this->access_url;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getAccessToken(): string
+    public function getAccessToken(): ?string
     {
         return $this->access_token;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getAccessWarning(): string
+    public function getAccessWarning(): ?string
     {
         return $this->access_warning;
     }

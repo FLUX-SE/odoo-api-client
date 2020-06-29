@@ -13,7 +13,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : account.analytic.group
  * Name : account.analytic.group
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -29,164 +29,172 @@ final class Group extends Base
     /**
      * Name
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Description
      *
-     * @var string
+     * @var null|string
      */
     private $description;
 
     /**
      * Parent
      *
-     * @var GroupAlias
+     * @var null|GroupAlias
      */
     private $parent_id;
 
     /**
      * Parent Path
      *
-     * @var string
+     * @var null|string
      */
     private $parent_path;
 
     /**
      * Childrens
      *
-     * @var GroupAlias
+     * @var null|GroupAlias[]
      */
     private $children_ids;
 
     /**
      * Complete Name
      *
-     * @var string
+     * @var null|string
      */
     private $complete_name;
 
     /**
      * Company
      *
-     * @var Company
+     * @var null|Company
      */
     private $company_id;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @return null|string
+     * @param string $name Name
      */
-    public function getName(): ?string
+    public function __construct(string $name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
     /**
-     * @return GroupAlias
+     * @return null|GroupAlias
      */
-    public function getParentId(): GroupAlias
+    public function getParentId(): ?GroupAlias
     {
         return $this->parent_id;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getParentPath(): string
+    public function getParentPath(): ?string
     {
         return $this->parent_path;
     }
 
     /**
-     * @return GroupAlias
+     * @return null|GroupAlias[]
      */
-    public function getChildrenIds(): GroupAlias
+    public function getChildrenIds(): ?array
     {
         return $this->children_ids;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getCompleteName(): string
+    public function getCompleteName(): ?string
     {
         return $this->complete_name;
     }
 
     /**
-     * @return Company
+     * @return null|Company
      */
-    public function getCompanyId(): Company
+    public function getCompanyId(): ?Company
     {
         return $this->company_id;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

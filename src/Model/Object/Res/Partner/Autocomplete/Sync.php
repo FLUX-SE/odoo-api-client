@@ -12,7 +12,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : res.partner.autocomplete.sync
  * Name : res.partner.autocomplete.sync
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -28,89 +28,89 @@ final class Sync extends Base
     /**
      * Partner
      *
-     * @var Partner
+     * @var null|Partner
      */
     private $partner_id;
 
     /**
      * Is synched
      *
-     * @var bool
+     * @var null|bool
      */
     private $synched;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param Partner $partner_id
+     * @param null|Partner $partner_id
      */
-    public function setPartnerId(Partner $partner_id): void
+    public function setPartnerId(?Partner $partner_id): void
     {
         $this->partner_id = $partner_id;
     }
 
     /**
-     * @param bool $synched
+     * @param null|bool $synched
      */
-    public function setSynched(bool $synched): void
+    public function setSynched(?bool $synched): void
     {
         $this->synched = $synched;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

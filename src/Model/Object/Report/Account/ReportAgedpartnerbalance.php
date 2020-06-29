@@ -9,7 +9,7 @@ use Flux\OdooApiClient\Model\Object\Base;
 /**
  * Odoo model : report.account.report_agedpartnerbalance
  * Name : report.account.report_agedpartnerbalance
- *
+ * Info :
  * The base model, which is implicitly inherited by all models.
  */
 final class ReportAgedpartnerbalance extends Base

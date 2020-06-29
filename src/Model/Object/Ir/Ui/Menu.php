@@ -13,7 +13,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : ir.ui.menu
  * Name : ir.ui.menu
- *
+ * Info :
  * Mixin that overrides the create and write methods to properly generate
  * ir.model.data entries flagged with Studio for the corresponding resources.
  * Doesn't create an ir.model.data if the record is part of a module being
@@ -25,182 +25,168 @@ final class Menu extends Base
     /**
      * Menu
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Active
      *
-     * @var bool
+     * @var null|bool
      */
     private $active;
 
     /**
      * Sequence
      *
-     * @var int
+     * @var null|int
      */
     private $sequence;
 
     /**
      * Child IDs
      *
-     * @var MenuAlias
+     * @var null|MenuAlias[]
      */
     private $child_id;
 
     /**
      * Parent Menu
      *
-     * @var MenuAlias
+     * @var null|MenuAlias
      */
     private $parent_id;
 
     /**
      * Parent Path
      *
-     * @var string
+     * @var null|string
      */
     private $parent_path;
 
     /**
      * Groups
+     * If you have groups, the visibility of this menu will be based on these groups. If this field is empty, Odoo
+     * will compute visibility based on the related object's read access.
      *
-     * @var Groups
+     * @var null|Groups[]
      */
     private $groups_id;
 
     /**
      * Full Path
      *
-     * @var string
+     * @var null|string
      */
     private $complete_name;
 
     /**
      * Web Icon File
      *
-     * @var string
+     * @var null|string
      */
     private $web_icon;
 
     /**
      * Action
      *
-     * @var mixed
+     * @var null|mixed
      */
     private $action;
 
     /**
      * Web Icon Image
      *
-     * @var int
+     * @var null|int
      */
     private $web_icon_data;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @param string $name Menu
      */
-    public function setName(?string $name): void
+    public function __construct(string $name)
     {
         $this->name = $name;
     }
 
     /**
-     * @param bool $active
+     * @param Groups $item
      */
-    public function setActive(bool $active): void
+    public function addGroupsId(Groups $item): void
     {
-        $this->active = $active;
+        if ($this->hasGroupsId($item)) {
+            return;
+        }
+
+        if (null === $this->groups_id) {
+            $this->groups_id = [];
+        }
+
+        $this->groups_id[] = $item;
     }
 
     /**
-     * @param int $sequence
+     * @return null|Users
      */
-    public function setSequence(int $sequence): void
+    public function getWriteUid(): ?Users
     {
-        $this->sequence = $sequence;
+        return $this->write_uid;
     }
 
     /**
-     * @param MenuAlias $child_id
+     * @return null|DateTimeInterface
      */
-    public function setChildId(MenuAlias $child_id): void
+    public function getCreateDate(): ?DateTimeInterface
     {
-        $this->child_id = $child_id;
+        return $this->create_date;
     }
 
     /**
-     * @param MenuAlias $parent_id
+     * @return null|Users
      */
-    public function setParentId(MenuAlias $parent_id): void
+    public function getCreateUid(): ?Users
     {
-        $this->parent_id = $parent_id;
+        return $this->create_uid;
     }
 
     /**
-     * @param string $parent_path
+     * @param null|int $web_icon_data
      */
-    public function setParentPath(string $parent_path): void
+    public function setWebIconData(?int $web_icon_data): void
     {
-        $this->parent_path = $parent_path;
+        $this->web_icon_data = $web_icon_data;
     }
 
     /**
-     * @param Groups $groups_id
-     */
-    public function setGroupsId(Groups $groups_id): void
-    {
-        $this->groups_id = $groups_id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCompleteName(): string
-    {
-        return $this->complete_name;
-    }
-
-    /**
-     * @param string $web_icon
-     */
-    public function setWebIcon(string $web_icon): void
-    {
-        $this->web_icon = $web_icon;
-    }
-
-    /**
-     * @param mixed $action
+     * @param null|mixed $action
      */
     public function setAction($action): void
     {
@@ -208,41 +194,157 @@ final class Menu extends Base
     }
 
     /**
-     * @param int $web_icon_data
+     * @param null|string $web_icon
      */
-    public function setWebIconData(int $web_icon_data): void
+    public function setWebIcon(?string $web_icon): void
     {
-        $this->web_icon_data = $web_icon_data;
+        $this->web_icon = $web_icon;
     }
 
     /**
-     * @return Users
+     * @return null|string
      */
-    public function getCreateUid(): Users
+    public function getCompleteName(): ?string
     {
-        return $this->create_uid;
+        return $this->complete_name;
     }
 
     /**
-     * @return DateTimeInterface
+     * @param Groups $item
      */
-    public function getCreateDate(): DateTimeInterface
+    public function removeGroupsId(Groups $item): void
     {
-        return $this->create_date;
+        if (null === $this->groups_id) {
+            $this->groups_id = [];
+        }
+
+        if ($this->hasGroupsId($item)) {
+            $index = array_search($item, $this->groups_id);
+            unset($this->groups_id[$index]);
+        }
     }
 
     /**
-     * @return Users
+     * @param Groups $item
+     * @param bool $strict
+     *
+     * @return bool
      */
-    public function getWriteUid(): Users
+    public function hasGroupsId(Groups $item, bool $strict = true): bool
     {
-        return $this->write_uid;
+        if (null === $this->groups_id) {
+            return false;
+        }
+
+        return in_array($item, $this->groups_id, $strict);
     }
 
     /**
-     * @return DateTimeInterface
+     * @param string $name
      */
-    public function getWriteDate(): DateTimeInterface
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param null|Groups[] $groups_id
+     */
+    public function setGroupsId(?array $groups_id): void
+    {
+        $this->groups_id = $groups_id;
+    }
+
+    /**
+     * @param null|string $parent_path
+     */
+    public function setParentPath(?string $parent_path): void
+    {
+        $this->parent_path = $parent_path;
+    }
+
+    /**
+     * @param null|MenuAlias $parent_id
+     */
+    public function setParentId(?MenuAlias $parent_id): void
+    {
+        $this->parent_id = $parent_id;
+    }
+
+    /**
+     * @param MenuAlias $item
+     */
+    public function removeChildId(MenuAlias $item): void
+    {
+        if (null === $this->child_id) {
+            $this->child_id = [];
+        }
+
+        if ($this->hasChildId($item)) {
+            $index = array_search($item, $this->child_id);
+            unset($this->child_id[$index]);
+        }
+    }
+
+    /**
+     * @param MenuAlias $item
+     */
+    public function addChildId(MenuAlias $item): void
+    {
+        if ($this->hasChildId($item)) {
+            return;
+        }
+
+        if (null === $this->child_id) {
+            $this->child_id = [];
+        }
+
+        $this->child_id[] = $item;
+    }
+
+    /**
+     * @param MenuAlias $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasChildId(MenuAlias $item, bool $strict = true): bool
+    {
+        if (null === $this->child_id) {
+            return false;
+        }
+
+        return in_array($item, $this->child_id, $strict);
+    }
+
+    /**
+     * @param null|MenuAlias[] $child_id
+     */
+    public function setChildId(?array $child_id): void
+    {
+        $this->child_id = $child_id;
+    }
+
+    /**
+     * @param null|int $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * @param null|bool $active
+     */
+    public function setActive(?bool $active): void
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

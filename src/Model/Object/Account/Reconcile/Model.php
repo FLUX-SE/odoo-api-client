@@ -19,7 +19,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : account.reconcile.model
  * Name : account.reconcile.model
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -35,880 +35,1188 @@ final class Model extends Base
     /**
      * Name
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Sequence
      *
-     * @var null|int
+     * @var int
      */
     private $sequence;
 
     /**
      * Company
      *
-     * @var null|Company
+     * @var Company
      */
     private $company_id;
 
     /**
      * Type
      *
-     * @var null|array
+     * @var array
      */
     private $rule_type;
 
     /**
      * Auto-validate
+     * Validate the statement line automatically (reconciliation based on your rule).
      *
-     * @var bool
+     * @var null|bool
      */
     private $auto_reconcile;
 
     /**
      * To Check
+     * This matching rule is used when the user is not certain of all the informations of the counterpart.
      *
-     * @var bool
+     * @var null|bool
      */
     private $to_check;
 
     /**
      * Journals
+     * The reconciliation model will only be available from the selected journals.
      *
-     * @var Journal
+     * @var null|Journal[]
      */
     private $match_journal_ids;
 
     /**
      * Amount Nature
+     * The reconciliation model will only be applied to the selected transaction type:
+     * * Amount Received: Only applied when receiving an amount.
+     * * Amount Paid: Only applied when paying an amount.
+     * * Amount Paid/Received: Applied in both cases.
      *
-     * @var null|array
+     * @var array
      */
     private $match_nature;
 
     /**
      * Amount
+     * The reconciliation model will only be applied when the amount being lower than, greater than or between
+     * specified amount(s).
      *
-     * @var array
+     * @var null|array
      */
     private $match_amount;
 
     /**
      * Amount Min Parameter
      *
-     * @var float
+     * @var null|float
      */
     private $match_amount_min;
 
     /**
      * Amount Max Parameter
      *
-     * @var float
+     * @var null|float
      */
     private $match_amount_max;
 
     /**
      * Label
+     * The reconciliation model will only be applied when the label:
+     * * Contains: The proposition label must contains this string (case insensitive).
+     * * Not Contains: Negation of "Contains".
+     * * Match Regex: Define your own regular expression.
      *
-     * @var array
+     * @var null|array
      */
     private $match_label;
 
     /**
      * Label Parameter
      *
-     * @var string
+     * @var null|string
      */
     private $match_label_param;
 
     /**
      * Note
+     * The reconciliation model will only be applied when the note:
+     * * Contains: The proposition note must contains this string (case insensitive).
+     * * Not Contains: Negation of "Contains".
+     * * Match Regex: Define your own regular expression.
      *
-     * @var array
+     * @var null|array
      */
     private $match_note;
 
     /**
      * Note Parameter
      *
-     * @var string
+     * @var null|string
      */
     private $match_note_param;
 
     /**
      * Transaction Type
+     * The reconciliation model will only be applied when the transaction type:
+     * * Contains: The proposition transaction type must contains this string (case insensitive).
+     * * Not Contains: Negation of "Contains".
+     * * Match Regex: Define your own regular expression.
      *
-     * @var array
+     * @var null|array
      */
     private $match_transaction_type;
 
     /**
      * Transaction Type Parameter
      *
-     * @var string
+     * @var null|string
      */
     private $match_transaction_type_param;
 
     /**
      * Same Currency Matching
+     * Restrict to propositions having the same currency as the statement line.
      *
-     * @var bool
+     * @var null|bool
      */
     private $match_same_currency;
 
     /**
      * Amount Matching
+     * The sum of total residual amount propositions matches the statement line amount.
      *
-     * @var bool
+     * @var null|bool
      */
     private $match_total_amount;
 
     /**
      * Amount Matching %
+     * The sum of total residual amount propositions matches the statement line amount under this percentage.
      *
-     * @var float
+     * @var null|float
      */
     private $match_total_amount_param;
 
     /**
      * Partner Is Set
+     * The reconciliation model will only be applied when a customer/vendor is set.
      *
-     * @var bool
+     * @var null|bool
      */
     private $match_partner;
 
     /**
      * Restrict Partners to
+     * The reconciliation model will only be applied to the selected customers/vendors.
      *
-     * @var Partner
+     * @var null|Partner[]
      */
     private $match_partner_ids;
 
     /**
      * Restrict Partner Categories to
+     * The reconciliation model will only be applied to the selected customer/vendor categories.
      *
-     * @var Category
+     * @var null|Category[]
      */
     private $match_partner_category_ids;
 
     /**
      * Account
      *
-     * @var Account
+     * @var null|Account
      */
     private $account_id;
 
     /**
      * Journal
+     * This field is ignored in a bank statement reconciliation.
      *
-     * @var Journal
+     * @var null|Journal
      */
     private $journal_id;
 
     /**
      * Journal Item Label
      *
-     * @var string
+     * @var null|string
      */
     private $label;
 
     /**
      * Amount Type
      *
-     * @var null|array
+     * @var array
      */
     private $amount_type;
 
     /**
      * Show Force Tax Included
+     * Technical field used to show the force tax included button
      *
-     * @var bool
+     * @var null|bool
      */
     private $show_force_tax_included;
 
     /**
      * Tax Included in Price
+     * Force the tax to be managed as a price included tax.
      *
-     * @var bool
+     * @var null|bool
      */
     private $force_tax_included;
 
     /**
      * Write-off Amount
+     * Fixed amount will count as a debit if it is negative, as a credit if it is positive.
      *
-     * @var null|float
+     * @var float
      */
     private $amount;
 
     /**
      * Amount from Label (regex)
+     * There is no need for regex delimiter, only the regex is needed. For instance if you want to extract the amount
+     * from
+     * R:9672938 10/07 AX 9415126318 T:5L:NA BRT: 3358,07 C:
+     * You could enter
+     * BRT: ([\d,]+)
      *
-     * @var string
+     * @var null|string
      */
     private $amount_from_label_regex;
 
     /**
      * Decimal Separator
+     * Every character that is nor a digit nor this separator will be removed from the matching string
      *
-     * @var string
+     * @var null|string
      */
     private $decimal_separator;
 
     /**
      * Taxes
      *
-     * @var Tax
+     * @var null|Tax[]
      */
     private $tax_ids;
 
     /**
      * Analytic Account
      *
-     * @var AccountAlias
+     * @var null|AccountAlias
      */
     private $analytic_account_id;
 
     /**
      * Analytic Tags
      *
-     * @var Tag
+     * @var null|Tag[]
      */
     private $analytic_tag_ids;
 
     /**
      * Add a second line
      *
-     * @var bool
+     * @var null|bool
      */
     private $has_second_line;
 
     /**
      * Second Account
      *
-     * @var Account
+     * @var null|Account
      */
     private $second_account_id;
 
     /**
      * Second Journal
+     * This field is ignored in a bank statement reconciliation.
      *
-     * @var Journal
+     * @var null|Journal
      */
     private $second_journal_id;
 
     /**
      * Second Journal Item Label
      *
-     * @var string
+     * @var null|string
      */
     private $second_label;
 
     /**
      * Second Amount type
      *
-     * @var null|array
+     * @var array
      */
     private $second_amount_type;
 
     /**
      * Show Second Force Tax Included
+     * Technical field used to show the force tax included button
      *
-     * @var bool
+     * @var null|bool
      */
     private $show_second_force_tax_included;
 
     /**
      * Second Tax Included in Price
+     * Force the second tax to be managed as a price included tax.
      *
-     * @var bool
+     * @var null|bool
      */
     private $force_second_tax_included;
 
     /**
      * Second Write-off Amount
+     * Fixed amount will count as a debit if it is negative, as a credit if it is positive.
      *
-     * @var null|float
+     * @var float
      */
     private $second_amount;
 
     /**
      * Second Amount from Label (regex)
      *
-     * @var string
+     * @var null|string
      */
     private $second_amount_from_label_regex;
 
     /**
      * Second Taxes
      *
-     * @var Tax
+     * @var null|Tax[]
      */
     private $second_tax_ids;
 
     /**
      * Second Analytic Account
      *
-     * @var AccountAlias
+     * @var null|AccountAlias
      */
     private $second_analytic_account_id;
 
     /**
      * Second Analytic Tags
      *
-     * @var Tag
+     * @var null|Tag[]
      */
     private $second_analytic_tag_ids;
 
     /**
      * Number of entries related to this model
      *
-     * @var int
+     * @var null|int
      */
     private $number_entries;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @param string $name Name
+     * @param int $sequence Sequence
+     * @param Company $company_id Company
+     * @param array $rule_type Type
+     * @param array $match_nature Amount Nature
+     *        The reconciliation model will only be applied to the selected transaction type:
+     *        * Amount Received: Only applied when receiving an amount.
+     *        * Amount Paid: Only applied when paying an amount.
+     *        * Amount Paid/Received: Applied in both cases.
+     * @param array $amount_type Amount Type
+     * @param float $amount Write-off Amount
+     *        Fixed amount will count as a debit if it is negative, as a credit if it is positive.
+     * @param array $second_amount_type Second Amount type
+     * @param float $second_amount Second Write-off Amount
+     *        Fixed amount will count as a debit if it is negative, as a credit if it is positive.
      */
-    public function setName(?string $name): void
-    {
+    public function __construct(
+        string $name,
+        int $sequence,
+        Company $company_id,
+        array $rule_type,
+        array $match_nature,
+        array $amount_type,
+        float $amount,
+        array $second_amount_type,
+        float $second_amount
+    ) {
         $this->name = $name;
+        $this->sequence = $sequence;
+        $this->company_id = $company_id;
+        $this->rule_type = $rule_type;
+        $this->match_nature = $match_nature;
+        $this->amount_type = $amount_type;
+        $this->amount = $amount;
+        $this->second_amount_type = $second_amount_type;
+        $this->second_amount = $second_amount;
     }
 
     /**
-     * @param bool $force_tax_included
+     * @param null|string $decimal_separator
      */
-    public function setForceTaxIncluded(bool $force_tax_included): void
-    {
-        $this->force_tax_included = $force_tax_included;
-    }
-
-    /**
-     * @param Tag $analytic_tag_ids
-     */
-    public function setAnalyticTagIds(Tag $analytic_tag_ids): void
-    {
-        $this->analytic_tag_ids = $analytic_tag_ids;
-    }
-
-    /**
-     * @param AccountAlias $analytic_account_id
-     */
-    public function setAnalyticAccountId(AccountAlias $analytic_account_id): void
-    {
-        $this->analytic_account_id = $analytic_account_id;
-    }
-
-    /**
-     * @param Tax $tax_ids
-     */
-    public function setTaxIds(Tax $tax_ids): void
-    {
-        $this->tax_ids = $tax_ids;
-    }
-
-    /**
-     * @param string $decimal_separator
-     */
-    public function setDecimalSeparator(string $decimal_separator): void
+    public function setDecimalSeparator(?string $decimal_separator): void
     {
         $this->decimal_separator = $decimal_separator;
     }
 
     /**
-     * @param string $amount_from_label_regex
+     * @param Tag $item
      */
-    public function setAmountFromLabelRegex(string $amount_from_label_regex): void
+    public function removeAnalyticTagIds(Tag $item): void
+    {
+        if (null === $this->analytic_tag_ids) {
+            $this->analytic_tag_ids = [];
+        }
+
+        if ($this->hasAnalyticTagIds($item)) {
+            $index = array_search($item, $this->analytic_tag_ids);
+            unset($this->analytic_tag_ids[$index]);
+        }
+    }
+
+    /**
+     * @param Tag $item
+     */
+    public function addAnalyticTagIds(Tag $item): void
+    {
+        if ($this->hasAnalyticTagIds($item)) {
+            return;
+        }
+
+        if (null === $this->analytic_tag_ids) {
+            $this->analytic_tag_ids = [];
+        }
+
+        $this->analytic_tag_ids[] = $item;
+    }
+
+    /**
+     * @param Tag $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasAnalyticTagIds(Tag $item, bool $strict = true): bool
+    {
+        if (null === $this->analytic_tag_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->analytic_tag_ids, $strict);
+    }
+
+    /**
+     * @param null|Tag[] $analytic_tag_ids
+     */
+    public function setAnalyticTagIds(?array $analytic_tag_ids): void
+    {
+        $this->analytic_tag_ids = $analytic_tag_ids;
+    }
+
+    /**
+     * @param null|AccountAlias $analytic_account_id
+     */
+    public function setAnalyticAccountId(?AccountAlias $analytic_account_id): void
+    {
+        $this->analytic_account_id = $analytic_account_id;
+    }
+
+    /**
+     * @param Tax $item
+     */
+    public function removeTaxIds(Tax $item): void
+    {
+        if (null === $this->tax_ids) {
+            $this->tax_ids = [];
+        }
+
+        if ($this->hasTaxIds($item)) {
+            $index = array_search($item, $this->tax_ids);
+            unset($this->tax_ids[$index]);
+        }
+    }
+
+    /**
+     * @param Tax $item
+     */
+    public function addTaxIds(Tax $item): void
+    {
+        if ($this->hasTaxIds($item)) {
+            return;
+        }
+
+        if (null === $this->tax_ids) {
+            $this->tax_ids = [];
+        }
+
+        $this->tax_ids[] = $item;
+    }
+
+    /**
+     * @param Tax $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasTaxIds(Tax $item, bool $strict = true): bool
+    {
+        if (null === $this->tax_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->tax_ids, $strict);
+    }
+
+    /**
+     * @param null|Tax[] $tax_ids
+     */
+    public function setTaxIds(?array $tax_ids): void
+    {
+        $this->tax_ids = $tax_ids;
+    }
+
+    /**
+     * @param null|string $amount_from_label_regex
+     */
+    public function setAmountFromLabelRegex(?string $amount_from_label_regex): void
     {
         $this->amount_from_label_regex = $amount_from_label_regex;
     }
 
     /**
-     * @param null|float $amount
+     * @param null|Account $second_account_id
      */
-    public function setAmount(?float $amount): void
-    {
-        $this->amount = $amount;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isShowForceTaxIncluded(): bool
-    {
-        return $this->show_force_tax_included;
-    }
-
-    /**
-     * @param Account $second_account_id
-     */
-    public function setSecondAccountId(Account $second_account_id): void
+    public function setSecondAccountId(?Account $second_account_id): void
     {
         $this->second_account_id = $second_account_id;
     }
 
     /**
-     * @param ?array $amount_type
+     * @param float $amount
      */
-    public function removeAmountType(?array $amount_type): void
+    public function setAmount(float $amount): void
     {
-        if ($this->hasAmountType($amount_type)) {
-            $index = array_search($amount_type, $this->amount_type);
+        $this->amount = $amount;
+    }
+
+    /**
+     * @param null|bool $force_tax_included
+     */
+    public function setForceTaxIncluded(?bool $force_tax_included): void
+    {
+        $this->force_tax_included = $force_tax_included;
+    }
+
+    /**
+     * @return null|bool
+     */
+    public function isShowForceTaxIncluded(): ?bool
+    {
+        return $this->show_force_tax_included;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeAmountType($item): void
+    {
+        if ($this->hasAmountType($item)) {
+            $index = array_search($item, $this->amount_type);
             unset($this->amount_type[$index]);
         }
     }
 
     /**
-     * @param ?array $amount_type
+     * @param mixed $item
      */
-    public function addAmountType(?array $amount_type): void
+    public function addAmountType($item): void
     {
-        if ($this->hasAmountType($amount_type)) {
+        if ($this->hasAmountType($item)) {
             return;
         }
 
-        if (null === $this->amount_type) {
-            $this->amount_type = [];
-        }
-
-        $this->amount_type[] = $amount_type;
+        $this->amount_type[] = $item;
     }
 
     /**
-     * @param ?array $amount_type
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasAmountType(?array $amount_type, bool $strict = true): bool
+    public function hasAmountType($item, bool $strict = true): bool
     {
-        if (null === $this->amount_type) {
-            return false;
-        }
-
-        return in_array($amount_type, $this->amount_type, $strict);
+        return in_array($item, $this->amount_type, $strict);
     }
 
     /**
-     * @param null|array $amount_type
+     * @param array $amount_type
      */
-    public function setAmountType(?array $amount_type): void
+    public function setAmountType(array $amount_type): void
     {
         $this->amount_type = $amount_type;
     }
 
     /**
-     * @param string $label
+     * @param null|string $label
      */
-    public function setLabel(string $label): void
+    public function setLabel(?string $label): void
     {
         $this->label = $label;
     }
 
     /**
-     * @param Journal $journal_id
+     * @param null|Journal $journal_id
      */
-    public function setJournalId(Journal $journal_id): void
+    public function setJournalId(?Journal $journal_id): void
     {
         $this->journal_id = $journal_id;
     }
 
     /**
-     * @param Account $account_id
+     * @param null|bool $has_second_line
      */
-    public function setAccountId(Account $account_id): void
-    {
-        $this->account_id = $account_id;
-    }
-
-    /**
-     * @param bool $has_second_line
-     */
-    public function setHasSecondLine(bool $has_second_line): void
+    public function setHasSecondLine(?bool $has_second_line): void
     {
         $this->has_second_line = $has_second_line;
     }
 
     /**
-     * @param Journal $second_journal_id
+     * @param null|Journal $second_journal_id
      */
-    public function setSecondJournalId(Journal $second_journal_id): void
+    public function setSecondJournalId(?Journal $second_journal_id): void
     {
         $this->second_journal_id = $second_journal_id;
     }
 
     /**
-     * @param Partner $match_partner_ids
+     * @param Category $item
      */
-    public function setMatchPartnerIds(Partner $match_partner_ids): void
+    public function removeMatchPartnerCategoryIds(Category $item): void
     {
-        $this->match_partner_ids = $match_partner_ids;
+        if (null === $this->match_partner_category_ids) {
+            $this->match_partner_category_ids = [];
+        }
+
+        if ($this->hasMatchPartnerCategoryIds($item)) {
+            $index = array_search($item, $this->match_partner_category_ids);
+            unset($this->match_partner_category_ids[$index]);
+        }
     }
 
     /**
-     * @param Tax $second_tax_ids
+     * @param Tax $item
      */
-    public function setSecondTaxIds(Tax $second_tax_ids): void
+    public function removeSecondTaxIds(Tax $item): void
     {
-        $this->second_tax_ids = $second_tax_ids;
+        if (null === $this->second_tax_ids) {
+            $this->second_tax_ids = [];
+        }
+
+        if ($this->hasSecondTaxIds($item)) {
+            $index = array_search($item, $this->second_tax_ids);
+            unset($this->second_tax_ids[$index]);
+        }
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return int
+     * @return null|int
      */
-    public function getNumberEntries(): int
+    public function getNumberEntries(): ?int
     {
         return $this->number_entries;
     }
 
     /**
-     * @param Tag $second_analytic_tag_ids
+     * @param Tag $item
      */
-    public function setSecondAnalyticTagIds(Tag $second_analytic_tag_ids): void
+    public function removeSecondAnalyticTagIds(Tag $item): void
+    {
+        if (null === $this->second_analytic_tag_ids) {
+            $this->second_analytic_tag_ids = [];
+        }
+
+        if ($this->hasSecondAnalyticTagIds($item)) {
+            $index = array_search($item, $this->second_analytic_tag_ids);
+            unset($this->second_analytic_tag_ids[$index]);
+        }
+    }
+
+    /**
+     * @param Tag $item
+     */
+    public function addSecondAnalyticTagIds(Tag $item): void
+    {
+        if ($this->hasSecondAnalyticTagIds($item)) {
+            return;
+        }
+
+        if (null === $this->second_analytic_tag_ids) {
+            $this->second_analytic_tag_ids = [];
+        }
+
+        $this->second_analytic_tag_ids[] = $item;
+    }
+
+    /**
+     * @param Tag $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasSecondAnalyticTagIds(Tag $item, bool $strict = true): bool
+    {
+        if (null === $this->second_analytic_tag_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->second_analytic_tag_ids, $strict);
+    }
+
+    /**
+     * @param null|Tag[] $second_analytic_tag_ids
+     */
+    public function setSecondAnalyticTagIds(?array $second_analytic_tag_ids): void
     {
         $this->second_analytic_tag_ids = $second_analytic_tag_ids;
     }
 
     /**
-     * @param AccountAlias $second_analytic_account_id
+     * @param null|AccountAlias $second_analytic_account_id
      */
-    public function setSecondAnalyticAccountId(AccountAlias $second_analytic_account_id): void
+    public function setSecondAnalyticAccountId(?AccountAlias $second_analytic_account_id): void
     {
         $this->second_analytic_account_id = $second_analytic_account_id;
     }
 
     /**
-     * @param string $second_amount_from_label_regex
+     * @param Tax $item
      */
-    public function setSecondAmountFromLabelRegex(string $second_amount_from_label_regex): void
+    public function addSecondTaxIds(Tax $item): void
     {
-        $this->second_amount_from_label_regex = $second_amount_from_label_regex;
+        if ($this->hasSecondTaxIds($item)) {
+            return;
+        }
+
+        if (null === $this->second_tax_ids) {
+            $this->second_tax_ids = [];
+        }
+
+        $this->second_tax_ids[] = $item;
     }
 
     /**
-     * @param string $second_label
+     * @param null|string $second_label
      */
-    public function setSecondLabel(string $second_label): void
+    public function setSecondLabel(?string $second_label): void
     {
         $this->second_label = $second_label;
     }
 
     /**
-     * @param null|float $second_amount
+     * @param Tax $item
+     * @param bool $strict
+     *
+     * @return bool
      */
-    public function setSecondAmount(?float $second_amount): void
+    public function hasSecondTaxIds(Tax $item, bool $strict = true): bool
+    {
+        if (null === $this->second_tax_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->second_tax_ids, $strict);
+    }
+
+    /**
+     * @param null|Tax[] $second_tax_ids
+     */
+    public function setSecondTaxIds(?array $second_tax_ids): void
+    {
+        $this->second_tax_ids = $second_tax_ids;
+    }
+
+    /**
+     * @param null|string $second_amount_from_label_regex
+     */
+    public function setSecondAmountFromLabelRegex(?string $second_amount_from_label_regex): void
+    {
+        $this->second_amount_from_label_regex = $second_amount_from_label_regex;
+    }
+
+    /**
+     * @param float $second_amount
+     */
+    public function setSecondAmount(float $second_amount): void
     {
         $this->second_amount = $second_amount;
     }
 
     /**
-     * @param bool $force_second_tax_included
+     * @param null|bool $force_second_tax_included
      */
-    public function setForceSecondTaxIncluded(bool $force_second_tax_included): void
+    public function setForceSecondTaxIncluded(?bool $force_second_tax_included): void
     {
         $this->force_second_tax_included = $force_second_tax_included;
     }
 
     /**
-     * @return bool
+     * @return null|bool
      */
-    public function isShowSecondForceTaxIncluded(): bool
+    public function isShowSecondForceTaxIncluded(): ?bool
     {
         return $this->show_second_force_tax_included;
     }
 
     /**
-     * @param ?array $second_amount_type
+     * @param mixed $item
      */
-    public function removeSecondAmountType(?array $second_amount_type): void
+    public function removeSecondAmountType($item): void
     {
-        if ($this->hasSecondAmountType($second_amount_type)) {
-            $index = array_search($second_amount_type, $this->second_amount_type);
+        if ($this->hasSecondAmountType($item)) {
+            $index = array_search($item, $this->second_amount_type);
             unset($this->second_amount_type[$index]);
         }
     }
 
     /**
-     * @param ?array $second_amount_type
+     * @param mixed $item
      */
-    public function addSecondAmountType(?array $second_amount_type): void
+    public function addSecondAmountType($item): void
     {
-        if ($this->hasSecondAmountType($second_amount_type)) {
+        if ($this->hasSecondAmountType($item)) {
             return;
         }
 
-        if (null === $this->second_amount_type) {
-            $this->second_amount_type = [];
-        }
-
-        $this->second_amount_type[] = $second_amount_type;
+        $this->second_amount_type[] = $item;
     }
 
     /**
-     * @param ?array $second_amount_type
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasSecondAmountType(?array $second_amount_type, bool $strict = true): bool
+    public function hasSecondAmountType($item, bool $strict = true): bool
     {
-        if (null === $this->second_amount_type) {
-            return false;
-        }
-
-        return in_array($second_amount_type, $this->second_amount_type, $strict);
+        return in_array($item, $this->second_amount_type, $strict);
     }
 
     /**
-     * @param null|array $second_amount_type
+     * @param array $second_amount_type
      */
-    public function setSecondAmountType(?array $second_amount_type): void
+    public function setSecondAmountType(array $second_amount_type): void
     {
         $this->second_amount_type = $second_amount_type;
     }
 
     /**
-     * @param Category $match_partner_category_ids
+     * @param null|Account $account_id
      */
-    public function setMatchPartnerCategoryIds(Category $match_partner_category_ids): void
+    public function setAccountId(?Account $account_id): void
     {
-        $this->match_partner_category_ids = $match_partner_category_ids;
+        $this->account_id = $account_id;
     }
 
     /**
-     * @param bool $match_partner
+     * @param Category $item
      */
-    public function setMatchPartner(bool $match_partner): void
+    public function addMatchPartnerCategoryIds(Category $item): void
     {
-        $this->match_partner = $match_partner;
-    }
-
-    /**
-     * @param null|int $sequence
-     */
-    public function setSequence(?int $sequence): void
-    {
-        $this->sequence = $sequence;
-    }
-
-    /**
-     * @param null|array $match_nature
-     */
-    public function setMatchNature(?array $match_nature): void
-    {
-        $this->match_nature = $match_nature;
-    }
-
-    /**
-     * @param array $match_amount
-     */
-    public function addMatchAmount(array $match_amount): void
-    {
-        if ($this->hasMatchAmount($match_amount)) {
+        if ($this->hasMatchPartnerCategoryIds($item)) {
             return;
         }
 
-        $this->match_amount[] = $match_amount;
+        if (null === $this->match_partner_category_ids) {
+            $this->match_partner_category_ids = [];
+        }
+
+        $this->match_partner_category_ids[] = $item;
     }
 
     /**
-     * @param array $match_amount
-     * @param bool $strict
-     *
-     * @return bool
+     * @param string $name
      */
-    public function hasMatchAmount(array $match_amount, bool $strict = true): bool
+    public function setName(string $name): void
     {
-        return in_array($match_amount, $this->match_amount, $strict);
+        $this->name = $name;
     }
 
     /**
-     * @param array $match_amount
+     * @param Journal $item
      */
-    public function setMatchAmount(array $match_amount): void
+    public function removeMatchJournalIds(Journal $item): void
     {
-        $this->match_amount = $match_amount;
-    }
+        if (null === $this->match_journal_ids) {
+            $this->match_journal_ids = [];
+        }
 
-    /**
-     * @param ?array $match_nature
-     */
-    public function removeMatchNature(?array $match_nature): void
-    {
-        if ($this->hasMatchNature($match_nature)) {
-            $index = array_search($match_nature, $this->match_nature);
-            unset($this->match_nature[$index]);
+        if ($this->hasMatchJournalIds($item)) {
+            $index = array_search($item, $this->match_journal_ids);
+            unset($this->match_journal_ids[$index]);
         }
     }
 
     /**
-     * @param ?array $match_nature
+     * @param null|float $match_amount_min
      */
-    public function addMatchNature(?array $match_nature): void
-    {
-        if ($this->hasMatchNature($match_nature)) {
-            return;
-        }
-
-        if (null === $this->match_nature) {
-            $this->match_nature = [];
-        }
-
-        $this->match_nature[] = $match_nature;
-    }
-
-    /**
-     * @param ?array $match_nature
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasMatchNature(?array $match_nature, bool $strict = true): bool
-    {
-        if (null === $this->match_nature) {
-            return false;
-        }
-
-        return in_array($match_nature, $this->match_nature, $strict);
-    }
-
-    /**
-     * @param Journal $match_journal_ids
-     */
-    public function setMatchJournalIds(Journal $match_journal_ids): void
-    {
-        $this->match_journal_ids = $match_journal_ids;
-    }
-
-    /**
-     * @param float $match_amount_min
-     */
-    public function setMatchAmountMin(float $match_amount_min): void
+    public function setMatchAmountMin(?float $match_amount_min): void
     {
         $this->match_amount_min = $match_amount_min;
     }
 
     /**
-     * @param bool $to_check
+     * @param mixed $item
      */
-    public function setToCheck(bool $to_check): void
+    public function removeMatchAmount($item): void
+    {
+        if (null === $this->match_amount) {
+            $this->match_amount = [];
+        }
+
+        if ($this->hasMatchAmount($item)) {
+            $index = array_search($item, $this->match_amount);
+            unset($this->match_amount[$index]);
+        }
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addMatchAmount($item): void
+    {
+        if ($this->hasMatchAmount($item)) {
+            return;
+        }
+
+        if (null === $this->match_amount) {
+            $this->match_amount = [];
+        }
+
+        $this->match_amount[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasMatchAmount($item, bool $strict = true): bool
+    {
+        if (null === $this->match_amount) {
+            return false;
+        }
+
+        return in_array($item, $this->match_amount, $strict);
+    }
+
+    /**
+     * @param null|array $match_amount
+     */
+    public function setMatchAmount(?array $match_amount): void
+    {
+        $this->match_amount = $match_amount;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeMatchNature($item): void
+    {
+        if ($this->hasMatchNature($item)) {
+            $index = array_search($item, $this->match_nature);
+            unset($this->match_nature[$index]);
+        }
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addMatchNature($item): void
+    {
+        if ($this->hasMatchNature($item)) {
+            return;
+        }
+
+        $this->match_nature[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasMatchNature($item, bool $strict = true): bool
+    {
+        return in_array($item, $this->match_nature, $strict);
+    }
+
+    /**
+     * @param array $match_nature
+     */
+    public function setMatchNature(array $match_nature): void
+    {
+        $this->match_nature = $match_nature;
+    }
+
+    /**
+     * @param Journal $item
+     */
+    public function addMatchJournalIds(Journal $item): void
+    {
+        if ($this->hasMatchJournalIds($item)) {
+            return;
+        }
+
+        if (null === $this->match_journal_ids) {
+            $this->match_journal_ids = [];
+        }
+
+        $this->match_journal_ids[] = $item;
+    }
+
+    /**
+     * @param null|array $match_label
+     */
+    public function setMatchLabel(?array $match_label): void
+    {
+        $this->match_label = $match_label;
+    }
+
+    /**
+     * @param Journal $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasMatchJournalIds(Journal $item, bool $strict = true): bool
+    {
+        if (null === $this->match_journal_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->match_journal_ids, $strict);
+    }
+
+    /**
+     * @param null|Journal[] $match_journal_ids
+     */
+    public function setMatchJournalIds(?array $match_journal_ids): void
+    {
+        $this->match_journal_ids = $match_journal_ids;
+    }
+
+    /**
+     * @param null|bool $to_check
+     */
+    public function setToCheck(?bool $to_check): void
     {
         $this->to_check = $to_check;
     }
 
     /**
-     * @param bool $auto_reconcile
+     * @param null|bool $auto_reconcile
      */
-    public function setAutoReconcile(bool $auto_reconcile): void
+    public function setAutoReconcile(?bool $auto_reconcile): void
     {
         $this->auto_reconcile = $auto_reconcile;
     }
 
     /**
-     * @param ?array $rule_type
+     * @param mixed $item
      */
-    public function removeRuleType(?array $rule_type): void
+    public function removeRuleType($item): void
     {
-        if ($this->hasRuleType($rule_type)) {
-            $index = array_search($rule_type, $this->rule_type);
+        if ($this->hasRuleType($item)) {
+            $index = array_search($item, $this->rule_type);
             unset($this->rule_type[$index]);
         }
     }
 
     /**
-     * @param ?array $rule_type
+     * @param mixed $item
      */
-    public function addRuleType(?array $rule_type): void
+    public function addRuleType($item): void
     {
-        if ($this->hasRuleType($rule_type)) {
+        if ($this->hasRuleType($item)) {
             return;
         }
 
-        if (null === $this->rule_type) {
-            $this->rule_type = [];
-        }
-
-        $this->rule_type[] = $rule_type;
+        $this->rule_type[] = $item;
     }
 
     /**
-     * @param ?array $rule_type
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasRuleType(?array $rule_type, bool $strict = true): bool
+    public function hasRuleType($item, bool $strict = true): bool
     {
-        if (null === $this->rule_type) {
-            return false;
-        }
-
-        return in_array($rule_type, $this->rule_type, $strict);
+        return in_array($item, $this->rule_type, $strict);
     }
 
     /**
-     * @param null|array $rule_type
+     * @param array $rule_type
      */
-    public function setRuleType(?array $rule_type): void
+    public function setRuleType(array $rule_type): void
     {
         $this->rule_type = $rule_type;
     }
 
     /**
-     * @param null|Company $company_id
+     * @param Company $company_id
      */
     public function setCompanyId(Company $company_id): void
     {
@@ -916,202 +1224,312 @@ final class Model extends Base
     }
 
     /**
-     * @param array $match_amount
+     * @param int $sequence
      */
-    public function removeMatchAmount(array $match_amount): void
+    public function setSequence(int $sequence): void
     {
-        if ($this->hasMatchAmount($match_amount)) {
-            $index = array_search($match_amount, $this->match_amount);
-            unset($this->match_amount[$index]);
-        }
+        $this->sequence = $sequence;
     }
 
     /**
-     * @param float $match_amount_max
+     * @param null|float $match_amount_max
      */
-    public function setMatchAmountMax(float $match_amount_max): void
+    public function setMatchAmountMax(?float $match_amount_max): void
     {
         $this->match_amount_max = $match_amount_max;
     }
 
     /**
-     * @param float $match_total_amount_param
+     * @param mixed $item
+     * @param bool $strict
+     *
+     * @return bool
      */
-    public function setMatchTotalAmountParam(float $match_total_amount_param): void
+    public function hasMatchLabel($item, bool $strict = true): bool
     {
-        $this->match_total_amount_param = $match_total_amount_param;
+        if (null === $this->match_label) {
+            return false;
+        }
+
+        return in_array($item, $this->match_label, $strict);
     }
 
     /**
-     * @param string $match_note_param
+     * @param Category $item
+     * @param bool $strict
+     *
+     * @return bool
      */
-    public function setMatchNoteParam(string $match_note_param): void
+    public function hasMatchPartnerCategoryIds(Category $item, bool $strict = true): bool
     {
-        $this->match_note_param = $match_note_param;
+        if (null === $this->match_partner_category_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->match_partner_category_ids, $strict);
     }
 
     /**
-     * @param bool $match_total_amount
+     * @param null|string $match_transaction_type_param
      */
-    public function setMatchTotalAmount(bool $match_total_amount): void
-    {
-        $this->match_total_amount = $match_total_amount;
-    }
-
-    /**
-     * @param bool $match_same_currency
-     */
-    public function setMatchSameCurrency(bool $match_same_currency): void
-    {
-        $this->match_same_currency = $match_same_currency;
-    }
-
-    /**
-     * @param string $match_transaction_type_param
-     */
-    public function setMatchTransactionTypeParam(string $match_transaction_type_param): void
+    public function setMatchTransactionTypeParam(?string $match_transaction_type_param): void
     {
         $this->match_transaction_type_param = $match_transaction_type_param;
     }
 
     /**
-     * @param array $match_transaction_type
+     * @param null|Category[] $match_partner_category_ids
      */
-    public function removeMatchTransactionType(array $match_transaction_type): void
+    public function setMatchPartnerCategoryIds(?array $match_partner_category_ids): void
     {
-        if ($this->hasMatchTransactionType($match_transaction_type)) {
-            $index = array_search($match_transaction_type, $this->match_transaction_type);
+        $this->match_partner_category_ids = $match_partner_category_ids;
+    }
+
+    /**
+     * @param Partner $item
+     */
+    public function removeMatchPartnerIds(Partner $item): void
+    {
+        if (null === $this->match_partner_ids) {
+            $this->match_partner_ids = [];
+        }
+
+        if ($this->hasMatchPartnerIds($item)) {
+            $index = array_search($item, $this->match_partner_ids);
+            unset($this->match_partner_ids[$index]);
+        }
+    }
+
+    /**
+     * @param Partner $item
+     */
+    public function addMatchPartnerIds(Partner $item): void
+    {
+        if ($this->hasMatchPartnerIds($item)) {
+            return;
+        }
+
+        if (null === $this->match_partner_ids) {
+            $this->match_partner_ids = [];
+        }
+
+        $this->match_partner_ids[] = $item;
+    }
+
+    /**
+     * @param Partner $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasMatchPartnerIds(Partner $item, bool $strict = true): bool
+    {
+        if (null === $this->match_partner_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->match_partner_ids, $strict);
+    }
+
+    /**
+     * @param null|Partner[] $match_partner_ids
+     */
+    public function setMatchPartnerIds(?array $match_partner_ids): void
+    {
+        $this->match_partner_ids = $match_partner_ids;
+    }
+
+    /**
+     * @param null|bool $match_partner
+     */
+    public function setMatchPartner(?bool $match_partner): void
+    {
+        $this->match_partner = $match_partner;
+    }
+
+    /**
+     * @param null|float $match_total_amount_param
+     */
+    public function setMatchTotalAmountParam(?float $match_total_amount_param): void
+    {
+        $this->match_total_amount_param = $match_total_amount_param;
+    }
+
+    /**
+     * @param null|bool $match_total_amount
+     */
+    public function setMatchTotalAmount(?bool $match_total_amount): void
+    {
+        $this->match_total_amount = $match_total_amount;
+    }
+
+    /**
+     * @param null|bool $match_same_currency
+     */
+    public function setMatchSameCurrency(?bool $match_same_currency): void
+    {
+        $this->match_same_currency = $match_same_currency;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeMatchTransactionType($item): void
+    {
+        if (null === $this->match_transaction_type) {
+            $this->match_transaction_type = [];
+        }
+
+        if ($this->hasMatchTransactionType($item)) {
+            $index = array_search($item, $this->match_transaction_type);
             unset($this->match_transaction_type[$index]);
         }
     }
 
     /**
-     * @param array $match_transaction_type
+     * @param mixed $item
      */
-    public function addMatchTransactionType(array $match_transaction_type): void
+    public function addMatchLabel($item): void
     {
-        if ($this->hasMatchTransactionType($match_transaction_type)) {
+        if ($this->hasMatchLabel($item)) {
             return;
         }
 
-        $this->match_transaction_type[] = $match_transaction_type;
+        if (null === $this->match_label) {
+            $this->match_label = [];
+        }
+
+        $this->match_label[] = $item;
     }
 
     /**
-     * @param array $match_transaction_type
+     * @param mixed $item
+     */
+    public function addMatchTransactionType($item): void
+    {
+        if ($this->hasMatchTransactionType($item)) {
+            return;
+        }
+
+        if (null === $this->match_transaction_type) {
+            $this->match_transaction_type = [];
+        }
+
+        $this->match_transaction_type[] = $item;
+    }
+
+    /**
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasMatchTransactionType(array $match_transaction_type, bool $strict = true): bool
+    public function hasMatchTransactionType($item, bool $strict = true): bool
     {
-        return in_array($match_transaction_type, $this->match_transaction_type, $strict);
+        if (null === $this->match_transaction_type) {
+            return false;
+        }
+
+        return in_array($item, $this->match_transaction_type, $strict);
     }
 
     /**
-     * @param array $match_transaction_type
+     * @param null|array $match_transaction_type
      */
-    public function setMatchTransactionType(array $match_transaction_type): void
+    public function setMatchTransactionType(?array $match_transaction_type): void
     {
         $this->match_transaction_type = $match_transaction_type;
     }
 
     /**
-     * @param array $match_note
+     * @param null|string $match_note_param
      */
-    public function removeMatchNote(array $match_note): void
+    public function setMatchNoteParam(?string $match_note_param): void
     {
-        if ($this->hasMatchNote($match_note)) {
-            $index = array_search($match_note, $this->match_note);
+        $this->match_note_param = $match_note_param;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeMatchNote($item): void
+    {
+        if (null === $this->match_note) {
+            $this->match_note = [];
+        }
+
+        if ($this->hasMatchNote($item)) {
+            $index = array_search($item, $this->match_note);
             unset($this->match_note[$index]);
         }
     }
 
     /**
-     * @param array $match_label
+     * @param mixed $item
      */
-    public function setMatchLabel(array $match_label): void
+    public function addMatchNote($item): void
     {
-        $this->match_label = $match_label;
-    }
-
-    /**
-     * @param array $match_note
-     */
-    public function addMatchNote(array $match_note): void
-    {
-        if ($this->hasMatchNote($match_note)) {
+        if ($this->hasMatchNote($item)) {
             return;
         }
 
-        $this->match_note[] = $match_note;
+        if (null === $this->match_note) {
+            $this->match_note = [];
+        }
+
+        $this->match_note[] = $item;
     }
 
     /**
-     * @param array $match_note
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasMatchNote(array $match_note, bool $strict = true): bool
+    public function hasMatchNote($item, bool $strict = true): bool
     {
-        return in_array($match_note, $this->match_note, $strict);
+        if (null === $this->match_note) {
+            return false;
+        }
+
+        return in_array($item, $this->match_note, $strict);
     }
 
     /**
-     * @param array $match_note
+     * @param null|array $match_note
      */
-    public function setMatchNote(array $match_note): void
+    public function setMatchNote(?array $match_note): void
     {
         $this->match_note = $match_note;
     }
 
     /**
-     * @param string $match_label_param
+     * @param null|string $match_label_param
      */
-    public function setMatchLabelParam(string $match_label_param): void
+    public function setMatchLabelParam(?string $match_label_param): void
     {
         $this->match_label_param = $match_label_param;
     }
 
     /**
-     * @param array $match_label
+     * @param mixed $item
      */
-    public function removeMatchLabel(array $match_label): void
+    public function removeMatchLabel($item): void
     {
-        if ($this->hasMatchLabel($match_label)) {
-            $index = array_search($match_label, $this->match_label);
+        if (null === $this->match_label) {
+            $this->match_label = [];
+        }
+
+        if ($this->hasMatchLabel($item)) {
+            $index = array_search($item, $this->match_label);
             unset($this->match_label[$index]);
         }
     }
 
     /**
-     * @param array $match_label
+     * @return null|DateTimeInterface
      */
-    public function addMatchLabel(array $match_label): void
-    {
-        if ($this->hasMatchLabel($match_label)) {
-            return;
-        }
-
-        $this->match_label[] = $match_label;
-    }
-
-    /**
-     * @param array $match_label
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasMatchLabel(array $match_label, bool $strict = true): bool
-    {
-        return in_array($match_label, $this->match_label, $strict);
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

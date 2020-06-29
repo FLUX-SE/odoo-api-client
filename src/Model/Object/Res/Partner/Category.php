@@ -13,7 +13,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : res.partner.category
  * Name : res.partner.category
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -29,164 +29,265 @@ final class Category extends Base
     /**
      * Tag Name
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Color Index
      *
-     * @var int
+     * @var null|int
      */
     private $color;
 
     /**
      * Parent Category
      *
-     * @var CategoryAlias
+     * @var null|CategoryAlias
      */
     private $parent_id;
 
     /**
      * Child Tags
      *
-     * @var CategoryAlias
+     * @var null|CategoryAlias[]
      */
     private $child_ids;
 
     /**
      * Active
+     * The active field allows you to hide the category without removing it.
      *
-     * @var bool
+     * @var null|bool
      */
     private $active;
 
     /**
      * Parent Path
      *
-     * @var string
+     * @var null|string
      */
     private $parent_path;
 
     /**
      * Partners
      *
-     * @var Partner
+     * @var null|Partner[]
      */
     private $partner_ids;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @param string $name Tag Name
      */
-    public function setName(?string $name): void
+    public function __construct(string $name)
     {
         $this->name = $name;
     }
 
     /**
-     * @param int $color
+     * @param null|Partner[] $partner_ids
      */
-    public function setColor(int $color): void
-    {
-        $this->color = $color;
-    }
-
-    /**
-     * @param CategoryAlias $parent_id
-     */
-    public function setParentId(CategoryAlias $parent_id): void
-    {
-        $this->parent_id = $parent_id;
-    }
-
-    /**
-     * @param CategoryAlias $child_ids
-     */
-    public function setChildIds(CategoryAlias $child_ids): void
-    {
-        $this->child_ids = $child_ids;
-    }
-
-    /**
-     * @param bool $active
-     */
-    public function setActive(bool $active): void
-    {
-        $this->active = $active;
-    }
-
-    /**
-     * @param string $parent_path
-     */
-    public function setParentPath(string $parent_path): void
-    {
-        $this->parent_path = $parent_path;
-    }
-
-    /**
-     * @param Partner $partner_ids
-     */
-    public function setPartnerIds(Partner $partner_ids): void
+    public function setPartnerIds(?array $partner_ids): void
     {
         $this->partner_ids = $partner_ids;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getCreateDate(): DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getCreateUid(): ?Users
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param Partner $item
+     */
+    public function removePartnerIds(Partner $item): void
+    {
+        if (null === $this->partner_ids) {
+            $this->partner_ids = [];
+        }
+
+        if ($this->hasPartnerIds($item)) {
+            $index = array_search($item, $this->partner_ids);
+            unset($this->partner_ids[$index]);
+        }
+    }
+
+    /**
+     * @param Partner $item
+     */
+    public function addPartnerIds(Partner $item): void
+    {
+        if ($this->hasPartnerIds($item)) {
+            return;
+        }
+
+        if (null === $this->partner_ids) {
+            $this->partner_ids = [];
+        }
+
+        $this->partner_ids[] = $item;
+    }
+
+    /**
+     * @param Partner $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasPartnerIds(Partner $item, bool $strict = true): bool
+    {
+        if (null === $this->partner_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->partner_ids, $strict);
+    }
+
+    /**
+     * @param null|string $parent_path
+     */
+    public function setParentPath(?string $parent_path): void
+    {
+        $this->parent_path = $parent_path;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param null|bool $active
+     */
+    public function setActive(?bool $active): void
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @param CategoryAlias $item
+     */
+    public function removeChildIds(CategoryAlias $item): void
+    {
+        if (null === $this->child_ids) {
+            $this->child_ids = [];
+        }
+
+        if ($this->hasChildIds($item)) {
+            $index = array_search($item, $this->child_ids);
+            unset($this->child_ids[$index]);
+        }
+    }
+
+    /**
+     * @param CategoryAlias $item
+     */
+    public function addChildIds(CategoryAlias $item): void
+    {
+        if ($this->hasChildIds($item)) {
+            return;
+        }
+
+        if (null === $this->child_ids) {
+            $this->child_ids = [];
+        }
+
+        $this->child_ids[] = $item;
+    }
+
+    /**
+     * @param CategoryAlias $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasChildIds(CategoryAlias $item, bool $strict = true): bool
+    {
+        if (null === $this->child_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->child_ids, $strict);
+    }
+
+    /**
+     * @param null|CategoryAlias[] $child_ids
+     */
+    public function setChildIds(?array $child_ids): void
+    {
+        $this->child_ids = $child_ids;
+    }
+
+    /**
+     * @param null|CategoryAlias $parent_id
+     */
+    public function setParentId(?CategoryAlias $parent_id): void
+    {
+        $this->parent_id = $parent_id;
+    }
+
+    /**
+     * @param null|int $color
+     */
+    public function setColor(?int $color): void
+    {
+        $this->color = $color;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

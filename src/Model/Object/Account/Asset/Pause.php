@@ -12,7 +12,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : account.asset.pause
  * Name : account.asset.pause
- *
+ * Info :
  * Model super-class for transient records, meant to be temporarily
  * persistent, and regularly vacuum-cleaned.
  *
@@ -25,55 +25,65 @@ final class Pause extends Base
     /**
      * Pause date
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface
      */
     private $date;
 
     /**
      * Asset
      *
-     * @var null|Asset
+     * @var Asset
      */
     private $asset_id;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|DateTimeInterface $date
+     * @param DateTimeInterface $date Pause date
+     * @param Asset $asset_id Asset
      */
-    public function setDate(?DateTimeInterface $date): void
+    public function __construct(DateTimeInterface $date, Asset $asset_id)
+    {
+        $this->date = $date;
+        $this->asset_id = $asset_id;
+    }
+
+    /**
+     * @param DateTimeInterface $date
+     */
+    public function setDate(DateTimeInterface $date): void
     {
         $this->date = $date;
     }
 
     /**
-     * @param null|Asset $asset_id
+     * @param Asset $asset_id
      */
     public function setAssetId(Asset $asset_id): void
     {
@@ -81,33 +91,33 @@ final class Pause extends Base
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

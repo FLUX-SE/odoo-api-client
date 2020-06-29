@@ -11,7 +11,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : mail.moderation
  * Name : mail.moderation
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -27,112 +27,116 @@ final class Moderation extends Base
     /**
      * Email
      *
-     * @var null|string
+     * @var string
      */
     private $email;
 
     /**
      * Status
      *
-     * @var null|array
+     * @var array
      */
     private $status;
 
     /**
      * Channel
      *
-     * @var null|Channel
+     * @var Channel
      */
     private $channel_id;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $email
+     * @param string $email Email
+     * @param array $status Status
+     * @param Channel $channel_id Channel
      */
-    public function setEmail(?string $email): void
+    public function __construct(string $email, array $status, Channel $channel_id)
+    {
+        $this->email = $email;
+        $this->status = $status;
+        $this->channel_id = $channel_id;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
 
     /**
-     * @param null|array $status
+     * @param array $status
      */
-    public function setStatus(?array $status): void
+    public function setStatus(array $status): void
     {
         $this->status = $status;
     }
 
     /**
-     * @param ?array $status
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasStatus(?array $status, bool $strict = true): bool
+    public function hasStatus($item, bool $strict = true): bool
     {
-        if (null === $this->status) {
-            return false;
-        }
-
-        return in_array($status, $this->status, $strict);
+        return in_array($item, $this->status, $strict);
     }
 
     /**
-     * @param ?array $status
+     * @param mixed $item
      */
-    public function addStatus(?array $status): void
+    public function addStatus($item): void
     {
-        if ($this->hasStatus($status)) {
+        if ($this->hasStatus($item)) {
             return;
         }
 
-        if (null === $this->status) {
-            $this->status = [];
-        }
-
-        $this->status[] = $status;
+        $this->status[] = $item;
     }
 
     /**
-     * @param ?array $status
+     * @param mixed $item
      */
-    public function removeStatus(?array $status): void
+    public function removeStatus($item): void
     {
-        if ($this->hasStatus($status)) {
-            $index = array_search($status, $this->status);
+        if ($this->hasStatus($item)) {
+            $index = array_search($item, $this->status);
             unset($this->status[$index]);
         }
     }
 
     /**
-     * @param null|Channel $channel_id
+     * @param Channel $channel_id
      */
     public function setChannelId(Channel $channel_id): void
     {
@@ -140,33 +144,33 @@ final class Moderation extends Base
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

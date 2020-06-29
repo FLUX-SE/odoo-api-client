@@ -13,7 +13,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : fetchmail.server
  * Name : fetchmail.server
- *
+ * Info :
  * Incoming POP/IMAP mail server account
  */
 final class Server extends Base
@@ -21,356 +21,367 @@ final class Server extends Base
     /**
      * Name
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Active
      *
-     * @var bool
+     * @var null|bool
      */
     private $active;
 
     /**
      * Status
      *
-     * @var array
+     * @var null|array
      */
     private $state;
 
     /**
      * Server Name
+     * Hostname or IP of the mail server
      *
-     * @var string
+     * @var null|string
      */
     private $server;
 
     /**
      * Port
      *
-     * @var int
+     * @var null|int
      */
     private $port;
 
     /**
      * Server Type
      *
-     * @var null|array
+     * @var array
      */
     private $server_type;
 
     /**
      * SSL/TLS
+     * Connections are encrypted with SSL/TLS through a dedicated port (default: IMAPS=993, POP3S=995)
      *
-     * @var bool
+     * @var null|bool
      */
     private $is_ssl;
 
     /**
      * Keep Attachments
+     * Whether attachments should be downloaded. If not enabled, incoming emails will be stripped of any attachments
+     * before being processed
      *
-     * @var bool
+     * @var null|bool
      */
     private $attach;
 
     /**
      * Keep Original
+     * Whether a full original copy of each email should be kept for reference and attached to each processed
+     * message. This will usually double the size of your message database.
      *
-     * @var bool
+     * @var null|bool
      */
     private $original;
 
     /**
      * Last Fetch Date
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $date;
 
     /**
      * Username
      *
-     * @var string
+     * @var null|string
      */
     private $user;
 
     /**
      * Password
      *
-     * @var string
+     * @var null|string
      */
     private $password;
 
     /**
      * Create a New Record
+     * Process each incoming mail as part of a conversation corresponding to this document type. This will create new
+     * documents for new conversations, or attach follow-up emails to the existing conversations (documents).
      *
-     * @var Model
+     * @var null|Model
      */
     private $object_id;
 
     /**
      * Server Priority
+     * Defines the order of processing, lower values mean higher priority
      *
-     * @var int
+     * @var null|int
      */
     private $priority;
 
     /**
      * Messages
      *
-     * @var Mail
+     * @var null|Mail[]
      */
     private $message_ids;
 
     /**
      * Configuration
      *
-     * @var string
+     * @var null|string
      */
     private $configuration;
 
     /**
      * Script
      *
-     * @var string
+     * @var null|string
      */
     private $script;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @param string $name Name
+     * @param array $server_type Server Type
      */
-    public function setName(?string $name): void
+    public function __construct(string $name, array $server_type)
     {
         $this->name = $name;
+        $this->server_type = $server_type;
     }
 
     /**
-     * @return string
+     * @return null|DateTimeInterface
      */
-    public function getUser(): string
-    {
-        return $this->user;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getWriteUid(): Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getCreateDate(): DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getCreateUid(): Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return string
-     */
-    public function getScript(): string
-    {
-        return $this->script;
-    }
-
-    /**
-     * @return string
-     */
-    public function getConfiguration(): string
-    {
-        return $this->configuration;
-    }
-
-    /**
-     * @return Mail
-     */
-    public function getMessageIds(): Mail
-    {
-        return $this->message_ids;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPriority(): int
-    {
-        return $this->priority;
-    }
-
-    /**
-     * @param Model $object_id
-     */
-    public function setObjectId(Model $object_id): void
-    {
-        $this->object_id = $object_id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getDate(): DateTimeInterface
+    public function getDate(): ?DateTimeInterface
     {
         return $this->date;
     }
 
     /**
-     * @param bool $active
+     * @return null|Users
      */
-    public function setActive(bool $active): void
+    public function getWriteUid(): ?Users
     {
-        $this->active = $active;
+        return $this->write_uid;
     }
 
     /**
-     * @param bool $original
+     * @return null|DateTimeInterface
      */
-    public function setOriginal(bool $original): void
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getCreateUid(): ?Users
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getScript(): ?string
+    {
+        return $this->script;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getConfiguration(): ?string
+    {
+        return $this->configuration;
+    }
+
+    /**
+     * @return null|Mail[]
+     */
+    public function getMessageIds(): ?array
+    {
+        return $this->message_ids;
+    }
+
+    /**
+     * @return null|int
+     */
+    public function getPriority(): ?int
+    {
+        return $this->priority;
+    }
+
+    /**
+     * @param null|Model $object_id
+     */
+    public function setObjectId(?Model $object_id): void
+    {
+        $this->object_id = $object_id;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getUser(): ?string
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param null|bool $original
+     */
+    public function setOriginal(?bool $original): void
     {
         $this->original = $original;
     }
 
     /**
-     * @param bool $attach
+     * @param string $name
      */
-    public function setAttach(bool $attach): void
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param null|bool $attach
+     */
+    public function setAttach(?bool $attach): void
     {
         $this->attach = $attach;
     }
 
     /**
-     * @param bool $is_ssl
+     * @param null|bool $is_ssl
      */
-    public function setIsSsl(bool $is_ssl): void
+    public function setIsSsl(?bool $is_ssl): void
     {
         $this->is_ssl = $is_ssl;
     }
 
     /**
-     * @param ?array $server_type
+     * @param mixed $item
      */
-    public function removeServerType(?array $server_type): void
+    public function removeServerType($item): void
     {
-        if ($this->hasServerType($server_type)) {
-            $index = array_search($server_type, $this->server_type);
+        if ($this->hasServerType($item)) {
+            $index = array_search($item, $this->server_type);
             unset($this->server_type[$index]);
         }
     }
 
     /**
-     * @param ?array $server_type
+     * @param mixed $item
      */
-    public function addServerType(?array $server_type): void
+    public function addServerType($item): void
     {
-        if ($this->hasServerType($server_type)) {
+        if ($this->hasServerType($item)) {
             return;
         }
 
-        if (null === $this->server_type) {
-            $this->server_type = [];
-        }
-
-        $this->server_type[] = $server_type;
+        $this->server_type[] = $item;
     }
 
     /**
-     * @param ?array $server_type
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasServerType(?array $server_type, bool $strict = true): bool
+    public function hasServerType($item, bool $strict = true): bool
     {
-        if (null === $this->server_type) {
-            return false;
-        }
-
-        return in_array($server_type, $this->server_type, $strict);
+        return in_array($item, $this->server_type, $strict);
     }
 
     /**
-     * @param null|array $server_type
+     * @param array $server_type
      */
-    public function setServerType(?array $server_type): void
+    public function setServerType(array $server_type): void
     {
         $this->server_type = $server_type;
     }
 
     /**
-     * @return int
+     * @return null|int
      */
-    public function getPort(): int
+    public function getPort(): ?int
     {
         return $this->port;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getServer(): string
+    public function getServer(): ?string
     {
         return $this->server;
     }
 
     /**
-     * @return array
+     * @return null|array
      */
-    public function getState(): array
+    public function getState(): ?array
     {
         return $this->state;
     }
 
     /**
-     * @return DateTimeInterface
+     * @param null|bool $active
      */
-    public function getWriteDate(): DateTimeInterface
+    public function setActive(?bool $active): void
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

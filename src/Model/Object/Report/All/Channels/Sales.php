@@ -20,7 +20,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : report.all.channels.sales
  * Name : report.all.channels.sales
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -36,224 +36,224 @@ final class Sales extends Base
     /**
      * Order Reference
      *
-     * @var string
+     * @var null|string
      */
     private $name;
 
     /**
      * Partner
      *
-     * @var Partner
+     * @var null|Partner
      */
     private $partner_id;
 
     /**
      * Product
      *
-     * @var Product
+     * @var null|Product
      */
     private $product_id;
 
     /**
      * Product Template
      *
-     * @var Template
+     * @var null|Template
      */
     private $product_tmpl_id;
 
     /**
      * Date Order
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $date_order;
 
     /**
      * Salesperson
      *
-     * @var Users
+     * @var null|Users
      */
     private $user_id;
 
     /**
      * Product Category
      *
-     * @var Category
+     * @var null|Category
      */
     private $categ_id;
 
     /**
      * Company
      *
-     * @var Company
+     * @var null|Company
      */
     private $company_id;
 
     /**
      * Total
      *
-     * @var float
+     * @var null|float
      */
     private $price_total;
 
     /**
      * Pricelist
      *
-     * @var Pricelist
+     * @var null|Pricelist
      */
     private $pricelist_id;
 
     /**
      * Partner Country
      *
-     * @var Country
+     * @var null|Country
      */
     private $country_id;
 
     /**
      * Price Subtotal
      *
-     * @var float
+     * @var null|float
      */
     private $price_subtotal;
 
     /**
      * Product Quantity
      *
-     * @var float
+     * @var null|float
      */
     private $product_qty;
 
     /**
      * Analytic Account
      *
-     * @var Account
+     * @var null|Account
      */
     private $analytic_account_id;
 
     /**
      * Sales Team
      *
-     * @var Team
+     * @var null|Team
      */
     private $team_id;
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
     /**
-     * @return Partner
+     * @return null|Partner
      */
-    public function getPartnerId(): Partner
+    public function getPartnerId(): ?Partner
     {
         return $this->partner_id;
     }
 
     /**
-     * @return Product
+     * @return null|Product
      */
-    public function getProductId(): Product
+    public function getProductId(): ?Product
     {
         return $this->product_id;
     }
 
     /**
-     * @return Template
+     * @return null|Template
      */
-    public function getProductTmplId(): Template
+    public function getProductTmplId(): ?Template
     {
         return $this->product_tmpl_id;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getDateOrder(): DateTimeInterface
+    public function getDateOrder(): ?DateTimeInterface
     {
         return $this->date_order;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getUserId(): Users
+    public function getUserId(): ?Users
     {
         return $this->user_id;
     }
 
     /**
-     * @return Category
+     * @return null|Category
      */
-    public function getCategId(): Category
+    public function getCategId(): ?Category
     {
         return $this->categ_id;
     }
 
     /**
-     * @return Company
+     * @return null|Company
      */
-    public function getCompanyId(): Company
+    public function getCompanyId(): ?Company
     {
         return $this->company_id;
     }
 
     /**
-     * @return float
+     * @return null|float
      */
-    public function getPriceTotal(): float
+    public function getPriceTotal(): ?float
     {
         return $this->price_total;
     }
 
     /**
-     * @return Pricelist
+     * @return null|Pricelist
      */
-    public function getPricelistId(): Pricelist
+    public function getPricelistId(): ?Pricelist
     {
         return $this->pricelist_id;
     }
 
     /**
-     * @return Country
+     * @return null|Country
      */
-    public function getCountryId(): Country
+    public function getCountryId(): ?Country
     {
         return $this->country_id;
     }
 
     /**
-     * @return float
+     * @return null|float
      */
-    public function getPriceSubtotal(): float
+    public function getPriceSubtotal(): ?float
     {
         return $this->price_subtotal;
     }
 
     /**
-     * @return float
+     * @return null|float
      */
-    public function getProductQty(): float
+    public function getProductQty(): ?float
     {
         return $this->product_qty;
     }
 
     /**
-     * @return Account
+     * @return null|Account
      */
-    public function getAnalyticAccountId(): Account
+    public function getAnalyticAccountId(): ?Account
     {
         return $this->analytic_account_id;
     }
 
     /**
-     * @return Team
+     * @return null|Team
      */
-    public function getTeamId(): Team
+    public function getTeamId(): ?Team
     {
         return $this->team_id;
     }

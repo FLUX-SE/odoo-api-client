@@ -13,7 +13,7 @@ use Flux\OdooApiClient\Model\Object\Uom\Uom;
 /**
  * Odoo model : product.packaging
  * Name : product.packaging
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -29,164 +29,177 @@ final class Packaging extends Base
     /**
      * Package Type
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Sequence
+     * The first in the sequence is the default one.
      *
-     * @var int
+     * @var null|int
      */
     private $sequence;
 
     /**
      * Product
      *
-     * @var Product
+     * @var null|Product
      */
     private $product_id;
 
     /**
      * Contained Quantity
+     * Quantity of products contained in the packaging.
      *
-     * @var float
+     * @var null|float
      */
     private $qty;
 
     /**
      * Barcode
+     * Barcode used for packaging identification. Scan this packaging barcode from a transfer in the Barcode app to
+     * move all the contained units
      *
-     * @var string
+     * @var null|string
      */
     private $barcode;
 
     /**
      * Unit of Measure
+     * Default unit of measure used for all stock operations.
      *
-     * @var Uom
+     * @var null|Uom
      */
     private $product_uom_id;
 
     /**
      * Company
      *
-     * @var Company
+     * @var null|Company
      */
     private $company_id;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @param string $name Package Type
      */
-    public function setName(?string $name): void
+    public function __construct(string $name)
     {
         $this->name = $name;
     }
 
     /**
-     * @param int $sequence
+     * @param string $name
      */
-    public function setSequence(int $sequence): void
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param null|int $sequence
+     */
+    public function setSequence(?int $sequence): void
     {
         $this->sequence = $sequence;
     }
 
     /**
-     * @param Product $product_id
+     * @param null|Product $product_id
      */
-    public function setProductId(Product $product_id): void
+    public function setProductId(?Product $product_id): void
     {
         $this->product_id = $product_id;
     }
 
     /**
-     * @param float $qty
+     * @param null|float $qty
      */
-    public function setQty(float $qty): void
+    public function setQty(?float $qty): void
     {
         $this->qty = $qty;
     }
 
     /**
-     * @param string $barcode
+     * @param null|string $barcode
      */
-    public function setBarcode(string $barcode): void
+    public function setBarcode(?string $barcode): void
     {
         $this->barcode = $barcode;
     }
 
     /**
-     * @return Uom
+     * @return null|Uom
      */
-    public function getProductUomId(): Uom
+    public function getProductUomId(): ?Uom
     {
         return $this->product_uom_id;
     }
 
     /**
-     * @param Company $company_id
+     * @param null|Company $company_id
      */
-    public function setCompanyId(Company $company_id): void
+    public function setCompanyId(?Company $company_id): void
     {
         $this->company_id = $company_id;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

@@ -4,54 +4,55 @@ declare(strict_types=1);
 
 namespace Flux\OdooApiClient\Command;
 
-use DateTimeInterface;
 use Flux\OdooApiClient\Api\OdooApiRequestMakerInterface;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\InspectionOperationsInterface;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\FieldsGetOptions;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterface;
+use Flux\OdooApiClient\Operations\ObjectOperationsInterface;
+use Flux\OdooApiClient\PhpGenerator\OdooModelsStructureConverterInterface;
 use Flux\OdooApiClient\PhpGenerator\OdooPhpClassesGeneratorInterface;
 use Http\Discovery\Psr17FactoryDiscovery;
-use Prometee\PhpClassGenerator\Builder\ClassBuilderInterface;
-use Prometee\PhpClassGenerator\Helper\PhpReservedWordsHelperInterface;
-use Prometee\PhpClassGenerator\Model\PhpDoc\PhpDocInterface;
+use LogicException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use function Symfony\Component\String\u;
 
 final class GeneratorCommand extends Command
 {
+    /** @var ObjectOperationsInterface */
+    private $objectOperations;
     /** @var OdooPhpClassesGeneratorInterface */
     private $odooPhpClassesGenerator;
-    /** @var RecordListOperationsInterface */
-    private $recordListOperations;
-    /** @var InspectionOperationsInterface */
-    private $inspectionOperations;
-    /** @var PhpReservedWordsHelperInterface */
-    private $phpReservedWordsHelper;
-
-    private $inheritedPropertiesCache = [];
-    private $inheritedModelsCache = [];
+    /** @var OdooModelsStructureConverterInterface */
+    private $odooModelsStructureConverter;
+    /** @var string */
+    private $baseUrl;
+    /** @var string */
+    private $database;
+    /** @var string */
+    private $username;
+    /** @var string */
+    private $password;
+    /** @var string */
+    private $basePath;
+    /** @var string */
+    private $baseNamespace;
 
     public function __construct(
+        ObjectOperationsInterface $objectOperations,
+        OdooModelsStructureConverterInterface $odooModelStructureConverter,
         OdooPhpClassesGeneratorInterface $odooPhpClassesGenerator,
-        RecordListOperationsInterface $recordListOperations,
-        InspectionOperationsInterface $inspectionOperations,
-        PhpReservedWordsHelperInterface $phpReservedWordsHelper,
         string $name = null
     ) {
+        $this->objectOperations = $objectOperations;
+        $this->odooModelsStructureConverter = $odooModelStructureConverter;
         $this->odooPhpClassesGenerator = $odooPhpClassesGenerator;
-        $this->recordListOperations = $recordListOperations;
-        $this->inspectionOperations = $inspectionOperations;
-        $this->phpReservedWordsHelper = $phpReservedWordsHelper;
+
         parent::__construct($name);
     }
 
     /**
      * {@inheritDoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->addArgument('baseUrl', InputArgument::REQUIRED, 'Your Odoo base URL (ex: https://myinstance.odoo.com.')
@@ -64,243 +65,72 @@ final class GeneratorCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->reconfigureServices($input);
+        $this->baseUrl = $input->getArgument('baseUrl');
+        $this->database = $input->getArgument('database');
+        $this->username = $input->getArgument('username');
+        $this->password = $input->getArgument('password');
+        $this->basePath = $input->getArgument('basePath');
+        $this->baseNamespace = $input->getArgument('baseNamespace');
 
-        $modelsConfig = [];
-        $managersConfig = [];
-        $baseNamespace = $input->getArgument('baseNamespace');
-        $basePath = $input->getArgument('basePath');
-        $modelNamespace = $baseNamespace.'\\Model\\Object';
-        $managerNamespace = $baseNamespace.'\\Manager\\Object';
-        $modelBasePath = $basePath.'/Model/Object';
-        $managerBasePath = $basePath.'/Manager/Object';
-        $baseModelClass = $modelNamespace.'\\Base';
+        $this->reconfigureServices();
 
-        $fieldGetOptions = new FieldsGetOptions();
-        $fieldGetOptions->addAttribute('type');
-        $fieldGetOptions->addAttribute('string');
-        $fieldGetOptions->addAttribute('readonly');
-        $fieldGetOptions->addAttribute('relation');
-        $fieldGetOptions->addAttribute('required');
-        $fieldGetOptions->addAttribute('selection');
-        $fieldGetOptions->addAttribute('inherited_model_ids');
+        $this->generateModels($this->baseNamespace, $this->basePath);
 
-        $search_read = $this->recordListOperations->search_read('ir.model');
+        $managerNamespace = $this->baseNamespace . '\\Manager\\Object';
+        $managerBasePath = $this->basePath . '/Manager/Object';
 
-        foreach ($search_read as $item) {
-            $this->inheritedModelsCache[$item['id']] = $item['model'];
-        }
-        $fieldsInfos = $this->inspectionOperations->fields_get(
-            'base',
-            [],
-            $fieldGetOptions
-        );
-        $this->inheritedPropertiesCache['base'] = array_keys($fieldsInfos);
-        foreach ($search_read as $item) {
-            if (count($item['inherited_model_ids']) === 1) {
-                $inheritedModelId = $item['inherited_model_ids'][0];
-                $inheritedModel = $this->inheritedModelsCache[$inheritedModelId];
-                $fieldsInfos = $this->inspectionOperations->fields_get(
-                    $inheritedModel,
-                    [],
-                    $fieldGetOptions
-                );
-                $this->inheritedPropertiesCache[$inheritedModel] = array_keys($fieldsInfos);
-            }
-        }
-
-        foreach ($search_read as $item) {
-            $modelName = $item['model'];
-            $className = $this->buildClassName($modelName);
-            $classType = ClassBuilderInterface::CLASS_TYPE_FINAL;
-            $extends = $baseModelClass;
-
-            foreach ($item['inherited_model_ids'] as $inheritedModelId) {
-                $inheritedModel = $this->inheritedModelsCache[$inheritedModelId];
-                $extends = $modelNamespace.'\\'.$this->buildClassName($inheritedModel);
-            }
-
-            $properties = [];
-
-            $fieldsInfos = $this->inspectionOperations->fields_get(
-                $modelName,
-                [],
-                $fieldGetOptions
-            );
-
-            foreach ($fieldsInfos as $fieldName => $fieldInfo) {
-                $readonly = $fieldInfo['readonly'] ?? false;
-                $types = $this->transformTypes($fieldInfo, $modelNamespace);
-                $properties[$fieldName] = [
-                    'types' => $types,
-                    'default' => null,
-                    'description' => $fieldInfo['string'],
-                    'readable' => false !== $readonly,
-                    'writable' => false === $readonly,
-                    'inherited' => $this->isInheritedField($item, $fieldName)
-                ];
-                /*if (in_array('mixed', $types)) {
-                    dump($modelName . ' --> ' . $fieldName, $item, $fieldInfo);
-                }*/
-            }
-
-            if ($item['abstract'] ?? false) {
-                $classType = ClassBuilderInterface::CLASS_TYPE_ABSTRACT;
-            }
-
-            if (isset($this->inheritedPropertiesCache[$modelName])) {
-                $classType = ClassBuilderInterface::CLASS_TYPE_CLASS;
-            }
-
-            if ($modelName === 'base') {
-                $extends = null;
-            }
-
-            $info = trim($item['info'], '"');
-            $info = trim($info);
-            $modelsConfig[$className] = [
-                'type' => $classType,
-                'extends' => $extends,
-                'description' => [
-                    PhpDocInterface::TYPE_DESCRIPTION => [
-                        sprintf('Odoo model : %s', $modelName),
-                        sprintf('Name : %s', $item['model']),
-                        '',
-                        $info,
-                    ]
-                ],
-                'properties' => $properties,
-            ];
-        }
-
-        $this->odooPhpClassesGenerator->setBaseNamespace($modelNamespace);
-        $this->odooPhpClassesGenerator->setBasePath($modelBasePath);
-        $this->odooPhpClassesGenerator->setClassesConfig($modelsConfig);
-        $this->odooPhpClassesGenerator->generate();
-
-        $this->odooPhpClassesGenerator->setBaseNamespace($managerNamespace);
-        $this->odooPhpClassesGenerator->setBasePath($managerBasePath);
-        $this->odooPhpClassesGenerator->setClassesConfig($managersConfig);
-        // $this->odooPhpClassesGenerator->getClassBuilder()->setExtendClass('');
-        // $this->odooPhpClassesGenerator->generate();
+        $this->generateManagers($managerNamespace, $managerBasePath);
 
         return Command::SUCCESS;
     }
 
-    /**
-     * @param InputInterface $input
-     */
-    private function reconfigureServices(InputInterface $input): void
+    private function reconfigureServices(): void
     {
-        $baseUrl = $input->getArgument('baseUrl');
-        $database = $input->getArgument('database');
-        $username = $input->getArgument('username');
-        $password = $input->getArgument('password');
-
-        $objectOperations = $this->recordListOperations->getObjectOperations();
-        $odooApiRequestMaker = $objectOperations->getApiRequestMaker();
+        $odooApiRequestMaker = $this->objectOperations->getApiRequestMaker();
         $uriFactory = Psr17FactoryDiscovery::findUrlFactory();
         $baseUri = $uriFactory->createUri(sprintf(
             '%s/%s',
-            $baseUrl,
+            $this->baseUrl,
             OdooApiRequestMakerInterface::BASE_PATH
         ));
         $odooApiRequestMaker->setBaseUri($baseUri);
-        $objectOperations->setDatabase($database);
-        $objectOperations->setUsername($username);
-        $objectOperations->setPassword($password);
+        $this->objectOperations->setDatabase($this->database);
+        $this->objectOperations->setUsername($this->username);
+        $this->objectOperations->setPassword($this->password);
 
-        $basePath = $input->getArgument('basePath');
-        $baseNamespace = $input->getArgument('baseNamespace');
 
-        $this->odooPhpClassesGenerator->setBasePath($basePath);
-        $this->odooPhpClassesGenerator->setBaseNamespace($baseNamespace);
+
+        $this->odooPhpClassesGenerator->setBasePath($this->basePath);
+        $this->odooPhpClassesGenerator->setBaseNamespace($this->baseNamespace);
     }
 
-    /**
-     * @param array<string, string> $fieldInfo
-     * @param string $baseNamespace
-     *
-     * @return array<int, string>
-     */
-    private function transformTypes(array $fieldInfo, string $baseNamespace): array
+    protected function generateModels(string $namespace, string $path): bool
     {
-        $phpTypes = [];
+        $modelNamespace = $namespace . '\\Model\\Object';
+        $modelBasePath = $path . '/Model/Object';
 
-        $required = $fieldInfo['required'] ?? false;
-        if (true === $required) {
-            $phpTypes[] = 'null';
-        }
+        $config = $this->odooModelsStructureConverter->convert($modelNamespace);
 
-        $odooType = $fieldInfo['type'] ?? null;
-        switch ($odooType) {
-            case 'binary':
-            case 'integer':
-            case 'many2one_reference':
-                $phpTypes[] = 'int';
-                break;
-            case 'boolean':
-                $phpTypes[] = 'bool';
-                break;
-            case 'char':
-            case 'html':
-            case 'text':
-                $phpTypes[] = 'string';
-                break;
-            case 'date':
-            case 'datetime':
-                $phpTypes[] = DateTimeInterface::class;
-                break;
-            case 'float':
-            case 'monetary':
-                $phpTypes[] = 'float';
-                break;
-            case 'selection':
-                $phpTypes[] = 'array';
-                break;
-            case 'many2one':
-            case 'many2many':
-            case 'one2many':
-                $phpTypes[] = $baseNamespace.'\\'.$this->buildClassName($fieldInfo['relation']);
-                break;
-            default:
-                $phpTypes[] = 'mixed';
-                break;
-        }
-
-        return $phpTypes;
+        $this->odooPhpClassesGenerator->setBaseNamespace($modelNamespace);
+        $this->odooPhpClassesGenerator->setBasePath($modelBasePath);
+        $this->odooPhpClassesGenerator->setClassesConfig($config);
+        return $this->odooPhpClassesGenerator->generate();
     }
 
-    private function buildClassName(string $modelName): string
+    protected function generateManagers(string $namespace, string $path): bool
     {
-        $path = explode('.', $modelName);
-        array_walk($path, function (string &$item) {
-            $u = u($item)->camel()->title();
-            $item = $u->toString();
-            if ($this->phpReservedWordsHelper->check($item)) {
-                $item .= '_';
-            }
-        });
-        return implode('\\', $path);
-    }
+        /*
+        $modelNamespace = $namespace . '\\Manager\\Object';
+        $modelBasePath = $path . '/Manager/Object';
 
-    private function isInheritedField(array $currentItem, string $fieldName): bool
-    {
-        $modelName = $currentItem['model'];
-        if ($modelName === 'base') {
-            return false;
-        }
+        $config = $this->odooManagersStructureConverter->convert($modelNamespace);
 
-        $inheritedModelIds = $currentItem['inherited_model_ids'];
-        $inheritedModelIds[] = array_search('base', $this->inheritedModelsCache);
-        foreach ($inheritedModelIds as $inheritedModelId) {
-            $inheritedModel = $this->inheritedModelsCache[$inheritedModelId];
-            $properties = $this->inheritedPropertiesCache[$inheritedModel];
-            if (in_array($fieldName, $properties)) {
-                return true;
-            }
-        }
+        $this->odooPhpClassesGenerator->setBaseNamespace($modelNamespace);
+        $this->odooPhpClassesGenerator->setBasePath($modelBasePath);
+        $this->odooPhpClassesGenerator->setClassesConfig($config);
+        return $this->odooPhpClassesGenerator->generate();
+        */
 
-        return false;
+        return true;
     }
 }

@@ -12,7 +12,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : mail.activity.mixin
  * Name : mail.activity.mixin
- *
+ * Info :
  * Mail Activity Mixin is a mixin class to use if you want to add activities
  * management on a model. It works like the mail.thread mixin. It defines
  * an activity_ids one2many field toward activities using res_id and res_model_id.
@@ -41,119 +41,125 @@ final class Mixin extends Base
     /**
      * Activities
      *
-     * @var Activity
+     * @var null|Activity[]
      */
     private $activity_ids;
 
     /**
      * Activity State
+     * Status based on activities
+     * Overdue: Due date is already passed
+     * Today: Activity date is today
+     * Planned: Future activities.
      *
-     * @var array
+     * @var null|array
      */
     private $activity_state;
 
     /**
      * Responsible User
      *
-     * @var Users
+     * @var null|Users
      */
     private $activity_user_id;
 
     /**
      * Next Activity Type
      *
-     * @var Type
+     * @var null|Type
      */
     private $activity_type_id;
 
     /**
      * Next Activity Deadline
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $activity_date_deadline;
 
     /**
      * Next Activity Summary
      *
-     * @var string
+     * @var null|string
      */
     private $activity_summary;
 
     /**
      * Activity Exception Decoration
+     * Type of the exception activity on record.
      *
-     * @var array
+     * @var null|array
      */
     private $activity_exception_decoration;
 
     /**
      * Icon
+     * Icon to indicate an exception activity.
      *
-     * @var string
+     * @var null|string
      */
     private $activity_exception_icon;
 
     /**
-     * @return Activity
+     * @return null|Activity[]
      */
-    public function getActivityIds(): Activity
+    public function getActivityIds(): ?array
     {
         return $this->activity_ids;
     }
 
     /**
-     * @return array
+     * @return null|array
      */
-    public function getActivityState(): array
+    public function getActivityState(): ?array
     {
         return $this->activity_state;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getActivityUserId(): Users
+    public function getActivityUserId(): ?Users
     {
         return $this->activity_user_id;
     }
 
     /**
-     * @return Type
+     * @return null|Type
      */
-    public function getActivityTypeId(): Type
+    public function getActivityTypeId(): ?Type
     {
         return $this->activity_type_id;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getActivityDateDeadline(): DateTimeInterface
+    public function getActivityDateDeadline(): ?DateTimeInterface
     {
         return $this->activity_date_deadline;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getActivitySummary(): string
+    public function getActivitySummary(): ?string
     {
         return $this->activity_summary;
     }
 
     /**
-     * @return array
+     * @return null|array
      */
-    public function getActivityExceptionDecoration(): array
+    public function getActivityExceptionDecoration(): ?array
     {
         return $this->activity_exception_decoration;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getActivityExceptionIcon(): string
+    public function getActivityExceptionIcon(): ?string
     {
         return $this->activity_exception_icon;
     }

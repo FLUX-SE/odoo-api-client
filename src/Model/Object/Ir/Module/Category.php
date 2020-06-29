@@ -12,7 +12,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : ir.module.category
  * Name : ir.module.category
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -28,209 +28,217 @@ final class Category extends Base
     /**
      * Name
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Parent Application
      *
-     * @var CategoryAlias
+     * @var null|CategoryAlias
      */
     private $parent_id;
 
     /**
      * Child Applications
      *
-     * @var CategoryAlias
+     * @var null|CategoryAlias[]
      */
     private $child_ids;
 
     /**
      * Number of Apps
      *
-     * @var int
+     * @var null|int
      */
     private $module_nr;
 
     /**
      * Modules
      *
-     * @var Module
+     * @var null|Module[]
      */
     private $module_ids;
 
     /**
      * Description
      *
-     * @var string
+     * @var null|string
      */
     private $description;
 
     /**
      * Sequence
      *
-     * @var int
+     * @var null|int
      */
     private $sequence;
 
     /**
      * Visible
      *
-     * @var bool
+     * @var null|bool
      */
     private $visible;
 
     /**
      * Exclusive
      *
-     * @var bool
+     * @var null|bool
      */
     private $exclusive;
 
     /**
      * External ID
      *
-     * @var string
+     * @var null|string
      */
     private $xml_id;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @return null|string
+     * @param string $name Name
      */
-    public function getName(): ?string
+    public function __construct(string $name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * @return CategoryAlias
+     * @return null|CategoryAlias
      */
-    public function getParentId(): CategoryAlias
+    public function getParentId(): ?CategoryAlias
     {
         return $this->parent_id;
     }
 
     /**
-     * @return CategoryAlias
+     * @return null|CategoryAlias[]
      */
-    public function getChildIds(): CategoryAlias
+    public function getChildIds(): ?array
     {
         return $this->child_ids;
     }
 
     /**
-     * @return int
+     * @return null|int
      */
-    public function getModuleNr(): int
+    public function getModuleNr(): ?int
     {
         return $this->module_nr;
     }
 
     /**
-     * @return Module
+     * @return null|Module[]
      */
-    public function getModuleIds(): Module
+    public function getModuleIds(): ?array
     {
         return $this->module_ids;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
     /**
-     * @return int
+     * @return null|int
      */
-    public function getSequence(): int
+    public function getSequence(): ?int
     {
         return $this->sequence;
     }
 
     /**
-     * @return bool
+     * @return null|bool
      */
-    public function isVisible(): bool
+    public function isVisible(): ?bool
     {
         return $this->visible;
     }
 
     /**
-     * @return bool
+     * @return null|bool
      */
-    public function isExclusive(): bool
+    public function isExclusive(): ?bool
     {
         return $this->exclusive;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getXmlId(): string
+    public function getXmlId(): ?string
     {
         return $this->xml_id;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

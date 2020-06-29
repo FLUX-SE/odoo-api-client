@@ -11,7 +11,7 @@ use Flux\OdooApiClient\Model\Object\Res\Company;
 /**
  * Odoo model : account.root
  * Name : account.root
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -27,44 +27,44 @@ final class Root extends Base
     /**
      * Name
      *
-     * @var string
+     * @var null|string
      */
     private $name;
 
     /**
      * Parent
      *
-     * @var RootAlias
+     * @var null|RootAlias
      */
     private $parent_id;
 
     /**
      * Company
      *
-     * @var Company
+     * @var null|Company
      */
     private $company_id;
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
     /**
-     * @return RootAlias
+     * @return null|RootAlias
      */
-    public function getParentId(): RootAlias
+    public function getParentId(): ?RootAlias
     {
         return $this->parent_id;
     }
 
     /**
-     * @return Company
+     * @return null|Company
      */
-    public function getCompanyId(): Company
+    public function getCompanyId(): ?Company
     {
         return $this->company_id;
     }

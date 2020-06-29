@@ -13,7 +13,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : account.financial.year.op
  * Name : account.financial.year.op
- *
+ * Info :
  * Model super-class for transient records, meant to be temporarily
  * persistent, and regularly vacuum-cleaned.
  *
@@ -26,89 +26,203 @@ final class Op extends Base
     /**
      * Company
      *
-     * @var null|Company
+     * @var Company
      */
     private $company_id;
 
     /**
      * Opening Move Posted
      *
-     * @var bool
+     * @var null|bool
      */
     private $opening_move_posted;
 
     /**
      * Opening Date
+     * Date from which the accounting is managed in Odoo. It is the date of the opening entry.
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface
      */
     private $opening_date;
 
     /**
      * Fiscalyear Last Day
+     * The last day of the month will be used if the chosen day doesn't exist.
      *
-     * @var null|int
+     * @var int
      */
     private $fiscalyear_last_day;
 
     /**
      * Fiscalyear Last Month
+     * The last day of the month will be used if the chosen day doesn't exist.
      *
-     * @var null|array
+     * @var array
      */
     private $fiscalyear_last_month;
 
     /**
      * Periodicity
+     * Periodicity
      *
-     * @var null|array
+     * @var array
      */
     private $account_tax_periodicity;
 
     /**
      * Reminder
      *
-     * @var null|int
+     * @var int
      */
     private $account_tax_periodicity_reminder_day;
 
     /**
      * Journal
      *
-     * @var Journal
+     * @var null|Journal
      */
     private $account_tax_periodicity_journal_id;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|Company $company_id
+     * @param Company $company_id Company
+     * @param DateTimeInterface $opening_date Opening Date
+     *        Date from which the accounting is managed in Odoo. It is the date of the opening entry.
+     * @param int $fiscalyear_last_day Fiscalyear Last Day
+     *        The last day of the month will be used if the chosen day doesn't exist.
+     * @param array $fiscalyear_last_month Fiscalyear Last Month
+     *        The last day of the month will be used if the chosen day doesn't exist.
+     * @param array $account_tax_periodicity Periodicity
+     *        Periodicity
+     * @param int $account_tax_periodicity_reminder_day Reminder
+     */
+    public function __construct(
+        Company $company_id,
+        DateTimeInterface $opening_date,
+        int $fiscalyear_last_day,
+        array $fiscalyear_last_month,
+        array $account_tax_periodicity,
+        int $account_tax_periodicity_reminder_day
+    ) {
+        $this->company_id = $company_id;
+        $this->opening_date = $opening_date;
+        $this->fiscalyear_last_day = $fiscalyear_last_day;
+        $this->fiscalyear_last_month = $fiscalyear_last_month;
+        $this->account_tax_periodicity = $account_tax_periodicity;
+        $this->account_tax_periodicity_reminder_day = $account_tax_periodicity_reminder_day;
+    }
+
+    /**
+     * @param mixed $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasAccountTaxPeriodicity($item, bool $strict = true): bool
+    {
+        return in_array($item, $this->account_tax_periodicity, $strict);
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getWriteUid(): ?Users
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getCreateUid(): ?Users
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param null|Journal $account_tax_periodicity_journal_id
+     */
+    public function setAccountTaxPeriodicityJournalId(?Journal $account_tax_periodicity_journal_id): void
+    {
+        $this->account_tax_periodicity_journal_id = $account_tax_periodicity_journal_id;
+    }
+
+    /**
+     * @param int $account_tax_periodicity_reminder_day
+     */
+    public function setAccountTaxPeriodicityReminderDay(int $account_tax_periodicity_reminder_day): void
+    {
+        $this->account_tax_periodicity_reminder_day = $account_tax_periodicity_reminder_day;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeAccountTaxPeriodicity($item): void
+    {
+        if ($this->hasAccountTaxPeriodicity($item)) {
+            $index = array_search($item, $this->account_tax_periodicity);
+            unset($this->account_tax_periodicity[$index]);
+        }
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addAccountTaxPeriodicity($item): void
+    {
+        if ($this->hasAccountTaxPeriodicity($item)) {
+            return;
+        }
+
+        $this->account_tax_periodicity[] = $item;
+    }
+
+    /**
+     * @param array $account_tax_periodicity
+     */
+    public function setAccountTaxPeriodicity(array $account_tax_periodicity): void
+    {
+        $this->account_tax_periodicity = $account_tax_periodicity;
+    }
+
+    /**
+     * @param Company $company_id
      */
     public function setCompanyId(Company $company_id): void
     {
@@ -116,173 +230,75 @@ final class Op extends Base
     }
 
     /**
-     * @param ?array $account_tax_periodicity
+     * @param mixed $item
      */
-    public function addAccountTaxPeriodicity(?array $account_tax_periodicity): void
+    public function removeFiscalyearLastMonth($item): void
     {
-        if ($this->hasAccountTaxPeriodicity($account_tax_periodicity)) {
-            return;
-        }
-
-        if (null === $this->account_tax_periodicity) {
-            $this->account_tax_periodicity = [];
-        }
-
-        $this->account_tax_periodicity[] = $account_tax_periodicity;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getWriteUid(): Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getCreateDate(): DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getCreateUid(): Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param Journal $account_tax_periodicity_journal_id
-     */
-    public function setAccountTaxPeriodicityJournalId(Journal $account_tax_periodicity_journal_id): void
-    {
-        $this->account_tax_periodicity_journal_id = $account_tax_periodicity_journal_id;
-    }
-
-    /**
-     * @param null|int $account_tax_periodicity_reminder_day
-     */
-    public function setAccountTaxPeriodicityReminderDay(?int $account_tax_periodicity_reminder_day): void
-    {
-        $this->account_tax_periodicity_reminder_day = $account_tax_periodicity_reminder_day;
-    }
-
-    /**
-     * @param ?array $account_tax_periodicity
-     */
-    public function removeAccountTaxPeriodicity(?array $account_tax_periodicity): void
-    {
-        if ($this->hasAccountTaxPeriodicity($account_tax_periodicity)) {
-            $index = array_search($account_tax_periodicity, $this->account_tax_periodicity);
-            unset($this->account_tax_periodicity[$index]);
-        }
-    }
-
-    /**
-     * @param ?array $account_tax_periodicity
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasAccountTaxPeriodicity(?array $account_tax_periodicity, bool $strict = true): bool
-    {
-        if (null === $this->account_tax_periodicity) {
-            return false;
-        }
-
-        return in_array($account_tax_periodicity, $this->account_tax_periodicity, $strict);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isOpeningMovePosted(): bool
-    {
-        return $this->opening_move_posted;
-    }
-
-    /**
-     * @param null|array $account_tax_periodicity
-     */
-    public function setAccountTaxPeriodicity(?array $account_tax_periodicity): void
-    {
-        $this->account_tax_periodicity = $account_tax_periodicity;
-    }
-
-    /**
-     * @param ?array $fiscalyear_last_month
-     */
-    public function removeFiscalyearLastMonth(?array $fiscalyear_last_month): void
-    {
-        if ($this->hasFiscalyearLastMonth($fiscalyear_last_month)) {
-            $index = array_search($fiscalyear_last_month, $this->fiscalyear_last_month);
+        if ($this->hasFiscalyearLastMonth($item)) {
+            $index = array_search($item, $this->fiscalyear_last_month);
             unset($this->fiscalyear_last_month[$index]);
         }
     }
 
     /**
-     * @param ?array $fiscalyear_last_month
+     * @param mixed $item
      */
-    public function addFiscalyearLastMonth(?array $fiscalyear_last_month): void
+    public function addFiscalyearLastMonth($item): void
     {
-        if ($this->hasFiscalyearLastMonth($fiscalyear_last_month)) {
+        if ($this->hasFiscalyearLastMonth($item)) {
             return;
         }
 
-        if (null === $this->fiscalyear_last_month) {
-            $this->fiscalyear_last_month = [];
-        }
-
-        $this->fiscalyear_last_month[] = $fiscalyear_last_month;
+        $this->fiscalyear_last_month[] = $item;
     }
 
     /**
-     * @param ?array $fiscalyear_last_month
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasFiscalyearLastMonth(?array $fiscalyear_last_month, bool $strict = true): bool
+    public function hasFiscalyearLastMonth($item, bool $strict = true): bool
     {
-        if (null === $this->fiscalyear_last_month) {
-            return false;
-        }
-
-        return in_array($fiscalyear_last_month, $this->fiscalyear_last_month, $strict);
+        return in_array($item, $this->fiscalyear_last_month, $strict);
     }
 
     /**
-     * @param null|array $fiscalyear_last_month
+     * @param array $fiscalyear_last_month
      */
-    public function setFiscalyearLastMonth(?array $fiscalyear_last_month): void
+    public function setFiscalyearLastMonth(array $fiscalyear_last_month): void
     {
         $this->fiscalyear_last_month = $fiscalyear_last_month;
     }
 
     /**
-     * @param null|int $fiscalyear_last_day
+     * @param int $fiscalyear_last_day
      */
-    public function setFiscalyearLastDay(?int $fiscalyear_last_day): void
+    public function setFiscalyearLastDay(int $fiscalyear_last_day): void
     {
         $this->fiscalyear_last_day = $fiscalyear_last_day;
     }
 
     /**
-     * @param null|DateTimeInterface $opening_date
+     * @param DateTimeInterface $opening_date
      */
-    public function setOpeningDate(?DateTimeInterface $opening_date): void
+    public function setOpeningDate(DateTimeInterface $opening_date): void
     {
         $this->opening_date = $opening_date;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|bool
      */
-    public function getWriteDate(): DateTimeInterface
+    public function isOpeningMovePosted(): ?bool
+    {
+        return $this->opening_move_posted;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

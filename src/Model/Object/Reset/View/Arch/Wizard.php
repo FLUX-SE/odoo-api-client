@@ -12,7 +12,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : reset.view.arch.wizard
  * Name : reset.view.arch.wizard
- *
+ * Info :
  * A wizard to reset views architecture.
  */
 final class Wizard extends Base
@@ -20,161 +20,163 @@ final class Wizard extends Base
     /**
      * View
      *
-     * @var View
+     * @var null|View
      */
     private $view_id;
 
     /**
      * View Name
      *
-     * @var string
+     * @var null|string
      */
     private $view_name;
 
     /**
      * Architecture Diff
      *
-     * @var string
+     * @var null|string
      */
     private $arch_diff;
 
     /**
      * Reset Mode
+     * You might want to try a soft reset first.
      *
-     * @var null|array
+     * @var array
      */
     private $reset_mode;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param View $view_id
+     * @param array $reset_mode Reset Mode
+     *        You might want to try a soft reset first.
      */
-    public function setViewId(View $view_id): void
-    {
-        $this->view_id = $view_id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getViewName(): string
-    {
-        return $this->view_name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getArchDiff(): string
-    {
-        return $this->arch_diff;
-    }
-
-    /**
-     * @param null|array $reset_mode
-     */
-    public function setResetMode(?array $reset_mode): void
+    public function __construct(array $reset_mode)
     {
         $this->reset_mode = $reset_mode;
     }
 
     /**
-     * @param ?array $reset_mode
+     * @param null|View $view_id
+     */
+    public function setViewId(?View $view_id): void
+    {
+        $this->view_id = $view_id;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getViewName(): ?string
+    {
+        return $this->view_name;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getArchDiff(): ?string
+    {
+        return $this->arch_diff;
+    }
+
+    /**
+     * @param array $reset_mode
+     */
+    public function setResetMode(array $reset_mode): void
+    {
+        $this->reset_mode = $reset_mode;
+    }
+
+    /**
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasResetMode(?array $reset_mode, bool $strict = true): bool
+    public function hasResetMode($item, bool $strict = true): bool
     {
-        if (null === $this->reset_mode) {
-            return false;
-        }
-
-        return in_array($reset_mode, $this->reset_mode, $strict);
+        return in_array($item, $this->reset_mode, $strict);
     }
 
     /**
-     * @param ?array $reset_mode
+     * @param mixed $item
      */
-    public function addResetMode(?array $reset_mode): void
+    public function addResetMode($item): void
     {
-        if ($this->hasResetMode($reset_mode)) {
+        if ($this->hasResetMode($item)) {
             return;
         }
 
-        if (null === $this->reset_mode) {
-            $this->reset_mode = [];
-        }
-
-        $this->reset_mode[] = $reset_mode;
+        $this->reset_mode[] = $item;
     }
 
     /**
-     * @param ?array $reset_mode
+     * @param mixed $item
      */
-    public function removeResetMode(?array $reset_mode): void
+    public function removeResetMode($item): void
     {
-        if ($this->hasResetMode($reset_mode)) {
-            $index = array_search($reset_mode, $this->reset_mode);
+        if ($this->hasResetMode($item)) {
+            $index = array_search($item, $this->reset_mode);
             unset($this->reset_mode[$index]);
         }
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

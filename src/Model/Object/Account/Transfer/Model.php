@@ -16,7 +16,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : account.transfer.model
  * Name : account.transfer.model
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -32,223 +32,457 @@ final class Model extends Base
     /**
      * Name
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Destination Journal
      *
-     * @var null|Journal
+     * @var Journal
      */
     private $journal_id;
 
     /**
      * Company
+     * Company related to this journal
      *
-     * @var Company
+     * @var null|Company
      */
     private $company_id;
 
     /**
      * Start Date
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface
      */
     private $date_start;
 
     /**
      * Stop Date
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $date_stop;
 
     /**
      * Frequency
      *
-     * @var null|array
+     * @var array
      */
     private $frequency;
 
     /**
      * Origin Accounts
      *
-     * @var Account
+     * @var null|Account[]
      */
     private $account_ids;
 
     /**
      * Destination Accounts
      *
-     * @var Line
+     * @var null|Line[]
      */
     private $line_ids;
 
     /**
      * Generated Moves
      *
-     * @var Move
+     * @var null|Move[]
      */
     private $move_ids;
 
     /**
      * Move Ids Count
      *
-     * @var int
+     * @var null|int
      */
     private $move_ids_count;
 
     /**
      * Total Percent
      *
-     * @var float
+     * @var null|float
      */
     private $total_percent;
 
     /**
      * State
      *
-     * @var null|array
+     * @var array
      */
     private $state;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @param string $name Name
+     * @param Journal $journal_id Destination Journal
+     * @param DateTimeInterface $date_start Start Date
+     * @param array $frequency Frequency
+     * @param array $state State
      */
-    public function setName(?string $name): void
-    {
+    public function __construct(
+        string $name,
+        Journal $journal_id,
+        DateTimeInterface $date_start,
+        array $frequency,
+        array $state
+    ) {
         $this->name = $name;
+        $this->journal_id = $journal_id;
+        $this->date_start = $date_start;
+        $this->frequency = $frequency;
+        $this->state = $state;
     }
 
     /**
-     * @return int
+     * @param Line $item
      */
-    public function getMoveIdsCount(): int
+    public function removeLineIds(Line $item): void
     {
-        return $this->move_ids_count;
+        if (null === $this->line_ids) {
+            $this->line_ids = [];
+        }
+
+        if ($this->hasLineIds($item)) {
+            $index = array_search($item, $this->line_ids);
+            unset($this->line_ids[$index]);
+        }
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @param ?array $state
+     * @param mixed $item
      */
-    public function removeState(?array $state): void
+    public function removeState($item): void
     {
-        if ($this->hasState($state)) {
-            $index = array_search($state, $this->state);
+        if ($this->hasState($item)) {
+            $index = array_search($item, $this->state);
             unset($this->state[$index]);
         }
     }
 
     /**
-     * @param ?array $state
+     * @param mixed $item
      */
-    public function addState(?array $state): void
+    public function addState($item): void
     {
-        if ($this->hasState($state)) {
+        if ($this->hasState($item)) {
             return;
         }
 
-        if (null === $this->state) {
-            $this->state = [];
-        }
-
-        $this->state[] = $state;
+        $this->state[] = $item;
     }
 
     /**
-     * @param ?array $state
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasState(?array $state, bool $strict = true): bool
+    public function hasState($item, bool $strict = true): bool
     {
-        if (null === $this->state) {
-            return false;
-        }
-
-        return in_array($state, $this->state, $strict);
+        return in_array($item, $this->state, $strict);
     }
 
     /**
-     * @param null|array $state
+     * @param array $state
      */
-    public function setState(?array $state): void
+    public function setState(array $state): void
     {
         $this->state = $state;
     }
 
     /**
-     * @return float
+     * @return null|float
      */
-    public function getTotalPercent(): float
+    public function getTotalPercent(): ?float
     {
         return $this->total_percent;
     }
 
     /**
-     * @param Move $move_ids
+     * @return null|int
      */
-    public function setMoveIds(Move $move_ids): void
+    public function getMoveIdsCount(): ?int
+    {
+        return $this->move_ids_count;
+    }
+
+    /**
+     * @param Move $item
+     */
+    public function removeMoveIds(Move $item): void
+    {
+        if (null === $this->move_ids) {
+            $this->move_ids = [];
+        }
+
+        if ($this->hasMoveIds($item)) {
+            $index = array_search($item, $this->move_ids);
+            unset($this->move_ids[$index]);
+        }
+    }
+
+    /**
+     * @param Move $item
+     */
+    public function addMoveIds(Move $item): void
+    {
+        if ($this->hasMoveIds($item)) {
+            return;
+        }
+
+        if (null === $this->move_ids) {
+            $this->move_ids = [];
+        }
+
+        $this->move_ids[] = $item;
+    }
+
+    /**
+     * @param Move $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasMoveIds(Move $item, bool $strict = true): bool
+    {
+        if (null === $this->move_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->move_ids, $strict);
+    }
+
+    /**
+     * @param null|Move[] $move_ids
+     */
+    public function setMoveIds(?array $move_ids): void
     {
         $this->move_ids = $move_ids;
     }
 
     /**
-     * @param null|Journal $journal_id
+     * @param Line $item
+     */
+    public function addLineIds(Line $item): void
+    {
+        if ($this->hasLineIds($item)) {
+            return;
+        }
+
+        if (null === $this->line_ids) {
+            $this->line_ids = [];
+        }
+
+        $this->line_ids[] = $item;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param Line $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasLineIds(Line $item, bool $strict = true): bool
+    {
+        if (null === $this->line_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->line_ids, $strict);
+    }
+
+    /**
+     * @param null|Line[] $line_ids
+     */
+    public function setLineIds(?array $line_ids): void
+    {
+        $this->line_ids = $line_ids;
+    }
+
+    /**
+     * @param Account $item
+     */
+    public function removeAccountIds(Account $item): void
+    {
+        if (null === $this->account_ids) {
+            $this->account_ids = [];
+        }
+
+        if ($this->hasAccountIds($item)) {
+            $index = array_search($item, $this->account_ids);
+            unset($this->account_ids[$index]);
+        }
+    }
+
+    /**
+     * @param Account $item
+     */
+    public function addAccountIds(Account $item): void
+    {
+        if ($this->hasAccountIds($item)) {
+            return;
+        }
+
+        if (null === $this->account_ids) {
+            $this->account_ids = [];
+        }
+
+        $this->account_ids[] = $item;
+    }
+
+    /**
+     * @param Account $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasAccountIds(Account $item, bool $strict = true): bool
+    {
+        if (null === $this->account_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->account_ids, $strict);
+    }
+
+    /**
+     * @param null|Account[] $account_ids
+     */
+    public function setAccountIds(?array $account_ids): void
+    {
+        $this->account_ids = $account_ids;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeFrequency($item): void
+    {
+        if ($this->hasFrequency($item)) {
+            $index = array_search($item, $this->frequency);
+            unset($this->frequency[$index]);
+        }
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addFrequency($item): void
+    {
+        if ($this->hasFrequency($item)) {
+            return;
+        }
+
+        $this->frequency[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasFrequency($item, bool $strict = true): bool
+    {
+        return in_array($item, $this->frequency, $strict);
+    }
+
+    /**
+     * @param array $frequency
+     */
+    public function setFrequency(array $frequency): void
+    {
+        $this->frequency = $frequency;
+    }
+
+    /**
+     * @param null|DateTimeInterface $date_stop
+     */
+    public function setDateStop(?DateTimeInterface $date_stop): void
+    {
+        $this->date_stop = $date_stop;
+    }
+
+    /**
+     * @param DateTimeInterface $date_start
+     */
+    public function setDateStart(DateTimeInterface $date_start): void
+    {
+        $this->date_start = $date_start;
+    }
+
+    /**
+     * @return null|Company
+     */
+    public function getCompanyId(): ?Company
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param Journal $journal_id
      */
     public function setJournalId(Journal $journal_id): void
     {
@@ -256,99 +490,9 @@ final class Model extends Base
     }
 
     /**
-     * @param Line $line_ids
+     * @return null|DateTimeInterface
      */
-    public function setLineIds(Line $line_ids): void
-    {
-        $this->line_ids = $line_ids;
-    }
-
-    /**
-     * @param Account $account_ids
-     */
-    public function setAccountIds(Account $account_ids): void
-    {
-        $this->account_ids = $account_ids;
-    }
-
-    /**
-     * @param ?array $frequency
-     */
-    public function removeFrequency(?array $frequency): void
-    {
-        if ($this->hasFrequency($frequency)) {
-            $index = array_search($frequency, $this->frequency);
-            unset($this->frequency[$index]);
-        }
-    }
-
-    /**
-     * @param ?array $frequency
-     */
-    public function addFrequency(?array $frequency): void
-    {
-        if ($this->hasFrequency($frequency)) {
-            return;
-        }
-
-        if (null === $this->frequency) {
-            $this->frequency = [];
-        }
-
-        $this->frequency[] = $frequency;
-    }
-
-    /**
-     * @param ?array $frequency
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasFrequency(?array $frequency, bool $strict = true): bool
-    {
-        if (null === $this->frequency) {
-            return false;
-        }
-
-        return in_array($frequency, $this->frequency, $strict);
-    }
-
-    /**
-     * @param null|array $frequency
-     */
-    public function setFrequency(?array $frequency): void
-    {
-        $this->frequency = $frequency;
-    }
-
-    /**
-     * @param DateTimeInterface $date_stop
-     */
-    public function setDateStop(DateTimeInterface $date_stop): void
-    {
-        $this->date_stop = $date_stop;
-    }
-
-    /**
-     * @param null|DateTimeInterface $date_start
-     */
-    public function setDateStart(?DateTimeInterface $date_start): void
-    {
-        $this->date_start = $date_start;
-    }
-
-    /**
-     * @return Company
-     */
-    public function getCompanyId(): Company
-    {
-        return $this->company_id;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

@@ -12,7 +12,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : base.automation.line.test
  * Name : base.automation.line.test
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -28,104 +28,104 @@ final class Test extends Base
     /**
      * Name
      *
-     * @var string
+     * @var null|string
      */
     private $name;
 
     /**
      * Lead
      *
-     * @var TestAlias
+     * @var null|TestAlias
      */
     private $lead_id;
 
     /**
      * User
      *
-     * @var Users
+     * @var null|Users
      */
     private $user_id;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param string $name
+     * @param null|string $name
      */
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * @param TestAlias $lead_id
+     * @param null|TestAlias $lead_id
      */
-    public function setLeadId(TestAlias $lead_id): void
+    public function setLeadId(?TestAlias $lead_id): void
     {
         $this->lead_id = $lead_id;
     }
 
     /**
-     * @param Users $user_id
+     * @param null|Users $user_id
      */
-    public function setUserId(Users $user_id): void
+    public function setUserId(?Users $user_id): void
     {
         $this->user_id = $user_id;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

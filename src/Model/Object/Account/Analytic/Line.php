@@ -20,7 +20,7 @@ use Flux\OdooApiClient\Model\Object\Uom\Uom;
 /**
  * Odoo model : account.analytic.line
  * Name : account.analytic.line
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -36,270 +36,189 @@ final class Line extends Base
     /**
      * Description
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Date
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface
      */
     private $date;
 
     /**
      * Amount
      *
-     * @var null|float
+     * @var float
      */
     private $amount;
 
     /**
      * Quantity
      *
-     * @var float
+     * @var null|float
      */
     private $unit_amount;
 
     /**
      * Unit of Measure
      *
-     * @var Uom
+     * @var null|Uom
      */
     private $product_uom_id;
 
     /**
      * Category
+     * Conversion between Units of Measure can only occur if they belong to the same category. The conversion will be
+     * made based on the ratios.
      *
-     * @var Category
+     * @var null|Category
      */
     private $product_uom_category_id;
 
     /**
      * Analytic Account
      *
-     * @var null|Account
+     * @var Account
      */
     private $account_id;
 
     /**
      * Partner
      *
-     * @var Partner
+     * @var null|Partner
      */
     private $partner_id;
 
     /**
      * User
      *
-     * @var Users
+     * @var null|Users
      */
     private $user_id;
 
     /**
      * Tags
      *
-     * @var Tag
+     * @var null|Tag[]
      */
     private $tag_ids;
 
     /**
      * Company
      *
-     * @var null|Company
+     * @var Company
      */
     private $company_id;
 
     /**
      * Currency
      *
-     * @var Currency
+     * @var null|Currency
      */
     private $currency_id;
 
     /**
      * Group
      *
-     * @var Group
+     * @var null|Group
      */
     private $group_id;
 
     /**
      * Product
      *
-     * @var Product
+     * @var null|Product
      */
     private $product_id;
 
     /**
      * Financial Account
      *
-     * @var AccountAlias
+     * @var null|AccountAlias
      */
     private $general_account_id;
 
     /**
      * Journal Item
      *
-     * @var LineAlias
+     * @var null|LineAlias
      */
     private $move_id;
 
     /**
      * Code
      *
-     * @var string
+     * @var null|string
      */
     private $code;
 
     /**
      * Ref.
      *
-     * @var string
+     * @var null|string
      */
     private $ref;
 
     /**
      * Sales Order Item
      *
-     * @var LineAliasAlias
+     * @var null|LineAliasAlias
      */
     private $so_line;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @param string $name Description
+     * @param DateTimeInterface $date Date
+     * @param float $amount Amount
+     * @param Account $account_id Analytic Account
+     * @param Company $company_id Company
      */
-    public function setName(?string $name): void
-    {
+    public function __construct(
+        string $name,
+        DateTimeInterface $date,
+        float $amount,
+        Account $account_id,
+        Company $company_id
+    ) {
         $this->name = $name;
-    }
-
-    /**
-     * @return Group
-     */
-    public function getGroupId(): Group
-    {
-        return $this->group_id;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getWriteUid(): Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getCreateDate(): DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getCreateUid(): Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param LineAliasAlias $so_line
-     */
-    public function setSoLine(LineAliasAlias $so_line): void
-    {
-        $this->so_line = $so_line;
-    }
-
-    /**
-     * @param string $ref
-     */
-    public function setRef(string $ref): void
-    {
-        $this->ref = $ref;
-    }
-
-    /**
-     * @param string $code
-     */
-    public function setCode(string $code): void
-    {
-        $this->code = $code;
-    }
-
-    /**
-     * @param LineAlias $move_id
-     */
-    public function setMoveId(LineAlias $move_id): void
-    {
-        $this->move_id = $move_id;
-    }
-
-    /**
-     * @return AccountAlias
-     */
-    public function getGeneralAccountId(): AccountAlias
-    {
-        return $this->general_account_id;
-    }
-
-    /**
-     * @param Product $product_id
-     */
-    public function setProductId(Product $product_id): void
-    {
-        $this->product_id = $product_id;
-    }
-
-    /**
-     * @return Currency
-     */
-    public function getCurrencyId(): Currency
-    {
-        return $this->currency_id;
-    }
-
-    /**
-     * @param null|DateTimeInterface $date
-     */
-    public function setDate(?DateTimeInterface $date): void
-    {
         $this->date = $date;
+        $this->amount = $amount;
+        $this->account_id = $account_id;
+        $this->company_id = $company_id;
     }
 
     /**
-     * @return null|Company
+     * @return Company
      */
     public function getCompanyId(): Company
     {
@@ -307,31 +226,173 @@ final class Line extends Base
     }
 
     /**
-     * @param Tag $tag_ids
+     * @return null|Users
      */
-    public function setTagIds(Tag $tag_ids): void
+    public function getWriteUid(): ?Users
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getCreateUid(): ?Users
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param null|LineAliasAlias $so_line
+     */
+    public function setSoLine(?LineAliasAlias $so_line): void
+    {
+        $this->so_line = $so_line;
+    }
+
+    /**
+     * @param null|string $ref
+     */
+    public function setRef(?string $ref): void
+    {
+        $this->ref = $ref;
+    }
+
+    /**
+     * @param null|string $code
+     */
+    public function setCode(?string $code): void
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * @param null|LineAlias $move_id
+     */
+    public function setMoveId(?LineAlias $move_id): void
+    {
+        $this->move_id = $move_id;
+    }
+
+    /**
+     * @return null|AccountAlias
+     */
+    public function getGeneralAccountId(): ?AccountAlias
+    {
+        return $this->general_account_id;
+    }
+
+    /**
+     * @param null|Product $product_id
+     */
+    public function setProductId(?Product $product_id): void
+    {
+        $this->product_id = $product_id;
+    }
+
+    /**
+     * @return null|Group
+     */
+    public function getGroupId(): ?Group
+    {
+        return $this->group_id;
+    }
+
+    /**
+     * @return null|Currency
+     */
+    public function getCurrencyId(): ?Currency
+    {
+        return $this->currency_id;
+    }
+
+    /**
+     * @param Tag $item
+     */
+    public function removeTagIds(Tag $item): void
+    {
+        if (null === $this->tag_ids) {
+            $this->tag_ids = [];
+        }
+
+        if ($this->hasTagIds($item)) {
+            $index = array_search($item, $this->tag_ids);
+            unset($this->tag_ids[$index]);
+        }
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param Tag $item
+     */
+    public function addTagIds(Tag $item): void
+    {
+        if ($this->hasTagIds($item)) {
+            return;
+        }
+
+        if (null === $this->tag_ids) {
+            $this->tag_ids = [];
+        }
+
+        $this->tag_ids[] = $item;
+    }
+
+    /**
+     * @param Tag $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasTagIds(Tag $item, bool $strict = true): bool
+    {
+        if (null === $this->tag_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->tag_ids, $strict);
+    }
+
+    /**
+     * @param null|Tag[] $tag_ids
+     */
+    public function setTagIds(?array $tag_ids): void
     {
         $this->tag_ids = $tag_ids;
     }
 
     /**
-     * @param Users $user_id
+     * @param null|Users $user_id
      */
-    public function setUserId(Users $user_id): void
+    public function setUserId(?Users $user_id): void
     {
         $this->user_id = $user_id;
     }
 
     /**
-     * @param Partner $partner_id
+     * @param null|Partner $partner_id
      */
-    public function setPartnerId(Partner $partner_id): void
+    public function setPartnerId(?Partner $partner_id): void
     {
         $this->partner_id = $partner_id;
     }
 
     /**
-     * @param null|Account $account_id
+     * @param Account $account_id
      */
     public function setAccountId(Account $account_id): void
     {
@@ -339,41 +400,49 @@ final class Line extends Base
     }
 
     /**
-     * @return Category
+     * @return null|Category
      */
-    public function getProductUomCategoryId(): Category
+    public function getProductUomCategoryId(): ?Category
     {
         return $this->product_uom_category_id;
     }
 
     /**
-     * @param Uom $product_uom_id
+     * @param null|Uom $product_uom_id
      */
-    public function setProductUomId(Uom $product_uom_id): void
+    public function setProductUomId(?Uom $product_uom_id): void
     {
         $this->product_uom_id = $product_uom_id;
     }
 
     /**
-     * @param float $unit_amount
+     * @param null|float $unit_amount
      */
-    public function setUnitAmount(float $unit_amount): void
+    public function setUnitAmount(?float $unit_amount): void
     {
         $this->unit_amount = $unit_amount;
     }
 
     /**
-     * @param null|float $amount
+     * @param float $amount
      */
-    public function setAmount(?float $amount): void
+    public function setAmount(float $amount): void
     {
         $this->amount = $amount;
     }
 
     /**
-     * @return DateTimeInterface
+     * @param DateTimeInterface $date
      */
-    public function getWriteDate(): DateTimeInterface
+    public function setDate(DateTimeInterface $date): void
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

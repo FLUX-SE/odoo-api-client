@@ -14,7 +14,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : account.move.reversal
  * Name : account.move.reversal
- *
+ * Info :
  * Account move reversal wizard, it cancel an account move by reversing it.
  */
 final class Reversal extends Base
@@ -22,221 +22,228 @@ final class Reversal extends Base
     /**
      * Journal Entry
      *
-     * @var Move
+     * @var null|Move
      */
     private $move_id;
 
     /**
      * Reversal date
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface
      */
     private $date;
 
     /**
      * Reason
      *
-     * @var string
+     * @var null|string
      */
     private $reason;
 
     /**
      * Credit Method
+     * Choose how you want to credit this invoice. You cannot "modify" nor "cancel" if the invoice is already
+     * reconciled.
      *
-     * @var null|array
+     * @var array
      */
     private $refund_method;
 
     /**
      * Use Specific Journal
+     * If empty, uses the journal of the journal entry to be reversed.
      *
-     * @var Journal
+     * @var null|Journal
      */
     private $journal_id;
 
     /**
      * Residual
      *
-     * @var float
+     * @var null|float
      */
     private $residual;
 
     /**
      * Currency
      *
-     * @var Currency
+     * @var null|Currency
      */
     private $currency_id;
 
     /**
      * Move Type
      *
-     * @var string
+     * @var null|string
      */
     private $move_type;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param Move $move_id
+     * @param DateTimeInterface $date Reversal date
+     * @param array $refund_method Credit Method
+     *        Choose how you want to credit this invoice. You cannot "modify" nor "cancel" if the invoice is already
+     *        reconciled.
      */
-    public function setMoveId(Move $move_id): void
+    public function __construct(DateTimeInterface $date, array $refund_method)
+    {
+        $this->date = $date;
+        $this->refund_method = $refund_method;
+    }
+
+    /**
+     * @param null|Move $move_id
+     */
+    public function setMoveId(?Move $move_id): void
     {
         $this->move_id = $move_id;
     }
 
     /**
-     * @param null|DateTimeInterface $date
+     * @param DateTimeInterface $date
      */
-    public function setDate(?DateTimeInterface $date): void
+    public function setDate(DateTimeInterface $date): void
     {
         $this->date = $date;
     }
 
     /**
-     * @param string $reason
+     * @param null|string $reason
      */
-    public function setReason(string $reason): void
+    public function setReason(?string $reason): void
     {
         $this->reason = $reason;
     }
 
     /**
-     * @param null|array $refund_method
+     * @param array $refund_method
      */
-    public function setRefundMethod(?array $refund_method): void
+    public function setRefundMethod(array $refund_method): void
     {
         $this->refund_method = $refund_method;
     }
 
     /**
-     * @param ?array $refund_method
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasRefundMethod(?array $refund_method, bool $strict = true): bool
+    public function hasRefundMethod($item, bool $strict = true): bool
     {
-        if (null === $this->refund_method) {
-            return false;
-        }
-
-        return in_array($refund_method, $this->refund_method, $strict);
+        return in_array($item, $this->refund_method, $strict);
     }
 
     /**
-     * @param ?array $refund_method
+     * @param mixed $item
      */
-    public function addRefundMethod(?array $refund_method): void
+    public function addRefundMethod($item): void
     {
-        if ($this->hasRefundMethod($refund_method)) {
+        if ($this->hasRefundMethod($item)) {
             return;
         }
 
-        if (null === $this->refund_method) {
-            $this->refund_method = [];
-        }
-
-        $this->refund_method[] = $refund_method;
+        $this->refund_method[] = $item;
     }
 
     /**
-     * @param ?array $refund_method
+     * @param mixed $item
      */
-    public function removeRefundMethod(?array $refund_method): void
+    public function removeRefundMethod($item): void
     {
-        if ($this->hasRefundMethod($refund_method)) {
-            $index = array_search($refund_method, $this->refund_method);
+        if ($this->hasRefundMethod($item)) {
+            $index = array_search($item, $this->refund_method);
             unset($this->refund_method[$index]);
         }
     }
 
     /**
-     * @param Journal $journal_id
+     * @param null|Journal $journal_id
      */
-    public function setJournalId(Journal $journal_id): void
+    public function setJournalId(?Journal $journal_id): void
     {
         $this->journal_id = $journal_id;
     }
 
     /**
-     * @return float
+     * @return null|float
      */
-    public function getResidual(): float
+    public function getResidual(): ?float
     {
         return $this->residual;
     }
 
     /**
-     * @return Currency
+     * @return null|Currency
      */
-    public function getCurrencyId(): Currency
+    public function getCurrencyId(): ?Currency
     {
         return $this->currency_id;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getMoveType(): string
+    public function getMoveType(): ?string
     {
         return $this->move_type;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

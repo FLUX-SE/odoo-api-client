@@ -13,7 +13,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : ir.model.relation
  * Name : ir.model.relation
- *
+ * Info :
  * This model tracks PostgreSQL tables used to implement Odoo many2many
  * relations.
  */
@@ -21,63 +21,77 @@ final class Relation extends Base
 {
     /**
      * Relation Name
+     * PostgreSQL table name implementing a many2many relation.
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Model
      *
-     * @var null|Model
+     * @var Model
      */
     private $model;
 
     /**
      * Module
      *
-     * @var null|Module
+     * @var Module
      */
     private $module;
 
     /**
      * Write Date
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
      * Create Date
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
-     * @param null|string $name
+     * @param string $name Relation Name
+     *        PostgreSQL table name implementing a many2many relation.
+     * @param Model $model Model
+     * @param Module $module Module
      */
-    public function setName(?string $name): void
+    public function __construct(string $name, Model $model, Module $module)
+    {
+        $this->name = $name;
+        $this->model = $model;
+        $this->module = $module;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * @param null|Model $model
+     * @param Model $model
      */
     public function setModel(Model $model): void
     {
@@ -85,7 +99,7 @@ final class Relation extends Base
     }
 
     /**
-     * @param null|Module $module
+     * @param Module $module
      */
     public function setModule(Module $module): void
     {
@@ -93,33 +107,33 @@ final class Relation extends Base
     }
 
     /**
-     * @param DateTimeInterface $write_date
+     * @param null|DateTimeInterface $write_date
      */
-    public function setWriteDate(DateTimeInterface $write_date): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
     }
 
     /**
-     * @param DateTimeInterface $create_date
+     * @param null|DateTimeInterface $create_date
      */
-    public function setCreateDate(DateTimeInterface $create_date): void
+    public function setCreateDate(?DateTimeInterface $create_date): void
     {
         $this->create_date = $create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }

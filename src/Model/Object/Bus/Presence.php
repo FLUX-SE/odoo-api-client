@@ -11,7 +11,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : bus.presence
  * Name : bus.presence
- *
+ * Info :
  * User Presence
  * Its status is 'online', 'away' or 'offline'. This model should be a one2one, but is not
  * attached to res_users to avoid database concurrence errors. Since the 'update' method is executed
@@ -22,33 +22,41 @@ final class Presence extends Base
     /**
      * Users
      *
-     * @var null|Users
+     * @var Users
      */
     private $user_id;
 
     /**
      * Last Poll
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $last_poll;
 
     /**
      * Last Presence
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $last_presence;
 
     /**
      * IM Status
      *
-     * @var array
+     * @var null|array
      */
     private $status;
 
     /**
-     * @param null|Users $user_id
+     * @param Users $user_id Users
+     */
+    public function __construct(Users $user_id)
+    {
+        $this->user_id = $user_id;
+    }
+
+    /**
+     * @param Users $user_id
      */
     public function setUserId(Users $user_id): void
     {
@@ -56,59 +64,71 @@ final class Presence extends Base
     }
 
     /**
-     * @param DateTimeInterface $last_poll
+     * @param null|DateTimeInterface $last_poll
      */
-    public function setLastPoll(DateTimeInterface $last_poll): void
+    public function setLastPoll(?DateTimeInterface $last_poll): void
     {
         $this->last_poll = $last_poll;
     }
 
     /**
-     * @param DateTimeInterface $last_presence
+     * @param null|DateTimeInterface $last_presence
      */
-    public function setLastPresence(DateTimeInterface $last_presence): void
+    public function setLastPresence(?DateTimeInterface $last_presence): void
     {
         $this->last_presence = $last_presence;
     }
 
     /**
-     * @param array $status
+     * @param null|array $status
      */
-    public function setStatus(array $status): void
+    public function setStatus(?array $status): void
     {
         $this->status = $status;
     }
 
     /**
-     * @param array $status
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasStatus(array $status, bool $strict = true): bool
+    public function hasStatus($item, bool $strict = true): bool
     {
-        return in_array($status, $this->status, $strict);
+        if (null === $this->status) {
+            return false;
+        }
+
+        return in_array($item, $this->status, $strict);
     }
 
     /**
-     * @param array $status
+     * @param mixed $item
      */
-    public function addStatus(array $status): void
+    public function addStatus($item): void
     {
-        if ($this->hasStatus($status)) {
+        if ($this->hasStatus($item)) {
             return;
         }
 
-        $this->status[] = $status;
+        if (null === $this->status) {
+            $this->status = [];
+        }
+
+        $this->status[] = $item;
     }
 
     /**
-     * @param array $status
+     * @param mixed $item
      */
-    public function removeStatus(array $status): void
+    public function removeStatus($item): void
     {
-        if ($this->hasStatus($status)) {
-            $index = array_search($status, $this->status);
+        if (null === $this->status) {
+            $this->status = [];
+        }
+
+        if ($this->hasStatus($item)) {
+            $index = array_search($item, $this->status);
             unset($this->status[$index]);
         }
     }

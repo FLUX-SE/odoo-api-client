@@ -13,7 +13,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : ir.actions.act_window.view
  * Name : ir.actions.act_window.view
- *
+ * Info :
  * Mixin that overrides the create and write methods to properly generate
  * ir.model.data entries flagged with Studio for the corresponding resources.
  * Doesn't create an ir.model.data if the record is part of a module being
@@ -25,176 +25,177 @@ final class View extends Base
     /**
      * Sequence
      *
-     * @var int
+     * @var null|int
      */
     private $sequence;
 
     /**
      * View
      *
-     * @var ViewAlias
+     * @var null|ViewAlias
      */
     private $view_id;
 
     /**
      * Action
      *
-     * @var ActWindow
+     * @var null|ActWindow
      */
     private $act_window_id;
 
     /**
      * On Multiple Doc.
+     * If set to true, the action will not be displayed on the right toolbar of a form view.
      *
-     * @var bool
+     * @var null|bool
      */
     private $multi;
 
     /**
      * View Type
      *
-     * @var null|array
+     * @var array
      */
     private $view_mode;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param int $sequence
+     * @param array $view_mode View Type
      */
-    public function setSequence(int $sequence): void
-    {
-        $this->sequence = $sequence;
-    }
-
-    /**
-     * @param ViewAlias $view_id
-     */
-    public function setViewId(ViewAlias $view_id): void
-    {
-        $this->view_id = $view_id;
-    }
-
-    /**
-     * @param ActWindow $act_window_id
-     */
-    public function setActWindowId(ActWindow $act_window_id): void
-    {
-        $this->act_window_id = $act_window_id;
-    }
-
-    /**
-     * @param bool $multi
-     */
-    public function setMulti(bool $multi): void
-    {
-        $this->multi = $multi;
-    }
-
-    /**
-     * @param null|array $view_mode
-     */
-    public function setViewMode(?array $view_mode): void
+    public function __construct(array $view_mode)
     {
         $this->view_mode = $view_mode;
     }
 
     /**
-     * @param ?array $view_mode
+     * @param null|int $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * @param null|ViewAlias $view_id
+     */
+    public function setViewId(?ViewAlias $view_id): void
+    {
+        $this->view_id = $view_id;
+    }
+
+    /**
+     * @param null|ActWindow $act_window_id
+     */
+    public function setActWindowId(?ActWindow $act_window_id): void
+    {
+        $this->act_window_id = $act_window_id;
+    }
+
+    /**
+     * @param null|bool $multi
+     */
+    public function setMulti(?bool $multi): void
+    {
+        $this->multi = $multi;
+    }
+
+    /**
+     * @param array $view_mode
+     */
+    public function setViewMode(array $view_mode): void
+    {
+        $this->view_mode = $view_mode;
+    }
+
+    /**
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasViewMode(?array $view_mode, bool $strict = true): bool
+    public function hasViewMode($item, bool $strict = true): bool
     {
-        if (null === $this->view_mode) {
-            return false;
-        }
-
-        return in_array($view_mode, $this->view_mode, $strict);
+        return in_array($item, $this->view_mode, $strict);
     }
 
     /**
-     * @param ?array $view_mode
+     * @param mixed $item
      */
-    public function addViewMode(?array $view_mode): void
+    public function addViewMode($item): void
     {
-        if ($this->hasViewMode($view_mode)) {
+        if ($this->hasViewMode($item)) {
             return;
         }
 
-        if (null === $this->view_mode) {
-            $this->view_mode = [];
-        }
-
-        $this->view_mode[] = $view_mode;
+        $this->view_mode[] = $item;
     }
 
     /**
-     * @param ?array $view_mode
+     * @param mixed $item
      */
-    public function removeViewMode(?array $view_mode): void
+    public function removeViewMode($item): void
     {
-        if ($this->hasViewMode($view_mode)) {
-            $index = array_search($view_mode, $this->view_mode);
+        if ($this->hasViewMode($item)) {
+            $index = array_search($item, $this->view_mode);
             unset($this->view_mode[$index]);
         }
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

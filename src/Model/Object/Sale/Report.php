@@ -25,7 +25,7 @@ use Flux\OdooApiClient\Model\Object\Utm\Source;
 /**
  * Odoo model : sale.report
  * Name : sale.report
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -41,524 +41,524 @@ final class Report extends Base
     /**
      * Order Reference
      *
-     * @var string
+     * @var null|string
      */
     private $name;
 
     /**
      * Order Date
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $date;
 
     /**
      * Product Variant
      *
-     * @var Product
+     * @var null|Product
      */
     private $product_id;
 
     /**
      * Unit of Measure
      *
-     * @var Uom
+     * @var null|Uom
      */
     private $product_uom;
 
     /**
      * Qty Ordered
      *
-     * @var float
+     * @var null|float
      */
     private $product_uom_qty;
 
     /**
      * Qty Delivered
      *
-     * @var float
+     * @var null|float
      */
     private $qty_delivered;
 
     /**
      * Qty To Invoice
      *
-     * @var float
+     * @var null|float
      */
     private $qty_to_invoice;
 
     /**
      * Qty Invoiced
      *
-     * @var float
+     * @var null|float
      */
     private $qty_invoiced;
 
     /**
      * Customer
      *
-     * @var Partner
+     * @var null|Partner
      */
     private $partner_id;
 
     /**
      * Company
      *
-     * @var Company
+     * @var null|Company
      */
     private $company_id;
 
     /**
      * Salesperson
      *
-     * @var Users
+     * @var null|Users
      */
     private $user_id;
 
     /**
      * Total
      *
-     * @var float
+     * @var null|float
      */
     private $price_total;
 
     /**
      * Untaxed Total
      *
-     * @var float
+     * @var null|float
      */
     private $price_subtotal;
 
     /**
      * Untaxed Amount To Invoice
      *
-     * @var float
+     * @var null|float
      */
     private $untaxed_amount_to_invoice;
 
     /**
      * Untaxed Amount Invoiced
      *
-     * @var float
+     * @var null|float
      */
     private $untaxed_amount_invoiced;
 
     /**
      * Product
      *
-     * @var Template
+     * @var null|Template
      */
     private $product_tmpl_id;
 
     /**
      * Product Category
      *
-     * @var Category
+     * @var null|Category
      */
     private $categ_id;
 
     /**
      * # of Lines
      *
-     * @var int
+     * @var null|int
      */
     private $nbr;
 
     /**
      * Pricelist
      *
-     * @var Pricelist
+     * @var null|Pricelist
      */
     private $pricelist_id;
 
     /**
      * Analytic Account
      *
-     * @var Account
+     * @var null|Account
      */
     private $analytic_account_id;
 
     /**
      * Sales Team
      *
-     * @var Team
+     * @var null|Team
      */
     private $team_id;
 
     /**
      * Customer Country
      *
-     * @var Country
+     * @var null|Country
      */
     private $country_id;
 
     /**
      * Customer Industry
      *
-     * @var Industry
+     * @var null|Industry
      */
     private $industry_id;
 
     /**
      * Customer Entity
      *
-     * @var Partner
+     * @var null|Partner
      */
     private $commercial_partner_id;
 
     /**
      * Status
      *
-     * @var array
+     * @var null|array
      */
     private $state;
 
     /**
      * Gross Weight
      *
-     * @var float
+     * @var null|float
      */
     private $weight;
 
     /**
      * Volume
      *
-     * @var float
+     * @var null|float
      */
     private $volume;
 
     /**
      * Discount %
      *
-     * @var float
+     * @var null|float
      */
     private $discount;
 
     /**
      * Discount Amount
      *
-     * @var float
+     * @var null|float
      */
     private $discount_amount;
 
     /**
      * Campaign
      *
-     * @var Campaign
+     * @var null|Campaign
      */
     private $campaign_id;
 
     /**
      * Medium
      *
-     * @var Medium
+     * @var null|Medium
      */
     private $medium_id;
 
     /**
      * Source
      *
-     * @var Source
+     * @var null|Source
      */
     private $source_id;
 
     /**
      * Order #
      *
-     * @var Order
+     * @var null|Order
      */
     private $order_id;
 
     /**
      * Days To Confirm
      *
-     * @var float
+     * @var null|float
      */
     private $days_to_confirm;
 
     /**
      * Invoice Status
      *
-     * @var array
+     * @var null|array
      */
     private $invoice_status;
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
     /**
-     * @return float
+     * @return null|float
      */
-    public function getVolume(): float
+    public function getVolume(): ?float
     {
         return $this->volume;
     }
 
     /**
-     * @return Team
+     * @return null|Team
      */
-    public function getTeamId(): Team
+    public function getTeamId(): ?Team
     {
         return $this->team_id;
     }
 
     /**
-     * @return Country
+     * @return null|Country
      */
-    public function getCountryId(): Country
+    public function getCountryId(): ?Country
     {
         return $this->country_id;
     }
 
     /**
-     * @return Industry
+     * @return null|Industry
      */
-    public function getIndustryId(): Industry
+    public function getIndustryId(): ?Industry
     {
         return $this->industry_id;
     }
 
     /**
-     * @return Partner
+     * @return null|Partner
      */
-    public function getCommercialPartnerId(): Partner
+    public function getCommercialPartnerId(): ?Partner
     {
         return $this->commercial_partner_id;
     }
 
     /**
-     * @return array
+     * @return null|array
      */
-    public function getState(): array
+    public function getState(): ?array
     {
         return $this->state;
     }
 
     /**
-     * @return float
+     * @return null|float
      */
-    public function getWeight(): float
+    public function getWeight(): ?float
     {
         return $this->weight;
     }
 
     /**
-     * @return float
+     * @return null|float
      */
-    public function getDiscount(): float
+    public function getDiscount(): ?float
     {
         return $this->discount;
     }
 
     /**
-     * @return Pricelist
+     * @return null|Pricelist
      */
-    public function getPricelistId(): Pricelist
+    public function getPricelistId(): ?Pricelist
     {
         return $this->pricelist_id;
     }
 
     /**
-     * @return float
+     * @return null|float
      */
-    public function getDiscountAmount(): float
+    public function getDiscountAmount(): ?float
     {
         return $this->discount_amount;
     }
 
     /**
-     * @param Campaign $campaign_id
+     * @param null|Campaign $campaign_id
      */
-    public function setCampaignId(Campaign $campaign_id): void
+    public function setCampaignId(?Campaign $campaign_id): void
     {
         $this->campaign_id = $campaign_id;
     }
 
     /**
-     * @param Medium $medium_id
+     * @param null|Medium $medium_id
      */
-    public function setMediumId(Medium $medium_id): void
+    public function setMediumId(?Medium $medium_id): void
     {
         $this->medium_id = $medium_id;
     }
 
     /**
-     * @param Source $source_id
+     * @param null|Source $source_id
      */
-    public function setSourceId(Source $source_id): void
+    public function setSourceId(?Source $source_id): void
     {
         $this->source_id = $source_id;
     }
 
     /**
-     * @return Order
+     * @return null|Order
      */
-    public function getOrderId(): Order
+    public function getOrderId(): ?Order
     {
         return $this->order_id;
     }
 
     /**
-     * @return float
+     * @return null|float
      */
-    public function getDaysToConfirm(): float
+    public function getDaysToConfirm(): ?float
     {
         return $this->days_to_confirm;
     }
 
     /**
-     * @return Account
+     * @return null|Account
      */
-    public function getAnalyticAccountId(): Account
+    public function getAnalyticAccountId(): ?Account
     {
         return $this->analytic_account_id;
     }
 
     /**
-     * @return int
+     * @return null|int
      */
-    public function getNbr(): int
+    public function getNbr(): ?int
     {
         return $this->nbr;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getDate(): DateTimeInterface
+    public function getDate(): ?DateTimeInterface
     {
         return $this->date;
     }
 
     /**
-     * @return Partner
+     * @return null|Partner
      */
-    public function getPartnerId(): Partner
+    public function getPartnerId(): ?Partner
     {
         return $this->partner_id;
     }
 
     /**
-     * @return Product
+     * @return null|Product
      */
-    public function getProductId(): Product
+    public function getProductId(): ?Product
     {
         return $this->product_id;
     }
 
     /**
-     * @return Uom
+     * @return null|Uom
      */
-    public function getProductUom(): Uom
+    public function getProductUom(): ?Uom
     {
         return $this->product_uom;
     }
 
     /**
-     * @return float
+     * @return null|float
      */
-    public function getProductUomQty(): float
+    public function getProductUomQty(): ?float
     {
         return $this->product_uom_qty;
     }
 
     /**
-     * @return float
+     * @return null|float
      */
-    public function getQtyDelivered(): float
+    public function getQtyDelivered(): ?float
     {
         return $this->qty_delivered;
     }
 
     /**
-     * @return float
+     * @return null|float
      */
-    public function getQtyToInvoice(): float
+    public function getQtyToInvoice(): ?float
     {
         return $this->qty_to_invoice;
     }
 
     /**
-     * @return float
+     * @return null|float
      */
-    public function getQtyInvoiced(): float
+    public function getQtyInvoiced(): ?float
     {
         return $this->qty_invoiced;
     }
 
     /**
-     * @return Company
+     * @return null|Company
      */
-    public function getCompanyId(): Company
+    public function getCompanyId(): ?Company
     {
         return $this->company_id;
     }
 
     /**
-     * @return Category
+     * @return null|Category
      */
-    public function getCategId(): Category
+    public function getCategId(): ?Category
     {
         return $this->categ_id;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getUserId(): Users
+    public function getUserId(): ?Users
     {
         return $this->user_id;
     }
 
     /**
-     * @return float
+     * @return null|float
      */
-    public function getPriceTotal(): float
+    public function getPriceTotal(): ?float
     {
         return $this->price_total;
     }
 
     /**
-     * @return float
+     * @return null|float
      */
-    public function getPriceSubtotal(): float
+    public function getPriceSubtotal(): ?float
     {
         return $this->price_subtotal;
     }
 
     /**
-     * @return float
+     * @return null|float
      */
-    public function getUntaxedAmountToInvoice(): float
+    public function getUntaxedAmountToInvoice(): ?float
     {
         return $this->untaxed_amount_to_invoice;
     }
 
     /**
-     * @return float
+     * @return null|float
      */
-    public function getUntaxedAmountInvoiced(): float
+    public function getUntaxedAmountInvoiced(): ?float
     {
         return $this->untaxed_amount_invoiced;
     }
 
     /**
-     * @return Template
+     * @return null|Template
      */
-    public function getProductTmplId(): Template
+    public function getProductTmplId(): ?Template
     {
         return $this->product_tmpl_id;
     }
 
     /**
-     * @return array
+     * @return null|array
      */
-    public function getInvoiceStatus(): array
+    public function getInvoiceStatus(): ?array
     {
         return $this->invoice_status;
     }

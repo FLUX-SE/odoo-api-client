@@ -14,7 +14,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : payment.link.wizard
  * Name : payment.link.wizard
- *
+ * Info :
  * Model super-class for transient records, meant to be temporarily
  * persistent, and regularly vacuum-cleaned.
  *
@@ -27,224 +27,236 @@ final class Wizard extends Base
     /**
      * Related Document Model
      *
-     * @var null|string
+     * @var string
      */
     private $res_model;
 
     /**
      * Related Document ID
      *
-     * @var null|int
+     * @var int
      */
     private $res_id;
 
     /**
      * Amount
      *
-     * @var null|float
+     * @var float
      */
     private $amount;
 
     /**
      * Amount Max
      *
-     * @var float
+     * @var null|float
      */
     private $amount_max;
 
     /**
      * Currency
      *
-     * @var Currency
+     * @var null|Currency
      */
     private $currency_id;
 
     /**
      * Partner
      *
-     * @var Partner
+     * @var null|Partner
      */
     private $partner_id;
 
     /**
      * Email
      *
-     * @var string
+     * @var null|string
      */
     private $partner_email;
 
     /**
      * Payment Link
      *
-     * @var string
+     * @var null|string
      */
     private $link;
 
     /**
      * Payment Ref
      *
-     * @var string
+     * @var null|string
      */
     private $description;
 
     /**
      * Access Token
      *
-     * @var string
+     * @var null|string
      */
     private $access_token;
 
     /**
      * Company
      *
-     * @var Company
+     * @var null|Company
      */
     private $company_id;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $res_model
+     * @param string $res_model Related Document Model
+     * @param int $res_id Related Document ID
+     * @param float $amount Amount
      */
-    public function setResModel(?string $res_model): void
+    public function __construct(string $res_model, int $res_id, float $amount)
+    {
+        $this->res_model = $res_model;
+        $this->res_id = $res_id;
+        $this->amount = $amount;
+    }
+
+    /**
+     * @param string $res_model
+     */
+    public function setResModel(string $res_model): void
     {
         $this->res_model = $res_model;
     }
 
     /**
-     * @param null|int $res_id
+     * @param int $res_id
      */
-    public function setResId(?int $res_id): void
+    public function setResId(int $res_id): void
     {
         $this->res_id = $res_id;
     }
 
     /**
-     * @param null|float $amount
+     * @param float $amount
      */
-    public function setAmount(?float $amount): void
+    public function setAmount(float $amount): void
     {
         $this->amount = $amount;
     }
 
     /**
-     * @param float $amount_max
+     * @param null|float $amount_max
      */
-    public function setAmountMax(float $amount_max): void
+    public function setAmountMax(?float $amount_max): void
     {
         $this->amount_max = $amount_max;
     }
 
     /**
-     * @param Currency $currency_id
+     * @param null|Currency $currency_id
      */
-    public function setCurrencyId(Currency $currency_id): void
+    public function setCurrencyId(?Currency $currency_id): void
     {
         $this->currency_id = $currency_id;
     }
 
     /**
-     * @param Partner $partner_id
+     * @param null|Partner $partner_id
      */
-    public function setPartnerId(Partner $partner_id): void
+    public function setPartnerId(?Partner $partner_id): void
     {
         $this->partner_id = $partner_id;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getPartnerEmail(): string
+    public function getPartnerEmail(): ?string
     {
         return $this->partner_email;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getLink(): string
+    public function getLink(): ?string
     {
         return $this->link;
     }
 
     /**
-     * @param string $description
+     * @param null|string $description
      */
-    public function setDescription(string $description): void
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getAccessToken(): string
+    public function getAccessToken(): ?string
     {
         return $this->access_token;
     }
 
     /**
-     * @return Company
+     * @return null|Company
      */
-    public function getCompanyId(): Company
+    public function getCompanyId(): ?Company
     {
         return $this->company_id;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

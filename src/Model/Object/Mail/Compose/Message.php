@@ -18,7 +18,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : mail.compose.message
  * Name : mail.compose.message
- *
+ * Info :
  * Generic message composition wizard. You may inherit from this wizard
  * at model and view levels to provide specific features.
  *
@@ -33,525 +33,644 @@ class Message extends Base
     /**
      * Subject
      *
-     * @var string
+     * @var null|string
      */
     protected $subject;
 
     /**
      * Contents
      *
-     * @var string
+     * @var null|string
      */
     protected $body;
 
     /**
      * Parent Message
+     * Initial thread message.
      *
-     * @var MessageAlias
+     * @var null|MessageAlias
      */
     protected $parent_id;
 
     /**
      * Attachments
      *
-     * @var Attachment
+     * @var null|Attachment[]
      */
     protected $attachment_ids;
 
     /**
      * From
+     * Email address of the sender. This field is set when no matching partner is found and replaces the author_id
+     * field in the chatter.
      *
-     * @var string
+     * @var null|string
      */
     protected $email_from;
 
     /**
      * Author
+     * Author of the message. If not set, email_from may hold an email address that did not match any partner.
      *
-     * @var Partner
+     * @var null|Partner
      */
     protected $author_id;
 
     /**
      * Related Document Model
      *
-     * @var string
+     * @var null|string
      */
     protected $model;
 
     /**
      * Related Document ID
      *
-     * @var int
+     * @var null|int
      */
     protected $res_id;
 
     /**
      * Message Record Name
+     * Name get of the related document.
      *
-     * @var string
+     * @var null|string
      */
     protected $record_name;
 
     /**
      * Type
+     * Message type: email for email message, notification for system message, comment for other messages such as
+     * user replies
      *
-     * @var null|array
+     * @var array
      */
     protected $message_type;
 
     /**
      * Subtype
      *
-     * @var Subtype
+     * @var null|Subtype
      */
     protected $subtype_id;
 
     /**
      * Mail Activity Type
      *
-     * @var Type
+     * @var null|Type
      */
     protected $mail_activity_type_id;
 
     /**
      * Composition mode
      *
-     * @var array
+     * @var null|array
      */
     protected $composition_mode;
 
     /**
      * Reply-To
+     * Reply email address. Setting the reply_to bypasses the automatic thread creation.
      *
-     * @var string
+     * @var null|string
      */
     protected $reply_to;
 
     /**
      * No threading for answers
+     * Answers do not go in the original document discussion thread. This has an impact on the generated message-id.
      *
-     * @var bool
+     * @var null|bool
      */
     protected $no_auto_thread;
 
     /**
      * Log an Internal Note
+     * Whether the message is an internal note (comment mode only)
      *
-     * @var bool
+     * @var null|bool
      */
     protected $is_log;
 
     /**
      * Additional Contacts
      *
-     * @var Partner
+     * @var null|Partner[]
      */
     protected $partner_ids;
 
     /**
      * Use active domain
      *
-     * @var bool
+     * @var null|bool
      */
     protected $use_active_domain;
 
     /**
      * Active domain
      *
-     * @var string
+     * @var null|string
      */
     protected $active_domain;
 
     /**
      * Notify followers
+     * Notify followers of the document (mass post only)
      *
-     * @var bool
+     * @var null|bool
      */
     protected $notify;
 
     /**
      * Delete Emails
+     * Delete sent emails (mass mailing only)
      *
-     * @var bool
+     * @var null|bool
      */
     protected $auto_delete;
 
     /**
      * Delete Message Copy
+     * Do not keep a copy of the email in the document communication history (mass mailing only)
      *
-     * @var bool
+     * @var null|bool
      */
     protected $auto_delete_message;
 
     /**
      * Use template
      *
-     * @var Template
+     * @var null|Template
      */
     protected $template_id;
 
     /**
      * Outgoing mail server
      *
-     * @var MailServer
+     * @var null|MailServer
      */
     protected $mail_server_id;
 
     /**
      * Layout
      *
-     * @var string
+     * @var null|string
      */
     protected $layout;
 
     /**
      * Add Sign
      *
-     * @var bool
+     * @var null|bool
      */
     protected $add_sign;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     protected $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     protected $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     protected $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     protected $write_date;
 
     /**
-     * @param string $subject
+     * @param array $message_type Type
+     *        Message type: email for email message, notification for system message, comment for other messages such as
+     *        user replies
      */
-    public function setSubject(string $subject): void
-    {
-        $this->subject = $subject;
-    }
-
-    /**
-     * @param bool $auto_delete_message
-     */
-    public function setAutoDeleteMessage(bool $auto_delete_message): void
-    {
-        $this->auto_delete_message = $auto_delete_message;
-    }
-
-    /**
-     * @param bool $is_log
-     */
-    public function setIsLog(bool $is_log): void
-    {
-        $this->is_log = $is_log;
-    }
-
-    /**
-     * @param Partner $partner_ids
-     */
-    public function setPartnerIds(Partner $partner_ids): void
-    {
-        $this->partner_ids = $partner_ids;
-    }
-
-    /**
-     * @param bool $use_active_domain
-     */
-    public function setUseActiveDomain(bool $use_active_domain): void
-    {
-        $this->use_active_domain = $use_active_domain;
-    }
-
-    /**
-     * @return string
-     */
-    public function getActiveDomain(): string
-    {
-        return $this->active_domain;
-    }
-
-    /**
-     * @param bool $notify
-     */
-    public function setNotify(bool $notify): void
-    {
-        $this->notify = $notify;
-    }
-
-    /**
-     * @param bool $auto_delete
-     */
-    public function setAutoDelete(bool $auto_delete): void
-    {
-        $this->auto_delete = $auto_delete;
-    }
-
-    /**
-     * @param Template $template_id
-     */
-    public function setTemplateId(Template $template_id): void
-    {
-        $this->template_id = $template_id;
-    }
-
-    /**
-     * @param string $reply_to
-     */
-    public function setReplyTo(string $reply_to): void
-    {
-        $this->reply_to = $reply_to;
-    }
-
-    /**
-     * @param MailServer $mail_server_id
-     */
-    public function setMailServerId(MailServer $mail_server_id): void
-    {
-        $this->mail_server_id = $mail_server_id;
-    }
-
-    /**
-     * @param string $layout
-     */
-    public function setLayout(string $layout): void
-    {
-        $this->layout = $layout;
-    }
-
-    /**
-     * @param bool $add_sign
-     */
-    public function setAddSign(bool $add_sign): void
-    {
-        $this->add_sign = $add_sign;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getCreateUid(): Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getCreateDate(): DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getWriteUid(): Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param bool $no_auto_thread
-     */
-    public function setNoAutoThread(bool $no_auto_thread): void
-    {
-        $this->no_auto_thread = $no_auto_thread;
-    }
-
-    /**
-     * @param array $composition_mode
-     */
-    public function removeCompositionMode(array $composition_mode): void
-    {
-        if ($this->hasCompositionMode($composition_mode)) {
-            $index = array_search($composition_mode, $this->composition_mode);
-            unset($this->composition_mode[$index]);
-        }
-    }
-
-    /**
-     * @param string $body
-     */
-    public function setBody(string $body): void
-    {
-        $this->body = $body;
-    }
-
-    /**
-     * @param string $record_name
-     */
-    public function setRecordName(string $record_name): void
-    {
-        $this->record_name = $record_name;
-    }
-
-    /**
-     * @param MessageAlias $parent_id
-     */
-    public function setParentId(MessageAlias $parent_id): void
-    {
-        $this->parent_id = $parent_id;
-    }
-
-    /**
-     * @param Attachment $attachment_ids
-     */
-    public function setAttachmentIds(Attachment $attachment_ids): void
-    {
-        $this->attachment_ids = $attachment_ids;
-    }
-
-    /**
-     * @param string $email_from
-     */
-    public function setEmailFrom(string $email_from): void
-    {
-        $this->email_from = $email_from;
-    }
-
-    /**
-     * @param Partner $author_id
-     */
-    public function setAuthorId(Partner $author_id): void
-    {
-        $this->author_id = $author_id;
-    }
-
-    /**
-     * @param string $model
-     */
-    public function setModel(string $model): void
-    {
-        $this->model = $model;
-    }
-
-    /**
-     * @param int $res_id
-     */
-    public function setResId(int $res_id): void
-    {
-        $this->res_id = $res_id;
-    }
-
-    /**
-     * @param null|array $message_type
-     */
-    public function setMessageType(?array $message_type): void
+    public function __construct(array $message_type)
     {
         $this->message_type = $message_type;
     }
 
     /**
-     * @param array $composition_mode
+     * @param null|bool $notify
      */
-    public function addCompositionMode(array $composition_mode): void
+    public function setNotify(?bool $notify): void
     {
-        if ($this->hasCompositionMode($composition_mode)) {
-            return;
-        }
-
-        $this->composition_mode[] = $composition_mode;
+        $this->notify = $notify;
     }
 
     /**
-     * @param ?array $message_type
+     * @param null|bool $no_auto_thread
+     */
+    public function setNoAutoThread(?bool $no_auto_thread): void
+    {
+        $this->no_auto_thread = $no_auto_thread;
+    }
+
+    /**
+     * @param null|bool $is_log
+     */
+    public function setIsLog(?bool $is_log): void
+    {
+        $this->is_log = $is_log;
+    }
+
+    /**
+     * @param null|Partner[] $partner_ids
+     */
+    public function setPartnerIds(?array $partner_ids): void
+    {
+        $this->partner_ids = $partner_ids;
+    }
+
+    /**
+     * @param Partner $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasMessageType(?array $message_type, bool $strict = true): bool
+    public function hasPartnerIds(Partner $item, bool $strict = true): bool
     {
-        if (null === $this->message_type) {
+        if (null === $this->partner_ids) {
             return false;
         }
 
-        return in_array($message_type, $this->message_type, $strict);
+        return in_array($item, $this->partner_ids, $strict);
     }
 
     /**
-     * @param ?array $message_type
+     * @param Partner $item
      */
-    public function addMessageType(?array $message_type): void
+    public function addPartnerIds(Partner $item): void
     {
-        if ($this->hasMessageType($message_type)) {
+        if ($this->hasPartnerIds($item)) {
             return;
         }
 
-        if (null === $this->message_type) {
-            $this->message_type = [];
+        if (null === $this->partner_ids) {
+            $this->partner_ids = [];
         }
 
-        $this->message_type[] = $message_type;
+        $this->partner_ids[] = $item;
     }
 
     /**
-     * @param ?array $message_type
+     * @param Partner $item
      */
-    public function removeMessageType(?array $message_type): void
+    public function removePartnerIds(Partner $item): void
     {
-        if ($this->hasMessageType($message_type)) {
-            $index = array_search($message_type, $this->message_type);
+        if (null === $this->partner_ids) {
+            $this->partner_ids = [];
+        }
+
+        if ($this->hasPartnerIds($item)) {
+            $index = array_search($item, $this->partner_ids);
+            unset($this->partner_ids[$index]);
+        }
+    }
+
+    /**
+     * @param null|bool $use_active_domain
+     */
+    public function setUseActiveDomain(?bool $use_active_domain): void
+    {
+        $this->use_active_domain = $use_active_domain;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getActiveDomain(): ?string
+    {
+        return $this->active_domain;
+    }
+
+    /**
+     * @param null|bool $auto_delete
+     */
+    public function setAutoDelete(?bool $auto_delete): void
+    {
+        $this->auto_delete = $auto_delete;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeCompositionMode($item): void
+    {
+        if (null === $this->composition_mode) {
+            $this->composition_mode = [];
+        }
+
+        if ($this->hasCompositionMode($item)) {
+            $index = array_search($item, $this->composition_mode);
+            unset($this->composition_mode[$index]);
+        }
+    }
+
+    /**
+     * @param null|bool $auto_delete_message
+     */
+    public function setAutoDeleteMessage(?bool $auto_delete_message): void
+    {
+        $this->auto_delete_message = $auto_delete_message;
+    }
+
+    /**
+     * @param null|Template $template_id
+     */
+    public function setTemplateId(?Template $template_id): void
+    {
+        $this->template_id = $template_id;
+    }
+
+    /**
+     * @param null|MailServer $mail_server_id
+     */
+    public function setMailServerId(?MailServer $mail_server_id): void
+    {
+        $this->mail_server_id = $mail_server_id;
+    }
+
+    /**
+     * @param null|string $layout
+     */
+    public function setLayout(?string $layout): void
+    {
+        $this->layout = $layout;
+    }
+
+    /**
+     * @param null|bool $add_sign
+     */
+    public function setAddSign(?bool $add_sign): void
+    {
+        $this->add_sign = $add_sign;
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getCreateUid(): ?Users
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getWriteUid(): ?Users
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param null|string $reply_to
+     */
+    public function setReplyTo(?string $reply_to): void
+    {
+        $this->reply_to = $reply_to;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addCompositionMode($item): void
+    {
+        if ($this->hasCompositionMode($item)) {
+            return;
+        }
+
+        if (null === $this->composition_mode) {
+            $this->composition_mode = [];
+        }
+
+        $this->composition_mode[] = $item;
+    }
+
+    /**
+     * @param null|string $subject
+     */
+    public function setSubject(?string $subject): void
+    {
+        $this->subject = $subject;
+    }
+
+    /**
+     * @param null|string $model
+     */
+    public function setModel(?string $model): void
+    {
+        $this->model = $model;
+    }
+
+    /**
+     * @param null|string $body
+     */
+    public function setBody(?string $body): void
+    {
+        $this->body = $body;
+    }
+
+    /**
+     * @param null|MessageAlias $parent_id
+     */
+    public function setParentId(?MessageAlias $parent_id): void
+    {
+        $this->parent_id = $parent_id;
+    }
+
+    /**
+     * @param null|Attachment[] $attachment_ids
+     */
+    public function setAttachmentIds(?array $attachment_ids): void
+    {
+        $this->attachment_ids = $attachment_ids;
+    }
+
+    /**
+     * @param Attachment $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasAttachmentIds(Attachment $item, bool $strict = true): bool
+    {
+        if (null === $this->attachment_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->attachment_ids, $strict);
+    }
+
+    /**
+     * @param Attachment $item
+     */
+    public function addAttachmentIds(Attachment $item): void
+    {
+        if ($this->hasAttachmentIds($item)) {
+            return;
+        }
+
+        if (null === $this->attachment_ids) {
+            $this->attachment_ids = [];
+        }
+
+        $this->attachment_ids[] = $item;
+    }
+
+    /**
+     * @param Attachment $item
+     */
+    public function removeAttachmentIds(Attachment $item): void
+    {
+        if (null === $this->attachment_ids) {
+            $this->attachment_ids = [];
+        }
+
+        if ($this->hasAttachmentIds($item)) {
+            $index = array_search($item, $this->attachment_ids);
+            unset($this->attachment_ids[$index]);
+        }
+    }
+
+    /**
+     * @param null|string $email_from
+     */
+    public function setEmailFrom(?string $email_from): void
+    {
+        $this->email_from = $email_from;
+    }
+
+    /**
+     * @param null|Partner $author_id
+     */
+    public function setAuthorId(?Partner $author_id): void
+    {
+        $this->author_id = $author_id;
+    }
+
+    /**
+     * @param null|int $res_id
+     */
+    public function setResId(?int $res_id): void
+    {
+        $this->res_id = $res_id;
+    }
+
+    /**
+     * @param mixed $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasCompositionMode($item, bool $strict = true): bool
+    {
+        if (null === $this->composition_mode) {
+            return false;
+        }
+
+        return in_array($item, $this->composition_mode, $strict);
+    }
+
+    /**
+     * @param null|string $record_name
+     */
+    public function setRecordName(?string $record_name): void
+    {
+        $this->record_name = $record_name;
+    }
+
+    /**
+     * @param array $message_type
+     */
+    public function setMessageType(array $message_type): void
+    {
+        $this->message_type = $message_type;
+    }
+
+    /**
+     * @param mixed $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasMessageType($item, bool $strict = true): bool
+    {
+        return in_array($item, $this->message_type, $strict);
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addMessageType($item): void
+    {
+        if ($this->hasMessageType($item)) {
+            return;
+        }
+
+        $this->message_type[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeMessageType($item): void
+    {
+        if ($this->hasMessageType($item)) {
+            $index = array_search($item, $this->message_type);
             unset($this->message_type[$index]);
         }
     }
 
     /**
-     * @param Subtype $subtype_id
+     * @param null|Subtype $subtype_id
      */
-    public function setSubtypeId(Subtype $subtype_id): void
+    public function setSubtypeId(?Subtype $subtype_id): void
     {
         $this->subtype_id = $subtype_id;
     }
 
     /**
-     * @param Type $mail_activity_type_id
+     * @param null|Type $mail_activity_type_id
      */
-    public function setMailActivityTypeId(Type $mail_activity_type_id): void
+    public function setMailActivityTypeId(?Type $mail_activity_type_id): void
     {
         $this->mail_activity_type_id = $mail_activity_type_id;
     }
 
     /**
-     * @param array $composition_mode
+     * @param null|array $composition_mode
      */
-    public function setCompositionMode(array $composition_mode): void
+    public function setCompositionMode(?array $composition_mode): void
     {
         $this->composition_mode = $composition_mode;
     }
 
     /**
-     * @param array $composition_mode
-     * @param bool $strict
-     *
-     * @return bool
+     * @return null|DateTimeInterface
      */
-    public function hasCompositionMode(array $composition_mode, bool $strict = true): bool
-    {
-        return in_array($composition_mode, $this->composition_mode, $strict);
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

@@ -11,7 +11,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : uom.uom
  * Name : uom.uom
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -27,42 +27,51 @@ final class Uom extends Base
     /**
      * Unit of Measure
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Category
+     * Conversion between Units of Measure can only occur if they belong to the same category. The conversion will be
+     * made based on the ratios.
      *
-     * @var null|Category
+     * @var Category
      */
     private $category_id;
 
     /**
      * Ratio
+     * How much bigger or smaller this unit is compared to the reference Unit of Measure for this category: 1 *
+     * (reference unit) = ratio * (this unit)
      *
-     * @var null|float
+     * @var float
      */
     private $factor;
 
     /**
      * Bigger Ratio
+     * How many times this Unit of Measure is bigger than the reference Unit of Measure in this category: 1 * (this
+     * unit) = ratio * (reference unit)
      *
-     * @var null|float
+     * @var float
      */
     private $factor_inv;
 
     /**
      * Rounding Precision
+     * The computed quantity will be a multiple of this value. Use 1.0 for a Unit of Measure that cannot be further
+     * split, such as a piece.
      *
-     * @var null|float
+     * @var float
      */
     private $rounding;
 
     /**
      * Active
+     * Uncheck the active field to disable a unit of measure without deleting it.
      *
-     * @var bool
+     * @var null|bool
      */
     private $active;
 
@@ -76,48 +85,80 @@ final class Uom extends Base
     /**
      * Type of measurement category
      *
-     * @var array
+     * @var null|array
      */
     private $measure_type;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @param string $name Unit of Measure
+     * @param Category $category_id Category
+     *        Conversion between Units of Measure can only occur if they belong to the same category. The conversion will be
+     *        made based on the ratios.
+     * @param float $factor Ratio
+     *        How much bigger or smaller this unit is compared to the reference Unit of Measure for this category: 1 *
+     *        (reference unit) = ratio * (this unit)
+     * @param float $factor_inv Bigger Ratio
+     *        How many times this Unit of Measure is bigger than the reference Unit of Measure in this category: 1 * (this
+     *        unit) = ratio * (reference unit)
+     * @param float $rounding Rounding Precision
+     *        The computed quantity will be a multiple of this value. Use 1.0 for a Unit of Measure that cannot be further
+     *        split, such as a piece.
+     * @param array $uom_type Type
      */
-    public function setName(?string $name): void
+    public function __construct(
+        string $name,
+        Category $category_id,
+        float $factor,
+        float $factor_inv,
+        float $rounding,
+        array $uom_type
+    ) {
+        $this->name = $name;
+        $this->category_id = $category_id;
+        $this->factor = $factor;
+        $this->factor_inv = $factor_inv;
+        $this->rounding = $rounding;
+        $this->uom_type = $uom_type;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * @param null|Category $category_id
+     * @param Category $category_id
      */
     public function setCategoryId(Category $category_id): void
     {
@@ -125,33 +166,33 @@ final class Uom extends Base
     }
 
     /**
-     * @param null|float $factor
+     * @param float $factor
      */
-    public function setFactor(?float $factor): void
+    public function setFactor(float $factor): void
     {
         $this->factor = $factor;
     }
 
     /**
-     * @return null|float
+     * @return float
      */
-    public function getFactorInv(): ?float
+    public function getFactorInv(): float
     {
         return $this->factor_inv;
     }
 
     /**
-     * @param null|float $rounding
+     * @param float $rounding
      */
-    public function setRounding(?float $rounding): void
+    public function setRounding(float $rounding): void
     {
         $this->rounding = $rounding;
     }
 
     /**
-     * @param bool $active
+     * @param null|bool $active
      */
-    public function setActive(bool $active): void
+    public function setActive(?bool $active): void
     {
         $this->active = $active;
     }
@@ -165,75 +206,75 @@ final class Uom extends Base
     }
 
     /**
-     * @param array $uom_type
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasUomType(array $uom_type, bool $strict = true): bool
+    public function hasUomType($item, bool $strict = true): bool
     {
-        return in_array($uom_type, $this->uom_type, $strict);
+        return in_array($item, $this->uom_type, $strict);
     }
 
     /**
-     * @param array $uom_type
+     * @param mixed $item
      */
-    public function addUomType(array $uom_type): void
+    public function addUomType($item): void
     {
-        if ($this->hasUomType($uom_type)) {
+        if ($this->hasUomType($item)) {
             return;
         }
 
-        $this->uom_type[] = $uom_type;
+        $this->uom_type[] = $item;
     }
 
     /**
-     * @param array $uom_type
+     * @param mixed $item
      */
-    public function removeUomType(array $uom_type): void
+    public function removeUomType($item): void
     {
-        if ($this->hasUomType($uom_type)) {
-            $index = array_search($uom_type, $this->uom_type);
+        if ($this->hasUomType($item)) {
+            $index = array_search($item, $this->uom_type);
             unset($this->uom_type[$index]);
         }
     }
 
     /**
-     * @return array
+     * @return null|array
      */
-    public function getMeasureType(): array
+    public function getMeasureType(): ?array
     {
         return $this->measure_type;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

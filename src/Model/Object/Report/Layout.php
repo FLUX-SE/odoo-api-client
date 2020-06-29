@@ -12,7 +12,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : report.layout
  * Name : report.layout
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -28,61 +28,69 @@ final class Layout extends Base
     /**
      * Document Template
      *
-     * @var null|View
+     * @var View
      */
     private $view_id;
 
     /**
      * Preview image src
      *
-     * @var string
+     * @var null|string
      */
     private $image;
 
     /**
      * Preview pdf src
      *
-     * @var string
+     * @var null|string
      */
     private $pdf;
 
     /**
      * Name
      *
-     * @var string
+     * @var null|string
      */
     private $name;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|View $view_id
+     * @param View $view_id Document Template
+     */
+    public function __construct(View $view_id)
+    {
+        $this->view_id = $view_id;
+    }
+
+    /**
+     * @param View $view_id
      */
     public function setViewId(View $view_id): void
     {
@@ -90,57 +98,57 @@ final class Layout extends Base
     }
 
     /**
-     * @param string $image
+     * @param null|string $image
      */
-    public function setImage(string $image): void
+    public function setImage(?string $image): void
     {
         $this->image = $image;
     }
 
     /**
-     * @param string $pdf
+     * @param null|string $pdf
      */
-    public function setPdf(string $pdf): void
+    public function setPdf(?string $pdf): void
     {
         $this->pdf = $pdf;
     }
 
     /**
-     * @param string $name
+     * @param null|string $name
      */
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

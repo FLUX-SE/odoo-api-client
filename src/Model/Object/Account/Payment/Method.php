@@ -11,7 +11,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : account.payment.method
  * Name : account.payment.method
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -27,146 +27,150 @@ final class Method extends Base
     /**
      * Name
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Code
      *
-     * @var null|string
+     * @var string
      */
     private $code;
 
     /**
      * Payment Type
      *
-     * @var null|array
+     * @var array
      */
     private $payment_type;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @param string $name Name
+     * @param string $code Code
+     * @param array $payment_type Payment Type
      */
-    public function setName(?string $name): void
+    public function __construct(string $name, string $code, array $payment_type)
+    {
+        $this->name = $name;
+        $this->code = $code;
+        $this->payment_type = $payment_type;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * @param null|string $code
+     * @param string $code
      */
-    public function setCode(?string $code): void
+    public function setCode(string $code): void
     {
         $this->code = $code;
     }
 
     /**
-     * @param null|array $payment_type
+     * @param array $payment_type
      */
-    public function setPaymentType(?array $payment_type): void
+    public function setPaymentType(array $payment_type): void
     {
         $this->payment_type = $payment_type;
     }
 
     /**
-     * @param ?array $payment_type
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasPaymentType(?array $payment_type, bool $strict = true): bool
+    public function hasPaymentType($item, bool $strict = true): bool
     {
-        if (null === $this->payment_type) {
-            return false;
-        }
-
-        return in_array($payment_type, $this->payment_type, $strict);
+        return in_array($item, $this->payment_type, $strict);
     }
 
     /**
-     * @param ?array $payment_type
+     * @param mixed $item
      */
-    public function addPaymentType(?array $payment_type): void
+    public function addPaymentType($item): void
     {
-        if ($this->hasPaymentType($payment_type)) {
+        if ($this->hasPaymentType($item)) {
             return;
         }
 
-        if (null === $this->payment_type) {
-            $this->payment_type = [];
-        }
-
-        $this->payment_type[] = $payment_type;
+        $this->payment_type[] = $item;
     }
 
     /**
-     * @param ?array $payment_type
+     * @param mixed $item
      */
-    public function removePaymentType(?array $payment_type): void
+    public function removePaymentType($item): void
     {
-        if ($this->hasPaymentType($payment_type)) {
-            $index = array_search($payment_type, $this->payment_type);
+        if ($this->hasPaymentType($item)) {
+            $index = array_search($item, $this->payment_type);
             unset($this->payment_type[$index]);
         }
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

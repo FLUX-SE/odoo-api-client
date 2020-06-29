@@ -12,7 +12,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : base_import.tests.models.complex
  * Name : base_import.tests.models.complex
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -28,149 +28,149 @@ final class Complex extends Base
     /**
      * F
      *
-     * @var float
+     * @var null|float
      */
     private $f;
 
     /**
      * M
      *
-     * @var float
+     * @var null|float
      */
     private $m;
 
     /**
      * C
      *
-     * @var string
+     * @var null|string
      */
     private $c;
 
     /**
      * Currency
      *
-     * @var Currency
+     * @var null|Currency
      */
     private $currency_id;
 
     /**
      * D
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $d;
 
     /**
      * Dt
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $dt;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @return float
+     * @return null|float
      */
-    public function getF(): float
+    public function getF(): ?float
     {
         return $this->f;
     }
 
     /**
-     * @return float
+     * @return null|float
      */
-    public function getM(): float
+    public function getM(): ?float
     {
         return $this->m;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getC(): string
+    public function getC(): ?string
     {
         return $this->c;
     }
 
     /**
-     * @return Currency
+     * @return null|Currency
      */
-    public function getCurrencyId(): Currency
+    public function getCurrencyId(): ?Currency
     {
         return $this->currency_id;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getD(): DateTimeInterface
+    public function getD(): ?DateTimeInterface
     {
         return $this->d;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getDt(): DateTimeInterface
+    public function getDt(): ?DateTimeInterface
     {
         return $this->dt;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

@@ -12,7 +12,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : ir.sequence.date_range
  * Name : ir.sequence.date_range
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -28,84 +28,106 @@ final class DateRange extends Base
     /**
      * From
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface
      */
     private $date_from;
 
     /**
      * To
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface
      */
     private $date_to;
 
     /**
      * Main Sequence
      *
-     * @var null|Sequence
+     * @var Sequence
      */
     private $sequence_id;
 
     /**
      * Next Number
+     * Next number of this sequence
      *
-     * @var null|int
+     * @var int
      */
     private $number_next;
 
     /**
      * Actual Next Number
+     * Next number that will be used. This number can be incremented frequently so the displayed value might already
+     * be obsolete
      *
-     * @var int
+     * @var null|int
      */
     private $number_next_actual;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|DateTimeInterface $date_from
+     * @param DateTimeInterface $date_from From
+     * @param DateTimeInterface $date_to To
+     * @param Sequence $sequence_id Main Sequence
+     * @param int $number_next Next Number
+     *        Next number of this sequence
      */
-    public function setDateFrom(?DateTimeInterface $date_from): void
+    public function __construct(
+        DateTimeInterface $date_from,
+        DateTimeInterface $date_to,
+        Sequence $sequence_id,
+        int $number_next
+    ) {
+        $this->date_from = $date_from;
+        $this->date_to = $date_to;
+        $this->sequence_id = $sequence_id;
+        $this->number_next = $number_next;
+    }
+
+    /**
+     * @param DateTimeInterface $date_from
+     */
+    public function setDateFrom(DateTimeInterface $date_from): void
     {
         $this->date_from = $date_from;
     }
 
     /**
-     * @param null|DateTimeInterface $date_to
+     * @param DateTimeInterface $date_to
      */
-    public function setDateTo(?DateTimeInterface $date_to): void
+    public function setDateTo(DateTimeInterface $date_to): void
     {
         $this->date_to = $date_to;
     }
 
     /**
-     * @param null|Sequence $sequence_id
+     * @param Sequence $sequence_id
      */
     public function setSequenceId(Sequence $sequence_id): void
     {
@@ -113,49 +135,49 @@ final class DateRange extends Base
     }
 
     /**
-     * @param null|int $number_next
+     * @param int $number_next
      */
-    public function setNumberNext(?int $number_next): void
+    public function setNumberNext(int $number_next): void
     {
         $this->number_next = $number_next;
     }
 
     /**
-     * @param int $number_next_actual
+     * @param null|int $number_next_actual
      */
-    public function setNumberNextActual(int $number_next_actual): void
+    public function setNumberNextActual(?int $number_next_actual): void
     {
         $this->number_next_actual = $number_next_actual;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

@@ -13,7 +13,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : ir.server.object.lines
  * Name : ir.server.object.lines
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -29,76 +29,96 @@ final class Lines extends Base
     /**
      * Related Server Action
      *
-     * @var Server
+     * @var null|Server
      */
     private $server_id;
 
     /**
      * Field
      *
-     * @var null|Fields
+     * @var Fields
      */
     private $col1;
 
     /**
      * Value
+     * Expression containing a value specification. 
+     * When Formula type is selected, this field may be a Python expression  that can use the same values as for the
+     * code field on the server action.
+     * If Value type is selected, the value will be used directly without evaluation.
      *
-     * @var null|string
+     * @var string
      */
     private $value;
 
     /**
      * Evaluation Type
      *
-     * @var null|array
+     * @var array
      */
     private $evaluation_type;
 
     /**
      * Record
      *
-     * @var mixed
+     * @var null|mixed
      */
     private $resource_ref;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param Server $server_id
+     * @param Fields $col1 Field
+     * @param string $value Value
+     *        Expression containing a value specification. 
+     *        When Formula type is selected, this field may be a Python expression  that can use the same values as for the
+     *        code field on the server action.
+     *        If Value type is selected, the value will be used directly without evaluation.
+     * @param array $evaluation_type Evaluation Type
      */
-    public function setServerId(Server $server_id): void
+    public function __construct(Fields $col1, string $value, array $evaluation_type)
+    {
+        $this->col1 = $col1;
+        $this->value = $value;
+        $this->evaluation_type = $evaluation_type;
+    }
+
+    /**
+     * @param null|Server $server_id
+     */
+    public function setServerId(?Server $server_id): void
     {
         $this->server_id = $server_id;
     }
 
     /**
-     * @param null|Fields $col1
+     * @param Fields $col1
      */
     public function setCol1(Fields $col1): void
     {
@@ -106,65 +126,57 @@ final class Lines extends Base
     }
 
     /**
-     * @param null|string $value
+     * @param string $value
      */
-    public function setValue(?string $value): void
+    public function setValue(string $value): void
     {
         $this->value = $value;
     }
 
     /**
-     * @param null|array $evaluation_type
+     * @param array $evaluation_type
      */
-    public function setEvaluationType(?array $evaluation_type): void
+    public function setEvaluationType(array $evaluation_type): void
     {
         $this->evaluation_type = $evaluation_type;
     }
 
     /**
-     * @param ?array $evaluation_type
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasEvaluationType(?array $evaluation_type, bool $strict = true): bool
+    public function hasEvaluationType($item, bool $strict = true): bool
     {
-        if (null === $this->evaluation_type) {
-            return false;
-        }
-
-        return in_array($evaluation_type, $this->evaluation_type, $strict);
+        return in_array($item, $this->evaluation_type, $strict);
     }
 
     /**
-     * @param ?array $evaluation_type
+     * @param mixed $item
      */
-    public function addEvaluationType(?array $evaluation_type): void
+    public function addEvaluationType($item): void
     {
-        if ($this->hasEvaluationType($evaluation_type)) {
+        if ($this->hasEvaluationType($item)) {
             return;
         }
 
-        if (null === $this->evaluation_type) {
-            $this->evaluation_type = [];
-        }
-
-        $this->evaluation_type[] = $evaluation_type;
+        $this->evaluation_type[] = $item;
     }
 
     /**
-     * @param ?array $evaluation_type
+     * @param mixed $item
      */
-    public function removeEvaluationType(?array $evaluation_type): void
+    public function removeEvaluationType($item): void
     {
-        if ($this->hasEvaluationType($evaluation_type)) {
-            $index = array_search($evaluation_type, $this->evaluation_type);
+        if ($this->hasEvaluationType($item)) {
+            $index = array_search($item, $this->evaluation_type);
             unset($this->evaluation_type[$index]);
         }
     }
 
     /**
-     * @param mixed $resource_ref
+     * @param null|mixed $resource_ref
      */
     public function setResourceRef($resource_ref): void
     {
@@ -172,33 +184,33 @@ final class Lines extends Base
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

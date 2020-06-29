@@ -11,7 +11,7 @@ use Flux\OdooApiClient\Model\Object\Res\Partner;
 /**
  * Odoo model : account.invoice.send
  * Name : account.invoice.send
- *
+ * Info :
  * Model super-class for transient records, meant to be temporarily
  * persistent, and regularly vacuum-cleaned.
  *
@@ -24,122 +24,181 @@ final class Send extends Message
     /**
      * Email
      *
-     * @var bool
+     * @var null|bool
      */
     private $is_email;
 
     /**
      * invoice(s) that will not be sent
      *
-     * @var string
+     * @var null|string
      */
     private $invoice_without_email;
 
     /**
      * Print
      *
-     * @var bool
+     * @var null|bool
      */
     private $is_print;
 
     /**
      * Is Printed
      *
-     * @var bool
+     * @var null|bool
      */
     private $printed;
 
     /**
      * Invoices
      *
-     * @var Move
+     * @var null|Move[]
      */
     private $invoice_ids;
 
     /**
      * Composer
      *
-     * @var null|Message
+     * @var Message
      */
     private $composer_id;
 
     /**
      * Partner
      *
-     * @var Partner
+     * @var null|Partner
      */
     private $partner_id;
 
     /**
      * Send by Post
+     * Allows to send the document by Snailmail (coventional posting delivery service)
      *
-     * @var bool
+     * @var null|bool
      */
     private $snailmail_is_letter;
 
     /**
      * Stamp(s)
      *
-     * @var float
+     * @var null|float
      */
     private $snailmail_cost;
 
     /**
      * Invalid Addresses Count
      *
-     * @var int
+     * @var null|int
      */
     private $invalid_addresses;
 
     /**
      * Invalid Addresses
      *
-     * @var Move
+     * @var null|Move[]
      */
     private $invalid_invoice_ids;
 
     /**
-     * @param bool $is_email
+     * @param Message $composer_id Composer
+     * @param array $message_type Type
+     *        Message type: email for email message, notification for system message, comment for other messages such as
+     *        user replies
      */
-    public function setIsEmail(bool $is_email): void
+    public function __construct(Message $composer_id, array $message_type)
+    {
+        $this->composer_id = $composer_id;
+        parent::__construct($message_type);
+    }
+
+    /**
+     * @param null|bool $is_email
+     */
+    public function setIsEmail(?bool $is_email): void
     {
         $this->is_email = $is_email;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getInvoiceWithoutEmail(): string
+    public function getInvoiceWithoutEmail(): ?string
     {
         return $this->invoice_without_email;
     }
 
     /**
-     * @param bool $is_print
+     * @param null|bool $is_print
      */
-    public function setIsPrint(bool $is_print): void
+    public function setIsPrint(?bool $is_print): void
     {
         $this->is_print = $is_print;
     }
 
     /**
-     * @param bool $printed
+     * @param null|bool $printed
      */
-    public function setPrinted(bool $printed): void
+    public function setPrinted(?bool $printed): void
     {
         $this->printed = $printed;
     }
 
     /**
-     * @param Move $invoice_ids
+     * @param null|Move[] $invoice_ids
      */
-    public function setInvoiceIds(Move $invoice_ids): void
+    public function setInvoiceIds(?array $invoice_ids): void
     {
         $this->invoice_ids = $invoice_ids;
     }
 
     /**
-     * @param null|Message $composer_id
+     * @param Move $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasInvoiceIds(Move $item, bool $strict = true): bool
+    {
+        if (null === $this->invoice_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->invoice_ids, $strict);
+    }
+
+    /**
+     * @param Move $item
+     */
+    public function addInvoiceIds(Move $item): void
+    {
+        if ($this->hasInvoiceIds($item)) {
+            return;
+        }
+
+        if (null === $this->invoice_ids) {
+            $this->invoice_ids = [];
+        }
+
+        $this->invoice_ids[] = $item;
+    }
+
+    /**
+     * @param Move $item
+     */
+    public function removeInvoiceIds(Move $item): void
+    {
+        if (null === $this->invoice_ids) {
+            $this->invoice_ids = [];
+        }
+
+        if ($this->hasInvoiceIds($item)) {
+            $index = array_search($item, $this->invoice_ids);
+            unset($this->invoice_ids[$index]);
+        }
+    }
+
+    /**
+     * @param Message $composer_id
      */
     public function setComposerId(Message $composer_id): void
     {
@@ -147,41 +206,41 @@ final class Send extends Message
     }
 
     /**
-     * @return Partner
+     * @return null|Partner
      */
-    public function getPartnerId(): Partner
+    public function getPartnerId(): ?Partner
     {
         return $this->partner_id;
     }
 
     /**
-     * @param bool $snailmail_is_letter
+     * @param null|bool $snailmail_is_letter
      */
-    public function setSnailmailIsLetter(bool $snailmail_is_letter): void
+    public function setSnailmailIsLetter(?bool $snailmail_is_letter): void
     {
         $this->snailmail_is_letter = $snailmail_is_letter;
     }
 
     /**
-     * @return float
+     * @return null|float
      */
-    public function getSnailmailCost(): float
+    public function getSnailmailCost(): ?float
     {
         return $this->snailmail_cost;
     }
 
     /**
-     * @return int
+     * @return null|int
      */
-    public function getInvalidAddresses(): int
+    public function getInvalidAddresses(): ?int
     {
         return $this->invalid_addresses;
     }
 
     /**
-     * @return Move
+     * @return null|Move[]
      */
-    public function getInvalidInvoiceIds(): Move
+    public function getInvalidInvoiceIds(): ?array
     {
         return $this->invalid_invoice_ids;
     }

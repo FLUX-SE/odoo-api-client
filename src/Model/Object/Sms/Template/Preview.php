@@ -15,7 +15,7 @@ use Flux\OdooApiClient\Model\Object\Sms\Template;
 /**
  * Odoo model : sms.template.preview
  * Name : sms.template.preview
- *
+ * Info :
  * Model super-class for transient records, meant to be temporarily
  * persistent, and regularly vacuum-cleaned.
  *
@@ -28,243 +28,257 @@ final class Preview extends Base
     /**
      * Sms Template
      *
-     * @var Template
+     * @var null|Template
      */
     private $sms_template_id;
 
     /**
      * Template Preview Language
      *
-     * @var array
+     * @var null|array
      */
     private $lang;
 
     /**
      * Applies to
+     * The type of document this template can be used with
      *
-     * @var null|Model
+     * @var Model
      */
     private $model_id;
 
     /**
      * Record ID
      *
-     * @var int
+     * @var null|int
      */
     private $res_id;
 
     /**
      * Record reference
      *
-     * @var mixed
+     * @var null|mixed
      */
     private $resource_ref;
 
     /**
      * Name
      *
-     * @var string
+     * @var null|string
      */
     private $name;
 
     /**
      * Related Document Model
      *
-     * @var string
+     * @var null|string
      */
     private $model;
 
     /**
      * Body
      *
-     * @var null|string
+     * @var string
      */
     private $body;
 
     /**
      * Sidebar action
+     * Sidebar action to make this template available on records of the related document model
      *
-     * @var ActWindow
+     * @var null|ActWindow
      */
     private $sidebar_action_id;
 
     /**
      * Field
+     * Select target field from the related document model.
+     * If it is a relationship field you will be able to select a target field at the destination of the
+     * relationship.
      *
-     * @var Fields
+     * @var null|Fields
      */
     private $model_object_field;
 
     /**
      * Sub-model
+     * When a relationship field is selected as first field, this field shows the document model the relationship
+     * goes to.
      *
-     * @var Model
+     * @var null|Model
      */
     private $sub_object;
 
     /**
      * Sub-field
+     * When a relationship field is selected as first field, this field lets you select the target field within the
+     * destination document model (sub-model).
      *
-     * @var Fields
+     * @var null|Fields
      */
     private $sub_model_object_field;
 
     /**
      * Default Value
+     * Optional value to use if the target field is empty
      *
-     * @var string
+     * @var null|string
      */
     private $null_value;
 
     /**
      * Placeholder Expression
+     * Final placeholder expression, to be copy-pasted in the desired template field.
      *
-     * @var string
+     * @var null|string
      */
     private $copyvalue;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param Template $sms_template_id
+     * @param Model $model_id Applies to
+     *        The type of document this template can be used with
+     * @param string $body Body
      */
-    public function setSmsTemplateId(Template $sms_template_id): void
+    public function __construct(Model $model_id, string $body)
     {
-        $this->sms_template_id = $sms_template_id;
+        $this->model_id = $model_id;
+        $this->body = $body;
     }
 
     /**
-     * @return ActWindow
+     * @return null|ActWindow
      */
-    public function getSidebarActionId(): ActWindow
+    public function getSidebarActionId(): ?ActWindow
     {
         return $this->sidebar_action_id;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @param string $copyvalue
+     * @param null|string $copyvalue
      */
-    public function setCopyvalue(string $copyvalue): void
+    public function setCopyvalue(?string $copyvalue): void
     {
         $this->copyvalue = $copyvalue;
     }
 
     /**
-     * @param string $null_value
+     * @param null|string $null_value
      */
-    public function setNullValue(string $null_value): void
+    public function setNullValue(?string $null_value): void
     {
         $this->null_value = $null_value;
     }
 
     /**
-     * @param Fields $sub_model_object_field
+     * @param null|Fields $sub_model_object_field
      */
-    public function setSubModelObjectField(Fields $sub_model_object_field): void
+    public function setSubModelObjectField(?Fields $sub_model_object_field): void
     {
         $this->sub_model_object_field = $sub_model_object_field;
     }
 
     /**
-     * @return Model
+     * @return null|Model
      */
-    public function getSubObject(): Model
+    public function getSubObject(): ?Model
     {
         return $this->sub_object;
     }
 
     /**
-     * @param Fields $model_object_field
+     * @param null|Fields $model_object_field
      */
-    public function setModelObjectField(Fields $model_object_field): void
+    public function setModelObjectField(?Fields $model_object_field): void
     {
         $this->model_object_field = $model_object_field;
     }
 
     /**
-     * @param null|string $body
+     * @param string $body
      */
-    public function setBody(?string $body): void
+    public function setBody(string $body): void
     {
         $this->body = $body;
     }
 
     /**
-     * @param array $lang
+     * @param null|Template $sms_template_id
      */
-    public function setLang(array $lang): void
+    public function setSmsTemplateId(?Template $sms_template_id): void
     {
-        $this->lang = $lang;
+        $this->sms_template_id = $sms_template_id;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getModel(): string
+    public function getModel(): ?string
     {
         return $this->model;
     }
 
     /**
-     * @param string $name
+     * @param null|string $name
      */
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * @param mixed $resource_ref
+     * @param null|mixed $resource_ref
      */
     public function setResourceRef($resource_ref): void
     {
@@ -272,15 +286,15 @@ final class Preview extends Base
     }
 
     /**
-     * @param int $res_id
+     * @param null|int $res_id
      */
-    public function setResId(int $res_id): void
+    public function setResId(?int $res_id): void
     {
         $this->res_id = $res_id;
     }
 
     /**
-     * @return null|Model
+     * @return Model
      */
     public function getModelId(): Model
     {
@@ -288,43 +302,63 @@ final class Preview extends Base
     }
 
     /**
-     * @param array $lang
+     * @param mixed $item
      */
-    public function removeLang(array $lang): void
+    public function removeLang($item): void
     {
-        if ($this->hasLang($lang)) {
-            $index = array_search($lang, $this->lang);
+        if (null === $this->lang) {
+            $this->lang = [];
+        }
+
+        if ($this->hasLang($item)) {
+            $index = array_search($item, $this->lang);
             unset($this->lang[$index]);
         }
     }
 
     /**
-     * @param array $lang
+     * @param mixed $item
      */
-    public function addLang(array $lang): void
+    public function addLang($item): void
     {
-        if ($this->hasLang($lang)) {
+        if ($this->hasLang($item)) {
             return;
         }
 
-        $this->lang[] = $lang;
+        if (null === $this->lang) {
+            $this->lang = [];
+        }
+
+        $this->lang[] = $item;
     }
 
     /**
-     * @param array $lang
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasLang(array $lang, bool $strict = true): bool
+    public function hasLang($item, bool $strict = true): bool
     {
-        return in_array($lang, $this->lang, $strict);
+        if (null === $this->lang) {
+            return false;
+        }
+
+        return in_array($item, $this->lang, $strict);
     }
 
     /**
-     * @return DateTimeInterface
+     * @param null|array $lang
      */
-    public function getWriteDate(): DateTimeInterface
+    public function setLang(?array $lang): void
+    {
+        $this->lang = $lang;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

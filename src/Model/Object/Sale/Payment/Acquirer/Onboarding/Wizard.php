@@ -11,7 +11,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : sale.payment.acquirer.onboarding.wizard
  * Name : sale.payment.acquirer.onboarding.wizard
- *
+ * Info :
  * Override for the sale quotation onboarding panel.
  */
 final class Wizard extends Base
@@ -19,292 +19,316 @@ final class Wizard extends Base
     /**
      * Payment Method
      *
-     * @var array
+     * @var null|array
      */
     private $payment_method;
 
     /**
      * Paypal User Type
      *
-     * @var array
+     * @var null|array
      */
     private $paypal_user_type;
 
     /**
      * Email
      *
-     * @var string
+     * @var null|string
      */
     private $paypal_email_account;
 
     /**
      * Merchant Account ID
      *
-     * @var string
+     * @var null|string
      */
     private $paypal_seller_account;
 
     /**
      * PDT Identity Token
      *
-     * @var string
+     * @var null|string
      */
     private $paypal_pdt_token;
 
     /**
      * Stripe Secret Key
      *
-     * @var string
+     * @var null|string
      */
     private $stripe_secret_key;
 
     /**
      * Stripe Publishable Key
      *
-     * @var string
+     * @var null|string
      */
     private $stripe_publishable_key;
 
     /**
      * Method
      *
-     * @var string
+     * @var null|string
      */
     private $manual_name;
 
     /**
      * Bank Name
      *
-     * @var string
+     * @var null|string
      */
     private $journal_name;
 
     /**
      * Account Number
      *
-     * @var string
+     * @var null|string
      */
     private $acc_number;
 
     /**
      * Payment Instructions
      *
-     * @var string
+     * @var null|string
      */
     private $manual_post_msg;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param array $payment_method
+     * @param null|array $payment_method
      */
-    public function setPaymentMethod(array $payment_method): void
+    public function setPaymentMethod(?array $payment_method): void
     {
         $this->payment_method = $payment_method;
     }
 
     /**
-     * @param string $stripe_secret_key
+     * @param null|string $stripe_secret_key
      */
-    public function setStripeSecretKey(string $stripe_secret_key): void
+    public function setStripeSecretKey(?string $stripe_secret_key): void
     {
         $this->stripe_secret_key = $stripe_secret_key;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @param string $manual_post_msg
+     * @param null|string $manual_post_msg
      */
-    public function setManualPostMsg(string $manual_post_msg): void
+    public function setManualPostMsg(?string $manual_post_msg): void
     {
         $this->manual_post_msg = $manual_post_msg;
     }
 
     /**
-     * @param string $acc_number
+     * @param null|string $acc_number
      */
-    public function setAccNumber(string $acc_number): void
+    public function setAccNumber(?string $acc_number): void
     {
         $this->acc_number = $acc_number;
     }
 
     /**
-     * @param string $journal_name
+     * @param null|string $journal_name
      */
-    public function setJournalName(string $journal_name): void
+    public function setJournalName(?string $journal_name): void
     {
         $this->journal_name = $journal_name;
     }
 
     /**
-     * @param string $manual_name
+     * @param null|string $manual_name
      */
-    public function setManualName(string $manual_name): void
+    public function setManualName(?string $manual_name): void
     {
         $this->manual_name = $manual_name;
     }
 
     /**
-     * @param string $stripe_publishable_key
+     * @param null|string $stripe_publishable_key
      */
-    public function setStripePublishableKey(string $stripe_publishable_key): void
+    public function setStripePublishableKey(?string $stripe_publishable_key): void
     {
         $this->stripe_publishable_key = $stripe_publishable_key;
     }
 
     /**
-     * @param string $paypal_pdt_token
+     * @param null|string $paypal_pdt_token
      */
-    public function setPaypalPdtToken(string $paypal_pdt_token): void
+    public function setPaypalPdtToken(?string $paypal_pdt_token): void
     {
         $this->paypal_pdt_token = $paypal_pdt_token;
     }
 
     /**
-     * @param array $payment_method
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasPaymentMethod(array $payment_method, bool $strict = true): bool
+    public function hasPaymentMethod($item, bool $strict = true): bool
     {
-        return in_array($payment_method, $this->payment_method, $strict);
+        if (null === $this->payment_method) {
+            return false;
+        }
+
+        return in_array($item, $this->payment_method, $strict);
     }
 
     /**
-     * @param string $paypal_seller_account
+     * @param null|string $paypal_seller_account
      */
-    public function setPaypalSellerAccount(string $paypal_seller_account): void
+    public function setPaypalSellerAccount(?string $paypal_seller_account): void
     {
         $this->paypal_seller_account = $paypal_seller_account;
     }
 
     /**
-     * @param string $paypal_email_account
+     * @param null|string $paypal_email_account
      */
-    public function setPaypalEmailAccount(string $paypal_email_account): void
+    public function setPaypalEmailAccount(?string $paypal_email_account): void
     {
         $this->paypal_email_account = $paypal_email_account;
     }
 
     /**
-     * @param array $paypal_user_type
+     * @param mixed $item
      */
-    public function removePaypalUserType(array $paypal_user_type): void
+    public function removePaypalUserType($item): void
     {
-        if ($this->hasPaypalUserType($paypal_user_type)) {
-            $index = array_search($paypal_user_type, $this->paypal_user_type);
+        if (null === $this->paypal_user_type) {
+            $this->paypal_user_type = [];
+        }
+
+        if ($this->hasPaypalUserType($item)) {
+            $index = array_search($item, $this->paypal_user_type);
             unset($this->paypal_user_type[$index]);
         }
     }
 
     /**
-     * @param array $paypal_user_type
+     * @param mixed $item
      */
-    public function addPaypalUserType(array $paypal_user_type): void
+    public function addPaypalUserType($item): void
     {
-        if ($this->hasPaypalUserType($paypal_user_type)) {
+        if ($this->hasPaypalUserType($item)) {
             return;
         }
 
-        $this->paypal_user_type[] = $paypal_user_type;
+        if (null === $this->paypal_user_type) {
+            $this->paypal_user_type = [];
+        }
+
+        $this->paypal_user_type[] = $item;
     }
 
     /**
-     * @param array $paypal_user_type
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasPaypalUserType(array $paypal_user_type, bool $strict = true): bool
+    public function hasPaypalUserType($item, bool $strict = true): bool
     {
-        return in_array($paypal_user_type, $this->paypal_user_type, $strict);
+        if (null === $this->paypal_user_type) {
+            return false;
+        }
+
+        return in_array($item, $this->paypal_user_type, $strict);
     }
 
     /**
-     * @param array $paypal_user_type
+     * @param null|array $paypal_user_type
      */
-    public function setPaypalUserType(array $paypal_user_type): void
+    public function setPaypalUserType(?array $paypal_user_type): void
     {
         $this->paypal_user_type = $paypal_user_type;
     }
 
     /**
-     * @param array $payment_method
+     * @param mixed $item
      */
-    public function removePaymentMethod(array $payment_method): void
+    public function removePaymentMethod($item): void
     {
-        if ($this->hasPaymentMethod($payment_method)) {
-            $index = array_search($payment_method, $this->payment_method);
+        if (null === $this->payment_method) {
+            $this->payment_method = [];
+        }
+
+        if ($this->hasPaymentMethod($item)) {
+            $index = array_search($item, $this->payment_method);
             unset($this->payment_method[$index]);
         }
     }
 
     /**
-     * @param array $payment_method
+     * @param mixed $item
      */
-    public function addPaymentMethod(array $payment_method): void
+    public function addPaymentMethod($item): void
     {
-        if ($this->hasPaymentMethod($payment_method)) {
+        if ($this->hasPaymentMethod($item)) {
             return;
         }
 
-        $this->payment_method[] = $payment_method;
+        if (null === $this->payment_method) {
+            $this->payment_method = [];
+        }
+
+        $this->payment_method[] = $item;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

@@ -9,7 +9,7 @@ use Flux\OdooApiClient\Model\Object\Base;
 /**
  * Odoo model : ir.qweb.field.float_time
  * Name : ir.qweb.field.float_time
- *
+ * Info :
  * ``float_time`` converter, to display integral or fractional values as
  * human-readable time spans (e.g. 1.5 as "01:30").
  *

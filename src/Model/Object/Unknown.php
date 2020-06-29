@@ -7,7 +7,7 @@ namespace Flux\OdooApiClient\Model\Object;
 /**
  * Odoo model : _unknown
  * Name : _unknown
- *
+ * Info :
  * Abstract model used as a substitute for relational fields with an unknown
  * comodel.
  */

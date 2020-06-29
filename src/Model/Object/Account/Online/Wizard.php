@@ -12,7 +12,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : account.online.wizard
  * Name : account.online.wizard
- *
+ * Info :
  * Model super-class for transient records, meant to be temporarily
  * persistent, and regularly vacuum-cleaned.
  *
@@ -25,179 +25,226 @@ final class Wizard extends Base
     /**
      * Number Added
      *
-     * @var int
+     * @var null|int
      */
     private $number_added;
 
     /**
      * Transactions
      *
-     * @var string
+     * @var null|string
      */
     private $transactions;
 
     /**
      * Status
      *
-     * @var array
+     * @var null|array
      */
     private $status;
 
     /**
      * Method
      *
-     * @var array
+     * @var null|array
      */
     private $method;
 
     /**
      * Message
      *
-     * @var string
+     * @var null|string
      */
     private $message;
 
     /**
      * Fetch transactions from
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $sync_date;
 
     /**
      * Synchronized accounts
      *
-     * @var WizardAlias
+     * @var null|WizardAlias[]
      */
     private $account_ids;
 
     /**
      * Hide Table
+     * Technical field to hide table in view
      *
-     * @var bool
+     * @var null|bool
      */
     private $hide_table;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @return int
+     * @return null|int
      */
-    public function getNumberAdded(): int
+    public function getNumberAdded(): ?int
     {
         return $this->number_added;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getTransactions(): string
+    public function getTransactions(): ?string
     {
         return $this->transactions;
     }
 
     /**
-     * @return array
+     * @return null|array
      */
-    public function getStatus(): array
+    public function getStatus(): ?array
     {
         return $this->status;
     }
 
     /**
-     * @return array
+     * @return null|array
      */
-    public function getMethod(): array
+    public function getMethod(): ?array
     {
         return $this->method;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getMessage(): string
+    public function getMessage(): ?string
     {
         return $this->message;
     }
 
     /**
-     * @param DateTimeInterface $sync_date
+     * @param null|DateTimeInterface $sync_date
      */
-    public function setSyncDate(DateTimeInterface $sync_date): void
+    public function setSyncDate(?DateTimeInterface $sync_date): void
     {
         $this->sync_date = $sync_date;
     }
 
     /**
-     * @param WizardAlias $account_ids
+     * @param null|WizardAlias[] $account_ids
      */
-    public function setAccountIds(WizardAlias $account_ids): void
+    public function setAccountIds(?array $account_ids): void
     {
         $this->account_ids = $account_ids;
     }
 
     /**
-     * @param bool $hide_table
+     * @param WizardAlias $item
+     * @param bool $strict
+     *
+     * @return bool
      */
-    public function setHideTable(bool $hide_table): void
+    public function hasAccountIds(WizardAlias $item, bool $strict = true): bool
+    {
+        if (null === $this->account_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->account_ids, $strict);
+    }
+
+    /**
+     * @param WizardAlias $item
+     */
+    public function addAccountIds(WizardAlias $item): void
+    {
+        if ($this->hasAccountIds($item)) {
+            return;
+        }
+
+        if (null === $this->account_ids) {
+            $this->account_ids = [];
+        }
+
+        $this->account_ids[] = $item;
+    }
+
+    /**
+     * @param WizardAlias $item
+     */
+    public function removeAccountIds(WizardAlias $item): void
+    {
+        if (null === $this->account_ids) {
+            $this->account_ids = [];
+        }
+
+        if ($this->hasAccountIds($item)) {
+            $index = array_search($item, $this->account_ids);
+            unset($this->account_ids[$index]);
+        }
+    }
+
+    /**
+     * @param null|bool $hide_table
+     */
+    public function setHideTable(?bool $hide_table): void
     {
         $this->hide_table = $hide_table;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

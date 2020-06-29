@@ -11,7 +11,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : ir.model.data
  * Name : ir.model.data
- *
+ * Info :
  * Holds external identifier keys for records in the database.
  * This has two main uses:
  *
@@ -26,195 +26,210 @@ final class Data extends Base
 {
     /**
      * External Identifier
+     * External Key/Identifier that can be used for data integration with third-party systems
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Complete ID
      *
-     * @var string
+     * @var null|string
      */
     private $complete_name;
 
     /**
      * Model Name
      *
-     * @var null|string
+     * @var string
      */
     private $model;
 
     /**
      * Module
      *
-     * @var null|string
+     * @var string
      */
     private $module;
 
     /**
      * Record ID
+     * ID of the target record in the database
      *
-     * @var int
+     * @var null|int
      */
     private $res_id;
 
     /**
      * Non Updatable
      *
-     * @var bool
+     * @var null|bool
      */
     private $noupdate;
 
     /**
      * Update Date
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $date_update;
 
     /**
      * Init Date
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $date_init;
 
     /**
      * Reference
      *
-     * @var string
+     * @var null|string
      */
     private $reference;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @param string $name External Identifier
+     *        External Key/Identifier that can be used for data integration with third-party systems
+     * @param string $model Model Name
+     * @param string $module Module
      */
-    public function setName(?string $name): void
+    public function __construct(string $name, string $model, string $module)
+    {
+        $this->name = $name;
+        $this->model = $model;
+        $this->module = $module;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getCompleteName(): string
+    public function getCompleteName(): ?string
     {
         return $this->complete_name;
     }
 
     /**
-     * @param null|string $model
+     * @param string $model
      */
-    public function setModel(?string $model): void
+    public function setModel(string $model): void
     {
         $this->model = $model;
     }
 
     /**
-     * @param null|string $module
+     * @param string $module
      */
-    public function setModule(?string $module): void
+    public function setModule(string $module): void
     {
         $this->module = $module;
     }
 
     /**
-     * @param int $res_id
+     * @param null|int $res_id
      */
-    public function setResId(int $res_id): void
+    public function setResId(?int $res_id): void
     {
         $this->res_id = $res_id;
     }
 
     /**
-     * @param bool $noupdate
+     * @param null|bool $noupdate
      */
-    public function setNoupdate(bool $noupdate): void
+    public function setNoupdate(?bool $noupdate): void
     {
         $this->noupdate = $noupdate;
     }
 
     /**
-     * @param DateTimeInterface $date_update
+     * @param null|DateTimeInterface $date_update
      */
-    public function setDateUpdate(DateTimeInterface $date_update): void
+    public function setDateUpdate(?DateTimeInterface $date_update): void
     {
         $this->date_update = $date_update;
     }
 
     /**
-     * @param DateTimeInterface $date_init
+     * @param null|DateTimeInterface $date_init
      */
-    public function setDateInit(DateTimeInterface $date_init): void
+    public function setDateInit(?DateTimeInterface $date_init): void
     {
         $this->date_init = $date_init;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getReference(): string
+    public function getReference(): ?string
     {
         return $this->reference;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

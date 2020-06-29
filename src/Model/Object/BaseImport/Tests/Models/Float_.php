@@ -12,7 +12,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : base_import.tests.models.float
  * Name : base_import.tests.models.float
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -28,104 +28,104 @@ final class Float_ extends Base
     /**
      * Value
      *
-     * @var float
+     * @var null|float
      */
     private $value;
 
     /**
      * Value2
      *
-     * @var float
+     * @var null|float
      */
     private $value2;
 
     /**
      * Currency
      *
-     * @var Currency
+     * @var null|Currency
      */
     private $currency_id;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param float $value
+     * @param null|float $value
      */
-    public function setValue(float $value): void
+    public function setValue(?float $value): void
     {
         $this->value = $value;
     }
 
     /**
-     * @param float $value2
+     * @param null|float $value2
      */
-    public function setValue2(float $value2): void
+    public function setValue2(?float $value2): void
     {
         $this->value2 = $value2;
     }
 
     /**
-     * @param Currency $currency_id
+     * @param null|Currency $currency_id
      */
-    public function setCurrencyId(Currency $currency_id): void
+    public function setCurrencyId(?Currency $currency_id): void
     {
         $this->currency_id = $currency_id;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

@@ -11,7 +11,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : account.report.footnote
  * Name : account.report.footnote
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -27,104 +27,104 @@ final class Footnote extends Base
     /**
      * Text
      *
-     * @var string
+     * @var null|string
      */
     private $text;
 
     /**
      * Line
      *
-     * @var string
+     * @var null|string
      */
     private $line;
 
     /**
      * Manager
      *
-     * @var Manager
+     * @var null|Manager
      */
     private $manager_id;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param string $text
+     * @param null|string $text
      */
-    public function setText(string $text): void
+    public function setText(?string $text): void
     {
         $this->text = $text;
     }
 
     /**
-     * @param string $line
+     * @param null|string $line
      */
-    public function setLine(string $line): void
+    public function setLine(?string $line): void
     {
         $this->line = $line;
     }
 
     /**
-     * @param Manager $manager_id
+     * @param null|Manager $manager_id
      */
-    public function setManagerId(Manager $manager_id): void
+    public function setManagerId(?Manager $manager_id): void
     {
         $this->manager_id = $manager_id;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

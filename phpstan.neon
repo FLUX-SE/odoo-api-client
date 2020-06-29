@@ -2,3 +2,7 @@ parameters:
     reportUnmatchedIgnoredErrors: false
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
+
+
+    ignoreErrors:
+        - '#Property Flux\\OdooApiClient\\Command\\GeneratorCommand::\$(baseUrl|database|username|password|basePath|baseNamespace) \(string\) does not accept .*#'

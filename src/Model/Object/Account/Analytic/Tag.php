@@ -12,7 +12,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : account.analytic.tag
  * Name : account.analytic.tag
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -28,149 +28,158 @@ final class Tag extends Base
     /**
      * Analytic Tag
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Color Index
      *
-     * @var int
+     * @var null|int
      */
     private $color;
 
     /**
      * Active
+     * Set active to false to hide the Analytic Tag without removing it.
      *
-     * @var bool
+     * @var null|bool
      */
     private $active;
 
     /**
      * Analytic Distribution
      *
-     * @var bool
+     * @var null|bool
      */
     private $active_analytic_distribution;
 
     /**
      * Analytic Accounts
      *
-     * @var Distribution
+     * @var null|Distribution[]
      */
     private $analytic_distribution_ids;
 
     /**
      * Company
      *
-     * @var Company
+     * @var null|Company
      */
     private $company_id;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @return null|string
+     * @param string $name Analytic Tag
      */
-    public function getName(): ?string
+    public function __construct(string $name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * @return int
+     * @return null|int
      */
-    public function getColor(): int
+    public function getColor(): ?int
     {
         return $this->color;
     }
 
     /**
-     * @return bool
+     * @return null|bool
      */
-    public function isActive(): bool
+    public function isActive(): ?bool
     {
         return $this->active;
     }
 
     /**
-     * @return bool
+     * @return null|bool
      */
-    public function isActiveAnalyticDistribution(): bool
+    public function isActiveAnalyticDistribution(): ?bool
     {
         return $this->active_analytic_distribution;
     }
 
     /**
-     * @return Distribution
+     * @return null|Distribution[]
      */
-    public function getAnalyticDistributionIds(): Distribution
+    public function getAnalyticDistributionIds(): ?array
     {
         return $this->analytic_distribution_ids;
     }
 
     /**
-     * @return Company
+     * @return null|Company
      */
-    public function getCompanyId(): Company
+    public function getCompanyId(): ?Company
     {
         return $this->company_id;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

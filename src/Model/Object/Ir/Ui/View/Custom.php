@@ -12,7 +12,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : ir.ui.view.custom
  * Name : ir.ui.view.custom
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -28,54 +28,66 @@ final class Custom extends Base
     /**
      * Original View
      *
-     * @var null|View
+     * @var View
      */
     private $ref_id;
 
     /**
      * User
      *
-     * @var null|Users
+     * @var Users
      */
     private $user_id;
 
     /**
      * View Architecture
      *
-     * @var null|string
+     * @var string
      */
     private $arch;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|View $ref_id
+     * @param View $ref_id Original View
+     * @param Users $user_id User
+     * @param string $arch View Architecture
+     */
+    public function __construct(View $ref_id, Users $user_id, string $arch)
+    {
+        $this->ref_id = $ref_id;
+        $this->user_id = $user_id;
+        $this->arch = $arch;
+    }
+
+    /**
+     * @param View $ref_id
      */
     public function setRefId(View $ref_id): void
     {
@@ -83,7 +95,7 @@ final class Custom extends Base
     }
 
     /**
-     * @param null|Users $user_id
+     * @param Users $user_id
      */
     public function setUserId(Users $user_id): void
     {
@@ -91,41 +103,41 @@ final class Custom extends Base
     }
 
     /**
-     * @param null|string $arch
+     * @param string $arch
      */
-    public function setArch(?string $arch): void
+    public function setArch(string $arch): void
     {
         $this->arch = $arch;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

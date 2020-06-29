@@ -21,7 +21,7 @@ use Flux\OdooApiClient\Model\Object\Sms\Template as TemplateAlias;
 /**
  * Odoo model : ir.actions.server
  * Name : ir.actions.server
- *
+ * Info :
  * Mixin that overrides the create and write methods to properly generate
  * ir.model.data entries flagged with Studio for the corresponding resources.
  * Doesn't create an ir.model.data if the record is part of a module being
@@ -33,554 +33,683 @@ class Server extends Base
     /**
      * Action Name
      *
-     * @var null|string
+     * @var string
      */
     protected $name;
 
     /**
      * Action Type
      *
-     * @var null|string
+     * @var string
      */
     protected $type;
 
     /**
      * Sequence
+     * When dealing with multiple actions, the execution order is based on the sequence. Low number means high
+     * priority.
      *
-     * @var int
+     * @var null|int
      */
     protected $sequence;
 
     /**
      * Model
+     * Model on which the server action runs.
      *
-     * @var null|Model
+     * @var Model
      */
     protected $model_id;
 
     /**
      * Model Name
      *
-     * @var string
+     * @var null|string
      */
     protected $model_name;
 
     /**
      * Python Code
+     * Write Python code that the action will execute. Some variables are available for use; help about python
+     * expression is given in the help tab.
      *
-     * @var string
+     * @var null|string
      */
     protected $code;
 
     /**
      * Child Actions
+     * Child server actions that will be executed. Note that the last return returned action value will be used as
+     * global return value.
      *
-     * @var ServerAlias
+     * @var null|ServerAlias[]
      */
     protected $child_ids;
 
     /**
      * Create/Write Target Model
+     * Model for record creation / update. Set this field only to specify a different model than the base model.
      *
-     * @var Model
+     * @var null|Model
      */
     protected $crud_model_id;
 
     /**
      * Target Model
      *
-     * @var string
+     * @var null|string
      */
     protected $crud_model_name;
 
     /**
      * Link using field
+     * Provide the field used to link the newly created record on the record on used by the server action.
      *
-     * @var Fields
+     * @var null|Fields
      */
     protected $link_field_id;
 
     /**
      * Value Mapping
      *
-     * @var Lines
+     * @var null|Lines[]
      */
     protected $fields_lines;
 
     /**
      * Groups
      *
-     * @var Groups
+     * @var null|Groups[]
      */
     protected $groups_id;
 
     /**
      * Add Followers
      *
-     * @var Partner
+     * @var null|Partner[]
      */
     protected $partner_ids;
 
     /**
      * Add Channels
      *
-     * @var Channel
+     * @var null|Channel[]
      */
     protected $channel_ids;
 
     /**
      * Email Template
      *
-     * @var Template
+     * @var null|Template
      */
     protected $template_id;
 
     /**
      * Activity
      *
-     * @var Type
+     * @var null|Type
      */
     protected $activity_type_id;
 
     /**
      * Summary
      *
-     * @var string
+     * @var null|string
      */
     protected $activity_summary;
 
     /**
      * Note
      *
-     * @var string
+     * @var null|string
      */
     protected $activity_note;
 
     /**
      * Due Date In
      *
-     * @var int
+     * @var null|int
      */
     protected $activity_date_deadline_range;
 
     /**
      * Due type
      *
-     * @var array
+     * @var null|array
      */
     protected $activity_date_deadline_range_type;
 
     /**
      * Activity User Type
+     * Use 'Specific User' to always assign the same user on the next activity. Use 'Generic User From Record' to
+     * specify the field name of the user to choose on the record.
      *
-     * @var null|array
+     * @var array
      */
     protected $activity_user_type;
 
     /**
      * Responsible
      *
-     * @var Users
+     * @var null|Users
      */
     protected $activity_user_id;
 
     /**
      * User field name
+     * Technical name of the user on the record
      *
-     * @var string
+     * @var null|string
      */
     protected $activity_user_field_name;
 
     /**
      * Usage
      *
-     * @var null|array
+     * @var array
      */
     protected $usage;
 
     /**
      * Action To Do
+     * Type of server action. The following values are available:
+     * - 'Execute Python Code': a block of python code that will be executed
+     * - 'Create': create a new record with new values
+     * - 'Update a Record': update the values of a record
+     * - 'Execute several actions': define an action that triggers several other server actions
+     * - 'Send Email': automatically send an email (Discuss)
+     * - 'Add Followers': add followers to a record (Discuss)
+     * - 'Create Next Activity': create an activity (Discuss)
      *
-     * @var null|array
+     * @var array
      */
     protected $state;
 
     /**
      * SMS Template
      *
-     * @var TemplateAlias
+     * @var null|TemplateAlias
      */
     protected $sms_template_id;
 
     /**
      * Log a note
      *
-     * @var bool
+     * @var null|bool
      */
     protected $sms_mass_keep_log;
 
     /**
      * External ID
      *
-     * @var string
+     * @var null|string
      */
     protected $xml_id;
 
     /**
      * Action Description
+     * Optional help text for the users with a description of the target view, such as its usage and purpose.
      *
-     * @var string
+     * @var null|string
      */
     protected $help;
 
     /**
      * Binding Model
+     * Setting a value makes this action available in the sidebar for the given model.
      *
-     * @var Model
+     * @var null|Model
      */
     protected $binding_model_id;
 
     /**
      * Binding Type
      *
-     * @var null|array
+     * @var array
      */
     protected $binding_type;
 
     /**
      * Binding View Types
      *
-     * @var string
+     * @var null|string
      */
     protected $binding_view_types;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     protected $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     protected $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     protected $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     protected $write_date;
 
     /**
-     * @param null|string $name
+     * @param string $name Action Name
+     * @param string $type Action Type
+     * @param Model $model_id Model
+     *        Model on which the server action runs.
+     * @param array $activity_user_type Activity User Type
+     *        Use 'Specific User' to always assign the same user on the next activity. Use 'Generic User From Record' to
+     *        specify the field name of the user to choose on the record.
+     * @param array $usage Usage
+     * @param array $state Action To Do
+     *        Type of server action. The following values are available:
+     *        - 'Execute Python Code': a block of python code that will be executed
+     *        - 'Create': create a new record with new values
+     *        - 'Update a Record': update the values of a record
+     *        - 'Execute several actions': define an action that triggers several other server actions
+     *        - 'Send Email': automatically send an email (Discuss)
+     *        - 'Add Followers': add followers to a record (Discuss)
+     *        - 'Create Next Activity': create an activity (Discuss)
+     * @param array $binding_type Binding Type
      */
-    public function setName(?string $name): void
-    {
+    public function __construct(
+        string $name,
+        string $type,
+        Model $model_id,
+        array $activity_user_type,
+        array $usage,
+        array $state,
+        array $binding_type
+    ) {
         $this->name = $name;
-    }
-
-    /**
-     * @param bool $sms_mass_keep_log
-     */
-    public function setSmsMassKeepLog(bool $sms_mass_keep_log): void
-    {
-        $this->sms_mass_keep_log = $sms_mass_keep_log;
-    }
-
-    /**
-     * @param string $activity_user_field_name
-     */
-    public function setActivityUserFieldName(string $activity_user_field_name): void
-    {
-        $this->activity_user_field_name = $activity_user_field_name;
-    }
-
-    /**
-     * @param null|array $usage
-     */
-    public function setUsage(?array $usage): void
-    {
+        $this->type = $type;
+        $this->model_id = $model_id;
+        $this->activity_user_type = $activity_user_type;
         $this->usage = $usage;
-    }
-
-    /**
-     * @param ?array $usage
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasUsage(?array $usage, bool $strict = true): bool
-    {
-        if (null === $this->usage) {
-            return false;
-        }
-
-        return in_array($usage, $this->usage, $strict);
-    }
-
-    /**
-     * @param ?array $usage
-     */
-    public function addUsage(?array $usage): void
-    {
-        if ($this->hasUsage($usage)) {
-            return;
-        }
-
-        if (null === $this->usage) {
-            $this->usage = [];
-        }
-
-        $this->usage[] = $usage;
-    }
-
-    /**
-     * @param ?array $usage
-     */
-    public function removeUsage(?array $usage): void
-    {
-        if ($this->hasUsage($usage)) {
-            $index = array_search($usage, $this->usage);
-            unset($this->usage[$index]);
-        }
-    }
-
-    /**
-     * @param null|array $state
-     */
-    public function setState(?array $state): void
-    {
         $this->state = $state;
+        $this->binding_type = $binding_type;
     }
 
     /**
-     * @param ?array $state
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasState(?array $state, bool $strict = true): bool
+    public function hasState($item, bool $strict = true): bool
     {
-        if (null === $this->state) {
+        return in_array($item, $this->state, $strict);
+    }
+
+    /**
+     * @param mixed $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasActivityDateDeadlineRangeType($item, bool $strict = true): bool
+    {
+        if (null === $this->activity_date_deadline_range_type) {
             return false;
         }
 
-        return in_array($state, $this->state, $strict);
+        return in_array($item, $this->activity_date_deadline_range_type, $strict);
     }
 
     /**
-     * @param ?array $state
+     * @param mixed $item
      */
-    public function addState(?array $state): void
+    public function addActivityDateDeadlineRangeType($item): void
     {
-        if ($this->hasState($state)) {
+        if ($this->hasActivityDateDeadlineRangeType($item)) {
             return;
         }
 
-        if (null === $this->state) {
-            $this->state = [];
+        if (null === $this->activity_date_deadline_range_type) {
+            $this->activity_date_deadline_range_type = [];
         }
 
-        $this->state[] = $state;
+        $this->activity_date_deadline_range_type[] = $item;
     }
 
     /**
-     * @param ?array $state
+     * @param mixed $item
      */
-    public function removeState(?array $state): void
+    public function removeActivityDateDeadlineRangeType($item): void
     {
-        if ($this->hasState($state)) {
-            $index = array_search($state, $this->state);
-            unset($this->state[$index]);
+        if (null === $this->activity_date_deadline_range_type) {
+            $this->activity_date_deadline_range_type = [];
+        }
+
+        if ($this->hasActivityDateDeadlineRangeType($item)) {
+            $index = array_search($item, $this->activity_date_deadline_range_type);
+            unset($this->activity_date_deadline_range_type[$index]);
         }
     }
 
     /**
-     * @param TemplateAlias $sms_template_id
+     * @param array $activity_user_type
      */
-    public function setSmsTemplateId(TemplateAlias $sms_template_id): void
+    public function setActivityUserType(array $activity_user_type): void
     {
-        $this->sms_template_id = $sms_template_id;
+        $this->activity_user_type = $activity_user_type;
     }
 
     /**
-     * @return string
+     * @param mixed $item
+     * @param bool $strict
+     *
+     * @return bool
      */
-    public function getXmlId(): string
+    public function hasActivityUserType($item, bool $strict = true): bool
     {
-        return $this->xml_id;
+        return in_array($item, $this->activity_user_type, $strict);
     }
 
     /**
-     * @param ?array $activity_user_type
+     * @param mixed $item
      */
-    public function removeActivityUserType(?array $activity_user_type): void
+    public function addActivityUserType($item): void
     {
-        if ($this->hasActivityUserType($activity_user_type)) {
-            $index = array_search($activity_user_type, $this->activity_user_type);
+        if ($this->hasActivityUserType($item)) {
+            return;
+        }
+
+        $this->activity_user_type[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeActivityUserType($item): void
+    {
+        if ($this->hasActivityUserType($item)) {
+            $index = array_search($item, $this->activity_user_type);
             unset($this->activity_user_type[$index]);
         }
     }
 
     /**
-     * @param string $help
+     * @param null|Users $activity_user_id
      */
-    public function setHelp(string $help): void
-    {
-        $this->help = $help;
-    }
-
-    /**
-     * @param Model $binding_model_id
-     */
-    public function setBindingModelId(Model $binding_model_id): void
-    {
-        $this->binding_model_id = $binding_model_id;
-    }
-
-    /**
-     * @param null|array $binding_type
-     */
-    public function setBindingType(?array $binding_type): void
-    {
-        $this->binding_type = $binding_type;
-    }
-
-    /**
-     * @param ?array $binding_type
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasBindingType(?array $binding_type, bool $strict = true): bool
-    {
-        if (null === $this->binding_type) {
-            return false;
-        }
-
-        return in_array($binding_type, $this->binding_type, $strict);
-    }
-
-    /**
-     * @param ?array $binding_type
-     */
-    public function addBindingType(?array $binding_type): void
-    {
-        if ($this->hasBindingType($binding_type)) {
-            return;
-        }
-
-        if (null === $this->binding_type) {
-            $this->binding_type = [];
-        }
-
-        $this->binding_type[] = $binding_type;
-    }
-
-    /**
-     * @param ?array $binding_type
-     */
-    public function removeBindingType(?array $binding_type): void
-    {
-        if ($this->hasBindingType($binding_type)) {
-            $index = array_search($binding_type, $this->binding_type);
-            unset($this->binding_type[$index]);
-        }
-    }
-
-    /**
-     * @param string $binding_view_types
-     */
-    public function setBindingViewTypes(string $binding_view_types): void
-    {
-        $this->binding_view_types = $binding_view_types;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getCreateUid(): Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getCreateDate(): DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getWriteUid(): Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param Users $activity_user_id
-     */
-    public function setActivityUserId(Users $activity_user_id): void
+    public function setActivityUserId(?Users $activity_user_id): void
     {
         $this->activity_user_id = $activity_user_id;
     }
 
     /**
-     * @param ?array $activity_user_type
+     * @param null|string $activity_user_field_name
      */
-    public function addActivityUserType(?array $activity_user_type): void
+    public function setActivityUserFieldName(?string $activity_user_field_name): void
     {
-        if ($this->hasActivityUserType($activity_user_type)) {
-            return;
-        }
-
-        if (null === $this->activity_user_type) {
-            $this->activity_user_type = [];
-        }
-
-        $this->activity_user_type[] = $activity_user_type;
+        $this->activity_user_field_name = $activity_user_field_name;
     }
 
     /**
-     * @param null|string $type
+     * @param array $usage
      */
-    public function setType(?string $type): void
+    public function setUsage(array $usage): void
+    {
+        $this->usage = $usage;
+    }
+
+    /**
+     * @param mixed $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasUsage($item, bool $strict = true): bool
+    {
+        return in_array($item, $this->usage, $strict);
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addUsage($item): void
+    {
+        if ($this->hasUsage($item)) {
+            return;
+        }
+
+        $this->usage[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeUsage($item): void
+    {
+        if ($this->hasUsage($item)) {
+            $index = array_search($item, $this->usage);
+            unset($this->usage[$index]);
+        }
+    }
+
+    /**
+     * @param array $state
+     */
+    public function setState(array $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addState($item): void
+    {
+        if ($this->hasState($item)) {
+            return;
+        }
+
+        $this->state[] = $item;
+    }
+
+    /**
+     * @param null|int $activity_date_deadline_range
+     */
+    public function setActivityDateDeadlineRange(?int $activity_date_deadline_range): void
+    {
+        $this->activity_date_deadline_range = $activity_date_deadline_range;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeState($item): void
+    {
+        if ($this->hasState($item)) {
+            $index = array_search($item, $this->state);
+            unset($this->state[$index]);
+        }
+    }
+
+    /**
+     * @param null|TemplateAlias $sms_template_id
+     */
+    public function setSmsTemplateId(?TemplateAlias $sms_template_id): void
+    {
+        $this->sms_template_id = $sms_template_id;
+    }
+
+    /**
+     * @param null|bool $sms_mass_keep_log
+     */
+    public function setSmsMassKeepLog(?bool $sms_mass_keep_log): void
+    {
+        $this->sms_mass_keep_log = $sms_mass_keep_log;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getXmlId(): ?string
+    {
+        return $this->xml_id;
+    }
+
+    /**
+     * @param null|string $help
+     */
+    public function setHelp(?string $help): void
+    {
+        $this->help = $help;
+    }
+
+    /**
+     * @param null|Model $binding_model_id
+     */
+    public function setBindingModelId(?Model $binding_model_id): void
+    {
+        $this->binding_model_id = $binding_model_id;
+    }
+
+    /**
+     * @param array $binding_type
+     */
+    public function setBindingType(array $binding_type): void
+    {
+        $this->binding_type = $binding_type;
+    }
+
+    /**
+     * @param mixed $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasBindingType($item, bool $strict = true): bool
+    {
+        return in_array($item, $this->binding_type, $strict);
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addBindingType($item): void
+    {
+        if ($this->hasBindingType($item)) {
+            return;
+        }
+
+        $this->binding_type[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeBindingType($item): void
+    {
+        if ($this->hasBindingType($item)) {
+            $index = array_search($item, $this->binding_type);
+            unset($this->binding_type[$index]);
+        }
+    }
+
+    /**
+     * @param null|string $binding_view_types
+     */
+    public function setBindingViewTypes(?string $binding_view_types): void
+    {
+        $this->binding_view_types = $binding_view_types;
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getCreateUid(): ?Users
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getWriteUid(): ?Users
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param null|array $activity_date_deadline_range_type
+     */
+    public function setActivityDateDeadlineRangeType(?array $activity_date_deadline_range_type): void
+    {
+        $this->activity_date_deadline_range_type = $activity_date_deadline_range_type;
+    }
+
+    /**
+     * @param null|string $activity_note
+     */
+    public function setActivityNote(?string $activity_note): void
+    {
+        $this->activity_note = $activity_note;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param Lines $item
+     */
+    public function addFieldsLines(Lines $item): void
+    {
+        if ($this->hasFieldsLines($item)) {
+            return;
+        }
+
+        if (null === $this->fields_lines) {
+            $this->fields_lines = [];
+        }
+
+        $this->fields_lines[] = $item;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType(string $type): void
     {
         $this->type = $type;
     }
 
     /**
-     * @param Partner $partner_ids
+     * @param null|int $sequence
      */
-    public function setPartnerIds(Partner $partner_ids): void
-    {
-        $this->partner_ids = $partner_ids;
-    }
-
-    /**
-     * @param int $sequence
-     */
-    public function setSequence(int $sequence): void
+    public function setSequence(?int $sequence): void
     {
         $this->sequence = $sequence;
     }
 
     /**
-     * @param null|Model $model_id
+     * @param Model $model_id
      */
     public function setModelId(Model $model_id): void
     {
@@ -588,189 +717,327 @@ class Server extends Base
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getModelName(): string
+    public function getModelName(): ?string
     {
         return $this->model_name;
     }
 
     /**
-     * @param string $code
+     * @param null|string $code
      */
-    public function setCode(string $code): void
+    public function setCode(?string $code): void
     {
         $this->code = $code;
     }
 
     /**
-     * @param ServerAlias $child_ids
+     * @param null|ServerAlias[] $child_ids
      */
-    public function setChildIds(ServerAlias $child_ids): void
+    public function setChildIds(?array $child_ids): void
     {
         $this->child_ids = $child_ids;
     }
 
     /**
-     * @param Model $crud_model_id
+     * @param ServerAlias $item
+     * @param bool $strict
+     *
+     * @return bool
      */
-    public function setCrudModelId(Model $crud_model_id): void
+    public function hasChildIds(ServerAlias $item, bool $strict = true): bool
+    {
+        if (null === $this->child_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->child_ids, $strict);
+    }
+
+    /**
+     * @param ServerAlias $item
+     */
+    public function addChildIds(ServerAlias $item): void
+    {
+        if ($this->hasChildIds($item)) {
+            return;
+        }
+
+        if (null === $this->child_ids) {
+            $this->child_ids = [];
+        }
+
+        $this->child_ids[] = $item;
+    }
+
+    /**
+     * @param ServerAlias $item
+     */
+    public function removeChildIds(ServerAlias $item): void
+    {
+        if (null === $this->child_ids) {
+            $this->child_ids = [];
+        }
+
+        if ($this->hasChildIds($item)) {
+            $index = array_search($item, $this->child_ids);
+            unset($this->child_ids[$index]);
+        }
+    }
+
+    /**
+     * @param null|Model $crud_model_id
+     */
+    public function setCrudModelId(?Model $crud_model_id): void
     {
         $this->crud_model_id = $crud_model_id;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getCrudModelName(): string
+    public function getCrudModelName(): ?string
     {
         return $this->crud_model_name;
     }
 
     /**
-     * @param Fields $link_field_id
+     * @param null|Fields $link_field_id
      */
-    public function setLinkFieldId(Fields $link_field_id): void
+    public function setLinkFieldId(?Fields $link_field_id): void
     {
         $this->link_field_id = $link_field_id;
     }
 
     /**
-     * @param Lines $fields_lines
+     * @param null|Lines[] $fields_lines
      */
-    public function setFieldsLines(Lines $fields_lines): void
+    public function setFieldsLines(?array $fields_lines): void
     {
         $this->fields_lines = $fields_lines;
     }
 
     /**
-     * @param Groups $groups_id
-     */
-    public function setGroupsId(Groups $groups_id): void
-    {
-        $this->groups_id = $groups_id;
-    }
-
-    /**
-     * @param Channel $channel_ids
-     */
-    public function setChannelIds(Channel $channel_ids): void
-    {
-        $this->channel_ids = $channel_ids;
-    }
-
-    /**
-     * @param ?array $activity_user_type
+     * @param Lines $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasActivityUserType(?array $activity_user_type, bool $strict = true): bool
+    public function hasFieldsLines(Lines $item, bool $strict = true): bool
     {
-        if (null === $this->activity_user_type) {
+        if (null === $this->fields_lines) {
             return false;
         }
 
-        return in_array($activity_user_type, $this->activity_user_type, $strict);
+        return in_array($item, $this->fields_lines, $strict);
     }
 
     /**
-     * @param Template $template_id
+     * @param Lines $item
      */
-    public function setTemplateId(Template $template_id): void
+    public function removeFieldsLines(Lines $item): void
     {
-        $this->template_id = $template_id;
+        if (null === $this->fields_lines) {
+            $this->fields_lines = [];
+        }
+
+        if ($this->hasFieldsLines($item)) {
+            $index = array_search($item, $this->fields_lines);
+            unset($this->fields_lines[$index]);
+        }
     }
 
     /**
-     * @param Type $activity_type_id
+     * @param null|string $activity_summary
      */
-    public function setActivityTypeId(Type $activity_type_id): void
-    {
-        $this->activity_type_id = $activity_type_id;
-    }
-
-    /**
-     * @param string $activity_summary
-     */
-    public function setActivitySummary(string $activity_summary): void
+    public function setActivitySummary(?string $activity_summary): void
     {
         $this->activity_summary = $activity_summary;
     }
 
     /**
-     * @param string $activity_note
+     * @param null|Groups[] $groups_id
      */
-    public function setActivityNote(string $activity_note): void
+    public function setGroupsId(?array $groups_id): void
     {
-        $this->activity_note = $activity_note;
+        $this->groups_id = $groups_id;
     }
 
     /**
-     * @param int $activity_date_deadline_range
-     */
-    public function setActivityDateDeadlineRange(int $activity_date_deadline_range): void
-    {
-        $this->activity_date_deadline_range = $activity_date_deadline_range;
-    }
-
-    /**
-     * @param array $activity_date_deadline_range_type
-     */
-    public function setActivityDateDeadlineRangeType(array $activity_date_deadline_range_type): void
-    {
-        $this->activity_date_deadline_range_type = $activity_date_deadline_range_type;
-    }
-
-    /**
-     * @param array $activity_date_deadline_range_type
+     * @param Groups $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasActivityDateDeadlineRangeType(
-        array $activity_date_deadline_range_type,
-        bool $strict = true
-    ): bool
+    public function hasGroupsId(Groups $item, bool $strict = true): bool
     {
-        return in_array($activity_date_deadline_range_type, $this->activity_date_deadline_range_type, $strict);
+        if (null === $this->groups_id) {
+            return false;
+        }
+
+        return in_array($item, $this->groups_id, $strict);
     }
 
     /**
-     * @param array $activity_date_deadline_range_type
+     * @param Groups $item
      */
-    public function addActivityDateDeadlineRangeType(array $activity_date_deadline_range_type): void
+    public function addGroupsId(Groups $item): void
     {
-        if ($this->hasActivityDateDeadlineRangeType($activity_date_deadline_range_type)) {
+        if ($this->hasGroupsId($item)) {
             return;
         }
 
-        $this->activity_date_deadline_range_type[] = $activity_date_deadline_range_type;
+        if (null === $this->groups_id) {
+            $this->groups_id = [];
+        }
+
+        $this->groups_id[] = $item;
     }
 
     /**
-     * @param array $activity_date_deadline_range_type
+     * @param Groups $item
      */
-    public function removeActivityDateDeadlineRangeType(array $activity_date_deadline_range_type): void
+    public function removeGroupsId(Groups $item): void
     {
-        if ($this->hasActivityDateDeadlineRangeType($activity_date_deadline_range_type)) {
-            $index = array_search($activity_date_deadline_range_type, $this->activity_date_deadline_range_type);
-            unset($this->activity_date_deadline_range_type[$index]);
+        if (null === $this->groups_id) {
+            $this->groups_id = [];
+        }
+
+        if ($this->hasGroupsId($item)) {
+            $index = array_search($item, $this->groups_id);
+            unset($this->groups_id[$index]);
         }
     }
 
     /**
-     * @param null|array $activity_user_type
+     * @param null|Partner[] $partner_ids
      */
-    public function setActivityUserType(?array $activity_user_type): void
+    public function setPartnerIds(?array $partner_ids): void
     {
-        $this->activity_user_type = $activity_user_type;
+        $this->partner_ids = $partner_ids;
     }
 
     /**
-     * @return DateTimeInterface
+     * @param Partner $item
+     * @param bool $strict
+     *
+     * @return bool
      */
-    public function getWriteDate(): DateTimeInterface
+    public function hasPartnerIds(Partner $item, bool $strict = true): bool
+    {
+        if (null === $this->partner_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->partner_ids, $strict);
+    }
+
+    /**
+     * @param Partner $item
+     */
+    public function addPartnerIds(Partner $item): void
+    {
+        if ($this->hasPartnerIds($item)) {
+            return;
+        }
+
+        if (null === $this->partner_ids) {
+            $this->partner_ids = [];
+        }
+
+        $this->partner_ids[] = $item;
+    }
+
+    /**
+     * @param Partner $item
+     */
+    public function removePartnerIds(Partner $item): void
+    {
+        if (null === $this->partner_ids) {
+            $this->partner_ids = [];
+        }
+
+        if ($this->hasPartnerIds($item)) {
+            $index = array_search($item, $this->partner_ids);
+            unset($this->partner_ids[$index]);
+        }
+    }
+
+    /**
+     * @param null|Channel[] $channel_ids
+     */
+    public function setChannelIds(?array $channel_ids): void
+    {
+        $this->channel_ids = $channel_ids;
+    }
+
+    /**
+     * @param Channel $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasChannelIds(Channel $item, bool $strict = true): bool
+    {
+        if (null === $this->channel_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->channel_ids, $strict);
+    }
+
+    /**
+     * @param Channel $item
+     */
+    public function addChannelIds(Channel $item): void
+    {
+        if ($this->hasChannelIds($item)) {
+            return;
+        }
+
+        if (null === $this->channel_ids) {
+            $this->channel_ids = [];
+        }
+
+        $this->channel_ids[] = $item;
+    }
+
+    /**
+     * @param Channel $item
+     */
+    public function removeChannelIds(Channel $item): void
+    {
+        if (null === $this->channel_ids) {
+            $this->channel_ids = [];
+        }
+
+        if ($this->hasChannelIds($item)) {
+            $index = array_search($item, $this->channel_ids);
+            unset($this->channel_ids[$index]);
+        }
+    }
+
+    /**
+     * @param null|Template $template_id
+     */
+    public function setTemplateId(?Template $template_id): void
+    {
+        $this->template_id = $template_id;
+    }
+
+    /**
+     * @param null|Type $activity_type_id
+     */
+    public function setActivityTypeId(?Type $activity_type_id): void
+    {
+        $this->activity_type_id = $activity_type_id;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

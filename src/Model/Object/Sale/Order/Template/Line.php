@@ -16,7 +16,7 @@ use Flux\OdooApiClient\Model\Object\Uom\Uom;
 /**
  * Odoo model : sale.order.template.line
  * Name : sale.order.template.line
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -31,193 +31,283 @@ final class Line extends Base
 {
     /**
      * Sequence
+     * Gives the sequence order when displaying a list of sale quote lines.
      *
-     * @var int
+     * @var null|int
      */
     private $sequence;
 
     /**
      * Quotation Template Reference
      *
-     * @var null|Template
+     * @var Template
      */
     private $sale_order_template_id;
 
     /**
      * Company
      *
-     * @var Company
+     * @var null|Company
      */
     private $company_id;
 
     /**
      * Description
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Product
      *
-     * @var Product
+     * @var null|Product
      */
     private $product_id;
 
     /**
      * Unit Price
      *
-     * @var null|float
+     * @var float
      */
     private $price_unit;
 
     /**
      * Discount (%)
      *
-     * @var float
+     * @var null|float
      */
     private $discount;
 
     /**
      * Quantity
      *
-     * @var null|float
+     * @var float
      */
     private $product_uom_qty;
 
     /**
      * Unit of Measure
      *
-     * @var Uom
+     * @var null|Uom
      */
     private $product_uom_id;
 
     /**
      * Category
+     * Conversion between Units of Measure can only occur if they belong to the same category. The conversion will be
+     * made based on the ratios.
      *
-     * @var Category
+     * @var null|Category
      */
     private $product_uom_category_id;
 
     /**
      * Display Type
+     * Technical field for UX purpose.
      *
-     * @var array
+     * @var null|array
      */
     private $display_type;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param int $sequence
+     * @param Template $sale_order_template_id Quotation Template Reference
+     * @param string $name Description
+     * @param float $price_unit Unit Price
+     * @param float $product_uom_qty Quantity
      */
-    public function setSequence(int $sequence): void
-    {
-        $this->sequence = $sequence;
+    public function __construct(
+        Template $sale_order_template_id,
+        string $name,
+        float $price_unit,
+        float $product_uom_qty
+    ) {
+        $this->sale_order_template_id = $sale_order_template_id;
+        $this->name = $name;
+        $this->price_unit = $price_unit;
+        $this->product_uom_qty = $product_uom_qty;
     }
 
     /**
-     * @param array $display_type
+     * @return null|Category
      */
-    public function setDisplayType(array $display_type): void
-    {
-        $this->display_type = $display_type;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getWriteUid(): Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getCreateDate(): DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getCreateUid(): Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param array $display_type
-     */
-    public function removeDisplayType(array $display_type): void
-    {
-        if ($this->hasDisplayType($display_type)) {
-            $index = array_search($display_type, $this->display_type);
-            unset($this->display_type[$index]);
-        }
-    }
-
-    /**
-     * @param array $display_type
-     */
-    public function addDisplayType(array $display_type): void
-    {
-        if ($this->hasDisplayType($display_type)) {
-            return;
-        }
-
-        $this->display_type[] = $display_type;
-    }
-
-    /**
-     * @param array $display_type
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasDisplayType(array $display_type, bool $strict = true): bool
-    {
-        return in_array($display_type, $this->display_type, $strict);
-    }
-
-    /**
-     * @return Category
-     */
-    public function getProductUomCategoryId(): Category
+    public function getProductUomCategoryId(): ?Category
     {
         return $this->product_uom_category_id;
     }
 
     /**
-     * @param null|Template $sale_order_template_id
+     * @return null|Users
+     */
+    public function getWriteUid(): ?Users
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getCreateUid(): ?Users
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeDisplayType($item): void
+    {
+        if (null === $this->display_type) {
+            $this->display_type = [];
+        }
+
+        if ($this->hasDisplayType($item)) {
+            $index = array_search($item, $this->display_type);
+            unset($this->display_type[$index]);
+        }
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addDisplayType($item): void
+    {
+        if ($this->hasDisplayType($item)) {
+            return;
+        }
+
+        if (null === $this->display_type) {
+            $this->display_type = [];
+        }
+
+        $this->display_type[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasDisplayType($item, bool $strict = true): bool
+    {
+        if (null === $this->display_type) {
+            return false;
+        }
+
+        return in_array($item, $this->display_type, $strict);
+    }
+
+    /**
+     * @param null|array $display_type
+     */
+    public function setDisplayType(?array $display_type): void
+    {
+        $this->display_type = $display_type;
+    }
+
+    /**
+     * @param null|Uom $product_uom_id
+     */
+    public function setProductUomId(?Uom $product_uom_id): void
+    {
+        $this->product_uom_id = $product_uom_id;
+    }
+
+    /**
+     * @param null|int $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * @param float $product_uom_qty
+     */
+    public function setProductUomQty(float $product_uom_qty): void
+    {
+        $this->product_uom_qty = $product_uom_qty;
+    }
+
+    /**
+     * @param null|float $discount
+     */
+    public function setDiscount(?float $discount): void
+    {
+        $this->discount = $discount;
+    }
+
+    /**
+     * @param float $price_unit
+     */
+    public function setPriceUnit(float $price_unit): void
+    {
+        $this->price_unit = $price_unit;
+    }
+
+    /**
+     * @param null|Product $product_id
+     */
+    public function setProductId(?Product $product_id): void
+    {
+        $this->product_id = $product_id;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return null|Company
+     */
+    public function getCompanyId(): ?Company
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param Template $sale_order_template_id
      */
     public function setSaleOrderTemplateId(Template $sale_order_template_id): void
     {
@@ -225,65 +315,9 @@ final class Line extends Base
     }
 
     /**
-     * @param Uom $product_uom_id
+     * @return null|DateTimeInterface
      */
-    public function setProductUomId(Uom $product_uom_id): void
-    {
-        $this->product_uom_id = $product_uom_id;
-    }
-
-    /**
-     * @param null|float $product_uom_qty
-     */
-    public function setProductUomQty(?float $product_uom_qty): void
-    {
-        $this->product_uom_qty = $product_uom_qty;
-    }
-
-    /**
-     * @param float $discount
-     */
-    public function setDiscount(float $discount): void
-    {
-        $this->discount = $discount;
-    }
-
-    /**
-     * @param null|float $price_unit
-     */
-    public function setPriceUnit(?float $price_unit): void
-    {
-        $this->price_unit = $price_unit;
-    }
-
-    /**
-     * @param Product $product_id
-     */
-    public function setProductId(Product $product_id): void
-    {
-        $this->product_id = $product_id;
-    }
-
-    /**
-     * @param null|string $name
-     */
-    public function setName(?string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return Company
-     */
-    public function getCompanyId(): Company
-    {
-        return $this->company_id;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

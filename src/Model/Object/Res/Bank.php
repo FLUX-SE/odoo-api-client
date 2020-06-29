@@ -11,7 +11,7 @@ use Flux\OdooApiClient\Model\Object\Res\Country\State;
 /**
  * Odoo model : res.bank
  * Name : res.bank
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -27,224 +27,233 @@ final class Bank extends Base
     /**
      * Name
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Street
      *
-     * @var string
+     * @var null|string
      */
     private $street;
 
     /**
      * Street2
      *
-     * @var string
+     * @var null|string
      */
     private $street2;
 
     /**
      * Zip
      *
-     * @var string
+     * @var null|string
      */
     private $zip;
 
     /**
      * City
      *
-     * @var string
+     * @var null|string
      */
     private $city;
 
     /**
      * Fed. State
      *
-     * @var State
+     * @var null|State
      */
     private $state;
 
     /**
      * Country
      *
-     * @var Country
+     * @var null|Country
      */
     private $country;
 
     /**
      * Email
      *
-     * @var string
+     * @var null|string
      */
     private $email;
 
     /**
      * Phone
      *
-     * @var string
+     * @var null|string
      */
     private $phone;
 
     /**
      * Active
      *
-     * @var bool
+     * @var null|bool
      */
     private $active;
 
     /**
      * Bank Identifier Code
+     * Sometimes called BIC or Swift.
      *
-     * @var string
+     * @var null|string
      */
     private $bic;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @param string $name Name
      */
-    public function setName(?string $name): void
+    public function __construct(string $name)
     {
         $this->name = $name;
     }
 
     /**
-     * @param string $street
+     * @param string $name
      */
-    public function setStreet(string $street): void
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param null|string $street
+     */
+    public function setStreet(?string $street): void
     {
         $this->street = $street;
     }
 
     /**
-     * @param string $street2
+     * @param null|string $street2
      */
-    public function setStreet2(string $street2): void
+    public function setStreet2(?string $street2): void
     {
         $this->street2 = $street2;
     }
 
     /**
-     * @param string $zip
+     * @param null|string $zip
      */
-    public function setZip(string $zip): void
+    public function setZip(?string $zip): void
     {
         $this->zip = $zip;
     }
 
     /**
-     * @param string $city
+     * @param null|string $city
      */
-    public function setCity(string $city): void
+    public function setCity(?string $city): void
     {
         $this->city = $city;
     }
 
     /**
-     * @param State $state
+     * @param null|State $state
      */
-    public function setState(State $state): void
+    public function setState(?State $state): void
     {
         $this->state = $state;
     }
 
     /**
-     * @param Country $country
+     * @param null|Country $country
      */
-    public function setCountry(Country $country): void
+    public function setCountry(?Country $country): void
     {
         $this->country = $country;
     }
 
     /**
-     * @param string $email
+     * @param null|string $email
      */
-    public function setEmail(string $email): void
+    public function setEmail(?string $email): void
     {
         $this->email = $email;
     }
 
     /**
-     * @param string $phone
+     * @param null|string $phone
      */
-    public function setPhone(string $phone): void
+    public function setPhone(?string $phone): void
     {
         $this->phone = $phone;
     }
 
     /**
-     * @param bool $active
+     * @param null|bool $active
      */
-    public function setActive(bool $active): void
+    public function setActive(?bool $active): void
     {
         $this->active = $active;
     }
 
     /**
-     * @param string $bic
+     * @param null|string $bic
      */
-    public function setBic(string $bic): void
+    public function setBic(?string $bic): void
     {
         $this->bic = $bic;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

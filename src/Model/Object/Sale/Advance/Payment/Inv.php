@@ -15,7 +15,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : sale.advance.payment.inv
  * Name : sale.advance.payment.inv
- *
+ * Info :
  * Model super-class for transient records, meant to be temporarily
  * persistent, and regularly vacuum-cleaned.
  *
@@ -27,252 +27,306 @@ final class Inv extends Base
 {
     /**
      * Create Invoice
+     * A standard invoice is issued with all the order lines ready for invoicing,         according to their
+     * invoicing policy (based on ordered or delivered quantity).
      *
-     * @var null|array
+     * @var array
      */
     private $advance_payment_method;
 
     /**
      * Deduct down payments
      *
-     * @var bool
+     * @var null|bool
      */
     private $deduct_down_payments;
 
     /**
      * Has down payments
      *
-     * @var bool
+     * @var null|bool
      */
     private $has_down_payments;
 
     /**
      * Down Payment Product
      *
-     * @var Product
+     * @var null|Product
      */
     private $product_id;
 
     /**
      * Order Count
      *
-     * @var int
+     * @var null|int
      */
     private $count;
 
     /**
      * Down Payment Amount
+     * The percentage of amount to be invoiced in advance, taxes excluded.
      *
-     * @var float
+     * @var null|float
      */
     private $amount;
 
     /**
      * Currency
      *
-     * @var Currency
+     * @var null|Currency
      */
     private $currency_id;
 
     /**
      * Down Payment Amount(Fixed)
+     * The fixed amount to be invoiced in advance, taxes excluded.
      *
-     * @var float
+     * @var null|float
      */
     private $fixed_amount;
 
     /**
      * Income Account
+     * Account used for deposits
      *
-     * @var Account
+     * @var null|Account
      */
     private $deposit_account_id;
 
     /**
      * Customer Taxes
+     * Taxes used for deposits
      *
-     * @var Tax
+     * @var null|Tax[]
      */
     private $deposit_taxes_id;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|array $advance_payment_method
+     * @param array $advance_payment_method Create Invoice
+     *        A standard invoice is issued with all the order lines ready for invoicing,         according to their
+     *        invoicing policy (based on ordered or delivered quantity).
      */
-    public function setAdvancePaymentMethod(?array $advance_payment_method): void
+    public function __construct(array $advance_payment_method)
     {
         $this->advance_payment_method = $advance_payment_method;
     }
 
     /**
-     * @param Currency $currency_id
+     * @param null|float $fixed_amount
      */
-    public function setCurrencyId(Currency $currency_id): void
-    {
-        $this->currency_id = $currency_id;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getWriteUid(): Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getCreateDate(): DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getCreateUid(): Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param Tax $deposit_taxes_id
-     */
-    public function setDepositTaxesId(Tax $deposit_taxes_id): void
-    {
-        $this->deposit_taxes_id = $deposit_taxes_id;
-    }
-
-    /**
-     * @param Account $deposit_account_id
-     */
-    public function setDepositAccountId(Account $deposit_account_id): void
-    {
-        $this->deposit_account_id = $deposit_account_id;
-    }
-
-    /**
-     * @param float $fixed_amount
-     */
-    public function setFixedAmount(float $fixed_amount): void
+    public function setFixedAmount(?float $fixed_amount): void
     {
         $this->fixed_amount = $fixed_amount;
     }
 
     /**
-     * @param float $amount
+     * @return null|Users
      */
-    public function setAmount(float $amount): void
+    public function getWriteUid(): ?Users
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getCreateUid(): ?Users
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param Tax $item
+     */
+    public function removeDepositTaxesId(Tax $item): void
+    {
+        if (null === $this->deposit_taxes_id) {
+            $this->deposit_taxes_id = [];
+        }
+
+        if ($this->hasDepositTaxesId($item)) {
+            $index = array_search($item, $this->deposit_taxes_id);
+            unset($this->deposit_taxes_id[$index]);
+        }
+    }
+
+    /**
+     * @param Tax $item
+     */
+    public function addDepositTaxesId(Tax $item): void
+    {
+        if ($this->hasDepositTaxesId($item)) {
+            return;
+        }
+
+        if (null === $this->deposit_taxes_id) {
+            $this->deposit_taxes_id = [];
+        }
+
+        $this->deposit_taxes_id[] = $item;
+    }
+
+    /**
+     * @param Tax $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasDepositTaxesId(Tax $item, bool $strict = true): bool
+    {
+        if (null === $this->deposit_taxes_id) {
+            return false;
+        }
+
+        return in_array($item, $this->deposit_taxes_id, $strict);
+    }
+
+    /**
+     * @param null|Tax[] $deposit_taxes_id
+     */
+    public function setDepositTaxesId(?array $deposit_taxes_id): void
+    {
+        $this->deposit_taxes_id = $deposit_taxes_id;
+    }
+
+    /**
+     * @param null|Account $deposit_account_id
+     */
+    public function setDepositAccountId(?Account $deposit_account_id): void
+    {
+        $this->deposit_account_id = $deposit_account_id;
+    }
+
+    /**
+     * @param null|Currency $currency_id
+     */
+    public function setCurrencyId(?Currency $currency_id): void
+    {
+        $this->currency_id = $currency_id;
+    }
+
+    /**
+     * @param array $advance_payment_method
+     */
+    public function setAdvancePaymentMethod(array $advance_payment_method): void
+    {
+        $this->advance_payment_method = $advance_payment_method;
+    }
+
+    /**
+     * @param null|float $amount
+     */
+    public function setAmount(?float $amount): void
     {
         $this->amount = $amount;
     }
 
     /**
-     * @param ?array $advance_payment_method
-     * @param bool $strict
-     *
-     * @return bool
+     * @param null|int $count
      */
-    public function hasAdvancePaymentMethod(?array $advance_payment_method, bool $strict = true): bool
-    {
-        if (null === $this->advance_payment_method) {
-            return false;
-        }
-
-        return in_array($advance_payment_method, $this->advance_payment_method, $strict);
-    }
-
-    /**
-     * @param int $count
-     */
-    public function setCount(int $count): void
+    public function setCount(?int $count): void
     {
         $this->count = $count;
     }
 
     /**
-     * @param Product $product_id
+     * @param null|Product $product_id
      */
-    public function setProductId(Product $product_id): void
+    public function setProductId(?Product $product_id): void
     {
         $this->product_id = $product_id;
     }
 
     /**
-     * @return bool
+     * @return null|bool
      */
-    public function isHasDownPayments(): bool
+    public function isHasDownPayments(): ?bool
     {
         return $this->has_down_payments;
     }
 
     /**
-     * @param bool $deduct_down_payments
+     * @param null|bool $deduct_down_payments
      */
-    public function setDeductDownPayments(bool $deduct_down_payments): void
+    public function setDeductDownPayments(?bool $deduct_down_payments): void
     {
         $this->deduct_down_payments = $deduct_down_payments;
     }
 
     /**
-     * @param ?array $advance_payment_method
+     * @param mixed $item
      */
-    public function removeAdvancePaymentMethod(?array $advance_payment_method): void
+    public function removeAdvancePaymentMethod($item): void
     {
-        if ($this->hasAdvancePaymentMethod($advance_payment_method)) {
-            $index = array_search($advance_payment_method, $this->advance_payment_method);
+        if ($this->hasAdvancePaymentMethod($item)) {
+            $index = array_search($item, $this->advance_payment_method);
             unset($this->advance_payment_method[$index]);
         }
     }
 
     /**
-     * @param ?array $advance_payment_method
+     * @param mixed $item
      */
-    public function addAdvancePaymentMethod(?array $advance_payment_method): void
+    public function addAdvancePaymentMethod($item): void
     {
-        if ($this->hasAdvancePaymentMethod($advance_payment_method)) {
+        if ($this->hasAdvancePaymentMethod($item)) {
             return;
         }
 
-        if (null === $this->advance_payment_method) {
-            $this->advance_payment_method = [];
-        }
-
-        $this->advance_payment_method[] = $advance_payment_method;
+        $this->advance_payment_method[] = $item;
     }
 
     /**
-     * @return DateTimeInterface
+     * @param mixed $item
+     * @param bool $strict
+     *
+     * @return bool
      */
-    public function getWriteDate(): DateTimeInterface
+    public function hasAdvancePaymentMethod($item, bool $strict = true): bool
+    {
+        return in_array($item, $this->advance_payment_method, $strict);
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

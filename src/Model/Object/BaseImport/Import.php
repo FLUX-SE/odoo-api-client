@@ -11,7 +11,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : base_import.import
  * Name : base_import.import
- *
+ * Info :
  * Model super-class for transient records, meant to be temporarily
  * persistent, and regularly vacuum-cleaned.
  *
@@ -24,119 +24,120 @@ final class Import extends Base
     /**
      * Model
      *
-     * @var string
+     * @var null|string
      */
     private $res_model;
 
     /**
      * File
+     * File to check and/or import, raw binary (not base64)
      *
-     * @var int
+     * @var null|int
      */
     private $file;
 
     /**
      * File Name
      *
-     * @var string
+     * @var null|string
      */
     private $file_name;
 
     /**
      * File Type
      *
-     * @var string
+     * @var null|string
      */
     private $file_type;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param string $res_model
+     * @param null|string $res_model
      */
-    public function setResModel(string $res_model): void
+    public function setResModel(?string $res_model): void
     {
         $this->res_model = $res_model;
     }
 
     /**
-     * @param int $file
+     * @param null|int $file
      */
-    public function setFile(int $file): void
+    public function setFile(?int $file): void
     {
         $this->file = $file;
     }
 
     /**
-     * @param string $file_name
+     * @param null|string $file_name
      */
-    public function setFileName(string $file_name): void
+    public function setFileName(?string $file_name): void
     {
         $this->file_name = $file_name;
     }
 
     /**
-     * @param string $file_type
+     * @param null|string $file_type
      */
-    public function setFileType(string $file_type): void
+    public function setFileType(?string $file_type): void
     {
         $this->file_type = $file_type;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

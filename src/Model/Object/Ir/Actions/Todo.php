@@ -11,7 +11,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : ir.actions.todo
  * Name : ir.actions.todo
- *
+ * Info :
  * Configuration Wizards
  */
 final class Todo extends Base
@@ -19,61 +19,71 @@ final class Todo extends Base
     /**
      * Action
      *
-     * @var null|Actions
+     * @var Actions
      */
     private $action_id;
 
     /**
      * Sequence
      *
-     * @var int
+     * @var null|int
      */
     private $sequence;
 
     /**
      * Status
      *
-     * @var null|array
+     * @var array
      */
     private $state;
 
     /**
      * Name
      *
-     * @var string
+     * @var null|string
      */
     private $name;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|Actions $action_id
+     * @param Actions $action_id Action
+     * @param array $state Status
+     */
+    public function __construct(Actions $action_id, array $state)
+    {
+        $this->action_id = $action_id;
+        $this->state = $state;
+    }
+
+    /**
+     * @param Actions $action_id
      */
     public function setActionId(Actions $action_id): void
     {
@@ -81,99 +91,91 @@ final class Todo extends Base
     }
 
     /**
-     * @param int $sequence
+     * @param null|int $sequence
      */
-    public function setSequence(int $sequence): void
+    public function setSequence(?int $sequence): void
     {
         $this->sequence = $sequence;
     }
 
     /**
-     * @param null|array $state
+     * @param array $state
      */
-    public function setState(?array $state): void
+    public function setState(array $state): void
     {
         $this->state = $state;
     }
 
     /**
-     * @param ?array $state
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasState(?array $state, bool $strict = true): bool
+    public function hasState($item, bool $strict = true): bool
     {
-        if (null === $this->state) {
-            return false;
-        }
-
-        return in_array($state, $this->state, $strict);
+        return in_array($item, $this->state, $strict);
     }
 
     /**
-     * @param ?array $state
+     * @param mixed $item
      */
-    public function addState(?array $state): void
+    public function addState($item): void
     {
-        if ($this->hasState($state)) {
+        if ($this->hasState($item)) {
             return;
         }
 
-        if (null === $this->state) {
-            $this->state = [];
-        }
-
-        $this->state[] = $state;
+        $this->state[] = $item;
     }
 
     /**
-     * @param ?array $state
+     * @param mixed $item
      */
-    public function removeState(?array $state): void
+    public function removeState($item): void
     {
-        if ($this->hasState($state)) {
-            $index = array_search($state, $this->state);
+        if ($this->hasState($item)) {
+            $index = array_search($item, $this->state);
             unset($this->state[$index]);
         }
     }
 
     /**
-     * @param string $name
+     * @param null|string $name
      */
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

@@ -12,7 +12,7 @@ use Flux\OdooApiClient\Model\Object\WebEditor\Converter\Test\Sub;
 /**
  * Odoo model : web_editor.converter.test
  * Name : web_editor.converter.test
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -28,56 +28,56 @@ final class Test extends Base
     /**
      * Char
      *
-     * @var string
+     * @var null|string
      */
     private $char;
 
     /**
      * Integer
      *
-     * @var int
+     * @var null|int
      */
     private $integer;
 
     /**
      * Float
      *
-     * @var float
+     * @var null|float
      */
     private $float;
 
     /**
      * Numeric
      *
-     * @var float
+     * @var null|float
      */
     private $numeric;
 
     /**
      * Many2One
      *
-     * @var Sub
+     * @var null|Sub
      */
     private $many2one;
 
     /**
      * Binary
      *
-     * @var int
+     * @var null|int
      */
     private $binary;
 
     /**
      * Date
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $date;
 
     /**
      * Datetime
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $datetime;
 
@@ -85,202 +85,214 @@ final class Test extends Base
      * Lorsqu'un pancake prend l'avion à destination de Toronto et qu'il fait une escale technique à St Claude, on
      * dit:
      *
-     * @var array
+     * @var null|array
      */
     private $selection_str;
 
     /**
      * Html
      *
-     * @var string
+     * @var null|string
      */
     private $html;
 
     /**
      * Text
      *
-     * @var string
+     * @var null|string
      */
     private $text;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param string $char
+     * @param null|string $char
      */
-    public function setChar(string $char): void
+    public function setChar(?string $char): void
     {
         $this->char = $char;
     }
 
     /**
-     * @param array $selection_str
+     * @param mixed $item
      */
-    public function addSelectionStr(array $selection_str): void
+    public function addSelectionStr($item): void
     {
-        if ($this->hasSelectionStr($selection_str)) {
+        if ($this->hasSelectionStr($item)) {
             return;
         }
 
-        $this->selection_str[] = $selection_str;
+        if (null === $this->selection_str) {
+            $this->selection_str = [];
+        }
+
+        $this->selection_str[] = $item;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @param string $text
+     * @param null|string $text
      */
-    public function setText(string $text): void
+    public function setText(?string $text): void
     {
         $this->text = $text;
     }
 
     /**
-     * @param string $html
+     * @param null|string $html
      */
-    public function setHtml(string $html): void
+    public function setHtml(?string $html): void
     {
         $this->html = $html;
     }
 
     /**
-     * @param array $selection_str
+     * @param mixed $item
      */
-    public function removeSelectionStr(array $selection_str): void
+    public function removeSelectionStr($item): void
     {
-        if ($this->hasSelectionStr($selection_str)) {
-            $index = array_search($selection_str, $this->selection_str);
+        if (null === $this->selection_str) {
+            $this->selection_str = [];
+        }
+
+        if ($this->hasSelectionStr($item)) {
+            $index = array_search($item, $this->selection_str);
             unset($this->selection_str[$index]);
         }
     }
 
     /**
-     * @param array $selection_str
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasSelectionStr(array $selection_str, bool $strict = true): bool
+    public function hasSelectionStr($item, bool $strict = true): bool
     {
-        return in_array($selection_str, $this->selection_str, $strict);
+        if (null === $this->selection_str) {
+            return false;
+        }
+
+        return in_array($item, $this->selection_str, $strict);
     }
 
     /**
-     * @param int $integer
+     * @param null|int $integer
      */
-    public function setInteger(int $integer): void
+    public function setInteger(?int $integer): void
     {
         $this->integer = $integer;
     }
 
     /**
-     * @param array $selection_str
+     * @param null|array $selection_str
      */
-    public function setSelectionStr(array $selection_str): void
+    public function setSelectionStr(?array $selection_str): void
     {
         $this->selection_str = $selection_str;
     }
 
     /**
-     * @param DateTimeInterface $datetime
+     * @param null|DateTimeInterface $datetime
      */
-    public function setDatetime(DateTimeInterface $datetime): void
+    public function setDatetime(?DateTimeInterface $datetime): void
     {
         $this->datetime = $datetime;
     }
 
     /**
-     * @param DateTimeInterface $date
+     * @param null|DateTimeInterface $date
      */
-    public function setDate(DateTimeInterface $date): void
+    public function setDate(?DateTimeInterface $date): void
     {
         $this->date = $date;
     }
 
     /**
-     * @param int $binary
+     * @param null|int $binary
      */
-    public function setBinary(int $binary): void
+    public function setBinary(?int $binary): void
     {
         $this->binary = $binary;
     }
 
     /**
-     * @param Sub $many2one
+     * @param null|Sub $many2one
      */
-    public function setMany2one(Sub $many2one): void
+    public function setMany2one(?Sub $many2one): void
     {
         $this->many2one = $many2one;
     }
 
     /**
-     * @param float $numeric
+     * @param null|float $numeric
      */
-    public function setNumeric(float $numeric): void
+    public function setNumeric(?float $numeric): void
     {
         $this->numeric = $numeric;
     }
 
     /**
-     * @param float $float
+     * @param null|float $float
      */
-    public function setFloat(float $float): void
+    public function setFloat(?float $float): void
     {
         $this->float = $float;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

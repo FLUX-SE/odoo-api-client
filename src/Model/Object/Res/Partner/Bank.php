@@ -16,7 +16,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : res.partner.bank
  * Name : res.partner.bank
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -31,229 +31,235 @@ class Bank extends Base
 {
     /**
      * Type
+     * Bank account type: Normal or IBAN. Inferred from the bank account number.
      *
-     * @var array
+     * @var null|array
      */
     protected $acc_type;
 
     /**
      * Account Number
      *
-     * @var null|string
+     * @var string
      */
     protected $acc_number;
 
     /**
      * Sanitized Account Number
      *
-     * @var string
+     * @var null|string
      */
     protected $sanitized_acc_number;
 
     /**
      * Account Holder Name
+     * Account holder name, in case it is different than the name of the Account Holder
      *
-     * @var string
+     * @var null|string
      */
     protected $acc_holder_name;
 
     /**
      * Account Holder
      *
-     * @var null|Partner
+     * @var Partner
      */
     protected $partner_id;
 
     /**
      * Bank
      *
-     * @var BankAlias
+     * @var null|BankAlias
      */
     protected $bank_id;
 
     /**
      * Name
      *
-     * @var string
+     * @var null|string
      */
     protected $bank_name;
 
     /**
      * Bank Identifier Code
+     * Sometimes called BIC or Swift.
      *
-     * @var string
+     * @var null|string
      */
     protected $bank_bic;
 
     /**
      * Sequence
      *
-     * @var int
+     * @var null|int
      */
     protected $sequence;
 
     /**
      * Currency
      *
-     * @var Currency
+     * @var null|Currency
      */
     protected $currency_id;
 
     /**
      * Company
      *
-     * @var Company
+     * @var null|Company
      */
     protected $company_id;
 
     /**
      * Has all required arguments
      *
-     * @var bool
+     * @var null|bool
      */
     protected $qr_code_valid;
 
     /**
      * Account Journal
+     * The accounting journal corresponding to this bank account.
      *
-     * @var Journal
+     * @var null|Journal[]
      */
     protected $journal_id;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     protected $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     protected $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     protected $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     protected $write_date;
 
     /**
-     * @return array
+     * @param string $acc_number Account Number
+     * @param Partner $partner_id Account Holder
      */
-    public function getAccType(): array
+    public function __construct(string $acc_number, Partner $partner_id)
     {
-        return $this->acc_type;
+        $this->acc_number = $acc_number;
+        $this->partner_id = $partner_id;
     }
 
     /**
-     * @param Currency $currency_id
+     * @param null|Currency $currency_id
      */
-    public function setCurrencyId(Currency $currency_id): void
+    public function setCurrencyId(?Currency $currency_id): void
     {
         $this->currency_id = $currency_id;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return Journal
+     * @return null|Journal[]
      */
-    public function getJournalId(): Journal
+    public function getJournalId(): ?array
     {
         return $this->journal_id;
     }
 
     /**
-     * @return bool
+     * @return null|bool
      */
-    public function isQrCodeValid(): bool
+    public function isQrCodeValid(): ?bool
     {
         return $this->qr_code_valid;
     }
 
     /**
-     * @param Company $company_id
+     * @param null|Company $company_id
      */
-    public function setCompanyId(Company $company_id): void
+    public function setCompanyId(?Company $company_id): void
     {
         $this->company_id = $company_id;
     }
 
     /**
-     * @param int $sequence
+     * @param null|int $sequence
      */
-    public function setSequence(int $sequence): void
+    public function setSequence(?int $sequence): void
     {
         $this->sequence = $sequence;
     }
 
     /**
-     * @param null|string $acc_number
+     * @return null|array
      */
-    public function setAccNumber(?string $acc_number): void
+    public function getAccType(): ?array
     {
-        $this->acc_number = $acc_number;
+        return $this->acc_type;
     }
 
     /**
-     * @param string $bank_bic
+     * @param null|string $bank_bic
      */
-    public function setBankBic(string $bank_bic): void
+    public function setBankBic(?string $bank_bic): void
     {
         $this->bank_bic = $bank_bic;
     }
 
     /**
-     * @param string $bank_name
+     * @param null|string $bank_name
      */
-    public function setBankName(string $bank_name): void
+    public function setBankName(?string $bank_name): void
     {
         $this->bank_name = $bank_name;
     }
 
     /**
-     * @param BankAlias $bank_id
+     * @param null|BankAlias $bank_id
      */
-    public function setBankId(BankAlias $bank_id): void
+    public function setBankId(?BankAlias $bank_id): void
     {
         $this->bank_id = $bank_id;
     }
 
     /**
-     * @param null|Partner $partner_id
+     * @param Partner $partner_id
      */
     public function setPartnerId(Partner $partner_id): void
     {
@@ -261,25 +267,33 @@ class Bank extends Base
     }
 
     /**
-     * @param string $acc_holder_name
+     * @param null|string $acc_holder_name
      */
-    public function setAccHolderName(string $acc_holder_name): void
+    public function setAccHolderName(?string $acc_holder_name): void
     {
         $this->acc_holder_name = $acc_holder_name;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getSanitizedAccNumber(): string
+    public function getSanitizedAccNumber(): ?string
     {
         return $this->sanitized_acc_number;
     }
 
     /**
-     * @return DateTimeInterface
+     * @param string $acc_number
      */
-    public function getWriteDate(): DateTimeInterface
+    public function setAccNumber(string $acc_number): void
+    {
+        $this->acc_number = $acc_number;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

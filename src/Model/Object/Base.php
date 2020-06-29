@@ -9,7 +9,7 @@ use DateTimeInterface;
 /**
  * Odoo model : base
  * Name : base
- *
+ * Info :
  * The base model, which is implicitly inherited by all models.
  */
 class Base
@@ -17,44 +17,44 @@ class Base
     /**
      * ID
      *
-     * @var int
+     * @var null|int
      */
     protected $id;
 
     /**
      * Display Name
      *
-     * @var string
+     * @var null|string
      */
     protected $display_name;
 
     /**
      * Last Modified on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     protected $__last_update;
 
     /**
-     * @return int
+     * @return null|int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getDisplayName(): string
+    public function getDisplayName(): ?string
     {
         return $this->display_name;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getLastUpdate(): DateTimeInterface
+    public function getLastUpdate(): ?DateTimeInterface
     {
         return $this->__last_update;
     }

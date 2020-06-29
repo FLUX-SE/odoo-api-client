@@ -10,7 +10,7 @@ use Flux\OdooApiClient\Model\Object\Base;
 /**
  * Odoo model : res.lang
  * Name : res.lang
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -26,323 +26,351 @@ final class Lang extends Base
     /**
      * Name
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Locale Code
+     * This field is used to set/get locales for user
      *
-     * @var null|string
+     * @var string
      */
     private $code;
 
     /**
      * ISO code
+     * This ISO code is the name of po files to use for translations
      *
-     * @var string
+     * @var null|string
      */
     private $iso_code;
 
     /**
      * URL Code
+     * The Lang Code displayed in the URL
      *
-     * @var null|string
+     * @var string
      */
     private $url_code;
 
     /**
      * Active
      *
-     * @var bool
+     * @var null|bool
      */
     private $active;
 
     /**
      * Direction
      *
-     * @var null|array
+     * @var array
      */
     private $direction;
 
     /**
      * Date Format
      *
-     * @var null|string
+     * @var string
      */
     private $date_format;
 
     /**
      * Time Format
      *
-     * @var null|string
+     * @var string
      */
     private $time_format;
 
     /**
      * First Day of Week
      *
-     * @var null|array
+     * @var array
      */
     private $week_start;
 
     /**
      * Separator Format
+     * The Separator Format should be like [,n] where 0 < n :starting from Unit digit. -1 will end the separation.
+     * e.g. [3,2,-1] will represent 106500 to be 1,06,500; [1,2,-1] will represent it to be 106,50,0;[3] will
+     * represent it as 106,500. Provided ',' as the thousand separator in each case.
      *
-     * @var null|string
+     * @var string
      */
     private $grouping;
 
     /**
      * Decimal Separator
      *
-     * @var null|string
+     * @var string
      */
     private $decimal_point;
 
     /**
      * Thousands Separator
      *
-     * @var string
+     * @var null|string
      */
     private $thousands_sep;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @param string $name Name
+     * @param string $code Locale Code
+     *        This field is used to set/get locales for user
+     * @param string $url_code URL Code
+     *        The Lang Code displayed in the URL
+     * @param array $direction Direction
+     * @param string $date_format Date Format
+     * @param string $time_format Time Format
+     * @param array $week_start First Day of Week
+     * @param string $grouping Separator Format
+     *        The Separator Format should be like [,n] where 0 < n :starting from Unit digit. -1 will end the separation.
+     *        e.g. [3,2,-1] will represent 106500 to be 1,06,500; [1,2,-1] will represent it to be 106,50,0;[3] will
+     *        represent it as 106,500. Provided ',' as the thousand separator in each case.
+     * @param string $decimal_point Decimal Separator
      */
-    public function setName(?string $name): void
-    {
+    public function __construct(
+        string $name,
+        string $code,
+        string $url_code,
+        array $direction,
+        string $date_format,
+        string $time_format,
+        array $week_start,
+        string $grouping,
+        string $decimal_point
+    ) {
         $this->name = $name;
-    }
-
-    /**
-     * @param ?array $week_start
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasWeekStart(?array $week_start, bool $strict = true): bool
-    {
-        if (null === $this->week_start) {
-            return false;
-        }
-
-        return in_array($week_start, $this->week_start, $strict);
-    }
-
-    /**
-     * @return Users
-     */
-    public function getWriteUid(): Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getCreateDate(): DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getCreateUid(): Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param string $thousands_sep
-     */
-    public function setThousandsSep(string $thousands_sep): void
-    {
-        $this->thousands_sep = $thousands_sep;
-    }
-
-    /**
-     * @param null|string $decimal_point
-     */
-    public function setDecimalPoint(?string $decimal_point): void
-    {
+        $this->code = $code;
+        $this->url_code = $url_code;
+        $this->direction = $direction;
+        $this->date_format = $date_format;
+        $this->time_format = $time_format;
+        $this->week_start = $week_start;
+        $this->grouping = $grouping;
         $this->decimal_point = $decimal_point;
     }
 
     /**
-     * @param null|string $grouping
+     * @param array $week_start
      */
-    public function setGrouping(?string $grouping): void
-    {
-        $this->grouping = $grouping;
-    }
-
-    /**
-     * @param ?array $week_start
-     */
-    public function removeWeekStart(?array $week_start): void
-    {
-        if ($this->hasWeekStart($week_start)) {
-            $index = array_search($week_start, $this->week_start);
-            unset($this->week_start[$index]);
-        }
-    }
-
-    /**
-     * @param ?array $week_start
-     */
-    public function addWeekStart(?array $week_start): void
-    {
-        if ($this->hasWeekStart($week_start)) {
-            return;
-        }
-
-        if (null === $this->week_start) {
-            $this->week_start = [];
-        }
-
-        $this->week_start[] = $week_start;
-    }
-
-    /**
-     * @param null|array $week_start
-     */
-    public function setWeekStart(?array $week_start): void
+    public function setWeekStart(array $week_start): void
     {
         $this->week_start = $week_start;
     }
 
     /**
-     * @param null|string $code
+     * @return null|Users
      */
-    public function setCode(?string $code): void
+    public function getWriteUid(): ?Users
     {
-        $this->code = $code;
+        return $this->write_uid;
     }
 
     /**
-     * @param null|string $time_format
+     * @return null|DateTimeInterface
      */
-    public function setTimeFormat(?string $time_format): void
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getCreateUid(): ?Users
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param null|string $thousands_sep
+     */
+    public function setThousandsSep(?string $thousands_sep): void
+    {
+        $this->thousands_sep = $thousands_sep;
+    }
+
+    /**
+     * @param string $decimal_point
+     */
+    public function setDecimalPoint(string $decimal_point): void
+    {
+        $this->decimal_point = $decimal_point;
+    }
+
+    /**
+     * @param string $grouping
+     */
+    public function setGrouping(string $grouping): void
+    {
+        $this->grouping = $grouping;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeWeekStart($item): void
+    {
+        if ($this->hasWeekStart($item)) {
+            $index = array_search($item, $this->week_start);
+            unset($this->week_start[$index]);
+        }
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addWeekStart($item): void
+    {
+        if ($this->hasWeekStart($item)) {
+            return;
+        }
+
+        $this->week_start[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasWeekStart($item, bool $strict = true): bool
+    {
+        return in_array($item, $this->week_start, $strict);
+    }
+
+    /**
+     * @param string $time_format
+     */
+    public function setTimeFormat(string $time_format): void
     {
         $this->time_format = $time_format;
     }
 
     /**
-     * @param null|string $date_format
+     * @param string $name
      */
-    public function setDateFormat(?string $date_format): void
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param string $date_format
+     */
+    public function setDateFormat(string $date_format): void
     {
         $this->date_format = $date_format;
     }
 
     /**
-     * @param ?array $direction
+     * @param mixed $item
      */
-    public function removeDirection(?array $direction): void
+    public function removeDirection($item): void
     {
-        if ($this->hasDirection($direction)) {
-            $index = array_search($direction, $this->direction);
+        if ($this->hasDirection($item)) {
+            $index = array_search($item, $this->direction);
             unset($this->direction[$index]);
         }
     }
 
     /**
-     * @param ?array $direction
+     * @param mixed $item
      */
-    public function addDirection(?array $direction): void
+    public function addDirection($item): void
     {
-        if ($this->hasDirection($direction)) {
+        if ($this->hasDirection($item)) {
             return;
         }
 
-        if (null === $this->direction) {
-            $this->direction = [];
-        }
-
-        $this->direction[] = $direction;
+        $this->direction[] = $item;
     }
 
     /**
-     * @param ?array $direction
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasDirection(?array $direction, bool $strict = true): bool
+    public function hasDirection($item, bool $strict = true): bool
     {
-        if (null === $this->direction) {
-            return false;
-        }
-
-        return in_array($direction, $this->direction, $strict);
+        return in_array($item, $this->direction, $strict);
     }
 
     /**
-     * @param null|array $direction
+     * @param array $direction
      */
-    public function setDirection(?array $direction): void
+    public function setDirection(array $direction): void
     {
         $this->direction = $direction;
     }
 
     /**
-     * @param bool $active
+     * @param null|bool $active
      */
-    public function setActive(bool $active): void
+    public function setActive(?bool $active): void
     {
         $this->active = $active;
     }
 
     /**
-     * @param null|string $url_code
+     * @param string $url_code
      */
-    public function setUrlCode(?string $url_code): void
+    public function setUrlCode(string $url_code): void
     {
         $this->url_code = $url_code;
     }
 
     /**
-     * @param string $iso_code
+     * @param null|string $iso_code
      */
-    public function setIsoCode(string $iso_code): void
+    public function setIsoCode(?string $iso_code): void
     {
         $this->iso_code = $iso_code;
     }
 
     /**
-     * @return DateTimeInterface
+     * @param string $code
      */
-    public function getWriteDate(): DateTimeInterface
+    public function setCode(string $code): void
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

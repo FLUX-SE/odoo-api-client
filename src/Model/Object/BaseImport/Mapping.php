@@ -11,7 +11,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : base_import.mapping
  * Name : base_import.mapping
- *
+ * Info :
  * mapping of previous column:field selections
  *
  * This is useful when repeatedly importing from a third-party
@@ -28,104 +28,104 @@ final class Mapping extends Base
     /**
      * Res Model
      *
-     * @var string
+     * @var null|string
      */
     private $res_model;
 
     /**
      * Column Name
      *
-     * @var string
+     * @var null|string
      */
     private $column_name;
 
     /**
      * Field Name
      *
-     * @var string
+     * @var null|string
      */
     private $field_name;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param string $res_model
+     * @param null|string $res_model
      */
-    public function setResModel(string $res_model): void
+    public function setResModel(?string $res_model): void
     {
         $this->res_model = $res_model;
     }
 
     /**
-     * @param string $column_name
+     * @param null|string $column_name
      */
-    public function setColumnName(string $column_name): void
+    public function setColumnName(?string $column_name): void
     {
         $this->column_name = $column_name;
     }
 
     /**
-     * @param string $field_name
+     * @param null|string $field_name
      */
-    public function setFieldName(string $field_name): void
+    public function setFieldName(?string $field_name): void
     {
         $this->field_name = $field_name;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

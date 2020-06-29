@@ -12,7 +12,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : res.country.state
  * Name : res.country.state
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -28,54 +28,70 @@ final class State extends Base
     /**
      * Country
      *
-     * @var null|Country
+     * @var Country
      */
     private $country_id;
 
     /**
      * State Name
+     * Administrative divisions of a country. E.g. Fed. State, Departement, Canton
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * State Code
+     * The state code.
      *
-     * @var null|string
+     * @var string
      */
     private $code;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|Country $country_id
+     * @param Country $country_id Country
+     * @param string $name State Name
+     *        Administrative divisions of a country. E.g. Fed. State, Departement, Canton
+     * @param string $code State Code
+     *        The state code.
+     */
+    public function __construct(Country $country_id, string $name, string $code)
+    {
+        $this->country_id = $country_id;
+        $this->name = $name;
+        $this->code = $code;
+    }
+
+    /**
+     * @param Country $country_id
      */
     public function setCountryId(Country $country_id): void
     {
@@ -83,49 +99,49 @@ final class State extends Base
     }
 
     /**
-     * @param null|string $name
+     * @param string $name
      */
-    public function setName(?string $name): void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * @param null|string $code
+     * @param string $code
      */
-    public function setCode(?string $code): void
+    public function setCode(string $code): void
     {
         $this->code = $code;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

@@ -13,7 +13,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : sms.sms
  * Name : sms.sms
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -29,183 +29,203 @@ final class Sms extends Base
     /**
      * Number
      *
-     * @var string
+     * @var null|string
      */
     private $number;
 
     /**
      * Body
      *
-     * @var string
+     * @var null|string
      */
     private $body;
 
     /**
      * Customer
      *
-     * @var Partner
+     * @var null|Partner
      */
     private $partner_id;
 
     /**
      * Mail Message
      *
-     * @var Message
+     * @var null|Message
      */
     private $mail_message_id;
 
     /**
      * SMS Status
      *
-     * @var null|array
+     * @var array
      */
     private $state;
 
     /**
      * Error Code
      *
-     * @var array
+     * @var null|array
      */
     private $error_code;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param string $number
+     * @param array $state SMS Status
      */
-    public function setNumber(string $number): void
+    public function __construct(array $state)
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @param null|string $number
+     */
+    public function setNumber(?string $number): void
     {
         $this->number = $number;
     }
 
     /**
-     * @param string $body
+     * @param null|string $body
      */
-    public function setBody(string $body): void
+    public function setBody(?string $body): void
     {
         $this->body = $body;
     }
 
     /**
-     * @param Partner $partner_id
+     * @param null|Partner $partner_id
      */
-    public function setPartnerId(Partner $partner_id): void
+    public function setPartnerId(?Partner $partner_id): void
     {
         $this->partner_id = $partner_id;
     }
 
     /**
-     * @param Message $mail_message_id
+     * @param null|Message $mail_message_id
      */
-    public function setMailMessageId(Message $mail_message_id): void
+    public function setMailMessageId(?Message $mail_message_id): void
     {
         $this->mail_message_id = $mail_message_id;
     }
 
     /**
-     * @return null|array
+     * @return array
      */
-    public function getState(): ?array
+    public function getState(): array
     {
         return $this->state;
     }
 
     /**
-     * @param array $error_code
+     * @param null|array $error_code
      */
-    public function setErrorCode(array $error_code): void
+    public function setErrorCode(?array $error_code): void
     {
         $this->error_code = $error_code;
     }
 
     /**
-     * @param array $error_code
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasErrorCode(array $error_code, bool $strict = true): bool
+    public function hasErrorCode($item, bool $strict = true): bool
     {
-        return in_array($error_code, $this->error_code, $strict);
+        if (null === $this->error_code) {
+            return false;
+        }
+
+        return in_array($item, $this->error_code, $strict);
     }
 
     /**
-     * @param array $error_code
+     * @param mixed $item
      */
-    public function addErrorCode(array $error_code): void
+    public function addErrorCode($item): void
     {
-        if ($this->hasErrorCode($error_code)) {
+        if ($this->hasErrorCode($item)) {
             return;
         }
 
-        $this->error_code[] = $error_code;
+        if (null === $this->error_code) {
+            $this->error_code = [];
+        }
+
+        $this->error_code[] = $item;
     }
 
     /**
-     * @param array $error_code
+     * @param mixed $item
      */
-    public function removeErrorCode(array $error_code): void
+    public function removeErrorCode($item): void
     {
-        if ($this->hasErrorCode($error_code)) {
-            $index = array_search($error_code, $this->error_code);
+        if (null === $this->error_code) {
+            $this->error_code = [];
+        }
+
+        if ($this->hasErrorCode($item)) {
+            $index = array_search($item, $this->error_code);
             unset($this->error_code[$index]);
         }
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

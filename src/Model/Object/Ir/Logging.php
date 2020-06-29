@@ -10,7 +10,7 @@ use Flux\OdooApiClient\Model\Object\Base;
 /**
  * Odoo model : ir.logging
  * Name : ir.logging
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -26,221 +26,237 @@ final class Logging extends Base
     /**
      * Created by
      *
-     * @var int
+     * @var null|int
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var int
+     * @var null|int
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
      * Name
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Type
      *
-     * @var null|array
+     * @var array
      */
     private $type;
 
     /**
      * Database Name
      *
-     * @var string
+     * @var null|string
      */
     private $dbname;
 
     /**
      * Level
      *
-     * @var string
+     * @var null|string
      */
     private $level;
 
     /**
      * Message
      *
-     * @var null|string
+     * @var string
      */
     private $message;
 
     /**
      * Path
      *
-     * @var null|string
+     * @var string
      */
     private $path;
 
     /**
      * Function
      *
-     * @var null|string
+     * @var string
      */
     private $func;
 
     /**
      * Line
      *
-     * @var null|string
+     * @var string
      */
     private $line;
 
     /**
-     * @return int
+     * @param string $name Name
+     * @param array $type Type
+     * @param string $message Message
+     * @param string $path Path
+     * @param string $func Function
+     * @param string $line Line
      */
-    public function getCreateUid(): int
+    public function __construct(
+        string $name,
+        array $type,
+        string $message,
+        string $path,
+        string $func,
+        string $line
+    ) {
+        $this->name = $name;
+        $this->type = $type;
+        $this->message = $message;
+        $this->path = $path;
+        $this->func = $func;
+        $this->line = $line;
+    }
+
+    /**
+     * @return null|int
+     */
+    public function getCreateUid(): ?int
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return int
+     * @return null|int
      */
-    public function getWriteUid(): int
+    public function getWriteUid(): ?int
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }
 
     /**
-     * @param null|string $name
+     * @param string $name
      */
-    public function setName(?string $name): void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * @param null|array $type
+     * @param array $type
      */
-    public function setType(?array $type): void
+    public function setType(array $type): void
     {
         $this->type = $type;
     }
 
     /**
-     * @param ?array $type
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasType(?array $type, bool $strict = true): bool
+    public function hasType($item, bool $strict = true): bool
     {
-        if (null === $this->type) {
-            return false;
-        }
-
-        return in_array($type, $this->type, $strict);
+        return in_array($item, $this->type, $strict);
     }
 
     /**
-     * @param ?array $type
+     * @param mixed $item
      */
-    public function addType(?array $type): void
+    public function addType($item): void
     {
-        if ($this->hasType($type)) {
+        if ($this->hasType($item)) {
             return;
         }
 
-        if (null === $this->type) {
-            $this->type = [];
-        }
-
-        $this->type[] = $type;
+        $this->type[] = $item;
     }
 
     /**
-     * @param ?array $type
+     * @param mixed $item
      */
-    public function removeType(?array $type): void
+    public function removeType($item): void
     {
-        if ($this->hasType($type)) {
-            $index = array_search($type, $this->type);
+        if ($this->hasType($item)) {
+            $index = array_search($item, $this->type);
             unset($this->type[$index]);
         }
     }
 
     /**
-     * @param string $dbname
+     * @param null|string $dbname
      */
-    public function setDbname(string $dbname): void
+    public function setDbname(?string $dbname): void
     {
         $this->dbname = $dbname;
     }
 
     /**
-     * @param string $level
+     * @param null|string $level
      */
-    public function setLevel(string $level): void
+    public function setLevel(?string $level): void
     {
         $this->level = $level;
     }
 
     /**
-     * @param null|string $message
+     * @param string $message
      */
-    public function setMessage(?string $message): void
+    public function setMessage(string $message): void
     {
         $this->message = $message;
     }
 
     /**
-     * @param null|string $path
+     * @param string $path
      */
-    public function setPath(?string $path): void
+    public function setPath(string $path): void
     {
         $this->path = $path;
     }
 
     /**
-     * @param null|string $func
+     * @param string $func
      */
-    public function setFunc(?string $func): void
+    public function setFunc(string $func): void
     {
         $this->func = $func;
     }
 
     /**
-     * @param null|string $line
+     * @param string $line
      */
-    public function setLine(?string $line): void
+    public function setLine(string $line): void
     {
         $this->line = $line;
     }

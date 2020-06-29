@@ -13,7 +13,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : payment.token
  * Name : payment.token
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -28,121 +28,228 @@ final class Token extends Base
 {
     /**
      * Name
+     * Name of the payment token
      *
-     * @var string
+     * @var null|string
      */
     private $name;
 
     /**
      * Short name
      *
-     * @var string
+     * @var null|string
      */
     private $short_name;
 
     /**
      * Partner
      *
-     * @var null|Partner
+     * @var Partner
      */
     private $partner_id;
 
     /**
      * Acquirer Account
      *
-     * @var null|Acquirer
+     * @var Acquirer
      */
     private $acquirer_id;
 
     /**
      * Company
      *
-     * @var Company
+     * @var null|Company
      */
     private $company_id;
 
     /**
      * Acquirer Ref.
      *
-     * @var null|string
+     * @var string
      */
     private $acquirer_ref;
 
     /**
      * Active
      *
-     * @var bool
+     * @var null|bool
      */
     private $active;
 
     /**
      * Payment Transactions
      *
-     * @var Transaction
+     * @var null|Transaction[]
      */
     private $payment_ids;
 
     /**
      * Verified
      *
-     * @var bool
+     * @var null|bool
      */
     private $verified;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param string $name
+     * @param Partner $partner_id Partner
+     * @param Acquirer $acquirer_id Acquirer Account
+     * @param string $acquirer_ref Acquirer Ref.
      */
-    public function setName(string $name): void
+    public function __construct(Partner $partner_id, Acquirer $acquirer_id, string $acquirer_ref)
+    {
+        $this->partner_id = $partner_id;
+        $this->acquirer_id = $acquirer_id;
+        $this->acquirer_ref = $acquirer_ref;
+    }
+
+    /**
+     * @param Transaction $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasPaymentIds(Transaction $item, bool $strict = true): bool
+    {
+        if (null === $this->payment_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->payment_ids, $strict);
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getWriteUid(): ?Users
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getCreateUid(): ?Users
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param null|bool $verified
+     */
+    public function setVerified(?bool $verified): void
+    {
+        $this->verified = $verified;
+    }
+
+    /**
+     * @param Transaction $item
+     */
+    public function removePaymentIds(Transaction $item): void
+    {
+        if (null === $this->payment_ids) {
+            $this->payment_ids = [];
+        }
+
+        if ($this->hasPaymentIds($item)) {
+            $index = array_search($item, $this->payment_ids);
+            unset($this->payment_ids[$index]);
+        }
+    }
+
+    /**
+     * @param Transaction $item
+     */
+    public function addPaymentIds(Transaction $item): void
+    {
+        if ($this->hasPaymentIds($item)) {
+            return;
+        }
+
+        if (null === $this->payment_ids) {
+            $this->payment_ids = [];
+        }
+
+        $this->payment_ids[] = $item;
+    }
+
+    /**
+     * @param null|Transaction[] $payment_ids
+     */
+    public function setPaymentIds(?array $payment_ids): void
+    {
+        $this->payment_ids = $payment_ids;
+    }
+
+    /**
+     * @param null|string $name
+     */
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * @return string
+     * @param null|bool $active
      */
-    public function getShortName(): string
+    public function setActive(?bool $active): void
     {
-        return $this->short_name;
+        $this->active = $active;
     }
 
     /**
-     * @param null|Partner $partner_id
+     * @param string $acquirer_ref
      */
-    public function setPartnerId(Partner $partner_id): void
+    public function setAcquirerRef(string $acquirer_ref): void
     {
-        $this->partner_id = $partner_id;
+        $this->acquirer_ref = $acquirer_ref;
     }
 
     /**
-     * @param null|Acquirer $acquirer_id
+     * @return null|Company
+     */
+    public function getCompanyId(): ?Company
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param Acquirer $acquirer_id
      */
     public function setAcquirerId(Acquirer $acquirer_id): void
     {
@@ -150,73 +257,25 @@ final class Token extends Base
     }
 
     /**
-     * @return Company
+     * @param Partner $partner_id
      */
-    public function getCompanyId(): Company
+    public function setPartnerId(Partner $partner_id): void
     {
-        return $this->company_id;
+        $this->partner_id = $partner_id;
     }
 
     /**
-     * @param null|string $acquirer_ref
+     * @return null|string
      */
-    public function setAcquirerRef(?string $acquirer_ref): void
+    public function getShortName(): ?string
     {
-        $this->acquirer_ref = $acquirer_ref;
+        return $this->short_name;
     }
 
     /**
-     * @param bool $active
+     * @return null|DateTimeInterface
      */
-    public function setActive(bool $active): void
-    {
-        $this->active = $active;
-    }
-
-    /**
-     * @param Transaction $payment_ids
-     */
-    public function setPaymentIds(Transaction $payment_ids): void
-    {
-        $this->payment_ids = $payment_ids;
-    }
-
-    /**
-     * @param bool $verified
-     */
-    public function setVerified(bool $verified): void
-    {
-        $this->verified = $verified;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getCreateUid(): Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getCreateDate(): DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getWriteUid(): Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

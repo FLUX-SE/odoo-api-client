@@ -13,7 +13,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : res.currency.rate
  * Name : res.currency.rate
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -29,119 +29,128 @@ final class Rate extends Base
     /**
      * Date
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface
      */
     private $name;
 
     /**
      * Rate
+     * The rate of the currency to the currency of rate 1
      *
-     * @var float
+     * @var null|float
      */
     private $rate;
 
     /**
      * Currency
      *
-     * @var Currency
+     * @var null|Currency
      */
     private $currency_id;
 
     /**
      * Company
      *
-     * @var Company
+     * @var null|Company
      */
     private $company_id;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|DateTimeInterface $name
+     * @param DateTimeInterface $name Date
      */
-    public function setName(?DateTimeInterface $name): void
+    public function __construct(DateTimeInterface $name)
     {
         $this->name = $name;
     }
 
     /**
-     * @param float $rate
+     * @param DateTimeInterface $name
      */
-    public function setRate(float $rate): void
+    public function setName(DateTimeInterface $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param null|float $rate
+     */
+    public function setRate(?float $rate): void
     {
         $this->rate = $rate;
     }
 
     /**
-     * @return Currency
+     * @return null|Currency
      */
-    public function getCurrencyId(): Currency
+    public function getCurrencyId(): ?Currency
     {
         return $this->currency_id;
     }
 
     /**
-     * @param Company $company_id
+     * @param null|Company $company_id
      */
-    public function setCompanyId(Company $company_id): void
+    public function setCompanyId(?Company $company_id): void
     {
         $this->company_id = $company_id;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

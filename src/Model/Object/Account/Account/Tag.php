@@ -13,7 +13,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : account.account.tag
  * Name : account.account.tag
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -29,206 +29,259 @@ final class Tag extends Base
     /**
      * Tag Name
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Applicability
      *
-     * @var null|array
+     * @var array
      */
     private $applicability;
 
     /**
      * Color Index
      *
-     * @var int
+     * @var null|int
      */
     private $color;
 
     /**
      * Active
+     * Set active to false to hide the Account Tag without removing it.
      *
-     * @var bool
+     * @var null|bool
      */
     private $active;
 
     /**
      * Tax Report Lines
+     * The tax report lines using this tag
      *
-     * @var Line
+     * @var null|Line[]
      */
     private $tax_report_line_ids;
 
     /**
      * Negate Tax Balance
+     * Check this box to negate the absolute value of the balance of the lines associated with this tag in tax report
+     * computation.
      *
-     * @var bool
+     * @var null|bool
      */
     private $tax_negate;
 
     /**
      * Country
+     * Country for which this tag is available, when applied on taxes.
      *
-     * @var Country
+     * @var null|Country
      */
     private $country_id;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @param string $name Tag Name
+     * @param array $applicability Applicability
      */
-    public function setName(?string $name): void
+    public function __construct(string $name, array $applicability)
     {
         $this->name = $name;
-    }
-
-    /**
-     * @param null|array $applicability
-     */
-    public function setApplicability(?array $applicability): void
-    {
         $this->applicability = $applicability;
     }
 
     /**
-     * @param ?array $applicability
-     * @param bool $strict
-     *
-     * @return bool
+     * @param Line $item
      */
-    public function hasApplicability(?array $applicability, bool $strict = true): bool
+    public function addTaxReportLineIds(Line $item): void
     {
-        if (null === $this->applicability) {
-            return false;
-        }
-
-        return in_array($applicability, $this->applicability, $strict);
-    }
-
-    /**
-     * @param ?array $applicability
-     */
-    public function addApplicability(?array $applicability): void
-    {
-        if ($this->hasApplicability($applicability)) {
+        if ($this->hasTaxReportLineIds($item)) {
             return;
         }
 
-        if (null === $this->applicability) {
-            $this->applicability = [];
+        if (null === $this->tax_report_line_ids) {
+            $this->tax_report_line_ids = [];
         }
 
-        $this->applicability[] = $applicability;
+        $this->tax_report_line_ids[] = $item;
     }
 
     /**
-     * @param ?array $applicability
+     * @return null|Users
      */
-    public function removeApplicability(?array $applicability): void
-    {
-        if ($this->hasApplicability($applicability)) {
-            $index = array_search($applicability, $this->applicability);
-            unset($this->applicability[$index]);
-        }
-    }
-
-    /**
-     * @param int $color
-     */
-    public function setColor(int $color): void
-    {
-        $this->color = $color;
-    }
-
-    /**
-     * @param bool $active
-     */
-    public function setActive(bool $active): void
-    {
-        $this->active = $active;
-    }
-
-    /**
-     * @param Line $tax_report_line_ids
-     */
-    public function setTaxReportLineIds(Line $tax_report_line_ids): void
-    {
-        $this->tax_report_line_ids = $tax_report_line_ids;
-    }
-
-    /**
-     * @param bool $tax_negate
-     */
-    public function setTaxNegate(bool $tax_negate): void
-    {
-        $this->tax_negate = $tax_negate;
-    }
-
-    /**
-     * @param Country $country_id
-     */
-    public function setCountryId(Country $country_id): void
-    {
-        $this->country_id = $country_id;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getCreateUid(): Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getCreateDate(): DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getCreateUid(): ?Users
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param null|Country $country_id
+     */
+    public function setCountryId(?Country $country_id): void
+    {
+        $this->country_id = $country_id;
+    }
+
+    /**
+     * @param null|bool $tax_negate
+     */
+    public function setTaxNegate(?bool $tax_negate): void
+    {
+        $this->tax_negate = $tax_negate;
+    }
+
+    /**
+     * @param Line $item
+     */
+    public function removeTaxReportLineIds(Line $item): void
+    {
+        if (null === $this->tax_report_line_ids) {
+            $this->tax_report_line_ids = [];
+        }
+
+        if ($this->hasTaxReportLineIds($item)) {
+            $index = array_search($item, $this->tax_report_line_ids);
+            unset($this->tax_report_line_ids[$index]);
+        }
+    }
+
+    /**
+     * @param Line $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasTaxReportLineIds(Line $item, bool $strict = true): bool
+    {
+        if (null === $this->tax_report_line_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->tax_report_line_ids, $strict);
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param null|Line[] $tax_report_line_ids
+     */
+    public function setTaxReportLineIds(?array $tax_report_line_ids): void
+    {
+        $this->tax_report_line_ids = $tax_report_line_ids;
+    }
+
+    /**
+     * @param null|bool $active
+     */
+    public function setActive(?bool $active): void
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @param null|int $color
+     */
+    public function setColor(?int $color): void
+    {
+        $this->color = $color;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeApplicability($item): void
+    {
+        if ($this->hasApplicability($item)) {
+            $index = array_search($item, $this->applicability);
+            unset($this->applicability[$index]);
+        }
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addApplicability($item): void
+    {
+        if ($this->hasApplicability($item)) {
+            return;
+        }
+
+        $this->applicability[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasApplicability($item, bool $strict = true): bool
+    {
+        return in_array($item, $this->applicability, $strict);
+    }
+
+    /**
+     * @param array $applicability
+     */
+    public function setApplicability(array $applicability): void
+    {
+        $this->applicability = $applicability;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

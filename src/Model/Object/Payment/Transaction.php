@@ -18,7 +18,7 @@ use Flux\OdooApiClient\Model\Object\Sale\Order;
 /**
  * Odoo model : payment.transaction
  * Name : payment.transaction
- *
+ * Info :
  * Transaction Model. Each specific acquirer can extend the model by adding
  * its own fields.
  *
@@ -39,344 +39,440 @@ final class Transaction extends Base
     /**
      * Validation Date
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $date;
 
     /**
      * Acquirer
      *
-     * @var null|Acquirer
+     * @var Acquirer
      */
     private $acquirer_id;
 
     /**
      * Provider
      *
-     * @var array
+     * @var null|array
      */
     private $provider;
 
     /**
      * Type
      *
-     * @var null|array
+     * @var array
      */
     private $type;
 
     /**
      * Status
      *
-     * @var null|array
+     * @var array
      */
     private $state;
 
     /**
      * Message
+     * Field used to store error and/or validation messages for information
      *
-     * @var string
+     * @var null|string
      */
     private $state_message;
 
     /**
      * Amount
      *
-     * @var null|float
+     * @var float
      */
     private $amount;
 
     /**
      * Fees
+     * Fees amount; set by the system because depends on the acquirer
      *
-     * @var float
+     * @var null|float
      */
     private $fees;
 
     /**
      * Currency
      *
-     * @var null|Currency
+     * @var Currency
      */
     private $currency_id;
 
     /**
      * Reference
+     * Internal reference of the TX
      *
-     * @var null|string
+     * @var string
      */
     private $reference;
 
     /**
      * Acquirer Reference
+     * Reference of the TX as stored in the acquirer database
      *
-     * @var string
+     * @var null|string
      */
     private $acquirer_reference;
 
     /**
      * Customer
      *
-     * @var Partner
+     * @var null|Partner
      */
     private $partner_id;
 
     /**
      * Partner Name
      *
-     * @var string
+     * @var null|string
      */
     private $partner_name;
 
     /**
      * Language
      *
-     * @var array
+     * @var null|array
      */
     private $partner_lang;
 
     /**
      * Email
      *
-     * @var string
+     * @var null|string
      */
     private $partner_email;
 
     /**
      * Zip
      *
-     * @var string
+     * @var null|string
      */
     private $partner_zip;
 
     /**
      * Address
      *
-     * @var string
+     * @var null|string
      */
     private $partner_address;
 
     /**
      * City
      *
-     * @var string
+     * @var null|string
      */
     private $partner_city;
 
     /**
      * Country
      *
-     * @var null|Country
+     * @var Country
      */
     private $partner_country_id;
 
     /**
      * Phone
      *
-     * @var string
+     * @var null|string
      */
     private $partner_phone;
 
     /**
      * 3D Secure HTML
      *
-     * @var string
+     * @var null|string
      */
     private $html_3ds;
 
     /**
      * Callback Document Model
      *
-     * @var Model
+     * @var null|Model
      */
     private $callback_model_id;
 
     /**
      * Callback Document ID
      *
-     * @var int
+     * @var null|int
      */
     private $callback_res_id;
 
     /**
      * Callback Method
      *
-     * @var string
+     * @var null|string
      */
     private $callback_method;
 
     /**
      * Callback Hash
      *
-     * @var string
+     * @var null|string
      */
     private $callback_hash;
 
     /**
      * Return URL after payment
      *
-     * @var string
+     * @var null|string
      */
     private $return_url;
 
     /**
      * Has the payment been post processed
      *
-     * @var bool
+     * @var null|bool
      */
     private $is_processed;
 
     /**
      * Payment Token
      *
-     * @var Token
+     * @var null|Token
      */
     private $payment_token_id;
 
     /**
      * Payment
      *
-     * @var Payment
+     * @var null|Payment
      */
     private $payment_id;
 
     /**
      * Invoices
      *
-     * @var Move
+     * @var null|Move[]
      */
     private $invoice_ids;
 
     /**
      * # of Invoices
      *
-     * @var int
+     * @var null|int
      */
     private $invoice_ids_nbr;
 
     /**
      * Sales Orders
      *
-     * @var Order
+     * @var null|Order[]
      */
     private $sale_order_ids;
 
     /**
      * # of Sales Orders
      *
-     * @var int
+     * @var null|int
      */
     private $sale_order_ids_nbr;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @return DateTimeInterface
+     * @param Acquirer $acquirer_id Acquirer
+     * @param array $type Type
+     * @param array $state Status
+     * @param float $amount Amount
+     * @param Currency $currency_id Currency
+     * @param string $reference Reference
+     *        Internal reference of the TX
+     * @param Country $partner_country_id Country
      */
-    public function getDate(): DateTimeInterface
-    {
-        return $this->date;
+    public function __construct(
+        Acquirer $acquirer_id,
+        array $type,
+        array $state,
+        float $amount,
+        Currency $currency_id,
+        string $reference,
+        Country $partner_country_id
+    ) {
+        $this->acquirer_id = $acquirer_id;
+        $this->type = $type;
+        $this->state = $state;
+        $this->amount = $amount;
+        $this->currency_id = $currency_id;
+        $this->reference = $reference;
+        $this->partner_country_id = $partner_country_id;
     }
 
     /**
-     * @return Token
+     * @param null|bool $is_processed
      */
-    public function getPaymentTokenId(): Token
-    {
-        return $this->payment_token_id;
-    }
-
-    /**
-     * @param string $html_3ds
-     */
-    public function setHtml3ds(string $html_3ds): void
-    {
-        $this->html_3ds = $html_3ds;
-    }
-
-    /**
-     * @param Model $callback_model_id
-     */
-    public function setCallbackModelId(Model $callback_model_id): void
-    {
-        $this->callback_model_id = $callback_model_id;
-    }
-
-    /**
-     * @param int $callback_res_id
-     */
-    public function setCallbackResId(int $callback_res_id): void
-    {
-        $this->callback_res_id = $callback_res_id;
-    }
-
-    /**
-     * @param string $callback_method
-     */
-    public function setCallbackMethod(string $callback_method): void
-    {
-        $this->callback_method = $callback_method;
-    }
-
-    /**
-     * @param string $callback_hash
-     */
-    public function setCallbackHash(string $callback_hash): void
-    {
-        $this->callback_hash = $callback_hash;
-    }
-
-    /**
-     * @param string $return_url
-     */
-    public function setReturnUrl(string $return_url): void
-    {
-        $this->return_url = $return_url;
-    }
-
-    /**
-     * @param bool $is_processed
-     */
-    public function setIsProcessed(bool $is_processed): void
+    public function setIsProcessed(?bool $is_processed): void
     {
         $this->is_processed = $is_processed;
     }
 
     /**
-     * @return Payment
+     * @param null|string $partner_phone
      */
-    public function getPaymentId(): Payment
+    public function setPartnerPhone(?string $partner_phone): void
+    {
+        $this->partner_phone = $partner_phone;
+    }
+
+    /**
+     * @param null|string $html_3ds
+     */
+    public function setHtml3ds(?string $html_3ds): void
+    {
+        $this->html_3ds = $html_3ds;
+    }
+
+    /**
+     * @param null|Model $callback_model_id
+     */
+    public function setCallbackModelId(?Model $callback_model_id): void
+    {
+        $this->callback_model_id = $callback_model_id;
+    }
+
+    /**
+     * @param null|int $callback_res_id
+     */
+    public function setCallbackResId(?int $callback_res_id): void
+    {
+        $this->callback_res_id = $callback_res_id;
+    }
+
+    /**
+     * @param null|string $callback_method
+     */
+    public function setCallbackMethod(?string $callback_method): void
+    {
+        $this->callback_method = $callback_method;
+    }
+
+    /**
+     * @param null|string $callback_hash
+     */
+    public function setCallbackHash(?string $callback_hash): void
+    {
+        $this->callback_hash = $callback_hash;
+    }
+
+    /**
+     * @param null|string $return_url
+     */
+    public function setReturnUrl(?string $return_url): void
+    {
+        $this->return_url = $return_url;
+    }
+
+    /**
+     * @return null|Token
+     */
+    public function getPaymentTokenId(): ?Token
+    {
+        return $this->payment_token_id;
+    }
+
+    /**
+     * @param null|string $partner_city
+     */
+    public function setPartnerCity(?string $partner_city): void
+    {
+        $this->partner_city = $partner_city;
+    }
+
+    /**
+     * @return null|Payment
+     */
+    public function getPaymentId(): ?Payment
     {
         return $this->payment_id;
     }
 
     /**
-     * @param null|Country $partner_country_id
+     * @return null|Move[]
+     */
+    public function getInvoiceIds(): ?array
+    {
+        return $this->invoice_ids;
+    }
+
+    /**
+     * @return null|int
+     */
+    public function getInvoiceIdsNbr(): ?int
+    {
+        return $this->invoice_ids_nbr;
+    }
+
+    /**
+     * @return null|Order[]
+     */
+    public function getSaleOrderIds(): ?array
+    {
+        return $this->sale_order_ids;
+    }
+
+    /**
+     * @return null|int
+     */
+    public function getSaleOrderIdsNbr(): ?int
+    {
+        return $this->sale_order_ids_nbr;
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getCreateUid(): ?Users
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getWriteUid(): ?Users
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param Country $partner_country_id
      */
     public function setPartnerCountryId(Country $partner_country_id): void
     {
@@ -384,143 +480,23 @@ final class Transaction extends Base
     }
 
     /**
-     * @return Move
+     * @param null|string $partner_address
      */
-    public function getInvoiceIds(): Move
+    public function setPartnerAddress(?string $partner_address): void
     {
-        return $this->invoice_ids;
+        $this->partner_address = $partner_address;
     }
 
     /**
-     * @return int
+     * @return null|DateTimeInterface
      */
-    public function getInvoiceIdsNbr(): int
+    public function getDate(): ?DateTimeInterface
     {
-        return $this->invoice_ids_nbr;
+        return $this->date;
     }
 
     /**
-     * @return Order
-     */
-    public function getSaleOrderIds(): Order
-    {
-        return $this->sale_order_ids;
-    }
-
-    /**
-     * @return int
-     */
-    public function getSaleOrderIdsNbr(): int
-    {
-        return $this->sale_order_ids_nbr;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getCreateUid(): Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getCreateDate(): DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getWriteUid(): Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param string $partner_phone
-     */
-    public function setPartnerPhone(string $partner_phone): void
-    {
-        $this->partner_phone = $partner_phone;
-    }
-
-    /**
-     * @param string $partner_city
-     */
-    public function setPartnerCity(string $partner_city): void
-    {
-        $this->partner_city = $partner_city;
-    }
-
-    /**
-     * @return null|Acquirer
-     */
-    public function getAcquirerId(): Acquirer
-    {
-        return $this->acquirer_id;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getReference(): ?string
-    {
-        return $this->reference;
-    }
-
-    /**
-     * @return array
-     */
-    public function getProvider(): array
-    {
-        return $this->provider;
-    }
-
-    /**
-     * @return null|array
-     */
-    public function getType(): ?array
-    {
-        return $this->type;
-    }
-
-    /**
-     * @return null|array
-     */
-    public function getState(): ?array
-    {
-        return $this->state;
-    }
-
-    /**
-     * @return string
-     */
-    public function getStateMessage(): string
-    {
-        return $this->state_message;
-    }
-
-    /**
-     * @return null|float
-     */
-    public function getAmount(): ?float
-    {
-        return $this->amount;
-    }
-
-    /**
-     * @return float
-     */
-    public function getFees(): float
-    {
-        return $this->fees;
-    }
-
-    /**
-     * @return null|Currency
+     * @return Currency
      */
     public function getCurrencyId(): Currency
     {
@@ -528,99 +504,167 @@ final class Transaction extends Base
     }
 
     /**
+     * @return Acquirer
+     */
+    public function getAcquirerId(): Acquirer
+    {
+        return $this->acquirer_id;
+    }
+
+    /**
+     * @return null|array
+     */
+    public function getProvider(): ?array
+    {
+        return $this->provider;
+    }
+
+    /**
+     * @return array
+     */
+    public function getType(): array
+    {
+        return $this->type;
+    }
+
+    /**
+     * @return array
+     */
+    public function getState(): array
+    {
+        return $this->state;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getStateMessage(): ?string
+    {
+        return $this->state_message;
+    }
+
+    /**
+     * @return float
+     */
+    public function getAmount(): float
+    {
+        return $this->amount;
+    }
+
+    /**
+     * @return null|float
+     */
+    public function getFees(): ?float
+    {
+        return $this->fees;
+    }
+
+    /**
      * @return string
      */
-    public function getAcquirerReference(): string
+    public function getReference(): string
     {
-        return $this->acquirer_reference;
+        return $this->reference;
     }
 
     /**
-     * @param string $partner_address
+     * @param null|string $partner_zip
      */
-    public function setPartnerAddress(string $partner_address): void
-    {
-        $this->partner_address = $partner_address;
-    }
-
-    /**
-     * @param Partner $partner_id
-     */
-    public function setPartnerId(Partner $partner_id): void
-    {
-        $this->partner_id = $partner_id;
-    }
-
-    /**
-     * @param string $partner_name
-     */
-    public function setPartnerName(string $partner_name): void
-    {
-        $this->partner_name = $partner_name;
-    }
-
-    /**
-     * @param array $partner_lang
-     */
-    public function setPartnerLang(array $partner_lang): void
-    {
-        $this->partner_lang = $partner_lang;
-    }
-
-    /**
-     * @param array $partner_lang
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasPartnerLang(array $partner_lang, bool $strict = true): bool
-    {
-        return in_array($partner_lang, $this->partner_lang, $strict);
-    }
-
-    /**
-     * @param array $partner_lang
-     */
-    public function addPartnerLang(array $partner_lang): void
-    {
-        if ($this->hasPartnerLang($partner_lang)) {
-            return;
-        }
-
-        $this->partner_lang[] = $partner_lang;
-    }
-
-    /**
-     * @param array $partner_lang
-     */
-    public function removePartnerLang(array $partner_lang): void
-    {
-        if ($this->hasPartnerLang($partner_lang)) {
-            $index = array_search($partner_lang, $this->partner_lang);
-            unset($this->partner_lang[$index]);
-        }
-    }
-
-    /**
-     * @param string $partner_email
-     */
-    public function setPartnerEmail(string $partner_email): void
-    {
-        $this->partner_email = $partner_email;
-    }
-
-    /**
-     * @param string $partner_zip
-     */
-    public function setPartnerZip(string $partner_zip): void
+    public function setPartnerZip(?string $partner_zip): void
     {
         $this->partner_zip = $partner_zip;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|string
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getAcquirerReference(): ?string
+    {
+        return $this->acquirer_reference;
+    }
+
+    /**
+     * @param null|Partner $partner_id
+     */
+    public function setPartnerId(?Partner $partner_id): void
+    {
+        $this->partner_id = $partner_id;
+    }
+
+    /**
+     * @param null|string $partner_name
+     */
+    public function setPartnerName(?string $partner_name): void
+    {
+        $this->partner_name = $partner_name;
+    }
+
+    /**
+     * @param null|array $partner_lang
+     */
+    public function setPartnerLang(?array $partner_lang): void
+    {
+        $this->partner_lang = $partner_lang;
+    }
+
+    /**
+     * @param mixed $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasPartnerLang($item, bool $strict = true): bool
+    {
+        if (null === $this->partner_lang) {
+            return false;
+        }
+
+        return in_array($item, $this->partner_lang, $strict);
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addPartnerLang($item): void
+    {
+        if ($this->hasPartnerLang($item)) {
+            return;
+        }
+
+        if (null === $this->partner_lang) {
+            $this->partner_lang = [];
+        }
+
+        $this->partner_lang[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removePartnerLang($item): void
+    {
+        if (null === $this->partner_lang) {
+            $this->partner_lang = [];
+        }
+
+        if ($this->hasPartnerLang($item)) {
+            $index = array_search($item, $this->partner_lang);
+            unset($this->partner_lang[$index]);
+        }
+    }
+
+    /**
+     * @param null|string $partner_email
+     */
+    public function setPartnerEmail(?string $partner_email): void
+    {
+        $this->partner_email = $partner_email;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

@@ -9,7 +9,7 @@ use Flux\OdooApiClient\Model\Object\Base;
 /**
  * Odoo model : report.base.report_irmodulereference
  * Name : report.base.report_irmodulereference
- *
+ * Info :
  * The base model, which is implicitly inherited by all models.
  */
 final class ReportIrmodulereference extends Base

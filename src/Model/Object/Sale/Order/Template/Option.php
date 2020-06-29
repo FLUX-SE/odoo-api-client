@@ -16,7 +16,7 @@ use Flux\OdooApiClient\Model\Object\Uom\Uom;
 /**
  * Odoo model : sale.order.template.option
  * Name : sale.order.template.option
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -32,96 +32,122 @@ final class Option extends Base
     /**
      * Quotation Template Reference
      *
-     * @var null|Template
+     * @var Template
      */
     private $sale_order_template_id;
 
     /**
      * Company
      *
-     * @var Company
+     * @var null|Company
      */
     private $company_id;
 
     /**
      * Description
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Product
      *
-     * @var null|Product
+     * @var Product
      */
     private $product_id;
 
     /**
      * Unit Price
      *
-     * @var null|float
+     * @var float
      */
     private $price_unit;
 
     /**
      * Discount (%)
      *
-     * @var float
+     * @var null|float
      */
     private $discount;
 
     /**
-     * Unit of Measure 
+     * Unit of Measure
      *
-     * @var null|Uom
+     * @var Uom
      */
     private $uom_id;
 
     /**
      * Category
+     * Conversion between Units of Measure can only occur if they belong to the same category. The conversion will be
+     * made based on the ratios.
      *
-     * @var Category
+     * @var null|Category
      */
     private $product_uom_category_id;
 
     /**
      * Quantity
      *
-     * @var null|float
+     * @var float
      */
     private $quantity;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|Template $sale_order_template_id
+     * @param Template $sale_order_template_id Quotation Template Reference
+     * @param string $name Description
+     * @param Product $product_id Product
+     * @param float $price_unit Unit Price
+     * @param Uom $uom_id Unit of Measure
+     * @param float $quantity Quantity
+     */
+    public function __construct(
+        Template $sale_order_template_id,
+        string $name,
+        Product $product_id,
+        float $price_unit,
+        Uom $uom_id,
+        float $quantity
+    ) {
+        $this->sale_order_template_id = $sale_order_template_id;
+        $this->name = $name;
+        $this->product_id = $product_id;
+        $this->price_unit = $price_unit;
+        $this->uom_id = $uom_id;
+        $this->quantity = $quantity;
+    }
+
+    /**
+     * @param Template $sale_order_template_id
      */
     public function setSaleOrderTemplateId(Template $sale_order_template_id): void
     {
@@ -129,23 +155,23 @@ final class Option extends Base
     }
 
     /**
-     * @return Company
+     * @return null|Company
      */
-    public function getCompanyId(): Company
+    public function getCompanyId(): ?Company
     {
         return $this->company_id;
     }
 
     /**
-     * @param null|string $name
+     * @param string $name
      */
-    public function setName(?string $name): void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * @param null|Product $product_id
+     * @param Product $product_id
      */
     public function setProductId(Product $product_id): void
     {
@@ -153,23 +179,23 @@ final class Option extends Base
     }
 
     /**
-     * @param null|float $price_unit
+     * @param float $price_unit
      */
-    public function setPriceUnit(?float $price_unit): void
+    public function setPriceUnit(float $price_unit): void
     {
         $this->price_unit = $price_unit;
     }
 
     /**
-     * @param float $discount
+     * @param null|float $discount
      */
-    public function setDiscount(float $discount): void
+    public function setDiscount(?float $discount): void
     {
         $this->discount = $discount;
     }
 
     /**
-     * @param null|Uom $uom_id
+     * @param Uom $uom_id
      */
     public function setUomId(Uom $uom_id): void
     {
@@ -177,49 +203,49 @@ final class Option extends Base
     }
 
     /**
-     * @return Category
+     * @return null|Category
      */
-    public function getProductUomCategoryId(): Category
+    public function getProductUomCategoryId(): ?Category
     {
         return $this->product_uom_category_id;
     }
 
     /**
-     * @param null|float $quantity
+     * @param float $quantity
      */
-    public function setQuantity(?float $quantity): void
+    public function setQuantity(float $quantity): void
     {
         $this->quantity = $quantity;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

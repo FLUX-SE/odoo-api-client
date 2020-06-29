@@ -12,7 +12,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : mail.resend.partner
  * Name : mail.resend.partner
- *
+ * Info :
  * Model super-class for transient records, meant to be temporarily
  * persistent, and regularly vacuum-cleaned.
  *
@@ -25,75 +25,83 @@ final class Partner extends Base
     /**
      * Partner
      *
-     * @var null|PartnerAlias
+     * @var PartnerAlias
      */
     private $partner_id;
 
     /**
      * Name
      *
-     * @var string
+     * @var null|string
      */
     private $name;
 
     /**
      * Email
      *
-     * @var string
+     * @var null|string
      */
     private $email;
 
     /**
      * Send Again
      *
-     * @var bool
+     * @var null|bool
      */
     private $resend;
 
     /**
      * Resend wizard
      *
-     * @var Message
+     * @var null|Message
      */
     private $resend_wizard_id;
 
     /**
      * Help message
      *
-     * @var string
+     * @var null|string
      */
     private $message;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|PartnerAlias $partner_id
+     * @param PartnerAlias $partner_id Partner
+     */
+    public function __construct(PartnerAlias $partner_id)
+    {
+        $this->partner_id = $partner_id;
+    }
+
+    /**
+     * @param PartnerAlias $partner_id
      */
     public function setPartnerId(PartnerAlias $partner_id): void
     {
@@ -101,73 +109,73 @@ final class Partner extends Base
     }
 
     /**
-     * @param string $name
+     * @param null|string $name
      */
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * @param string $email
+     * @param null|string $email
      */
-    public function setEmail(string $email): void
+    public function setEmail(?string $email): void
     {
         $this->email = $email;
     }
 
     /**
-     * @param bool $resend
+     * @param null|bool $resend
      */
-    public function setResend(bool $resend): void
+    public function setResend(?bool $resend): void
     {
         $this->resend = $resend;
     }
 
     /**
-     * @param Message $resend_wizard_id
+     * @param null|Message $resend_wizard_id
      */
-    public function setResendWizardId(Message $resend_wizard_id): void
+    public function setResendWizardId(?Message $resend_wizard_id): void
     {
         $this->resend_wizard_id = $resend_wizard_id;
     }
 
     /**
-     * @param string $message
+     * @param null|string $message
      */
-    public function setMessage(string $message): void
+    public function setMessage(?string $message): void
     {
         $this->message = $message;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

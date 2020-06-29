@@ -12,7 +12,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : base.language.export
  * Name : base.language.export
- *
+ * Info :
  * Model super-class for transient records, meant to be temporarily
  * persistent, and regularly vacuum-cleaned.
  *
@@ -25,267 +25,319 @@ final class Export extends Base
     /**
      * File Name
      *
-     * @var string
+     * @var null|string
      */
     private $name;
 
     /**
      * Language
      *
-     * @var null|array
+     * @var array
      */
     private $lang;
 
     /**
      * File Format
      *
-     * @var null|array
+     * @var array
      */
     private $format;
 
     /**
      * Apps To Export
      *
-     * @var Module
+     * @var null|Module[]
      */
     private $modules;
 
     /**
      * File
      *
-     * @var int
+     * @var null|int
      */
     private $data;
 
     /**
      * State
      *
-     * @var array
+     * @var null|array
      */
     private $state;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @return string
+     * @param array $lang Language
+     * @param array $format File Format
      */
-    public function getName(): string
+    public function __construct(array $lang, array $format)
     {
-        return $this->name;
+        $this->lang = $lang;
+        $this->format = $format;
     }
 
     /**
-     * @return int
+     * @param Module $item
      */
-    public function getData(): int
+    public function addModules(Module $item): void
     {
-        return $this->data;
+        if ($this->hasModules($item)) {
+            return;
+        }
+
+        if (null === $this->modules) {
+            $this->modules = [];
+        }
+
+        $this->modules[] = $item;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @param array $state
+     * @param mixed $item
      */
-    public function removeState(array $state): void
+    public function removeState($item): void
     {
-        if ($this->hasState($state)) {
-            $index = array_search($state, $this->state);
+        if (null === $this->state) {
+            $this->state = [];
+        }
+
+        if ($this->hasState($item)) {
+            $index = array_search($item, $this->state);
             unset($this->state[$index]);
         }
     }
 
     /**
-     * @param array $state
+     * @param mixed $item
      */
-    public function addState(array $state): void
+    public function addState($item): void
     {
-        if ($this->hasState($state)) {
+        if ($this->hasState($item)) {
             return;
         }
 
-        $this->state[] = $state;
+        if (null === $this->state) {
+            $this->state = [];
+        }
+
+        $this->state[] = $item;
     }
 
     /**
-     * @param array $state
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasState(array $state, bool $strict = true): bool
+    public function hasState($item, bool $strict = true): bool
     {
-        return in_array($state, $this->state, $strict);
+        if (null === $this->state) {
+            return false;
+        }
+
+        return in_array($item, $this->state, $strict);
     }
 
     /**
-     * @param array $state
+     * @param null|array $state
      */
-    public function setState(array $state): void
+    public function setState(?array $state): void
     {
         $this->state = $state;
     }
 
     /**
-     * @param Module $modules
+     * @return null|int
      */
-    public function setModules(Module $modules): void
+    public function getData(): ?int
+    {
+        return $this->data;
+    }
+
+    /**
+     * @param Module $item
+     */
+    public function removeModules(Module $item): void
+    {
+        if (null === $this->modules) {
+            $this->modules = [];
+        }
+
+        if ($this->hasModules($item)) {
+            $index = array_search($item, $this->modules);
+            unset($this->modules[$index]);
+        }
+    }
+
+    /**
+     * @param Module $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasModules(Module $item, bool $strict = true): bool
+    {
+        if (null === $this->modules) {
+            return false;
+        }
+
+        return in_array($item, $this->modules, $strict);
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param null|Module[] $modules
+     */
+    public function setModules(?array $modules): void
     {
         $this->modules = $modules;
     }
 
     /**
-     * @param null|array $lang
+     * @param mixed $item
      */
-    public function setLang(?array $lang): void
+    public function removeFormat($item): void
     {
-        $this->lang = $lang;
-    }
-
-    /**
-     * @param ?array $format
-     */
-    public function removeFormat(?array $format): void
-    {
-        if ($this->hasFormat($format)) {
-            $index = array_search($format, $this->format);
+        if ($this->hasFormat($item)) {
+            $index = array_search($item, $this->format);
             unset($this->format[$index]);
         }
     }
 
     /**
-     * @param ?array $format
+     * @param mixed $item
      */
-    public function addFormat(?array $format): void
+    public function addFormat($item): void
     {
-        if ($this->hasFormat($format)) {
+        if ($this->hasFormat($item)) {
             return;
         }
 
-        if (null === $this->format) {
-            $this->format = [];
-        }
-
-        $this->format[] = $format;
+        $this->format[] = $item;
     }
 
     /**
-     * @param ?array $format
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasFormat(?array $format, bool $strict = true): bool
+    public function hasFormat($item, bool $strict = true): bool
     {
-        if (null === $this->format) {
-            return false;
-        }
-
-        return in_array($format, $this->format, $strict);
+        return in_array($item, $this->format, $strict);
     }
 
     /**
-     * @param null|array $format
+     * @param array $format
      */
-    public function setFormat(?array $format): void
+    public function setFormat(array $format): void
     {
         $this->format = $format;
     }
 
     /**
-     * @param ?array $lang
+     * @param mixed $item
      */
-    public function removeLang(?array $lang): void
+    public function removeLang($item): void
     {
-        if ($this->hasLang($lang)) {
-            $index = array_search($lang, $this->lang);
+        if ($this->hasLang($item)) {
+            $index = array_search($item, $this->lang);
             unset($this->lang[$index]);
         }
     }
 
     /**
-     * @param ?array $lang
+     * @param mixed $item
      */
-    public function addLang(?array $lang): void
+    public function addLang($item): void
     {
-        if ($this->hasLang($lang)) {
+        if ($this->hasLang($item)) {
             return;
         }
 
-        if (null === $this->lang) {
-            $this->lang = [];
-        }
-
-        $this->lang[] = $lang;
+        $this->lang[] = $item;
     }
 
     /**
-     * @param ?array $lang
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasLang(?array $lang, bool $strict = true): bool
+    public function hasLang($item, bool $strict = true): bool
     {
-        if (null === $this->lang) {
-            return false;
-        }
-
-        return in_array($lang, $this->lang, $strict);
+        return in_array($item, $this->lang, $strict);
     }
 
     /**
-     * @return DateTimeInterface
+     * @param array $lang
      */
-    public function getWriteDate(): DateTimeInterface
+    public function setLang(array $lang): void
+    {
+        $this->lang = $lang;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

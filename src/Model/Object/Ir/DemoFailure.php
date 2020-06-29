@@ -13,7 +13,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : ir.demo_failure
  * Name : ir.demo_failure
- *
+ * Info :
  * Stores modules for which we could not install demo data
  */
 final class DemoFailure extends Base
@@ -21,54 +21,62 @@ final class DemoFailure extends Base
     /**
      * Module
      *
-     * @var null|Module
+     * @var Module
      */
     private $module_id;
 
     /**
      * Error
      *
-     * @var string
+     * @var null|string
      */
     private $error;
 
     /**
      * Wizard
      *
-     * @var Wizard
+     * @var null|Wizard
      */
     private $wizard_id;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|Module $module_id
+     * @param Module $module_id Module
+     */
+    public function __construct(Module $module_id)
+    {
+        $this->module_id = $module_id;
+    }
+
+    /**
+     * @param Module $module_id
      */
     public function setModuleId(Module $module_id): void
     {
@@ -76,49 +84,49 @@ final class DemoFailure extends Base
     }
 
     /**
-     * @param string $error
+     * @param null|string $error
      */
-    public function setError(string $error): void
+    public function setError(?string $error): void
     {
         $this->error = $error;
     }
 
     /**
-     * @param Wizard $wizard_id
+     * @param null|Wizard $wizard_id
      */
-    public function setWizardId(Wizard $wizard_id): void
+    public function setWizardId(?Wizard $wizard_id): void
     {
         $this->wizard_id = $wizard_id;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

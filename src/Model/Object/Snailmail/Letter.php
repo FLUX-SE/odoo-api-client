@@ -18,7 +18,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : snailmail.letter
  * Name : snailmail.letter
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -34,412 +34,443 @@ final class Letter extends Base
     /**
      * Sent by
      *
-     * @var Users
+     * @var null|Users
      */
     private $user_id;
 
     /**
      * Model
      *
-     * @var null|string
+     * @var string
      */
     private $model;
 
     /**
      * Document ID
      *
-     * @var null|int
+     * @var int
      */
     private $res_id;
 
     /**
      * Recipient
      *
-     * @var null|Partner
+     * @var Partner
      */
     private $partner_id;
 
     /**
      * Company
      *
-     * @var null|Company
+     * @var Company
      */
     private $company_id;
 
     /**
      * Optional report to print and attach
      *
-     * @var Report
+     * @var null|Report
      */
     private $report_template;
 
     /**
      * Attachment
      *
-     * @var Attachment
+     * @var null|Attachment
      */
     private $attachment_id;
 
     /**
      * Document
      *
-     * @var int
+     * @var null|int
      */
     private $attachment_datas;
 
     /**
      * Attachment Filename
      *
-     * @var string
+     * @var null|string
      */
     private $attachment_fname;
 
     /**
      * Color
      *
-     * @var bool
+     * @var null|bool
      */
     private $color;
 
     /**
      * Cover Page
      *
-     * @var bool
+     * @var null|bool
      */
     private $cover;
 
     /**
      * Both side
      *
-     * @var bool
+     * @var null|bool
      */
     private $duplex;
 
     /**
      * Status
+     * When a letter is created, the status is 'Pending'.
+     * If the letter is correctly sent, the status goes in 'Sent',
+     * If not, it will got in state 'Error' and the error message will be displayed in the field 'Error Message'.
      *
-     * @var null|array
+     * @var array
      */
     private $state;
 
     /**
      * Error
      *
-     * @var array
+     * @var null|array
      */
     private $error_code;
 
     /**
      * Information
      *
-     * @var string
+     * @var null|string
      */
     private $info_msg;
 
     /**
      * Related Record
      *
-     * @var string
+     * @var null|string
      */
     private $reference;
 
     /**
      * Snailmail Status Message
      *
-     * @var Message
+     * @var null|Message
      */
     private $message_id;
 
     /**
      * Street
      *
-     * @var string
+     * @var null|string
      */
     private $street;
 
     /**
      * Street2
      *
-     * @var string
+     * @var null|string
      */
     private $street2;
 
     /**
      * Zip
      *
-     * @var string
+     * @var null|string
      */
     private $zip;
 
     /**
      * City
      *
-     * @var string
+     * @var null|string
      */
     private $city;
 
     /**
      * State
      *
-     * @var State
+     * @var null|State
      */
     private $state_id;
 
     /**
      * Country
      *
-     * @var Country
+     * @var null|Country
      */
     private $country_id;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param Users $user_id
+     * @param string $model Model
+     * @param int $res_id Document ID
+     * @param Partner $partner_id Recipient
+     * @param Company $company_id Company
+     * @param array $state Status
+     *        When a letter is created, the status is 'Pending'.
+     *        If the letter is correctly sent, the status goes in 'Sent',
+     *        If not, it will got in state 'Error' and the error message will be displayed in the field 'Error Message'.
      */
-    public function setUserId(Users $user_id): void
-    {
-        $this->user_id = $user_id;
+    public function __construct(
+        string $model,
+        int $res_id,
+        Partner $partner_id,
+        Company $company_id,
+        array $state
+    ) {
+        $this->model = $model;
+        $this->res_id = $res_id;
+        $this->partner_id = $partner_id;
+        $this->company_id = $company_id;
+        $this->state = $state;
     }
 
     /**
-     * @param array $error_code
+     * @param mixed $item
      */
-    public function removeErrorCode(array $error_code): void
+    public function addErrorCode($item): void
     {
-        if ($this->hasErrorCode($error_code)) {
-            $index = array_search($error_code, $this->error_code);
-            unset($this->error_code[$index]);
+        if ($this->hasErrorCode($item)) {
+            return;
         }
+
+        if (null === $this->error_code) {
+            $this->error_code = [];
+        }
+
+        $this->error_code[] = $item;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @param Country $country_id
+     * @param null|Country $country_id
      */
-    public function setCountryId(Country $country_id): void
+    public function setCountryId(?Country $country_id): void
     {
         $this->country_id = $country_id;
     }
 
     /**
-     * @param State $state_id
+     * @param null|State $state_id
      */
-    public function setStateId(State $state_id): void
+    public function setStateId(?State $state_id): void
     {
         $this->state_id = $state_id;
     }
 
     /**
-     * @param string $city
+     * @param null|string $city
      */
-    public function setCity(string $city): void
+    public function setCity(?string $city): void
     {
         $this->city = $city;
     }
 
     /**
-     * @param string $zip
+     * @param null|string $zip
      */
-    public function setZip(string $zip): void
+    public function setZip(?string $zip): void
     {
         $this->zip = $zip;
     }
 
     /**
-     * @param string $street2
+     * @param null|string $street2
      */
-    public function setStreet2(string $street2): void
+    public function setStreet2(?string $street2): void
     {
         $this->street2 = $street2;
     }
 
     /**
-     * @param string $street
+     * @param null|string $street
      */
-    public function setStreet(string $street): void
+    public function setStreet(?string $street): void
     {
         $this->street = $street;
     }
 
     /**
-     * @param Message $message_id
+     * @param null|Message $message_id
      */
-    public function setMessageId(Message $message_id): void
+    public function setMessageId(?Message $message_id): void
     {
         $this->message_id = $message_id;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getReference(): string
+    public function getReference(): ?string
     {
         return $this->reference;
     }
 
     /**
-     * @param string $info_msg
+     * @param null|string $info_msg
      */
-    public function setInfoMsg(string $info_msg): void
+    public function setInfoMsg(?string $info_msg): void
     {
         $this->info_msg = $info_msg;
     }
 
     /**
-     * @param array $error_code
+     * @param mixed $item
      */
-    public function addErrorCode(array $error_code): void
+    public function removeErrorCode($item): void
     {
-        if ($this->hasErrorCode($error_code)) {
-            return;
+        if (null === $this->error_code) {
+            $this->error_code = [];
         }
 
-        $this->error_code[] = $error_code;
+        if ($this->hasErrorCode($item)) {
+            $index = array_search($item, $this->error_code);
+            unset($this->error_code[$index]);
+        }
     }
 
     /**
-     * @param null|string $model
-     */
-    public function setModel(?string $model): void
-    {
-        $this->model = $model;
-    }
-
-    /**
-     * @param array $error_code
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasErrorCode(array $error_code, bool $strict = true): bool
+    public function hasErrorCode($item, bool $strict = true): bool
     {
-        return in_array($error_code, $this->error_code, $strict);
+        if (null === $this->error_code) {
+            return false;
+        }
+
+        return in_array($item, $this->error_code, $strict);
     }
 
     /**
-     * @param array $error_code
+     * @param null|Users $user_id
      */
-    public function setErrorCode(array $error_code): void
+    public function setUserId(?Users $user_id): void
+    {
+        $this->user_id = $user_id;
+    }
+
+    /**
+     * @param null|array $error_code
+     */
+    public function setErrorCode(?array $error_code): void
     {
         $this->error_code = $error_code;
     }
 
     /**
-     * @return null|array
+     * @return array
      */
-    public function getState(): ?array
+    public function getState(): array
     {
         return $this->state;
     }
 
     /**
-     * @param bool $duplex
+     * @param null|bool $duplex
      */
-    public function setDuplex(bool $duplex): void
+    public function setDuplex(?bool $duplex): void
     {
         $this->duplex = $duplex;
     }
 
     /**
-     * @param bool $cover
+     * @param null|bool $cover
      */
-    public function setCover(bool $cover): void
+    public function setCover(?bool $cover): void
     {
         $this->cover = $cover;
     }
 
     /**
-     * @param bool $color
+     * @param null|bool $color
      */
-    public function setColor(bool $color): void
+    public function setColor(?bool $color): void
     {
         $this->color = $color;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getAttachmentFname(): string
+    public function getAttachmentFname(): ?string
     {
         return $this->attachment_fname;
     }
 
     /**
-     * @return int
+     * @return null|int
      */
-    public function getAttachmentDatas(): int
+    public function getAttachmentDatas(): ?int
     {
         return $this->attachment_datas;
     }
 
     /**
-     * @param Attachment $attachment_id
+     * @param null|Attachment $attachment_id
      */
-    public function setAttachmentId(Attachment $attachment_id): void
+    public function setAttachmentId(?Attachment $attachment_id): void
     {
         $this->attachment_id = $attachment_id;
     }
 
     /**
-     * @param Report $report_template
+     * @param null|Report $report_template
      */
-    public function setReportTemplate(Report $report_template): void
+    public function setReportTemplate(?Report $report_template): void
     {
         $this->report_template = $report_template;
     }
 
     /**
-     * @return null|Company
+     * @return Company
      */
     public function getCompanyId(): Company
     {
@@ -447,7 +478,7 @@ final class Letter extends Base
     }
 
     /**
-     * @param null|Partner $partner_id
+     * @param Partner $partner_id
      */
     public function setPartnerId(Partner $partner_id): void
     {
@@ -455,17 +486,25 @@ final class Letter extends Base
     }
 
     /**
-     * @param null|int $res_id
+     * @param int $res_id
      */
-    public function setResId(?int $res_id): void
+    public function setResId(int $res_id): void
     {
         $this->res_id = $res_id;
     }
 
     /**
-     * @return DateTimeInterface
+     * @param string $model
      */
-    public function getWriteDate(): DateTimeInterface
+    public function setModel(string $model): void
+    {
+        $this->model = $model;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

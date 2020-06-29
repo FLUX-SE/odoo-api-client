@@ -12,7 +12,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : ir.attachment
  * Name : ir.attachment
- *
+ * Info :
  * Attachments are used to link binary files or url to any openerp document.
  *
  * External attachment storage
@@ -31,431 +31,437 @@ final class Attachment extends Base
     /**
      * Name
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Description
      *
-     * @var string
+     * @var null|string
      */
     private $description;
 
     /**
      * Resource Name
      *
-     * @var string
+     * @var null|string
      */
     private $res_name;
 
     /**
      * Resource Model
+     * The database object this attachment will be attached to.
      *
-     * @var string
+     * @var null|string
      */
     private $res_model;
 
     /**
      * Resource Field
      *
-     * @var string
+     * @var null|string
      */
     private $res_field;
 
     /**
      * Resource ID
+     * The record id this is attached to.
      *
-     * @var int
+     * @var null|int
      */
     private $res_id;
 
     /**
      * Company
      *
-     * @var Company
+     * @var null|Company
      */
     private $company_id;
 
     /**
      * Type
+     * You can either upload a file from your computer or copy/paste an internet link to your file.
      *
-     * @var null|array
+     * @var array
      */
     private $type;
 
     /**
      * Url
      *
-     * @var string
+     * @var null|string
      */
     private $url;
 
     /**
      * Is public document
      *
-     * @var bool
+     * @var null|bool
      */
     private $public;
 
     /**
      * Access Token
      *
-     * @var string
+     * @var null|string
      */
     private $access_token;
 
     /**
      * File Content
      *
-     * @var int
+     * @var null|int
      */
     private $datas;
 
     /**
      * Database Data
      *
-     * @var int
+     * @var null|int
      */
     private $db_datas;
 
     /**
      * Stored Filename
      *
-     * @var string
+     * @var null|string
      */
     private $store_fname;
 
     /**
      * File Size
      *
-     * @var int
+     * @var null|int
      */
     private $file_size;
 
     /**
      * Checksum/SHA1
      *
-     * @var string
+     * @var null|string
      */
     private $checksum;
 
     /**
      * Mime Type
      *
-     * @var string
+     * @var null|string
      */
     private $mimetype;
 
     /**
      * Indexed Content
      *
-     * @var string
+     * @var null|string
      */
     private $index_content;
 
     /**
      * Attachment URL
      *
-     * @var string
+     * @var null|string
      */
     private $local_url;
 
     /**
      * Image Src
      *
-     * @var string
+     * @var null|string
      */
     private $image_src;
 
     /**
      * Image Width
      *
-     * @var int
+     * @var null|int
      */
     private $image_width;
 
     /**
      * Image Height
      *
-     * @var int
+     * @var null|int
      */
     private $image_height;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @param string $name Name
+     * @param array $type Type
+     *        You can either upload a file from your computer or copy/paste an internet link to your file.
      */
-    public function setName(?string $name): void
+    public function __construct(string $name, array $type)
     {
         $this->name = $name;
+        $this->type = $type;
     }
 
     /**
-     * @param int $db_datas
+     * @param null|int $db_datas
      */
-    public function setDbDatas(int $db_datas): void
+    public function setDbDatas(?int $db_datas): void
     {
         $this->db_datas = $db_datas;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return int
+     * @return null|int
      */
-    public function getImageHeight(): int
+    public function getImageHeight(): ?int
     {
         return $this->image_height;
     }
 
     /**
-     * @return int
+     * @return null|int
      */
-    public function getImageWidth(): int
+    public function getImageWidth(): ?int
     {
         return $this->image_width;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getImageSrc(): string
+    public function getImageSrc(): ?string
     {
         return $this->image_src;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getLocalUrl(): string
+    public function getLocalUrl(): ?string
     {
         return $this->local_url;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getIndexContent(): string
+    public function getIndexContent(): ?string
     {
         return $this->index_content;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getMimetype(): string
+    public function getMimetype(): ?string
     {
         return $this->mimetype;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getChecksum(): string
+    public function getChecksum(): ?string
     {
         return $this->checksum;
     }
 
     /**
-     * @return int
+     * @return null|int
      */
-    public function getFileSize(): int
+    public function getFileSize(): ?int
     {
         return $this->file_size;
     }
 
     /**
-     * @param string $store_fname
+     * @param null|string $store_fname
      */
-    public function setStoreFname(string $store_fname): void
+    public function setStoreFname(?string $store_fname): void
     {
         $this->store_fname = $store_fname;
     }
 
     /**
-     * @param int $datas
+     * @param null|int $datas
      */
-    public function setDatas(int $datas): void
+    public function setDatas(?int $datas): void
     {
         $this->datas = $datas;
     }
 
     /**
-     * @param string $description
+     * @param string $name
      */
-    public function setDescription(string $description): void
+    public function setName(string $name): void
     {
-        $this->description = $description;
+        $this->name = $name;
     }
 
     /**
-     * @param string $access_token
+     * @param null|string $access_token
      */
-    public function setAccessToken(string $access_token): void
+    public function setAccessToken(?string $access_token): void
     {
         $this->access_token = $access_token;
     }
 
     /**
-     * @param bool $public
+     * @param null|bool $public
      */
-    public function setPublic(bool $public): void
+    public function setPublic(?bool $public): void
     {
         $this->public = $public;
     }
 
     /**
-     * @param string $url
+     * @param null|string $url
      */
-    public function setUrl(string $url): void
+    public function setUrl(?string $url): void
     {
         $this->url = $url;
     }
 
     /**
-     * @param ?array $type
+     * @param mixed $item
      */
-    public function removeType(?array $type): void
+    public function removeType($item): void
     {
-        if ($this->hasType($type)) {
-            $index = array_search($type, $this->type);
+        if ($this->hasType($item)) {
+            $index = array_search($item, $this->type);
             unset($this->type[$index]);
         }
     }
 
     /**
-     * @param ?array $type
+     * @param mixed $item
      */
-    public function addType(?array $type): void
+    public function addType($item): void
     {
-        if ($this->hasType($type)) {
+        if ($this->hasType($item)) {
             return;
         }
 
-        if (null === $this->type) {
-            $this->type = [];
-        }
-
-        $this->type[] = $type;
+        $this->type[] = $item;
     }
 
     /**
-     * @param ?array $type
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasType(?array $type, bool $strict = true): bool
+    public function hasType($item, bool $strict = true): bool
     {
-        if (null === $this->type) {
-            return false;
-        }
-
-        return in_array($type, $this->type, $strict);
+        return in_array($item, $this->type, $strict);
     }
 
     /**
-     * @param null|array $type
+     * @param array $type
      */
-    public function setType(?array $type): void
+    public function setType(array $type): void
     {
         $this->type = $type;
     }
 
     /**
-     * @param Company $company_id
+     * @param null|Company $company_id
      */
-    public function setCompanyId(Company $company_id): void
+    public function setCompanyId(?Company $company_id): void
     {
         $this->company_id = $company_id;
     }
 
     /**
-     * @return int
+     * @return null|int
      */
-    public function getResId(): int
+    public function getResId(): ?int
     {
         return $this->res_id;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getResField(): string
+    public function getResField(): ?string
     {
         return $this->res_field;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getResModel(): string
+    public function getResModel(): ?string
     {
         return $this->res_model;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getResName(): string
+    public function getResName(): ?string
     {
         return $this->res_name;
     }
 
     /**
-     * @return DateTimeInterface
+     * @param null|string $description
      */
-    public function getWriteDate(): DateTimeInterface
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

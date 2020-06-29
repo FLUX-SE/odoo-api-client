@@ -11,7 +11,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : mail.shortcode
  * Name : mail.shortcode
- *
+ * Info :
  * Shortcode
  * Canned Responses, allowing the user to defined shortcuts in its message. Should be applied before storing
  * message in database.
@@ -23,120 +23,134 @@ final class Shortcode extends Base
 {
     /**
      * Shortcut
+     * The shortcut which must be replaced in the Chat Messages
      *
-     * @var null|string
+     * @var string
      */
     private $source;
 
     /**
      * Substitution
+     * The escaped html code replacing the shortcut
      *
-     * @var null|string
+     * @var string
      */
     private $substitution;
 
     /**
      * Description
      *
-     * @var string
+     * @var null|string
      */
     private $description;
 
     /**
      * Messages
      *
-     * @var Message
+     * @var null|Message
      */
     private $message_ids;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $source
+     * @param string $source Shortcut
+     *        The shortcut which must be replaced in the Chat Messages
+     * @param string $substitution Substitution
+     *        The escaped html code replacing the shortcut
      */
-    public function setSource(?string $source): void
+    public function __construct(string $source, string $substitution)
+    {
+        $this->source = $source;
+        $this->substitution = $substitution;
+    }
+
+    /**
+     * @param string $source
+     */
+    public function setSource(string $source): void
     {
         $this->source = $source;
     }
 
     /**
-     * @param null|string $substitution
+     * @param string $substitution
      */
-    public function setSubstitution(?string $substitution): void
+    public function setSubstitution(string $substitution): void
     {
         $this->substitution = $substitution;
     }
 
     /**
-     * @param string $description
+     * @param null|string $description
      */
-    public function setDescription(string $description): void
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
 
     /**
-     * @param Message $message_ids
+     * @param null|Message $message_ids
      */
-    public function setMessageIds(Message $message_ids): void
+    public function setMessageIds(?Message $message_ids): void
     {
         $this->message_ids = $message_ids;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

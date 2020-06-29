@@ -14,7 +14,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : account.online.link.wizard
  * Name : account.online.link.wizard
- *
+ * Info :
  * Model super-class for transient records, meant to be temporarily
  * persistent, and regularly vacuum-cleaned.
  *
@@ -27,250 +27,272 @@ final class Wizard extends Base
     /**
      * Journal
      *
-     * @var Journal
+     * @var null|Journal
      */
     private $journal_id;
 
     /**
      * Online Account
      *
-     * @var JournalAlias
+     * @var null|JournalAlias
      */
     private $online_account_id;
 
     /**
      * Action
      *
-     * @var array
+     * @var null|array
      */
     private $action;
 
     /**
      * Account name
      *
-     * @var string
+     * @var null|string
      */
     private $name;
 
     /**
      * Balance
+     * balance of the account sent by the third party provider
      *
-     * @var float
+     * @var null|float
      */
     private $balance;
 
     /**
      * Account Online Wizard
      *
-     * @var WizardAlias
+     * @var null|WizardAlias
      */
     private $account_online_wizard_id;
 
     /**
      * Account Number
      *
-     * @var string
+     * @var null|string
      */
     private $account_number;
 
     /**
      * Synchronization frequency
      *
-     * @var array
+     * @var null|array
      */
     private $journal_statements_creation;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param Journal $journal_id
+     * @param null|Journal $journal_id
      */
-    public function setJournalId(Journal $journal_id): void
+    public function setJournalId(?Journal $journal_id): void
     {
         $this->journal_id = $journal_id;
     }
 
     /**
-     * @param array $journal_statements_creation
+     * @param null|array $journal_statements_creation
      */
-    public function setJournalStatementsCreation(array $journal_statements_creation): void
+    public function setJournalStatementsCreation(?array $journal_statements_creation): void
     {
         $this->journal_statements_creation = $journal_statements_creation;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @param array $journal_statements_creation
+     * @param mixed $item
      */
-    public function removeJournalStatementsCreation(array $journal_statements_creation): void
+    public function removeJournalStatementsCreation($item): void
     {
-        if ($this->hasJournalStatementsCreation($journal_statements_creation)) {
-            $index = array_search($journal_statements_creation, $this->journal_statements_creation);
+        if (null === $this->journal_statements_creation) {
+            $this->journal_statements_creation = [];
+        }
+
+        if ($this->hasJournalStatementsCreation($item)) {
+            $index = array_search($item, $this->journal_statements_creation);
             unset($this->journal_statements_creation[$index]);
         }
     }
 
     /**
-     * @param array $journal_statements_creation
+     * @param mixed $item
      */
-    public function addJournalStatementsCreation(array $journal_statements_creation): void
+    public function addJournalStatementsCreation($item): void
     {
-        if ($this->hasJournalStatementsCreation($journal_statements_creation)) {
+        if ($this->hasJournalStatementsCreation($item)) {
             return;
         }
 
-        $this->journal_statements_creation[] = $journal_statements_creation;
+        if (null === $this->journal_statements_creation) {
+            $this->journal_statements_creation = [];
+        }
+
+        $this->journal_statements_creation[] = $item;
     }
 
     /**
-     * @param array $journal_statements_creation
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasJournalStatementsCreation(
-        array $journal_statements_creation,
-        bool $strict = true
-    ): bool
+    public function hasJournalStatementsCreation($item, bool $strict = true): bool
     {
-        return in_array($journal_statements_creation, $this->journal_statements_creation, $strict);
+        if (null === $this->journal_statements_creation) {
+            return false;
+        }
+
+        return in_array($item, $this->journal_statements_creation, $strict);
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getAccountNumber(): string
+    public function getAccountNumber(): ?string
     {
         return $this->account_number;
     }
 
     /**
-     * @param JournalAlias $online_account_id
+     * @param null|JournalAlias $online_account_id
      */
-    public function setOnlineAccountId(JournalAlias $online_account_id): void
+    public function setOnlineAccountId(?JournalAlias $online_account_id): void
     {
         $this->online_account_id = $online_account_id;
     }
 
     /**
-     * @param WizardAlias $account_online_wizard_id
+     * @param null|WizardAlias $account_online_wizard_id
      */
-    public function setAccountOnlineWizardId(WizardAlias $account_online_wizard_id): void
+    public function setAccountOnlineWizardId(?WizardAlias $account_online_wizard_id): void
     {
         $this->account_online_wizard_id = $account_online_wizard_id;
     }
 
     /**
-     * @return float
+     * @return null|float
      */
-    public function getBalance(): float
+    public function getBalance(): ?float
     {
         return $this->balance;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
     /**
-     * @param array $action
+     * @param mixed $item
      */
-    public function removeAction(array $action): void
+    public function removeAction($item): void
     {
-        if ($this->hasAction($action)) {
-            $index = array_search($action, $this->action);
+        if (null === $this->action) {
+            $this->action = [];
+        }
+
+        if ($this->hasAction($item)) {
+            $index = array_search($item, $this->action);
             unset($this->action[$index]);
         }
     }
 
     /**
-     * @param array $action
+     * @param mixed $item
      */
-    public function addAction(array $action): void
+    public function addAction($item): void
     {
-        if ($this->hasAction($action)) {
+        if ($this->hasAction($item)) {
             return;
         }
 
-        $this->action[] = $action;
+        if (null === $this->action) {
+            $this->action = [];
+        }
+
+        $this->action[] = $item;
     }
 
     /**
-     * @param array $action
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasAction(array $action, bool $strict = true): bool
+    public function hasAction($item, bool $strict = true): bool
     {
-        return in_array($action, $this->action, $strict);
+        if (null === $this->action) {
+            return false;
+        }
+
+        return in_array($item, $this->action, $strict);
     }
 
     /**
-     * @param array $action
+     * @param null|array $action
      */
-    public function setAction(array $action): void
+    public function setAction(?array $action): void
     {
         $this->action = $action;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

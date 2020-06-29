@@ -14,7 +14,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : account.transfer.model.line
  * Name : account.transfer.model.line
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -30,68 +30,84 @@ final class Line extends Base
     /**
      * Transfer Model
      *
-     * @var null|Model
+     * @var Model
      */
     private $transfer_model_id;
 
     /**
      * Destination Account
      *
-     * @var null|Account
+     * @var Account
      */
     private $account_id;
 
     /**
      * Percent
+     * Percentage of the sum of lines from the origin accounts will be transferred to the destination account
      *
-     * @var null|float
+     * @var float
      */
     private $percent;
 
     /**
      * Analytic Filter
+     * The sum of all lines from the origin accounts having this analytic account will be automatically transferred
+     * to the destination account
      *
-     * @var AccountAlias
+     * @var null|AccountAlias[]
      */
     private $analytic_account_ids;
 
     /**
      * Percent Is Readonly
      *
-     * @var bool
+     * @var null|bool
      */
     private $percent_is_readonly;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|Model $transfer_model_id
+     * @param Model $transfer_model_id Transfer Model
+     * @param Account $account_id Destination Account
+     * @param float $percent Percent
+     *        Percentage of the sum of lines from the origin accounts will be transferred to the destination account
+     */
+    public function __construct(Model $transfer_model_id, Account $account_id, float $percent)
+    {
+        $this->transfer_model_id = $transfer_model_id;
+        $this->account_id = $account_id;
+        $this->percent = $percent;
+    }
+
+    /**
+     * @param Model $transfer_model_id
      */
     public function setTransferModelId(Model $transfer_model_id): void
     {
@@ -99,7 +115,7 @@ final class Line extends Base
     }
 
     /**
-     * @param null|Account $account_id
+     * @param Account $account_id
      */
     public function setAccountId(Account $account_id): void
     {
@@ -107,57 +123,103 @@ final class Line extends Base
     }
 
     /**
-     * @param null|float $percent
+     * @param float $percent
      */
-    public function setPercent(?float $percent): void
+    public function setPercent(float $percent): void
     {
         $this->percent = $percent;
     }
 
     /**
-     * @param AccountAlias $analytic_account_ids
+     * @param null|AccountAlias[] $analytic_account_ids
      */
-    public function setAnalyticAccountIds(AccountAlias $analytic_account_ids): void
+    public function setAnalyticAccountIds(?array $analytic_account_ids): void
     {
         $this->analytic_account_ids = $analytic_account_ids;
     }
 
     /**
+     * @param AccountAlias $item
+     * @param bool $strict
+     *
      * @return bool
      */
-    public function isPercentIsReadonly(): bool
+    public function hasAnalyticAccountIds(AccountAlias $item, bool $strict = true): bool
+    {
+        if (null === $this->analytic_account_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->analytic_account_ids, $strict);
+    }
+
+    /**
+     * @param AccountAlias $item
+     */
+    public function addAnalyticAccountIds(AccountAlias $item): void
+    {
+        if ($this->hasAnalyticAccountIds($item)) {
+            return;
+        }
+
+        if (null === $this->analytic_account_ids) {
+            $this->analytic_account_ids = [];
+        }
+
+        $this->analytic_account_ids[] = $item;
+    }
+
+    /**
+     * @param AccountAlias $item
+     */
+    public function removeAnalyticAccountIds(AccountAlias $item): void
+    {
+        if (null === $this->analytic_account_ids) {
+            $this->analytic_account_ids = [];
+        }
+
+        if ($this->hasAnalyticAccountIds($item)) {
+            $index = array_search($item, $this->analytic_account_ids);
+            unset($this->analytic_account_ids[$index]);
+        }
+    }
+
+    /**
+     * @return null|bool
+     */
+    public function isPercentIsReadonly(): ?bool
     {
         return $this->percent_is_readonly;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

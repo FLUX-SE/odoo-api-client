@@ -6,8 +6,6 @@ namespace Flux\OdooApiClient\PhpGenerator;
 
 use Exception;
 use Prometee\PhpClassGenerator\Builder\ClassBuilderInterface;
-use Prometee\PhpClassGenerator\Model\Attribute\PropertyInterface;
-use stdClass;
 
 final class OdooPhpClassesGenerator implements OdooPhpClassesGeneratorInterface
 {
@@ -48,11 +46,10 @@ final class OdooPhpClassesGenerator implements OdooPhpClassesGeneratorInterface
         $this->classBuilder->setIndent($indent);
         $this->classBuilder->setEol($eol);
 
-        foreach ($this->classesConfig as $className => $config) {
-
-            $path = explode('\\', $className);
-            $className = array_pop($path);
-            $classNamespace = implode('\\', $path);
+        foreach ($this->classesConfig as $config) {
+            $path = explode('\\', $config['class']);
+            $className = (string) array_pop($path);
+            $classNamespace = (string) implode('\\', $path);
             $classNamespace = $this->baseNamespace . '\\' . $classNamespace;
             $classNamespace = rtrim($classNamespace, '\\');
 
@@ -63,9 +60,9 @@ final class OdooPhpClassesGenerator implements OdooPhpClassesGeneratorInterface
             $this->classBuilder->setExtendClass($config['extends']);
             $this->classBuilder->getClassModel()->getPhpDoc()->setLines($config['description']);
 
-            foreach ($config['properties'] as $propertyName => $propertyConfig) {
+            foreach ($config['properties'] as $propertyConfig) {
                 $property = $this->classBuilder->createProperty(
-                    $propertyName,
+                    $propertyConfig['name'],
                     $propertyConfig['types'],
                     $propertyConfig['default'],
                     $propertyConfig['description']
@@ -84,6 +81,10 @@ final class OdooPhpClassesGenerator implements OdooPhpClassesGeneratorInterface
 
             $classContent = $this->classBuilder->build($classNamespace, $className);
 
+            if (null === $classContent) {
+                continue;
+            }
+
             $written = $this->writeClass($classContent, $classFilePath);
 
             if (false === $written) {
@@ -96,10 +97,6 @@ final class OdooPhpClassesGenerator implements OdooPhpClassesGeneratorInterface
 
     public function writeClass(string $classContent, string $classFilePath): bool
     {
-        if (null === $classContent) {
-            return false;
-        }
-
         $classPath = dirname($classFilePath);
         if (false === is_dir($classPath)) {
             mkdir($classPath, 0777, true);

@@ -9,6 +9,8 @@ use Flux\OdooApiClient\Builder\OdooApiClientBuilder;
 use Flux\OdooApiClient\Command\GeneratorCommand;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\InspectionOperations;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
+use Flux\OdooApiClient\PhpGenerator\ModelFixer\ResUsersModelFixer;
+use Flux\OdooApiClient\PhpGenerator\OdooModelsStructureConverter;
 use Flux\OdooApiClient\PhpGenerator\OdooPhpClassesGenerator;
 use Prometee\PhpClassGenerator\Builder\ClassBuilder;
 use Prometee\PhpClassGenerator\Builder\ModelFactoryBuilder;
@@ -44,12 +46,20 @@ $inspectionOperations = $odooApiClientBuilder->buildExecuteKwOperations(
 );
 $phpReservedWordsHelper = new PhpReservedWordsHelper();
 
-$application = new Application('odoo-api-client-generator', '1.0.0');
-$command = new GeneratorCommand(
-    $phpGenerator,
+$odooModelsStructureConverter = new OdooModelsStructureConverter(
     $recordListOperations,
     $inspectionOperations,
     $phpReservedWordsHelper,
+    [
+        new ResUsersModelFixer()
+    ]
+);
+
+$application = new Application('odoo-api-client-generator', '1.0.0');
+$command = new GeneratorCommand(
+    $inspectionOperations->getObjectOperations(),
+    $odooModelsStructureConverter,
+    $phpGenerator,
     'bin/generator'
 );
 

@@ -9,7 +9,7 @@ use Flux\OdooApiClient\Model\Object\Base;
 /**
  * Odoo model : ir.translation
  * Name : ir.translation
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -25,236 +25,282 @@ final class Translation extends Base
     /**
      * Translated field
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Record ID
      *
-     * @var int
+     * @var null|int
      */
     private $res_id;
 
     /**
      * Language
      *
-     * @var array
+     * @var null|array
      */
     private $lang;
 
     /**
      * Type
      *
-     * @var array
+     * @var null|array
      */
     private $type;
 
     /**
      * Internal Source
      *
-     * @var string
+     * @var null|string
      */
     private $src;
 
     /**
      * Translation Value
      *
-     * @var string
+     * @var null|string
      */
     private $value;
 
     /**
      * Module
+     * Module this term belongs to
      *
-     * @var string
+     * @var null|string
      */
     private $module;
 
     /**
      * Status
+     * Automatically set to let administators find new terms that might need to be translated
      *
-     * @var array
+     * @var null|array
      */
     private $state;
 
     /**
      * Translation comments
      *
-     * @var string
+     * @var null|string
      */
     private $comments;
 
     /**
-     * @param null|string $name
+     * @param string $name Translated field
      */
-    public function setName(?string $name): void
+    public function __construct(string $name)
     {
         $this->name = $name;
     }
 
     /**
-     * @param string $src
+     * @param mixed $item
      */
-    public function setSrc(string $src): void
+    public function removeType($item): void
     {
-        $this->src = $src;
-    }
-
-    /**
-     * @param array $state
-     */
-    public function removeState(array $state): void
-    {
-        if ($this->hasState($state)) {
-            $index = array_search($state, $this->state);
-            unset($this->state[$index]);
-        }
-    }
-
-    /**
-     * @param array $state
-     */
-    public function addState(array $state): void
-    {
-        if ($this->hasState($state)) {
-            return;
+        if (null === $this->type) {
+            $this->type = [];
         }
 
-        $this->state[] = $state;
-    }
-
-    /**
-     * @param array $state
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasState(array $state, bool $strict = true): bool
-    {
-        return in_array($state, $this->state, $strict);
-    }
-
-    /**
-     * @param array $state
-     */
-    public function setState(array $state): void
-    {
-        $this->state = $state;
-    }
-
-    /**
-     * @param string $module
-     */
-    public function setModule(string $module): void
-    {
-        $this->module = $module;
-    }
-
-    /**
-     * @param string $value
-     */
-    public function setValue(string $value): void
-    {
-        $this->value = $value;
-    }
-
-    /**
-     * @param array $type
-     */
-    public function removeType(array $type): void
-    {
-        if ($this->hasType($type)) {
-            $index = array_search($type, $this->type);
+        if ($this->hasType($item)) {
+            $index = array_search($item, $this->type);
             unset($this->type[$index]);
         }
     }
 
     /**
-     * @param int $res_id
+     * @param mixed $item
      */
-    public function setResId(int $res_id): void
+    public function removeState($item): void
     {
-        $this->res_id = $res_id;
+        if (null === $this->state) {
+            $this->state = [];
+        }
+
+        if ($this->hasState($item)) {
+            $index = array_search($item, $this->state);
+            unset($this->state[$index]);
+        }
     }
 
     /**
-     * @param array $type
+     * @param mixed $item
      */
-    public function addType(array $type): void
+    public function addState($item): void
     {
-        if ($this->hasType($type)) {
+        if ($this->hasState($item)) {
             return;
         }
 
-        $this->type[] = $type;
+        if (null === $this->state) {
+            $this->state = [];
+        }
+
+        $this->state[] = $item;
     }
 
     /**
-     * @param array $type
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasType(array $type, bool $strict = true): bool
+    public function hasState($item, bool $strict = true): bool
     {
-        return in_array($type, $this->type, $strict);
+        if (null === $this->state) {
+            return false;
+        }
+
+        return in_array($item, $this->state, $strict);
     }
 
     /**
-     * @param array $type
+     * @param null|array $state
      */
-    public function setType(array $type): void
+    public function setState(?array $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @param null|string $module
+     */
+    public function setModule(?string $module): void
+    {
+        $this->module = $module;
+    }
+
+    /**
+     * @param null|string $value
+     */
+    public function setValue(?string $value): void
+    {
+        $this->value = $value;
+    }
+
+    /**
+     * @param null|string $src
+     */
+    public function setSrc(?string $src): void
+    {
+        $this->src = $src;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addType($item): void
+    {
+        if ($this->hasType($item)) {
+            return;
+        }
+
+        if (null === $this->type) {
+            $this->type = [];
+        }
+
+        $this->type[] = $item;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param mixed $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasType($item, bool $strict = true): bool
+    {
+        if (null === $this->type) {
+            return false;
+        }
+
+        return in_array($item, $this->type, $strict);
+    }
+
+    /**
+     * @param null|array $type
+     */
+    public function setType(?array $type): void
     {
         $this->type = $type;
     }
 
     /**
-     * @param array $lang
+     * @param mixed $item
      */
-    public function removeLang(array $lang): void
+    public function removeLang($item): void
     {
-        if ($this->hasLang($lang)) {
-            $index = array_search($lang, $this->lang);
+        if (null === $this->lang) {
+            $this->lang = [];
+        }
+
+        if ($this->hasLang($item)) {
+            $index = array_search($item, $this->lang);
             unset($this->lang[$index]);
         }
     }
 
     /**
-     * @param array $lang
+     * @param mixed $item
      */
-    public function addLang(array $lang): void
+    public function addLang($item): void
     {
-        if ($this->hasLang($lang)) {
+        if ($this->hasLang($item)) {
             return;
         }
 
-        $this->lang[] = $lang;
+        if (null === $this->lang) {
+            $this->lang = [];
+        }
+
+        $this->lang[] = $item;
     }
 
     /**
-     * @param array $lang
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasLang(array $lang, bool $strict = true): bool
+    public function hasLang($item, bool $strict = true): bool
     {
-        return in_array($lang, $this->lang, $strict);
+        if (null === $this->lang) {
+            return false;
+        }
+
+        return in_array($item, $this->lang, $strict);
     }
 
     /**
-     * @param array $lang
+     * @param null|array $lang
      */
-    public function setLang(array $lang): void
+    public function setLang(?array $lang): void
     {
         $this->lang = $lang;
     }
 
     /**
-     * @param string $comments
+     * @param null|int $res_id
      */
-    public function setComments(string $comments): void
+    public function setResId(?int $res_id): void
+    {
+        $this->res_id = $res_id;
+    }
+
+    /**
+     * @param null|string $comments
+     */
+    public function setComments(?string $comments): void
     {
         $this->comments = $comments;
     }

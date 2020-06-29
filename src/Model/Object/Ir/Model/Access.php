@@ -13,7 +13,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : ir.model.access
  * Name : ir.model.access
- *
+ * Info :
  * Mixin that overrides the create and write methods to properly generate
  * ir.model.data entries flagged with Studio for the corresponding resources.
  * Doesn't create an ir.model.data if the record is part of a module being
@@ -25,105 +25,117 @@ final class Access extends Base
     /**
      * Name
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Active
+     * If you uncheck the active field, it will disable the ACL without deleting it (if you delete a native ACL, it
+     * will be re-created when you reload the module).
      *
-     * @var bool
+     * @var null|bool
      */
     private $active;
 
     /**
      * Object
      *
-     * @var null|Model
+     * @var Model
      */
     private $model_id;
 
     /**
      * Group
      *
-     * @var Groups
+     * @var null|Groups
      */
     private $group_id;
 
     /**
      * Read Access
      *
-     * @var bool
+     * @var null|bool
      */
     private $perm_read;
 
     /**
      * Write Access
      *
-     * @var bool
+     * @var null|bool
      */
     private $perm_write;
 
     /**
      * Create Access
      *
-     * @var bool
+     * @var null|bool
      */
     private $perm_create;
 
     /**
      * Delete Access
      *
-     * @var bool
+     * @var null|bool
      */
     private $perm_unlink;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @param string $name Name
+     * @param Model $model_id Object
      */
-    public function setName(?string $name): void
+    public function __construct(string $name, Model $model_id)
+    {
+        $this->name = $name;
+        $this->model_id = $model_id;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * @param bool $active
+     * @param null|bool $active
      */
-    public function setActive(bool $active): void
+    public function setActive(?bool $active): void
     {
         $this->active = $active;
     }
 
     /**
-     * @param null|Model $model_id
+     * @param Model $model_id
      */
     public function setModelId(Model $model_id): void
     {
@@ -131,73 +143,73 @@ final class Access extends Base
     }
 
     /**
-     * @param Groups $group_id
+     * @param null|Groups $group_id
      */
-    public function setGroupId(Groups $group_id): void
+    public function setGroupId(?Groups $group_id): void
     {
         $this->group_id = $group_id;
     }
 
     /**
-     * @param bool $perm_read
+     * @param null|bool $perm_read
      */
-    public function setPermRead(bool $perm_read): void
+    public function setPermRead(?bool $perm_read): void
     {
         $this->perm_read = $perm_read;
     }
 
     /**
-     * @param bool $perm_write
+     * @param null|bool $perm_write
      */
-    public function setPermWrite(bool $perm_write): void
+    public function setPermWrite(?bool $perm_write): void
     {
         $this->perm_write = $perm_write;
     }
 
     /**
-     * @param bool $perm_create
+     * @param null|bool $perm_create
      */
-    public function setPermCreate(bool $perm_create): void
+    public function setPermCreate(?bool $perm_create): void
     {
         $this->perm_create = $perm_create;
     }
 
     /**
-     * @param bool $perm_unlink
+     * @param null|bool $perm_unlink
      */
-    public function setPermUnlink(bool $perm_unlink): void
+    public function setPermUnlink(?bool $perm_unlink): void
     {
         $this->perm_unlink = $perm_unlink;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

@@ -13,7 +13,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : ir.module.module
  * Name : ir.module.module
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -29,494 +29,504 @@ final class Module extends Base
     /**
      * Technical Name
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Category
      *
-     * @var Category
+     * @var null|Category
      */
     private $category_id;
 
     /**
      * Module Name
      *
-     * @var string
+     * @var null|string
      */
     private $shortdesc;
 
     /**
      * Summary
      *
-     * @var string
+     * @var null|string
      */
     private $summary;
 
     /**
      * Description
      *
-     * @var string
+     * @var null|string
      */
     private $description;
 
     /**
      * Description HTML
      *
-     * @var string
+     * @var null|string
      */
     private $description_html;
 
     /**
      * Author
      *
-     * @var string
+     * @var null|string
      */
     private $author;
 
     /**
      * Maintainer
      *
-     * @var string
+     * @var null|string
      */
     private $maintainer;
 
     /**
      * Contributors
      *
-     * @var string
+     * @var null|string
      */
     private $contributors;
 
     /**
      * Website
      *
-     * @var string
+     * @var null|string
      */
     private $website;
 
     /**
      * Latest Version
      *
-     * @var string
+     * @var null|string
      */
     private $installed_version;
 
     /**
      * Installed Version
      *
-     * @var string
+     * @var null|string
      */
     private $latest_version;
 
     /**
      * Published Version
      *
-     * @var string
+     * @var null|string
      */
     private $published_version;
 
     /**
      * URL
      *
-     * @var string
+     * @var null|string
      */
     private $url;
 
     /**
      * Sequence
      *
-     * @var int
+     * @var null|int
      */
     private $sequence;
 
     /**
      * Dependencies
      *
-     * @var Dependency
+     * @var null|Dependency[]
      */
     private $dependencies_id;
 
     /**
      * Exclusions
      *
-     * @var Exclusion
+     * @var null|Exclusion[]
      */
     private $exclusion_ids;
 
     /**
      * Automatic Installation
+     * An auto-installable module is automatically installed by the system when all its dependencies are satisfied.
+     * If the module has no dependency, it is always installed.
      *
-     * @var bool
+     * @var null|bool
      */
     private $auto_install;
 
     /**
      * Status
      *
-     * @var array
+     * @var null|array
      */
     private $state;
 
     /**
      * Demo Data
      *
-     * @var bool
+     * @var null|bool
      */
     private $demo;
 
     /**
      * License
      *
-     * @var array
+     * @var null|array
      */
     private $license;
 
     /**
      * Menus
      *
-     * @var string
+     * @var null|string
      */
     private $menus_by_module;
 
     /**
      * Reports
      *
-     * @var string
+     * @var null|string
      */
     private $reports_by_module;
 
     /**
      * Views
      *
-     * @var string
+     * @var null|string
      */
     private $views_by_module;
 
     /**
      * Application
      *
-     * @var bool
+     * @var null|bool
      */
     private $application;
 
     /**
      * Icon URL
      *
-     * @var string
+     * @var null|string
      */
     private $icon;
 
     /**
      * Icon
      *
-     * @var int
+     * @var null|int
      */
     private $icon_image;
 
     /**
      * Odoo Enterprise Module
      *
-     * @var bool
+     * @var null|bool
      */
     private $to_buy;
 
     /**
      * Imported Module
      *
-     * @var bool
+     * @var null|bool
      */
     private $imported;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @return null|string
+     * @param string $name Technical Name
      */
-    public function getName(): ?string
+    public function __construct(string $name)
     {
-        return $this->name;
+        $this->name = $name;
     }
 
     /**
-     * @param bool $auto_install
+     * @param null|bool $auto_install
      */
-    public function setAutoInstall(bool $auto_install): void
+    public function setAutoInstall(?bool $auto_install): void
     {
         $this->auto_install = $auto_install;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @param bool $imported
+     * @param null|bool $imported
      */
-    public function setImported(bool $imported): void
+    public function setImported(?bool $imported): void
     {
         $this->imported = $imported;
     }
 
     /**
-     * @param bool $to_buy
+     * @param null|bool $to_buy
      */
-    public function setToBuy(bool $to_buy): void
+    public function setToBuy(?bool $to_buy): void
     {
         $this->to_buy = $to_buy;
     }
 
     /**
-     * @return int
+     * @return null|int
      */
-    public function getIconImage(): int
+    public function getIconImage(): ?int
     {
         return $this->icon_image;
     }
 
     /**
-     * @param string $icon
+     * @param null|string $icon
      */
-    public function setIcon(string $icon): void
+    public function setIcon(?string $icon): void
     {
         $this->icon = $icon;
     }
 
     /**
-     * @return bool
+     * @return null|bool
      */
-    public function isApplication(): bool
+    public function isApplication(): ?bool
     {
         return $this->application;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getViewsByModule(): string
+    public function getViewsByModule(): ?string
     {
         return $this->views_by_module;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getReportsByModule(): string
+    public function getReportsByModule(): ?string
     {
         return $this->reports_by_module;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getMenusByModule(): string
+    public function getMenusByModule(): ?string
     {
         return $this->menus_by_module;
     }
 
     /**
-     * @return array
+     * @return null|array
      */
-    public function getLicense(): array
+    public function getLicense(): ?array
     {
         return $this->license;
     }
 
     /**
-     * @return bool
+     * @return null|bool
      */
-    public function isDemo(): bool
+    public function isDemo(): ?bool
     {
         return $this->demo;
     }
 
     /**
-     * @return array
+     * @return null|array
      */
-    public function getState(): array
+    public function getState(): ?array
     {
         return $this->state;
     }
 
     /**
-     * @return Exclusion
+     * @return null|Exclusion[]
      */
-    public function getExclusionIds(): Exclusion
+    public function getExclusionIds(): ?array
     {
         return $this->exclusion_ids;
     }
 
     /**
-     * @return Category
-     */
-    public function getCategoryId(): Category
-    {
-        return $this->category_id;
-    }
-
-    /**
-     * @return Dependency
-     */
-    public function getDependenciesId(): Dependency
-    {
-        return $this->dependencies_id;
-    }
-
-    /**
-     * @param int $sequence
-     */
-    public function setSequence(int $sequence): void
-    {
-        $this->sequence = $sequence;
-    }
-
-    /**
      * @return string
      */
-    public function getUrl(): string
+    public function getName(): string
     {
-        return $this->url;
+        return $this->name;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getPublishedVersion(): string
-    {
-        return $this->published_version;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLatestVersion(): string
-    {
-        return $this->latest_version;
-    }
-
-    /**
-     * @return string
-     */
-    public function getInstalledVersion(): string
-    {
-        return $this->installed_version;
-    }
-
-    /**
-     * @return string
-     */
-    public function getWebsite(): string
-    {
-        return $this->website;
-    }
-
-    /**
-     * @return string
-     */
-    public function getContributors(): string
-    {
-        return $this->contributors;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMaintainer(): string
+    public function getMaintainer(): ?string
     {
         return $this->maintainer;
     }
 
     /**
-     * @return string
+     * @return null|Category
      */
-    public function getAuthor(): string
+    public function getCategoryId(): ?Category
     {
-        return $this->author;
+        return $this->category_id;
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getDescriptionHtml(): string
-    {
-        return $this->description_html;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescription(): string
-    {
-        return $this->description;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSummary(): string
-    {
-        return $this->summary;
-    }
-
-    /**
-     * @return string
-     */
-    public function getShortdesc(): string
+    public function getShortdesc(): ?string
     {
         return $this->shortdesc;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|string
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getSummary(): ?string
+    {
+        return $this->summary;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getDescriptionHtml(): ?string
+    {
+        return $this->description_html;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getAuthor(): ?string
+    {
+        return $this->author;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getContributors(): ?string
+    {
+        return $this->contributors;
+    }
+
+    /**
+     * @return null|Dependency[]
+     */
+    public function getDependenciesId(): ?array
+    {
+        return $this->dependencies_id;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getWebsite(): ?string
+    {
+        return $this->website;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getInstalledVersion(): ?string
+    {
+        return $this->installed_version;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getLatestVersion(): ?string
+    {
+        return $this->latest_version;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPublishedVersion(): ?string
+    {
+        return $this->published_version;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param null|int $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

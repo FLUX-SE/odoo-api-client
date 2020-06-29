@@ -11,7 +11,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : uom.category
  * Name : uom.category
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -27,123 +27,143 @@ final class Category extends Base
     /**
      * Unit of Measure Category
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Type of Measure
      *
-     * @var array
+     * @var null|array
      */
     private $measure_type;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @param string $name Unit of Measure Category
      */
-    public function setName(?string $name): void
+    public function __construct(string $name)
     {
         $this->name = $name;
     }
 
     /**
-     * @param array $measure_type
+     * @param string $name
      */
-    public function setMeasureType(array $measure_type): void
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param null|array $measure_type
+     */
+    public function setMeasureType(?array $measure_type): void
     {
         $this->measure_type = $measure_type;
     }
 
     /**
-     * @param array $measure_type
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasMeasureType(array $measure_type, bool $strict = true): bool
+    public function hasMeasureType($item, bool $strict = true): bool
     {
-        return in_array($measure_type, $this->measure_type, $strict);
+        if (null === $this->measure_type) {
+            return false;
+        }
+
+        return in_array($item, $this->measure_type, $strict);
     }
 
     /**
-     * @param array $measure_type
+     * @param mixed $item
      */
-    public function addMeasureType(array $measure_type): void
+    public function addMeasureType($item): void
     {
-        if ($this->hasMeasureType($measure_type)) {
+        if ($this->hasMeasureType($item)) {
             return;
         }
 
-        $this->measure_type[] = $measure_type;
+        if (null === $this->measure_type) {
+            $this->measure_type = [];
+        }
+
+        $this->measure_type[] = $item;
     }
 
     /**
-     * @param array $measure_type
+     * @param mixed $item
      */
-    public function removeMeasureType(array $measure_type): void
+    public function removeMeasureType($item): void
     {
-        if ($this->hasMeasureType($measure_type)) {
-            $index = array_search($measure_type, $this->measure_type);
+        if (null === $this->measure_type) {
+            $this->measure_type = [];
+        }
+
+        if ($this->hasMeasureType($item)) {
+            $index = array_search($item, $this->measure_type);
             unset($this->measure_type[$index]);
         }
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getWriteDate(): DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

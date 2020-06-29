@@ -10,7 +10,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : web_tour.tour
  * Name : web_tour.tour
- *
+ * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
  * Odoo models are created by inheriting from this class::
@@ -26,29 +26,37 @@ final class Tour extends Base
     /**
      * Tour name
      *
-     * @var null|string
+     * @var string
      */
     private $name;
 
     /**
      * Consumed by
      *
-     * @var Users
+     * @var null|Users
      */
     private $user_id;
 
     /**
-     * @param null|string $name
+     * @param string $name Tour name
      */
-    public function setName(?string $name): void
+    public function __construct(string $name)
     {
         $this->name = $name;
     }
 
     /**
-     * @param Users $user_id
+     * @param string $name
      */
-    public function setUserId(Users $user_id): void
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param null|Users $user_id
+     */
+    public function setUserId(?Users $user_id): void
     {
         $this->user_id = $user_id;
     }

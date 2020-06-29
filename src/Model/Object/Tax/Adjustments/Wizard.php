@@ -16,7 +16,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : tax.adjustments.wizard
  * Name : tax.adjustments.wizard
- *
+ * Info :
  * Model super-class for transient records, meant to be temporarily
  * persistent, and regularly vacuum-cleaned.
  *
@@ -29,162 +29,186 @@ final class Wizard extends Base
     /**
      * Justification
      *
-     * @var null|string
+     * @var string
      */
     private $reason;
 
     /**
      * Journal
      *
-     * @var null|Journal
+     * @var Journal
      */
     private $journal_id;
 
     /**
      * Date
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface
      */
     private $date;
 
     /**
      * Debit account
      *
-     * @var null|Account
+     * @var Account
      */
     private $debit_account_id;
 
     /**
      * Credit account
      *
-     * @var null|Account
+     * @var Account
      */
     private $credit_account_id;
 
     /**
      * Amount
      *
-     * @var null|float
+     * @var float
      */
     private $amount;
 
     /**
      * Adjustment Type
      *
-     * @var null|array
+     * @var array
      */
     private $adjustment_type;
 
     /**
      * Report Line
+     * The report line to make an adjustment for.
      *
-     * @var null|Line
+     * @var Line
      */
     private $tax_report_line_id;
 
     /**
      * Company Currency
      *
-     * @var Currency
+     * @var null|Currency
      */
     private $company_currency_id;
 
     /**
      * Country
      *
-     * @var Country
+     * @var null|Country
      */
     private $country_id;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|string $reason
+     * @param string $reason Justification
+     * @param Journal $journal_id Journal
+     * @param DateTimeInterface $date Date
+     * @param Account $debit_account_id Debit account
+     * @param Account $credit_account_id Credit account
+     * @param float $amount Amount
+     * @param array $adjustment_type Adjustment Type
+     * @param Line $tax_report_line_id Report Line
+     *        The report line to make an adjustment for.
      */
-    public function setReason(?string $reason): void
-    {
+    public function __construct(
+        string $reason,
+        Journal $journal_id,
+        DateTimeInterface $date,
+        Account $debit_account_id,
+        Account $credit_account_id,
+        float $amount,
+        array $adjustment_type,
+        Line $tax_report_line_id
+    ) {
         $this->reason = $reason;
+        $this->journal_id = $journal_id;
+        $this->date = $date;
+        $this->debit_account_id = $debit_account_id;
+        $this->credit_account_id = $credit_account_id;
+        $this->amount = $amount;
+        $this->adjustment_type = $adjustment_type;
+        $this->tax_report_line_id = $tax_report_line_id;
     }
 
     /**
-     * @param ?array $adjustment_type
+     * @param mixed $item
      */
-    public function removeAdjustmentType(?array $adjustment_type): void
+    public function removeAdjustmentType($item): void
     {
-        if ($this->hasAdjustmentType($adjustment_type)) {
-            $index = array_search($adjustment_type, $this->adjustment_type);
+        if ($this->hasAdjustmentType($item)) {
+            $index = array_search($item, $this->adjustment_type);
             unset($this->adjustment_type[$index]);
         }
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getWriteUid(): Users
+    public function getWriteUid(): ?Users
     {
         return $this->write_uid;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return null|DateTimeInterface
      */
-    public function getCreateDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
         return $this->create_date;
     }
 
     /**
-     * @return Users
+     * @return null|Users
      */
-    public function getCreateUid(): Users
+    public function getCreateUid(): ?Users
     {
         return $this->create_uid;
     }
 
     /**
-     * @return Country
+     * @return null|Country
      */
-    public function getCountryId(): Country
+    public function getCountryId(): ?Country
     {
         return $this->country_id;
     }
 
     /**
-     * @return Currency
+     * @return null|Currency
      */
-    public function getCompanyCurrencyId(): Currency
+    public function getCompanyCurrencyId(): ?Currency
     {
         return $this->company_currency_id;
     }
 
     /**
-     * @param null|Line $tax_report_line_id
+     * @param Line $tax_report_line_id
      */
     public function setTaxReportLineId(Line $tax_report_line_id): void
     {
@@ -192,62 +216,54 @@ final class Wizard extends Base
     }
 
     /**
-     * @param ?array $adjustment_type
+     * @param mixed $item
      */
-    public function addAdjustmentType(?array $adjustment_type): void
+    public function addAdjustmentType($item): void
     {
-        if ($this->hasAdjustmentType($adjustment_type)) {
+        if ($this->hasAdjustmentType($item)) {
             return;
         }
 
-        if (null === $this->adjustment_type) {
-            $this->adjustment_type = [];
-        }
-
-        $this->adjustment_type[] = $adjustment_type;
+        $this->adjustment_type[] = $item;
     }
 
     /**
-     * @param null|Journal $journal_id
+     * @param string $reason
      */
-    public function setJournalId(Journal $journal_id): void
+    public function setReason(string $reason): void
     {
-        $this->journal_id = $journal_id;
+        $this->reason = $reason;
     }
 
     /**
-     * @param ?array $adjustment_type
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasAdjustmentType(?array $adjustment_type, bool $strict = true): bool
+    public function hasAdjustmentType($item, bool $strict = true): bool
     {
-        if (null === $this->adjustment_type) {
-            return false;
-        }
-
-        return in_array($adjustment_type, $this->adjustment_type, $strict);
+        return in_array($item, $this->adjustment_type, $strict);
     }
 
     /**
-     * @param null|array $adjustment_type
+     * @param array $adjustment_type
      */
-    public function setAdjustmentType(?array $adjustment_type): void
+    public function setAdjustmentType(array $adjustment_type): void
     {
         $this->adjustment_type = $adjustment_type;
     }
 
     /**
-     * @param null|float $amount
+     * @param float $amount
      */
-    public function setAmount(?float $amount): void
+    public function setAmount(float $amount): void
     {
         $this->amount = $amount;
     }
 
     /**
-     * @param null|Account $credit_account_id
+     * @param Account $credit_account_id
      */
     public function setCreditAccountId(Account $credit_account_id): void
     {
@@ -255,7 +271,7 @@ final class Wizard extends Base
     }
 
     /**
-     * @param null|Account $debit_account_id
+     * @param Account $debit_account_id
      */
     public function setDebitAccountId(Account $debit_account_id): void
     {
@@ -263,17 +279,25 @@ final class Wizard extends Base
     }
 
     /**
-     * @param null|DateTimeInterface $date
+     * @param DateTimeInterface $date
      */
-    public function setDate(?DateTimeInterface $date): void
+    public function setDate(DateTimeInterface $date): void
     {
         $this->date = $date;
     }
 
     /**
-     * @return DateTimeInterface
+     * @param Journal $journal_id
      */
-    public function getWriteDate(): DateTimeInterface
+    public function setJournalId(Journal $journal_id): void
+    {
+        $this->journal_id = $journal_id;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

@@ -16,7 +16,7 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
 /**
  * Odoo model : account.accrual.accounting.wizard
  * Name : account.accrual.accounting.wizard
- *
+ * Info :
  * Model super-class for transient records, meant to be temporarily
  * persistent, and regularly vacuum-cleaned.
  *
@@ -29,183 +29,119 @@ final class Wizard extends Base
     /**
      * Date
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface
      */
     private $date;
 
     /**
      * Company
      *
-     * @var null|Company
+     * @var Company
      */
     private $company_id;
 
     /**
      * Account Type
      *
-     * @var array
+     * @var null|array
      */
     private $account_type;
 
     /**
      * Active Move Line
      *
-     * @var Line
+     * @var null|Line[]
      */
     private $active_move_line_ids;
 
     /**
      * Accrual Default Journal
+     * Journal used by default for moving the period of an entry
      *
-     * @var null|Journal
+     * @var Journal
      */
     private $journal_id;
 
     /**
      * Expense Accrual Account
+     * Account used to move the period of an expense
      *
-     * @var Account
+     * @var null|Account
      */
     private $expense_accrual_account;
 
     /**
      * Revenue Accrual Account
+     * Account used to move the period of a revenue
      *
-     * @var Account
+     * @var null|Account
      */
     private $revenue_accrual_account;
 
     /**
      * Percentage
      *
-     * @var float
+     * @var null|float
      */
     private $percentage;
 
     /**
      * Total Amount
      *
-     * @var float
+     * @var null|float
      */
     private $total_amount;
 
     /**
      * Currency
      *
-     * @var Currency
+     * @var null|Currency
      */
     private $company_currency_id;
 
     /**
      * Created by
      *
-     * @var Users
+     * @var null|Users
      */
     private $create_uid;
 
     /**
      * Created on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $create_date;
 
     /**
      * Last Updated by
      *
-     * @var Users
+     * @var null|Users
      */
     private $write_uid;
 
     /**
      * Last Updated on
      *
-     * @var DateTimeInterface
+     * @var null|DateTimeInterface
      */
     private $write_date;
 
     /**
-     * @param null|DateTimeInterface $date
+     * @param DateTimeInterface $date Date
+     * @param Company $company_id Company
+     * @param Journal $journal_id Accrual Default Journal
+     *        Journal used by default for moving the period of an entry
      */
-    public function setDate(?DateTimeInterface $date): void
+    public function __construct(DateTimeInterface $date, Company $company_id, Journal $journal_id)
     {
         $this->date = $date;
-    }
-
-    /**
-     * @param Account $revenue_accrual_account
-     */
-    public function setRevenueAccrualAccount(Account $revenue_accrual_account): void
-    {
-        $this->revenue_accrual_account = $revenue_accrual_account;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getWriteUid(): Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return DateTimeInterface
-     */
-    public function getCreateDate(): DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return Users
-     */
-    public function getCreateUid(): Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return Currency
-     */
-    public function getCompanyCurrencyId(): Currency
-    {
-        return $this->company_currency_id;
-    }
-
-    /**
-     * @return float
-     */
-    public function getTotalAmount(): float
-    {
-        return $this->total_amount;
-    }
-
-    /**
-     * @param float $percentage
-     */
-    public function setPercentage(float $percentage): void
-    {
-        $this->percentage = $percentage;
-    }
-
-    /**
-     * @param Account $expense_accrual_account
-     */
-    public function setExpenseAccrualAccount(Account $expense_accrual_account): void
-    {
-        $this->expense_accrual_account = $expense_accrual_account;
-    }
-
-    /**
-     * @param null|Company $company_id
-     */
-    public function setCompanyId(Company $company_id): void
-    {
         $this->company_id = $company_id;
+        $this->journal_id = $journal_id;
     }
 
     /**
-     * @param null|Journal $journal_id
+     * @param Journal $journal_id
      */
     public function setJournalId(Journal $journal_id): void
     {
@@ -213,59 +149,197 @@ final class Wizard extends Base
     }
 
     /**
-     * @param Line $active_move_line_ids
+     * @return null|Users
      */
-    public function setActiveMoveLineIds(Line $active_move_line_ids): void
+    public function getWriteUid(): ?Users
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @return null|Users
+     */
+    public function getCreateUid(): ?Users
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @return null|Currency
+     */
+    public function getCompanyCurrencyId(): ?Currency
+    {
+        return $this->company_currency_id;
+    }
+
+    /**
+     * @return null|float
+     */
+    public function getTotalAmount(): ?float
+    {
+        return $this->total_amount;
+    }
+
+    /**
+     * @param null|float $percentage
+     */
+    public function setPercentage(?float $percentage): void
+    {
+        $this->percentage = $percentage;
+    }
+
+    /**
+     * @param null|Account $revenue_accrual_account
+     */
+    public function setRevenueAccrualAccount(?Account $revenue_accrual_account): void
+    {
+        $this->revenue_accrual_account = $revenue_accrual_account;
+    }
+
+    /**
+     * @param null|Account $expense_accrual_account
+     */
+    public function setExpenseAccrualAccount(?Account $expense_accrual_account): void
+    {
+        $this->expense_accrual_account = $expense_accrual_account;
+    }
+
+    /**
+     * @param Line $item
+     */
+    public function removeActiveMoveLineIds(Line $item): void
+    {
+        if (null === $this->active_move_line_ids) {
+            $this->active_move_line_ids = [];
+        }
+
+        if ($this->hasActiveMoveLineIds($item)) {
+            $index = array_search($item, $this->active_move_line_ids);
+            unset($this->active_move_line_ids[$index]);
+        }
+    }
+
+    /**
+     * @param DateTimeInterface $date
+     */
+    public function setDate(DateTimeInterface $date): void
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @param Line $item
+     */
+    public function addActiveMoveLineIds(Line $item): void
+    {
+        if ($this->hasActiveMoveLineIds($item)) {
+            return;
+        }
+
+        if (null === $this->active_move_line_ids) {
+            $this->active_move_line_ids = [];
+        }
+
+        $this->active_move_line_ids[] = $item;
+    }
+
+    /**
+     * @param Line $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasActiveMoveLineIds(Line $item, bool $strict = true): bool
+    {
+        if (null === $this->active_move_line_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->active_move_line_ids, $strict);
+    }
+
+    /**
+     * @param null|Line[] $active_move_line_ids
+     */
+    public function setActiveMoveLineIds(?array $active_move_line_ids): void
     {
         $this->active_move_line_ids = $active_move_line_ids;
     }
 
     /**
-     * @param array $account_type
+     * @param mixed $item
      */
-    public function removeAccountType(array $account_type): void
+    public function removeAccountType($item): void
     {
-        if ($this->hasAccountType($account_type)) {
-            $index = array_search($account_type, $this->account_type);
+        if (null === $this->account_type) {
+            $this->account_type = [];
+        }
+
+        if ($this->hasAccountType($item)) {
+            $index = array_search($item, $this->account_type);
             unset($this->account_type[$index]);
         }
     }
 
     /**
-     * @param array $account_type
+     * @param mixed $item
      */
-    public function addAccountType(array $account_type): void
+    public function addAccountType($item): void
     {
-        if ($this->hasAccountType($account_type)) {
+        if ($this->hasAccountType($item)) {
             return;
         }
 
-        $this->account_type[] = $account_type;
+        if (null === $this->account_type) {
+            $this->account_type = [];
+        }
+
+        $this->account_type[] = $item;
     }
 
     /**
-     * @param array $account_type
+     * @param mixed $item
      * @param bool $strict
      *
      * @return bool
      */
-    public function hasAccountType(array $account_type, bool $strict = true): bool
+    public function hasAccountType($item, bool $strict = true): bool
     {
-        return in_array($account_type, $this->account_type, $strict);
+        if (null === $this->account_type) {
+            return false;
+        }
+
+        return in_array($item, $this->account_type, $strict);
     }
 
     /**
-     * @param array $account_type
+     * @param null|array $account_type
      */
-    public function setAccountType(array $account_type): void
+    public function setAccountType(?array $account_type): void
     {
         $this->account_type = $account_type;
     }
 
     /**
-     * @return DateTimeInterface
+     * @param Company $company_id
      */
-    public function getWriteDate(): DateTimeInterface
+    public function setCompanyId(Company $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return null|DateTimeInterface
+     */
+    public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
     }

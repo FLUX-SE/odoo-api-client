@@ -11,7 +11,7 @@ use Flux\OdooApiClient\Model\Object\Res\Partner;
 /**
  * Odoo model : mail.followers
  * Name : mail.followers
- *
+ * Info :
  * mail_followers holds the data related to the follow mechanism inside
  * Odoo. Partners can choose to follow documents (records) of any kind
  * that inherits from mail.thread. Following documents allow to receive
@@ -25,75 +25,131 @@ final class Followers extends Base
     /**
      * Related Document Model Name
      *
-     * @var null|string
+     * @var string
      */
     private $res_model;
 
     /**
      * Related Document ID
+     * Id of the followed resource
      *
-     * @var int
+     * @var null|int
      */
     private $res_id;
 
     /**
      * Related Partner
      *
-     * @var Partner
+     * @var null|Partner
      */
     private $partner_id;
 
     /**
      * Listener
      *
-     * @var Channel
+     * @var null|Channel
      */
     private $channel_id;
 
     /**
      * Subtype
+     * Message subtypes followed, meaning subtypes that will be pushed onto the user's Wall.
      *
-     * @var Subtype
+     * @var null|Subtype[]
      */
     private $subtype_ids;
 
     /**
-     * @param null|string $res_model
+     * @param string $res_model Related Document Model Name
      */
-    public function setResModel(?string $res_model): void
+    public function __construct(string $res_model)
     {
         $this->res_model = $res_model;
     }
 
     /**
-     * @param int $res_id
+     * @param string $res_model
      */
-    public function setResId(int $res_id): void
+    public function setResModel(string $res_model): void
+    {
+        $this->res_model = $res_model;
+    }
+
+    /**
+     * @param null|int $res_id
+     */
+    public function setResId(?int $res_id): void
     {
         $this->res_id = $res_id;
     }
 
     /**
-     * @param Partner $partner_id
+     * @param null|Partner $partner_id
      */
-    public function setPartnerId(Partner $partner_id): void
+    public function setPartnerId(?Partner $partner_id): void
     {
         $this->partner_id = $partner_id;
     }
 
     /**
-     * @param Channel $channel_id
+     * @param null|Channel $channel_id
      */
-    public function setChannelId(Channel $channel_id): void
+    public function setChannelId(?Channel $channel_id): void
     {
         $this->channel_id = $channel_id;
     }
 
     /**
-     * @param Subtype $subtype_ids
+     * @param null|Subtype[] $subtype_ids
      */
-    public function setSubtypeIds(Subtype $subtype_ids): void
+    public function setSubtypeIds(?array $subtype_ids): void
     {
         $this->subtype_ids = $subtype_ids;
+    }
+
+    /**
+     * @param Subtype $item
+     * @param bool $strict
+     *
+     * @return bool
+     */
+    public function hasSubtypeIds(Subtype $item, bool $strict = true): bool
+    {
+        if (null === $this->subtype_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->subtype_ids, $strict);
+    }
+
+    /**
+     * @param Subtype $item
+     */
+    public function addSubtypeIds(Subtype $item): void
+    {
+        if ($this->hasSubtypeIds($item)) {
+            return;
+        }
+
+        if (null === $this->subtype_ids) {
+            $this->subtype_ids = [];
+        }
+
+        $this->subtype_ids[] = $item;
+    }
+
+    /**
+     * @param Subtype $item
+     */
+    public function removeSubtypeIds(Subtype $item): void
+    {
+        if (null === $this->subtype_ids) {
+            $this->subtype_ids = [];
+        }
+
+        if ($this->hasSubtypeIds($item)) {
+            $index = array_search($item, $this->subtype_ids);
+            unset($this->subtype_ids[$index]);
+        }
     }
 }
