@@ -5,12 +5,8 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Account\Tax\Report;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Account\Tag;
-use Flux\OdooApiClient\Model\Object\Account\Tax\Report\Line as LineAlias;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Actions\ActWindow;
-use Flux\OdooApiClient\Model\Object\Res\Country;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.tax.report.line
@@ -18,19 +14,23 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Line extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.tax.report.line';
+
     /**
      * Name
      * Complete name for this report line, to be used in report.
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -39,39 +39,49 @@ final class Line extends Base
     /**
      * Tags
      * Tax tags populating this line
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Tag[]
+     * @var OdooRelation[]|null
      */
     private $tag_ids;
 
     /**
      * Country
      * Country for which this line is available.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Country
+     * @var OdooRelation
      */
     private $country_id;
 
     /**
      * Report Action
      * The optional action to call when clicking on this line in accounting reports.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|ActWindow
+     * @var OdooRelation|null
      */
     private $report_action_id;
 
     /**
      * Children Lines
      * Lines that should be rendered as children of this one
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|LineAlias[]
+     * @var OdooRelation[]|null
      */
     private $children_line_ids;
 
     /**
      * Parent Line
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|LineAlias
+     * @var OdooRelation|null
      */
     private $parent_id;
 
@@ -79,6 +89,8 @@ final class Line extends Base
      * Sequence
      * Sequence determining the order of the lines in the report (smaller ones come first). This order is applied
      * locally per section (so, children of the same line are always rendered one after the other).
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var int
      */
@@ -86,8 +98,10 @@ final class Line extends Base
 
     /**
      * Parent Path
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $parent_path;
 
@@ -95,16 +109,20 @@ final class Line extends Base
      * Tag Name
      * Short name for the tax grid corresponding to this report line. Leave empty if this report line should not
      * correspond to any such grid.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $tag_name;
 
     /**
      * Code
      * Optional unique code to refer to this line in total formulas
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $code;
 
@@ -114,49 +132,65 @@ final class Line extends Base
      * setting it turns the line to a total line. Tax report line codes can be used as variables in this expression
      * to refer to the balance of the corresponding lines in the report. A formula cannot refer to another line using
      * a formula.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $formula;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Name
      *        Complete name for this report line, to be used in report.
-     * @param Country $country_id Country
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $country_id Country
      *        Country for which this line is available.
+     *        Searchable : yes
+     *        Sortable : yes
      * @param int $sequence Sequence
      *        Sequence determining the order of the lines in the report (smaller ones come first). This order is applied
      *        locally per section (so, children of the same line are always rendered one after the other).
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(string $name, Country $country_id, int $sequence)
+    public function __construct(string $name, OdooRelation $country_id, int $sequence)
     {
         $this->name = $name;
         $this->country_id = $country_id;
@@ -164,55 +198,39 @@ final class Line extends Base
     }
 
     /**
-     * @param null|LineAlias $parent_id
+     * @return string|null
      */
-    public function setParentId(?LineAlias $parent_id): void
+    public function getFormula(): ?string
     {
-        $this->parent_id = $parent_id;
+        return $this->formula;
     }
 
     /**
-     * @return null|Users
+     * @return string|null
      */
-    public function getWriteUid(): ?Users
+    public function getParentPath(): ?string
     {
-        return $this->write_uid;
+        return $this->parent_path;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param string|null $parent_path
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function setParentPath(?string $parent_path): void
     {
-        return $this->create_date;
+        $this->parent_path = $parent_path;
     }
 
     /**
-     * @return null|Users
+     * @return string|null
      */
-    public function getCreateUid(): ?Users
+    public function getTagName(): ?string
     {
-        return $this->create_uid;
+        return $this->tag_name;
     }
 
     /**
-     * @param null|string $formula
-     */
-    public function setFormula(?string $formula): void
-    {
-        $this->formula = $formula;
-    }
-
-    /**
-     * @param null|string $code
-     */
-    public function setCode(?string $code): void
-    {
-        $this->code = $code;
-    }
-
-    /**
-     * @param null|string $tag_name
+     * @param string|null $tag_name
      */
     public function setTagName(?string $tag_name): void
     {
@@ -220,11 +238,91 @@ final class Line extends Base
     }
 
     /**
-     * @param null|string $parent_path
+     * @return string|null
      */
-    public function setParentPath(?string $parent_path): void
+    public function getCode(): ?string
     {
-        $this->parent_path = $parent_path;
+        return $this->code;
+    }
+
+    /**
+     * @param string|null $code
+     */
+    public function setCode(?string $code): void
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * @param string|null $formula
+     */
+    public function setFormula(?string $formula): void
+    {
+        $this->formula = $formula;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSequence(): int
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
     }
 
     /**
@@ -236,18 +334,27 @@ final class Line extends Base
     }
 
     /**
-     * @param LineAlias $item
+     * @param OdooRelation|null $parent_id
      */
-    public function removeChildrenLineIds(LineAlias $item): void
+    public function setParentId(?OdooRelation $parent_id): void
     {
-        if (null === $this->children_line_ids) {
-            $this->children_line_ids = [];
-        }
+        $this->parent_id = $parent_id;
+    }
 
-        if ($this->hasChildrenLineIds($item)) {
-            $index = array_search($item, $this->children_line_ids);
-            unset($this->children_line_ids[$index]);
-        }
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getCountryId(): OdooRelation
+    {
+        return $this->country_id;
     }
 
     /**
@@ -259,79 +366,39 @@ final class Line extends Base
     }
 
     /**
-     * @param LineAlias $item
+     * @return OdooRelation[]|null
      */
-    public function addChildrenLineIds(LineAlias $item): void
+    public function getTagIds(): ?array
     {
-        if ($this->hasChildrenLineIds($item)) {
-            return;
-        }
-
-        if (null === $this->children_line_ids) {
-            $this->children_line_ids = [];
-        }
-
-        $this->children_line_ids[] = $item;
+        return $this->tag_ids;
     }
 
     /**
-     * @param LineAlias $item
-     * @param bool $strict
+     * @param OdooRelation[]|null $tag_ids
+     */
+    public function setTagIds(?array $tag_ids): void
+    {
+        $this->tag_ids = $tag_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasChildrenLineIds(LineAlias $item, bool $strict = true): bool
+    public function hasTagIds(OdooRelation $item): bool
     {
-        if (null === $this->children_line_ids) {
+        if (null === $this->tag_ids) {
             return false;
         }
 
-        return in_array($item, $this->children_line_ids, $strict);
+        return in_array($item, $this->tag_ids);
     }
 
     /**
-     * @param null|LineAlias[] $children_line_ids
+     * @param OdooRelation $item
      */
-    public function setChildrenLineIds(?array $children_line_ids): void
-    {
-        $this->children_line_ids = $children_line_ids;
-    }
-
-    /**
-     * @param null|ActWindow $report_action_id
-     */
-    public function setReportActionId(?ActWindow $report_action_id): void
-    {
-        $this->report_action_id = $report_action_id;
-    }
-
-    /**
-     * @param Country $country_id
-     */
-    public function setCountryId(Country $country_id): void
-    {
-        $this->country_id = $country_id;
-    }
-
-    /**
-     * @param Tag $item
-     */
-    public function removeTagIds(Tag $item): void
-    {
-        if (null === $this->tag_ids) {
-            $this->tag_ids = [];
-        }
-
-        if ($this->hasTagIds($item)) {
-            $index = array_search($item, $this->tag_ids);
-            unset($this->tag_ids[$index]);
-        }
-    }
-
-    /**
-     * @param Tag $item
-     */
-    public function addTagIds(Tag $item): void
+    public function addTagIds(OdooRelation $item): void
     {
         if ($this->hasTagIds($item)) {
             return;
@@ -345,33 +412,118 @@ final class Line extends Base
     }
 
     /**
-     * @param Tag $item
-     * @param bool $strict
+     * @param OdooRelation $item
+     */
+    public function removeTagIds(OdooRelation $item): void
+    {
+        if (null === $this->tag_ids) {
+            $this->tag_ids = [];
+        }
+
+        if ($this->hasTagIds($item)) {
+            $index = array_search($item, $this->tag_ids);
+            unset($this->tag_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $country_id
+     */
+    public function setCountryId(OdooRelation $country_id): void
+    {
+        $this->country_id = $country_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getParentId(): ?OdooRelation
+    {
+        return $this->parent_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getReportActionId(): ?OdooRelation
+    {
+        return $this->report_action_id;
+    }
+
+    /**
+     * @param OdooRelation|null $report_action_id
+     */
+    public function setReportActionId(?OdooRelation $report_action_id): void
+    {
+        $this->report_action_id = $report_action_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getChildrenLineIds(): ?array
+    {
+        return $this->children_line_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $children_line_ids
+     */
+    public function setChildrenLineIds(?array $children_line_ids): void
+    {
+        $this->children_line_ids = $children_line_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasTagIds(Tag $item, bool $strict = true): bool
+    public function hasChildrenLineIds(OdooRelation $item): bool
     {
-        if (null === $this->tag_ids) {
+        if (null === $this->children_line_ids) {
             return false;
         }
 
-        return in_array($item, $this->tag_ids, $strict);
+        return in_array($item, $this->children_line_ids);
     }
 
     /**
-     * @param null|Tag[] $tag_ids
+     * @param OdooRelation $item
      */
-    public function setTagIds(?array $tag_ids): void
+    public function addChildrenLineIds(OdooRelation $item): void
     {
-        $this->tag_ids = $tag_ids;
+        if ($this->hasChildrenLineIds($item)) {
+            return;
+        }
+
+        if (null === $this->children_line_ids) {
+            $this->children_line_ids = [];
+        }
+
+        $this->children_line_ids[] = $item;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation $item
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function removeChildrenLineIds(OdooRelation $item): void
     {
-        return $this->write_date;
+        if (null === $this->children_line_ids) {
+            $this->children_line_ids = [];
+        }
+
+        if ($this->hasChildrenLineIds($item)) {
+            $index = array_search($item, $this->children_line_ids);
+            unset($this->children_line_ids[$index]);
+        }
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

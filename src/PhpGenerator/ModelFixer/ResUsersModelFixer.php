@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Flux\OdooApiClient\PhpGenerator\ModelFixer;
 
-final class ResUsersModelFixer extends AbstractModelFixer implements ResUsersModelFixerInterface
+final class ResUsersModelFixer extends AbstractModelFixer implements ModelFixerInterface
 {
     protected function doFix(string $modelName, array &$structure): void
     {

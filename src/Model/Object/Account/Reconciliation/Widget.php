@@ -14,4 +14,5 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Widget extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.reconciliation.widget';
 }

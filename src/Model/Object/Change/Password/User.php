@@ -6,7 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Change\Password;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : change.password.user
@@ -16,114 +16,136 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  */
 final class User extends Base
 {
+    public const ODOO_MODEL_NAME = 'change.password.user';
+
     /**
      * Wizard
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Wizard
+     * @var OdooRelation
      */
     private $wizard_id;
 
     /**
      * User
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Users
+     * @var OdooRelation
      */
     private $user_id;
 
     /**
      * User Login
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $user_login;
 
     /**
      * New Password
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $new_passwd;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param Wizard $wizard_id Wizard
-     * @param Users $user_id User
+     * @param OdooRelation $wizard_id Wizard
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $user_id User
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(Wizard $wizard_id, Users $user_id)
+    public function __construct(OdooRelation $wizard_id, OdooRelation $user_id)
     {
         $this->wizard_id = $wizard_id;
         $this->user_id = $user_id;
     }
 
     /**
-     * @param Wizard $wizard_id
+     * @return OdooRelation|null
      */
-    public function setWizardId(Wizard $wizard_id): void
-    {
-        $this->wizard_id = $wizard_id;
-    }
-
-    /**
-     * @param Users $user_id
-     */
-    public function setUserId(Users $user_id): void
-    {
-        $this->user_id = $user_id;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getUserLogin(): ?string
-    {
-        return $this->user_login;
-    }
-
-    /**
-     * @param null|string $new_passwd
-     */
-    public function setNewPasswd(?string $new_passwd): void
-    {
-        $this->new_passwd = $new_passwd;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -131,18 +153,82 @@ final class User extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getWriteUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->write_uid;
+        $this->create_uid = $create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param string|null $new_passwd
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function setNewPasswd(?string $new_passwd): void
     {
-        return $this->write_date;
+        $this->new_passwd = $new_passwd;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getWizardId(): OdooRelation
+    {
+        return $this->wizard_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNewPasswd(): ?string
+    {
+        return $this->new_passwd;
+    }
+
+    /**
+     * @param string|null $user_login
+     */
+    public function setUserLogin(?string $user_login): void
+    {
+        $this->user_login = $user_login;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUserLogin(): ?string
+    {
+        return $this->user_login;
+    }
+
+    /**
+     * @param OdooRelation $user_id
+     */
+    public function setUserId(OdooRelation $user_id): void
+    {
+        $this->user_id = $user_id;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getUserId(): OdooRelation
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @param OdooRelation $wizard_id
+     */
+    public function setWizardId(OdooRelation $wizard_id): void
+    {
+        $this->wizard_id = $wizard_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

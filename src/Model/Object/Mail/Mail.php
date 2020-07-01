@@ -4,91 +4,119 @@ declare(strict_types=1);
 
 namespace Flux\OdooApiClient\Model\Object\Mail;
 
-use Flux\OdooApiClient\Model\Object\Fetchmail\Server;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.mail
  * Name : mail.mail
  * Info :
  * Model holding RFC2822 email messages to send. This model also provides
- * facilities to queue and send new email messages.
+ *                 facilities to queue and send new email messages.
  */
 final class Mail extends Message
 {
+    public const ODOO_MODEL_NAME = 'mail.mail';
+
     /**
      * Message
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Message
+     * @var OdooRelation
      */
     private $mail_message_id;
 
     /**
      * Rich-text Contents
      * Rich-text/HTML message
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $body_html;
 
     /**
      * References
      * Message references, such as identifiers of previous messages
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $references;
 
     /**
      * Headers
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $headers;
 
     /**
      * Is Notification
      * Mail has been created to notify people of an existing mail.message
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $notification;
 
     /**
      * To
      * Message recipients (emails)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $email_to;
 
     /**
      * Cc
      * Carbon copy message recipients
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $email_cc;
 
     /**
      * To (Partners)
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Partner[]
+     * @var OdooRelation[]|null
      */
     private $recipient_ids;
 
     /**
      * Status
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> outgoing (Outgoing)
+     *     -> sent (Sent)
+     *     -> received (Received)
+     *     -> exception (Delivery Failed)
+     *     -> cancel (Cancelled)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $state;
 
     /**
      * Auto Delete
      * Permanently delete this email after sending it, to save space
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $auto_delete;
 
@@ -96,8 +124,10 @@ final class Mail extends Message
      * Failure Reason
      * Failure reason. This is usually the exception thrown by the email server, stored to ease the debugging of
      * mailing issues.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $failure_reason;
 
@@ -105,47 +135,64 @@ final class Mail extends Message
      * Scheduled Send Date
      * If set, the queue manager will send the email after the date. If not set, the email will be send as soon as
      * possible.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $scheduled_date;
 
     /**
      * Inbound Mail Server
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Server
+     * @var OdooRelation|null
      */
     private $fetchmail_server_id;
 
     /**
-     * @param Message $mail_message_id Message
-     * @param array $message_type Type
+     * @param OdooRelation $mail_message_id Message
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $message_type Type
      *        Message type: email for email message, notification for system message, comment for other messages such as
      *        user replies
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> email (Email)
+     *            -> comment (Comment)
+     *            -> notification (System notification)
+     *            -> user_notification (User Specific Notification)
+     *            -> snailmail (Snailmail)
+     *            -> sms (SMS)
+     *
      */
-    public function __construct(Message $mail_message_id, array $message_type)
+    public function __construct(OdooRelation $mail_message_id, string $message_type)
     {
         $this->mail_message_id = $mail_message_id;
         parent::__construct($message_type);
     }
 
     /**
-     * @param Partner $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param OdooRelation[]|null $recipient_ids
      */
-    public function hasRecipientIds(Partner $item, bool $strict = true): bool
+    public function setRecipientIds(?array $recipient_ids): void
     {
-        if (null === $this->recipient_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->recipient_ids, $strict);
+        $this->recipient_ids = $recipient_ids;
     }
 
     /**
-     * @param null|string $scheduled_date
+     * @return OdooRelation|null
+     */
+    public function getFetchmailServerId(): ?OdooRelation
+    {
+        return $this->fetchmail_server_id;
+    }
+
+    /**
+     * @param string|null $scheduled_date
      */
     public function setScheduledDate(?string $scheduled_date): void
     {
@@ -153,7 +200,23 @@ final class Mail extends Message
     }
 
     /**
-     * @return null|string
+     * @return string|null
+     */
+    public function getScheduledDate(): ?string
+    {
+        return $this->scheduled_date;
+    }
+
+    /**
+     * @param string|null $failure_reason
+     */
+    public function setFailureReason(?string $failure_reason): void
+    {
+        $this->failure_reason = $failure_reason;
+    }
+
+    /**
+     * @return string|null
      */
     public function getFailureReason(): ?string
     {
@@ -161,7 +224,7 @@ final class Mail extends Message
     }
 
     /**
-     * @param null|bool $auto_delete
+     * @param bool|null $auto_delete
      */
     public function setAutoDelete(?bool $auto_delete): void
     {
@@ -169,17 +232,33 @@ final class Mail extends Message
     }
 
     /**
-     * @return null|array
+     * @return bool|null
      */
-    public function getState(): ?array
+    public function isAutoDelete(): ?bool
+    {
+        return $this->auto_delete;
+    }
+
+    /**
+     * @param string|null $state
+     */
+    public function setState(?string $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getState(): ?string
     {
         return $this->state;
     }
 
     /**
-     * @param Partner $item
+     * @param OdooRelation $item
      */
-    public function removeRecipientIds(Partner $item): void
+    public function removeRecipientIds(OdooRelation $item): void
     {
         if (null === $this->recipient_ids) {
             $this->recipient_ids = [];
@@ -192,9 +271,9 @@ final class Mail extends Message
     }
 
     /**
-     * @param Partner $item
+     * @param OdooRelation $item
      */
-    public function addRecipientIds(Partner $item): void
+    public function addRecipientIds(OdooRelation $item): void
     {
         if ($this->hasRecipientIds($item)) {
             return;
@@ -208,23 +287,37 @@ final class Mail extends Message
     }
 
     /**
-     * @param null|Partner[] $recipient_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setRecipientIds(?array $recipient_ids): void
+    public function hasRecipientIds(OdooRelation $item): bool
     {
-        $this->recipient_ids = $recipient_ids;
+        if (null === $this->recipient_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->recipient_ids);
     }
 
     /**
-     * @param Message $mail_message_id
+     * @return OdooRelation[]|null
      */
-    public function setMailMessageId(Message $mail_message_id): void
+    public function getRecipientIds(): ?array
     {
-        $this->mail_message_id = $mail_message_id;
+        return $this->recipient_ids;
     }
 
     /**
-     * @param null|string $email_cc
+     * @return OdooRelation
+     */
+    public function getMailMessageId(): OdooRelation
+    {
+        return $this->mail_message_id;
+    }
+
+    /**
+     * @param string|null $email_cc
      */
     public function setEmailCc(?string $email_cc): void
     {
@@ -232,7 +325,15 @@ final class Mail extends Message
     }
 
     /**
-     * @param null|string $email_to
+     * @return string|null
+     */
+    public function getEmailCc(): ?string
+    {
+        return $this->email_cc;
+    }
+
+    /**
+     * @param string|null $email_to
      */
     public function setEmailTo(?string $email_to): void
     {
@@ -240,7 +341,15 @@ final class Mail extends Message
     }
 
     /**
-     * @param null|bool $notification
+     * @return string|null
+     */
+    public function getEmailTo(): ?string
+    {
+        return $this->email_to;
+    }
+
+    /**
+     * @param bool|null $notification
      */
     public function setNotification(?bool $notification): void
     {
@@ -248,7 +357,15 @@ final class Mail extends Message
     }
 
     /**
-     * @param null|string $headers
+     * @return bool|null
+     */
+    public function isNotification(): ?bool
+    {
+        return $this->notification;
+    }
+
+    /**
+     * @param string|null $headers
      */
     public function setHeaders(?string $headers): void
     {
@@ -256,7 +373,23 @@ final class Mail extends Message
     }
 
     /**
-     * @return null|string
+     * @return string|null
+     */
+    public function getHeaders(): ?string
+    {
+        return $this->headers;
+    }
+
+    /**
+     * @param string|null $references
+     */
+    public function setReferences(?string $references): void
+    {
+        $this->references = $references;
+    }
+
+    /**
+     * @return string|null
      */
     public function getReferences(): ?string
     {
@@ -264,7 +397,7 @@ final class Mail extends Message
     }
 
     /**
-     * @param null|string $body_html
+     * @param string|null $body_html
      */
     public function setBodyHtml(?string $body_html): void
     {
@@ -272,10 +405,26 @@ final class Mail extends Message
     }
 
     /**
-     * @return null|Server
+     * @return string|null
      */
-    public function getFetchmailServerId(): ?Server
+    public function getBodyHtml(): ?string
     {
-        return $this->fetchmail_server_id;
+        return $this->body_html;
+    }
+
+    /**
+     * @param OdooRelation $mail_message_id
+     */
+    public function setMailMessageId(OdooRelation $mail_message_id): void
+    {
+        $this->mail_message_id = $mail_message_id;
+    }
+
+    /**
+     * @param OdooRelation|null $fetchmail_server_id
+     */
+    public function setFetchmailServerId(?OdooRelation $fetchmail_server_id): void
+    {
+        $this->fetchmail_server_id = $fetchmail_server_id;
     }
 }

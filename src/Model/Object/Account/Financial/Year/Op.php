@@ -5,41 +5,47 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Account\Financial\Year;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Journal;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.financial.year.op
  * Name : account.financial.year.op
  * Info :
  * Model super-class for transient records, meant to be temporarily
- * persistent, and regularly vacuum-cleaned.
+ *         persistent, and regularly vacuum-cleaned.
  *
- * A TransientModel has a simplified access rights management, all users can
- * create new records, and may only access the records they created. The
- * superuser has unrestricted access to all TransientModel records.
+ *         A TransientModel has a simplified access rights management, all users can
+ *         create new records, and may only access the records they created. The
+ *         superuser has unrestricted access to all TransientModel records.
  */
 final class Op extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.financial.year.op';
+
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Company
+     * @var OdooRelation
      */
     private $company_id;
 
     /**
      * Opening Move Posted
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $opening_move_posted;
 
     /**
      * Opening Date
      * Date from which the accounting is managed in Odoo. It is the date of the opening entry.
+     * Searchable : yes
+     * Sortable : no
      *
      * @var DateTimeInterface
      */
@@ -48,6 +54,8 @@ final class Op extends Base
     /**
      * Fiscalyear Last Day
      * The last day of the month will be used if the chosen day doesn't exist.
+     * Searchable : yes
+     * Sortable : no
      *
      * @var int
      */
@@ -56,21 +64,45 @@ final class Op extends Base
     /**
      * Fiscalyear Last Month
      * The last day of the month will be used if the chosen day doesn't exist.
+     * Searchable : yes
+     * Sortable : no
+     * Selection : (default value, usually null)
+     *     -> 1 (January)
+     *     -> 2 (February)
+     *     -> 3 (March)
+     *     -> 4 (April)
+     *     -> 5 (May)
+     *     -> 6 (June)
+     *     -> 7 (July)
+     *     -> 8 (August)
+     *     -> 9 (September)
+     *     -> 10 (October)
+     *     -> 11 (November)
+     *     -> 12 (December)
      *
-     * @var array
+     *
+     * @var string
      */
     private $fiscalyear_last_month;
 
     /**
      * Periodicity
      * Periodicity
+     * Searchable : yes
+     * Sortable : no
+     * Selection : (default value, usually null)
+     *     -> trimester (trimester)
+     *     -> monthly (monthly)
      *
-     * @var array
+     *
+     * @var string
      */
     private $account_tax_periodicity;
 
     /**
      * Reminder
+     * Searchable : yes
+     * Sortable : no
      *
      * @var int
      */
@@ -78,57 +110,97 @@ final class Op extends Base
 
     /**
      * Journal
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Journal
+     * @var OdooRelation|null
      */
     private $account_tax_periodicity_journal_id;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param Company $company_id Company
+     * @param OdooRelation $company_id Company
+     *        Searchable : yes
+     *        Sortable : yes
      * @param DateTimeInterface $opening_date Opening Date
      *        Date from which the accounting is managed in Odoo. It is the date of the opening entry.
+     *        Searchable : yes
+     *        Sortable : no
      * @param int $fiscalyear_last_day Fiscalyear Last Day
      *        The last day of the month will be used if the chosen day doesn't exist.
-     * @param array $fiscalyear_last_month Fiscalyear Last Month
+     *        Searchable : yes
+     *        Sortable : no
+     * @param string $fiscalyear_last_month Fiscalyear Last Month
      *        The last day of the month will be used if the chosen day doesn't exist.
-     * @param array $account_tax_periodicity Periodicity
+     *        Searchable : yes
+     *        Sortable : no
+     *        Selection : (default value, usually null)
+     *            -> 1 (January)
+     *            -> 2 (February)
+     *            -> 3 (March)
+     *            -> 4 (April)
+     *            -> 5 (May)
+     *            -> 6 (June)
+     *            -> 7 (July)
+     *            -> 8 (August)
+     *            -> 9 (September)
+     *            -> 10 (October)
+     *            -> 11 (November)
+     *            -> 12 (December)
+     *
+     * @param string $account_tax_periodicity Periodicity
      *        Periodicity
+     *        Searchable : yes
+     *        Sortable : no
+     *        Selection : (default value, usually null)
+     *            -> trimester (trimester)
+     *            -> monthly (monthly)
+     *
      * @param int $account_tax_periodicity_reminder_day Reminder
+     *        Searchable : yes
+     *        Sortable : no
      */
     public function __construct(
-        Company $company_id,
+        OdooRelation $company_id,
         DateTimeInterface $opening_date,
         int $fiscalyear_last_day,
-        array $fiscalyear_last_month,
-        array $account_tax_periodicity,
+        string $fiscalyear_last_month,
+        string $account_tax_periodicity,
         int $account_tax_periodicity_reminder_day
     ) {
         $this->company_id = $company_id;
@@ -140,26 +212,47 @@ final class Op extends Base
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return int
      */
-    public function hasAccountTaxPeriodicity($item, bool $strict = true): bool
+    public function getAccountTaxPeriodicityReminderDay(): int
     {
-        return in_array($item, $this->account_tax_periodicity, $strict);
+        return $this->account_tax_periodicity_reminder_day;
     }
 
     /**
-     * @return null|Users
+     * @return DateTimeInterface|null
      */
-    public function getWriteUid(): ?Users
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -167,19 +260,36 @@ final class Op extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @param null|Journal $account_tax_periodicity_journal_id
+     * @param OdooRelation|null $account_tax_periodicity_journal_id
      */
-    public function setAccountTaxPeriodicityJournalId(?Journal $account_tax_periodicity_journal_id): void
-    {
+    public function setAccountTaxPeriodicityJournalId(
+        ?OdooRelation $account_tax_periodicity_journal_id
+    ): void {
         $this->account_tax_periodicity_journal_id = $account_tax_periodicity_journal_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getAccountTaxPeriodicityJournalId(): ?OdooRelation
+    {
+        return $this->account_tax_periodicity_journal_id;
     }
 
     /**
@@ -191,84 +301,43 @@ final class Op extends Base
     }
 
     /**
-     * @param mixed $item
+     * @param string $account_tax_periodicity
      */
-    public function removeAccountTaxPeriodicity($item): void
-    {
-        if ($this->hasAccountTaxPeriodicity($item)) {
-            $index = array_search($item, $this->account_tax_periodicity);
-            unset($this->account_tax_periodicity[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addAccountTaxPeriodicity($item): void
-    {
-        if ($this->hasAccountTaxPeriodicity($item)) {
-            return;
-        }
-
-        $this->account_tax_periodicity[] = $item;
-    }
-
-    /**
-     * @param array $account_tax_periodicity
-     */
-    public function setAccountTaxPeriodicity(array $account_tax_periodicity): void
+    public function setAccountTaxPeriodicity(string $account_tax_periodicity): void
     {
         $this->account_tax_periodicity = $account_tax_periodicity;
     }
 
     /**
-     * @param Company $company_id
+     * @return OdooRelation
      */
-    public function setCompanyId(Company $company_id): void
+    public function getCompanyId(): OdooRelation
     {
-        $this->company_id = $company_id;
+        return $this->company_id;
     }
 
     /**
-     * @param mixed $item
+     * @return string
      */
-    public function removeFiscalyearLastMonth($item): void
+    public function getAccountTaxPeriodicity(): string
     {
-        if ($this->hasFiscalyearLastMonth($item)) {
-            $index = array_search($item, $this->fiscalyear_last_month);
-            unset($this->fiscalyear_last_month[$index]);
-        }
+        return $this->account_tax_periodicity;
     }
 
     /**
-     * @param mixed $item
+     * @param string $fiscalyear_last_month
      */
-    public function addFiscalyearLastMonth($item): void
-    {
-        if ($this->hasFiscalyearLastMonth($item)) {
-            return;
-        }
-
-        $this->fiscalyear_last_month[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasFiscalyearLastMonth($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->fiscalyear_last_month, $strict);
-    }
-
-    /**
-     * @param array $fiscalyear_last_month
-     */
-    public function setFiscalyearLastMonth(array $fiscalyear_last_month): void
+    public function setFiscalyearLastMonth(string $fiscalyear_last_month): void
     {
         $this->fiscalyear_last_month = $fiscalyear_last_month;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFiscalyearLastMonth(): string
+    {
+        return $this->fiscalyear_last_month;
     }
 
     /**
@@ -280,6 +349,14 @@ final class Op extends Base
     }
 
     /**
+     * @return int
+     */
+    public function getFiscalyearLastDay(): int
+    {
+        return $this->fiscalyear_last_day;
+    }
+
+    /**
      * @param DateTimeInterface $opening_date
      */
     public function setOpeningDate(DateTimeInterface $opening_date): void
@@ -288,7 +365,23 @@ final class Op extends Base
     }
 
     /**
-     * @return null|bool
+     * @return DateTimeInterface
+     */
+    public function getOpeningDate(): DateTimeInterface
+    {
+        return $this->opening_date;
+    }
+
+    /**
+     * @param bool|null $opening_move_posted
+     */
+    public function setOpeningMovePosted(?bool $opening_move_posted): void
+    {
+        $this->opening_move_posted = $opening_move_posted;
+    }
+
+    /**
+     * @return bool|null
      */
     public function isOpeningMovePosted(): ?bool
     {
@@ -296,10 +389,18 @@ final class Op extends Base
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation $company_id
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function setCompanyId(OdooRelation $company_id): void
     {
-        return $this->write_date;
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

@@ -6,8 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Ui\View;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Ui\View;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.ui.view.custom
@@ -15,32 +14,40 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Custom extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.ui.view.custom';
+
     /**
      * Original View
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var View
+     * @var OdooRelation
      */
     private $ref_id;
 
     /**
      * User
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Users
+     * @var OdooRelation
      */
     private $user_id;
 
     /**
      * View Architecture
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -48,38 +55,52 @@ final class Custom extends Base
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param View $ref_id Original View
-     * @param Users $user_id User
+     * @param OdooRelation $ref_id Original View
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $user_id User
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $arch View Architecture
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(View $ref_id, Users $user_id, string $arch)
+    public function __construct(OdooRelation $ref_id, OdooRelation $user_id, string $arch)
     {
         $this->ref_id = $ref_id;
         $this->user_id = $user_id;
@@ -87,19 +108,43 @@ final class Custom extends Base
     }
 
     /**
-     * @param View $ref_id
+     * @return OdooRelation
      */
-    public function setRefId(View $ref_id): void
+    public function getRefId(): OdooRelation
+    {
+        return $this->ref_id;
+    }
+
+    /**
+     * @param OdooRelation $ref_id
+     */
+    public function setRefId(OdooRelation $ref_id): void
     {
         $this->ref_id = $ref_id;
     }
 
     /**
-     * @param Users $user_id
+     * @return OdooRelation
      */
-    public function setUserId(Users $user_id): void
+    public function getUserId(): OdooRelation
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @param OdooRelation $user_id
+     */
+    public function setUserId(OdooRelation $user_id): void
     {
         $this->user_id = $user_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getArch(): string
+    {
+        return $this->arch;
     }
 
     /**
@@ -111,15 +156,23 @@ final class Custom extends Base
     }
 
     /**
-     * @return null|Users
+     * @return OdooRelation|null
      */
-    public function getCreateUid(): ?Users
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -127,18 +180,42 @@ final class Custom extends Base
     }
 
     /**
-     * @return null|Users
+     * @param DateTimeInterface|null $create_date
      */
-    public function getWriteUid(): ?Users
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

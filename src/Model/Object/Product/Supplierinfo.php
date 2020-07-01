@@ -6,11 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Product;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Currency;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
-use Flux\OdooApiClient\Model\Object\Res\Users;
-use Flux\OdooApiClient\Model\Object\Uom\Uom;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : product.supplierinfo
@@ -18,21 +14,25 @@ use Flux\OdooApiClient\Model\Object\Uom\Uom;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Supplierinfo extends Base
 {
+    public const ODOO_MODEL_NAME = 'product.supplierinfo';
+
     /**
      * Vendor
      * Vendor of this product
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Partner
+     * @var OdooRelation
      */
     private $name;
 
@@ -40,8 +40,10 @@ final class Supplierinfo extends Base
      * Vendor Product Name
      * This vendor's product name will be used when printing a request for quotation. Keep empty to use the internal
      * one.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $product_name;
 
@@ -49,24 +51,30 @@ final class Supplierinfo extends Base
      * Vendor Product Code
      * This vendor's product code will be used when printing a request for quotation. Keep empty to use the internal
      * one.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $product_code;
 
     /**
      * Sequence
      * Assigns the priority to the list of product vendor.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $sequence;
 
     /**
      * Unit of Measure
      * This comes from the product form.
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Uom
+     * @var OdooRelation|null
      */
     private $product_uom;
 
@@ -74,6 +82,8 @@ final class Supplierinfo extends Base
      * Quantity
      * The quantity to purchase from this vendor to benefit from the price, expressed in the vendor Product Unit of
      * Measure if not any, in the default unit of measure of the product otherwise.
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var float
      */
@@ -82,6 +92,8 @@ final class Supplierinfo extends Base
     /**
      * Price
      * The price to purchase a product
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var float
      */
@@ -89,53 +101,67 @@ final class Supplierinfo extends Base
 
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Company
+     * @var OdooRelation|null
      */
     private $company_id;
 
     /**
      * Currency
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Currency
+     * @var OdooRelation
      */
     private $currency_id;
 
     /**
      * Start Date
      * Start date for this vendor price
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $date_start;
 
     /**
      * End Date
      * End date for this vendor price
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $date_end;
 
     /**
      * Product Variant
      * If not set, the vendor price will apply to all variants of this product.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Product
+     * @var OdooRelation|null
      */
     private $product_id;
 
     /**
      * Product Template
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Template
+     * @var OdooRelation|null
      */
     private $product_tmpl_id;
 
     /**
      * Variant Count
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $product_variant_count;
 
@@ -143,6 +169,8 @@ final class Supplierinfo extends Base
      * Delivery Lead Time
      * Lead time in days between the confirmation of the purchase order and the receipt of the products in your
      * warehouse. Used by the scheduler for automatic computation of the purchase order planning.
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var int
      */
@@ -150,50 +178,68 @@ final class Supplierinfo extends Base
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param Partner $name Vendor
+     * @param OdooRelation $name Vendor
      *        Vendor of this product
+     *        Searchable : yes
+     *        Sortable : yes
      * @param float $min_qty Quantity
      *        The quantity to purchase from this vendor to benefit from the price, expressed in the vendor Product Unit of
      *        Measure if not any, in the default unit of measure of the product otherwise.
+     *        Searchable : yes
+     *        Sortable : yes
      * @param float $price Price
      *        The price to purchase a product
-     * @param Currency $currency_id Currency
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $currency_id Currency
+     *        Searchable : yes
+     *        Sortable : yes
      * @param int $delay Delivery Lead Time
      *        Lead time in days between the confirmation of the purchase order and the receipt of the products in your
      *        warehouse. Used by the scheduler for automatic computation of the purchase order planning.
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
-        Partner $name,
+        OdooRelation $name,
         float $min_qty,
         float $price,
-        Currency $currency_id,
+        OdooRelation $currency_id,
         int $delay
     ) {
         $this->name = $name;
@@ -204,7 +250,15 @@ final class Supplierinfo extends Base
     }
 
     /**
-     * @param null|DateTimeInterface $date_end
+     * @return int
+     */
+    public function getDelay(): int
+    {
+        return $this->delay;
+    }
+
+    /**
+     * @param DateTimeInterface|null $date_end
      */
     public function setDateEnd(?DateTimeInterface $date_end): void
     {
@@ -212,27 +266,51 @@ final class Supplierinfo extends Base
     }
 
     /**
-     * @return null|Users
+     * @return OdooRelation|null
      */
-    public function getWriteUid(): ?Users
+    public function getProductId(): ?OdooRelation
     {
-        return $this->write_uid;
+        return $this->product_id;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $product_id
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function setProductId(?OdooRelation $product_id): void
     {
-        return $this->create_date;
+        $this->product_id = $product_id;
     }
 
     /**
-     * @return null|Users
+     * @return OdooRelation|null
      */
-    public function getCreateUid(): ?Users
+    public function getProductTmplId(): ?OdooRelation
     {
-        return $this->create_uid;
+        return $this->product_tmpl_id;
+    }
+
+    /**
+     * @param OdooRelation|null $product_tmpl_id
+     */
+    public function setProductTmplId(?OdooRelation $product_tmpl_id): void
+    {
+        $this->product_tmpl_id = $product_tmpl_id;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getProductVariantCount(): ?int
+    {
+        return $this->product_variant_count;
+    }
+
+    /**
+     * @param int|null $product_variant_count
+     */
+    public function setProductVariantCount(?int $product_variant_count): void
+    {
+        $this->product_variant_count = $product_variant_count;
     }
 
     /**
@@ -244,31 +322,7 @@ final class Supplierinfo extends Base
     }
 
     /**
-     * @param null|int $product_variant_count
-     */
-    public function setProductVariantCount(?int $product_variant_count): void
-    {
-        $this->product_variant_count = $product_variant_count;
-    }
-
-    /**
-     * @param null|Template $product_tmpl_id
-     */
-    public function setProductTmplId(?Template $product_tmpl_id): void
-    {
-        $this->product_tmpl_id = $product_tmpl_id;
-    }
-
-    /**
-     * @param null|Product $product_id
-     */
-    public function setProductId(?Product $product_id): void
-    {
-        $this->product_id = $product_id;
-    }
-
-    /**
-     * @param null|DateTimeInterface $date_start
+     * @param DateTimeInterface|null $date_start
      */
     public function setDateStart(?DateTimeInterface $date_start): void
     {
@@ -276,35 +330,171 @@ final class Supplierinfo extends Base
     }
 
     /**
-     * @param Partner $name
+     * @return OdooRelation|null
      */
-    public function setName(Partner $name): void
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getDateEnd(): ?DateTimeInterface
+    {
+        return $this->date_end;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getDateStart(): ?DateTimeInterface
+    {
+        return $this->date_start;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getName(): OdooRelation
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getProductUom(): ?OdooRelation
+    {
+        return $this->product_uom;
+    }
+
+    /**
+     * @param OdooRelation $name
+     */
+    public function setName(OdooRelation $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * @param Currency $currency_id
+     * @return string|null
      */
-    public function setCurrencyId(Currency $currency_id): void
+    public function getProductName(): ?string
+    {
+        return $this->product_name;
+    }
+
+    /**
+     * @param string|null $product_name
+     */
+    public function setProductName(?string $product_name): void
+    {
+        $this->product_name = $product_name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProductCode(): ?string
+    {
+        return $this->product_code;
+    }
+
+    /**
+     * @param string|null $product_code
+     */
+    public function setProductCode(?string $product_code): void
+    {
+        $this->product_code = $product_code;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSequence(): ?int
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * @param int|null $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * @param OdooRelation|null $product_uom
+     */
+    public function setProductUom(?OdooRelation $product_uom): void
+    {
+        $this->product_uom = $product_uom;
+    }
+
+    /**
+     * @param OdooRelation $currency_id
+     */
+    public function setCurrencyId(OdooRelation $currency_id): void
     {
         $this->currency_id = $currency_id;
     }
 
     /**
-     * @param null|Company $company_id
+     * @return float
      */
-    public function setCompanyId(?Company $company_id): void
+    public function getMinQty(): float
     {
-        $this->company_id = $company_id;
-    }
-
-    /**
-     * @param float $price
-     */
-    public function setPrice(float $price): void
-    {
-        $this->price = $price;
+        return $this->min_qty;
     }
 
     /**
@@ -316,42 +506,50 @@ final class Supplierinfo extends Base
     }
 
     /**
-     * @return null|Uom
+     * @return float
      */
-    public function getProductUom(): ?Uom
+    public function getPrice(): float
     {
-        return $this->product_uom;
+        return $this->price;
     }
 
     /**
-     * @param null|int $sequence
+     * @param float $price
      */
-    public function setSequence(?int $sequence): void
+    public function setPrice(float $price): void
     {
-        $this->sequence = $sequence;
+        $this->price = $price;
     }
 
     /**
-     * @param null|string $product_code
+     * @return OdooRelation|null
      */
-    public function setProductCode(?string $product_code): void
+    public function getCompanyId(): ?OdooRelation
     {
-        $this->product_code = $product_code;
+        return $this->company_id;
     }
 
     /**
-     * @param null|string $product_name
+     * @param OdooRelation|null $company_id
      */
-    public function setProductName(?string $product_name): void
+    public function setCompanyId(?OdooRelation $company_id): void
     {
-        $this->product_name = $product_name;
+        $this->company_id = $company_id;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return OdooRelation
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getCurrencyId(): OdooRelation
     {
-        return $this->write_date;
+        return $this->currency_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

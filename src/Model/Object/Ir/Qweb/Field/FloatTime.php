@@ -11,10 +11,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  * Name : ir.qweb.field.float_time
  * Info :
  * ``float_time`` converter, to display integral or fractional values as
- * human-readable time spans (e.g. 1.5 as "01:30").
+ *         human-readable time spans (e.g. 1.5 as "01:30").
  *
- * Can be used on any numerical field.
+ *         Can be used on any numerical field.
  */
 final class FloatTime extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.qweb.field.float_time';
 }

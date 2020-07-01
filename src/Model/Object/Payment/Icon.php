@@ -6,7 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Payment;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : payment.icon
@@ -14,76 +14,174 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Icon extends Base
 {
+    public const ODOO_MODEL_NAME = 'payment.icon';
+
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $name;
 
     /**
      * Acquirers
      * List of Acquirers supporting this payment icon.
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Acquirer[]
+     * @var OdooRelation[]|null
      */
     private $acquirer_ids;
 
     /**
      * Image
      * This field holds the image used for this payment icon, limited to 1024x1024px
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $image;
 
     /**
      * Image displayed on the payment form
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $image_payment_form;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param int|null $image_payment_form
+     */
+    public function setImagePaymentForm(?int $image_payment_form): void
+    {
+        $this->image_payment_form = $image_payment_form;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getImagePaymentForm(): ?int
+    {
+        return $this->image_payment_form;
+    }
+
+    /**
+     * @param string|null $name
      */
     public function setName(?string $name): void
     {
@@ -91,32 +189,40 @@ final class Icon extends Base
     }
 
     /**
-     * @param null|Acquirer[] $acquirer_ids
+     * @param int|null $image
      */
-    public function setAcquirerIds(?array $acquirer_ids): void
+    public function setImage(?int $image): void
     {
-        $this->acquirer_ids = $acquirer_ids;
+        $this->image = $image;
     }
 
     /**
-     * @param Acquirer $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return int|null
      */
-    public function hasAcquirerIds(Acquirer $item, bool $strict = true): bool
+    public function getImage(): ?int
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeAcquirerIds(OdooRelation $item): void
     {
         if (null === $this->acquirer_ids) {
-            return false;
+            $this->acquirer_ids = [];
         }
 
-        return in_array($item, $this->acquirer_ids, $strict);
+        if ($this->hasAcquirerIds($item)) {
+            $index = array_search($item, $this->acquirer_ids);
+            unset($this->acquirer_ids[$index]);
+        }
     }
 
     /**
-     * @param Acquirer $item
+     * @param OdooRelation $item
      */
-    public function addAcquirerIds(Acquirer $item): void
+    public function addAcquirerIds(OdooRelation $item): void
     {
         if ($this->hasAcquirerIds($item)) {
             return;
@@ -130,65 +236,40 @@ final class Icon extends Base
     }
 
     /**
-     * @param Acquirer $item
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removeAcquirerIds(Acquirer $item): void
+    public function hasAcquirerIds(OdooRelation $item): bool
     {
         if (null === $this->acquirer_ids) {
-            $this->acquirer_ids = [];
+            return false;
         }
 
-        if ($this->hasAcquirerIds($item)) {
-            $index = array_search($item, $this->acquirer_ids);
-            unset($this->acquirer_ids[$index]);
-        }
+        return in_array($item, $this->acquirer_ids);
     }
 
     /**
-     * @param null|int $image
+     * @param OdooRelation[]|null $acquirer_ids
      */
-    public function setImage(?int $image): void
+    public function setAcquirerIds(?array $acquirer_ids): void
     {
-        $this->image = $image;
+        $this->acquirer_ids = $acquirer_ids;
     }
 
     /**
-     * @param null|int $image_payment_form
+     * @return OdooRelation[]|null
      */
-    public function setImagePaymentForm(?int $image_payment_form): void
+    public function getAcquirerIds(): ?array
     {
-        $this->image_payment_form = $image_payment_form;
+        return $this->acquirer_ids;
     }
 
     /**
-     * @return null|Users
+     * @param DateTimeInterface|null $write_date
      */
-    public function getCreateUid(): ?Users
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

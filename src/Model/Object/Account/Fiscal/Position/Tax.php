@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Account\Fiscal\Position;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Fiscal\Position;
-use Flux\OdooApiClient\Model\Object\Account\Tax as TaxAlias;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.fiscal.position.tax
@@ -16,109 +14,161 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Tax extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.fiscal.position.tax';
+
     /**
      * Fiscal Position
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Position
+     * @var OdooRelation
      */
     private $position_id;
 
     /**
      * Tax on Product
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var TaxAlias
+     * @var OdooRelation
      */
     private $tax_src_id;
 
     /**
      * Tax to Apply
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|TaxAlias
+     * @var OdooRelation|null
      */
     private $tax_dest_id;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param Position $position_id Fiscal Position
-     * @param TaxAlias $tax_src_id Tax on Product
+     * @param OdooRelation $position_id Fiscal Position
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $tax_src_id Tax on Product
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(Position $position_id, TaxAlias $tax_src_id)
+    public function __construct(OdooRelation $position_id, OdooRelation $tax_src_id)
     {
         $this->position_id = $position_id;
         $this->tax_src_id = $tax_src_id;
     }
 
     /**
-     * @param Position $position_id
+     * @return OdooRelation
      */
-    public function setPositionId(Position $position_id): void
+    public function getPositionId(): OdooRelation
+    {
+        return $this->position_id;
+    }
+
+    /**
+     * @param OdooRelation $position_id
+     */
+    public function setPositionId(OdooRelation $position_id): void
     {
         $this->position_id = $position_id;
     }
 
     /**
-     * @param TaxAlias $tax_src_id
+     * @return OdooRelation
      */
-    public function setTaxSrcId(TaxAlias $tax_src_id): void
+    public function getTaxSrcId(): OdooRelation
+    {
+        return $this->tax_src_id;
+    }
+
+    /**
+     * @param OdooRelation $tax_src_id
+     */
+    public function setTaxSrcId(OdooRelation $tax_src_id): void
     {
         $this->tax_src_id = $tax_src_id;
     }
 
     /**
-     * @param null|TaxAlias $tax_dest_id
+     * @return OdooRelation|null
      */
-    public function setTaxDestId(?TaxAlias $tax_dest_id): void
+    public function getTaxDestId(): ?OdooRelation
+    {
+        return $this->tax_dest_id;
+    }
+
+    /**
+     * @param OdooRelation|null $tax_dest_id
+     */
+    public function setTaxDestId(?OdooRelation $tax_dest_id): void
     {
         $this->tax_dest_id = $tax_dest_id;
     }
 
     /**
-     * @return null|Users
+     * @return OdooRelation|null
      */
-    public function getCreateUid(): ?Users
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -126,18 +176,42 @@ final class Tax extends Base
     }
 
     /**
-     * @return null|Users
+     * @param DateTimeInterface|null $create_date
      */
-    public function getWriteUid(): ?Users
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

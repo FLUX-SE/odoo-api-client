@@ -6,8 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Digest;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Groups;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : digest.tip
@@ -15,76 +14,174 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Tip extends Base
 {
+    public const ODOO_MODEL_NAME = 'digest.tip';
+
     /**
      * Sequence
      * Used to display digest tip in email template base on order
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $sequence;
 
     /**
      * Recipients
      * Users having already received this tip
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Users[]
+     * @var OdooRelation[]|null
      */
     private $user_ids;
 
     /**
      * Tip description
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $tip_description;
 
     /**
      * Authorized Group
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Groups
+     * @var OdooRelation|null
      */
     private $group_id;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param null|int $sequence
+     * @return int|null
+     */
+    public function getSequence(): ?int
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * @param OdooRelation|null $group_id
+     */
+    public function setGroupId(?OdooRelation $group_id): void
+    {
+        $this->group_id = $group_id;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getGroupId(): ?OdooRelation
+    {
+        return $this->group_id;
+    }
+
+    /**
+     * @param int|null $sequence
      */
     public function setSequence(?int $sequence): void
     {
@@ -92,32 +189,40 @@ final class Tip extends Base
     }
 
     /**
-     * @param null|Users[] $user_ids
+     * @param string|null $tip_description
      */
-    public function setUserIds(?array $user_ids): void
+    public function setTipDescription(?string $tip_description): void
     {
-        $this->user_ids = $user_ids;
+        $this->tip_description = $tip_description;
     }
 
     /**
-     * @param Users $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return string|null
      */
-    public function hasUserIds(Users $item, bool $strict = true): bool
+    public function getTipDescription(): ?string
+    {
+        return $this->tip_description;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeUserIds(OdooRelation $item): void
     {
         if (null === $this->user_ids) {
-            return false;
+            $this->user_ids = [];
         }
 
-        return in_array($item, $this->user_ids, $strict);
+        if ($this->hasUserIds($item)) {
+            $index = array_search($item, $this->user_ids);
+            unset($this->user_ids[$index]);
+        }
     }
 
     /**
-     * @param Users $item
+     * @param OdooRelation $item
      */
-    public function addUserIds(Users $item): void
+    public function addUserIds(OdooRelation $item): void
     {
         if ($this->hasUserIds($item)) {
             return;
@@ -131,65 +236,40 @@ final class Tip extends Base
     }
 
     /**
-     * @param Users $item
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removeUserIds(Users $item): void
+    public function hasUserIds(OdooRelation $item): bool
     {
         if (null === $this->user_ids) {
-            $this->user_ids = [];
+            return false;
         }
 
-        if ($this->hasUserIds($item)) {
-            $index = array_search($item, $this->user_ids);
-            unset($this->user_ids[$index]);
-        }
+        return in_array($item, $this->user_ids);
     }
 
     /**
-     * @param null|string $tip_description
+     * @param OdooRelation[]|null $user_ids
      */
-    public function setTipDescription(?string $tip_description): void
+    public function setUserIds(?array $user_ids): void
     {
-        $this->tip_description = $tip_description;
+        $this->user_ids = $user_ids;
     }
 
     /**
-     * @param null|Groups $group_id
+     * @return OdooRelation[]|null
      */
-    public function setGroupId(?Groups $group_id): void
+    public function getUserIds(): ?array
     {
-        $this->group_id = $group_id;
+        return $this->user_ids;
     }
 
     /**
-     * @return null|Users
+     * @param DateTimeInterface|null $write_date
      */
-    public function getCreateUid(): ?Users
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

@@ -6,32 +6,26 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Actions;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Actions\Server as ServerAlias;
-use Flux\OdooApiClient\Model\Object\Ir\Model;
-use Flux\OdooApiClient\Model\Object\Ir\Model\Fields;
-use Flux\OdooApiClient\Model\Object\Ir\Server\Object_\Lines;
-use Flux\OdooApiClient\Model\Object\Mail\Activity\Type;
-use Flux\OdooApiClient\Model\Object\Mail\Channel;
-use Flux\OdooApiClient\Model\Object\Mail\Template;
-use Flux\OdooApiClient\Model\Object\Res\Groups;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
-use Flux\OdooApiClient\Model\Object\Res\Users;
-use Flux\OdooApiClient\Model\Object\Sms\Template as TemplateAlias;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.actions.server
  * Name : ir.actions.server
  * Info :
  * Mixin that overrides the create and write methods to properly generate
- * ir.model.data entries flagged with Studio for the corresponding resources.
- * Doesn't create an ir.model.data if the record is part of a module being
- * currently installed as the ir.model.data will be created automatically
- * afterwards.
+ *                 ir.model.data entries flagged with Studio for the corresponding resources.
+ *                 Doesn't create an ir.model.data if the record is part of a module being
+ *                 currently installed as the ir.model.data will be created automatically
+ *                 afterwards.
  */
 class Server extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.actions.server';
+
     /**
      * Action Name
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -39,6 +33,8 @@ class Server extends Base
 
     /**
      * Action Type
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -48,23 +44,29 @@ class Server extends Base
      * Sequence
      * When dealing with multiple actions, the execution order is based on the sequence. Low number means high
      * priority.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     protected $sequence;
 
     /**
      * Model
      * Model on which the server action runs.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Model
+     * @var OdooRelation
      */
     protected $model_id;
 
     /**
      * Model Name
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     protected $model_name;
 
@@ -72,8 +74,10 @@ class Server extends Base
      * Python Code
      * Write Python code that the action will execute. Some variables are available for use; help about python
      * expression is given in the help tab.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     protected $code;
 
@@ -81,101 +85,134 @@ class Server extends Base
      * Child Actions
      * Child server actions that will be executed. Note that the last return returned action value will be used as
      * global return value.
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|ServerAlias[]
+     * @var OdooRelation[]|null
      */
     protected $child_ids;
 
     /**
      * Create/Write Target Model
      * Model for record creation / update. Set this field only to specify a different model than the base model.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Model
+     * @var OdooRelation|null
      */
     protected $crud_model_id;
 
     /**
      * Target Model
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     protected $crud_model_name;
 
     /**
      * Link using field
      * Provide the field used to link the newly created record on the record on used by the server action.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Fields
+     * @var OdooRelation|null
      */
     protected $link_field_id;
 
     /**
      * Value Mapping
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Lines[]
+     * @var OdooRelation[]|null
      */
     protected $fields_lines;
 
     /**
      * Groups
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Groups[]
+     * @var OdooRelation[]|null
      */
     protected $groups_id;
 
     /**
      * Add Followers
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Partner[]
+     * @var OdooRelation[]|null
      */
     protected $partner_ids;
 
     /**
      * Add Channels
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Channel[]
+     * @var OdooRelation[]|null
      */
     protected $channel_ids;
 
     /**
      * Email Template
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Template
+     * @var OdooRelation|null
      */
     protected $template_id;
 
     /**
      * Activity
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Type
+     * @var OdooRelation|null
      */
     protected $activity_type_id;
 
     /**
      * Summary
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     protected $activity_summary;
 
     /**
      * Note
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     protected $activity_note;
 
     /**
      * Due Date In
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     protected $activity_date_deadline_range;
 
     /**
      * Due type
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> days (Days)
+     *     -> weeks (Weeks)
+     *     -> months (Months)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     protected $activity_date_deadline_range_type;
 
@@ -183,30 +220,47 @@ class Server extends Base
      * Activity User Type
      * Use 'Specific User' to always assign the same user on the next activity. Use 'Generic User From Record' to
      * specify the field name of the user to choose on the record.
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> specific (Specific User)
+     *     -> generic (Generic User From Record)
      *
-     * @var array
+     *
+     * @var string
      */
     protected $activity_user_type;
 
     /**
      * Responsible
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     protected $activity_user_id;
 
     /**
      * User field name
      * Technical name of the user on the record
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     protected $activity_user_field_name;
 
     /**
      * Usage
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> ir_actions_server (Server Action)
+     *     -> ir_cron (Scheduled Action)
+     *     -> base_automation (Automated Action)
      *
-     * @var array
+     *
+     * @var string
      */
     protected $usage;
 
@@ -220,100 +274,157 @@ class Server extends Base
      * - 'Send Email': automatically send an email (Discuss)
      * - 'Add Followers': add followers to a record (Discuss)
      * - 'Create Next Activity': create an activity (Discuss)
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> code (Execute Python Code)
+     *     -> object_create (Create a new Record)
+     *     -> object_write (Update the Record)
+     *     -> multi (Execute several actions)
+     *     -> email (Send Email)
+     *     -> followers (Add Followers)
+     *     -> next_activity (Create Next Activity)
+     *     -> sms (Send SMS Text Message)
      *
-     * @var array
+     *
+     * @var string
      */
     protected $state;
 
     /**
      * SMS Template
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|TemplateAlias
+     * @var OdooRelation|null
      */
     protected $sms_template_id;
 
     /**
      * Log a note
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     protected $sms_mass_keep_log;
 
     /**
      * External ID
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     protected $xml_id;
 
     /**
      * Action Description
      * Optional help text for the users with a description of the target view, such as its usage and purpose.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     protected $help;
 
     /**
      * Binding Model
      * Setting a value makes this action available in the sidebar for the given model.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Model
+     * @var OdooRelation|null
      */
     protected $binding_model_id;
 
     /**
      * Binding Type
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> action (Action)
+     *     -> report (Report)
      *
-     * @var array
+     *
+     * @var string
      */
     protected $binding_type;
 
     /**
      * Binding View Types
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     protected $binding_view_types;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     protected $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     protected $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     protected $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     protected $write_date;
 
     /**
      * @param string $name Action Name
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $type Action Type
-     * @param Model $model_id Model
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $model_id Model
      *        Model on which the server action runs.
-     * @param array $activity_user_type Activity User Type
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $activity_user_type Activity User Type
      *        Use 'Specific User' to always assign the same user on the next activity. Use 'Generic User From Record' to
      *        specify the field name of the user to choose on the record.
-     * @param array $usage Usage
-     * @param array $state Action To Do
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> specific (Specific User)
+     *            -> generic (Generic User From Record)
+     *
+     * @param string $usage Usage
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> ir_actions_server (Server Action)
+     *            -> ir_cron (Scheduled Action)
+     *            -> base_automation (Automated Action)
+     *
+     * @param string $state Action To Do
      *        Type of server action. The following values are available:
      *        - 'Execute Python Code': a block of python code that will be executed
      *        - 'Create': create a new record with new values
@@ -322,16 +433,34 @@ class Server extends Base
      *        - 'Send Email': automatically send an email (Discuss)
      *        - 'Add Followers': add followers to a record (Discuss)
      *        - 'Create Next Activity': create an activity (Discuss)
-     * @param array $binding_type Binding Type
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> code (Execute Python Code)
+     *            -> object_create (Create a new Record)
+     *            -> object_write (Update the Record)
+     *            -> multi (Execute several actions)
+     *            -> email (Send Email)
+     *            -> followers (Add Followers)
+     *            -> next_activity (Create Next Activity)
+     *            -> sms (Send SMS Text Message)
+     *
+     * @param string $binding_type Binding Type
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> action (Action)
+     *            -> report (Report)
+     *
      */
     public function __construct(
         string $name,
         string $type,
-        Model $model_id,
-        array $activity_user_type,
-        array $usage,
-        array $state,
-        array $binding_type
+        OdooRelation $model_id,
+        string $activity_user_type,
+        string $usage,
+        string $state,
+        string $binding_type
     ) {
         $this->name = $name;
         $this->type = $type;
@@ -343,114 +472,39 @@ class Server extends Base
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return string
      */
-    public function hasState($item, bool $strict = true): bool
+    public function getActivityUserType(): string
     {
-        return in_array($item, $this->state, $strict);
+        return $this->activity_user_type;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return string
      */
-    public function hasActivityDateDeadlineRangeType($item, bool $strict = true): bool
+    public function getState(): string
     {
-        if (null === $this->activity_date_deadline_range_type) {
-            return false;
-        }
-
-        return in_array($item, $this->activity_date_deadline_range_type, $strict);
+        return $this->state;
     }
 
     /**
-     * @param mixed $item
+     * @param string $usage
      */
-    public function addActivityDateDeadlineRangeType($item): void
+    public function setUsage(string $usage): void
     {
-        if ($this->hasActivityDateDeadlineRangeType($item)) {
-            return;
-        }
-
-        if (null === $this->activity_date_deadline_range_type) {
-            $this->activity_date_deadline_range_type = [];
-        }
-
-        $this->activity_date_deadline_range_type[] = $item;
+        $this->usage = $usage;
     }
 
     /**
-     * @param mixed $item
+     * @return string
      */
-    public function removeActivityDateDeadlineRangeType($item): void
+    public function getUsage(): string
     {
-        if (null === $this->activity_date_deadline_range_type) {
-            $this->activity_date_deadline_range_type = [];
-        }
-
-        if ($this->hasActivityDateDeadlineRangeType($item)) {
-            $index = array_search($item, $this->activity_date_deadline_range_type);
-            unset($this->activity_date_deadline_range_type[$index]);
-        }
+        return $this->usage;
     }
 
     /**
-     * @param array $activity_user_type
-     */
-    public function setActivityUserType(array $activity_user_type): void
-    {
-        $this->activity_user_type = $activity_user_type;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasActivityUserType($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->activity_user_type, $strict);
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addActivityUserType($item): void
-    {
-        if ($this->hasActivityUserType($item)) {
-            return;
-        }
-
-        $this->activity_user_type[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeActivityUserType($item): void
-    {
-        if ($this->hasActivityUserType($item)) {
-            $index = array_search($item, $this->activity_user_type);
-            unset($this->activity_user_type[$index]);
-        }
-    }
-
-    /**
-     * @param null|Users $activity_user_id
-     */
-    public function setActivityUserId(?Users $activity_user_id): void
-    {
-        $this->activity_user_id = $activity_user_id;
-    }
-
-    /**
-     * @param null|string $activity_user_field_name
+     * @param string|null $activity_user_field_name
      */
     public function setActivityUserFieldName(?string $activity_user_field_name): void
     {
@@ -458,69 +512,63 @@ class Server extends Base
     }
 
     /**
-     * @param array $usage
+     * @return string|null
      */
-    public function setUsage(array $usage): void
+    public function getActivityUserFieldName(): ?string
     {
-        $this->usage = $usage;
+        return $this->activity_user_field_name;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param OdooRelation|null $activity_user_id
      */
-    public function hasUsage($item, bool $strict = true): bool
+    public function setActivityUserId(?OdooRelation $activity_user_id): void
     {
-        return in_array($item, $this->usage, $strict);
+        $this->activity_user_id = $activity_user_id;
     }
 
     /**
-     * @param mixed $item
+     * @return OdooRelation|null
      */
-    public function addUsage($item): void
+    public function getActivityUserId(): ?OdooRelation
     {
-        if ($this->hasUsage($item)) {
-            return;
-        }
-
-        $this->usage[] = $item;
+        return $this->activity_user_id;
     }
 
     /**
-     * @param mixed $item
+     * @param string $activity_user_type
      */
-    public function removeUsage($item): void
+    public function setActivityUserType(string $activity_user_type): void
     {
-        if ($this->hasUsage($item)) {
-            $index = array_search($item, $this->usage);
-            unset($this->usage[$index]);
-        }
+        $this->activity_user_type = $activity_user_type;
     }
 
     /**
-     * @param array $state
+     * @param string|null $activity_date_deadline_range_type
      */
-    public function setState(array $state): void
+    public function setActivityDateDeadlineRangeType(?string $activity_date_deadline_range_type): void
     {
-        $this->state = $state;
+        $this->activity_date_deadline_range_type = $activity_date_deadline_range_type;
     }
 
     /**
-     * @param mixed $item
+     * @return OdooRelation|null
      */
-    public function addState($item): void
+    public function getSmsTemplateId(): ?OdooRelation
     {
-        if ($this->hasState($item)) {
-            return;
-        }
-
-        $this->state[] = $item;
+        return $this->sms_template_id;
     }
 
     /**
-     * @param null|int $activity_date_deadline_range
+     * @return string|null
+     */
+    public function getActivityDateDeadlineRangeType(): ?string
+    {
+        return $this->activity_date_deadline_range_type;
+    }
+
+    /**
+     * @param int|null $activity_date_deadline_range
      */
     public function setActivityDateDeadlineRange(?int $activity_date_deadline_range): void
     {
@@ -528,140 +576,15 @@ class Server extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return int|null
      */
-    public function removeState($item): void
+    public function getActivityDateDeadlineRange(): ?int
     {
-        if ($this->hasState($item)) {
-            $index = array_search($item, $this->state);
-            unset($this->state[$index]);
-        }
+        return $this->activity_date_deadline_range;
     }
 
     /**
-     * @param null|TemplateAlias $sms_template_id
-     */
-    public function setSmsTemplateId(?TemplateAlias $sms_template_id): void
-    {
-        $this->sms_template_id = $sms_template_id;
-    }
-
-    /**
-     * @param null|bool $sms_mass_keep_log
-     */
-    public function setSmsMassKeepLog(?bool $sms_mass_keep_log): void
-    {
-        $this->sms_mass_keep_log = $sms_mass_keep_log;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getXmlId(): ?string
-    {
-        return $this->xml_id;
-    }
-
-    /**
-     * @param null|string $help
-     */
-    public function setHelp(?string $help): void
-    {
-        $this->help = $help;
-    }
-
-    /**
-     * @param null|Model $binding_model_id
-     */
-    public function setBindingModelId(?Model $binding_model_id): void
-    {
-        $this->binding_model_id = $binding_model_id;
-    }
-
-    /**
-     * @param array $binding_type
-     */
-    public function setBindingType(array $binding_type): void
-    {
-        $this->binding_type = $binding_type;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasBindingType($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->binding_type, $strict);
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addBindingType($item): void
-    {
-        if ($this->hasBindingType($item)) {
-            return;
-        }
-
-        $this->binding_type[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeBindingType($item): void
-    {
-        if ($this->hasBindingType($item)) {
-            $index = array_search($item, $this->binding_type);
-            unset($this->binding_type[$index]);
-        }
-    }
-
-    /**
-     * @param null|string $binding_view_types
-     */
-    public function setBindingViewTypes(?string $binding_view_types): void
-    {
-        $this->binding_view_types = $binding_view_types;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param null|array $activity_date_deadline_range_type
-     */
-    public function setActivityDateDeadlineRangeType(?array $activity_date_deadline_range_type): void
-    {
-        $this->activity_date_deadline_range_type = $activity_date_deadline_range_type;
-    }
-
-    /**
-     * @param null|string $activity_note
+     * @param string|null $activity_note
      */
     public function setActivityNote(?string $activity_note): void
     {
@@ -669,96 +592,280 @@ class Server extends Base
     }
 
     /**
-     * @param string $name
+     * @return string|null
      */
-    public function setName(string $name): void
+    public function getActivityNote(): ?string
     {
-        $this->name = $name;
+        return $this->activity_note;
     }
 
     /**
-     * @param Lines $item
+     * @param string|null $activity_summary
      */
-    public function addFieldsLines(Lines $item): void
+    public function setActivitySummary(?string $activity_summary): void
     {
-        if ($this->hasFieldsLines($item)) {
-            return;
-        }
-
-        if (null === $this->fields_lines) {
-            $this->fields_lines = [];
-        }
-
-        $this->fields_lines[] = $item;
+        $this->activity_summary = $activity_summary;
     }
 
     /**
-     * @param string $type
+     * @return string|null
      */
-    public function setType(string $type): void
+    public function getActivitySummary(): ?string
     {
-        $this->type = $type;
+        return $this->activity_summary;
     }
 
     /**
-     * @param null|int $sequence
+     * @param OdooRelation|null $activity_type_id
      */
-    public function setSequence(?int $sequence): void
+    public function setActivityTypeId(?OdooRelation $activity_type_id): void
     {
-        $this->sequence = $sequence;
+        $this->activity_type_id = $activity_type_id;
     }
 
     /**
-     * @param Model $model_id
+     * @param string $state
      */
-    public function setModelId(Model $model_id): void
+    public function setState(string $state): void
     {
-        $this->model_id = $model_id;
+        $this->state = $state;
     }
 
     /**
-     * @return null|string
+     * @param OdooRelation|null $sms_template_id
      */
-    public function getModelName(): ?string
+    public function setSmsTemplateId(?OdooRelation $sms_template_id): void
     {
-        return $this->model_name;
+        $this->sms_template_id = $sms_template_id;
     }
 
     /**
-     * @param null|string $code
+     * @param OdooRelation|null $template_id
      */
-    public function setCode(?string $code): void
+    public function setTemplateId(?OdooRelation $template_id): void
     {
-        $this->code = $code;
+        $this->template_id = $template_id;
     }
 
     /**
-     * @param null|ServerAlias[] $child_ids
+     * @return string|null
      */
-    public function setChildIds(?array $child_ids): void
+    public function getBindingViewTypes(): ?string
     {
-        $this->child_ids = $child_ids;
+        return $this->binding_view_types;
     }
 
     /**
-     * @param ServerAlias $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return DateTimeInterface|null
      */
-    public function hasChildIds(ServerAlias $item, bool $strict = true): bool
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param string|null $binding_view_types
+     */
+    public function setBindingViewTypes(?string $binding_view_types): void
+    {
+        $this->binding_view_types = $binding_view_types;
+    }
+
+    /**
+     * @param string $binding_type
+     */
+    public function setBindingType(string $binding_type): void
+    {
+        $this->binding_type = $binding_type;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isSmsMassKeepLog(): ?bool
+    {
+        return $this->sms_mass_keep_log;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBindingType(): string
+    {
+        return $this->binding_type;
+    }
+
+    /**
+     * @param OdooRelation|null $binding_model_id
+     */
+    public function setBindingModelId(?OdooRelation $binding_model_id): void
+    {
+        $this->binding_model_id = $binding_model_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getBindingModelId(): ?OdooRelation
+    {
+        return $this->binding_model_id;
+    }
+
+    /**
+     * @param string|null $help
+     */
+    public function setHelp(?string $help): void
+    {
+        $this->help = $help;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getHelp(): ?string
+    {
+        return $this->help;
+    }
+
+    /**
+     * @param string|null $xml_id
+     */
+    public function setXmlId(?string $xml_id): void
+    {
+        $this->xml_id = $xml_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getXmlId(): ?string
+    {
+        return $this->xml_id;
+    }
+
+    /**
+     * @param bool|null $sms_mass_keep_log
+     */
+    public function setSmsMassKeepLog(?bool $sms_mass_keep_log): void
+    {
+        $this->sms_mass_keep_log = $sms_mass_keep_log;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getActivityTypeId(): ?OdooRelation
+    {
+        return $this->activity_type_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getTemplateId(): ?OdooRelation
+    {
+        return $this->template_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param OdooRelation|null $crud_model_id
+     */
+    public function setCrudModelId(?OdooRelation $crud_model_id): void
+    {
+        $this->crud_model_id = $crud_model_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCrudModelId(): ?OdooRelation
+    {
+        return $this->crud_model_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeChildIds(OdooRelation $item): void
     {
         if (null === $this->child_ids) {
-            return false;
+            $this->child_ids = [];
         }
 
-        return in_array($item, $this->child_ids, $strict);
+        if ($this->hasChildIds($item)) {
+            $index = array_search($item, $this->child_ids);
+            unset($this->child_ids[$index]);
+        }
     }
 
     /**
-     * @param ServerAlias $item
+     * @param OdooRelation $item
      */
-    public function addChildIds(ServerAlias $item): void
+    public function addChildIds(OdooRelation $item): void
     {
         if ($this->hasChildIds($item)) {
             return;
@@ -772,30 +879,125 @@ class Server extends Base
     }
 
     /**
-     * @param ServerAlias $item
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removeChildIds(ServerAlias $item): void
+    public function hasChildIds(OdooRelation $item): bool
     {
         if (null === $this->child_ids) {
-            $this->child_ids = [];
+            return false;
         }
 
-        if ($this->hasChildIds($item)) {
-            $index = array_search($item, $this->child_ids);
-            unset($this->child_ids[$index]);
-        }
+        return in_array($item, $this->child_ids);
     }
 
     /**
-     * @param null|Model $crud_model_id
+     * @param OdooRelation[]|null $child_ids
      */
-    public function setCrudModelId(?Model $crud_model_id): void
+    public function setChildIds(?array $child_ids): void
     {
-        $this->crud_model_id = $crud_model_id;
+        $this->child_ids = $child_ids;
     }
 
     /**
-     * @return null|string
+     * @return OdooRelation[]|null
+     */
+    public function getChildIds(): ?array
+    {
+        return $this->child_ids;
+    }
+
+    /**
+     * @param string|null $code
+     */
+    public function setCode(?string $code): void
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * @param string|null $model_name
+     */
+    public function setModelName(?string $model_name): void
+    {
+        $this->model_name = $model_name;
+    }
+
+    /**
+     * @param string|null $crud_model_name
+     */
+    public function setCrudModelName(?string $crud_model_name): void
+    {
+        $this->crud_model_name = $crud_model_name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getModelName(): ?string
+    {
+        return $this->model_name;
+    }
+
+    /**
+     * @param OdooRelation $model_id
+     */
+    public function setModelId(OdooRelation $model_id): void
+    {
+        $this->model_id = $model_id;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getModelId(): OdooRelation
+    {
+        return $this->model_id;
+    }
+
+    /**
+     * @param int|null $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSequence(): ?int
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType(string $type): void
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string|null
      */
     public function getCrudModelName(): ?string
     {
@@ -803,194 +1005,40 @@ class Server extends Base
     }
 
     /**
-     * @param null|Fields $link_field_id
+     * @return OdooRelation|null
      */
-    public function setLinkFieldId(?Fields $link_field_id): void
+    public function getLinkFieldId(): ?OdooRelation
     {
-        $this->link_field_id = $link_field_id;
+        return $this->link_field_id;
     }
 
     /**
-     * @param null|Lines[] $fields_lines
+     * @param OdooRelation $item
      */
-    public function setFieldsLines(?array $fields_lines): void
-    {
-        $this->fields_lines = $fields_lines;
-    }
-
-    /**
-     * @param Lines $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasFieldsLines(Lines $item, bool $strict = true): bool
-    {
-        if (null === $this->fields_lines) {
-            return false;
-        }
-
-        return in_array($item, $this->fields_lines, $strict);
-    }
-
-    /**
-     * @param Lines $item
-     */
-    public function removeFieldsLines(Lines $item): void
-    {
-        if (null === $this->fields_lines) {
-            $this->fields_lines = [];
-        }
-
-        if ($this->hasFieldsLines($item)) {
-            $index = array_search($item, $this->fields_lines);
-            unset($this->fields_lines[$index]);
-        }
-    }
-
-    /**
-     * @param null|string $activity_summary
-     */
-    public function setActivitySummary(?string $activity_summary): void
-    {
-        $this->activity_summary = $activity_summary;
-    }
-
-    /**
-     * @param null|Groups[] $groups_id
-     */
-    public function setGroupsId(?array $groups_id): void
-    {
-        $this->groups_id = $groups_id;
-    }
-
-    /**
-     * @param Groups $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasGroupsId(Groups $item, bool $strict = true): bool
-    {
-        if (null === $this->groups_id) {
-            return false;
-        }
-
-        return in_array($item, $this->groups_id, $strict);
-    }
-
-    /**
-     * @param Groups $item
-     */
-    public function addGroupsId(Groups $item): void
-    {
-        if ($this->hasGroupsId($item)) {
-            return;
-        }
-
-        if (null === $this->groups_id) {
-            $this->groups_id = [];
-        }
-
-        $this->groups_id[] = $item;
-    }
-
-    /**
-     * @param Groups $item
-     */
-    public function removeGroupsId(Groups $item): void
-    {
-        if (null === $this->groups_id) {
-            $this->groups_id = [];
-        }
-
-        if ($this->hasGroupsId($item)) {
-            $index = array_search($item, $this->groups_id);
-            unset($this->groups_id[$index]);
-        }
-    }
-
-    /**
-     * @param null|Partner[] $partner_ids
-     */
-    public function setPartnerIds(?array $partner_ids): void
-    {
-        $this->partner_ids = $partner_ids;
-    }
-
-    /**
-     * @param Partner $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasPartnerIds(Partner $item, bool $strict = true): bool
-    {
-        if (null === $this->partner_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->partner_ids, $strict);
-    }
-
-    /**
-     * @param Partner $item
-     */
-    public function addPartnerIds(Partner $item): void
-    {
-        if ($this->hasPartnerIds($item)) {
-            return;
-        }
-
-        if (null === $this->partner_ids) {
-            $this->partner_ids = [];
-        }
-
-        $this->partner_ids[] = $item;
-    }
-
-    /**
-     * @param Partner $item
-     */
-    public function removePartnerIds(Partner $item): void
-    {
-        if (null === $this->partner_ids) {
-            $this->partner_ids = [];
-        }
-
-        if ($this->hasPartnerIds($item)) {
-            $index = array_search($item, $this->partner_ids);
-            unset($this->partner_ids[$index]);
-        }
-    }
-
-    /**
-     * @param null|Channel[] $channel_ids
-     */
-    public function setChannelIds(?array $channel_ids): void
-    {
-        $this->channel_ids = $channel_ids;
-    }
-
-    /**
-     * @param Channel $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasChannelIds(Channel $item, bool $strict = true): bool
+    public function removeChannelIds(OdooRelation $item): void
     {
         if (null === $this->channel_ids) {
-            return false;
+            $this->channel_ids = [];
         }
 
-        return in_array($item, $this->channel_ids, $strict);
+        if ($this->hasChannelIds($item)) {
+            $index = array_search($item, $this->channel_ids);
+            unset($this->channel_ids[$index]);
+        }
     }
 
     /**
-     * @param Channel $item
+     * @return OdooRelation[]|null
      */
-    public function addChannelIds(Channel $item): void
+    public function getPartnerIds(): ?array
+    {
+        return $this->partner_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addChannelIds(OdooRelation $item): void
     {
         if ($this->hasChannelIds($item)) {
             return;
@@ -1004,41 +1052,223 @@ class Server extends Base
     }
 
     /**
-     * @param Channel $item
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removeChannelIds(Channel $item): void
+    public function hasChannelIds(OdooRelation $item): bool
     {
         if (null === $this->channel_ids) {
-            $this->channel_ids = [];
+            return false;
         }
 
-        if ($this->hasChannelIds($item)) {
-            $index = array_search($item, $this->channel_ids);
-            unset($this->channel_ids[$index]);
+        return in_array($item, $this->channel_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $channel_ids
+     */
+    public function setChannelIds(?array $channel_ids): void
+    {
+        $this->channel_ids = $channel_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getChannelIds(): ?array
+    {
+        return $this->channel_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removePartnerIds(OdooRelation $item): void
+    {
+        if (null === $this->partner_ids) {
+            $this->partner_ids = [];
+        }
+
+        if ($this->hasPartnerIds($item)) {
+            $index = array_search($item, $this->partner_ids);
+            unset($this->partner_ids[$index]);
         }
     }
 
     /**
-     * @param null|Template $template_id
+     * @param OdooRelation $item
      */
-    public function setTemplateId(?Template $template_id): void
+    public function addPartnerIds(OdooRelation $item): void
     {
-        $this->template_id = $template_id;
+        if ($this->hasPartnerIds($item)) {
+            return;
+        }
+
+        if (null === $this->partner_ids) {
+            $this->partner_ids = [];
+        }
+
+        $this->partner_ids[] = $item;
     }
 
     /**
-     * @param null|Type $activity_type_id
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setActivityTypeId(?Type $activity_type_id): void
+    public function hasPartnerIds(OdooRelation $item): bool
     {
-        $this->activity_type_id = $activity_type_id;
+        if (null === $this->partner_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->partner_ids);
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation[]|null $partner_ids
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function setPartnerIds(?array $partner_ids): void
     {
-        return $this->write_date;
+        $this->partner_ids = $partner_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeGroupsId(OdooRelation $item): void
+    {
+        if (null === $this->groups_id) {
+            $this->groups_id = [];
+        }
+
+        if ($this->hasGroupsId($item)) {
+            $index = array_search($item, $this->groups_id);
+            unset($this->groups_id[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation|null $link_field_id
+     */
+    public function setLinkFieldId(?OdooRelation $link_field_id): void
+    {
+        $this->link_field_id = $link_field_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addGroupsId(OdooRelation $item): void
+    {
+        if ($this->hasGroupsId($item)) {
+            return;
+        }
+
+        if (null === $this->groups_id) {
+            $this->groups_id = [];
+        }
+
+        $this->groups_id[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasGroupsId(OdooRelation $item): bool
+    {
+        if (null === $this->groups_id) {
+            return false;
+        }
+
+        return in_array($item, $this->groups_id);
+    }
+
+    /**
+     * @param OdooRelation[]|null $groups_id
+     */
+    public function setGroupsId(?array $groups_id): void
+    {
+        $this->groups_id = $groups_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getGroupsId(): ?array
+    {
+        return $this->groups_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeFieldsLines(OdooRelation $item): void
+    {
+        if (null === $this->fields_lines) {
+            $this->fields_lines = [];
+        }
+
+        if ($this->hasFieldsLines($item)) {
+            $index = array_search($item, $this->fields_lines);
+            unset($this->fields_lines[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addFieldsLines(OdooRelation $item): void
+    {
+        if ($this->hasFieldsLines($item)) {
+            return;
+        }
+
+        if (null === $this->fields_lines) {
+            $this->fields_lines = [];
+        }
+
+        $this->fields_lines[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasFieldsLines(OdooRelation $item): bool
+    {
+        if (null === $this->fields_lines) {
+            return false;
+        }
+
+        return in_array($item, $this->fields_lines);
+    }
+
+    /**
+     * @param OdooRelation[]|null $fields_lines
+     */
+    public function setFieldsLines(?array $fields_lines): void
+    {
+        $this->fields_lines = $fields_lines;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getFieldsLines(): ?array
+    {
+        return $this->fields_lines;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

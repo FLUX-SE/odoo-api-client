@@ -14,4 +14,5 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class ReportPricelist extends Base
 {
+    public const ODOO_MODEL_NAME = 'report.product.report_pricelist';
 }

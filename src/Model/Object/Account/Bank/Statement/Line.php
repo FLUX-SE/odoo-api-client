@@ -5,16 +5,8 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Account\Bank\Statement;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Account;
-use Flux\OdooApiClient\Model\Object\Account\Bank\Statement;
-use Flux\OdooApiClient\Model\Object\Account\Journal;
-use Flux\OdooApiClient\Model\Object\Account\Move\Line as LineAlias;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Currency;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
-use Flux\OdooApiClient\Model\Object\Res\Partner\Bank;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.bank.statement.line
@@ -22,18 +14,22 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Line extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.bank.statement.line';
+
     /**
      * Label
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -41,6 +37,8 @@ final class Line extends Base
 
     /**
      * Date
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var DateTimeInterface
      */
@@ -48,39 +46,49 @@ final class Line extends Base
 
     /**
      * Amount
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $amount;
 
     /**
      * Journal's Currency
      * Utility field to express amount currency
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|Currency
+     * @var OdooRelation|null
      */
     private $journal_currency_id;
 
     /**
      * Partner
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Partner
+     * @var OdooRelation|null
      */
     private $partner_id;
 
     /**
      * Bank Account Number
      * Technical field used to store the bank account number before its creation, upon the line's processing
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $account_number;
 
     /**
      * Bank Account
      * Bank account that was used in this transaction.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Bank
+     * @var OdooRelation|null
      */
     private $bank_account_id;
 
@@ -88,22 +96,28 @@ final class Line extends Base
      * Counterpart Account
      * This technical field can be used at the statement line creation/import time in order to avoid the
      * reconciliation process on it later on. The statement line will simply create a counterpart on this account
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Account
+     * @var OdooRelation|null
      */
     private $account_id;
 
     /**
      * Statement
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Statement
+     * @var OdooRelation
      */
     private $statement_id;
 
     /**
      * Journal
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Journal
+     * @var OdooRelation|null
      */
     private $journal_id;
 
@@ -111,75 +125,99 @@ final class Line extends Base
      * Partner Name
      * This field is used to record the third party name when importing bank statement in electronic format, when the
      * partner doesn't exist yet in the database (or cannot be found).
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $partner_name;
 
     /**
      * Reference
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $ref;
 
     /**
      * Notes
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $note;
 
     /**
      * Transaction Type
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $transaction_type;
 
     /**
      * Sequence
      * Gives the sequence order when displaying a list of bank statement lines.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $sequence;
 
     /**
      * Company
      * Company related to this journal
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Company
+     * @var OdooRelation|null
      */
     private $company_id;
 
     /**
      * Journal Items
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|LineAlias[]
+     * @var OdooRelation[]|null
      */
     private $journal_entry_ids;
 
     /**
      * Amount Currency
      * The amount expressed in an optional other currency if it is a multi-currency entry.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $amount_currency;
 
     /**
      * Currency
      * The optional other currency if it is a multi-currency entry.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Currency
+     * @var OdooRelation|null
      */
     private $currency_id;
 
     /**
      * Status
+     * Searchable : yes
+     * Sortable : no
+     * Selection : (default value, usually null)
+     *     -> open (New)
+     *     -> confirm (Validated)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $state;
 
@@ -188,75 +226,99 @@ final class Line extends Base
      * Technical field holding the number given to the journal entry, automatically set when the statement line is
      * reconciled then stored to set the same number again if the line is cancelled, set to draft and re-processed
      * again.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $move_name;
 
     /**
      * Import ID
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $unique_import_id;
 
     /**
      * Online Identifier
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $online_identifier;
 
     /**
      * Online Partner Vendor Name
      * Technical field used to store information from plaid/yodlee to match partner (used when a purchase is made)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $online_partner_vendor_name;
 
     /**
      * Online Partner Bank Account
      * Technical field used to store information from plaid/yodlee to match partner
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $online_partner_bank_account;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Label
+     *        Searchable : yes
+     *        Sortable : yes
      * @param DateTimeInterface $date Date
-     * @param Statement $statement_id Statement
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $statement_id Statement
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(string $name, DateTimeInterface $date, Statement $statement_id)
+    public function __construct(string $name, DateTimeInterface $date, OdooRelation $statement_id)
     {
         $this->name = $name;
         $this->date = $date;
@@ -264,63 +326,7 @@ final class Line extends Base
     }
 
     /**
-     * @return null|Company
-     */
-    public function getCompanyId(): ?Company
-    {
-        return $this->company_id;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getOnlinePartnerBankAccount(): ?string
-    {
-        return $this->online_partner_bank_account;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getOnlinePartnerVendorName(): ?string
-    {
-        return $this->online_partner_vendor_name;
-    }
-
-    /**
-     * @param null|string $online_identifier
-     */
-    public function setOnlineIdentifier(?string $online_identifier): void
-    {
-        $this->online_identifier = $online_identifier;
-    }
-
-    /**
-     * @return null|string
+     * @return string|null
      */
     public function getUniqueImportId(): ?string
     {
@@ -328,31 +334,68 @@ final class Line extends Base
     }
 
     /**
-     * @return null|string
+     * @param OdooRelation[]|null $journal_entry_ids
      */
-    public function getMoveName(): ?string
+    public function setJournalEntryIds(?array $journal_entry_ids): void
     {
-        return $this->move_name;
+        $this->journal_entry_ids = $journal_entry_ids;
     }
 
     /**
-     * @return null|array
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function getState(): ?array
+    public function hasJournalEntryIds(OdooRelation $item): bool
     {
-        return $this->state;
+        if (null === $this->journal_entry_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->journal_entry_ids);
     }
 
     /**
-     * @param null|Currency $currency_id
+     * @param OdooRelation $item
      */
-    public function setCurrencyId(?Currency $currency_id): void
+    public function addJournalEntryIds(OdooRelation $item): void
     {
-        $this->currency_id = $currency_id;
+        if ($this->hasJournalEntryIds($item)) {
+            return;
+        }
+
+        if (null === $this->journal_entry_ids) {
+            $this->journal_entry_ids = [];
+        }
+
+        $this->journal_entry_ids[] = $item;
     }
 
     /**
-     * @param null|float $amount_currency
+     * @param OdooRelation $item
+     */
+    public function removeJournalEntryIds(OdooRelation $item): void
+    {
+        if (null === $this->journal_entry_ids) {
+            $this->journal_entry_ids = [];
+        }
+
+        if ($this->hasJournalEntryIds($item)) {
+            $index = array_search($item, $this->journal_entry_ids);
+            unset($this->journal_entry_ids[$index]);
+        }
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getAmountCurrency(): ?float
+    {
+        return $this->amount_currency;
+    }
+
+    /**
+     * @param float|null $amount_currency
      */
     public function setAmountCurrency(?float $amount_currency): void
     {
@@ -360,7 +403,175 @@ final class Line extends Base
     }
 
     /**
-     * @return null|LineAlias[]
+     * @return OdooRelation|null
+     */
+    public function getCurrencyId(): ?OdooRelation
+    {
+        return $this->currency_id;
+    }
+
+    /**
+     * @param OdooRelation|null $currency_id
+     */
+    public function setCurrencyId(?OdooRelation $currency_id): void
+    {
+        $this->currency_id = $currency_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param string|null $state
+     */
+    public function setState(?string $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMoveName(): ?string
+    {
+        return $this->move_name;
+    }
+
+    /**
+     * @param string|null $move_name
+     */
+    public function setMoveName(?string $move_name): void
+    {
+        $this->move_name = $move_name;
+    }
+
+    /**
+     * @param string|null $unique_import_id
+     */
+    public function setUniqueImportId(?string $unique_import_id): void
+    {
+        $this->unique_import_id = $unique_import_id;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOnlineIdentifier(): ?string
+    {
+        return $this->online_identifier;
+    }
+
+    /**
+     * @param string|null $online_identifier
+     */
+    public function setOnlineIdentifier(?string $online_identifier): void
+    {
+        $this->online_identifier = $online_identifier;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOnlinePartnerVendorName(): ?string
+    {
+        return $this->online_partner_vendor_name;
+    }
+
+    /**
+     * @param string|null $online_partner_vendor_name
+     */
+    public function setOnlinePartnerVendorName(?string $online_partner_vendor_name): void
+    {
+        $this->online_partner_vendor_name = $online_partner_vendor_name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOnlinePartnerBankAccount(): ?string
+    {
+        return $this->online_partner_bank_account;
+    }
+
+    /**
+     * @param string|null $online_partner_bank_account
+     */
+    public function setOnlinePartnerBankAccount(?string $online_partner_bank_account): void
+    {
+        $this->online_partner_bank_account = $online_partner_bank_account;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @return OdooRelation[]|null
      */
     public function getJournalEntryIds(): ?array
     {
@@ -368,11 +579,27 @@ final class Line extends Base
     }
 
     /**
-     * @param null|int $sequence
+     * @return OdooRelation|null
      */
-    public function setSequence(?int $sequence): void
+    public function getCompanyId(): ?OdooRelation
     {
-        $this->sequence = $sequence;
+        return $this->company_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getAccountId(): ?OdooRelation
+    {
+        return $this->account_id;
     }
 
     /**
@@ -384,99 +611,11 @@ final class Line extends Base
     }
 
     /**
-     * @param null|string $transaction_type
+     * @return DateTimeInterface
      */
-    public function setTransactionType(?string $transaction_type): void
+    public function getDate(): DateTimeInterface
     {
-        $this->transaction_type = $transaction_type;
-    }
-
-    /**
-     * @param null|string $note
-     */
-    public function setNote(?string $note): void
-    {
-        $this->note = $note;
-    }
-
-    /**
-     * @param null|string $ref
-     */
-    public function setRef(?string $ref): void
-    {
-        $this->ref = $ref;
-    }
-
-    /**
-     * @param null|string $partner_name
-     */
-    public function setPartnerName(?string $partner_name): void
-    {
-        $this->partner_name = $partner_name;
-    }
-
-    /**
-     * @return null|Journal
-     */
-    public function getJournalId(): ?Journal
-    {
-        return $this->journal_id;
-    }
-
-    /**
-     * @param Statement $statement_id
-     */
-    public function setStatementId(Statement $statement_id): void
-    {
-        $this->statement_id = $statement_id;
-    }
-
-    /**
-     * @param null|Account $account_id
-     */
-    public function setAccountId(?Account $account_id): void
-    {
-        $this->account_id = $account_id;
-    }
-
-    /**
-     * @param null|Bank $bank_account_id
-     */
-    public function setBankAccountId(?Bank $bank_account_id): void
-    {
-        $this->bank_account_id = $bank_account_id;
-    }
-
-    /**
-     * @param null|string $account_number
-     */
-    public function setAccountNumber(?string $account_number): void
-    {
-        $this->account_number = $account_number;
-    }
-
-    /**
-     * @param null|Partner $partner_id
-     */
-    public function setPartnerId(?Partner $partner_id): void
-    {
-        $this->partner_id = $partner_id;
-    }
-
-    /**
-     * @return null|Currency
-     */
-    public function getJournalCurrencyId(): ?Currency
-    {
-        return $this->journal_currency_id;
-    }
-
-    /**
-     * @param null|float $amount
-     */
-    public function setAmount(?float $amount): void
-    {
-        $this->amount = $amount;
+        return $this->date;
     }
 
     /**
@@ -488,10 +627,210 @@ final class Line extends Base
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return float|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getAmount(): ?float
     {
-        return $this->write_date;
+        return $this->amount;
+    }
+
+    /**
+     * @param float|null $amount
+     */
+    public function setAmount(?float $amount): void
+    {
+        $this->amount = $amount;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getJournalCurrencyId(): ?OdooRelation
+    {
+        return $this->journal_currency_id;
+    }
+
+    /**
+     * @param OdooRelation|null $journal_currency_id
+     */
+    public function setJournalCurrencyId(?OdooRelation $journal_currency_id): void
+    {
+        $this->journal_currency_id = $journal_currency_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPartnerId(): ?OdooRelation
+    {
+        return $this->partner_id;
+    }
+
+    /**
+     * @param OdooRelation|null $partner_id
+     */
+    public function setPartnerId(?OdooRelation $partner_id): void
+    {
+        $this->partner_id = $partner_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAccountNumber(): ?string
+    {
+        return $this->account_number;
+    }
+
+    /**
+     * @param string|null $account_number
+     */
+    public function setAccountNumber(?string $account_number): void
+    {
+        $this->account_number = $account_number;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getBankAccountId(): ?OdooRelation
+    {
+        return $this->bank_account_id;
+    }
+
+    /**
+     * @param OdooRelation|null $bank_account_id
+     */
+    public function setBankAccountId(?OdooRelation $bank_account_id): void
+    {
+        $this->bank_account_id = $bank_account_id;
+    }
+
+    /**
+     * @param OdooRelation|null $account_id
+     */
+    public function setAccountId(?OdooRelation $account_id): void
+    {
+        $this->account_id = $account_id;
+    }
+
+    /**
+     * @param int|null $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getStatementId(): OdooRelation
+    {
+        return $this->statement_id;
+    }
+
+    /**
+     * @param OdooRelation $statement_id
+     */
+    public function setStatementId(OdooRelation $statement_id): void
+    {
+        $this->statement_id = $statement_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getJournalId(): ?OdooRelation
+    {
+        return $this->journal_id;
+    }
+
+    /**
+     * @param OdooRelation|null $journal_id
+     */
+    public function setJournalId(?OdooRelation $journal_id): void
+    {
+        $this->journal_id = $journal_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPartnerName(): ?string
+    {
+        return $this->partner_name;
+    }
+
+    /**
+     * @param string|null $partner_name
+     */
+    public function setPartnerName(?string $partner_name): void
+    {
+        $this->partner_name = $partner_name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRef(): ?string
+    {
+        return $this->ref;
+    }
+
+    /**
+     * @param string|null $ref
+     */
+    public function setRef(?string $ref): void
+    {
+        $this->ref = $ref;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNote(): ?string
+    {
+        return $this->note;
+    }
+
+    /**
+     * @param string|null $note
+     */
+    public function setNote(?string $note): void
+    {
+        $this->note = $note;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTransactionType(): ?string
+    {
+        return $this->transaction_type;
+    }
+
+    /**
+     * @param string|null $transaction_type
+     */
+    public function setTransactionType(?string $transaction_type): void
+    {
+        $this->transaction_type = $transaction_type;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSequence(): ?int
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

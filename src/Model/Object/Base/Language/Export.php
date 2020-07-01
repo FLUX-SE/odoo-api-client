@@ -6,106 +6,264 @@ namespace Flux\OdooApiClient\Model\Object\Base\Language;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Module\Module;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : base.language.export
  * Name : base.language.export
  * Info :
  * Model super-class for transient records, meant to be temporarily
- * persistent, and regularly vacuum-cleaned.
+ *         persistent, and regularly vacuum-cleaned.
  *
- * A TransientModel has a simplified access rights management, all users can
- * create new records, and may only access the records they created. The
- * superuser has unrestricted access to all TransientModel records.
+ *         A TransientModel has a simplified access rights management, all users can
+ *         create new records, and may only access the records they created. The
+ *         superuser has unrestricted access to all TransientModel records.
  */
 final class Export extends Base
 {
+    public const ODOO_MODEL_NAME = 'base.language.export';
+
     /**
      * File Name
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $name;
 
     /**
      * Language
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> __new__ (New Language (Empty translation template))
+     *     -> en_US (English (US))
      *
-     * @var array
+     *
+     * @var string
      */
     private $lang;
 
     /**
      * File Format
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> csv (CSV File)
+     *     -> po (PO File)
+     *     -> tgz (TGZ Archive)
      *
-     * @var array
+     *
+     * @var string
      */
     private $format;
 
     /**
      * Apps To Export
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Module[]
+     * @var OdooRelation[]|null
      */
     private $modules;
 
     /**
      * File
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $data;
 
     /**
      * State
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> choose (choose)
+     *     -> get (get)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $state;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param array $lang Language
-     * @param array $format File Format
+     * @param string $lang Language
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> __new__ (New Language (Empty translation template))
+     *            -> en_US (English (US))
+     *
+     * @param string $format File Format
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> csv (CSV File)
+     *            -> po (PO File)
+     *            -> tgz (TGZ Archive)
+     *
      */
-    public function __construct(array $lang, array $format)
+    public function __construct(string $lang, string $format)
     {
         $this->lang = $lang;
         $this->format = $format;
     }
 
     /**
-     * @param Module $item
+     * @param int|null $data
      */
-    public function addModules(Module $item): void
+    public function setData(?int $data): void
+    {
+        $this->data = $data;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param string|null $state
+     */
+    public function setState(?string $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getData(): ?int
+    {
+        return $this->data;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeModules(OdooRelation $item): void
+    {
+        if (null === $this->modules) {
+            $this->modules = [];
+        }
+
+        if ($this->hasModules($item)) {
+            $index = array_search($item, $this->modules);
+            unset($this->modules[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addModules(OdooRelation $item): void
     {
         if ($this->hasModules($item)) {
             return;
@@ -119,131 +277,21 @@ final class Export extends Base
     }
 
     /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeState($item): void
-    {
-        if (null === $this->state) {
-            $this->state = [];
-        }
-
-        if ($this->hasState($item)) {
-            $index = array_search($item, $this->state);
-            unset($this->state[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addState($item): void
-    {
-        if ($this->hasState($item)) {
-            return;
-        }
-
-        if (null === $this->state) {
-            $this->state = [];
-        }
-
-        $this->state[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasState($item, bool $strict = true): bool
-    {
-        if (null === $this->state) {
-            return false;
-        }
-
-        return in_array($item, $this->state, $strict);
-    }
-
-    /**
-     * @param null|array $state
-     */
-    public function setState(?array $state): void
-    {
-        $this->state = $state;
-    }
-
-    /**
-     * @return null|int
-     */
-    public function getData(): ?int
-    {
-        return $this->data;
-    }
-
-    /**
-     * @param Module $item
-     */
-    public function removeModules(Module $item): void
-    {
-        if (null === $this->modules) {
-            $this->modules = [];
-        }
-
-        if ($this->hasModules($item)) {
-            $index = array_search($item, $this->modules);
-            unset($this->modules[$index]);
-        }
-    }
-
-    /**
-     * @param Module $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasModules(Module $item, bool $strict = true): bool
+    public function hasModules(OdooRelation $item): bool
     {
         if (null === $this->modules) {
             return false;
         }
 
-        return in_array($item, $this->modules, $strict);
+        return in_array($item, $this->modules);
     }
 
     /**
-     * @return null|string
-     */
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param null|Module[] $modules
+     * @param OdooRelation[]|null $modules
      */
     public function setModules(?array $modules): void
     {
@@ -251,94 +299,58 @@ final class Export extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return OdooRelation[]|null
      */
-    public function removeFormat($item): void
+    public function getModules(): ?array
     {
-        if ($this->hasFormat($item)) {
-            $index = array_search($item, $this->format);
-            unset($this->format[$index]);
-        }
+        return $this->modules;
     }
 
     /**
-     * @param mixed $item
+     * @param string $format
      */
-    public function addFormat($item): void
-    {
-        if ($this->hasFormat($item)) {
-            return;
-        }
-
-        $this->format[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasFormat($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->format, $strict);
-    }
-
-    /**
-     * @param array $format
-     */
-    public function setFormat(array $format): void
+    public function setFormat(string $format): void
     {
         $this->format = $format;
     }
 
     /**
-     * @param mixed $item
+     * @return string
      */
-    public function removeLang($item): void
+    public function getFormat(): string
     {
-        if ($this->hasLang($item)) {
-            $index = array_search($item, $this->lang);
-            unset($this->lang[$index]);
-        }
+        return $this->format;
     }
 
     /**
-     * @param mixed $item
+     * @param string $lang
      */
-    public function addLang($item): void
-    {
-        if ($this->hasLang($item)) {
-            return;
-        }
-
-        $this->lang[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasLang($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->lang, $strict);
-    }
-
-    /**
-     * @param array $lang
-     */
-    public function setLang(array $lang): void
+    public function setLang(string $lang): void
     {
         $this->lang = $lang;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return string
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getLang(): string
     {
-        return $this->write_date;
+        return $this->lang;
+    }
+
+    /**
+     * @param string|null $name
+     */
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

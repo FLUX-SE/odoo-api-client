@@ -5,136 +5,195 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Account\Online\Link;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Journal;
-use Flux\OdooApiClient\Model\Object\Account\Online\Journal as JournalAlias;
-use Flux\OdooApiClient\Model\Object\Account\Online\Wizard as WizardAlias;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.online.link.wizard
  * Name : account.online.link.wizard
  * Info :
  * Model super-class for transient records, meant to be temporarily
- * persistent, and regularly vacuum-cleaned.
+ *         persistent, and regularly vacuum-cleaned.
  *
- * A TransientModel has a simplified access rights management, all users can
- * create new records, and may only access the records they created. The
- * superuser has unrestricted access to all TransientModel records.
+ *         A TransientModel has a simplified access rights management, all users can
+ *         create new records, and may only access the records they created. The
+ *         superuser has unrestricted access to all TransientModel records.
  */
 final class Wizard extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.online.link.wizard';
+
     /**
      * Journal
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Journal
+     * @var OdooRelation|null
      */
     private $journal_id;
 
     /**
      * Online Account
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|JournalAlias
+     * @var OdooRelation|null
      */
     private $online_account_id;
 
     /**
      * Action
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> create (Create new journal)
+     *     -> link (Link to existing journal)
+     *     -> drop (Do not link)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $action;
 
     /**
      * Account name
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $name;
 
     /**
      * Balance
      * balance of the account sent by the third party provider
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|float
+     * @var float|null
      */
     private $balance;
 
     /**
      * Account Online Wizard
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|WizardAlias
+     * @var OdooRelation|null
      */
     private $account_online_wizard_id;
 
     /**
      * Account Number
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $account_number;
 
     /**
      * Synchronization frequency
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> none (Create one statement per synchronization)
+     *     -> day (Create daily statements)
+     *     -> week (Create weekly statements)
+     *     -> bimonthly (Create bi-monthly statements)
+     *     -> month (Create monthly statements)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $journal_statements_creation;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param null|Journal $journal_id
+     * @return OdooRelation|null
      */
-    public function setJournalId(?Journal $journal_id): void
+    public function getJournalId(): ?OdooRelation
     {
-        $this->journal_id = $journal_id;
+        return $this->journal_id;
     }
 
     /**
-     * @param null|array $journal_statements_creation
+     * @param string|null $account_number
      */
-    public function setJournalStatementsCreation(?array $journal_statements_creation): void
+    public function setAccountNumber(?string $account_number): void
     {
-        $this->journal_statements_creation = $journal_statements_creation;
+        $this->account_number = $account_number;
     }
 
     /**
-     * @return null|Users
+     * @return DateTimeInterface|null
      */
-    public function getWriteUid(): ?Users
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -142,61 +201,39 @@ final class Wizard extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @param mixed $item
+     * @param string|null $journal_statements_creation
      */
-    public function removeJournalStatementsCreation($item): void
+    public function setJournalStatementsCreation(?string $journal_statements_creation): void
     {
-        if (null === $this->journal_statements_creation) {
-            $this->journal_statements_creation = [];
-        }
-
-        if ($this->hasJournalStatementsCreation($item)) {
-            $index = array_search($item, $this->journal_statements_creation);
-            unset($this->journal_statements_creation[$index]);
-        }
+        $this->journal_statements_creation = $journal_statements_creation;
     }
 
     /**
-     * @param mixed $item
+     * @return string|null
      */
-    public function addJournalStatementsCreation($item): void
+    public function getJournalStatementsCreation(): ?string
     {
-        if ($this->hasJournalStatementsCreation($item)) {
-            return;
-        }
-
-        if (null === $this->journal_statements_creation) {
-            $this->journal_statements_creation = [];
-        }
-
-        $this->journal_statements_creation[] = $item;
+        return $this->journal_statements_creation;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasJournalStatementsCreation($item, bool $strict = true): bool
-    {
-        if (null === $this->journal_statements_creation) {
-            return false;
-        }
-
-        return in_array($item, $this->journal_statements_creation, $strict);
-    }
-
-    /**
-     * @return null|string
+     * @return string|null
      */
     public function getAccountNumber(): ?string
     {
@@ -204,23 +241,39 @@ final class Wizard extends Base
     }
 
     /**
-     * @param null|JournalAlias $online_account_id
+     * @param OdooRelation|null $journal_id
      */
-    public function setOnlineAccountId(?JournalAlias $online_account_id): void
+    public function setJournalId(?OdooRelation $journal_id): void
     {
-        $this->online_account_id = $online_account_id;
+        $this->journal_id = $journal_id;
     }
 
     /**
-     * @param null|WizardAlias $account_online_wizard_id
+     * @param OdooRelation|null $account_online_wizard_id
      */
-    public function setAccountOnlineWizardId(?WizardAlias $account_online_wizard_id): void
+    public function setAccountOnlineWizardId(?OdooRelation $account_online_wizard_id): void
     {
         $this->account_online_wizard_id = $account_online_wizard_id;
     }
 
     /**
-     * @return null|float
+     * @return OdooRelation|null
+     */
+    public function getAccountOnlineWizardId(): ?OdooRelation
+    {
+        return $this->account_online_wizard_id;
+    }
+
+    /**
+     * @param float|null $balance
+     */
+    public function setBalance(?float $balance): void
+    {
+        $this->balance = $balance;
+    }
+
+    /**
+     * @return float|null
      */
     public function getBalance(): ?float
     {
@@ -228,7 +281,15 @@ final class Wizard extends Base
     }
 
     /**
-     * @return null|string
+     * @param string|null $name
+     */
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string|null
      */
     public function getName(): ?string
     {
@@ -236,64 +297,42 @@ final class Wizard extends Base
     }
 
     /**
-     * @param mixed $item
+     * @param string|null $action
      */
-    public function removeAction($item): void
-    {
-        if (null === $this->action) {
-            $this->action = [];
-        }
-
-        if ($this->hasAction($item)) {
-            $index = array_search($item, $this->action);
-            unset($this->action[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addAction($item): void
-    {
-        if ($this->hasAction($item)) {
-            return;
-        }
-
-        if (null === $this->action) {
-            $this->action = [];
-        }
-
-        $this->action[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasAction($item, bool $strict = true): bool
-    {
-        if (null === $this->action) {
-            return false;
-        }
-
-        return in_array($item, $this->action, $strict);
-    }
-
-    /**
-     * @param null|array $action
-     */
-    public function setAction(?array $action): void
+    public function setAction(?string $action): void
     {
         $this->action = $action;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return string|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getAction(): ?string
     {
-        return $this->write_date;
+        return $this->action;
+    }
+
+    /**
+     * @param OdooRelation|null $online_account_id
+     */
+    public function setOnlineAccountId(?OdooRelation $online_account_id): void
+    {
+        $this->online_account_id = $online_account_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getOnlineAccountId(): ?OdooRelation
+    {
+        return $this->online_account_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

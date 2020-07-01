@@ -5,14 +5,8 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Account\Reconcile\Model;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Account\Template as TemplateAliasAlias;
-use Flux\OdooApiClient\Model\Object\Account\Chart\Template as TemplateAlias;
-use Flux\OdooApiClient\Model\Object\Account\Journal;
-use Flux\OdooApiClient\Model\Object\Account\Tax\Template as Template2;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
-use Flux\OdooApiClient\Model\Object\Res\Partner\Category;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.reconcile.model.template
@@ -20,25 +14,31 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Template extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.reconcile.model.template';
+
     /**
      * Chart Template
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var TemplateAlias
+     * @var OdooRelation
      */
     private $chart_template_id;
 
     /**
      * Button Label
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -46,6 +46,8 @@ final class Template extends Base
 
     /**
      * Sequence
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var int
      */
@@ -53,43 +55,63 @@ final class Template extends Base
 
     /**
      * Type
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> writeoff_button (Manually create a write-off on clicked button.)
+     *     -> writeoff_suggestion (Suggest a write-off.)
+     *     -> invoice_matching (Match existing invoices/bills.)
      *
-     * @var array
+     *
+     * @var string
      */
     private $rule_type;
 
     /**
      * Auto-validate
      * Validate the statement line automatically (reconciliation based on your rule).
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $auto_reconcile;
 
     /**
      * To Check
      * This matching rule is used when the user is not certain of all the informations of the counterpart.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $to_check;
 
     /**
      * Journals
      * The reconciliation model will only be available from the selected journals.
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Journal[]
+     * @var OdooRelation[]|null
      */
     private $match_journal_ids;
 
     /**
      * Amount Nature
      * The reconciliation model will only be applied to the selected transaction type:
-     * * Amount Received: Only applied when receiving an amount.
-     * * Amount Paid: Only applied when paying an amount.
-     * * Amount Paid/Received: Applied in both cases.
+     *                 * Amount Received: Only applied when receiving an amount.
+     *                 * Amount Paid: Only applied when paying an amount.
+     *                 * Amount Paid/Received: Applied in both cases.
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> amount_received (Amount Received)
+     *     -> amount_paid (Amount Paid)
+     *     -> both (Amount Paid/Received)
      *
-     * @var array
+     *
+     * @var string
      */
     private $match_nature;
 
@@ -97,151 +119,214 @@ final class Template extends Base
      * Amount
      * The reconciliation model will only be applied when the amount being lower than, greater than or between
      * specified amount(s).
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> lower (Is Lower Than)
+     *     -> greater (Is Greater Than)
+     *     -> between (Is Between)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $match_amount;
 
     /**
      * Amount Min Parameter
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $match_amount_min;
 
     /**
      * Amount Max Parameter
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $match_amount_max;
 
     /**
      * Label
      * The reconciliation model will only be applied when the label:
-     * * Contains: The proposition label must contains this string (case insensitive).
-     * * Not Contains: Negation of "Contains".
-     * * Match Regex: Define your own regular expression.
+     *                 * Contains: The proposition label must contains this string (case insensitive).
+     *                 * Not Contains: Negation of "Contains".
+     *                 * Match Regex: Define your own regular expression.
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> contains (Contains)
+     *     -> not_contains (Not Contains)
+     *     -> match_regex (Match Regex)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $match_label;
 
     /**
      * Label Parameter
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $match_label_param;
 
     /**
      * Note
      * The reconciliation model will only be applied when the note:
-     * * Contains: The proposition note must contains this string (case insensitive).
-     * * Not Contains: Negation of "Contains".
-     * * Match Regex: Define your own regular expression.
+     *                 * Contains: The proposition note must contains this string (case insensitive).
+     *                 * Not Contains: Negation of "Contains".
+     *                 * Match Regex: Define your own regular expression.
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> contains (Contains)
+     *     -> not_contains (Not Contains)
+     *     -> match_regex (Match Regex)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $match_note;
 
     /**
      * Note Parameter
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $match_note_param;
 
     /**
      * Transaction Type
      * The reconciliation model will only be applied when the transaction type:
-     * * Contains: The proposition transaction type must contains this string (case insensitive).
-     * * Not Contains: Negation of "Contains".
-     * * Match Regex: Define your own regular expression.
+     *                 * Contains: The proposition transaction type must contains this string (case insensitive).
+     *                 * Not Contains: Negation of "Contains".
+     *                 * Match Regex: Define your own regular expression.
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> contains (Contains)
+     *     -> not_contains (Not Contains)
+     *     -> match_regex (Match Regex)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $match_transaction_type;
 
     /**
      * Transaction Type Parameter
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $match_transaction_type_param;
 
     /**
      * Same Currency Matching
      * Restrict to propositions having the same currency as the statement line.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $match_same_currency;
 
     /**
      * Amount Matching
      * The sum of total residual amount propositions matches the statement line amount.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $match_total_amount;
 
     /**
      * Amount Matching %
      * The sum of total residual amount propositions matches the statement line amount under this percentage.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $match_total_amount_param;
 
     /**
      * Partner Is Set
      * The reconciliation model will only be applied when a customer/vendor is set.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $match_partner;
 
     /**
      * Restrict Partners to
      * The reconciliation model will only be applied to the selected customers/vendors.
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Partner[]
+     * @var OdooRelation[]|null
      */
     private $match_partner_ids;
 
     /**
      * Restrict Partner Categories to
      * The reconciliation model will only be applied to the selected customer/vendor categories.
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Category[]
+     * @var OdooRelation[]|null
      */
     private $match_partner_category_ids;
 
     /**
      * Account
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|TemplateAliasAlias
+     * @var OdooRelation|null
      */
     private $account_id;
 
     /**
      * Journal Item Label
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $label;
 
     /**
      * Amount Type
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> fixed (Fixed)
+     *     -> percentage (Percentage of balance)
+     *     -> regex (From label)
      *
-     * @var array
+     *
+     * @var string
      */
     private $amount_type;
 
     /**
      * Write-off Amount
      * Fixed amount will count as a debit if it is negative, as a credit if it is positive.
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var float
      */
@@ -249,65 +334,88 @@ final class Template extends Base
 
     /**
      * Amount from Label (regex)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $amount_from_label_regex;
 
     /**
      * Decimal Separator
      * Every character that is nor a digit nor this separator will be removed from the matching string
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $decimal_separator;
 
     /**
      * Tax Included in Price
      * Force the tax to be managed as a price included tax.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $force_tax_included;
 
     /**
      * Add a second line
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $has_second_line;
 
     /**
      * Taxes
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Template2[]
+     * @var OdooRelation[]|null
      */
     private $tax_ids;
 
     /**
      * Second Account
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|TemplateAliasAlias
+     * @var OdooRelation|null
      */
     private $second_account_id;
 
     /**
      * Second Journal Item Label
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $second_label;
 
     /**
      * Second Amount type
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> fixed (Fixed)
+     *     -> percentage (Percentage of amount)
+     *     -> regex (From label)
      *
-     * @var array
+     *
+     * @var string
      */
     private $second_amount_type;
 
     /**
      * Second Write-off Amount
      * Fixed amount will count as a debit if it is negative, as a credit if it is positive.
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var float
      */
@@ -315,80 +423,132 @@ final class Template extends Base
 
     /**
      * Second Amount from Label (regex)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $second_amount_from_label_regex;
 
     /**
      * Second Tax Included in Price
      * Force the second tax to be managed as a price included tax.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $force_second_tax_included;
 
     /**
      * Second Taxes
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Template2[]
+     * @var OdooRelation[]|null
      */
     private $second_tax_ids;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param TemplateAlias $chart_template_id Chart Template
+     * @param OdooRelation $chart_template_id Chart Template
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $name Button Label
+     *        Searchable : yes
+     *        Sortable : yes
      * @param int $sequence Sequence
-     * @param array $rule_type Type
-     * @param array $match_nature Amount Nature
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $rule_type Type
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> writeoff_button (Manually create a write-off on clicked button.)
+     *            -> writeoff_suggestion (Suggest a write-off.)
+     *            -> invoice_matching (Match existing invoices/bills.)
+     *
+     * @param string $match_nature Amount Nature
      *        The reconciliation model will only be applied to the selected transaction type:
-     *        * Amount Received: Only applied when receiving an amount.
-     *        * Amount Paid: Only applied when paying an amount.
-     *        * Amount Paid/Received: Applied in both cases.
-     * @param array $amount_type Amount Type
+     *                        * Amount Received: Only applied when receiving an amount.
+     *                        * Amount Paid: Only applied when paying an amount.
+     *                        * Amount Paid/Received: Applied in both cases.
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> amount_received (Amount Received)
+     *            -> amount_paid (Amount Paid)
+     *            -> both (Amount Paid/Received)
+     *
+     * @param string $amount_type Amount Type
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> fixed (Fixed)
+     *            -> percentage (Percentage of balance)
+     *            -> regex (From label)
+     *
      * @param float $amount Write-off Amount
      *        Fixed amount will count as a debit if it is negative, as a credit if it is positive.
-     * @param array $second_amount_type Second Amount type
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $second_amount_type Second Amount type
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> fixed (Fixed)
+     *            -> percentage (Percentage of amount)
+     *            -> regex (From label)
+     *
      * @param float $second_amount Second Write-off Amount
      *        Fixed amount will count as a debit if it is negative, as a credit if it is positive.
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
-        TemplateAlias $chart_template_id,
+        OdooRelation $chart_template_id,
         string $name,
         int $sequence,
-        array $rule_type,
-        array $match_nature,
-        array $amount_type,
+        string $rule_type,
+        string $match_nature,
+        string $amount_type,
         float $amount,
-        array $second_amount_type,
+        string $second_amount_type,
         float $second_amount
     ) {
         $this->chart_template_id = $chart_template_id;
@@ -403,15 +563,61 @@ final class Template extends Base
     }
 
     /**
-     * @param array $amount_type
+     * @param string|null $amount_from_label_regex
      */
-    public function setAmountType(array $amount_type): void
+    public function setAmountFromLabelRegex(?string $amount_from_label_regex): void
     {
-        $this->amount_type = $amount_type;
+        $this->amount_from_label_regex = $amount_from_label_regex;
     }
 
     /**
-     * @param null|bool $force_tax_included
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasTaxIds(OdooRelation $item): bool
+    {
+        if (null === $this->tax_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->tax_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $tax_ids
+     */
+    public function setTaxIds(?array $tax_ids): void
+    {
+        $this->tax_ids = $tax_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getTaxIds(): ?array
+    {
+        return $this->tax_ids;
+    }
+
+    /**
+     * @param bool|null $has_second_line
+     */
+    public function setHasSecondLine(?bool $has_second_line): void
+    {
+        $this->has_second_line = $has_second_line;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isHasSecondLine(): ?bool
+    {
+        return $this->has_second_line;
+    }
+
+    /**
+     * @param bool|null $force_tax_included
      */
     public function setForceTaxIncluded(?bool $force_tax_included): void
     {
@@ -419,7 +625,15 @@ final class Template extends Base
     }
 
     /**
-     * @param null|string $decimal_separator
+     * @return bool|null
+     */
+    public function isForceTaxIncluded(): ?bool
+    {
+        return $this->force_tax_included;
+    }
+
+    /**
+     * @param string|null $decimal_separator
      */
     public function setDecimalSeparator(?string $decimal_separator): void
     {
@@ -427,11 +641,34 @@ final class Template extends Base
     }
 
     /**
-     * @param null|string $amount_from_label_regex
+     * @return string|null
      */
-    public function setAmountFromLabelRegex(?string $amount_from_label_regex): void
+    public function getDecimalSeparator(): ?string
     {
-        $this->amount_from_label_regex = $amount_from_label_regex;
+        return $this->decimal_separator;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAmountFromLabelRegex(): ?string
+    {
+        return $this->amount_from_label_regex;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeTaxIds(OdooRelation $item): void
+    {
+        if (null === $this->tax_ids) {
+            $this->tax_ids = [];
+        }
+
+        if ($this->hasTaxIds($item)) {
+            $index = array_search($item, $this->tax_ids);
+            unset($this->tax_ids[$index]);
+        }
     }
 
     /**
@@ -443,41 +680,31 @@ final class Template extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return float
      */
-    public function removeAmountType($item): void
+    public function getAmount(): float
     {
-        if ($this->hasAmountType($item)) {
-            $index = array_search($item, $this->amount_type);
-            unset($this->amount_type[$index]);
-        }
+        return $this->amount;
     }
 
     /**
-     * @param mixed $item
+     * @param string $amount_type
      */
-    public function addAmountType($item): void
+    public function setAmountType(string $amount_type): void
     {
-        if ($this->hasAmountType($item)) {
-            return;
-        }
-
-        $this->amount_type[] = $item;
+        $this->amount_type = $amount_type;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return string
      */
-    public function hasAmountType($item, bool $strict = true): bool
+    public function getAmountType(): string
     {
-        return in_array($item, $this->amount_type, $strict);
+        return $this->amount_type;
     }
 
     /**
-     * @param null|string $label
+     * @param string|null $label
      */
     public function setLabel(?string $label): void
     {
@@ -485,25 +712,33 @@ final class Template extends Base
     }
 
     /**
-     * @param null|Template2[] $tax_ids
+     * @return string|null
      */
-    public function setTaxIds(?array $tax_ids): void
+    public function getLabel(): ?string
     {
-        $this->tax_ids = $tax_ids;
+        return $this->label;
     }
 
     /**
-     * @param null|TemplateAliasAlias $account_id
+     * @param OdooRelation|null $account_id
      */
-    public function setAccountId(?TemplateAliasAlias $account_id): void
+    public function setAccountId(?OdooRelation $account_id): void
     {
         $this->account_id = $account_id;
     }
 
     /**
-     * @param Category $item
+     * @return OdooRelation|null
      */
-    public function removeMatchPartnerCategoryIds(Category $item): void
+    public function getAccountId(): ?OdooRelation
+    {
+        return $this->account_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMatchPartnerCategoryIds(OdooRelation $item): void
     {
         if (null === $this->match_partner_category_ids) {
             $this->match_partner_category_ids = [];
@@ -516,9 +751,9 @@ final class Template extends Base
     }
 
     /**
-     * @param Category $item
+     * @param OdooRelation $item
      */
-    public function addMatchPartnerCategoryIds(Category $item): void
+    public function addMatchPartnerCategoryIds(OdooRelation $item): void
     {
         if ($this->hasMatchPartnerCategoryIds($item)) {
             return;
@@ -532,203 +767,9 @@ final class Template extends Base
     }
 
     /**
-     * @param Category $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param OdooRelation $item
      */
-    public function hasMatchPartnerCategoryIds(Category $item, bool $strict = true): bool
-    {
-        if (null === $this->match_partner_category_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->match_partner_category_ids, $strict);
-    }
-
-    /**
-     * @param null|Category[] $match_partner_category_ids
-     */
-    public function setMatchPartnerCategoryIds(?array $match_partner_category_ids): void
-    {
-        $this->match_partner_category_ids = $match_partner_category_ids;
-    }
-
-    /**
-     * @param Partner $item
-     */
-    public function removeMatchPartnerIds(Partner $item): void
-    {
-        if (null === $this->match_partner_ids) {
-            $this->match_partner_ids = [];
-        }
-
-        if ($this->hasMatchPartnerIds($item)) {
-            $index = array_search($item, $this->match_partner_ids);
-            unset($this->match_partner_ids[$index]);
-        }
-    }
-
-    /**
-     * @param Partner $item
-     */
-    public function addMatchPartnerIds(Partner $item): void
-    {
-        if ($this->hasMatchPartnerIds($item)) {
-            return;
-        }
-
-        if (null === $this->match_partner_ids) {
-            $this->match_partner_ids = [];
-        }
-
-        $this->match_partner_ids[] = $item;
-    }
-
-    /**
-     * @param Partner $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasMatchPartnerIds(Partner $item, bool $strict = true): bool
-    {
-        if (null === $this->match_partner_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->match_partner_ids, $strict);
-    }
-
-    /**
-     * @param null|bool $has_second_line
-     */
-    public function setHasSecondLine(?bool $has_second_line): void
-    {
-        $this->has_second_line = $has_second_line;
-    }
-
-    /**
-     * @param Template2 $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasTaxIds(Template2 $item, bool $strict = true): bool
-    {
-        if (null === $this->tax_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->tax_ids, $strict);
-    }
-
-    /**
-     * @param null|bool $match_partner
-     */
-    public function setMatchPartner(?bool $match_partner): void
-    {
-        $this->match_partner = $match_partner;
-    }
-
-    /**
-     * @param null|bool $force_second_tax_included
-     */
-    public function setForceSecondTaxIncluded(?bool $force_second_tax_included): void
-    {
-        $this->force_second_tax_included = $force_second_tax_included;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param Template2 $item
-     */
-    public function removeSecondTaxIds(Template2 $item): void
-    {
-        if (null === $this->second_tax_ids) {
-            $this->second_tax_ids = [];
-        }
-
-        if ($this->hasSecondTaxIds($item)) {
-            $index = array_search($item, $this->second_tax_ids);
-            unset($this->second_tax_ids[$index]);
-        }
-    }
-
-    /**
-     * @param Template2 $item
-     */
-    public function addSecondTaxIds(Template2 $item): void
-    {
-        if ($this->hasSecondTaxIds($item)) {
-            return;
-        }
-
-        if (null === $this->second_tax_ids) {
-            $this->second_tax_ids = [];
-        }
-
-        $this->second_tax_ids[] = $item;
-    }
-
-    /**
-     * @param Template2 $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasSecondTaxIds(Template2 $item, bool $strict = true): bool
-    {
-        if (null === $this->second_tax_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->second_tax_ids, $strict);
-    }
-
-    /**
-     * @param null|Template2[] $second_tax_ids
-     */
-    public function setSecondTaxIds(?array $second_tax_ids): void
-    {
-        $this->second_tax_ids = $second_tax_ids;
-    }
-
-    /**
-     * @param null|string $second_amount_from_label_regex
-     */
-    public function setSecondAmountFromLabelRegex(?string $second_amount_from_label_regex): void
-    {
-        $this->second_amount_from_label_regex = $second_amount_from_label_regex;
-    }
-
-    /**
-     * @param Template2 $item
-     */
-    public function addTaxIds(Template2 $item): void
+    public function addTaxIds(OdooRelation $item): void
     {
         if ($this->hasTaxIds($item)) {
             return;
@@ -742,6 +783,179 @@ final class Template extends Base
     }
 
     /**
+     * @return OdooRelation|null
+     */
+    public function getSecondAccountId(): ?OdooRelation
+    {
+        return $this->second_account_id;
+    }
+
+    /**
+     * @param OdooRelation[]|null $match_partner_category_ids
+     */
+    public function setMatchPartnerCategoryIds(?array $match_partner_category_ids): void
+    {
+        $this->match_partner_category_ids = $match_partner_category_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $second_tax_ids
+     */
+    public function setSecondTaxIds(?array $second_tax_ids): void
+    {
+        $this->second_tax_ids = $second_tax_ids;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeSecondTaxIds(OdooRelation $item): void
+    {
+        if (null === $this->second_tax_ids) {
+            $this->second_tax_ids = [];
+        }
+
+        if ($this->hasSecondTaxIds($item)) {
+            $index = array_search($item, $this->second_tax_ids);
+            unset($this->second_tax_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addSecondTaxIds(OdooRelation $item): void
+    {
+        if ($this->hasSecondTaxIds($item)) {
+            return;
+        }
+
+        if (null === $this->second_tax_ids) {
+            $this->second_tax_ids = [];
+        }
+
+        $this->second_tax_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasSecondTaxIds(OdooRelation $item): bool
+    {
+        if (null === $this->second_tax_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->second_tax_ids);
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getSecondTaxIds(): ?array
+    {
+        return $this->second_tax_ids;
+    }
+
+    /**
+     * @param OdooRelation|null $second_account_id
+     */
+    public function setSecondAccountId(?OdooRelation $second_account_id): void
+    {
+        $this->second_account_id = $second_account_id;
+    }
+
+    /**
+     * @param bool|null $force_second_tax_included
+     */
+    public function setForceSecondTaxIncluded(?bool $force_second_tax_included): void
+    {
+        $this->force_second_tax_included = $force_second_tax_included;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isForceSecondTaxIncluded(): ?bool
+    {
+        return $this->force_second_tax_included;
+    }
+
+    /**
+     * @param string|null $second_amount_from_label_regex
+     */
+    public function setSecondAmountFromLabelRegex(?string $second_amount_from_label_regex): void
+    {
+        $this->second_amount_from_label_regex = $second_amount_from_label_regex;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSecondAmountFromLabelRegex(): ?string
+    {
+        return $this->second_amount_from_label_regex;
+    }
+
+    /**
      * @param float $second_amount
      */
     public function setSecondAmount(float $second_amount): void
@@ -750,49 +964,31 @@ final class Template extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return float
      */
-    public function removeSecondAmountType($item): void
+    public function getSecondAmount(): float
     {
-        if ($this->hasSecondAmountType($item)) {
-            $index = array_search($item, $this->second_amount_type);
-            unset($this->second_amount_type[$index]);
-        }
+        return $this->second_amount;
     }
 
     /**
-     * @param mixed $item
+     * @param string $second_amount_type
      */
-    public function addSecondAmountType($item): void
-    {
-        if ($this->hasSecondAmountType($item)) {
-            return;
-        }
-
-        $this->second_amount_type[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasSecondAmountType($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->second_amount_type, $strict);
-    }
-
-    /**
-     * @param array $second_amount_type
-     */
-    public function setSecondAmountType(array $second_amount_type): void
+    public function setSecondAmountType(string $second_amount_type): void
     {
         $this->second_amount_type = $second_amount_type;
     }
 
     /**
-     * @param null|string $second_label
+     * @return string
+     */
+    public function getSecondAmountType(): string
+    {
+        return $this->second_amount_type;
+    }
+
+    /**
+     * @param string|null $second_label
      */
     public function setSecondLabel(?string $second_label): void
     {
@@ -800,121 +996,103 @@ final class Template extends Base
     }
 
     /**
-     * @param null|TemplateAliasAlias $second_account_id
+     * @return string|null
      */
-    public function setSecondAccountId(?TemplateAliasAlias $second_account_id): void
+    public function getSecondLabel(): ?string
     {
-        $this->second_account_id = $second_account_id;
+        return $this->second_label;
     }
 
     /**
-     * @param Template2 $item
-     */
-    public function removeTaxIds(Template2 $item): void
-    {
-        if (null === $this->tax_ids) {
-            $this->tax_ids = [];
-        }
-
-        if ($this->hasTaxIds($item)) {
-            $index = array_search($item, $this->tax_ids);
-            unset($this->tax_ids[$index]);
-        }
-    }
-
-    /**
-     * @param null|Partner[] $match_partner_ids
-     */
-    public function setMatchPartnerIds(?array $match_partner_ids): void
-    {
-        $this->match_partner_ids = $match_partner_ids;
-    }
-
-    /**
-     * @param null|float $match_total_amount_param
-     */
-    public function setMatchTotalAmountParam(?float $match_total_amount_param): void
-    {
-        $this->match_total_amount_param = $match_total_amount_param;
-    }
-
-    /**
-     * @param TemplateAlias $chart_template_id
-     */
-    public function setChartTemplateId(TemplateAlias $chart_template_id): void
-    {
-        $this->chart_template_id = $chart_template_id;
-    }
-
-    /**
-     * @param Journal $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasMatchJournalIds(Journal $item, bool $strict = true): bool
+    public function hasMatchPartnerCategoryIds(OdooRelation $item): bool
     {
-        if (null === $this->match_journal_ids) {
+        if (null === $this->match_partner_category_ids) {
             return false;
         }
 
-        return in_array($item, $this->match_journal_ids, $strict);
+        return in_array($item, $this->match_partner_category_ids);
     }
 
     /**
-     * @param null|array $match_amount
+     * @return OdooRelation[]|null
      */
-    public function setMatchAmount(?array $match_amount): void
+    public function getMatchPartnerCategoryIds(): ?array
+    {
+        return $this->match_partner_category_ids;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getChartTemplateId(): OdooRelation
+    {
+        return $this->chart_template_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getMatchJournalIds(): ?array
+    {
+        return $this->match_journal_ids;
+    }
+
+    /**
+     * @param float|null $match_amount_min
+     */
+    public function setMatchAmountMin(?float $match_amount_min): void
+    {
+        $this->match_amount_min = $match_amount_min;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getMatchAmountMin(): ?float
+    {
+        return $this->match_amount_min;
+    }
+
+    /**
+     * @param string|null $match_amount
+     */
+    public function setMatchAmount(?string $match_amount): void
     {
         $this->match_amount = $match_amount;
     }
 
     /**
-     * @param mixed $item
+     * @return string|null
      */
-    public function removeMatchNature($item): void
+    public function getMatchAmount(): ?string
     {
-        if ($this->hasMatchNature($item)) {
-            $index = array_search($item, $this->match_nature);
-            unset($this->match_nature[$index]);
-        }
+        return $this->match_amount;
     }
 
     /**
-     * @param mixed $item
+     * @param string $match_nature
      */
-    public function addMatchNature($item): void
-    {
-        if ($this->hasMatchNature($item)) {
-            return;
-        }
-
-        $this->match_nature[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasMatchNature($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->match_nature, $strict);
-    }
-
-    /**
-     * @param array $match_nature
-     */
-    public function setMatchNature(array $match_nature): void
+    public function setMatchNature(string $match_nature): void
     {
         $this->match_nature = $match_nature;
     }
 
     /**
-     * @param Journal $item
+     * @return string
      */
-    public function removeMatchJournalIds(Journal $item): void
+    public function getMatchNature(): string
+    {
+        return $this->match_nature;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMatchJournalIds(OdooRelation $item): void
     {
         if (null === $this->match_journal_ids) {
             $this->match_journal_ids = [];
@@ -927,9 +1105,9 @@ final class Template extends Base
     }
 
     /**
-     * @param Journal $item
+     * @param OdooRelation $item
      */
-    public function addMatchJournalIds(Journal $item): void
+    public function addMatchJournalIds(OdooRelation $item): void
     {
         if ($this->hasMatchJournalIds($item)) {
             return;
@@ -943,7 +1121,21 @@ final class Template extends Base
     }
 
     /**
-     * @param null|Journal[] $match_journal_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMatchJournalIds(OdooRelation $item): bool
+    {
+        if (null === $this->match_journal_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->match_journal_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $match_journal_ids
      */
     public function setMatchJournalIds(?array $match_journal_ids): void
     {
@@ -951,23 +1143,7 @@ final class Template extends Base
     }
 
     /**
-     * @param mixed $item
-     */
-    public function addMatchAmount($item): void
-    {
-        if ($this->hasMatchAmount($item)) {
-            return;
-        }
-
-        if (null === $this->match_amount) {
-            $this->match_amount = [];
-        }
-
-        $this->match_amount[] = $item;
-    }
-
-    /**
-     * @param null|bool $to_check
+     * @param bool|null $to_check
      */
     public function setToCheck(?bool $to_check): void
     {
@@ -975,7 +1151,23 @@ final class Template extends Base
     }
 
     /**
-     * @param null|bool $auto_reconcile
+     * @param float|null $match_amount_max
+     */
+    public function setMatchAmountMax(?float $match_amount_max): void
+    {
+        $this->match_amount_max = $match_amount_max;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isToCheck(): ?bool
+    {
+        return $this->to_check;
+    }
+
+    /**
+     * @param bool|null $auto_reconcile
      */
     public function setAutoReconcile(?bool $auto_reconcile): void
     {
@@ -983,45 +1175,27 @@ final class Template extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return bool|null
      */
-    public function removeRuleType($item): void
+    public function isAutoReconcile(): ?bool
     {
-        if ($this->hasRuleType($item)) {
-            $index = array_search($item, $this->rule_type);
-            unset($this->rule_type[$index]);
-        }
+        return $this->auto_reconcile;
     }
 
     /**
-     * @param mixed $item
+     * @param string $rule_type
      */
-    public function addRuleType($item): void
-    {
-        if ($this->hasRuleType($item)) {
-            return;
-        }
-
-        $this->rule_type[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasRuleType($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->rule_type, $strict);
-    }
-
-    /**
-     * @param array $rule_type
-     */
-    public function setRuleType(array $rule_type): void
+    public function setRuleType(string $rule_type): void
     {
         $this->rule_type = $rule_type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRuleType(): string
+    {
+        return $this->rule_type;
     }
 
     /**
@@ -1033,6 +1207,14 @@ final class Template extends Base
     }
 
     /**
+     * @return int
+     */
+    public function getSequence(): int
+    {
+        return $this->sequence;
+    }
+
+    /**
      * @param string $name
      */
     public function setName(string $name): void
@@ -1041,60 +1223,54 @@ final class Template extends Base
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return string
      */
-    public function hasMatchAmount($item, bool $strict = true): bool
+    public function getName(): string
     {
-        if (null === $this->match_amount) {
-            return false;
-        }
-
-        return in_array($item, $this->match_amount, $strict);
+        return $this->name;
     }
 
     /**
-     * @param mixed $item
+     * @param OdooRelation $chart_template_id
      */
-    public function removeMatchAmount($item): void
+    public function setChartTemplateId(OdooRelation $chart_template_id): void
     {
-        if (null === $this->match_amount) {
-            $this->match_amount = [];
-        }
-
-        if ($this->hasMatchAmount($item)) {
-            $index = array_search($item, $this->match_amount);
-            unset($this->match_amount[$index]);
-        }
+        $this->chart_template_id = $chart_template_id;
     }
 
     /**
-     * @param null|bool $match_total_amount
+     * @return float|null
      */
-    public function setMatchTotalAmount(?bool $match_total_amount): void
+    public function getMatchAmountMax(): ?float
     {
-        $this->match_total_amount = $match_total_amount;
+        return $this->match_amount_max;
     }
 
     /**
-     * @param mixed $item
+     * @return string|null
      */
-    public function removeMatchNote($item): void
+    public function getMatchLabel(): ?string
     {
-        if (null === $this->match_note) {
-            $this->match_note = [];
+        return $this->match_label;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMatchPartnerIds(OdooRelation $item): void
+    {
+        if (null === $this->match_partner_ids) {
+            $this->match_partner_ids = [];
         }
 
-        if ($this->hasMatchNote($item)) {
-            $index = array_search($item, $this->match_note);
-            unset($this->match_note[$index]);
+        if ($this->hasMatchPartnerIds($item)) {
+            $index = array_search($item, $this->match_partner_ids);
+            unset($this->match_partner_ids[$index]);
         }
     }
 
     /**
-     * @param null|bool $match_same_currency
+     * @param bool|null $match_same_currency
      */
     public function setMatchSameCurrency(?bool $match_same_currency): void
     {
@@ -1102,7 +1278,117 @@ final class Template extends Base
     }
 
     /**
-     * @param null|string $match_transaction_type_param
+     * @param OdooRelation $item
+     */
+    public function addMatchPartnerIds(OdooRelation $item): void
+    {
+        if ($this->hasMatchPartnerIds($item)) {
+            return;
+        }
+
+        if (null === $this->match_partner_ids) {
+            $this->match_partner_ids = [];
+        }
+
+        $this->match_partner_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMatchPartnerIds(OdooRelation $item): bool
+    {
+        if (null === $this->match_partner_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->match_partner_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $match_partner_ids
+     */
+    public function setMatchPartnerIds(?array $match_partner_ids): void
+    {
+        $this->match_partner_ids = $match_partner_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getMatchPartnerIds(): ?array
+    {
+        return $this->match_partner_ids;
+    }
+
+    /**
+     * @param bool|null $match_partner
+     */
+    public function setMatchPartner(?bool $match_partner): void
+    {
+        $this->match_partner = $match_partner;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isMatchPartner(): ?bool
+    {
+        return $this->match_partner;
+    }
+
+    /**
+     * @param float|null $match_total_amount_param
+     */
+    public function setMatchTotalAmountParam(?float $match_total_amount_param): void
+    {
+        $this->match_total_amount_param = $match_total_amount_param;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getMatchTotalAmountParam(): ?float
+    {
+        return $this->match_total_amount_param;
+    }
+
+    /**
+     * @param bool|null $match_total_amount
+     */
+    public function setMatchTotalAmount(?bool $match_total_amount): void
+    {
+        $this->match_total_amount = $match_total_amount;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isMatchTotalAmount(): ?bool
+    {
+        return $this->match_total_amount;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isMatchSameCurrency(): ?bool
+    {
+        return $this->match_same_currency;
+    }
+
+    /**
+     * @param string|null $match_label
+     */
+    public function setMatchLabel(?string $match_label): void
+    {
+        $this->match_label = $match_label;
+    }
+
+    /**
+     * @param string|null $match_transaction_type_param
      */
     public function setMatchTransactionTypeParam(?string $match_transaction_type_param): void
     {
@@ -1110,61 +1396,31 @@ final class Template extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return string|null
      */
-    public function removeMatchTransactionType($item): void
+    public function getMatchTransactionTypeParam(): ?string
     {
-        if (null === $this->match_transaction_type) {
-            $this->match_transaction_type = [];
-        }
-
-        if ($this->hasMatchTransactionType($item)) {
-            $index = array_search($item, $this->match_transaction_type);
-            unset($this->match_transaction_type[$index]);
-        }
+        return $this->match_transaction_type_param;
     }
 
     /**
-     * @param mixed $item
+     * @param string|null $match_transaction_type
      */
-    public function addMatchTransactionType($item): void
-    {
-        if ($this->hasMatchTransactionType($item)) {
-            return;
-        }
-
-        if (null === $this->match_transaction_type) {
-            $this->match_transaction_type = [];
-        }
-
-        $this->match_transaction_type[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasMatchTransactionType($item, bool $strict = true): bool
-    {
-        if (null === $this->match_transaction_type) {
-            return false;
-        }
-
-        return in_array($item, $this->match_transaction_type, $strict);
-    }
-
-    /**
-     * @param null|array $match_transaction_type
-     */
-    public function setMatchTransactionType(?array $match_transaction_type): void
+    public function setMatchTransactionType(?string $match_transaction_type): void
     {
         $this->match_transaction_type = $match_transaction_type;
     }
 
     /**
-     * @param null|string $match_note_param
+     * @return string|null
+     */
+    public function getMatchTransactionType(): ?string
+    {
+        return $this->match_transaction_type;
+    }
+
+    /**
+     * @param string|null $match_note_param
      */
     public function setMatchNoteParam(?string $match_note_param): void
     {
@@ -1172,54 +1428,31 @@ final class Template extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return string|null
      */
-    public function addMatchNote($item): void
+    public function getMatchNoteParam(): ?string
     {
-        if ($this->hasMatchNote($item)) {
-            return;
-        }
-
-        if (null === $this->match_note) {
-            $this->match_note = [];
-        }
-
-        $this->match_note[] = $item;
+        return $this->match_note_param;
     }
 
     /**
-     * @param null|float $match_amount_min
+     * @param string|null $match_note
      */
-    public function setMatchAmountMin(?float $match_amount_min): void
-    {
-        $this->match_amount_min = $match_amount_min;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasMatchNote($item, bool $strict = true): bool
-    {
-        if (null === $this->match_note) {
-            return false;
-        }
-
-        return in_array($item, $this->match_note, $strict);
-    }
-
-    /**
-     * @param null|array $match_note
-     */
-    public function setMatchNote(?array $match_note): void
+    public function setMatchNote(?string $match_note): void
     {
         $this->match_note = $match_note;
     }
 
     /**
-     * @param null|string $match_label_param
+     * @return string|null
+     */
+    public function getMatchNote(): ?string
+    {
+        return $this->match_note;
+    }
+
+    /**
+     * @param string|null $match_label_param
      */
     public function setMatchLabelParam(?string $match_label_param): void
     {
@@ -1227,72 +1460,18 @@ final class Template extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return string|null
      */
-    public function removeMatchLabel($item): void
+    public function getMatchLabelParam(): ?string
     {
-        if (null === $this->match_label) {
-            $this->match_label = [];
-        }
-
-        if ($this->hasMatchLabel($item)) {
-            $index = array_search($item, $this->match_label);
-            unset($this->match_label[$index]);
-        }
+        return $this->match_label_param;
     }
 
     /**
-     * @param mixed $item
+     * @param DateTimeInterface|null $write_date
      */
-    public function addMatchLabel($item): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        if ($this->hasMatchLabel($item)) {
-            return;
-        }
-
-        if (null === $this->match_label) {
-            $this->match_label = [];
-        }
-
-        $this->match_label[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasMatchLabel($item, bool $strict = true): bool
-    {
-        if (null === $this->match_label) {
-            return false;
-        }
-
-        return in_array($item, $this->match_label, $strict);
-    }
-
-    /**
-     * @param null|array $match_label
-     */
-    public function setMatchLabel(?array $match_label): void
-    {
-        $this->match_label = $match_label;
-    }
-
-    /**
-     * @param null|float $match_amount_max
-     */
-    public function setMatchAmountMax(?float $match_amount_max): void
-    {
-        $this->match_amount_max = $match_amount_max;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

@@ -6,7 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Actions;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.actions.todo
@@ -16,148 +16,144 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  */
 final class Todo extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.actions.todo';
+
     /**
      * Action
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Actions
+     * @var OdooRelation
      */
     private $action_id;
 
     /**
      * Sequence
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $sequence;
 
     /**
      * Status
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> open (To Do)
+     *     -> done (Done)
      *
-     * @var array
+     *
+     * @var string
      */
     private $state;
 
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $name;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param Actions $action_id Action
-     * @param array $state Status
-     */
-    public function __construct(Actions $action_id, array $state)
-    {
-        $this->action_id = $action_id;
-        $this->state = $state;
-    }
-
-    /**
-     * @param Actions $action_id
-     */
-    public function setActionId(Actions $action_id): void
-    {
-        $this->action_id = $action_id;
-    }
-
-    /**
-     * @param null|int $sequence
-     */
-    public function setSequence(?int $sequence): void
-    {
-        $this->sequence = $sequence;
-    }
-
-    /**
-     * @param array $state
-     */
-    public function setState(array $state): void
-    {
-        $this->state = $state;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
+     * @param OdooRelation $action_id Action
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $state Status
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> open (To Do)
+     *            -> done (Done)
      *
-     * @return bool
      */
-    public function hasState($item, bool $strict = true): bool
+    public function __construct(OdooRelation $action_id, string $state)
     {
-        return in_array($item, $this->state, $strict);
+        $this->action_id = $action_id;
+        $this->state = $state;
     }
 
     /**
-     * @param mixed $item
+     * @return OdooRelation|null
      */
-    public function addState($item): void
-    {
-        if ($this->hasState($item)) {
-            return;
-        }
-
-        $this->state[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeState($item): void
-    {
-        if ($this->hasState($item)) {
-            $index = array_search($item, $this->state);
-            unset($this->state[$index]);
-        }
-    }
-
-    /**
-     * @param null|string $name
-     */
-    public function setName(?string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -165,18 +161,82 @@ final class Todo extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getWriteUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->write_uid;
+        $this->create_uid = $create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param string|null $name
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function setName(?string $name): void
     {
-        return $this->write_date;
+        $this->name = $name;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getActionId(): OdooRelation
+    {
+        return $this->action_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $state
+     */
+    public function setState(string $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return string
+     */
+    public function getState(): string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param int|null $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSequence(): ?int
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * @param OdooRelation $action_id
+     */
+    public function setActionId(OdooRelation $action_id): void
+    {
+        $this->action_id = $action_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

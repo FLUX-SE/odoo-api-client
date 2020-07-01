@@ -6,7 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.mail_server
@@ -16,8 +16,12 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  */
 final class MailServer extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.mail_server';
+
     /**
      * Description
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -26,6 +30,8 @@ final class MailServer extends Base
     /**
      * SMTP Server
      * Hostname or IP of SMTP server
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -34,6 +40,8 @@ final class MailServer extends Base
     /**
      * SMTP Port
      * SMTP Port. Usually 465 for SSL, and 25 or 587 for other cases.
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var int
      */
@@ -42,16 +50,20 @@ final class MailServer extends Base
     /**
      * Username
      * Optional username for SMTP authentication
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $smtp_user;
 
     /**
      * Password
      * Optional password for SMTP authentication
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $smtp_pass;
 
@@ -61,8 +73,15 @@ final class MailServer extends Base
      * - None: SMTP sessions are done in cleartext.
      * - TLS (STARTTLS): TLS encryption is requested at start of SMTP session (Recommended)
      * - SSL/TLS: SMTP sessions are encrypted with SSL/TLS through a dedicated port (default: 465)
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> none (None)
+     *     -> starttls (TLS (STARTTLS))
+     *     -> ssl (SSL/TLS)
      *
-     * @var array
+     *
+     * @var string
      */
     private $smtp_encryption;
 
@@ -70,8 +89,10 @@ final class MailServer extends Base
      * Debugging
      * If enabled, the full output of SMTP sessions will be written to the server log at DEBUG level (this is very
      * verbose and may include confidential info!)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $smtp_debug;
 
@@ -79,59 +100,84 @@ final class MailServer extends Base
      * Priority
      * When no specific mail server is requested for a mail, the highest priority one is used. Default priority is 10
      * (smaller number = higher priority)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $sequence;
 
     /**
      * Active
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $active;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Description
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $smtp_host SMTP Server
      *        Hostname or IP of SMTP server
+     *        Searchable : yes
+     *        Sortable : yes
      * @param int $smtp_port SMTP Port
      *        SMTP Port. Usually 465 for SSL, and 25 or 587 for other cases.
-     * @param array $smtp_encryption Connection Security
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $smtp_encryption Connection Security
      *        Choose the connection encryption scheme:
      *        - None: SMTP sessions are done in cleartext.
      *        - TLS (STARTTLS): TLS encryption is requested at start of SMTP session (Recommended)
      *        - SSL/TLS: SMTP sessions are encrypted with SSL/TLS through a dedicated port (default: 465)
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> none (None)
+     *            -> starttls (TLS (STARTTLS))
+     *            -> ssl (SSL/TLS)
+     *
      */
-    public function __construct(string $name, string $smtp_host, int $smtp_port, array $smtp_encryption)
+    public function __construct(string $name, string $smtp_host, int $smtp_port, string $smtp_encryption)
     {
         $this->name = $name;
         $this->smtp_host = $smtp_host;
@@ -140,58 +186,7 @@ final class MailServer extends Base
     }
 
     /**
-     * @param mixed $item
-     */
-    public function removeSmtpEncryption($item): void
-    {
-        if ($this->hasSmtpEncryption($item)) {
-            $index = array_search($item, $this->smtp_encryption);
-            unset($this->smtp_encryption[$index]);
-        }
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param null|bool $active
-     */
-    public function setActive(?bool $active): void
-    {
-        $this->active = $active;
-    }
-
-    /**
-     * @param null|int $sequence
-     */
-    public function setSequence(?int $sequence): void
-    {
-        $this->sequence = $sequence;
-    }
-
-    /**
-     * @param null|bool $smtp_debug
+     * @param bool|null $smtp_debug
      */
     public function setSmtpDebug(?bool $smtp_debug): void
     {
@@ -199,46 +194,127 @@ final class MailServer extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return DateTimeInterface|null
      */
-    public function addSmtpEncryption($item): void
+    public function getWriteDate(): ?DateTimeInterface
     {
-        if ($this->hasSmtpEncryption($item)) {
-            return;
-        }
-
-        $this->smtp_encryption[] = $item;
+        return $this->write_date;
     }
 
     /**
-     * @param string $name
+     * @param OdooRelation|null $write_uid
      */
-    public function setName(string $name): void
+    public function setWriteUid(?OdooRelation $write_uid): void
     {
-        $this->name = $name;
+        $this->write_uid = $write_uid;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return OdooRelation|null
      */
-    public function hasSmtpEncryption($item, bool $strict = true): bool
+    public function getWriteUid(): ?OdooRelation
     {
-        return in_array($item, $this->smtp_encryption, $strict);
+        return $this->write_uid;
     }
 
     /**
-     * @param array $smtp_encryption
+     * @param DateTimeInterface|null $create_date
      */
-    public function setSmtpEncryption(array $smtp_encryption): void
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param bool|null $active
+     */
+    public function setActive(?bool $active): void
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param int|null $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSequence(): ?int
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isSmtpDebug(): ?bool
+    {
+        return $this->smtp_debug;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $smtp_encryption
+     */
+    public function setSmtpEncryption(string $smtp_encryption): void
     {
         $this->smtp_encryption = $smtp_encryption;
     }
 
     /**
-     * @param null|string $smtp_pass
+     * @return string
+     */
+    public function getSmtpEncryption(): string
+    {
+        return $this->smtp_encryption;
+    }
+
+    /**
+     * @param string|null $smtp_pass
      */
     public function setSmtpPass(?string $smtp_pass): void
     {
@@ -246,11 +322,27 @@ final class MailServer extends Base
     }
 
     /**
-     * @param null|string $smtp_user
+     * @return string|null
+     */
+    public function getSmtpPass(): ?string
+    {
+        return $this->smtp_pass;
+    }
+
+    /**
+     * @param string|null $smtp_user
      */
     public function setSmtpUser(?string $smtp_user): void
     {
         $this->smtp_user = $smtp_user;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSmtpUser(): ?string
+    {
+        return $this->smtp_user;
     }
 
     /**
@@ -262,6 +354,14 @@ final class MailServer extends Base
     }
 
     /**
+     * @return int
+     */
+    public function getSmtpPort(): int
+    {
+        return $this->smtp_port;
+    }
+
+    /**
      * @param string $smtp_host
      */
     public function setSmtpHost(string $smtp_host): void
@@ -270,10 +370,26 @@ final class MailServer extends Base
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return string
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getSmtpHost(): string
     {
-        return $this->write_date;
+        return $this->smtp_host;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

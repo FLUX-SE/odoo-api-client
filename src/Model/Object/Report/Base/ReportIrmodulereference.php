@@ -14,4 +14,5 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class ReportIrmodulereference extends Base
 {
+    public const ODOO_MODEL_NAME = 'report.base.report_irmodulereference';
 }

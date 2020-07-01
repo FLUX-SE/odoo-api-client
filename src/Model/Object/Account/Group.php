@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Account;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Group as GroupAlias;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.group
@@ -15,32 +14,40 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Group extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.group';
+
     /**
      * Parent
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|GroupAlias
+     * @var OdooRelation|null
      */
     private $parent_id;
 
     /**
      * Parent Path
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $parent_path;
 
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -48,41 +55,53 @@ final class Group extends Base
 
     /**
      * Code Prefix
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $code_prefix;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Name
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $name)
     {
@@ -90,19 +109,83 @@ final class Group extends Base
     }
 
     /**
-     * @param null|GroupAlias $parent_id
+     * @return OdooRelation|null
      */
-    public function setParentId(?GroupAlias $parent_id): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->parent_id = $parent_id;
+        return $this->create_uid;
     }
 
     /**
-     * @param null|string $parent_path
+     * @return DateTimeInterface|null
      */
-    public function setParentPath(?string $parent_path): void
+    public function getWriteDate(): ?DateTimeInterface
     {
-        $this->parent_path = $parent_path;
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @param string|null $code_prefix
+     */
+    public function setCodePrefix(?string $code_prefix): void
+    {
+        $this->code_prefix = $code_prefix;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getParentId(): ?OdooRelation
+    {
+        return $this->parent_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCodePrefix(): ?string
+    {
+        return $this->code_prefix;
     }
 
     /**
@@ -114,42 +197,42 @@ final class Group extends Base
     }
 
     /**
-     * @param null|string $code_prefix
+     * @return string
      */
-    public function setCodePrefix(?string $code_prefix): void
+    public function getName(): string
     {
-        $this->code_prefix = $code_prefix;
+        return $this->name;
     }
 
     /**
-     * @return null|Users
+     * @param string|null $parent_path
      */
-    public function getCreateUid(): ?Users
+    public function setParentPath(?string $parent_path): void
     {
-        return $this->create_uid;
+        $this->parent_path = $parent_path;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return string|null
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function getParentPath(): ?string
     {
-        return $this->create_date;
+        return $this->parent_path;
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $parent_id
      */
-    public function getWriteUid(): ?Users
+    public function setParentId(?OdooRelation $parent_id): void
     {
-        return $this->write_uid;
+        $this->parent_id = $parent_id;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param DateTimeInterface|null $write_date
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

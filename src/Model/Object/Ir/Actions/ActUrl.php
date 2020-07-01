@@ -6,8 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Actions;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Model;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.actions.act_url
@@ -15,18 +14,22 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class ActUrl extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.actions.act_url';
+
     /**
      * Action Name
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -34,6 +37,8 @@ final class ActUrl extends Base
 
     /**
      * Action Type
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -41,6 +46,8 @@ final class ActUrl extends Base
 
     /**
      * Action URL
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -48,85 +55,136 @@ final class ActUrl extends Base
 
     /**
      * Action Target
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> new (New Window)
+     *     -> self (This Window)
      *
-     * @var array
+     *
+     * @var string
      */
     private $target;
 
     /**
      * External ID
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $xml_id;
 
     /**
      * Action Description
      * Optional help text for the users with a description of the target view, such as its usage and purpose.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $help;
 
     /**
      * Binding Model
      * Setting a value makes this action available in the sidebar for the given model.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Model
+     * @var OdooRelation|null
      */
     private $binding_model_id;
 
     /**
      * Binding Type
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> action (Action)
+     *     -> report (Report)
      *
-     * @var array
+     *
+     * @var string
      */
     private $binding_type;
 
     /**
      * Binding View Types
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $binding_view_types;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Action Name
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $type Action Type
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $url Action URL
-     * @param array $target Action Target
-     * @param array $binding_type Binding Type
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $target Action Target
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> new (New Window)
+     *            -> self (This Window)
+     *
+     * @param string $binding_type Binding Type
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> action (Action)
+     *            -> report (Report)
+     *
      */
-    public function __construct(string $name, string $type, string $url, array $target, array $binding_type)
-    {
+    public function __construct(
+        string $name,
+        string $type,
+        string $url,
+        string $target,
+        string $binding_type
+    ) {
         $this->name = $name;
         $this->type = $type;
         $this->url = $url;
@@ -135,23 +193,47 @@ final class ActUrl extends Base
     }
 
     /**
-     * @param array $binding_type
+     * @param OdooRelation|null $binding_model_id
      */
-    public function setBindingType(array $binding_type): void
+    public function setBindingModelId(?OdooRelation $binding_model_id): void
     {
-        $this->binding_type = $binding_type;
+        $this->binding_model_id = $binding_model_id;
     }
 
     /**
-     * @return null|Users
+     * @return DateTimeInterface|null
      */
-    public function getWriteUid(): ?Users
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -159,15 +241,23 @@ final class ActUrl extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @param null|string $binding_view_types
+     * @param string|null $binding_view_types
      */
     public function setBindingViewTypes(?string $binding_view_types): void
     {
@@ -175,57 +265,47 @@ final class ActUrl extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return string|null
      */
-    public function removeBindingType($item): void
+    public function getBindingViewTypes(): ?string
     {
-        if ($this->hasBindingType($item)) {
-            $index = array_search($item, $this->binding_type);
-            unset($this->binding_type[$index]);
-        }
+        return $this->binding_view_types;
     }
 
     /**
-     * @param mixed $item
+     * @param string $binding_type
      */
-    public function addBindingType($item): void
+    public function setBindingType(string $binding_type): void
     {
-        if ($this->hasBindingType($item)) {
-            return;
-        }
-
-        $this->binding_type[] = $item;
+        $this->binding_type = $binding_type;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return string
      */
-    public function hasBindingType($item, bool $strict = true): bool
+    public function getBindingType(): string
     {
-        return in_array($item, $this->binding_type, $strict);
+        return $this->binding_type;
     }
 
     /**
-     * @param null|Model $binding_model_id
+     * @return OdooRelation|null
      */
-    public function setBindingModelId(?Model $binding_model_id): void
+    public function getBindingModelId(): ?OdooRelation
     {
-        $this->binding_model_id = $binding_model_id;
+        return $this->binding_model_id;
     }
 
     /**
-     * @param string $name
+     * @return string
      */
-    public function setName(string $name): void
+    public function getName(): string
     {
-        $this->name = $name;
+        return $this->name;
     }
 
     /**
-     * @param null|string $help
+     * @param string|null $help
      */
     public function setHelp(?string $help): void
     {
@@ -233,7 +313,23 @@ final class ActUrl extends Base
     }
 
     /**
-     * @return null|string
+     * @return string|null
+     */
+    public function getHelp(): ?string
+    {
+        return $this->help;
+    }
+
+    /**
+     * @param string|null $xml_id
+     */
+    public function setXmlId(?string $xml_id): void
+    {
+        $this->xml_id = $xml_id;
+    }
+
+    /**
+     * @return string|null
      */
     public function getXmlId(): ?string
     {
@@ -241,45 +337,19 @@ final class ActUrl extends Base
     }
 
     /**
-     * @param mixed $item
+     * @param string $target
      */
-    public function removeTarget($item): void
-    {
-        if ($this->hasTarget($item)) {
-            $index = array_search($item, $this->target);
-            unset($this->target[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addTarget($item): void
-    {
-        if ($this->hasTarget($item)) {
-            return;
-        }
-
-        $this->target[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasTarget($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->target, $strict);
-    }
-
-    /**
-     * @param array $target
-     */
-    public function setTarget(array $target): void
+    public function setTarget(string $target): void
     {
         $this->target = $target;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTarget(): string
+    {
+        return $this->target;
     }
 
     /**
@@ -291,6 +361,14 @@ final class ActUrl extends Base
     }
 
     /**
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        return $this->url;
+    }
+
+    /**
      * @param string $type
      */
     public function setType(string $type): void
@@ -299,10 +377,26 @@ final class ActUrl extends Base
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return string
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getType(): string
     {
-        return $this->write_date;
+        return $this->type;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

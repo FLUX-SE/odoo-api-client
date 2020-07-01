@@ -6,8 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Sequence;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Sequence;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.sequence.date_range
@@ -15,18 +14,22 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class DateRange extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.sequence.date_range';
+
     /**
      * From
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var DateTimeInterface
      */
@@ -34,6 +37,8 @@ final class DateRange extends Base
 
     /**
      * To
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var DateTimeInterface
      */
@@ -41,14 +46,18 @@ final class DateRange extends Base
 
     /**
      * Main Sequence
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Sequence
+     * @var OdooRelation
      */
     private $sequence_id;
 
     /**
      * Next Number
      * Next number of this sequence
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var int
      */
@@ -58,50 +67,68 @@ final class DateRange extends Base
      * Actual Next Number
      * Next number that will be used. This number can be incremented frequently so the displayed value might already
      * be obsolete
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $number_next_actual;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param DateTimeInterface $date_from From
+     *        Searchable : yes
+     *        Sortable : yes
      * @param DateTimeInterface $date_to To
-     * @param Sequence $sequence_id Main Sequence
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $sequence_id Main Sequence
+     *        Searchable : yes
+     *        Sortable : yes
      * @param int $number_next Next Number
      *        Next number of this sequence
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         DateTimeInterface $date_from,
         DateTimeInterface $date_to,
-        Sequence $sequence_id,
+        OdooRelation $sequence_id,
         int $number_next
     ) {
         $this->date_from = $date_from;
@@ -111,27 +138,83 @@ final class DateRange extends Base
     }
 
     /**
-     * @param DateTimeInterface $date_from
+     * @param int|null $number_next_actual
      */
-    public function setDateFrom(DateTimeInterface $date_from): void
+    public function setNumberNextActual(?int $number_next_actual): void
     {
-        $this->date_from = $date_from;
+        $this->number_next_actual = $number_next_actual;
     }
 
     /**
-     * @param DateTimeInterface $date_to
+     * @return DateTimeInterface|null
      */
-    public function setDateTo(DateTimeInterface $date_to): void
+    public function getWriteDate(): ?DateTimeInterface
     {
-        $this->date_to = $date_to;
+        return $this->write_date;
     }
 
     /**
-     * @param Sequence $sequence_id
+     * @param OdooRelation|null $write_uid
      */
-    public function setSequenceId(Sequence $sequence_id): void
+    public function setWriteUid(?OdooRelation $write_uid): void
     {
-        $this->sequence_id = $sequence_id;
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getNumberNextActual(): ?int
+    {
+        return $this->number_next_actual;
+    }
+
+    /**
+     * @return DateTimeInterface
+     */
+    public function getDateFrom(): DateTimeInterface
+    {
+        return $this->date_from;
     }
 
     /**
@@ -143,42 +226,58 @@ final class DateRange extends Base
     }
 
     /**
-     * @param null|int $number_next_actual
+     * @return int
      */
-    public function setNumberNextActual(?int $number_next_actual): void
+    public function getNumberNext(): int
     {
-        $this->number_next_actual = $number_next_actual;
+        return $this->number_next;
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation $sequence_id
      */
-    public function getCreateUid(): ?Users
+    public function setSequenceId(OdooRelation $sequence_id): void
     {
-        return $this->create_uid;
+        $this->sequence_id = $sequence_id;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return OdooRelation
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function getSequenceId(): OdooRelation
     {
-        return $this->create_date;
+        return $this->sequence_id;
     }
 
     /**
-     * @return null|Users
+     * @param DateTimeInterface $date_to
      */
-    public function getWriteUid(): ?Users
+    public function setDateTo(DateTimeInterface $date_to): void
     {
-        return $this->write_uid;
+        $this->date_to = $date_to;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return DateTimeInterface
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getDateTo(): DateTimeInterface
     {
-        return $this->write_date;
+        return $this->date_to;
+    }
+
+    /**
+     * @param DateTimeInterface $date_from
+     */
+    public function setDateFrom(DateTimeInterface $date_from): void
+    {
+        $this->date_from = $date_from;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

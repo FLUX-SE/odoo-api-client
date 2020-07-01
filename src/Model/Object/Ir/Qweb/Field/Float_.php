@@ -11,8 +11,9 @@ use Flux\OdooApiClient\Model\Object\Base;
  * Name : ir.qweb.field.float
  * Info :
  * Override qweb.field.float to add a `decimal_precision` domain option
- * and use that instead of the column's own value if it is specified
+ *         and use that instead of the column's own value if it is specified
  */
 final class Float_ extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.qweb.field.float';
 }

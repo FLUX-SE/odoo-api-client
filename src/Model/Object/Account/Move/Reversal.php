@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Account\Move;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Journal;
-use Flux\OdooApiClient\Model\Object\Account\Move;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Currency;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.move.reversal
@@ -19,15 +16,21 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  */
 final class Reversal extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.move.reversal';
+
     /**
      * Journal Entry
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Move
+     * @var OdooRelation|null
      */
     private $move_id;
 
     /**
      * Reversal date
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var DateTimeInterface
      */
@@ -35,8 +38,10 @@ final class Reversal extends Base
 
     /**
      * Reason
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $reason;
 
@@ -44,86 +49,270 @@ final class Reversal extends Base
      * Credit Method
      * Choose how you want to credit this invoice. You cannot "modify" nor "cancel" if the invoice is already
      * reconciled.
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> refund (Partial Refund)
+     *     -> cancel (Full Refund)
+     *     -> modify (Full refund and new draft invoice)
      *
-     * @var array
+     *
+     * @var string
      */
     private $refund_method;
 
     /**
      * Use Specific Journal
      * If empty, uses the journal of the journal entry to be reversed.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Journal
+     * @var OdooRelation|null
      */
     private $journal_id;
 
     /**
      * Residual
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|float
+     * @var float|null
      */
     private $residual;
 
     /**
      * Currency
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|Currency
+     * @var OdooRelation|null
      */
     private $currency_id;
 
     /**
      * Move Type
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $move_type;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param DateTimeInterface $date Reversal date
-     * @param array $refund_method Credit Method
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $refund_method Credit Method
      *        Choose how you want to credit this invoice. You cannot "modify" nor "cancel" if the invoice is already
      *        reconciled.
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> refund (Partial Refund)
+     *            -> cancel (Full Refund)
+     *            -> modify (Full refund and new draft invoice)
+     *
      */
-    public function __construct(DateTimeInterface $date, array $refund_method)
+    public function __construct(DateTimeInterface $date, string $refund_method)
     {
         $this->date = $date;
         $this->refund_method = $refund_method;
     }
 
     /**
-     * @param null|Move $move_id
+     * @return OdooRelation|null
      */
-    public function setMoveId(?Move $move_id): void
+    public function getCurrencyId(): ?OdooRelation
     {
-        $this->move_id = $move_id;
+        return $this->currency_id;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param string|null $move_type
+     */
+    public function setMoveType(?string $move_type): void
+    {
+        $this->move_type = $move_type;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMoveType(): ?string
+    {
+        return $this->move_type;
+    }
+
+    /**
+     * @param OdooRelation|null $currency_id
+     */
+    public function setCurrencyId(?OdooRelation $currency_id): void
+    {
+        $this->currency_id = $currency_id;
+    }
+
+    /**
+     * @param float|null $residual
+     */
+    public function setResidual(?float $residual): void
+    {
+        $this->residual = $residual;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getMoveId(): ?OdooRelation
+    {
+        return $this->move_id;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getResidual(): ?float
+    {
+        return $this->residual;
+    }
+
+    /**
+     * @param OdooRelation|null $journal_id
+     */
+    public function setJournalId(?OdooRelation $journal_id): void
+    {
+        $this->journal_id = $journal_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getJournalId(): ?OdooRelation
+    {
+        return $this->journal_id;
+    }
+
+    /**
+     * @param string $refund_method
+     */
+    public function setRefundMethod(string $refund_method): void
+    {
+        $this->refund_method = $refund_method;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRefundMethod(): string
+    {
+        return $this->refund_method;
+    }
+
+    /**
+     * @param string|null $reason
+     */
+    public function setReason(?string $reason): void
+    {
+        $this->reason = $reason;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getReason(): ?string
+    {
+        return $this->reason;
     }
 
     /**
@@ -135,116 +324,26 @@ final class Reversal extends Base
     }
 
     /**
-     * @param null|string $reason
+     * @return DateTimeInterface
      */
-    public function setReason(?string $reason): void
+    public function getDate(): DateTimeInterface
     {
-        $this->reason = $reason;
+        return $this->date;
     }
 
     /**
-     * @param array $refund_method
+     * @param OdooRelation|null $move_id
      */
-    public function setRefundMethod(array $refund_method): void
+    public function setMoveId(?OdooRelation $move_id): void
     {
-        $this->refund_method = $refund_method;
+        $this->move_id = $move_id;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param DateTimeInterface|null $write_date
      */
-    public function hasRefundMethod($item, bool $strict = true): bool
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return in_array($item, $this->refund_method, $strict);
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addRefundMethod($item): void
-    {
-        if ($this->hasRefundMethod($item)) {
-            return;
-        }
-
-        $this->refund_method[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeRefundMethod($item): void
-    {
-        if ($this->hasRefundMethod($item)) {
-            $index = array_search($item, $this->refund_method);
-            unset($this->refund_method[$index]);
-        }
-    }
-
-    /**
-     * @param null|Journal $journal_id
-     */
-    public function setJournalId(?Journal $journal_id): void
-    {
-        $this->journal_id = $journal_id;
-    }
-
-    /**
-     * @return null|float
-     */
-    public function getResidual(): ?float
-    {
-        return $this->residual;
-    }
-
-    /**
-     * @return null|Currency
-     */
-    public function getCurrencyId(): ?Currency
-    {
-        return $this->currency_id;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getMoveType(): ?string
-    {
-        return $this->move_type;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

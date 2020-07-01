@@ -6,8 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Module\Module;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Module\Module;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.module.module.dependency
@@ -15,130 +14,159 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Dependency extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.module.module.dependency';
+
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $name;
 
     /**
      * Module
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Module
+     * @var OdooRelation|null
      */
     private $module_id;
 
     /**
      * Dependency
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Module
+     * @var OdooRelation|null
      */
     private $depend_id;
 
     /**
      * Status
+     * Searchable : no
+     * Sortable : no
+     * Selection : (default value, usually null)
+     *     -> uninstallable (Uninstallable)
+     *     -> uninstalled (Not Installed)
+     *     -> installed (Installed)
+     *     -> to upgrade (To be upgraded)
+     *     -> to remove (To be removed)
+     *     -> to install (To be installed)
+     *     -> unknown (Unknown)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $state;
 
     /**
      * Auto Install Required
      * Whether this dependency blocks automatic installation of the dependent
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $auto_install_required;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @return string|null
      */
-    public function setName(?string $name): void
+    public function getName(): ?string
     {
-        $this->name = $name;
+        return $this->name;
     }
 
     /**
-     * @param null|Module $module_id
+     * @return OdooRelation|null
      */
-    public function setModuleId(?Module $module_id): void
-    {
-        $this->module_id = $module_id;
-    }
-
-    /**
-     * @return null|Module
-     */
-    public function getDependId(): ?Module
-    {
-        return $this->depend_id;
-    }
-
-    /**
-     * @return null|array
-     */
-    public function getState(): ?array
-    {
-        return $this->state;
-    }
-
-    /**
-     * @param null|bool $auto_install_required
-     */
-    public function setAutoInstallRequired(?bool $auto_install_required): void
-    {
-        $this->auto_install_required = $auto_install_required;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -146,18 +174,90 @@ final class Dependency extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getWriteUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->write_uid;
+        $this->create_uid = $create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param bool|null $auto_install_required
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function setAutoInstallRequired(?bool $auto_install_required): void
     {
-        return $this->write_date;
+        $this->auto_install_required = $auto_install_required;
+    }
+
+    /**
+     * @param string|null $name
+     */
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isAutoInstallRequired(): ?bool
+    {
+        return $this->auto_install_required;
+    }
+
+    /**
+     * @param string|null $state
+     */
+    public function setState(?string $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param OdooRelation|null $depend_id
+     */
+    public function setDependId(?OdooRelation $depend_id): void
+    {
+        $this->depend_id = $depend_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getDependId(): ?OdooRelation
+    {
+        return $this->depend_id;
+    }
+
+    /**
+     * @param OdooRelation|null $module_id
+     */
+    public function setModuleId(?OdooRelation $module_id): void
+    {
+        $this->module_id = $module_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getModuleId(): ?OdooRelation
+    {
+        return $this->module_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

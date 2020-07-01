@@ -6,8 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.attachment
@@ -15,21 +14,25 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Attachments are used to link binary files or url to any openerp document.
  *
- * External attachment storage
- * ---------------------------
+ *         External attachment storage
+ *         ---------------------------
  *
- * The computed field ``datas`` is implemented using ``_file_read``,
- * ``_file_write`` and ``_file_delete``, which can be overridden to implement
- * other storage engines. Such methods should check for other location pseudo
- * uri (example: hdfs://hadoopserver).
+ *         The computed field ``datas`` is implemented using ``_file_read``,
+ *         ``_file_write`` and ``_file_delete``, which can be overridden to implement
+ *         other storage engines. Such methods should check for other location pseudo
+ *         uri (example: hdfs://hadoopserver).
  *
- * The default implementation is the file:dirname location that stores files
- * on the local filesystem using name based on their sha1 hash
+ *         The default implementation is the file:dirname location that stores files
+ *         on the local filesystem using name based on their sha1 hash
  */
 final class Attachment extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.attachment';
+
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -37,243 +40,257 @@ final class Attachment extends Base
 
     /**
      * Description
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $description;
 
     /**
      * Resource Name
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $res_name;
 
     /**
      * Resource Model
      * The database object this attachment will be attached to.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $res_model;
 
     /**
      * Resource Field
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $res_field;
 
     /**
      * Resource ID
      * The record id this is attached to.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $res_id;
 
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Company
+     * @var OdooRelation|null
      */
     private $company_id;
 
     /**
      * Type
      * You can either upload a file from your computer or copy/paste an internet link to your file.
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> url (URL)
+     *     -> binary (File)
      *
-     * @var array
+     *
+     * @var string
      */
     private $type;
 
     /**
      * Url
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $url;
 
     /**
      * Is public document
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $public;
 
     /**
      * Access Token
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $access_token;
 
     /**
      * File Content
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $datas;
 
     /**
      * Database Data
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $db_datas;
 
     /**
      * Stored Filename
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $store_fname;
 
     /**
      * File Size
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $file_size;
 
     /**
      * Checksum/SHA1
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $checksum;
 
     /**
      * Mime Type
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $mimetype;
 
     /**
      * Indexed Content
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $index_content;
 
     /**
      * Attachment URL
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $local_url;
 
     /**
      * Image Src
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $image_src;
 
     /**
      * Image Width
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $image_width;
 
     /**
      * Image Height
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $image_height;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Name
-     * @param array $type Type
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $type Type
      *        You can either upload a file from your computer or copy/paste an internet link to your file.
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> url (URL)
+     *            -> binary (File)
+     *
      */
-    public function __construct(string $name, array $type)
+    public function __construct(string $name, string $type)
     {
         $this->name = $name;
         $this->type = $type;
     }
 
     /**
-     * @param null|int $db_datas
-     */
-    public function setDbDatas(?int $db_datas): void
-    {
-        $this->db_datas = $db_datas;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|int
-     */
-    public function getImageHeight(): ?int
-    {
-        return $this->image_height;
-    }
-
-    /**
-     * @return null|int
-     */
-    public function getImageWidth(): ?int
-    {
-        return $this->image_width;
-    }
-
-    /**
-     * @return null|string
+     * @return string|null
      */
     public function getImageSrc(): ?string
     {
@@ -281,39 +298,7 @@ final class Attachment extends Base
     }
 
     /**
-     * @return null|string
-     */
-    public function getLocalUrl(): ?string
-    {
-        return $this->local_url;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getIndexContent(): ?string
-    {
-        return $this->index_content;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getMimetype(): ?string
-    {
-        return $this->mimetype;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getChecksum(): ?string
-    {
-        return $this->checksum;
-    }
-
-    /**
-     * @return null|int
+     * @return int|null
      */
     public function getFileSize(): ?int
     {
@@ -321,7 +306,183 @@ final class Attachment extends Base
     }
 
     /**
-     * @param null|string $store_fname
+     * @param int|null $file_size
+     */
+    public function setFileSize(?int $file_size): void
+    {
+        $this->file_size = $file_size;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getChecksum(): ?string
+    {
+        return $this->checksum;
+    }
+
+    /**
+     * @param string|null $checksum
+     */
+    public function setChecksum(?string $checksum): void
+    {
+        $this->checksum = $checksum;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMimetype(): ?string
+    {
+        return $this->mimetype;
+    }
+
+    /**
+     * @param string|null $mimetype
+     */
+    public function setMimetype(?string $mimetype): void
+    {
+        $this->mimetype = $mimetype;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIndexContent(): ?string
+    {
+        return $this->index_content;
+    }
+
+    /**
+     * @param string|null $index_content
+     */
+    public function setIndexContent(?string $index_content): void
+    {
+        $this->index_content = $index_content;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLocalUrl(): ?string
+    {
+        return $this->local_url;
+    }
+
+    /**
+     * @param string|null $local_url
+     */
+    public function setLocalUrl(?string $local_url): void
+    {
+        $this->local_url = $local_url;
+    }
+
+    /**
+     * @param string|null $image_src
+     */
+    public function setImageSrc(?string $image_src): void
+    {
+        $this->image_src = $image_src;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getStoreFname(): ?string
+    {
+        return $this->store_fname;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getImageWidth(): ?int
+    {
+        return $this->image_width;
+    }
+
+    /**
+     * @param int|null $image_width
+     */
+    public function setImageWidth(?int $image_width): void
+    {
+        $this->image_width = $image_width;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getImageHeight(): ?int
+    {
+        return $this->image_height;
+    }
+
+    /**
+     * @param int|null $image_height
+     */
+    public function setImageHeight(?int $image_height): void
+    {
+        $this->image_height = $image_height;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param string|null $store_fname
      */
     public function setStoreFname(?string $store_fname): void
     {
@@ -329,11 +490,27 @@ final class Attachment extends Base
     }
 
     /**
-     * @param null|int $datas
+     * @param int|null $db_datas
      */
-    public function setDatas(?int $datas): void
+    public function setDbDatas(?int $db_datas): void
     {
-        $this->datas = $datas;
+        $this->db_datas = $db_datas;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param int|null $res_id
+     */
+    public function setResId(?int $res_id): void
+    {
+        $this->res_id = $res_id;
     }
 
     /**
@@ -345,113 +522,15 @@ final class Attachment extends Base
     }
 
     /**
-     * @param null|string $access_token
+     * @return string|null
      */
-    public function setAccessToken(?string $access_token): void
+    public function getDescription(): ?string
     {
-        $this->access_token = $access_token;
+        return $this->description;
     }
 
     /**
-     * @param null|bool $public
-     */
-    public function setPublic(?bool $public): void
-    {
-        $this->public = $public;
-    }
-
-    /**
-     * @param null|string $url
-     */
-    public function setUrl(?string $url): void
-    {
-        $this->url = $url;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeType($item): void
-    {
-        if ($this->hasType($item)) {
-            $index = array_search($item, $this->type);
-            unset($this->type[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addType($item): void
-    {
-        if ($this->hasType($item)) {
-            return;
-        }
-
-        $this->type[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasType($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->type, $strict);
-    }
-
-    /**
-     * @param array $type
-     */
-    public function setType(array $type): void
-    {
-        $this->type = $type;
-    }
-
-    /**
-     * @param null|Company $company_id
-     */
-    public function setCompanyId(?Company $company_id): void
-    {
-        $this->company_id = $company_id;
-    }
-
-    /**
-     * @return null|int
-     */
-    public function getResId(): ?int
-    {
-        return $this->res_id;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getResField(): ?string
-    {
-        return $this->res_field;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getResModel(): ?string
-    {
-        return $this->res_model;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getResName(): ?string
-    {
-        return $this->res_name;
-    }
-
-    /**
-     * @param null|string $description
+     * @param string|null $description
      */
     public function setDescription(?string $description): void
     {
@@ -459,10 +538,170 @@ final class Attachment extends Base
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return string|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getResName(): ?string
     {
-        return $this->write_date;
+        return $this->res_name;
+    }
+
+    /**
+     * @param string|null $res_name
+     */
+    public function setResName(?string $res_name): void
+    {
+        $this->res_name = $res_name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getResModel(): ?string
+    {
+        return $this->res_model;
+    }
+
+    /**
+     * @param string|null $res_model
+     */
+    public function setResModel(?string $res_model): void
+    {
+        $this->res_model = $res_model;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getResField(): ?string
+    {
+        return $this->res_field;
+    }
+
+    /**
+     * @param string|null $res_field
+     */
+    public function setResField(?string $res_field): void
+    {
+        $this->res_field = $res_field;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getResId(): ?int
+    {
+        return $this->res_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getDbDatas(): ?int
+    {
+        return $this->db_datas;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType(string $type): void
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param string|null $url
+     */
+    public function setUrl(?string $url): void
+    {
+        $this->url = $url;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isPublic(): ?bool
+    {
+        return $this->public;
+    }
+
+    /**
+     * @param bool|null $public
+     */
+    public function setPublic(?bool $public): void
+    {
+        $this->public = $public;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAccessToken(): ?string
+    {
+        return $this->access_token;
+    }
+
+    /**
+     * @param string|null $access_token
+     */
+    public function setAccessToken(?string $access_token): void
+    {
+        $this->access_token = $access_token;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getDatas(): ?int
+    {
+        return $this->datas;
+    }
+
+    /**
+     * @param int|null $datas
+     */
+    public function setDatas(?int $datas): void
+    {
+        $this->datas = $datas;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

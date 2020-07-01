@@ -9,8 +9,9 @@ namespace Flux\OdooApiClient\Model\Object;
  * Name : _unknown
  * Info :
  * Abstract model used as a substitute for relational fields with an unknown
- * comodel.
+ *         comodel.
  */
 final class Unknown extends Base
 {
+    public const ODOO_MODEL_NAME = '_unknown';
 }

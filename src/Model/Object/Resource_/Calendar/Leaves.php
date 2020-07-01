@@ -6,10 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Resource_\Calendar;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Users;
-use Flux\OdooApiClient\Model\Object\Resource_\Calendar;
-use Flux\OdooApiClient\Model\Object\Resource_\Resource_;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : resource.calendar.leaves
@@ -17,39 +14,49 @@ use Flux\OdooApiClient\Model\Object\Resource_\Resource_;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Leaves extends Base
 {
+    public const ODOO_MODEL_NAME = 'resource.calendar.leaves';
+
     /**
      * Reason
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $name;
 
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Company
+     * @var OdooRelation|null
      */
     private $company_id;
 
     /**
      * Working Hours
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Calendar
+     * @var OdooRelation|null
      */
     private $calendar_id;
 
     /**
      * Start Date
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var DateTimeInterface
      */
@@ -57,6 +64,8 @@ final class Leaves extends Base
 
     /**
      * End Date
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var DateTimeInterface
      */
@@ -66,50 +75,70 @@ final class Leaves extends Base
      * Resource
      * If empty, this is a generic time off for the company. If a resource is set, the time off is only for this
      * resource
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Resource_
+     * @var OdooRelation|null
      */
     private $resource_id;
 
     /**
      * Time Type
      * Whether this should be computed as a time off or as work time (eg: formation)
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> leave (Time Off)
+     *     -> other (Other)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $time_type;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param DateTimeInterface $date_from Start Date
+     *        Searchable : yes
+     *        Sortable : yes
      * @param DateTimeInterface $date_to End Date
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(DateTimeInterface $date_from, DateTimeInterface $date_to)
     {
@@ -118,35 +147,99 @@ final class Leaves extends Base
     }
 
     /**
-     * @param null|string $name
+     * @param OdooRelation|null $resource_id
      */
-    public function setName(?string $name): void
+    public function setResourceId(?OdooRelation $resource_id): void
     {
-        $this->name = $name;
+        $this->resource_id = $resource_id;
     }
 
     /**
-     * @return null|Company
+     * @return DateTimeInterface|null
      */
-    public function getCompanyId(): ?Company
+    public function getWriteDate(): ?DateTimeInterface
     {
-        return $this->company_id;
+        return $this->write_date;
     }
 
     /**
-     * @param null|Calendar $calendar_id
+     * @param OdooRelation|null $write_uid
      */
-    public function setCalendarId(?Calendar $calendar_id): void
+    public function setWriteUid(?OdooRelation $write_uid): void
     {
-        $this->calendar_id = $calendar_id;
+        $this->write_uid = $write_uid;
     }
 
     /**
-     * @param DateTimeInterface $date_from
+     * @return OdooRelation|null
      */
-    public function setDateFrom(DateTimeInterface $date_from): void
+    public function getWriteUid(): ?OdooRelation
     {
-        $this->date_from = $date_from;
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param string|null $time_type
+     */
+    public function setTimeType(?string $time_type): void
+    {
+        $this->time_type = $time_type;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTimeType(): ?string
+    {
+        return $this->time_type;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getResourceId(): ?OdooRelation
+    {
+        return $this->resource_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
     }
 
     /**
@@ -158,96 +251,74 @@ final class Leaves extends Base
     }
 
     /**
-     * @param null|Resource_ $resource_id
+     * @return DateTimeInterface
      */
-    public function setResourceId(?Resource_ $resource_id): void
+    public function getDateTo(): DateTimeInterface
     {
-        $this->resource_id = $resource_id;
+        return $this->date_to;
     }
 
     /**
-     * @param null|array $time_type
+     * @param DateTimeInterface $date_from
      */
-    public function setTimeType(?array $time_type): void
+    public function setDateFrom(DateTimeInterface $date_from): void
     {
-        $this->time_type = $time_type;
+        $this->date_from = $date_from;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return DateTimeInterface
      */
-    public function hasTimeType($item, bool $strict = true): bool
+    public function getDateFrom(): DateTimeInterface
     {
-        if (null === $this->time_type) {
-            return false;
-        }
-
-        return in_array($item, $this->time_type, $strict);
+        return $this->date_from;
     }
 
     /**
-     * @param mixed $item
+     * @param OdooRelation|null $calendar_id
      */
-    public function addTimeType($item): void
+    public function setCalendarId(?OdooRelation $calendar_id): void
     {
-        if ($this->hasTimeType($item)) {
-            return;
-        }
-
-        if (null === $this->time_type) {
-            $this->time_type = [];
-        }
-
-        $this->time_type[] = $item;
+        $this->calendar_id = $calendar_id;
     }
 
     /**
-     * @param mixed $item
+     * @return OdooRelation|null
      */
-    public function removeTimeType($item): void
+    public function getCalendarId(): ?OdooRelation
     {
-        if (null === $this->time_type) {
-            $this->time_type = [];
-        }
-
-        if ($this->hasTimeType($item)) {
-            $index = array_search($item, $this->time_type);
-            unset($this->time_type[$index]);
-        }
+        return $this->calendar_id;
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $company_id
      */
-    public function getCreateUid(): ?Users
+    public function setCompanyId(?OdooRelation $company_id): void
     {
-        return $this->create_uid;
+        $this->company_id = $company_id;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return OdooRelation|null
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function getCompanyId(): ?OdooRelation
     {
-        return $this->create_date;
+        return $this->company_id;
     }
 
     /**
-     * @return null|Users
+     * @param string|null $name
      */
-    public function getWriteUid(): ?Users
+    public function setName(?string $name): void
     {
-        return $this->write_uid;
+        $this->name = $name;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param DateTimeInterface|null $write_date
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

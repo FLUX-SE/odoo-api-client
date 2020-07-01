@@ -6,183 +6,181 @@ namespace Flux\OdooApiClient\Model\Object\Snailmail\Letter\Missing\Required;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Country;
-use Flux\OdooApiClient\Model\Object\Res\Country\State;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
-use Flux\OdooApiClient\Model\Object\Res\Users;
-use Flux\OdooApiClient\Model\Object\Snailmail\Letter;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : snailmail.letter.missing.required.fields
  * Name : snailmail.letter.missing.required.fields
  * Info :
  * Model super-class for transient records, meant to be temporarily
- * persistent, and regularly vacuum-cleaned.
+ *         persistent, and regularly vacuum-cleaned.
  *
- * A TransientModel has a simplified access rights management, all users can
- * create new records, and may only access the records they created. The
- * superuser has unrestricted access to all TransientModel records.
+ *         A TransientModel has a simplified access rights management, all users can
+ *         create new records, and may only access the records they created. The
+ *         superuser has unrestricted access to all TransientModel records.
  */
 final class Fields extends Base
 {
+    public const ODOO_MODEL_NAME = 'snailmail.letter.missing.required.fields';
+
     /**
      * Partner
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Partner
+     * @var OdooRelation|null
      */
     private $partner_id;
 
     /**
      * Letter
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Letter
+     * @var OdooRelation|null
      */
     private $letter_id;
 
     /**
      * Street
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $street;
 
     /**
      * Street2
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $street2;
 
     /**
      * Zip
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $zip;
 
     /**
      * City
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $city;
 
     /**
      * State
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|State
+     * @var OdooRelation|null
      */
     private $state_id;
 
     /**
      * Country
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Country
+     * @var OdooRelation|null
      */
     private $country_id;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param null|Partner $partner_id
+     * @return OdooRelation|null
      */
-    public function setPartnerId(?Partner $partner_id): void
+    public function getPartnerId(): ?OdooRelation
     {
-        $this->partner_id = $partner_id;
+        return $this->partner_id;
     }
 
     /**
-     * @param null|Letter $letter_id
+     * @param OdooRelation|null $state_id
      */
-    public function setLetterId(?Letter $letter_id): void
-    {
-        $this->letter_id = $letter_id;
-    }
-
-    /**
-     * @param null|string $street
-     */
-    public function setStreet(?string $street): void
-    {
-        $this->street = $street;
-    }
-
-    /**
-     * @param null|string $street2
-     */
-    public function setStreet2(?string $street2): void
-    {
-        $this->street2 = $street2;
-    }
-
-    /**
-     * @param null|string $zip
-     */
-    public function setZip(?string $zip): void
-    {
-        $this->zip = $zip;
-    }
-
-    /**
-     * @param null|string $city
-     */
-    public function setCity(?string $city): void
-    {
-        $this->city = $city;
-    }
-
-    /**
-     * @param null|State $state_id
-     */
-    public function setStateId(?State $state_id): void
+    public function setStateId(?OdooRelation $state_id): void
     {
         $this->state_id = $state_id;
     }
 
     /**
-     * @param null|Country $country_id
+     * @return DateTimeInterface|null
      */
-    public function setCountryId(?Country $country_id): void
+    public function getWriteDate(): ?DateTimeInterface
     {
-        $this->country_id = $country_id;
+        return $this->write_date;
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $write_uid
      */
-    public function getCreateUid(): ?Users
+    public function setWriteUid(?OdooRelation $write_uid): void
     {
-        return $this->create_uid;
+        $this->write_uid = $write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -190,18 +188,138 @@ final class Fields extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getWriteUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->write_uid;
+        $this->create_uid = $create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return OdooRelation|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getCreateUid(): ?OdooRelation
     {
-        return $this->write_date;
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $country_id
+     */
+    public function setCountryId(?OdooRelation $country_id): void
+    {
+        $this->country_id = $country_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCountryId(): ?OdooRelation
+    {
+        return $this->country_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getStateId(): ?OdooRelation
+    {
+        return $this->state_id;
+    }
+
+    /**
+     * @param OdooRelation|null $partner_id
+     */
+    public function setPartnerId(?OdooRelation $partner_id): void
+    {
+        $this->partner_id = $partner_id;
+    }
+
+    /**
+     * @param string|null $city
+     */
+    public function setCity(?string $city): void
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param string|null $zip
+     */
+    public function setZip(?string $zip): void
+    {
+        $this->zip = $zip;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getZip(): ?string
+    {
+        return $this->zip;
+    }
+
+    /**
+     * @param string|null $street2
+     */
+    public function setStreet2(?string $street2): void
+    {
+        $this->street2 = $street2;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getStreet2(): ?string
+    {
+        return $this->street2;
+    }
+
+    /**
+     * @param string|null $street
+     */
+    public function setStreet(?string $street): void
+    {
+        $this->street = $street;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getStreet(): ?string
+    {
+        return $this->street;
+    }
+
+    /**
+     * @param OdooRelation|null $letter_id
+     */
+    public function setLetterId(?OdooRelation $letter_id): void
+    {
+        $this->letter_id = $letter_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getLetterId(): ?OdooRelation
+    {
+        return $this->letter_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

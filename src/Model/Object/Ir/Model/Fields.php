@@ -6,26 +6,26 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Model;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Model;
-use Flux\OdooApiClient\Model\Object\Ir\Model\Fields as FieldsAlias;
-use Flux\OdooApiClient\Model\Object\Ir\Model\Fields\Selection;
-use Flux\OdooApiClient\Model\Object\Res\Groups;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.model.fields
  * Name : ir.model.fields
  * Info :
  * Mixin that overrides the create and write methods to properly generate
- * ir.model.data entries flagged with Studio for the corresponding resources.
- * Doesn't create an ir.model.data if the record is part of a module being
- * currently installed as the ir.model.data will be created automatically
- * afterwards.
+ *                 ir.model.data entries flagged with Studio for the corresponding resources.
+ *                 Doesn't create an ir.model.data if the record is part of a module being
+ *                 currently installed as the ir.model.data will be created automatically
+ *                 afterwards.
  */
 final class Fields extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.model.fields';
+
     /**
      * Field Name
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -33,14 +33,18 @@ final class Fields extends Base
 
     /**
      * Complete Name
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $complete_name;
 
     /**
      * Object Name
      * The technical name of the model this field belongs to
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -49,36 +53,46 @@ final class Fields extends Base
     /**
      * Object Relation
      * For relationship fields, the technical name of the target model
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $relation;
 
     /**
      * Relation Field
      * For one2many fields, the field on the target model that implement the opposite many2one relationship
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $relation_field;
 
     /**
      * Relation field
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|FieldsAlias
+     * @var OdooRelation|null
      */
     private $relation_field_id;
 
     /**
      * Model
      * The model this field belongs to
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Model
+     * @var OdooRelation
      */
     private $model_id;
 
     /**
      * Field Label
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -86,103 +100,158 @@ final class Fields extends Base
 
     /**
      * Field Help
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $help;
 
     /**
      * Field Type
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> binary (binary)
+     *     -> boolean (boolean)
+     *     -> char (char)
+     *     -> date (date)
+     *     -> datetime (datetime)
+     *     -> float (float)
+     *     -> html (html)
+     *     -> integer (integer)
+     *     -> many2many (many2many)
+     *     -> many2one (many2one)
+     *     -> many2one_reference (many2one_reference)
+     *     -> monetary (monetary)
+     *     -> one2many (one2many)
+     *     -> reference (reference)
+     *     -> selection (selection)
+     *     -> text (text)
      *
-     * @var array
+     *
+     * @var string
      */
     private $ttype;
 
     /**
      * Selection Options (Deprecated)
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $selection;
 
     /**
      * Selection Options
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Selection[]
+     * @var OdooRelation[]|null
      */
     private $selection_ids;
 
     /**
      * Copied
      * Whether the value is copied when duplicating a record.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $copied;
 
     /**
      * Related Field
      * The corresponding related field, if any. This must be a dot-separated list of field names.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $related;
 
     /**
      * Related field
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|FieldsAlias
+     * @var OdooRelation|null
      */
     private $related_field_id;
 
     /**
      * Required
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $required;
 
     /**
      * Readonly
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $readonly;
 
     /**
      * Indexed
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $index;
 
     /**
      * Translatable
      * Whether values for this field can be translated (enables the translation mechanism for that field)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $translate;
 
     /**
      * Size
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $size;
 
     /**
      * Type
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> manual (Custom Field)
+     *     -> base (Base Field)
      *
-     * @var array
+     *
+     * @var string
      */
     private $state;
 
     /**
      * On Delete
      * On delete property for many2one fields
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> cascade (Cascade)
+     *     -> set null (Set NULL)
+     *     -> restrict (Restrict)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $on_delete;
 
@@ -190,54 +259,68 @@ final class Fields extends Base
      * Domain
      * The optional domain to restrict possible values for relationship fields, specified as a Python expression
      * defining a list of triplets. For example: [('color','=','red')]
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $domain;
 
     /**
      * Groups
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Groups[]
+     * @var OdooRelation[]|null
      */
     private $groups;
 
     /**
      * Selectable
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $selectable;
 
     /**
      * In Apps
      * List of modules in which the field is defined
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $modules;
 
     /**
      * Relation Table
      * Used for custom many2many fields to define a custom relation table name
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $relation_table;
 
     /**
      * Column 1
      * Column referring to the record in the model table
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $column1;
 
     /**
      * Column 2
      * Column referring to the record in the comodel table
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $column2;
 
@@ -246,12 +329,14 @@ final class Fields extends Base
      * Code to compute the value of the field.
      * Iterate on the recordset 'self' and assign the field's value:
      *
-     * for record in self:
-     * record['size'] = len(record.name)
+     *         for record in self:
+     *                 record['size'] = len(record.name)
      *
      * Modules time, datetime, dateutil are available.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $compute;
 
@@ -259,17 +344,21 @@ final class Fields extends Base
      * Dependencies
      * Dependencies of compute method; a list of comma-separated field names, like
      *
-     * name, partner_id.name
+     *         name, partner_id.name
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $depends;
 
     /**
      * Stored
      * Whether the value is stored in the database.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $store;
 
@@ -277,56 +366,100 @@ final class Fields extends Base
      * Enable Ordered Tracking
      * If set every modification done to this field is tracked in the chatter. Value is used to order tracking
      * values.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $tracking;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Field Name
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $model Object Name
      *        The technical name of the model this field belongs to
-     * @param Model $model_id Model
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $model_id Model
      *        The model this field belongs to
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $field_description Field Label
-     * @param array $ttype Field Type
-     * @param array $state Type
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $ttype Field Type
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> binary (binary)
+     *            -> boolean (boolean)
+     *            -> char (char)
+     *            -> date (date)
+     *            -> datetime (datetime)
+     *            -> float (float)
+     *            -> html (html)
+     *            -> integer (integer)
+     *            -> many2many (many2many)
+     *            -> many2one (many2one)
+     *            -> many2one_reference (many2one_reference)
+     *            -> monetary (monetary)
+     *            -> one2many (one2many)
+     *            -> reference (reference)
+     *            -> selection (selection)
+     *            -> text (text)
+     *
+     * @param string $state Type
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> manual (Custom Field)
+     *            -> base (Base Field)
+     *
      */
     public function __construct(
         string $name,
         string $model,
-        Model $model_id,
+        OdooRelation $model_id,
         string $field_description,
-        array $ttype,
-        array $state
+        string $ttype,
+        string $state
     ) {
         $this->name = $name;
         $this->model = $model;
@@ -337,77 +470,7 @@ final class Fields extends Base
     }
 
     /**
-     * @param null|bool $selectable
-     */
-    public function setSelectable(?bool $selectable): void
-    {
-        $this->selectable = $selectable;
-    }
-
-    /**
-     * @param null|array $on_delete
-     */
-    public function setOnDelete(?array $on_delete): void
-    {
-        $this->on_delete = $on_delete;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasOnDelete($item, bool $strict = true): bool
-    {
-        if (null === $this->on_delete) {
-            return false;
-        }
-
-        return in_array($item, $this->on_delete, $strict);
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addOnDelete($item): void
-    {
-        if ($this->hasOnDelete($item)) {
-            return;
-        }
-
-        if (null === $this->on_delete) {
-            $this->on_delete = [];
-        }
-
-        $this->on_delete[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeOnDelete($item): void
-    {
-        if (null === $this->on_delete) {
-            $this->on_delete = [];
-        }
-
-        if ($this->hasOnDelete($item)) {
-            $index = array_search($item, $this->on_delete);
-            unset($this->on_delete[$index]);
-        }
-    }
-
-    /**
-     * @param null|string $domain
-     */
-    public function setDomain(?string $domain): void
-    {
-        $this->domain = $domain;
-    }
-
-    /**
-     * @param null|Groups[] $groups
+     * @param OdooRelation[]|null $groups
      */
     public function setGroups(?array $groups): void
     {
@@ -415,24 +478,56 @@ final class Fields extends Base
     }
 
     /**
-     * @param Groups $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param string|null $modules
      */
-    public function hasGroups(Groups $item, bool $strict = true): bool
+    public function setModules(?string $modules): void
     {
-        if (null === $this->groups) {
-            return false;
-        }
-
-        return in_array($item, $this->groups, $strict);
+        $this->modules = $modules;
     }
 
     /**
-     * @param Groups $item
+     * @return string|null
      */
-    public function addGroups(Groups $item): void
+    public function getModules(): ?string
+    {
+        return $this->modules;
+    }
+
+    /**
+     * @param bool|null $selectable
+     */
+    public function setSelectable(?bool $selectable): void
+    {
+        $this->selectable = $selectable;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isSelectable(): ?bool
+    {
+        return $this->selectable;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeGroups(OdooRelation $item): void
+    {
+        if (null === $this->groups) {
+            $this->groups = [];
+        }
+
+        if ($this->hasGroups($item)) {
+            $index = array_search($item, $this->groups);
+            unset($this->groups[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addGroups(OdooRelation $item): void
     {
         if ($this->hasGroups($item)) {
             return;
@@ -446,38 +541,29 @@ final class Fields extends Base
     }
 
     /**
-     * @param Groups $item
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removeGroups(Groups $item): void
+    public function hasGroups(OdooRelation $item): bool
     {
         if (null === $this->groups) {
-            $this->groups = [];
+            return false;
         }
 
-        if ($this->hasGroups($item)) {
-            $index = array_search($item, $this->groups);
-            unset($this->groups[$index]);
-        }
+        return in_array($item, $this->groups);
     }
 
     /**
-     * @return null|string
+     * @return OdooRelation[]|null
      */
-    public function getModules(): ?string
+    public function getGroups(): ?array
     {
-        return $this->modules;
+        return $this->groups;
     }
 
     /**
-     * @param null|int $size
-     */
-    public function setSize(?int $size): void
-    {
-        $this->size = $size;
-    }
-
-    /**
-     * @param null|string $relation_table
+     * @param string|null $relation_table
      */
     public function setRelationTable(?string $relation_table): void
     {
@@ -485,87 +571,79 @@ final class Fields extends Base
     }
 
     /**
-     * @param null|string $column1
+     * @param string|null $domain
      */
-    public function setColumn1(?string $column1): void
+    public function setDomain(?string $domain): void
     {
-        $this->column1 = $column1;
+        $this->domain = $domain;
     }
 
     /**
-     * @param null|string $column2
+     * @return string|null
      */
-    public function setColumn2(?string $column2): void
+    public function getDomain(): ?string
     {
-        $this->column2 = $column2;
+        return $this->domain;
     }
 
     /**
-     * @param null|string $compute
+     * @param string|null $on_delete
      */
-    public function setCompute(?string $compute): void
+    public function setOnDelete(?string $on_delete): void
     {
-        $this->compute = $compute;
+        $this->on_delete = $on_delete;
     }
 
     /**
-     * @param null|string $depends
+     * @return string|null
      */
-    public function setDepends(?string $depends): void
+    public function getOnDelete(): ?string
     {
-        $this->depends = $depends;
+        return $this->on_delete;
     }
 
     /**
-     * @param null|bool $store
+     * @param string $state
      */
-    public function setStore(?bool $store): void
+    public function setState(string $state): void
     {
-        $this->store = $store;
+        $this->state = $state;
     }
 
     /**
-     * @param null|int $tracking
+     * @return string
      */
-    public function setTracking(?int $tracking): void
-    {
-        $this->tracking = $tracking;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return array
-     */
-    public function getState(): array
+    public function getState(): string
     {
         return $this->state;
     }
 
     /**
-     * @param null|bool $translate
+     * @param int|null $size
+     */
+    public function setSize(?int $size): void
+    {
+        $this->size = $size;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRelationTable(): ?string
+    {
+        return $this->relation_table;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getColumn1(): ?string
+    {
+        return $this->column1;
+    }
+
+    /**
+     * @param bool|null $translate
      */
     public function setTranslate(?bool $translate): void
     {
@@ -573,51 +651,175 @@ final class Fields extends Base
     }
 
     /**
-     * @param string $name
+     * @param int|null $tracking
      */
-    public function setName(string $name): void
+    public function setTracking(?int $tracking): void
     {
-        $this->name = $name;
+        $this->tracking = $tracking;
     }
 
     /**
-     * @param mixed $item
+     * @return DateTimeInterface|null
      */
-    public function addTtype($item): void
+    public function getWriteDate(): ?DateTimeInterface
     {
-        if ($this->hasTtype($item)) {
-            return;
-        }
-
-        $this->ttype[] = $item;
+        return $this->write_date;
     }
 
     /**
-     * @param null|string $complete_name
+     * @param OdooRelation|null $write_uid
      */
-    public function setCompleteName(?string $complete_name): void
+    public function setWriteUid(?OdooRelation $write_uid): void
     {
-        $this->complete_name = $complete_name;
+        $this->write_uid = $write_uid;
     }
 
     /**
-     * @param string $model
+     * @return OdooRelation|null
      */
-    public function setModel(string $model): void
+    public function getWriteUid(): ?OdooRelation
     {
-        $this->model = $model;
+        return $this->write_uid;
     }
 
     /**
-     * @param null|string $relation
+     * @param DateTimeInterface|null $create_date
      */
-    public function setRelation(?string $relation): void
+    public function setCreateDate(?DateTimeInterface $create_date): void
     {
-        $this->relation = $relation;
+        $this->create_date = $create_date;
     }
 
     /**
-     * @param null|string $relation_field
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getTracking(): ?int
+    {
+        return $this->tracking;
+    }
+
+    /**
+     * @param string|null $column1
+     */
+    public function setColumn1(?string $column1): void
+    {
+        $this->column1 = $column1;
+    }
+
+    /**
+     * @param bool|null $store
+     */
+    public function setStore(?bool $store): void
+    {
+        $this->store = $store;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isStore(): ?bool
+    {
+        return $this->store;
+    }
+
+    /**
+     * @param string|null $depends
+     */
+    public function setDepends(?string $depends): void
+    {
+        $this->depends = $depends;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDepends(): ?string
+    {
+        return $this->depends;
+    }
+
+    /**
+     * @param string|null $compute
+     */
+    public function setCompute(?string $compute): void
+    {
+        $this->compute = $compute;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCompute(): ?string
+    {
+        return $this->compute;
+    }
+
+    /**
+     * @param string|null $column2
+     */
+    public function setColumn2(?string $column2): void
+    {
+        $this->column2 = $column2;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getColumn2(): ?string
+    {
+        return $this->column2;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSize(): ?int
+    {
+        return $this->size;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isTranslate(): ?bool
+    {
+        return $this->translate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string|null $relation_field
      */
     public function setRelationField(?string $relation_field): void
     {
@@ -625,19 +827,11 @@ final class Fields extends Base
     }
 
     /**
-     * @return null|FieldsAlias
+     * @return string|null
      */
-    public function getRelationFieldId(): ?FieldsAlias
+    public function getHelp(): ?string
     {
-        return $this->relation_field_id;
-    }
-
-    /**
-     * @param Model $model_id
-     */
-    public function setModelId(Model $model_id): void
-    {
-        $this->model_id = $model_id;
+        return $this->help;
     }
 
     /**
@@ -649,7 +843,119 @@ final class Fields extends Base
     }
 
     /**
-     * @param null|string $help
+     * @return string
+     */
+    public function getFieldDescription(): string
+    {
+        return $this->field_description;
+    }
+
+    /**
+     * @param OdooRelation $model_id
+     */
+    public function setModelId(OdooRelation $model_id): void
+    {
+        $this->model_id = $model_id;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getModelId(): OdooRelation
+    {
+        return $this->model_id;
+    }
+
+    /**
+     * @param OdooRelation|null $relation_field_id
+     */
+    public function setRelationFieldId(?OdooRelation $relation_field_id): void
+    {
+        $this->relation_field_id = $relation_field_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getRelationFieldId(): ?OdooRelation
+    {
+        return $this->relation_field_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRelationField(): ?string
+    {
+        return $this->relation_field;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTtype(): string
+    {
+        return $this->ttype;
+    }
+
+    /**
+     * @param string|null $relation
+     */
+    public function setRelation(?string $relation): void
+    {
+        $this->relation = $relation;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRelation(): ?string
+    {
+        return $this->relation;
+    }
+
+    /**
+     * @param string $model
+     */
+    public function setModel(string $model): void
+    {
+        $this->model = $model;
+    }
+
+    /**
+     * @return string
+     */
+    public function getModel(): string
+    {
+        return $this->model;
+    }
+
+    /**
+     * @param string|null $complete_name
+     */
+    public function setCompleteName(?string $complete_name): void
+    {
+        $this->complete_name = $complete_name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCompleteName(): ?string
+    {
+        return $this->complete_name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param string|null $help
      */
     public function setHelp(?string $help): void
     {
@@ -657,37 +963,15 @@ final class Fields extends Base
     }
 
     /**
-     * @param array $ttype
+     * @param string $ttype
      */
-    public function setTtype(array $ttype): void
+    public function setTtype(string $ttype): void
     {
         $this->ttype = $ttype;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasTtype($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->ttype, $strict);
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeTtype($item): void
-    {
-        if ($this->hasTtype($item)) {
-            $index = array_search($item, $this->ttype);
-            unset($this->ttype[$index]);
-        }
-    }
-
-    /**
-     * @param null|bool $index
+     * @param bool|null $index
      */
     public function setIndex(?bool $index): void
     {
@@ -695,40 +979,120 @@ final class Fields extends Base
     }
 
     /**
-     * @param null|string $selection
+     * @param string|null $related
      */
-    public function setSelection(?string $selection): void
+    public function setRelated(?string $related): void
     {
-        $this->selection = $selection;
+        $this->related = $related;
     }
 
     /**
-     * @param null|Selection[] $selection_ids
+     * @return bool|null
      */
-    public function setSelectionIds(?array $selection_ids): void
+    public function isIndex(): ?bool
     {
-        $this->selection_ids = $selection_ids;
+        return $this->index;
     }
 
     /**
-     * @param Selection $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param bool|null $readonly
      */
-    public function hasSelectionIds(Selection $item, bool $strict = true): bool
+    public function setReadonly(?bool $readonly): void
+    {
+        $this->readonly = $readonly;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isReadonly(): ?bool
+    {
+        return $this->readonly;
+    }
+
+    /**
+     * @param bool|null $required
+     */
+    public function setRequired(?bool $required): void
+    {
+        $this->required = $required;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isRequired(): ?bool
+    {
+        return $this->required;
+    }
+
+    /**
+     * @param OdooRelation|null $related_field_id
+     */
+    public function setRelatedFieldId(?OdooRelation $related_field_id): void
+    {
+        $this->related_field_id = $related_field_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getRelatedFieldId(): ?OdooRelation
+    {
+        return $this->related_field_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRelated(): ?string
+    {
+        return $this->related;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSelection(): ?string
+    {
+        return $this->selection;
+    }
+
+    /**
+     * @param bool|null $copied
+     */
+    public function setCopied(?bool $copied): void
+    {
+        $this->copied = $copied;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isCopied(): ?bool
+    {
+        return $this->copied;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeSelectionIds(OdooRelation $item): void
     {
         if (null === $this->selection_ids) {
-            return false;
+            $this->selection_ids = [];
         }
 
-        return in_array($item, $this->selection_ids, $strict);
+        if ($this->hasSelectionIds($item)) {
+            $index = array_search($item, $this->selection_ids);
+            unset($this->selection_ids[$index]);
+        }
     }
 
     /**
-     * @param Selection $item
+     * @param OdooRelation $item
      */
-    public function addSelectionIds(Selection $item): void
+    public function addSelectionIds(OdooRelation $item): void
     {
         if ($this->hasSelectionIds($item)) {
             return;
@@ -742,65 +1106,48 @@ final class Fields extends Base
     }
 
     /**
-     * @param Selection $item
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removeSelectionIds(Selection $item): void
+    public function hasSelectionIds(OdooRelation $item): bool
     {
         if (null === $this->selection_ids) {
-            $this->selection_ids = [];
+            return false;
         }
 
-        if ($this->hasSelectionIds($item)) {
-            $index = array_search($item, $this->selection_ids);
-            unset($this->selection_ids[$index]);
-        }
+        return in_array($item, $this->selection_ids);
     }
 
     /**
-     * @param null|bool $copied
+     * @param OdooRelation[]|null $selection_ids
      */
-    public function setCopied(?bool $copied): void
+    public function setSelectionIds(?array $selection_ids): void
     {
-        $this->copied = $copied;
+        $this->selection_ids = $selection_ids;
     }
 
     /**
-     * @param null|string $related
+     * @return OdooRelation[]|null
      */
-    public function setRelated(?string $related): void
+    public function getSelectionIds(): ?array
     {
-        $this->related = $related;
+        return $this->selection_ids;
     }
 
     /**
-     * @return null|FieldsAlias
+     * @param string|null $selection
      */
-    public function getRelatedFieldId(): ?FieldsAlias
+    public function setSelection(?string $selection): void
     {
-        return $this->related_field_id;
+        $this->selection = $selection;
     }
 
     /**
-     * @param null|bool $required
+     * @param DateTimeInterface|null $write_date
      */
-    public function setRequired(?bool $required): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->required = $required;
-    }
-
-    /**
-     * @param null|bool $readonly
-     */
-    public function setReadonly(?bool $readonly): void
-    {
-        $this->readonly = $readonly;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

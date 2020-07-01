@@ -6,11 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Sale\Order;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Mail\Template as TemplateAlias;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Users;
-use Flux\OdooApiClient\Model\Object\Sale\Order\Template\Line;
-use Flux\OdooApiClient\Model\Object\Sale\Order\Template\Option;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : sale.order.template
@@ -18,18 +14,22 @@ use Flux\OdooApiClient\Model\Object\Sale\Order\Template\Option;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Template extends Base
 {
+    public const ODOO_MODEL_NAME = 'sale.order.template';
+
     /**
      * Quotation Template
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -37,102 +37,130 @@ final class Template extends Base
 
     /**
      * Lines
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Line[]
+     * @var OdooRelation[]|null
      */
     private $sale_order_template_line_ids;
 
     /**
      * Terms and conditions
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $note;
 
     /**
      * Optional Products
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Option[]
+     * @var OdooRelation[]|null
      */
     private $sale_order_template_option_ids;
 
     /**
      * Quotation Duration
      * Number of days for the validity date computation of the quotation
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $number_of_days;
 
     /**
      * Online Signature
      * Request a online signature to the customer in order to confirm orders automatically.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $require_signature;
 
     /**
      * Online Payment
      * Request an online payment to the customer in order to confirm orders automatically.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $require_payment;
 
     /**
      * Confirmation Mail
      * This e-mail template will be sent on confirmation. Leave empty to send nothing.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|TemplateAlias
+     * @var OdooRelation|null
      */
     private $mail_template_id;
 
     /**
      * Active
      * If unchecked, it will allow you to hide the quotation template without removing it.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $active;
 
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Company
+     * @var OdooRelation|null
      */
     private $company_id;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Quotation Template
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $name)
     {
@@ -140,63 +168,15 @@ final class Template extends Base
     }
 
     /**
-     * @param null|int $number_of_days
+     * @param OdooRelation|null $company_id
      */
-    public function setNumberOfDays(?int $number_of_days): void
-    {
-        $this->number_of_days = $number_of_days;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param null|Company $company_id
-     */
-    public function setCompanyId(?Company $company_id): void
+    public function setCompanyId(?OdooRelation $company_id): void
     {
         $this->company_id = $company_id;
     }
 
     /**
-     * @param null|bool $active
-     */
-    public function setActive(?bool $active): void
-    {
-        $this->active = $active;
-    }
-
-    /**
-     * @param null|TemplateAlias $mail_template_id
-     */
-    public function setMailTemplateId(?TemplateAlias $mail_template_id): void
-    {
-        $this->mail_template_id = $mail_template_id;
-    }
-
-    /**
-     * @param null|bool $require_payment
+     * @param bool|null $require_payment
      */
     public function setRequirePayment(?bool $require_payment): void
     {
@@ -204,7 +184,55 @@ final class Template extends Base
     }
 
     /**
-     * @param null|bool $require_signature
+     * @return OdooRelation|null
+     */
+    public function getMailTemplateId(): ?OdooRelation
+    {
+        return $this->mail_template_id;
+    }
+
+    /**
+     * @param OdooRelation|null $mail_template_id
+     */
+    public function setMailTemplateId(?OdooRelation $mail_template_id): void
+    {
+        $this->mail_template_id = $mail_template_id;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param bool|null $active
+     */
+    public function setActive(?bool $active): void
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param bool|null $require_signature
      */
     public function setRequireSignature(?bool $require_signature): void
     {
@@ -212,18 +240,83 @@ final class Template extends Base
     }
 
     /**
-     * @param Option $item
+     * @param OdooRelation|null $create_uid
      */
-    public function removeSaleOrderTemplateOptionIds(Option $item): void
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        if (null === $this->sale_order_template_option_ids) {
-            $this->sale_order_template_option_ids = [];
-        }
+        $this->create_uid = $create_uid;
+    }
 
-        if ($this->hasSaleOrderTemplateOptionIds($item)) {
-            $index = array_search($item, $this->sale_order_template_option_ids);
-            unset($this->sale_order_template_option_ids[$index]);
-        }
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isRequirePayment(): ?bool
+    {
+        return $this->require_payment;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isRequireSignature(): ?bool
+    {
+        return $this->require_signature;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNote(): ?string
+    {
+        return $this->note;
     }
 
     /**
@@ -235,71 +328,39 @@ final class Template extends Base
     }
 
     /**
-     * @param Option $item
+     * @return OdooRelation[]|null
      */
-    public function addSaleOrderTemplateOptionIds(Option $item): void
+    public function getSaleOrderTemplateLineIds(): ?array
     {
-        if ($this->hasSaleOrderTemplateOptionIds($item)) {
-            return;
-        }
-
-        if (null === $this->sale_order_template_option_ids) {
-            $this->sale_order_template_option_ids = [];
-        }
-
-        $this->sale_order_template_option_ids[] = $item;
+        return $this->sale_order_template_line_ids;
     }
 
     /**
-     * @param Option $item
-     * @param bool $strict
+     * @param OdooRelation[]|null $sale_order_template_line_ids
+     */
+    public function setSaleOrderTemplateLineIds(?array $sale_order_template_line_ids): void
+    {
+        $this->sale_order_template_line_ids = $sale_order_template_line_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasSaleOrderTemplateOptionIds(Option $item, bool $strict = true): bool
+    public function hasSaleOrderTemplateLineIds(OdooRelation $item): bool
     {
-        if (null === $this->sale_order_template_option_ids) {
+        if (null === $this->sale_order_template_line_ids) {
             return false;
         }
 
-        return in_array($item, $this->sale_order_template_option_ids, $strict);
+        return in_array($item, $this->sale_order_template_line_ids);
     }
 
     /**
-     * @param null|Option[] $sale_order_template_option_ids
+     * @param OdooRelation $item
      */
-    public function setSaleOrderTemplateOptionIds(?array $sale_order_template_option_ids): void
-    {
-        $this->sale_order_template_option_ids = $sale_order_template_option_ids;
-    }
-
-    /**
-     * @param null|string $note
-     */
-    public function setNote(?string $note): void
-    {
-        $this->note = $note;
-    }
-
-    /**
-     * @param Line $item
-     */
-    public function removeSaleOrderTemplateLineIds(Line $item): void
-    {
-        if (null === $this->sale_order_template_line_ids) {
-            $this->sale_order_template_line_ids = [];
-        }
-
-        if ($this->hasSaleOrderTemplateLineIds($item)) {
-            $index = array_search($item, $this->sale_order_template_line_ids);
-            unset($this->sale_order_template_line_ids[$index]);
-        }
-    }
-
-    /**
-     * @param Line $item
-     */
-    public function addSaleOrderTemplateLineIds(Line $item): void
+    public function addSaleOrderTemplateLineIds(OdooRelation $item): void
     {
         if ($this->hasSaleOrderTemplateLineIds($item)) {
             return;
@@ -313,33 +374,110 @@ final class Template extends Base
     }
 
     /**
-     * @param Line $item
-     * @param bool $strict
+     * @param OdooRelation $item
+     */
+    public function removeSaleOrderTemplateLineIds(OdooRelation $item): void
+    {
+        if (null === $this->sale_order_template_line_ids) {
+            $this->sale_order_template_line_ids = [];
+        }
+
+        if ($this->hasSaleOrderTemplateLineIds($item)) {
+            $index = array_search($item, $this->sale_order_template_line_ids);
+            unset($this->sale_order_template_line_ids[$index]);
+        }
+    }
+
+    /**
+     * @param string|null $note
+     */
+    public function setNote(?string $note): void
+    {
+        $this->note = $note;
+    }
+
+    /**
+     * @param int|null $number_of_days
+     */
+    public function setNumberOfDays(?int $number_of_days): void
+    {
+        $this->number_of_days = $number_of_days;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getSaleOrderTemplateOptionIds(): ?array
+    {
+        return $this->sale_order_template_option_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $sale_order_template_option_ids
+     */
+    public function setSaleOrderTemplateOptionIds(?array $sale_order_template_option_ids): void
+    {
+        $this->sale_order_template_option_ids = $sale_order_template_option_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasSaleOrderTemplateLineIds(Line $item, bool $strict = true): bool
+    public function hasSaleOrderTemplateOptionIds(OdooRelation $item): bool
     {
-        if (null === $this->sale_order_template_line_ids) {
+        if (null === $this->sale_order_template_option_ids) {
             return false;
         }
 
-        return in_array($item, $this->sale_order_template_line_ids, $strict);
+        return in_array($item, $this->sale_order_template_option_ids);
     }
 
     /**
-     * @param null|Line[] $sale_order_template_line_ids
+     * @param OdooRelation $item
      */
-    public function setSaleOrderTemplateLineIds(?array $sale_order_template_line_ids): void
+    public function addSaleOrderTemplateOptionIds(OdooRelation $item): void
     {
-        $this->sale_order_template_line_ids = $sale_order_template_line_ids;
+        if ($this->hasSaleOrderTemplateOptionIds($item)) {
+            return;
+        }
+
+        if (null === $this->sale_order_template_option_ids) {
+            $this->sale_order_template_option_ids = [];
+        }
+
+        $this->sale_order_template_option_ids[] = $item;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation $item
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function removeSaleOrderTemplateOptionIds(OdooRelation $item): void
     {
-        return $this->write_date;
+        if (null === $this->sale_order_template_option_ids) {
+            $this->sale_order_template_option_ids = [];
+        }
+
+        if ($this->hasSaleOrderTemplateOptionIds($item)) {
+            $index = array_search($item, $this->sale_order_template_option_ids);
+            unset($this->sale_order_template_option_ids[$index]);
+        }
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getNumberOfDays(): ?int
+    {
+        return $this->number_of_days;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

@@ -12,9 +12,10 @@ use Flux\OdooApiClient\Model\Object\Base;
  * Info :
  * Widget options:
  *
- * ``class``
- * set as attribute on the generated <img> tag
+ *         ``class``
+ *                 set as attribute on the generated <img> tag
  */
 final class Image extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.qweb.field.image';
 }

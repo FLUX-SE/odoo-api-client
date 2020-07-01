@@ -6,11 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Product;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Product\Pricelist\Item;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Country\Group;
-use Flux\OdooApiClient\Model\Object\Res\Currency;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : product.pricelist
@@ -18,18 +14,22 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Pricelist extends Base
 {
+    public const ODOO_MODEL_NAME = 'product.pricelist';
+
     /**
      * Pricelist Name
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -38,95 +38,220 @@ final class Pricelist extends Base
     /**
      * Active
      * If unchecked, it will allow you to hide the pricelist without removing it.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $active;
 
     /**
      * Pricelist Items
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Item[]
+     * @var OdooRelation[]|null
      */
     private $item_ids;
 
     /**
      * Currency
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Currency
+     * @var OdooRelation
      */
     private $currency_id;
 
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Company
+     * @var OdooRelation|null
      */
     private $company_id;
 
     /**
      * Sequence
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $sequence;
 
     /**
      * Country Groups
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Group[]
+     * @var OdooRelation[]|null
      */
     private $country_group_ids;
 
     /**
      * Discount Policy
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> with_discount (Discount included in the price)
+     *     -> without_discount (Show public price & discount to the customer)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $discount_policy;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Pricelist Name
-     * @param Currency $currency_id Currency
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $currency_id Currency
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(string $name, Currency $currency_id)
+    public function __construct(string $name, OdooRelation $currency_id)
     {
         $this->name = $name;
         $this->currency_id = $currency_id;
     }
 
     /**
-     * @param Group $item
+     * @return OdooRelation[]|null
      */
-    public function addCountryGroupIds(Group $item): void
+    public function getCountryGroupIds(): ?array
+    {
+        return $this->country_group_ids;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param string|null $discount_policy
+     */
+    public function setDiscountPolicy(?string $discount_policy): void
+    {
+        $this->discount_policy = $discount_policy;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDiscountPolicy(): ?string
+    {
+        return $this->discount_policy;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeCountryGroupIds(OdooRelation $item): void
+    {
+        if (null === $this->country_group_ids) {
+            $this->country_group_ids = [];
+        }
+
+        if ($this->hasCountryGroupIds($item)) {
+            $index = array_search($item, $this->country_group_ids);
+            unset($this->country_group_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addCountryGroupIds(OdooRelation $item): void
     {
         if ($this->hasCountryGroupIds($item)) {
             return;
@@ -140,123 +265,21 @@ final class Pricelist extends Base
     }
 
     /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeDiscountPolicy($item): void
-    {
-        if (null === $this->discount_policy) {
-            $this->discount_policy = [];
-        }
-
-        if ($this->hasDiscountPolicy($item)) {
-            $index = array_search($item, $this->discount_policy);
-            unset($this->discount_policy[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addDiscountPolicy($item): void
-    {
-        if ($this->hasDiscountPolicy($item)) {
-            return;
-        }
-
-        if (null === $this->discount_policy) {
-            $this->discount_policy = [];
-        }
-
-        $this->discount_policy[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasDiscountPolicy($item, bool $strict = true): bool
-    {
-        if (null === $this->discount_policy) {
-            return false;
-        }
-
-        return in_array($item, $this->discount_policy, $strict);
-    }
-
-    /**
-     * @param null|array $discount_policy
-     */
-    public function setDiscountPolicy(?array $discount_policy): void
-    {
-        $this->discount_policy = $discount_policy;
-    }
-
-    /**
-     * @param Group $item
-     */
-    public function removeCountryGroupIds(Group $item): void
-    {
-        if (null === $this->country_group_ids) {
-            $this->country_group_ids = [];
-        }
-
-        if ($this->hasCountryGroupIds($item)) {
-            $index = array_search($item, $this->country_group_ids);
-            unset($this->country_group_ids[$index]);
-        }
-    }
-
-    /**
-     * @param Group $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasCountryGroupIds(Group $item, bool $strict = true): bool
+    public function hasCountryGroupIds(OdooRelation $item): bool
     {
         if (null === $this->country_group_ids) {
             return false;
         }
 
-        return in_array($item, $this->country_group_ids, $strict);
+        return in_array($item, $this->country_group_ids);
     }
 
     /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @param null|Group[] $country_group_ids
+     * @param OdooRelation[]|null $country_group_ids
      */
     public function setCountryGroupIds(?array $country_group_ids): void
     {
@@ -264,7 +287,7 @@ final class Pricelist extends Base
     }
 
     /**
-     * @param null|int $sequence
+     * @param int|null $sequence
      */
     public function setSequence(?int $sequence): void
     {
@@ -272,25 +295,57 @@ final class Pricelist extends Base
     }
 
     /**
-     * @param null|Company $company_id
+     * @return string
      */
-    public function setCompanyId(?Company $company_id): void
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSequence(): ?int
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
     {
         $this->company_id = $company_id;
     }
 
     /**
-     * @param Currency $currency_id
+     * @return OdooRelation|null
      */
-    public function setCurrencyId(Currency $currency_id): void
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param OdooRelation $currency_id
+     */
+    public function setCurrencyId(OdooRelation $currency_id): void
     {
         $this->currency_id = $currency_id;
     }
 
     /**
-     * @param Item $item
+     * @return OdooRelation
      */
-    public function removeItemIds(Item $item): void
+    public function getCurrencyId(): OdooRelation
+    {
+        return $this->currency_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeItemIds(OdooRelation $item): void
     {
         if (null === $this->item_ids) {
             $this->item_ids = [];
@@ -303,9 +358,9 @@ final class Pricelist extends Base
     }
 
     /**
-     * @param Item $item
+     * @param OdooRelation $item
      */
-    public function addItemIds(Item $item): void
+    public function addItemIds(OdooRelation $item): void
     {
         if ($this->hasItemIds($item)) {
             return;
@@ -319,22 +374,21 @@ final class Pricelist extends Base
     }
 
     /**
-     * @param Item $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasItemIds(Item $item, bool $strict = true): bool
+    public function hasItemIds(OdooRelation $item): bool
     {
         if (null === $this->item_ids) {
             return false;
         }
 
-        return in_array($item, $this->item_ids, $strict);
+        return in_array($item, $this->item_ids);
     }
 
     /**
-     * @param null|Item[] $item_ids
+     * @param OdooRelation[]|null $item_ids
      */
     public function setItemIds(?array $item_ids): void
     {
@@ -342,7 +396,15 @@ final class Pricelist extends Base
     }
 
     /**
-     * @param null|bool $active
+     * @return OdooRelation[]|null
+     */
+    public function getItemIds(): ?array
+    {
+        return $this->item_ids;
+    }
+
+    /**
+     * @param bool|null $active
      */
     public function setActive(?bool $active): void
     {
@@ -350,10 +412,26 @@ final class Pricelist extends Base
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return bool|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function isActive(): ?bool
     {
-        return $this->write_date;
+        return $this->active;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

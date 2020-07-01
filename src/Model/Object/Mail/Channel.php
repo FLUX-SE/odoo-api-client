@@ -4,25 +4,23 @@ declare(strict_types=1);
 
 namespace Flux\OdooApiClient\Model\Object\Mail;
 
-use Flux\OdooApiClient\Model\Object\Ir\Attachment;
-use Flux\OdooApiClient\Model\Object\Ir\Model;
-use Flux\OdooApiClient\Model\Object\Mail\Channel as ChannelAlias;
-use Flux\OdooApiClient\Model\Object\Mail\Channel\Partner;
-use Flux\OdooApiClient\Model\Object\Res\Groups;
-use Flux\OdooApiClient\Model\Object\Res\Partner as PartnerAlias;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.channel
  * Name : mail.channel
  * Info :
  * A mail.channel is a discussion group that may behave like a listener
- * on documents.
+ *         on documents.
  */
 final class Channel extends Alias
 {
+    public const ODOO_MODEL_NAME = 'mail.channel';
+
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -30,79 +28,110 @@ final class Channel extends Alias
 
     /**
      * Channel Type
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> chat (Chat Discussion)
+     *     -> channel (Channel)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $channel_type;
 
     /**
      * Is a chat
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $is_chat;
 
     /**
      * Description
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $description;
 
     /**
      * UUID
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $uuid;
 
     /**
      * Send messages by email
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $email_send;
 
     /**
      * Last Seen
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Partner[]
+     * @var OdooRelation[]|null
      */
     private $channel_last_seen_partner_ids;
 
     /**
      * Listeners
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|PartnerAlias[]
+     * @var OdooRelation[]|null
      */
     private $channel_partner_ids;
 
     /**
      * Channel Message
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Message[]
+     * @var OdooRelation[]|null
      */
     private $channel_message_ids;
 
     /**
      * Is a member
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $is_member;
 
     /**
      * Privacy
      * This group is visible by non members. Invisible groups can add members through the invite button.
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> public (Everyone)
+     *     -> private (Invited people only)
+     *     -> groups (Selected group of users)
      *
-     * @var array
+     *
+     * @var string
      */
     private $public;
 
     /**
      * Authorized Group
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Groups
+     * @var OdooRelation|null
      */
     private $group_public_id;
 
@@ -110,234 +139,313 @@ final class Channel extends Alias
      * Auto Subscription
      * Members of those groups will automatically added as followers. Note that they will be able to manage their
      * subscription manually if necessary.
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Groups[]
+     * @var OdooRelation[]|null
      */
     private $group_ids;
 
     /**
      * Image
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $image_128;
 
     /**
      * Is Subscribed
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $is_subscribed;
 
     /**
      * Moderate this channel
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $moderation;
 
     /**
      * Moderators
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Users[]
+     * @var OdooRelation[]|null
      */
     private $moderator_ids;
 
     /**
      * Moderator
      * Current user is a moderator of the channel
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $is_moderator;
 
     /**
      * Moderated Emails
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Moderation[]
+     * @var OdooRelation[]|null
      */
     private $moderation_ids;
 
     /**
      * Moderated emails count
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $moderation_count;
 
     /**
      * Automatic notification
      * People receive an automatic notification about their message being waiting for moderation.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $moderation_notify;
 
     /**
      * Notification message
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $moderation_notify_msg;
 
     /**
      * Send guidelines to new subscribers
      * Newcomers on this moderated channel will automatically receive the guidelines.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $moderation_guidelines;
 
     /**
      * Guidelines
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $moderation_guidelines_msg;
 
     /**
      * Alias
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Alias
+     * @var OdooRelation
      */
     private $alias_id;
 
     /**
      * Is Follower
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $message_is_follower;
 
     /**
      * Followers
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Followers[]
+     * @var OdooRelation[]|null
      */
     private $message_follower_ids;
 
     /**
      * Followers (Partners)
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|PartnerAlias[]
+     * @var OdooRelation[]|null
      */
     private $message_partner_ids;
 
     /**
      * Followers (Channels)
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|ChannelAlias[]
+     * @var OdooRelation[]|null
      */
     private $message_channel_ids;
 
     /**
      * Messages
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Message[]
+     * @var OdooRelation[]|null
      */
     private $message_ids;
 
     /**
      * Unread Messages
      * If checked, new messages require your attention.
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $message_unread;
 
     /**
      * Unread Messages Counter
      * Number of unread messages
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $message_unread_counter;
 
     /**
      * Action Needed
      * If checked, new messages require your attention.
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $message_needaction;
 
     /**
      * Number of Actions
      * Number of messages which requires an action
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $message_needaction_counter;
 
     /**
      * Message Delivery error
      * If checked, some messages have a delivery error.
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $message_has_error;
 
     /**
      * Number of errors
      * Number of messages with delivery error
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $message_has_error_counter;
 
     /**
      * Attachment Count
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $message_attachment_count;
 
     /**
      * Main Attachment
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Attachment
+     * @var OdooRelation|null
      */
     private $message_main_attachment_id;
 
     /**
      * Website Messages
      * Website communication history
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Message[]
+     * @var OdooRelation[]|null
      */
     private $website_message_ids;
 
     /**
      * SMS Delivery error
      * If checked, some messages have a delivery error.
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $message_has_sms_error;
 
     /**
      * @param string $name Name
-     * @param array $public Privacy
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $public Privacy
      *        This group is visible by non members. Invisible groups can add members through the invite button.
-     * @param Alias $alias_id Alias
-     * @param Model $alias_model_id Aliased Model
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> public (Everyone)
+     *            -> private (Invited people only)
+     *            -> groups (Selected group of users)
+     *
+     * @param OdooRelation $alias_id Alias
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $alias_model_id Aliased Model
      *        The model (Odoo Document Kind) to which this alias corresponds. Any incoming email that does not reply to an
      *        existing record will cause the creation of a new record of this model (e.g. a Project Task)
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $alias_defaults Default Values
      *        A Python dictionary that will be evaluated to provide default values when creating new records for this alias.
-     * @param array $alias_contact Alias Contact Security
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $alias_contact Alias Contact Security
      *        Policy to post a message on the document using the mailgateway.
      *        - everyone: everyone can post
      *        - partners: only authenticated partners
      *        - followers: only followers of the related document or members of following channels
+     *
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> everyone (Everyone)
+     *            -> partners (Authenticated Partners)
+     *            -> followers (Followers only)
+     *
      */
     public function __construct(
         string $name,
-        array $public,
-        Alias $alias_id,
-        Model $alias_model_id,
+        string $public,
+        OdooRelation $alias_id,
+        OdooRelation $alias_model_id,
         string $alias_defaults,
-        array $alias_contact
+        string $alias_contact
     ) {
         $this->name = $name;
         $this->public = $public;
@@ -346,17 +454,123 @@ final class Channel extends Alias
     }
 
     /**
-     * @param null|bool $moderation_guidelines
+     * @param OdooRelation[]|null $message_follower_ids
      */
-    public function setModerationGuidelines(?bool $moderation_guidelines): void
+    public function setMessageFollowerIds(?array $message_follower_ids): void
     {
-        $this->moderation_guidelines = $moderation_guidelines;
+        $this->message_follower_ids = $message_follower_ids;
     }
 
     /**
-     * @param Followers $item
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function addMessageFollowerIds(Followers $item): void
+    public function hasMessageChannelIds(OdooRelation $item): bool
+    {
+        if (null === $this->message_channel_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_channel_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_channel_ids
+     */
+    public function setMessageChannelIds(?array $message_channel_ids): void
+    {
+        $this->message_channel_ids = $message_channel_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getMessageChannelIds(): ?array
+    {
+        return $this->message_channel_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMessagePartnerIds(OdooRelation $item): void
+    {
+        if (null === $this->message_partner_ids) {
+            $this->message_partner_ids = [];
+        }
+
+        if ($this->hasMessagePartnerIds($item)) {
+            $index = array_search($item, $this->message_partner_ids);
+            unset($this->message_partner_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMessagePartnerIds(OdooRelation $item): void
+    {
+        if ($this->hasMessagePartnerIds($item)) {
+            return;
+        }
+
+        if (null === $this->message_partner_ids) {
+            $this->message_partner_ids = [];
+        }
+
+        $this->message_partner_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMessagePartnerIds(OdooRelation $item): bool
+    {
+        if (null === $this->message_partner_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_partner_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_partner_ids
+     */
+    public function setMessagePartnerIds(?array $message_partner_ids): void
+    {
+        $this->message_partner_ids = $message_partner_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getMessagePartnerIds(): ?array
+    {
+        return $this->message_partner_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMessageFollowerIds(OdooRelation $item): void
+    {
+        if (null === $this->message_follower_ids) {
+            $this->message_follower_ids = [];
+        }
+
+        if ($this->hasMessageFollowerIds($item)) {
+            $index = array_search($item, $this->message_follower_ids);
+            unset($this->message_follower_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMessageFollowerIds(OdooRelation $item): void
     {
         if ($this->hasMessageFollowerIds($item)) {
             return;
@@ -370,30 +584,52 @@ final class Channel extends Alias
     }
 
     /**
-     * @param Followers $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasMessageFollowerIds(Followers $item, bool $strict = true): bool
+    public function hasMessageFollowerIds(OdooRelation $item): bool
     {
         if (null === $this->message_follower_ids) {
             return false;
         }
 
-        return in_array($item, $this->message_follower_ids, $strict);
+        return in_array($item, $this->message_follower_ids);
     }
 
     /**
-     * @param null|Followers[] $message_follower_ids
+     * @return OdooRelation[]|null
      */
-    public function setMessageFollowerIds(?array $message_follower_ids): void
+    public function getMessageFollowerIds(): ?array
     {
-        $this->message_follower_ids = $message_follower_ids;
+        return $this->message_follower_ids;
     }
 
     /**
-     * @return null|bool
+     * @param OdooRelation $item
+     */
+    public function removeMessageChannelIds(OdooRelation $item): void
+    {
+        if (null === $this->message_channel_ids) {
+            $this->message_channel_ids = [];
+        }
+
+        if ($this->hasMessageChannelIds($item)) {
+            $index = array_search($item, $this->message_channel_ids);
+            unset($this->message_channel_ids[$index]);
+        }
+    }
+
+    /**
+     * @param bool|null $message_is_follower
+     */
+    public function setMessageIsFollower(?bool $message_is_follower): void
+    {
+        $this->message_is_follower = $message_is_follower;
+    }
+
+    /**
+     * @return bool|null
      */
     public function isMessageIsFollower(): ?bool
     {
@@ -401,15 +637,23 @@ final class Channel extends Alias
     }
 
     /**
-     * @param Alias $alias_id
+     * @param OdooRelation $alias_id
      */
-    public function setAliasId(Alias $alias_id): void
+    public function setAliasId(OdooRelation $alias_id): void
     {
         $this->alias_id = $alias_id;
     }
 
     /**
-     * @param null|string $moderation_guidelines_msg
+     * @return OdooRelation
+     */
+    public function getAliasId(): OdooRelation
+    {
+        return $this->alias_id;
+    }
+
+    /**
+     * @param string|null $moderation_guidelines_msg
      */
     public function setModerationGuidelinesMsg(?string $moderation_guidelines_msg): void
     {
@@ -417,7 +661,31 @@ final class Channel extends Alias
     }
 
     /**
-     * @param null|string $moderation_notify_msg
+     * @return string|null
+     */
+    public function getModerationGuidelinesMsg(): ?string
+    {
+        return $this->moderation_guidelines_msg;
+    }
+
+    /**
+     * @param bool|null $moderation_guidelines
+     */
+    public function setModerationGuidelines(?bool $moderation_guidelines): void
+    {
+        $this->moderation_guidelines = $moderation_guidelines;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isModerationGuidelines(): ?bool
+    {
+        return $this->moderation_guidelines;
+    }
+
+    /**
+     * @param string|null $moderation_notify_msg
      */
     public function setModerationNotifyMsg(?string $moderation_notify_msg): void
     {
@@ -425,15 +693,15 @@ final class Channel extends Alias
     }
 
     /**
-     * @return null|PartnerAlias[]
+     * @return string|null
      */
-    public function getMessagePartnerIds(): ?array
+    public function getModerationNotifyMsg(): ?string
     {
-        return $this->message_partner_ids;
+        return $this->moderation_notify_msg;
     }
 
     /**
-     * @param null|bool $moderation_notify
+     * @param bool|null $moderation_notify
      */
     public function setModerationNotify(?bool $moderation_notify): void
     {
@@ -441,107 +709,39 @@ final class Channel extends Alias
     }
 
     /**
-     * @return null|int
+     * @param OdooRelation $item
      */
-    public function getModerationCount(): ?int
+    public function addMessageChannelIds(OdooRelation $item): void
     {
-        return $this->moderation_count;
-    }
-
-    /**
-     * @param Moderation $item
-     */
-    public function removeModerationIds(Moderation $item): void
-    {
-        if (null === $this->moderation_ids) {
-            $this->moderation_ids = [];
-        }
-
-        if ($this->hasModerationIds($item)) {
-            $index = array_search($item, $this->moderation_ids);
-            unset($this->moderation_ids[$index]);
-        }
-    }
-
-    /**
-     * @param Moderation $item
-     */
-    public function addModerationIds(Moderation $item): void
-    {
-        if ($this->hasModerationIds($item)) {
+        if ($this->hasMessageChannelIds($item)) {
             return;
         }
 
-        if (null === $this->moderation_ids) {
-            $this->moderation_ids = [];
+        if (null === $this->message_channel_ids) {
+            $this->message_channel_ids = [];
         }
 
-        $this->moderation_ids[] = $item;
+        $this->message_channel_ids[] = $item;
     }
 
     /**
-     * @param Moderation $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return OdooRelation[]|null
      */
-    public function hasModerationIds(Moderation $item, bool $strict = true): bool
+    public function getMessageIds(): ?array
     {
-        if (null === $this->moderation_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->moderation_ids, $strict);
+        return $this->message_ids;
     }
 
     /**
-     * @param null|Moderation[] $moderation_ids
+     * @param int|null $moderation_count
      */
-    public function setModerationIds(?array $moderation_ids): void
+    public function setModerationCount(?int $moderation_count): void
     {
-        $this->moderation_ids = $moderation_ids;
+        $this->moderation_count = $moderation_count;
     }
 
     /**
-     * @param Followers $item
-     */
-    public function removeMessageFollowerIds(Followers $item): void
-    {
-        if (null === $this->message_follower_ids) {
-            $this->message_follower_ids = [];
-        }
-
-        if ($this->hasMessageFollowerIds($item)) {
-            $index = array_search($item, $this->message_follower_ids);
-            unset($this->message_follower_ids[$index]);
-        }
-    }
-
-    /**
-     * @return null|ChannelAlias[]
-     */
-    public function getMessageChannelIds(): ?array
-    {
-        return $this->message_channel_ids;
-    }
-
-    /**
-     * @param Users $item
-     */
-    public function removeModeratorIds(Users $item): void
-    {
-        if (null === $this->moderator_ids) {
-            $this->moderator_ids = [];
-        }
-
-        if ($this->hasModeratorIds($item)) {
-            $index = array_search($item, $this->moderator_ids);
-            unset($this->moderator_ids[$index]);
-        }
-    }
-
-    /**
-     * @return null|int
+     * @return int|null
      */
     public function getMessageHasErrorCounter(): ?int
     {
@@ -549,9 +749,17 @@ final class Channel extends Alias
     }
 
     /**
-     * @param Message $item
+     * @return bool|null
      */
-    public function removeWebsiteMessageIds(Message $item): void
+    public function isMessageHasSmsError(): ?bool
+    {
+        return $this->message_has_sms_error;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeWebsiteMessageIds(OdooRelation $item): void
     {
         if (null === $this->website_message_ids) {
             $this->website_message_ids = [];
@@ -564,9 +772,9 @@ final class Channel extends Alias
     }
 
     /**
-     * @param Message $item
+     * @param OdooRelation $item
      */
-    public function addWebsiteMessageIds(Message $item): void
+    public function addWebsiteMessageIds(OdooRelation $item): void
     {
         if ($this->hasWebsiteMessageIds($item)) {
             return;
@@ -580,22 +788,21 @@ final class Channel extends Alias
     }
 
     /**
-     * @param Message $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasWebsiteMessageIds(Message $item, bool $strict = true): bool
+    public function hasWebsiteMessageIds(OdooRelation $item): bool
     {
         if (null === $this->website_message_ids) {
             return false;
         }
 
-        return in_array($item, $this->website_message_ids, $strict);
+        return in_array($item, $this->website_message_ids);
     }
 
     /**
-     * @param null|Message[] $website_message_ids
+     * @param OdooRelation[]|null $website_message_ids
      */
     public function setWebsiteMessageIds(?array $website_message_ids): void
     {
@@ -603,15 +810,39 @@ final class Channel extends Alias
     }
 
     /**
-     * @param null|Attachment $message_main_attachment_id
+     * @return OdooRelation[]|null
      */
-    public function setMessageMainAttachmentId(?Attachment $message_main_attachment_id): void
+    public function getWebsiteMessageIds(): ?array
+    {
+        return $this->website_message_ids;
+    }
+
+    /**
+     * @param OdooRelation|null $message_main_attachment_id
+     */
+    public function setMessageMainAttachmentId(?OdooRelation $message_main_attachment_id): void
     {
         $this->message_main_attachment_id = $message_main_attachment_id;
     }
 
     /**
-     * @return null|int
+     * @return OdooRelation|null
+     */
+    public function getMessageMainAttachmentId(): ?OdooRelation
+    {
+        return $this->message_main_attachment_id;
+    }
+
+    /**
+     * @param int|null $message_attachment_count
+     */
+    public function setMessageAttachmentCount(?int $message_attachment_count): void
+    {
+        $this->message_attachment_count = $message_attachment_count;
+    }
+
+    /**
+     * @return int|null
      */
     public function getMessageAttachmentCount(): ?int
     {
@@ -619,15 +850,23 @@ final class Channel extends Alias
     }
 
     /**
-     * @return null|bool
+     * @param int|null $message_has_error_counter
      */
-    public function isMessageHasError(): ?bool
+    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
     {
-        return $this->message_has_error;
+        $this->message_has_error_counter = $message_has_error_counter;
     }
 
     /**
-     * @param null|Message[] $message_ids
+     * @param bool|null $message_has_error
+     */
+    public function setMessageHasError(?bool $message_has_error): void
+    {
+        $this->message_has_error = $message_has_error;
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_ids
      */
     public function setMessageIds(?array $message_ids): void
     {
@@ -635,7 +874,23 @@ final class Channel extends Alias
     }
 
     /**
-     * @return null|int
+     * @return bool|null
+     */
+    public function isMessageHasError(): ?bool
+    {
+        return $this->message_has_error;
+    }
+
+    /**
+     * @param int|null $message_needaction_counter
+     */
+    public function setMessageNeedactionCounter(?int $message_needaction_counter): void
+    {
+        $this->message_needaction_counter = $message_needaction_counter;
+    }
+
+    /**
+     * @return int|null
      */
     public function getMessageNeedactionCounter(): ?int
     {
@@ -643,7 +898,15 @@ final class Channel extends Alias
     }
 
     /**
-     * @return null|bool
+     * @param bool|null $message_needaction
+     */
+    public function setMessageNeedaction(?bool $message_needaction): void
+    {
+        $this->message_needaction = $message_needaction;
+    }
+
+    /**
+     * @return bool|null
      */
     public function isMessageNeedaction(): ?bool
     {
@@ -651,7 +914,15 @@ final class Channel extends Alias
     }
 
     /**
-     * @return null|int
+     * @param int|null $message_unread_counter
+     */
+    public function setMessageUnreadCounter(?int $message_unread_counter): void
+    {
+        $this->message_unread_counter = $message_unread_counter;
+    }
+
+    /**
+     * @return int|null
      */
     public function getMessageUnreadCounter(): ?int
     {
@@ -659,7 +930,15 @@ final class Channel extends Alias
     }
 
     /**
-     * @return null|bool
+     * @param bool|null $message_unread
+     */
+    public function setMessageUnread(?bool $message_unread): void
+    {
+        $this->message_unread = $message_unread;
+    }
+
+    /**
+     * @return bool|null
      */
     public function isMessageUnread(): ?bool
     {
@@ -667,9 +946,9 @@ final class Channel extends Alias
     }
 
     /**
-     * @param Message $item
+     * @param OdooRelation $item
      */
-    public function removeMessageIds(Message $item): void
+    public function removeMessageIds(OdooRelation $item): void
     {
         if (null === $this->message_ids) {
             $this->message_ids = [];
@@ -682,9 +961,9 @@ final class Channel extends Alias
     }
 
     /**
-     * @param Message $item
+     * @param OdooRelation $item
      */
-    public function addMessageIds(Message $item): void
+    public function addMessageIds(OdooRelation $item): void
     {
         if ($this->hasMessageIds($item)) {
             return;
@@ -698,374 +977,61 @@ final class Channel extends Alias
     }
 
     /**
-     * @param Message $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasMessageIds(Message $item, bool $strict = true): bool
+    public function hasMessageIds(OdooRelation $item): bool
     {
         if (null === $this->message_ids) {
             return false;
         }
 
-        return in_array($item, $this->message_ids, $strict);
+        return in_array($item, $this->message_ids);
     }
 
     /**
-     * @return null|bool
+     * @return bool|null
      */
-    public function isIsModerator(): ?bool
+    public function isModerationNotify(): ?bool
     {
-        return $this->is_moderator;
+        return $this->moderation_notify;
     }
 
     /**
-     * @param Users $item
+     * @return int|null
      */
-    public function addModeratorIds(Users $item): void
+    public function getModerationCount(): ?int
     {
-        if ($this->hasModeratorIds($item)) {
-            return;
-        }
-
-        if (null === $this->moderator_ids) {
-            $this->moderator_ids = [];
-        }
-
-        $this->moderator_ids[] = $item;
+        return $this->moderation_count;
     }
 
     /**
-     * @param string $name
+     * @return string
      */
-    public function setName(string $name): void
+    public function getName(): string
     {
-        $this->name = $name;
+        return $this->name;
     }
 
     /**
-     * @param null|Partner[] $channel_last_seen_partner_ids
-     */
-    public function setChannelLastSeenPartnerIds(?array $channel_last_seen_partner_ids): void
-    {
-        $this->channel_last_seen_partner_ids = $channel_last_seen_partner_ids;
-    }
-
-    /**
-     * @param PartnerAlias $item
-     */
-    public function addChannelPartnerIds(PartnerAlias $item): void
-    {
-        if ($this->hasChannelPartnerIds($item)) {
-            return;
-        }
-
-        if (null === $this->channel_partner_ids) {
-            $this->channel_partner_ids = [];
-        }
-
-        $this->channel_partner_ids[] = $item;
-    }
-
-    /**
-     * @param PartnerAlias $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasChannelPartnerIds(PartnerAlias $item, bool $strict = true): bool
-    {
-        if (null === $this->channel_partner_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->channel_partner_ids, $strict);
-    }
-
-    /**
-     * @param null|PartnerAlias[] $channel_partner_ids
-     */
-    public function setChannelPartnerIds(?array $channel_partner_ids): void
-    {
-        $this->channel_partner_ids = $channel_partner_ids;
-    }
-
-    /**
-     * @param Partner $item
-     */
-    public function removeChannelLastSeenPartnerIds(Partner $item): void
-    {
-        if (null === $this->channel_last_seen_partner_ids) {
-            $this->channel_last_seen_partner_ids = [];
-        }
-
-        if ($this->hasChannelLastSeenPartnerIds($item)) {
-            $index = array_search($item, $this->channel_last_seen_partner_ids);
-            unset($this->channel_last_seen_partner_ids[$index]);
-        }
-    }
-
-    /**
-     * @param Partner $item
-     */
-    public function addChannelLastSeenPartnerIds(Partner $item): void
-    {
-        if ($this->hasChannelLastSeenPartnerIds($item)) {
-            return;
-        }
-
-        if (null === $this->channel_last_seen_partner_ids) {
-            $this->channel_last_seen_partner_ids = [];
-        }
-
-        $this->channel_last_seen_partner_ids[] = $item;
-    }
-
-    /**
-     * @param Partner $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasChannelLastSeenPartnerIds(Partner $item, bool $strict = true): bool
+    public function hasChannelLastSeenPartnerIds(OdooRelation $item): bool
     {
         if (null === $this->channel_last_seen_partner_ids) {
             return false;
         }
 
-        return in_array($item, $this->channel_last_seen_partner_ids, $strict);
+        return in_array($item, $this->channel_last_seen_partner_ids);
     }
 
     /**
-     * @param null|bool $email_send
+     * @param OdooRelation $item
      */
-    public function setEmailSend(?bool $email_send): void
-    {
-        $this->email_send = $email_send;
-    }
-
-    /**
-     * @param null|Message[] $channel_message_ids
-     */
-    public function setChannelMessageIds(?array $channel_message_ids): void
-    {
-        $this->channel_message_ids = $channel_message_ids;
-    }
-
-    /**
-     * @param null|string $uuid
-     */
-    public function setUuid(?string $uuid): void
-    {
-        $this->uuid = $uuid;
-    }
-
-    /**
-     * @param null|string $description
-     */
-    public function setDescription(?string $description): void
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * @return null|bool
-     */
-    public function isIsChat(): ?bool
-    {
-        return $this->is_chat;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeChannelType($item): void
-    {
-        if (null === $this->channel_type) {
-            $this->channel_type = [];
-        }
-
-        if ($this->hasChannelType($item)) {
-            $index = array_search($item, $this->channel_type);
-            unset($this->channel_type[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addChannelType($item): void
-    {
-        if ($this->hasChannelType($item)) {
-            return;
-        }
-
-        if (null === $this->channel_type) {
-            $this->channel_type = [];
-        }
-
-        $this->channel_type[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasChannelType($item, bool $strict = true): bool
-    {
-        if (null === $this->channel_type) {
-            return false;
-        }
-
-        return in_array($item, $this->channel_type, $strict);
-    }
-
-    /**
-     * @param null|array $channel_type
-     */
-    public function setChannelType(?array $channel_type): void
-    {
-        $this->channel_type = $channel_type;
-    }
-
-    /**
-     * @param PartnerAlias $item
-     */
-    public function removeChannelPartnerIds(PartnerAlias $item): void
-    {
-        if (null === $this->channel_partner_ids) {
-            $this->channel_partner_ids = [];
-        }
-
-        if ($this->hasChannelPartnerIds($item)) {
-            $index = array_search($item, $this->channel_partner_ids);
-            unset($this->channel_partner_ids[$index]);
-        }
-    }
-
-    /**
-     * @param Message $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasChannelMessageIds(Message $item, bool $strict = true): bool
-    {
-        if (null === $this->channel_message_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->channel_message_ids, $strict);
-    }
-
-    /**
-     * @param Users $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasModeratorIds(Users $item, bool $strict = true): bool
-    {
-        if (null === $this->moderator_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->moderator_ids, $strict);
-    }
-
-    /**
-     * @param Groups $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasGroupIds(Groups $item, bool $strict = true): bool
-    {
-        if (null === $this->group_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->group_ids, $strict);
-    }
-
-    /**
-     * @param null|Users[] $moderator_ids
-     */
-    public function setModeratorIds(?array $moderator_ids): void
-    {
-        $this->moderator_ids = $moderator_ids;
-    }
-
-    /**
-     * @param null|bool $moderation
-     */
-    public function setModeration(?bool $moderation): void
-    {
-        $this->moderation = $moderation;
-    }
-
-    /**
-     * @return null|bool
-     */
-    public function isIsSubscribed(): ?bool
-    {
-        return $this->is_subscribed;
-    }
-
-    /**
-     * @param null|int $image_128
-     */
-    public function setImage128(?int $image_128): void
-    {
-        $this->image_128 = $image_128;
-    }
-
-    /**
-     * @param Groups $item
-     */
-    public function removeGroupIds(Groups $item): void
-    {
-        if (null === $this->group_ids) {
-            $this->group_ids = [];
-        }
-
-        if ($this->hasGroupIds($item)) {
-            $index = array_search($item, $this->group_ids);
-            unset($this->group_ids[$index]);
-        }
-    }
-
-    /**
-     * @param Groups $item
-     */
-    public function addGroupIds(Groups $item): void
-    {
-        if ($this->hasGroupIds($item)) {
-            return;
-        }
-
-        if (null === $this->group_ids) {
-            $this->group_ids = [];
-        }
-
-        $this->group_ids[] = $item;
-    }
-
-    /**
-     * @param null|Groups[] $group_ids
-     */
-    public function setGroupIds(?array $group_ids): void
-    {
-        $this->group_ids = $group_ids;
-    }
-
-    /**
-     * @param Message $item
-     */
-    public function addChannelMessageIds(Message $item): void
+    public function addChannelMessageIds(OdooRelation $item): void
     {
         if ($this->hasChannelMessageIds($item)) {
             return;
@@ -1079,57 +1045,137 @@ final class Channel extends Alias
     }
 
     /**
-     * @param null|Groups $group_public_id
-     */
-    public function setGroupPublicId(?Groups $group_public_id): void
-    {
-        $this->group_public_id = $group_public_id;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removePublic($item): void
-    {
-        if ($this->hasPublic($item)) {
-            $index = array_search($item, $this->public);
-            unset($this->public[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addPublic($item): void
-    {
-        if ($this->hasPublic($item)) {
-            return;
-        }
-
-        $this->public[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasPublic($item, bool $strict = true): bool
+    public function hasChannelMessageIds(OdooRelation $item): bool
     {
-        return in_array($item, $this->public, $strict);
+        if (null === $this->channel_message_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->channel_message_ids);
     }
 
     /**
-     * @param array $public
+     * @param OdooRelation[]|null $channel_message_ids
      */
-    public function setPublic(array $public): void
+    public function setChannelMessageIds(?array $channel_message_ids): void
     {
-        $this->public = $public;
+        $this->channel_message_ids = $channel_message_ids;
     }
 
     /**
-     * @return null|bool
+     * @return OdooRelation[]|null
+     */
+    public function getChannelMessageIds(): ?array
+    {
+        return $this->channel_message_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeChannelPartnerIds(OdooRelation $item): void
+    {
+        if (null === $this->channel_partner_ids) {
+            $this->channel_partner_ids = [];
+        }
+
+        if ($this->hasChannelPartnerIds($item)) {
+            $index = array_search($item, $this->channel_partner_ids);
+            unset($this->channel_partner_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addChannelPartnerIds(OdooRelation $item): void
+    {
+        if ($this->hasChannelPartnerIds($item)) {
+            return;
+        }
+
+        if (null === $this->channel_partner_ids) {
+            $this->channel_partner_ids = [];
+        }
+
+        $this->channel_partner_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasChannelPartnerIds(OdooRelation $item): bool
+    {
+        if (null === $this->channel_partner_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->channel_partner_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $channel_partner_ids
+     */
+    public function setChannelPartnerIds(?array $channel_partner_ids): void
+    {
+        $this->channel_partner_ids = $channel_partner_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getChannelPartnerIds(): ?array
+    {
+        return $this->channel_partner_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeChannelLastSeenPartnerIds(OdooRelation $item): void
+    {
+        if (null === $this->channel_last_seen_partner_ids) {
+            $this->channel_last_seen_partner_ids = [];
+        }
+
+        if ($this->hasChannelLastSeenPartnerIds($item)) {
+            $index = array_search($item, $this->channel_last_seen_partner_ids);
+            unset($this->channel_last_seen_partner_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addChannelLastSeenPartnerIds(OdooRelation $item): void
+    {
+        if ($this->hasChannelLastSeenPartnerIds($item)) {
+            return;
+        }
+
+        if (null === $this->channel_last_seen_partner_ids) {
+            $this->channel_last_seen_partner_ids = [];
+        }
+
+        $this->channel_last_seen_partner_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation[]|null $channel_last_seen_partner_ids
+     */
+    public function setChannelLastSeenPartnerIds(?array $channel_last_seen_partner_ids): void
+    {
+        $this->channel_last_seen_partner_ids = $channel_last_seen_partner_ids;
+    }
+
+    /**
+     * @return bool|null
      */
     public function isIsMember(): ?bool
     {
@@ -1137,9 +1183,105 @@ final class Channel extends Alias
     }
 
     /**
-     * @param Message $item
+     * @return OdooRelation[]|null
      */
-    public function removeChannelMessageIds(Message $item): void
+    public function getChannelLastSeenPartnerIds(): ?array
+    {
+        return $this->channel_last_seen_partner_ids;
+    }
+
+    /**
+     * @param bool|null $email_send
+     */
+    public function setEmailSend(?bool $email_send): void
+    {
+        $this->email_send = $email_send;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isEmailSend(): ?bool
+    {
+        return $this->email_send;
+    }
+
+    /**
+     * @param string|null $uuid
+     */
+    public function setUuid(?string $uuid): void
+    {
+        $this->uuid = $uuid;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUuid(): ?string
+    {
+        return $this->uuid;
+    }
+
+    /**
+     * @param string|null $description
+     */
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param bool|null $is_chat
+     */
+    public function setIsChat(?bool $is_chat): void
+    {
+        $this->is_chat = $is_chat;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsChat(): ?bool
+    {
+        return $this->is_chat;
+    }
+
+    /**
+     * @param string|null $channel_type
+     */
+    public function setChannelType(?string $channel_type): void
+    {
+        $this->channel_type = $channel_type;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getChannelType(): ?string
+    {
+        return $this->channel_type;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeChannelMessageIds(OdooRelation $item): void
     {
         if (null === $this->channel_message_ids) {
             $this->channel_message_ids = [];
@@ -1152,10 +1294,297 @@ final class Channel extends Alias
     }
 
     /**
-     * @return null|bool
+     * @param bool|null $is_member
      */
-    public function isMessageHasSmsError(): ?bool
+    public function setIsMember(?bool $is_member): void
     {
-        return $this->message_has_sms_error;
+        $this->is_member = $is_member;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeModerationIds(OdooRelation $item): void
+    {
+        if (null === $this->moderation_ids) {
+            $this->moderation_ids = [];
+        }
+
+        if ($this->hasModerationIds($item)) {
+            $index = array_search($item, $this->moderation_ids);
+            unset($this->moderation_ids[$index]);
+        }
+    }
+
+    /**
+     * @param bool|null $moderation
+     */
+    public function setModeration(?bool $moderation): void
+    {
+        $this->moderation = $moderation;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addModerationIds(OdooRelation $item): void
+    {
+        if ($this->hasModerationIds($item)) {
+            return;
+        }
+
+        if (null === $this->moderation_ids) {
+            $this->moderation_ids = [];
+        }
+
+        $this->moderation_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasModerationIds(OdooRelation $item): bool
+    {
+        if (null === $this->moderation_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->moderation_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $moderation_ids
+     */
+    public function setModerationIds(?array $moderation_ids): void
+    {
+        $this->moderation_ids = $moderation_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getModerationIds(): ?array
+    {
+        return $this->moderation_ids;
+    }
+
+    /**
+     * @param bool|null $is_moderator
+     */
+    public function setIsModerator(?bool $is_moderator): void
+    {
+        $this->is_moderator = $is_moderator;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsModerator(): ?bool
+    {
+        return $this->is_moderator;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeModeratorIds(OdooRelation $item): void
+    {
+        if (null === $this->moderator_ids) {
+            $this->moderator_ids = [];
+        }
+
+        if ($this->hasModeratorIds($item)) {
+            $index = array_search($item, $this->moderator_ids);
+            unset($this->moderator_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addModeratorIds(OdooRelation $item): void
+    {
+        if ($this->hasModeratorIds($item)) {
+            return;
+        }
+
+        if (null === $this->moderator_ids) {
+            $this->moderator_ids = [];
+        }
+
+        $this->moderator_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasModeratorIds(OdooRelation $item): bool
+    {
+        if (null === $this->moderator_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->moderator_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $moderator_ids
+     */
+    public function setModeratorIds(?array $moderator_ids): void
+    {
+        $this->moderator_ids = $moderator_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getModeratorIds(): ?array
+    {
+        return $this->moderator_ids;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isModeration(): ?bool
+    {
+        return $this->moderation;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPublic(): string
+    {
+        return $this->public;
+    }
+
+    /**
+     * @param bool|null $is_subscribed
+     */
+    public function setIsSubscribed(?bool $is_subscribed): void
+    {
+        $this->is_subscribed = $is_subscribed;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsSubscribed(): ?bool
+    {
+        return $this->is_subscribed;
+    }
+
+    /**
+     * @param int|null $image_128
+     */
+    public function setImage128(?int $image_128): void
+    {
+        $this->image_128 = $image_128;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getImage128(): ?int
+    {
+        return $this->image_128;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeGroupIds(OdooRelation $item): void
+    {
+        if (null === $this->group_ids) {
+            $this->group_ids = [];
+        }
+
+        if ($this->hasGroupIds($item)) {
+            $index = array_search($item, $this->group_ids);
+            unset($this->group_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addGroupIds(OdooRelation $item): void
+    {
+        if ($this->hasGroupIds($item)) {
+            return;
+        }
+
+        if (null === $this->group_ids) {
+            $this->group_ids = [];
+        }
+
+        $this->group_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasGroupIds(OdooRelation $item): bool
+    {
+        if (null === $this->group_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->group_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $group_ids
+     */
+    public function setGroupIds(?array $group_ids): void
+    {
+        $this->group_ids = $group_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getGroupIds(): ?array
+    {
+        return $this->group_ids;
+    }
+
+    /**
+     * @param OdooRelation|null $group_public_id
+     */
+    public function setGroupPublicId(?OdooRelation $group_public_id): void
+    {
+        $this->group_public_id = $group_public_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getGroupPublicId(): ?OdooRelation
+    {
+        return $this->group_public_id;
+    }
+
+    /**
+     * @param string $public
+     */
+    public function setPublic(string $public): void
+    {
+        $this->public = $public;
+    }
+
+    /**
+     * @param bool|null $message_has_sms_error
+     */
+    public function setMessageHasSmsError(?bool $message_has_sms_error): void
+    {
+        $this->message_has_sms_error = $message_has_sms_error;
     }
 }

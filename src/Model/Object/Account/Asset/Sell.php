@@ -5,151 +5,215 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Account\Asset;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Account;
-use Flux\OdooApiClient\Model\Object\Account\Asset;
-use Flux\OdooApiClient\Model\Object\Account\Move;
-use Flux\OdooApiClient\Model\Object\Account\Move\Line;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.asset.sell
  * Name : account.asset.sell
  * Info :
  * Model super-class for transient records, meant to be temporarily
- * persistent, and regularly vacuum-cleaned.
+ *         persistent, and regularly vacuum-cleaned.
  *
- * A TransientModel has a simplified access rights management, all users can
- * create new records, and may only access the records they created. The
- * superuser has unrestricted access to all TransientModel records.
+ *         A TransientModel has a simplified access rights management, all users can
+ *         create new records, and may only access the records they created. The
+ *         superuser has unrestricted access to all TransientModel records.
  */
 final class Sell extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.asset.sell';
+
     /**
      * Asset
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Asset
+     * @var OdooRelation
      */
     private $asset_id;
 
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Company
+     * @var OdooRelation|null
      */
     private $company_id;
 
     /**
      * Action
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> sell (Sell)
+     *     -> dispose (Dispose)
      *
-     * @var array
+     *
+     * @var string
      */
     private $action;
 
     /**
      * Customer Invoice
      * The disposal invoice is needed in order to generate the closing journal entry.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Move
+     * @var OdooRelation|null
      */
     private $invoice_id;
 
     /**
      * Invoice Line
      * There are multiple lines that could be the related to this asset
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Line
+     * @var OdooRelation|null
      */
     private $invoice_line_id;
 
     /**
      * Select Invoice Line
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $select_invoice_line_id;
 
     /**
      * Gain Account
      * Account used to write the journal item in case of gain
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Account
+     * @var OdooRelation|null
      */
     private $gain_account_id;
 
     /**
      * Loss Account
      * Account used to write the journal item in case of loss
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Account
+     * @var OdooRelation|null
      */
     private $loss_account_id;
 
     /**
      * Gain Or Loss
      * Technical field to know is there was a gain or a loss in the selling of the asset
+     * Searchable : no
+     * Sortable : no
+     * Selection : (default value, usually null)
+     *     -> gain (Gain)
+     *     -> loss (Loss)
+     *     -> no (No)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $gain_or_loss;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param Asset $asset_id Asset
-     * @param array $action Action
+     * @param OdooRelation $asset_id Asset
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $action Action
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> sell (Sell)
+     *            -> dispose (Dispose)
+     *
      */
-    public function __construct(Asset $asset_id, array $action)
+    public function __construct(OdooRelation $asset_id, string $action)
     {
         $this->asset_id = $asset_id;
         $this->action = $action;
     }
 
     /**
-     * @return null|bool
+     * @param OdooRelation|null $gain_account_id
      */
-    public function isSelectInvoiceLineId(): ?bool
+    public function setGainAccountId(?OdooRelation $gain_account_id): void
     {
-        return $this->select_invoice_line_id;
+        $this->gain_account_id = $gain_account_id;
     }
 
     /**
-     * @return null|Users
+     * @return DateTimeInterface|null
      */
-    public function getWriteUid(): ?Users
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -157,116 +221,162 @@ final class Sell extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @return null|array
+     * @param string|null $gain_or_loss
      */
-    public function getGainOrLoss(): ?array
+    public function setGainOrLoss(?string $gain_or_loss): void
+    {
+        $this->gain_or_loss = $gain_or_loss;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getGainOrLoss(): ?string
     {
         return $this->gain_or_loss;
     }
 
     /**
-     * @param null|Account $loss_account_id
+     * @param OdooRelation|null $loss_account_id
      */
-    public function setLossAccountId(?Account $loss_account_id): void
+    public function setLossAccountId(?OdooRelation $loss_account_id): void
     {
         $this->loss_account_id = $loss_account_id;
     }
 
     /**
-     * @param null|Account $gain_account_id
+     * @return OdooRelation|null
      */
-    public function setGainAccountId(?Account $gain_account_id): void
+    public function getLossAccountId(): ?OdooRelation
     {
-        $this->gain_account_id = $gain_account_id;
+        return $this->loss_account_id;
     }
 
     /**
-     * @param null|Line $invoice_line_id
+     * @return OdooRelation|null
      */
-    public function setInvoiceLineId(?Line $invoice_line_id): void
+    public function getGainAccountId(): ?OdooRelation
+    {
+        return $this->gain_account_id;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getAssetId(): OdooRelation
+    {
+        return $this->asset_id;
+    }
+
+    /**
+     * @param bool|null $select_invoice_line_id
+     */
+    public function setSelectInvoiceLineId(?bool $select_invoice_line_id): void
+    {
+        $this->select_invoice_line_id = $select_invoice_line_id;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isSelectInvoiceLineId(): ?bool
+    {
+        return $this->select_invoice_line_id;
+    }
+
+    /**
+     * @param OdooRelation|null $invoice_line_id
+     */
+    public function setInvoiceLineId(?OdooRelation $invoice_line_id): void
     {
         $this->invoice_line_id = $invoice_line_id;
     }
 
     /**
-     * @param Asset $asset_id
+     * @return OdooRelation|null
      */
-    public function setAssetId(Asset $asset_id): void
+    public function getInvoiceLineId(): ?OdooRelation
     {
-        $this->asset_id = $asset_id;
+        return $this->invoice_line_id;
     }
 
     /**
-     * @param null|Move $invoice_id
+     * @param OdooRelation|null $invoice_id
      */
-    public function setInvoiceId(?Move $invoice_id): void
+    public function setInvoiceId(?OdooRelation $invoice_id): void
     {
         $this->invoice_id = $invoice_id;
     }
 
     /**
-     * @param mixed $item
+     * @return OdooRelation|null
      */
-    public function removeAction($item): void
+    public function getInvoiceId(): ?OdooRelation
     {
-        if ($this->hasAction($item)) {
-            $index = array_search($item, $this->action);
-            unset($this->action[$index]);
-        }
+        return $this->invoice_id;
     }
 
     /**
-     * @param mixed $item
+     * @param string $action
      */
-    public function addAction($item): void
-    {
-        if ($this->hasAction($item)) {
-            return;
-        }
-
-        $this->action[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasAction($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->action, $strict);
-    }
-
-    /**
-     * @param array $action
-     */
-    public function setAction(array $action): void
+    public function setAction(string $action): void
     {
         $this->action = $action;
     }
 
     /**
-     * @param null|Company $company_id
+     * @return string
      */
-    public function setCompanyId(?Company $company_id): void
+    public function getAction(): string
+    {
+        return $this->action;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
     {
         $this->company_id = $company_id;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return OdooRelation|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getCompanyId(): ?OdooRelation
     {
-        return $this->write_date;
+        return $this->company_id;
+    }
+
+    /**
+     * @param OdooRelation $asset_id
+     */
+    public function setAssetId(OdooRelation $asset_id): void
+    {
+        $this->asset_id = $asset_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

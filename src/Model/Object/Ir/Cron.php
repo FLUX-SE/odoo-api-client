@@ -6,7 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Ir\Actions\Server;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.cron
@@ -16,46 +16,67 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  */
 final class Cron extends Server
 {
+    public const ODOO_MODEL_NAME = 'ir.cron';
+
     /**
      * Server action
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Server
+     * @var OdooRelation
      */
     private $ir_actions_server_id;
 
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $cron_name;
 
     /**
      * Scheduler User
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Users
+     * @var OdooRelation
      */
     private $user_id;
 
     /**
      * Active
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $active;
 
     /**
      * Interval Number
      * Repeat every x.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $interval_number;
 
     /**
      * Interval Unit
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> minutes (Minutes)
+     *     -> hours (Hours)
+     *     -> days (Days)
+     *     -> weeks (Weeks)
+     *     -> months (Months)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $interval_type;
 
@@ -63,22 +84,28 @@ final class Cron extends Server
      * Number of Calls
      * How many times the method is called,
      * a negative number indicates no limit.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $numbercall;
 
     /**
      * Repeat Missed
      * Specify if missed occurrences should be executed when the server restarts.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $doall;
 
     /**
      * Next Execution Date
      * Next planned execution date for this job.
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var DateTimeInterface
      */
@@ -87,33 +114,62 @@ final class Cron extends Server
     /**
      * Last Execution Date
      * Previous time the cron ran successfully, provided to the job through the context on the `lastcall` key
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $lastcall;
 
     /**
      * Priority
      * The priority of the job, as an integer: 0 means higher priority, 10 means lower priority.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $priority;
 
     /**
-     * @param Server $ir_actions_server_id Server action
-     * @param Users $user_id Scheduler User
+     * @param OdooRelation $ir_actions_server_id Server action
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $user_id Scheduler User
+     *        Searchable : yes
+     *        Sortable : yes
      * @param DateTimeInterface $nextcall Next Execution Date
      *        Next planned execution date for this job.
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $name Action Name
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $type Action Type
-     * @param Model $model_id Model
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $model_id Model
      *        Model on which the server action runs.
-     * @param array $activity_user_type Activity User Type
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $activity_user_type Activity User Type
      *        Use 'Specific User' to always assign the same user on the next activity. Use 'Generic User From Record' to
      *        specify the field name of the user to choose on the record.
-     * @param array $usage Usage
-     * @param array $state Action To Do
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> specific (Specific User)
+     *            -> generic (Generic User From Record)
+     *
+     * @param string $usage Usage
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> ir_actions_server (Server Action)
+     *            -> ir_cron (Scheduled Action)
+     *            -> base_automation (Automated Action)
+     *
+     * @param string $state Action To Do
      *        Type of server action. The following values are available:
      *        - 'Execute Python Code': a block of python code that will be executed
      *        - 'Create': create a new record with new values
@@ -122,142 +178,82 @@ final class Cron extends Server
      *        - 'Send Email': automatically send an email (Discuss)
      *        - 'Add Followers': add followers to a record (Discuss)
      *        - 'Create Next Activity': create an activity (Discuss)
-     * @param array $binding_type Binding Type
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> code (Execute Python Code)
+     *            -> object_create (Create a new Record)
+     *            -> object_write (Update the Record)
+     *            -> multi (Execute several actions)
+     *            -> email (Send Email)
+     *            -> followers (Add Followers)
+     *            -> next_activity (Create Next Activity)
+     *            -> sms (Send SMS Text Message)
+     *
+     * @param string $binding_type Binding Type
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> action (Action)
+     *            -> report (Report)
+     *
      */
     public function __construct(
-        Server $ir_actions_server_id,
-        Users $user_id,
+        OdooRelation $ir_actions_server_id,
+        OdooRelation $user_id,
         DateTimeInterface $nextcall,
         string $name,
         string $type,
-        Model $model_id,
-        array $activity_user_type,
-        array $usage,
-        array $state,
-        array $binding_type
+        OdooRelation $model_id,
+        string $activity_user_type,
+        string $usage,
+        string $state,
+        string $binding_type
     ) {
         $this->ir_actions_server_id = $ir_actions_server_id;
         $this->user_id = $user_id;
         $this->nextcall = $nextcall;
         parent::__construct(
-            $name, 
-            $type, 
-            $model_id, 
-            $activity_user_type, 
-            $usage, 
-            $state, 
+            $name,
+            $type,
+            $model_id,
+            $activity_user_type,
+            $usage,
+            $state,
             $binding_type
         );
     }
 
     /**
-     * @param Server $ir_actions_server_id
+     * @param string|null $interval_type
      */
-    public function setIrActionsServerId(Server $ir_actions_server_id): void
-    {
-        $this->ir_actions_server_id = $ir_actions_server_id;
-    }
-
-    /**
-     * @param null|string $cron_name
-     */
-    public function setCronName(?string $cron_name): void
-    {
-        $this->cron_name = $cron_name;
-    }
-
-    /**
-     * @param Users $user_id
-     */
-    public function setUserId(Users $user_id): void
-    {
-        $this->user_id = $user_id;
-    }
-
-    /**
-     * @param null|bool $active
-     */
-    public function setActive(?bool $active): void
-    {
-        $this->active = $active;
-    }
-
-    /**
-     * @param null|int $interval_number
-     */
-    public function setIntervalNumber(?int $interval_number): void
-    {
-        $this->interval_number = $interval_number;
-    }
-
-    /**
-     * @param null|array $interval_type
-     */
-    public function setIntervalType(?array $interval_type): void
+    public function setIntervalType(?string $interval_type): void
     {
         $this->interval_type = $interval_type;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return int|null
      */
-    public function hasIntervalType($item, bool $strict = true): bool
+    public function getPriority(): ?int
     {
-        if (null === $this->interval_type) {
-            return false;
-        }
-
-        return in_array($item, $this->interval_type, $strict);
+        return $this->priority;
     }
 
     /**
-     * @param mixed $item
+     * @param DateTimeInterface|null $lastcall
      */
-    public function addIntervalType($item): void
+    public function setLastcall(?DateTimeInterface $lastcall): void
     {
-        if ($this->hasIntervalType($item)) {
-            return;
-        }
-
-        if (null === $this->interval_type) {
-            $this->interval_type = [];
-        }
-
-        $this->interval_type[] = $item;
+        $this->lastcall = $lastcall;
     }
 
     /**
-     * @param mixed $item
+     * @return DateTimeInterface|null
      */
-    public function removeIntervalType($item): void
+    public function getLastcall(): ?DateTimeInterface
     {
-        if (null === $this->interval_type) {
-            $this->interval_type = [];
-        }
-
-        if ($this->hasIntervalType($item)) {
-            $index = array_search($item, $this->interval_type);
-            unset($this->interval_type[$index]);
-        }
-    }
-
-    /**
-     * @param null|int $numbercall
-     */
-    public function setNumbercall(?int $numbercall): void
-    {
-        $this->numbercall = $numbercall;
-    }
-
-    /**
-     * @param null|bool $doall
-     */
-    public function setDoall(?bool $doall): void
-    {
-        $this->doall = $doall;
+        return $this->lastcall;
     }
 
     /**
@@ -269,15 +265,135 @@ final class Cron extends Server
     }
 
     /**
-     * @param null|DateTimeInterface $lastcall
+     * @return DateTimeInterface
      */
-    public function setLastcall(?DateTimeInterface $lastcall): void
+    public function getNextcall(): DateTimeInterface
     {
-        $this->lastcall = $lastcall;
+        return $this->nextcall;
     }
 
     /**
-     * @param null|int $priority
+     * @param bool|null $doall
+     */
+    public function setDoall(?bool $doall): void
+    {
+        $this->doall = $doall;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isDoall(): ?bool
+    {
+        return $this->doall;
+    }
+
+    /**
+     * @param int|null $numbercall
+     */
+    public function setNumbercall(?int $numbercall): void
+    {
+        $this->numbercall = $numbercall;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getNumbercall(): ?int
+    {
+        return $this->numbercall;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIntervalType(): ?string
+    {
+        return $this->interval_type;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getIrActionsServerId(): OdooRelation
+    {
+        return $this->ir_actions_server_id;
+    }
+
+    /**
+     * @param int|null $interval_number
+     */
+    public function setIntervalNumber(?int $interval_number): void
+    {
+        $this->interval_number = $interval_number;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getIntervalNumber(): ?int
+    {
+        return $this->interval_number;
+    }
+
+    /**
+     * @param bool|null $active
+     */
+    public function setActive(?bool $active): void
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param OdooRelation $user_id
+     */
+    public function setUserId(OdooRelation $user_id): void
+    {
+        $this->user_id = $user_id;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getUserId(): OdooRelation
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @param string|null $cron_name
+     */
+    public function setCronName(?string $cron_name): void
+    {
+        $this->cron_name = $cron_name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCronName(): ?string
+    {
+        return $this->cron_name;
+    }
+
+    /**
+     * @param OdooRelation $ir_actions_server_id
+     */
+    public function setIrActionsServerId(OdooRelation $ir_actions_server_id): void
+    {
+        $this->ir_actions_server_id = $ir_actions_server_id;
+    }
+
+    /**
+     * @param int|null $priority
      */
     public function setPriority(?int $priority): void
     {

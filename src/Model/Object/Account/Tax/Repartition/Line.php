@@ -5,13 +5,8 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Account\Tax\Repartition;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Account;
-use Flux\OdooApiClient\Model\Object\Account\Account\Tag;
-use Flux\OdooApiClient\Model\Object\Account\Tax;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Country;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.tax.repartition.line
@@ -19,19 +14,23 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Line extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.tax.repartition.line';
+
     /**
      * %
      * Factor to apply on the account move lines generated from this repartition line, in percents
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var float
      */
@@ -40,70 +39,92 @@ final class Line extends Base
     /**
      * Factor Ratio
      * Factor to apply on the account move lines generated from this repartition line
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|float
+     * @var float|null
      */
     private $factor;
 
     /**
      * Based On
      * Base on which the factor will be applied.
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> base (Base)
+     *     -> tax (of tax)
      *
-     * @var array
+     *
+     * @var string
      */
     private $repartition_type;
 
     /**
      * Account
      * Account on which to post the tax amount
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Account
+     * @var OdooRelation|null
      */
     private $account_id;
 
     /**
      * Tax Grids
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Tag[]
+     * @var OdooRelation[]|null
      */
     private $tag_ids;
 
     /**
      * Invoice Tax
      * The tax set to apply this repartition on invoices. Mutually exclusive with refund_tax_id
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Tax
+     * @var OdooRelation|null
      */
     private $invoice_tax_id;
 
     /**
      * Refund Tax
      * The tax set to apply this repartition on refund invoices. Mutually exclusive with invoice_tax_id
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Tax
+     * @var OdooRelation|null
      */
     private $refund_tax_id;
 
     /**
      * Tax
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|Tax
+     * @var OdooRelation|null
      */
     private $tax_id;
 
     /**
      * Country
      * Technical field used to restrict tags domain in form view.
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|Country
+     * @var OdooRelation|null
      */
     private $country_id;
 
     /**
      * Company
      * The company this repartition line belongs to.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Company
+     * @var OdooRelation
      */
     private $company_id;
 
@@ -111,48 +132,68 @@ final class Line extends Base
      * Sequence
      * The order in which display and match repartition lines. For refunds to work properly, invoice repartition
      * lines should be arranged in the same order as the credit note repartition lines they correspond to.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $sequence;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param float $factor_percent %
      *        Factor to apply on the account move lines generated from this repartition line, in percents
-     * @param array $repartition_type Based On
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $repartition_type Based On
      *        Base on which the factor will be applied.
-     * @param Company $company_id Company
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> base (Base)
+     *            -> tax (of tax)
+     *
+     * @param OdooRelation $company_id Company
      *        The company this repartition line belongs to.
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(float $factor_percent, array $repartition_type, Company $company_id)
+    public function __construct(float $factor_percent, string $repartition_type, OdooRelation $company_id)
     {
         $this->factor_percent = $factor_percent;
         $this->repartition_type = $repartition_type;
@@ -160,23 +201,47 @@ final class Line extends Base
     }
 
     /**
-     * @param null|Tax $invoice_tax_id
+     * @return OdooRelation|null
      */
-    public function setInvoiceTaxId(?Tax $invoice_tax_id): void
+    public function getTaxId(): ?OdooRelation
     {
-        $this->invoice_tax_id = $invoice_tax_id;
+        return $this->tax_id;
     }
 
     /**
-     * @return null|Users
+     * @return DateTimeInterface|null
      */
-    public function getWriteUid(): ?Users
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -184,15 +249,23 @@ final class Line extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @param null|int $sequence
+     * @param int|null $sequence
      */
     public function setSequence(?int $sequence): void
     {
@@ -200,50 +273,75 @@ final class Line extends Base
     }
 
     /**
-     * @param Company $company_id
+     * @return int|null
      */
-    public function setCompanyId(Company $company_id): void
+    public function getSequence(): ?int
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * @param OdooRelation $company_id
+     */
+    public function setCompanyId(OdooRelation $company_id): void
     {
         $this->company_id = $company_id;
     }
 
     /**
-     * @return null|Country
+     * @return OdooRelation
      */
-    public function getCountryId(): ?Country
+    public function getCompanyId(): OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param OdooRelation|null $country_id
+     */
+    public function setCountryId(?OdooRelation $country_id): void
+    {
+        $this->country_id = $country_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCountryId(): ?OdooRelation
     {
         return $this->country_id;
     }
 
     /**
-     * @return null|Tax
+     * @param OdooRelation|null $tax_id
      */
-    public function getTaxId(): ?Tax
+    public function setTaxId(?OdooRelation $tax_id): void
     {
-        return $this->tax_id;
+        $this->tax_id = $tax_id;
     }
 
     /**
-     * @param null|Tax $refund_tax_id
+     * @param OdooRelation|null $refund_tax_id
      */
-    public function setRefundTaxId(?Tax $refund_tax_id): void
+    public function setRefundTaxId(?OdooRelation $refund_tax_id): void
     {
         $this->refund_tax_id = $refund_tax_id;
     }
 
     /**
-     * @param Tag $item
+     * @return float
      */
-    public function removeTagIds(Tag $item): void
+    public function getFactorPercent(): float
     {
-        if (null === $this->tag_ids) {
-            $this->tag_ids = [];
-        }
+        return $this->factor_percent;
+    }
 
-        if ($this->hasTagIds($item)) {
-            $index = array_search($item, $this->tag_ids);
-            unset($this->tag_ids[$index]);
-        }
+    /**
+     * @param OdooRelation|null $account_id
+     */
+    public function setAccountId(?OdooRelation $account_id): void
+    {
+        $this->account_id = $account_id;
     }
 
     /**
@@ -255,9 +353,87 @@ final class Line extends Base
     }
 
     /**
-     * @param Tag $item
+     * @return float|null
      */
-    public function addTagIds(Tag $item): void
+    public function getFactor(): ?float
+    {
+        return $this->factor;
+    }
+
+    /**
+     * @param float|null $factor
+     */
+    public function setFactor(?float $factor): void
+    {
+        $this->factor = $factor;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRepartitionType(): string
+    {
+        return $this->repartition_type;
+    }
+
+    /**
+     * @param string $repartition_type
+     */
+    public function setRepartitionType(string $repartition_type): void
+    {
+        $this->repartition_type = $repartition_type;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getAccountId(): ?OdooRelation
+    {
+        return $this->account_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getTagIds(): ?array
+    {
+        return $this->tag_ids;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getRefundTaxId(): ?OdooRelation
+    {
+        return $this->refund_tax_id;
+    }
+
+    /**
+     * @param OdooRelation[]|null $tag_ids
+     */
+    public function setTagIds(?array $tag_ids): void
+    {
+        $this->tag_ids = $tag_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasTagIds(OdooRelation $item): bool
+    {
+        if (null === $this->tag_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->tag_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addTagIds(OdooRelation $item): void
     {
         if ($this->hasTagIds($item)) {
             return;
@@ -271,91 +447,41 @@ final class Line extends Base
     }
 
     /**
-     * @param Tag $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param OdooRelation $item
      */
-    public function hasTagIds(Tag $item, bool $strict = true): bool
+    public function removeTagIds(OdooRelation $item): void
     {
         if (null === $this->tag_ids) {
-            return false;
+            $this->tag_ids = [];
         }
 
-        return in_array($item, $this->tag_ids, $strict);
-    }
-
-    /**
-     * @param null|Tag[] $tag_ids
-     */
-    public function setTagIds(?array $tag_ids): void
-    {
-        $this->tag_ids = $tag_ids;
-    }
-
-    /**
-     * @param null|Account $account_id
-     */
-    public function setAccountId(?Account $account_id): void
-    {
-        $this->account_id = $account_id;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeRepartitionType($item): void
-    {
-        if ($this->hasRepartitionType($item)) {
-            $index = array_search($item, $this->repartition_type);
-            unset($this->repartition_type[$index]);
+        if ($this->hasTagIds($item)) {
+            $index = array_search($item, $this->tag_ids);
+            unset($this->tag_ids[$index]);
         }
     }
 
     /**
-     * @param mixed $item
+     * @return OdooRelation|null
      */
-    public function addRepartitionType($item): void
+    public function getInvoiceTaxId(): ?OdooRelation
     {
-        if ($this->hasRepartitionType($item)) {
-            return;
-        }
-
-        $this->repartition_type[] = $item;
+        return $this->invoice_tax_id;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param OdooRelation|null $invoice_tax_id
      */
-    public function hasRepartitionType($item, bool $strict = true): bool
+    public function setInvoiceTaxId(?OdooRelation $invoice_tax_id): void
     {
-        return in_array($item, $this->repartition_type, $strict);
+        $this->invoice_tax_id = $invoice_tax_id;
     }
 
     /**
-     * @param array $repartition_type
+     * @param DateTimeInterface|null $write_date
      */
-    public function setRepartitionType(array $repartition_type): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->repartition_type = $repartition_type;
-    }
-
-    /**
-     * @return null|float
-     */
-    public function getFactor(): ?float
-    {
-        return $this->factor;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

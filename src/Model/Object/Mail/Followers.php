@@ -5,25 +5,28 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Mail;
 
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Mail\Message\Subtype;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.followers
  * Name : mail.followers
  * Info :
  * mail_followers holds the data related to the follow mechanism inside
- * Odoo. Partners can choose to follow documents (records) of any kind
- * that inherits from mail.thread. Following documents allow to receive
- * notifications for new messages. A subscription is characterized by:
+ *         Odoo. Partners can choose to follow documents (records) of any kind
+ *         that inherits from mail.thread. Following documents allow to receive
+ *         notifications for new messages. A subscription is characterized by:
  *
- * :param: res_model: model of the followed objects
- * :param: res_id: ID of resource (may be 0 for every objects)
+ *         :param: res_model: model of the followed objects
+ *         :param: res_id: ID of resource (may be 0 for every objects)
  */
 final class Followers extends Base
 {
+    public const ODOO_MODEL_NAME = 'mail.followers';
+
     /**
      * Related Document Model Name
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -32,39 +35,57 @@ final class Followers extends Base
     /**
      * Related Document ID
      * Id of the followed resource
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $res_id;
 
     /**
      * Related Partner
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Partner
+     * @var OdooRelation|null
      */
     private $partner_id;
 
     /**
      * Listener
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Channel
+     * @var OdooRelation|null
      */
     private $channel_id;
 
     /**
      * Subtype
      * Message subtypes followed, meaning subtypes that will be pushed onto the user's Wall.
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Subtype[]
+     * @var OdooRelation[]|null
      */
     private $subtype_ids;
 
     /**
      * @param string $res_model Related Document Model Name
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $res_model)
     {
         $this->res_model = $res_model;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResModel(): string
+    {
+        return $this->res_model;
     }
 
     /**
@@ -76,7 +97,15 @@ final class Followers extends Base
     }
 
     /**
-     * @param null|int $res_id
+     * @return int|null
+     */
+    public function getResId(): ?int
+    {
+        return $this->res_id;
+    }
+
+    /**
+     * @param int|null $res_id
      */
     public function setResId(?int $res_id): void
     {
@@ -84,23 +113,47 @@ final class Followers extends Base
     }
 
     /**
-     * @param null|Partner $partner_id
+     * @return OdooRelation|null
      */
-    public function setPartnerId(?Partner $partner_id): void
+    public function getPartnerId(): ?OdooRelation
+    {
+        return $this->partner_id;
+    }
+
+    /**
+     * @param OdooRelation|null $partner_id
+     */
+    public function setPartnerId(?OdooRelation $partner_id): void
     {
         $this->partner_id = $partner_id;
     }
 
     /**
-     * @param null|Channel $channel_id
+     * @return OdooRelation|null
      */
-    public function setChannelId(?Channel $channel_id): void
+    public function getChannelId(): ?OdooRelation
+    {
+        return $this->channel_id;
+    }
+
+    /**
+     * @param OdooRelation|null $channel_id
+     */
+    public function setChannelId(?OdooRelation $channel_id): void
     {
         $this->channel_id = $channel_id;
     }
 
     /**
-     * @param null|Subtype[] $subtype_ids
+     * @return OdooRelation[]|null
+     */
+    public function getSubtypeIds(): ?array
+    {
+        return $this->subtype_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $subtype_ids
      */
     public function setSubtypeIds(?array $subtype_ids): void
     {
@@ -108,24 +161,23 @@ final class Followers extends Base
     }
 
     /**
-     * @param Subtype $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasSubtypeIds(Subtype $item, bool $strict = true): bool
+    public function hasSubtypeIds(OdooRelation $item): bool
     {
         if (null === $this->subtype_ids) {
             return false;
         }
 
-        return in_array($item, $this->subtype_ids, $strict);
+        return in_array($item, $this->subtype_ids);
     }
 
     /**
-     * @param Subtype $item
+     * @param OdooRelation $item
      */
-    public function addSubtypeIds(Subtype $item): void
+    public function addSubtypeIds(OdooRelation $item): void
     {
         if ($this->hasSubtypeIds($item)) {
             return;
@@ -139,9 +191,9 @@ final class Followers extends Base
     }
 
     /**
-     * @param Subtype $item
+     * @param OdooRelation $item
      */
-    public function removeSubtypeIds(Subtype $item): void
+    public function removeSubtypeIds(OdooRelation $item): void
     {
         if (null === $this->subtype_ids) {
             $this->subtype_ids = [];

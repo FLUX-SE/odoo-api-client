@@ -6,7 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Base\Import;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : base.import.module
@@ -16,8 +16,12 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  */
 final class Module extends Base
 {
+    public const ODOO_MODEL_NAME = 'base.import.module';
+
     /**
      * Module .ZIP file
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var int
      */
@@ -25,60 +29,192 @@ final class Module extends Base
 
     /**
      * Status
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> init (init)
+     *     -> done (done)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $state;
 
     /**
      * Import Message
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $import_message;
 
     /**
      * Force init
      * Force init mode even if installed. (will update `noupdate='1'` records)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $force;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param int $module_file Module .ZIP file
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(int $module_file)
     {
         $this->module_file = $module_file;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @param bool|null $force
+     */
+    public function setForce(?bool $force): void
+    {
+        $this->force = $force;
+    }
+
+    /**
+     * @return int
+     */
+    public function getModuleFile(): int
+    {
+        return $this->module_file;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isForce(): ?bool
+    {
+        return $this->force;
+    }
+
+    /**
+     * @param string|null $import_message
+     */
+    public function setImportMessage(?string $import_message): void
+    {
+        $this->import_message = $import_message;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImportMessage(): ?string
+    {
+        return $this->import_message;
+    }
+
+    /**
+     * @param string|null $state
+     */
+    public function setState(?string $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getState(): ?string
+    {
+        return $this->state;
     }
 
     /**
@@ -90,58 +226,10 @@ final class Module extends Base
     }
 
     /**
-     * @return null|array
+     * @param DateTimeInterface|null $write_date
      */
-    public function getState(): ?array
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->state;
-    }
-
-    /**
-     * @param null|string $import_message
-     */
-    public function setImportMessage(?string $import_message): void
-    {
-        $this->import_message = $import_message;
-    }
-
-    /**
-     * @param null|bool $force
-     */
-    public function setForce(?bool $force): void
-    {
-        $this->force = $force;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

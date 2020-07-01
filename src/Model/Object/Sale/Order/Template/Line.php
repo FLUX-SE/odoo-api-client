@@ -6,12 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Sale\Order\Template;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Product\Product;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Users;
-use Flux\OdooApiClient\Model\Object\Sale\Order\Template;
-use Flux\OdooApiClient\Model\Object\Uom\Category;
-use Flux\OdooApiClient\Model\Object\Uom\Uom;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : sale.order.template.line
@@ -19,40 +14,50 @@ use Flux\OdooApiClient\Model\Object\Uom\Uom;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Line extends Base
 {
+    public const ODOO_MODEL_NAME = 'sale.order.template.line';
+
     /**
      * Sequence
      * Gives the sequence order when displaying a list of sale quote lines.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $sequence;
 
     /**
      * Quotation Template Reference
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Template
+     * @var OdooRelation
      */
     private $sale_order_template_id;
 
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Company
+     * @var OdooRelation|null
      */
     private $company_id;
 
     /**
      * Description
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -60,13 +65,17 @@ final class Line extends Base
 
     /**
      * Product
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Product
+     * @var OdooRelation|null
      */
     private $product_id;
 
     /**
      * Unit Price
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var float
      */
@@ -74,13 +83,17 @@ final class Line extends Base
 
     /**
      * Discount (%)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $discount;
 
     /**
      * Quantity
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var float
      */
@@ -88,8 +101,10 @@ final class Line extends Base
 
     /**
      * Unit of Measure
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Uom
+     * @var OdooRelation|null
      */
     private $product_uom_id;
 
@@ -97,55 +112,79 @@ final class Line extends Base
      * Category
      * Conversion between Units of Measure can only occur if they belong to the same category. The conversion will be
      * made based on the ratios.
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Category
+     * @var OdooRelation|null
      */
     private $product_uom_category_id;
 
     /**
      * Display Type
      * Technical field for UX purpose.
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> line_section (Section)
+     *     -> line_note (Note)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $display_type;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param Template $sale_order_template_id Quotation Template Reference
+     * @param OdooRelation $sale_order_template_id Quotation Template Reference
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $name Description
+     *        Searchable : yes
+     *        Sortable : yes
      * @param float $price_unit Unit Price
+     *        Searchable : yes
+     *        Sortable : yes
      * @param float $product_uom_qty Quantity
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
-        Template $sale_order_template_id,
+        OdooRelation $sale_order_template_id,
         string $name,
         float $price_unit,
         float $product_uom_qty
@@ -157,108 +196,6 @@ final class Line extends Base
     }
 
     /**
-     * @return null|Category
-     */
-    public function getProductUomCategoryId(): ?Category
-    {
-        return $this->product_uom_category_id;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeDisplayType($item): void
-    {
-        if (null === $this->display_type) {
-            $this->display_type = [];
-        }
-
-        if ($this->hasDisplayType($item)) {
-            $index = array_search($item, $this->display_type);
-            unset($this->display_type[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addDisplayType($item): void
-    {
-        if ($this->hasDisplayType($item)) {
-            return;
-        }
-
-        if (null === $this->display_type) {
-            $this->display_type = [];
-        }
-
-        $this->display_type[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasDisplayType($item, bool $strict = true): bool
-    {
-        if (null === $this->display_type) {
-            return false;
-        }
-
-        return in_array($item, $this->display_type, $strict);
-    }
-
-    /**
-     * @param null|array $display_type
-     */
-    public function setDisplayType(?array $display_type): void
-    {
-        $this->display_type = $display_type;
-    }
-
-    /**
-     * @param null|Uom $product_uom_id
-     */
-    public function setProductUomId(?Uom $product_uom_id): void
-    {
-        $this->product_uom_id = $product_uom_id;
-    }
-
-    /**
-     * @param null|int $sequence
-     */
-    public function setSequence(?int $sequence): void
-    {
-        $this->sequence = $sequence;
-    }
-
-    /**
      * @param float $product_uom_qty
      */
     public function setProductUomQty(float $product_uom_qty): void
@@ -267,11 +204,139 @@ final class Line extends Base
     }
 
     /**
-     * @param null|float $discount
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param string|null $display_type
+     */
+    public function setDisplayType(?string $display_type): void
+    {
+        $this->display_type = $display_type;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDisplayType(): ?string
+    {
+        return $this->display_type;
+    }
+
+    /**
+     * @param OdooRelation|null $product_uom_category_id
+     */
+    public function setProductUomCategoryId(?OdooRelation $product_uom_category_id): void
+    {
+        $this->product_uom_category_id = $product_uom_category_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getProductUomCategoryId(): ?OdooRelation
+    {
+        return $this->product_uom_category_id;
+    }
+
+    /**
+     * @param OdooRelation|null $product_uom_id
+     */
+    public function setProductUomId(?OdooRelation $product_uom_id): void
+    {
+        $this->product_uom_id = $product_uom_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getProductUomId(): ?OdooRelation
+    {
+        return $this->product_uom_id;
+    }
+
+    /**
+     * @return float
+     */
+    public function getProductUomQty(): float
+    {
+        return $this->product_uom_qty;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSequence(): ?int
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * @param float|null $discount
      */
     public function setDiscount(?float $discount): void
     {
         $this->discount = $discount;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getDiscount(): ?float
+    {
+        return $this->discount;
     }
 
     /**
@@ -283,11 +348,27 @@ final class Line extends Base
     }
 
     /**
-     * @param null|Product $product_id
+     * @return float
      */
-    public function setProductId(?Product $product_id): void
+    public function getPriceUnit(): float
+    {
+        return $this->price_unit;
+    }
+
+    /**
+     * @param OdooRelation|null $product_id
+     */
+    public function setProductId(?OdooRelation $product_id): void
     {
         $this->product_id = $product_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getProductId(): ?OdooRelation
+    {
+        return $this->product_id;
     }
 
     /**
@@ -299,26 +380,58 @@ final class Line extends Base
     }
 
     /**
-     * @return null|Company
+     * @return string
      */
-    public function getCompanyId(): ?Company
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCompanyId(): ?OdooRelation
     {
         return $this->company_id;
     }
 
     /**
-     * @param Template $sale_order_template_id
+     * @param OdooRelation $sale_order_template_id
      */
-    public function setSaleOrderTemplateId(Template $sale_order_template_id): void
+    public function setSaleOrderTemplateId(OdooRelation $sale_order_template_id): void
     {
         $this->sale_order_template_id = $sale_order_template_id;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return OdooRelation
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getSaleOrderTemplateId(): OdooRelation
     {
-        return $this->write_date;
+        return $this->sale_order_template_id;
+    }
+
+    /**
+     * @param int|null $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

@@ -14,4 +14,5 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Report extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.analytic.report';
 }

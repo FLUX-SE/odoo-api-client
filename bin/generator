@@ -51,7 +51,7 @@ $odooModelsStructureConverter = new OdooModelsStructureConverter(
     $inspectionOperations,
     $phpReservedWordsHelper,
     [
-        new ResUsersModelFixer()
+        new ResUsersModelFixer(),
     ]
 );
 

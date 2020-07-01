@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Account\Journal;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Journal;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.journal.group
@@ -16,18 +14,22 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Group extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.journal.group';
+
     /**
      * Journal Group
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -35,106 +37,180 @@ final class Group extends Base
 
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Company
+     * @var OdooRelation
      */
     private $company_id;
 
     /**
      * Excluded Journals
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Journal[]
+     * @var OdooRelation[]|null
      */
     private $excluded_journal_ids;
 
     /**
      * Sequence
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $sequence;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Journal Group
-     * @param Company $company_id Company
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $company_id Company
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(string $name, Company $company_id)
+    public function __construct(string $name, OdooRelation $company_id)
     {
         $this->name = $name;
         $this->company_id = $company_id;
     }
 
     /**
-     * @param string $name
+     * @param int|null $sequence
      */
-    public function setName(string $name): void
+    public function setSequence(?int $sequence): void
     {
-        $this->name = $name;
+        $this->sequence = $sequence;
     }
 
     /**
-     * @param Company $company_id
+     * @return DateTimeInterface|null
      */
-    public function setCompanyId(Company $company_id): void
+    public function getWriteDate(): ?DateTimeInterface
     {
-        $this->company_id = $company_id;
+        return $this->write_date;
     }
 
     /**
-     * @param null|Journal[] $excluded_journal_ids
+     * @param OdooRelation|null $write_uid
      */
-    public function setExcludedJournalIds(?array $excluded_journal_ids): void
+    public function setWriteUid(?OdooRelation $write_uid): void
     {
-        $this->excluded_journal_ids = $excluded_journal_ids;
+        $this->write_uid = $write_uid;
     }
 
     /**
-     * @param Journal $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return OdooRelation|null
      */
-    public function hasExcludedJournalIds(Journal $item, bool $strict = true): bool
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSequence(): ?int
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeExcludedJournalIds(OdooRelation $item): void
     {
         if (null === $this->excluded_journal_ids) {
-            return false;
+            $this->excluded_journal_ids = [];
         }
 
-        return in_array($item, $this->excluded_journal_ids, $strict);
+        if ($this->hasExcludedJournalIds($item)) {
+            $index = array_search($item, $this->excluded_journal_ids);
+            unset($this->excluded_journal_ids[$index]);
+        }
     }
 
     /**
-     * @param Journal $item
+     * @param OdooRelation $item
      */
-    public function addExcludedJournalIds(Journal $item): void
+    public function addExcludedJournalIds(OdooRelation $item): void
     {
         if ($this->hasExcludedJournalIds($item)) {
             return;
@@ -148,57 +224,64 @@ final class Group extends Base
     }
 
     /**
-     * @param Journal $item
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removeExcludedJournalIds(Journal $item): void
+    public function hasExcludedJournalIds(OdooRelation $item): bool
     {
         if (null === $this->excluded_journal_ids) {
-            $this->excluded_journal_ids = [];
+            return false;
         }
 
-        if ($this->hasExcludedJournalIds($item)) {
-            $index = array_search($item, $this->excluded_journal_ids);
-            unset($this->excluded_journal_ids[$index]);
-        }
+        return in_array($item, $this->excluded_journal_ids);
     }
 
     /**
-     * @param null|int $sequence
+     * @param OdooRelation[]|null $excluded_journal_ids
      */
-    public function setSequence(?int $sequence): void
+    public function setExcludedJournalIds(?array $excluded_journal_ids): void
     {
-        $this->sequence = $sequence;
+        $this->excluded_journal_ids = $excluded_journal_ids;
     }
 
     /**
-     * @return null|Users
+     * @return OdooRelation[]|null
      */
-    public function getCreateUid(): ?Users
+    public function getExcludedJournalIds(): ?array
     {
-        return $this->create_uid;
+        return $this->excluded_journal_ids;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation $company_id
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function setCompanyId(OdooRelation $company_id): void
     {
-        return $this->create_date;
+        $this->company_id = $company_id;
     }
 
     /**
-     * @return null|Users
+     * @return OdooRelation
      */
-    public function getWriteUid(): ?Users
+    public function getCompanyId(): OdooRelation
     {
-        return $this->write_uid;
+        return $this->company_id;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param string $name
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function setName(string $name): void
     {
-        return $this->write_date;
+        $this->name = $name;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

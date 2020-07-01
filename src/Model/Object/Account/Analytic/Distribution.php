@@ -6,7 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Analytic;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.analytic.distribution
@@ -14,25 +14,31 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Distribution extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.analytic.distribution';
+
     /**
      * Analytic Account
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Account
+     * @var OdooRelation
      */
     private $account_id;
 
     /**
      * Percentage
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var float
      */
@@ -40,52 +46,70 @@ final class Distribution extends Base
 
     /**
      * Name
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $name;
 
     /**
      * Parent tag
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Tag
+     * @var OdooRelation
      */
     private $tag_id;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param Account $account_id Analytic Account
+     * @param OdooRelation $account_id Analytic Account
+     *        Searchable : yes
+     *        Sortable : yes
      * @param float $percentage Percentage
-     * @param Tag $tag_id Parent tag
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $tag_id Parent tag
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(Account $account_id, float $percentage, Tag $tag_id)
+    public function __construct(OdooRelation $account_id, float $percentage, OdooRelation $tag_id)
     {
         $this->account_id = $account_id;
         $this->percentage = $percentage;
@@ -93,11 +117,107 @@ final class Distribution extends Base
     }
 
     /**
-     * @return Account
+     * @return OdooRelation|null
      */
-    public function getAccountId(): Account
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @param OdooRelation $tag_id
+     */
+    public function setTagId(OdooRelation $tag_id): void
+    {
+        $this->tag_id = $tag_id;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getAccountId(): OdooRelation
     {
         return $this->account_id;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getTagId(): OdooRelation
+    {
+        return $this->tag_id;
+    }
+
+    /**
+     * @param string|null $name
+     */
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param float $percentage
+     */
+    public function setPercentage(float $percentage): void
+    {
+        $this->percentage = $percentage;
     }
 
     /**
@@ -109,50 +229,18 @@ final class Distribution extends Base
     }
 
     /**
-     * @return null|string
+     * @param OdooRelation $account_id
      */
-    public function getName(): ?string
+    public function setAccountId(OdooRelation $account_id): void
     {
-        return $this->name;
+        $this->account_id = $account_id;
     }
 
     /**
-     * @return Tag
+     * @param DateTimeInterface|null $write_date
      */
-    public function getTagId(): Tag
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->tag_id;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

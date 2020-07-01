@@ -6,6 +6,7 @@ namespace Flux\OdooApiClient\PhpGenerator;
 
 use DateTimeInterface;
 use Exception;
+use Flux\OdooApiClient\Model\OdooRelation;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\InspectionOperationsInterface;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\FieldsGetOptions;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterface;
@@ -86,11 +87,6 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
     {
         $phpTypes = [];
 
-        $required = (bool) ($fieldInfo['required'] ?? false);
-        if (false === $required) {
-            $phpTypes[] = 'null';
-        }
-
         $odooType = $fieldInfo['type'] ?? null;
         switch ($odooType) {
             case 'binary':
@@ -104,6 +100,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             case 'char':
             case 'html':
             case 'text':
+            case 'selection':
                 $phpTypes[] = 'string';
                 break;
             case 'date':
@@ -114,20 +111,21 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             case 'monetary':
                 $phpTypes[] = 'float';
                 break;
-            case 'selection':
-                $phpTypes[] = 'array';
-                break;
             case 'many2one':
-                $phpTypes[] = $baseNamespace.'\\'.$this->getClassNameFormModelName($fieldInfo['relation']);
+                $phpTypes[] = OdooRelation::class;
                 break;
             case 'many2many':
             case 'one2many':
-                $relatedClass = $baseNamespace . '\\' . $this->getClassNameFormModelName($fieldInfo['relation']);
-                $phpTypes[] = $relatedClass .'[]';
+                $phpTypes[] = OdooRelation::class . '[]';
                 break;
             default:
                 $phpTypes[] = 'mixed';
                 break;
+        }
+
+        $required = (bool) ($fieldInfo['required'] ?? false);
+        if (false === $required) {
+            $phpTypes[] = 'null';
         }
 
         return $phpTypes;
@@ -148,7 +146,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         $class = $builtClass;
         $i = 1;
         $modelNameToClassLowerCase = array_map('strtolower', $this->modelNameToClass);
-        while(false !== array_search(strtolower($class), $modelNameToClassLowerCase)) {
+        while (false !== array_search(strtolower($class), $modelNameToClassLowerCase)) {
             $class = $builtClass . ++$i;
         }
 
@@ -217,15 +215,19 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
                 'help',
                 'readonly',
                 'relation',
+                'relation_field',
                 'required',
                 'selection',
-                'inherited_model_ids'
+                'inherited_model_ids',
+                'domain',
+                'searchable',
+                'sortable'
             ]);
 
             $this->fields_getCache[$modelName] = $this->inspectionOperations->fields_get(
-                $modelName/*,
+                $modelName,
                 [],
-                $fieldGetOptions*/
+                $fieldGetOptions
             );
 
             foreach ($this->modelFixers as $modelFixer) {
@@ -272,13 +274,19 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
 
         foreach ($item['inherited_model_ids'] as $inheritedModelId) {
             $inheritedModel = $this->modelIdToModelName[$inheritedModelId];
-            $extends = $baseModelNamespace.'\\'.$this->getClassNameFormModelName($inheritedModel);
+            $extends = $baseModelNamespace . '\\' . $this->getClassNameFormModelName($inheritedModel);
             break; // one and only extends allowed
         }
 
         $fieldsInfos = $this->fields_get($modelName);
 
         $properties = $this->convertModelProperties($fieldsInfos, $baseModelNamespace, $item);
+        $constants = [
+            [
+                'name' => 'ODOO_MODEL_NAME',
+                'default' => sprintf('\'%s\'', $modelName),
+            ]
+        ];
 
         if ($item['abstract'] ?? false) {
             $classType = ClassBuilderInterface::CLASS_TYPE_ABSTRACT;
@@ -307,6 +315,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
                     $info,
                 ]
             ],
+            'constants' => $constants,
             'properties' => $properties,
         ];
     }
@@ -315,21 +324,55 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
     {
         $properties = [];
         foreach ($fieldsInfos as $fieldName => $fieldInfo) {
-            $readonly = $fieldInfo['readonly'] ?? false;
             $types = $this->transformTypes($fieldInfo, $baseModelNamespace);
-            $description = $fieldInfo['string'];
-            $description .= !empty($fieldInfo['help']) ? "\n" . $fieldInfo['help'] : '';
+            $description = [
+                $fieldInfo['string'],
+            ];
+            if (!empty($fieldInfo['help'] ?? '')) {
+                $description[] = $fieldInfo['help'];
+            }
+            $searchable = $fieldInfo['searchable'] ?? false;
+            $description[] = sprintf('Searchable : %s', $searchable ? 'yes' : 'no');
+            $sortable = $fieldInfo['sortable'] ?? false;
+            $description[] = sprintf('Sortable : %s', $sortable ? 'yes' : 'no');
+
+            if ($fieldInfo['type'] === 'selection') {
+                $description[] = 'Selection : (default value, usually null)';
+                $description = array_merge($description, $this->prettyGetSelection($fieldInfo['selection']));
+            }
+
             $properties[] = [
                 'name' => $fieldName,
                 'types' => $types,
                 'default' => null,
                 'description' => $description,
-                'readable' => false !== $readonly,
-                'writable' => false === $readonly,
                 'inherited' => $this->isInheritedField($item, $fieldName)
             ];
         }
 
         return $properties;
+    }
+
+    private function prettyGetSelection(array $selection, int $deep = 0): array
+    {
+        $lines = [];
+        $line = '';
+        foreach ($selection as $i => $item) {
+            if (is_array($item)) {
+                $lines = array_merge($lines, $this->prettyGetSelection($item, $deep + 1));
+                continue;
+            }
+
+            if ($i !== 0) {
+                $line .= ' (' . $item . ')';
+                continue;
+            }
+
+            $line = str_repeat('  ', $deep) . '-> ' . $item;
+        }
+
+        $lines[] = $line;
+
+        return $lines;
     }
 }

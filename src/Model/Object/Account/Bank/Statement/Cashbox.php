@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Account\Bank\Statement;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Bank\Statement;
-use Flux\OdooApiClient\Model\Object\Account\Cashbox\Line;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Currency;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.bank.statement.cashbox
@@ -19,81 +16,204 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  */
 final class Cashbox extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.bank.statement.cashbox';
+
     /**
      * Cashbox Lines
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Line[]
+     * @var OdooRelation[]|null
      */
     private $cashbox_lines_ids;
 
     /**
      * Start Bank Stmt
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Statement[]
+     * @var OdooRelation[]|null
      */
     private $start_bank_stmt_ids;
 
     /**
      * End Bank Stmt
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Statement[]
+     * @var OdooRelation[]|null
      */
     private $end_bank_stmt_ids;
 
     /**
      * Total
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|float
+     * @var float|null
      */
     private $total;
 
     /**
      * Currency
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|Currency
+     * @var OdooRelation|null
      */
     private $currency_id;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param null|Line[] $cashbox_lines_ids
+     * @return OdooRelation[]|null
      */
-    public function setCashboxLinesIds(?array $cashbox_lines_ids): void
+    public function getCashboxLinesIds(): ?array
     {
-        $this->cashbox_lines_ids = $cashbox_lines_ids;
+        return $this->cashbox_lines_ids;
     }
 
     /**
-     * @param Statement $item
+     * @param OdooRelation $item
      */
-    public function addEndBankStmtIds(Statement $item): void
+    public function removeEndBankStmtIds(OdooRelation $item): void
+    {
+        if (null === $this->end_bank_stmt_ids) {
+            $this->end_bank_stmt_ids = [];
+        }
+
+        if ($this->hasEndBankStmtIds($item)) {
+            $index = array_search($item, $this->end_bank_stmt_ids);
+            unset($this->end_bank_stmt_ids[$index]);
+        }
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $currency_id
+     */
+    public function setCurrencyId(?OdooRelation $currency_id): void
+    {
+        $this->currency_id = $currency_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCurrencyId(): ?OdooRelation
+    {
+        return $this->currency_id;
+    }
+
+    /**
+     * @param float|null $total
+     */
+    public function setTotal(?float $total): void
+    {
+        $this->total = $total;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getTotal(): ?float
+    {
+        return $this->total;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addEndBankStmtIds(OdooRelation $item): void
     {
         if ($this->hasEndBankStmtIds($item)) {
             return;
@@ -107,92 +227,29 @@ final class Cashbox extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation[]|null $cashbox_lines_ids
      */
-    public function getWriteUid(): ?Users
+    public function setCashboxLinesIds(?array $cashbox_lines_ids): void
     {
-        return $this->write_uid;
+        $this->cashbox_lines_ids = $cashbox_lines_ids;
     }
 
     /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|Currency
-     */
-    public function getCurrencyId(): ?Currency
-    {
-        return $this->currency_id;
-    }
-
-    /**
-     * @return null|float
-     */
-    public function getTotal(): ?float
-    {
-        return $this->total;
-    }
-
-    /**
-     * @param Statement $item
-     */
-    public function removeEndBankStmtIds(Statement $item): void
-    {
-        if (null === $this->end_bank_stmt_ids) {
-            $this->end_bank_stmt_ids = [];
-        }
-
-        if ($this->hasEndBankStmtIds($item)) {
-            $index = array_search($item, $this->end_bank_stmt_ids);
-            unset($this->end_bank_stmt_ids[$index]);
-        }
-    }
-
-    /**
-     * @param Statement $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasEndBankStmtIds(Statement $item, bool $strict = true): bool
+    public function hasEndBankStmtIds(OdooRelation $item): bool
     {
         if (null === $this->end_bank_stmt_ids) {
             return false;
         }
 
-        return in_array($item, $this->end_bank_stmt_ids, $strict);
+        return in_array($item, $this->end_bank_stmt_ids);
     }
 
     /**
-     * @param Line $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasCashboxLinesIds(Line $item, bool $strict = true): bool
-    {
-        if (null === $this->cashbox_lines_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->cashbox_lines_ids, $strict);
-    }
-
-    /**
-     * @param null|Statement[] $end_bank_stmt_ids
+     * @param OdooRelation[]|null $end_bank_stmt_ids
      */
     public function setEndBankStmtIds(?array $end_bank_stmt_ids): void
     {
@@ -200,9 +257,17 @@ final class Cashbox extends Base
     }
 
     /**
-     * @param Statement $item
+     * @return OdooRelation[]|null
      */
-    public function removeStartBankStmtIds(Statement $item): void
+    public function getEndBankStmtIds(): ?array
+    {
+        return $this->end_bank_stmt_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeStartBankStmtIds(OdooRelation $item): void
     {
         if (null === $this->start_bank_stmt_ids) {
             $this->start_bank_stmt_ids = [];
@@ -215,9 +280,9 @@ final class Cashbox extends Base
     }
 
     /**
-     * @param Statement $item
+     * @param OdooRelation $item
      */
-    public function addStartBankStmtIds(Statement $item): void
+    public function addStartBankStmtIds(OdooRelation $item): void
     {
         if ($this->hasStartBankStmtIds($item)) {
             return;
@@ -231,22 +296,21 @@ final class Cashbox extends Base
     }
 
     /**
-     * @param Statement $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasStartBankStmtIds(Statement $item, bool $strict = true): bool
+    public function hasStartBankStmtIds(OdooRelation $item): bool
     {
         if (null === $this->start_bank_stmt_ids) {
             return false;
         }
 
-        return in_array($item, $this->start_bank_stmt_ids, $strict);
+        return in_array($item, $this->start_bank_stmt_ids);
     }
 
     /**
-     * @param null|Statement[] $start_bank_stmt_ids
+     * @param OdooRelation[]|null $start_bank_stmt_ids
      */
     public function setStartBankStmtIds(?array $start_bank_stmt_ids): void
     {
@@ -254,9 +318,17 @@ final class Cashbox extends Base
     }
 
     /**
-     * @param Line $item
+     * @return OdooRelation[]|null
      */
-    public function removeCashboxLinesIds(Line $item): void
+    public function getStartBankStmtIds(): ?array
+    {
+        return $this->start_bank_stmt_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeCashboxLinesIds(OdooRelation $item): void
     {
         if (null === $this->cashbox_lines_ids) {
             $this->cashbox_lines_ids = [];
@@ -269,9 +341,9 @@ final class Cashbox extends Base
     }
 
     /**
-     * @param Line $item
+     * @param OdooRelation $item
      */
-    public function addCashboxLinesIds(Line $item): void
+    public function addCashboxLinesIds(OdooRelation $item): void
     {
         if ($this->hasCashboxLinesIds($item)) {
             return;
@@ -285,10 +357,24 @@ final class Cashbox extends Base
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function hasCashboxLinesIds(OdooRelation $item): bool
     {
-        return $this->write_date;
+        if (null === $this->cashbox_lines_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->cashbox_lines_ids);
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

@@ -5,17 +5,8 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Account\Analytic;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Account as AccountAlias;
-use Flux\OdooApiClient\Model\Object\Account\Move\Line as LineAlias;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Product\Product;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Currency;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
-use Flux\OdooApiClient\Model\Object\Res\Users;
-use Flux\OdooApiClient\Model\Object\Sale\Order\Line as LineAliasAlias;
-use Flux\OdooApiClient\Model\Object\Uom\Category;
-use Flux\OdooApiClient\Model\Object\Uom\Uom;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.analytic.line
@@ -23,18 +14,22 @@ use Flux\OdooApiClient\Model\Object\Uom\Uom;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Line extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.analytic.line';
+
     /**
      * Description
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -42,6 +37,8 @@ final class Line extends Base
 
     /**
      * Date
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var DateTimeInterface
      */
@@ -49,6 +46,8 @@ final class Line extends Base
 
     /**
      * Amount
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var float
      */
@@ -56,15 +55,19 @@ final class Line extends Base
 
     /**
      * Quantity
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $unit_amount;
 
     /**
      * Unit of Measure
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Uom
+     * @var OdooRelation|null
      */
     private $product_uom_id;
 
@@ -72,143 +75,189 @@ final class Line extends Base
      * Category
      * Conversion between Units of Measure can only occur if they belong to the same category. The conversion will be
      * made based on the ratios.
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Category
+     * @var OdooRelation|null
      */
     private $product_uom_category_id;
 
     /**
      * Analytic Account
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Account
+     * @var OdooRelation
      */
     private $account_id;
 
     /**
      * Partner
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Partner
+     * @var OdooRelation|null
      */
     private $partner_id;
 
     /**
      * User
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $user_id;
 
     /**
      * Tags
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Tag[]
+     * @var OdooRelation[]|null
      */
     private $tag_ids;
 
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Company
+     * @var OdooRelation
      */
     private $company_id;
 
     /**
      * Currency
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Currency
+     * @var OdooRelation|null
      */
     private $currency_id;
 
     /**
      * Group
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Group
+     * @var OdooRelation|null
      */
     private $group_id;
 
     /**
      * Product
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Product
+     * @var OdooRelation|null
      */
     private $product_id;
 
     /**
      * Financial Account
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|AccountAlias
+     * @var OdooRelation|null
      */
     private $general_account_id;
 
     /**
      * Journal Item
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|LineAlias
+     * @var OdooRelation|null
      */
     private $move_id;
 
     /**
      * Code
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $code;
 
     /**
      * Ref.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $ref;
 
     /**
      * Sales Order Item
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|LineAliasAlias
+     * @var OdooRelation|null
      */
     private $so_line;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Description
+     *        Searchable : yes
+     *        Sortable : yes
      * @param DateTimeInterface $date Date
+     *        Searchable : yes
+     *        Sortable : yes
      * @param float $amount Amount
-     * @param Account $account_id Analytic Account
-     * @param Company $company_id Company
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $account_id Analytic Account
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $company_id Company
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         string $name,
         DateTimeInterface $date,
         float $amount,
-        Account $account_id,
-        Company $company_id
+        OdooRelation $account_id,
+        OdooRelation $company_id
     ) {
         $this->name = $name;
         $this->date = $date;
@@ -218,55 +267,7 @@ final class Line extends Base
     }
 
     /**
-     * @return Company
-     */
-    public function getCompanyId(): Company
-    {
-        return $this->company_id;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param null|LineAliasAlias $so_line
-     */
-    public function setSoLine(?LineAliasAlias $so_line): void
-    {
-        $this->so_line = $so_line;
-    }
-
-    /**
-     * @param null|string $ref
-     */
-    public function setRef(?string $ref): void
-    {
-        $this->ref = $ref;
-    }
-
-    /**
-     * @param null|string $code
+     * @param string|null $code
      */
     public function setCode(?string $code): void
     {
@@ -274,58 +275,203 @@ final class Line extends Base
     }
 
     /**
-     * @param null|LineAlias $move_id
+     * @return OdooRelation|null
      */
-    public function setMoveId(?LineAlias $move_id): void
-    {
-        $this->move_id = $move_id;
-    }
-
-    /**
-     * @return null|AccountAlias
-     */
-    public function getGeneralAccountId(): ?AccountAlias
-    {
-        return $this->general_account_id;
-    }
-
-    /**
-     * @param null|Product $product_id
-     */
-    public function setProductId(?Product $product_id): void
-    {
-        $this->product_id = $product_id;
-    }
-
-    /**
-     * @return null|Group
-     */
-    public function getGroupId(): ?Group
+    public function getGroupId(): ?OdooRelation
     {
         return $this->group_id;
     }
 
     /**
-     * @return null|Currency
+     * @param OdooRelation|null $group_id
      */
-    public function getCurrencyId(): ?Currency
+    public function setGroupId(?OdooRelation $group_id): void
+    {
+        $this->group_id = $group_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getProductId(): ?OdooRelation
+    {
+        return $this->product_id;
+    }
+
+    /**
+     * @param OdooRelation|null $product_id
+     */
+    public function setProductId(?OdooRelation $product_id): void
+    {
+        $this->product_id = $product_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getGeneralAccountId(): ?OdooRelation
+    {
+        return $this->general_account_id;
+    }
+
+    /**
+     * @param OdooRelation|null $general_account_id
+     */
+    public function setGeneralAccountId(?OdooRelation $general_account_id): void
+    {
+        $this->general_account_id = $general_account_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getMoveId(): ?OdooRelation
+    {
+        return $this->move_id;
+    }
+
+    /**
+     * @param OdooRelation|null $move_id
+     */
+    public function setMoveId(?OdooRelation $move_id): void
+    {
+        $this->move_id = $move_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRef(): ?string
+    {
+        return $this->ref;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCurrencyId(): ?OdooRelation
     {
         return $this->currency_id;
     }
 
     /**
-     * @param Tag $item
+     * @param string|null $ref
      */
-    public function removeTagIds(Tag $item): void
+    public function setRef(?string $ref): void
     {
-        if (null === $this->tag_ids) {
-            $this->tag_ids = [];
-        }
+        $this->ref = $ref;
+    }
 
-        if ($this->hasTagIds($item)) {
-            $index = array_search($item, $this->tag_ids);
-            unset($this->tag_ids[$index]);
-        }
+    /**
+     * @return OdooRelation|null
+     */
+    public function getSoLine(): ?OdooRelation
+    {
+        return $this->so_line;
+    }
+
+    /**
+     * @param OdooRelation|null $so_line
+     */
+    public function setSoLine(?OdooRelation $so_line): void
+    {
+        $this->so_line = $so_line;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $currency_id
+     */
+    public function setCurrencyId(?OdooRelation $currency_id): void
+    {
+        $this->currency_id = $currency_id;
+    }
+
+    /**
+     * @param OdooRelation $company_id
+     */
+    public function setCompanyId(OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param OdooRelation|null $product_uom_category_id
+     */
+    public function setProductUomCategoryId(?OdooRelation $product_uom_category_id): void
+    {
+        $this->product_uom_category_id = $product_uom_category_id;
     }
 
     /**
@@ -337,9 +483,167 @@ final class Line extends Base
     }
 
     /**
-     * @param Tag $item
+     * @return DateTimeInterface
      */
-    public function addTagIds(Tag $item): void
+    public function getDate(): DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param DateTimeInterface $date
+     */
+    public function setDate(DateTimeInterface $date): void
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @return float
+     */
+    public function getAmount(): float
+    {
+        return $this->amount;
+    }
+
+    /**
+     * @param float $amount
+     */
+    public function setAmount(float $amount): void
+    {
+        $this->amount = $amount;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getUnitAmount(): ?float
+    {
+        return $this->unit_amount;
+    }
+
+    /**
+     * @param float|null $unit_amount
+     */
+    public function setUnitAmount(?float $unit_amount): void
+    {
+        $this->unit_amount = $unit_amount;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getProductUomId(): ?OdooRelation
+    {
+        return $this->product_uom_id;
+    }
+
+    /**
+     * @param OdooRelation|null $product_uom_id
+     */
+    public function setProductUomId(?OdooRelation $product_uom_id): void
+    {
+        $this->product_uom_id = $product_uom_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getProductUomCategoryId(): ?OdooRelation
+    {
+        return $this->product_uom_category_id;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getAccountId(): OdooRelation
+    {
+        return $this->account_id;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getCompanyId(): OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param OdooRelation $account_id
+     */
+    public function setAccountId(OdooRelation $account_id): void
+    {
+        $this->account_id = $account_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPartnerId(): ?OdooRelation
+    {
+        return $this->partner_id;
+    }
+
+    /**
+     * @param OdooRelation|null $partner_id
+     */
+    public function setPartnerId(?OdooRelation $partner_id): void
+    {
+        $this->partner_id = $partner_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getUserId(): ?OdooRelation
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @param OdooRelation|null $user_id
+     */
+    public function setUserId(?OdooRelation $user_id): void
+    {
+        $this->user_id = $user_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getTagIds(): ?array
+    {
+        return $this->tag_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $tag_ids
+     */
+    public function setTagIds(?array $tag_ids): void
+    {
+        $this->tag_ids = $tag_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasTagIds(OdooRelation $item): bool
+    {
+        if (null === $this->tag_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->tag_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addTagIds(OdooRelation $item): void
     {
         if ($this->hasTagIds($item)) {
             return;
@@ -353,97 +657,25 @@ final class Line extends Base
     }
 
     /**
-     * @param Tag $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param OdooRelation $item
      */
-    public function hasTagIds(Tag $item, bool $strict = true): bool
+    public function removeTagIds(OdooRelation $item): void
     {
         if (null === $this->tag_ids) {
-            return false;
+            $this->tag_ids = [];
         }
 
-        return in_array($item, $this->tag_ids, $strict);
+        if ($this->hasTagIds($item)) {
+            $index = array_search($item, $this->tag_ids);
+            unset($this->tag_ids[$index]);
+        }
     }
 
     /**
-     * @param null|Tag[] $tag_ids
+     * @param DateTimeInterface|null $write_date
      */
-    public function setTagIds(?array $tag_ids): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->tag_ids = $tag_ids;
-    }
-
-    /**
-     * @param null|Users $user_id
-     */
-    public function setUserId(?Users $user_id): void
-    {
-        $this->user_id = $user_id;
-    }
-
-    /**
-     * @param null|Partner $partner_id
-     */
-    public function setPartnerId(?Partner $partner_id): void
-    {
-        $this->partner_id = $partner_id;
-    }
-
-    /**
-     * @param Account $account_id
-     */
-    public function setAccountId(Account $account_id): void
-    {
-        $this->account_id = $account_id;
-    }
-
-    /**
-     * @return null|Category
-     */
-    public function getProductUomCategoryId(): ?Category
-    {
-        return $this->product_uom_category_id;
-    }
-
-    /**
-     * @param null|Uom $product_uom_id
-     */
-    public function setProductUomId(?Uom $product_uom_id): void
-    {
-        $this->product_uom_id = $product_uom_id;
-    }
-
-    /**
-     * @param null|float $unit_amount
-     */
-    public function setUnitAmount(?float $unit_amount): void
-    {
-        $this->unit_amount = $unit_amount;
-    }
-
-    /**
-     * @param float $amount
-     */
-    public function setAmount(float $amount): void
-    {
-        $this->amount = $amount;
-    }
-
-    /**
-     * @param DateTimeInterface $date
-     */
-    public function setDate(DateTimeInterface $date): void
-    {
-        $this->date = $date;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

@@ -6,7 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Change\Password;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : change.password.wizard
@@ -16,43 +16,63 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  */
 final class Wizard extends Base
 {
+    public const ODOO_MODEL_NAME = 'change.password.wizard';
+
     /**
      * Users
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|User[]
+     * @var OdooRelation[]|null
      */
     private $user_ids;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param null|User[] $user_ids
+     * @return OdooRelation[]|null
+     */
+    public function getUserIds(): ?array
+    {
+        return $this->user_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $user_ids
      */
     public function setUserIds(?array $user_ids): void
     {
@@ -60,24 +80,23 @@ final class Wizard extends Base
     }
 
     /**
-     * @param User $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasUserIds(User $item, bool $strict = true): bool
+    public function hasUserIds(OdooRelation $item): bool
     {
         if (null === $this->user_ids) {
             return false;
         }
 
-        return in_array($item, $this->user_ids, $strict);
+        return in_array($item, $this->user_ids);
     }
 
     /**
-     * @param User $item
+     * @param OdooRelation $item
      */
-    public function addUserIds(User $item): void
+    public function addUserIds(OdooRelation $item): void
     {
         if ($this->hasUserIds($item)) {
             return;
@@ -91,9 +110,9 @@ final class Wizard extends Base
     }
 
     /**
-     * @param User $item
+     * @param OdooRelation $item
      */
-    public function removeUserIds(User $item): void
+    public function removeUserIds(OdooRelation $item): void
     {
         if (null === $this->user_ids) {
             $this->user_ids = [];
@@ -106,15 +125,23 @@ final class Wizard extends Base
     }
 
     /**
-     * @return null|Users
+     * @return OdooRelation|null
      */
-    public function getCreateUid(): ?Users
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -122,18 +149,42 @@ final class Wizard extends Base
     }
 
     /**
-     * @return null|Users
+     * @param DateTimeInterface|null $create_date
      */
-    public function getWriteUid(): ?Users
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

@@ -11,20 +11,21 @@ use Flux\OdooApiClient\Model\Object\Base;
  * Name : ir.qweb.field.duration
  * Info :
  * ``duration`` converter, to display integral or fractional values as
- * human-readable time spans (e.g. 1.5 as "1 hour 30 minutes").
+ *         human-readable time spans (e.g. 1.5 as "1 hour 30 minutes").
  *
- * Can be used on any numerical field.
+ *         Can be used on any numerical field.
  *
- * Has an option ``unit`` which can be one of ``second``, ``minute``,
- * ``hour``, ``day``, ``week`` or ``year``, used to interpret the numerical
- * field value before converting it. By default use ``second``.
+ *         Has an option ``unit`` which can be one of ``second``, ``minute``,
+ *         ``hour``, ``day``, ``week`` or ``year``, used to interpret the numerical
+ *         field value before converting it. By default use ``second``.
  *
- * Has an option ``round``. By default use ``second``.
+ *         Has an option ``round``. By default use ``second``.
  *
- * Has an option ``digital`` to display 01:00 instead of 1 hour
+ *         Has an option ``digital`` to display 01:00 instead of 1 hour
  *
- * Sub-second values will be ignored.
+ *         Sub-second values will be ignored.
  */
 final class Duration extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.qweb.field.duration';
 }

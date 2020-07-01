@@ -13,46 +13,58 @@ use Flux\OdooApiClient\Model\Object\Base;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Logging extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.logging';
+
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -60,27 +72,39 @@ final class Logging extends Base
 
     /**
      * Type
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> client (Client)
+     *     -> server (Server)
      *
-     * @var array
+     *
+     * @var string
      */
     private $type;
 
     /**
      * Database Name
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $dbname;
 
     /**
      * Level
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $level;
 
     /**
      * Message
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -88,6 +112,8 @@ final class Logging extends Base
 
     /**
      * Path
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -95,6 +121,8 @@ final class Logging extends Base
 
     /**
      * Function
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -102,6 +130,8 @@ final class Logging extends Base
 
     /**
      * Line
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -109,15 +139,31 @@ final class Logging extends Base
 
     /**
      * @param string $name Name
-     * @param array $type Type
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $type Type
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> client (Client)
+     *            -> server (Server)
+     *
      * @param string $message Message
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $path Path
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $func Function
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $line Line
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         string $name,
-        array $type,
+        string $type,
         string $message,
         string $path,
         string $func,
@@ -132,109 +178,35 @@ final class Logging extends Base
     }
 
     /**
-     * @return null|int
+     * @return string|null
      */
-    public function getCreateUid(): ?int
+    public function getDbname(): ?string
     {
-        return $this->create_uid;
+        return $this->dbname;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return string
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function getLine(): string
     {
-        return $this->create_date;
+        return $this->line;
     }
 
     /**
-     * @return null|int
+     * @param string $func
      */
-    public function getWriteUid(): ?int
+    public function setFunc(string $func): void
     {
-        return $this->write_uid;
+        $this->func = $func;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return string
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getFunc(): string
     {
-        return $this->write_date;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @param array $type
-     */
-    public function setType(array $type): void
-    {
-        $this->type = $type;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasType($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->type, $strict);
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addType($item): void
-    {
-        if ($this->hasType($item)) {
-            return;
-        }
-
-        $this->type[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeType($item): void
-    {
-        if ($this->hasType($item)) {
-            $index = array_search($item, $this->type);
-            unset($this->type[$index]);
-        }
-    }
-
-    /**
-     * @param null|string $dbname
-     */
-    public function setDbname(?string $dbname): void
-    {
-        $this->dbname = $dbname;
-    }
-
-    /**
-     * @param null|string $level
-     */
-    public function setLevel(?string $level): void
-    {
-        $this->level = $level;
-    }
-
-    /**
-     * @param string $message
-     */
-    public function setMessage(string $message): void
-    {
-        $this->message = $message;
+        return $this->func;
     }
 
     /**
@@ -246,11 +218,147 @@ final class Logging extends Base
     }
 
     /**
-     * @param string $func
+     * @return string
      */
-    public function setFunc(string $func): void
+    public function getPath(): string
     {
-        $this->func = $func;
+        return $this->path;
+    }
+
+    /**
+     * @param string $message
+     */
+    public function setMessage(string $message): void
+    {
+        $this->message = $message;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessage(): string
+    {
+        return $this->message;
+    }
+
+    /**
+     * @param string|null $level
+     */
+    public function setLevel(?string $level): void
+    {
+        $this->level = $level;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLevel(): ?string
+    {
+        return $this->level;
+    }
+
+    /**
+     * @param string|null $dbname
+     */
+    public function setDbname(?string $dbname): void
+    {
+        $this->dbname = $dbname;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType(string $type): void
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCreateUid(): ?int
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param int|null $write_uid
+     */
+    public function setWriteUid(?int $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getWriteUid(): ?int
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param int|null $create_uid
+     */
+    public function setCreateUid(?int $create_uid): void
+    {
+        $this->create_uid = $create_uid;
     }
 
     /**

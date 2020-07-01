@@ -6,177 +6,188 @@ namespace Flux\OdooApiClient\Model\Object\Sms\Resend;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Mail\Notification;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
-use Flux\OdooApiClient\Model\Object\Res\Users;
-use Flux\OdooApiClient\Model\Object\Sms\Resend;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : sms.resend.recipient
  * Name : sms.resend.recipient
  * Info :
  * Model super-class for transient records, meant to be temporarily
- * persistent, and regularly vacuum-cleaned.
+ *         persistent, and regularly vacuum-cleaned.
  *
- * A TransientModel has a simplified access rights management, all users can
- * create new records, and may only access the records they created. The
- * superuser has unrestricted access to all TransientModel records.
+ *         A TransientModel has a simplified access rights management, all users can
+ *         create new records, and may only access the records they created. The
+ *         superuser has unrestricted access to all TransientModel records.
  */
 final class Recipient extends Base
 {
+    public const ODOO_MODEL_NAME = 'sms.resend.recipient';
+
     /**
      * Sms Resend
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Resend
+     * @var OdooRelation
      */
     private $sms_resend_id;
 
     /**
      * Notification
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Notification
+     * @var OdooRelation
      */
     private $notification_id;
 
     /**
      * Resend
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $resend;
 
     /**
      * Failure type
+     * Searchable : yes
+     * Sortable : no
+     * Selection : (default value, usually null)
+     *     -> SMTP (Connection failed (outgoing mail server problem))
+     *     -> RECIPIENT (Invalid email address)
+     *     -> BOUNCE (Email address rejected by destination)
+     *     -> UNKNOWN (Unknown error)
+     *     -> sms_number_missing (Missing Number)
+     *     -> sms_number_format (Wrong Number Format)
+     *     -> sms_credit (Insufficient Credit)
+     *     -> sms_server (Server Error)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $failure_type;
 
     /**
      * Partner
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Partner
+     * @var OdooRelation|null
      */
     private $partner_id;
 
     /**
      * Recipient
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $partner_name;
 
     /**
      * Number
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $sms_number;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param Resend $sms_resend_id Sms Resend
-     * @param Notification $notification_id Notification
+     * @param OdooRelation $sms_resend_id Sms Resend
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $notification_id Notification
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(Resend $sms_resend_id, Notification $notification_id)
+    public function __construct(OdooRelation $sms_resend_id, OdooRelation $notification_id)
     {
         $this->sms_resend_id = $sms_resend_id;
         $this->notification_id = $notification_id;
     }
 
     /**
-     * @param Resend $sms_resend_id
+     * @param string|null $partner_name
      */
-    public function setSmsResendId(Resend $sms_resend_id): void
+    public function setPartnerName(?string $partner_name): void
     {
-        $this->sms_resend_id = $sms_resend_id;
+        $this->partner_name = $partner_name;
     }
 
     /**
-     * @param Notification $notification_id
+     * @return DateTimeInterface|null
      */
-    public function setNotificationId(Notification $notification_id): void
+    public function getWriteDate(): ?DateTimeInterface
     {
-        $this->notification_id = $notification_id;
+        return $this->write_date;
     }
 
     /**
-     * @param null|bool $resend
+     * @param OdooRelation|null $write_uid
      */
-    public function setResend(?bool $resend): void
+    public function setWriteUid(?OdooRelation $write_uid): void
     {
-        $this->resend = $resend;
+        $this->write_uid = $write_uid;
     }
 
     /**
-     * @return null|array
+     * @return OdooRelation|null
      */
-    public function getFailureType(): ?array
+    public function getWriteUid(): ?OdooRelation
     {
-        return $this->failure_type;
+        return $this->write_uid;
     }
 
     /**
-     * @return null|Partner
+     * @param DateTimeInterface|null $create_date
      */
-    public function getPartnerId(): ?Partner
+    public function setCreateDate(?DateTimeInterface $create_date): void
     {
-        return $this->partner_id;
+        $this->create_date = $create_date;
     }
 
     /**
-     * @return null|string
-     */
-    public function getPartnerName(): ?string
-    {
-        return $this->partner_name;
-    }
-
-    /**
-     * @param null|string $sms_number
-     */
-    public function setSmsNumber(?string $sms_number): void
-    {
-        $this->sms_number = $sms_number;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -184,18 +195,130 @@ final class Recipient extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getWriteUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->write_uid;
+        $this->create_uid = $create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return OdooRelation|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getCreateUid(): ?OdooRelation
     {
-        return $this->write_date;
+        return $this->create_uid;
+    }
+
+    /**
+     * @param string|null $sms_number
+     */
+    public function setSmsNumber(?string $sms_number): void
+    {
+        $this->sms_number = $sms_number;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSmsNumber(): ?string
+    {
+        return $this->sms_number;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPartnerName(): ?string
+    {
+        return $this->partner_name;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getSmsResendId(): OdooRelation
+    {
+        return $this->sms_resend_id;
+    }
+
+    /**
+     * @param OdooRelation|null $partner_id
+     */
+    public function setPartnerId(?OdooRelation $partner_id): void
+    {
+        $this->partner_id = $partner_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPartnerId(): ?OdooRelation
+    {
+        return $this->partner_id;
+    }
+
+    /**
+     * @param string|null $failure_type
+     */
+    public function setFailureType(?string $failure_type): void
+    {
+        $this->failure_type = $failure_type;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFailureType(): ?string
+    {
+        return $this->failure_type;
+    }
+
+    /**
+     * @param bool|null $resend
+     */
+    public function setResend(?bool $resend): void
+    {
+        $this->resend = $resend;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isResend(): ?bool
+    {
+        return $this->resend;
+    }
+
+    /**
+     * @param OdooRelation $notification_id
+     */
+    public function setNotificationId(OdooRelation $notification_id): void
+    {
+        $this->notification_id = $notification_id;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getNotificationId(): OdooRelation
+    {
+        return $this->notification_id;
+    }
+
+    /**
+     * @param OdooRelation $sms_resend_id
+     */
+    public function setSmsResendId(OdooRelation $sms_resend_id): void
+    {
+        $this->sms_resend_id = $sms_resend_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

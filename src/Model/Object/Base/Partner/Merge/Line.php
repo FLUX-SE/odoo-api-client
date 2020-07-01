@@ -6,38 +6,45 @@ namespace Flux\OdooApiClient\Model\Object\Base\Partner\Merge;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Base\Partner\Merge\Automatic\Wizard;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : base.partner.merge.line
  * Name : base.partner.merge.line
  * Info :
  * Model super-class for transient records, meant to be temporarily
- * persistent, and regularly vacuum-cleaned.
+ *         persistent, and regularly vacuum-cleaned.
  *
- * A TransientModel has a simplified access rights management, all users can
- * create new records, and may only access the records they created. The
- * superuser has unrestricted access to all TransientModel records.
+ *         A TransientModel has a simplified access rights management, all users can
+ *         create new records, and may only access the records they created. The
+ *         superuser has unrestricted access to all TransientModel records.
  */
 final class Line extends Base
 {
+    public const ODOO_MODEL_NAME = 'base.partner.merge.line';
+
     /**
      * Wizard
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Wizard
+     * @var OdooRelation|null
      */
     private $wizard_id;
 
     /**
      * MinID
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $min_id;
 
     /**
      * Ids
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -45,34 +52,44 @@ final class Line extends Base
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $aggr_ids Ids
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $aggr_ids)
     {
@@ -80,19 +97,43 @@ final class Line extends Base
     }
 
     /**
-     * @param null|Wizard $wizard_id
+     * @return OdooRelation|null
      */
-    public function setWizardId(?Wizard $wizard_id): void
+    public function getWizardId(): ?OdooRelation
+    {
+        return $this->wizard_id;
+    }
+
+    /**
+     * @param OdooRelation|null $wizard_id
+     */
+    public function setWizardId(?OdooRelation $wizard_id): void
     {
         $this->wizard_id = $wizard_id;
     }
 
     /**
-     * @param null|int $min_id
+     * @return int|null
+     */
+    public function getMinId(): ?int
+    {
+        return $this->min_id;
+    }
+
+    /**
+     * @param int|null $min_id
      */
     public function setMinId(?int $min_id): void
     {
         $this->min_id = $min_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAggrIds(): string
+    {
+        return $this->aggr_ids;
     }
 
     /**
@@ -104,15 +145,23 @@ final class Line extends Base
     }
 
     /**
-     * @return null|Users
+     * @return OdooRelation|null
      */
-    public function getCreateUid(): ?Users
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -120,18 +169,42 @@ final class Line extends Base
     }
 
     /**
-     * @return null|Users
+     * @param DateTimeInterface|null $create_date
      */
-    public function getWriteUid(): ?Users
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

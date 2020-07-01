@@ -42,7 +42,7 @@ final class OdooApiRequestMaker implements OdooApiRequestMakerInterface
      */
     public function request(string $operationPath, StreamInterface $body): ResponseInterface
     {
-        $uri = $this->baseUri->withPath($this->baseUri->getPath().$operationPath);
+        $uri = $this->baseUri->withPath($this->baseUri->getPath() . $operationPath);
         $request = $this->requestFactory
             ->createRequest('POST', $uri)
             ->withBody($body);

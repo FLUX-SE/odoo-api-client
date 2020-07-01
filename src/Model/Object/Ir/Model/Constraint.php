@@ -6,22 +6,24 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Model;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Model;
-use Flux\OdooApiClient\Model\Object\Ir\Module\Module;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.model.constraint
  * Name : ir.model.constraint
  * Info :
  * This model tracks PostgreSQL foreign keys and constraints used by Odoo
- * models.
+ *         models.
  */
 final class Constraint extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.model.constraint';
+
     /**
      * Constraint
      * PostgreSQL constraint or foreign key name.
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -30,36 +32,46 @@ final class Constraint extends Base
     /**
      * Definition
      * PostgreSQL constraint definition
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $definition;
 
     /**
      * Message
      * Error message returned when the constraint is violated.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $message;
 
     /**
      * Model
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Model
+     * @var OdooRelation
      */
     private $model;
 
     /**
      * Module
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Module
+     * @var OdooRelation
      */
     private $module;
 
     /**
      * Constraint Type
      * Type of the constraint: `f` for a foreign key, `u` for other constraints.
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -67,41 +79,57 @@ final class Constraint extends Base
 
     /**
      * Write Date
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * Create Date
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * @param string $name Constraint
      *        PostgreSQL constraint or foreign key name.
-     * @param Model $model Model
-     * @param Module $module Module
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $model Model
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $module Module
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $type Constraint Type
      *        Type of the constraint: `f` for a foreign key, `u` for other constraints.
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(string $name, Model $model, Module $module, string $type)
+    public function __construct(string $name, OdooRelation $model, OdooRelation $module, string $type)
     {
         $this->name = $name;
         $this->model = $model;
@@ -110,43 +138,67 @@ final class Constraint extends Base
     }
 
     /**
-     * @param string $name
+     * @return string
      */
-    public function setName(string $name): void
+    public function getType(): string
     {
-        $this->name = $name;
+        return $this->type;
     }
 
     /**
-     * @param null|string $definition
+     * @return OdooRelation|null
      */
-    public function setDefinition(?string $definition): void
+    public function getWriteUid(): ?OdooRelation
     {
-        $this->definition = $definition;
+        return $this->write_uid;
     }
 
     /**
-     * @param null|string $message
+     * @param OdooRelation|null $create_uid
      */
-    public function setMessage(?string $message): void
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        $this->message = $message;
+        $this->create_uid = $create_uid;
     }
 
     /**
-     * @param Model $model
+     * @return OdooRelation|null
      */
-    public function setModel(Model $model): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->model = $model;
+        return $this->create_uid;
     }
 
     /**
-     * @param Module $module
+     * @param DateTimeInterface|null $create_date
      */
-    public function setModule(Module $module): void
+    public function setCreateDate(?DateTimeInterface $create_date): void
     {
-        $this->module = $module;
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
     }
 
     /**
@@ -158,34 +210,90 @@ final class Constraint extends Base
     }
 
     /**
-     * @param null|DateTimeInterface $write_date
+     * @param OdooRelation $module
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function setModule(OdooRelation $module): void
     {
-        $this->write_date = $write_date;
+        $this->module = $module;
     }
 
     /**
-     * @param null|DateTimeInterface $create_date
+     * @return string
      */
-    public function setCreateDate(?DateTimeInterface $create_date): void
+    public function getName(): string
     {
-        $this->create_date = $create_date;
+        return $this->name;
     }
 
     /**
-     * @return null|Users
+     * @return OdooRelation
      */
-    public function getCreateUid(): ?Users
+    public function getModule(): OdooRelation
     {
-        return $this->create_uid;
+        return $this->module;
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation $model
      */
-    public function getWriteUid(): ?Users
+    public function setModel(OdooRelation $model): void
     {
-        return $this->write_uid;
+        $this->model = $model;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getModel(): OdooRelation
+    {
+        return $this->model;
+    }
+
+    /**
+     * @param string|null $message
+     */
+    public function setMessage(?string $message): void
+    {
+        $this->message = $message;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMessage(): ?string
+    {
+        return $this->message;
+    }
+
+    /**
+     * @param string|null $definition
+     */
+    public function setDefinition(?string $definition): void
+    {
+        $this->definition = $definition;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDefinition(): ?string
+    {
+        return $this->definition;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
     }
 }

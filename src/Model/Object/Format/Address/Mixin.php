@@ -14,4 +14,5 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Mixin extends Base
 {
+    public const ODOO_MODEL_NAME = 'format.address.mixin';
 }

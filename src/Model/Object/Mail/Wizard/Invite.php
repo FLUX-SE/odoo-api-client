@@ -6,9 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Mail\Wizard;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Mail\Channel;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.wizard.invite
@@ -18,9 +16,13 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  */
 final class Invite extends Base
 {
+    public const ODOO_MODEL_NAME = 'mail.wizard.invite';
+
     /**
      * Related Document Model
      * Model of the followed resource
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -29,73 +31,93 @@ final class Invite extends Base
     /**
      * Related Document ID
      * Id of the followed resource
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $res_id;
 
     /**
      * Recipients
      * List of partners that will be added as follower of the current document.
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Partner[]
+     * @var OdooRelation[]|null
      */
     private $partner_ids;
 
     /**
      * Channels
      * List of channels that will be added as listeners of the current document.
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Channel[]
+     * @var OdooRelation[]|null
      */
     private $channel_ids;
 
     /**
      * Message
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $message;
 
     /**
      * Send Email
      * If checked, the partners will receive an email warning they have been added in the document's followers.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $send_mail;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $res_model Related Document Model
      *        Model of the followed resource
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $res_model)
     {
@@ -103,9 +125,112 @@ final class Invite extends Base
     }
 
     /**
-     * @param Channel $item
+     * @param OdooRelation $item
      */
-    public function addChannelIds(Channel $item): void
+    public function removeChannelIds(OdooRelation $item): void
+    {
+        if (null === $this->channel_ids) {
+            $this->channel_ids = [];
+        }
+
+        if ($this->hasChannelIds($item)) {
+            $index = array_search($item, $this->channel_ids);
+            unset($this->channel_ids[$index]);
+        }
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param bool|null $send_mail
+     */
+    public function setSendMail(?bool $send_mail): void
+    {
+        $this->send_mail = $send_mail;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isSendMail(): ?bool
+    {
+        return $this->send_mail;
+    }
+
+    /**
+     * @param string|null $message
+     */
+    public function setMessage(?string $message): void
+    {
+        $this->message = $message;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMessage(): ?string
+    {
+        return $this->message;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addChannelIds(OdooRelation $item): void
     {
         if ($this->hasChannelIds($item)) {
             return;
@@ -119,85 +244,29 @@ final class Invite extends Base
     }
 
     /**
-     * @return null|Users
+     * @return string
      */
-    public function getWriteUid(): ?Users
+    public function getResModel(): string
     {
-        return $this->write_uid;
+        return $this->res_model;
     }
 
     /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param null|bool $send_mail
-     */
-    public function setSendMail(?bool $send_mail): void
-    {
-        $this->send_mail = $send_mail;
-    }
-
-    /**
-     * @param null|string $message
-     */
-    public function setMessage(?string $message): void
-    {
-        $this->message = $message;
-    }
-
-    /**
-     * @param Channel $item
-     */
-    public function removeChannelIds(Channel $item): void
-    {
-        if (null === $this->channel_ids) {
-            $this->channel_ids = [];
-        }
-
-        if ($this->hasChannelIds($item)) {
-            $index = array_search($item, $this->channel_ids);
-            unset($this->channel_ids[$index]);
-        }
-    }
-
-    /**
-     * @param Channel $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasChannelIds(Channel $item, bool $strict = true): bool
+    public function hasChannelIds(OdooRelation $item): bool
     {
         if (null === $this->channel_ids) {
             return false;
         }
 
-        return in_array($item, $this->channel_ids, $strict);
+        return in_array($item, $this->channel_ids);
     }
 
     /**
-     * @param string $res_model
-     */
-    public function setResModel(string $res_model): void
-    {
-        $this->res_model = $res_model;
-    }
-
-    /**
-     * @param null|Channel[] $channel_ids
+     * @param OdooRelation[]|null $channel_ids
      */
     public function setChannelIds(?array $channel_ids): void
     {
@@ -205,9 +274,17 @@ final class Invite extends Base
     }
 
     /**
-     * @param Partner $item
+     * @return OdooRelation[]|null
      */
-    public function removePartnerIds(Partner $item): void
+    public function getChannelIds(): ?array
+    {
+        return $this->channel_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removePartnerIds(OdooRelation $item): void
     {
         if (null === $this->partner_ids) {
             $this->partner_ids = [];
@@ -220,9 +297,9 @@ final class Invite extends Base
     }
 
     /**
-     * @param Partner $item
+     * @param OdooRelation $item
      */
-    public function addPartnerIds(Partner $item): void
+    public function addPartnerIds(OdooRelation $item): void
     {
         if ($this->hasPartnerIds($item)) {
             return;
@@ -236,22 +313,21 @@ final class Invite extends Base
     }
 
     /**
-     * @param Partner $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasPartnerIds(Partner $item, bool $strict = true): bool
+    public function hasPartnerIds(OdooRelation $item): bool
     {
         if (null === $this->partner_ids) {
             return false;
         }
 
-        return in_array($item, $this->partner_ids, $strict);
+        return in_array($item, $this->partner_ids);
     }
 
     /**
-     * @param null|Partner[] $partner_ids
+     * @param OdooRelation[]|null $partner_ids
      */
     public function setPartnerIds(?array $partner_ids): void
     {
@@ -259,7 +335,15 @@ final class Invite extends Base
     }
 
     /**
-     * @param null|int $res_id
+     * @return OdooRelation[]|null
+     */
+    public function getPartnerIds(): ?array
+    {
+        return $this->partner_ids;
+    }
+
+    /**
+     * @param int|null $res_id
      */
     public function setResId(?int $res_id): void
     {
@@ -267,10 +351,26 @@ final class Invite extends Base
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return int|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getResId(): ?int
     {
-        return $this->write_date;
+        return $this->res_id;
+    }
+
+    /**
+     * @param string $res_model
+     */
+    public function setResModel(string $res_model): void
+    {
+        $this->res_model = $res_model;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

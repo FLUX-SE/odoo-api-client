@@ -6,56 +6,59 @@ namespace Flux\OdooApiClient\Model\Object\Mail\Compose;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Attachment;
-use Flux\OdooApiClient\Model\Object\Ir\MailServer;
-use Flux\OdooApiClient\Model\Object\Mail\Activity\Type;
-use Flux\OdooApiClient\Model\Object\Mail\Message as MessageAlias;
-use Flux\OdooApiClient\Model\Object\Mail\Message\Subtype;
-use Flux\OdooApiClient\Model\Object\Mail\Template;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.compose.message
  * Name : mail.compose.message
  * Info :
  * Generic message composition wizard. You may inherit from this wizard
- * at model and view levels to provide specific features.
+ *                 at model and view levels to provide specific features.
  *
- * The behavior of the wizard depends on the composition_mode field:
- * - 'comment': post on a record. The wizard is pre-populated via ``get_record_data``
- * - 'mass_mail': wizard in mass mailing mode where the mail details can
- * contain template placeholders that will be merged with actual data
- * before being sent to each recipient.
+ *                 The behavior of the wizard depends on the composition_mode field:
+ *                 - 'comment': post on a record. The wizard is pre-populated via ``get_record_data``
+ *                 - 'mass_mail': wizard in mass mailing mode where the mail details can
+ *                         contain template placeholders that will be merged with actual data
+ *                         before being sent to each recipient.
  */
 class Message extends Base
 {
+    public const ODOO_MODEL_NAME = 'mail.compose.message';
+
     /**
      * Subject
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     protected $subject;
 
     /**
      * Contents
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     protected $body;
 
     /**
      * Parent Message
      * Initial thread message.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|MessageAlias
+     * @var OdooRelation|null
      */
     protected $parent_id;
 
     /**
      * Attachments
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Attachment[]
+     * @var OdooRelation[]|null
      */
     protected $attachment_ids;
 
@@ -63,38 +66,48 @@ class Message extends Base
      * From
      * Email address of the sender. This field is set when no matching partner is found and replaces the author_id
      * field in the chatter.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     protected $email_from;
 
     /**
      * Author
      * Author of the message. If not set, email_from may hold an email address that did not match any partner.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Partner
+     * @var OdooRelation|null
      */
     protected $author_id;
 
     /**
      * Related Document Model
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     protected $model;
 
     /**
      * Related Document ID
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     protected $res_id;
 
     /**
      * Message Record Name
      * Name get of the related document.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     protected $record_name;
 
@@ -102,193 +115,242 @@ class Message extends Base
      * Type
      * Message type: email for email message, notification for system message, comment for other messages such as
      * user replies
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> comment (Comment)
+     *     -> notification (System notification)
      *
-     * @var array
+     *
+     * @var string
      */
     protected $message_type;
 
     /**
      * Subtype
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Subtype
+     * @var OdooRelation|null
      */
     protected $subtype_id;
 
     /**
      * Mail Activity Type
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Type
+     * @var OdooRelation|null
      */
     protected $mail_activity_type_id;
 
     /**
      * Composition mode
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> comment (Post on a document)
+     *     -> mass_mail (Email Mass Mailing)
+     *     -> mass_post (Post on Multiple Documents)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     protected $composition_mode;
 
     /**
      * Reply-To
      * Reply email address. Setting the reply_to bypasses the automatic thread creation.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     protected $reply_to;
 
     /**
      * No threading for answers
      * Answers do not go in the original document discussion thread. This has an impact on the generated message-id.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     protected $no_auto_thread;
 
     /**
      * Log an Internal Note
      * Whether the message is an internal note (comment mode only)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     protected $is_log;
 
     /**
      * Additional Contacts
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Partner[]
+     * @var OdooRelation[]|null
      */
     protected $partner_ids;
 
     /**
      * Use active domain
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     protected $use_active_domain;
 
     /**
      * Active domain
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     protected $active_domain;
 
     /**
      * Notify followers
      * Notify followers of the document (mass post only)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     protected $notify;
 
     /**
      * Delete Emails
      * Delete sent emails (mass mailing only)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     protected $auto_delete;
 
     /**
      * Delete Message Copy
      * Do not keep a copy of the email in the document communication history (mass mailing only)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     protected $auto_delete_message;
 
     /**
      * Use template
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Template
+     * @var OdooRelation|null
      */
     protected $template_id;
 
     /**
      * Outgoing mail server
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|MailServer
+     * @var OdooRelation|null
      */
     protected $mail_server_id;
 
     /**
      * Layout
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     protected $layout;
 
     /**
      * Add Sign
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     protected $add_sign;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     protected $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     protected $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     protected $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     protected $write_date;
 
     /**
-     * @param array $message_type Type
+     * @param string $message_type Type
      *        Message type: email for email message, notification for system message, comment for other messages such as
      *        user replies
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> comment (Comment)
+     *            -> notification (System notification)
+     *
      */
-    public function __construct(array $message_type)
+    public function __construct(string $message_type)
     {
         $this->message_type = $message_type;
     }
 
     /**
-     * @param null|bool $notify
+     * @param bool|null $auto_delete_message
      */
-    public function setNotify(?bool $notify): void
+    public function setAutoDeleteMessage(?bool $auto_delete_message): void
     {
-        $this->notify = $notify;
+        $this->auto_delete_message = $auto_delete_message;
     }
 
     /**
-     * @param null|bool $no_auto_thread
+     * @return OdooRelation[]|null
      */
-    public function setNoAutoThread(?bool $no_auto_thread): void
+    public function getPartnerIds(): ?array
     {
-        $this->no_auto_thread = $no_auto_thread;
+        return $this->partner_ids;
     }
 
     /**
-     * @param null|bool $is_log
-     */
-    public function setIsLog(?bool $is_log): void
-    {
-        $this->is_log = $is_log;
-    }
-
-    /**
-     * @param null|Partner[] $partner_ids
+     * @param OdooRelation[]|null $partner_ids
      */
     public function setPartnerIds(?array $partner_ids): void
     {
@@ -296,24 +358,23 @@ class Message extends Base
     }
 
     /**
-     * @param Partner $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasPartnerIds(Partner $item, bool $strict = true): bool
+    public function hasPartnerIds(OdooRelation $item): bool
     {
         if (null === $this->partner_ids) {
             return false;
         }
 
-        return in_array($item, $this->partner_ids, $strict);
+        return in_array($item, $this->partner_ids);
     }
 
     /**
-     * @param Partner $item
+     * @param OdooRelation $item
      */
-    public function addPartnerIds(Partner $item): void
+    public function addPartnerIds(OdooRelation $item): void
     {
         if ($this->hasPartnerIds($item)) {
             return;
@@ -327,9 +388,9 @@ class Message extends Base
     }
 
     /**
-     * @param Partner $item
+     * @param OdooRelation $item
      */
-    public function removePartnerIds(Partner $item): void
+    public function removePartnerIds(OdooRelation $item): void
     {
         if (null === $this->partner_ids) {
             $this->partner_ids = [];
@@ -342,7 +403,15 @@ class Message extends Base
     }
 
     /**
-     * @param null|bool $use_active_domain
+     * @return bool|null
+     */
+    public function isUseActiveDomain(): ?bool
+    {
+        return $this->use_active_domain;
+    }
+
+    /**
+     * @param bool|null $use_active_domain
      */
     public function setUseActiveDomain(?bool $use_active_domain): void
     {
@@ -350,7 +419,7 @@ class Message extends Base
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getActiveDomain(): ?string
     {
@@ -358,7 +427,39 @@ class Message extends Base
     }
 
     /**
-     * @param null|bool $auto_delete
+     * @param string|null $active_domain
+     */
+    public function setActiveDomain(?string $active_domain): void
+    {
+        $this->active_domain = $active_domain;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isNotify(): ?bool
+    {
+        return $this->notify;
+    }
+
+    /**
+     * @param bool|null $notify
+     */
+    public function setNotify(?bool $notify): void
+    {
+        $this->notify = $notify;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isAutoDelete(): ?bool
+    {
+        return $this->auto_delete;
+    }
+
+    /**
+     * @param bool|null $auto_delete
      */
     public function setAutoDelete(?bool $auto_delete): void
     {
@@ -366,46 +467,63 @@ class Message extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return bool|null
      */
-    public function removeCompositionMode($item): void
+    public function isAutoDeleteMessage(): ?bool
     {
-        if (null === $this->composition_mode) {
-            $this->composition_mode = [];
-        }
-
-        if ($this->hasCompositionMode($item)) {
-            $index = array_search($item, $this->composition_mode);
-            unset($this->composition_mode[$index]);
-        }
+        return $this->auto_delete_message;
     }
 
     /**
-     * @param null|bool $auto_delete_message
+     * @return OdooRelation|null
      */
-    public function setAutoDeleteMessage(?bool $auto_delete_message): void
+    public function getTemplateId(): ?OdooRelation
     {
-        $this->auto_delete_message = $auto_delete_message;
+        return $this->template_id;
     }
 
     /**
-     * @param null|Template $template_id
+     * @return bool|null
      */
-    public function setTemplateId(?Template $template_id): void
+    public function isIsLog(): ?bool
+    {
+        return $this->is_log;
+    }
+
+    /**
+     * @param OdooRelation|null $template_id
+     */
+    public function setTemplateId(?OdooRelation $template_id): void
     {
         $this->template_id = $template_id;
     }
 
     /**
-     * @param null|MailServer $mail_server_id
+     * @return OdooRelation|null
      */
-    public function setMailServerId(?MailServer $mail_server_id): void
+    public function getMailServerId(): ?OdooRelation
+    {
+        return $this->mail_server_id;
+    }
+
+    /**
+     * @param OdooRelation|null $mail_server_id
+     */
+    public function setMailServerId(?OdooRelation $mail_server_id): void
     {
         $this->mail_server_id = $mail_server_id;
     }
 
     /**
-     * @param null|string $layout
+     * @return string|null
+     */
+    public function getLayout(): ?string
+    {
+        return $this->layout;
+    }
+
+    /**
+     * @param string|null $layout
      */
     public function setLayout(?string $layout): void
     {
@@ -413,7 +531,15 @@ class Message extends Base
     }
 
     /**
-     * @param null|bool $add_sign
+     * @return bool|null
+     */
+    public function isAddSign(): ?bool
+    {
+        return $this->add_sign;
+    }
+
+    /**
+     * @param bool|null $add_sign
      */
     public function setAddSign(?bool $add_sign): void
     {
@@ -421,15 +547,23 @@ class Message extends Base
     }
 
     /**
-     * @return null|Users
+     * @return OdooRelation|null
      */
-    public function getCreateUid(): ?Users
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -437,39 +571,71 @@ class Message extends Base
     }
 
     /**
-     * @return null|Users
+     * @param DateTimeInterface|null $create_date
      */
-    public function getWriteUid(): ?Users
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @param null|string $reply_to
+     * @param OdooRelation|null $write_uid
      */
-    public function setReplyTo(?string $reply_to): void
+    public function setWriteUid(?OdooRelation $write_uid): void
     {
-        $this->reply_to = $reply_to;
+        $this->write_uid = $write_uid;
     }
 
     /**
-     * @param mixed $item
+     * @return DateTimeInterface|null
      */
-    public function addCompositionMode($item): void
+    public function getWriteDate(): ?DateTimeInterface
     {
-        if ($this->hasCompositionMode($item)) {
-            return;
-        }
-
-        if (null === $this->composition_mode) {
-            $this->composition_mode = [];
-        }
-
-        $this->composition_mode[] = $item;
+        return $this->write_date;
     }
 
     /**
-     * @param null|string $subject
+     * @param bool|null $is_log
+     */
+    public function setIsLog(?bool $is_log): void
+    {
+        $this->is_log = $is_log;
+    }
+
+    /**
+     * @param bool|null $no_auto_thread
+     */
+    public function setNoAutoThread(?bool $no_auto_thread): void
+    {
+        $this->no_auto_thread = $no_auto_thread;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSubject(): ?string
+    {
+        return $this->subject;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getModel(): ?string
+    {
+        return $this->model;
+    }
+
+    /**
+     * @param string|null $subject
      */
     public function setSubject(?string $subject): void
     {
@@ -477,15 +643,15 @@ class Message extends Base
     }
 
     /**
-     * @param null|string $model
+     * @return string|null
      */
-    public function setModel(?string $model): void
+    public function getBody(): ?string
     {
-        $this->model = $model;
+        return $this->body;
     }
 
     /**
-     * @param null|string $body
+     * @param string|null $body
      */
     public function setBody(?string $body): void
     {
@@ -493,15 +659,31 @@ class Message extends Base
     }
 
     /**
-     * @param null|MessageAlias $parent_id
+     * @return OdooRelation|null
      */
-    public function setParentId(?MessageAlias $parent_id): void
+    public function getParentId(): ?OdooRelation
+    {
+        return $this->parent_id;
+    }
+
+    /**
+     * @param OdooRelation|null $parent_id
+     */
+    public function setParentId(?OdooRelation $parent_id): void
     {
         $this->parent_id = $parent_id;
     }
 
     /**
-     * @param null|Attachment[] $attachment_ids
+     * @return OdooRelation[]|null
+     */
+    public function getAttachmentIds(): ?array
+    {
+        return $this->attachment_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $attachment_ids
      */
     public function setAttachmentIds(?array $attachment_ids): void
     {
@@ -509,24 +691,23 @@ class Message extends Base
     }
 
     /**
-     * @param Attachment $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasAttachmentIds(Attachment $item, bool $strict = true): bool
+    public function hasAttachmentIds(OdooRelation $item): bool
     {
         if (null === $this->attachment_ids) {
             return false;
         }
 
-        return in_array($item, $this->attachment_ids, $strict);
+        return in_array($item, $this->attachment_ids);
     }
 
     /**
-     * @param Attachment $item
+     * @param OdooRelation $item
      */
-    public function addAttachmentIds(Attachment $item): void
+    public function addAttachmentIds(OdooRelation $item): void
     {
         if ($this->hasAttachmentIds($item)) {
             return;
@@ -540,9 +721,9 @@ class Message extends Base
     }
 
     /**
-     * @param Attachment $item
+     * @param OdooRelation $item
      */
-    public function removeAttachmentIds(Attachment $item): void
+    public function removeAttachmentIds(OdooRelation $item): void
     {
         if (null === $this->attachment_ids) {
             $this->attachment_ids = [];
@@ -555,7 +736,15 @@ class Message extends Base
     }
 
     /**
-     * @param null|string $email_from
+     * @return string|null
+     */
+    public function getEmailFrom(): ?string
+    {
+        return $this->email_from;
+    }
+
+    /**
+     * @param string|null $email_from
      */
     public function setEmailFrom(?string $email_from): void
     {
@@ -563,15 +752,47 @@ class Message extends Base
     }
 
     /**
-     * @param null|Partner $author_id
+     * @return OdooRelation|null
      */
-    public function setAuthorId(?Partner $author_id): void
+    public function getAuthorId(): ?OdooRelation
+    {
+        return $this->author_id;
+    }
+
+    /**
+     * @param OdooRelation|null $author_id
+     */
+    public function setAuthorId(?OdooRelation $author_id): void
     {
         $this->author_id = $author_id;
     }
 
     /**
-     * @param null|int $res_id
+     * @param string|null $model
+     */
+    public function setModel(?string $model): void
+    {
+        $this->model = $model;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isNoAutoThread(): ?bool
+    {
+        return $this->no_auto_thread;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getResId(): ?int
+    {
+        return $this->res_id;
+    }
+
+    /**
+     * @param int|null $res_id
      */
     public function setResId(?int $res_id): void
     {
@@ -579,22 +800,15 @@ class Message extends Base
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return string|null
      */
-    public function hasCompositionMode($item, bool $strict = true): bool
+    public function getRecordName(): ?string
     {
-        if (null === $this->composition_mode) {
-            return false;
-        }
-
-        return in_array($item, $this->composition_mode, $strict);
+        return $this->record_name;
     }
 
     /**
-     * @param null|string $record_name
+     * @param string|null $record_name
      */
     public function setRecordName(?string $record_name): void
     {
@@ -602,76 +816,90 @@ class Message extends Base
     }
 
     /**
-     * @param array $message_type
+     * @return string
      */
-    public function setMessageType(array $message_type): void
+    public function getMessageType(): string
+    {
+        return $this->message_type;
+    }
+
+    /**
+     * @param string $message_type
+     */
+    public function setMessageType(string $message_type): void
     {
         $this->message_type = $message_type;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return OdooRelation|null
      */
-    public function hasMessageType($item, bool $strict = true): bool
+    public function getSubtypeId(): ?OdooRelation
     {
-        return in_array($item, $this->message_type, $strict);
+        return $this->subtype_id;
     }
 
     /**
-     * @param mixed $item
+     * @param OdooRelation|null $subtype_id
      */
-    public function addMessageType($item): void
-    {
-        if ($this->hasMessageType($item)) {
-            return;
-        }
-
-        $this->message_type[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeMessageType($item): void
-    {
-        if ($this->hasMessageType($item)) {
-            $index = array_search($item, $this->message_type);
-            unset($this->message_type[$index]);
-        }
-    }
-
-    /**
-     * @param null|Subtype $subtype_id
-     */
-    public function setSubtypeId(?Subtype $subtype_id): void
+    public function setSubtypeId(?OdooRelation $subtype_id): void
     {
         $this->subtype_id = $subtype_id;
     }
 
     /**
-     * @param null|Type $mail_activity_type_id
+     * @return OdooRelation|null
      */
-    public function setMailActivityTypeId(?Type $mail_activity_type_id): void
+    public function getMailActivityTypeId(): ?OdooRelation
+    {
+        return $this->mail_activity_type_id;
+    }
+
+    /**
+     * @param OdooRelation|null $mail_activity_type_id
+     */
+    public function setMailActivityTypeId(?OdooRelation $mail_activity_type_id): void
     {
         $this->mail_activity_type_id = $mail_activity_type_id;
     }
 
     /**
-     * @param null|array $composition_mode
+     * @return string|null
      */
-    public function setCompositionMode(?array $composition_mode): void
+    public function getCompositionMode(): ?string
+    {
+        return $this->composition_mode;
+    }
+
+    /**
+     * @param string|null $composition_mode
+     */
+    public function setCompositionMode(?string $composition_mode): void
     {
         $this->composition_mode = $composition_mode;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return string|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getReplyTo(): ?string
     {
-        return $this->write_date;
+        return $this->reply_to;
+    }
+
+    /**
+     * @param string|null $reply_to
+     */
+    public function setReplyTo(?string $reply_to): void
+    {
+        $this->reply_to = $reply_to;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

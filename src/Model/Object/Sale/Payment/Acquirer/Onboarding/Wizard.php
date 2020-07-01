@@ -6,7 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Sale\Payment\Acquirer\Onboarding;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : sale.payment.acquirer.onboarding.wizard
@@ -16,137 +16,204 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  */
 final class Wizard extends Base
 {
+    public const ODOO_MODEL_NAME = 'sale.payment.acquirer.onboarding.wizard';
+
     /**
      * Payment Method
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> digital_signature (Online signature)
+     *     -> paypal (PayPal)
+     *     -> stripe (Credit card (via Stripe))
+     *     -> other (Other payment acquirer)
+     *     -> manual (Custom payment instructions)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $payment_method;
 
     /**
      * Paypal User Type
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> new_user (I don't have a Paypal account)
+     *     -> existing_user (I have a Paypal account)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $paypal_user_type;
 
     /**
      * Email
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $paypal_email_account;
 
     /**
      * Merchant Account ID
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $paypal_seller_account;
 
     /**
      * PDT Identity Token
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $paypal_pdt_token;
 
     /**
      * Stripe Secret Key
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $stripe_secret_key;
 
     /**
      * Stripe Publishable Key
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $stripe_publishable_key;
 
     /**
      * Method
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $manual_name;
 
     /**
      * Bank Name
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $journal_name;
 
     /**
      * Account Number
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $acc_number;
 
     /**
      * Payment Instructions
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $manual_post_msg;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param null|array $payment_method
+     * @return string|null
      */
-    public function setPaymentMethod(?array $payment_method): void
+    public function getPaymentMethod(): ?string
     {
-        $this->payment_method = $payment_method;
+        return $this->payment_method;
     }
 
     /**
-     * @param null|string $stripe_secret_key
+     * @return string|null
      */
-    public function setStripeSecretKey(?string $stripe_secret_key): void
+    public function getJournalName(): ?string
     {
-        $this->stripe_secret_key = $stripe_secret_key;
+        return $this->journal_name;
     }
 
     /**
-     * @return null|Users
+     * @return DateTimeInterface|null
      */
-    public function getWriteUid(): ?Users
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -154,15 +221,23 @@ final class Wizard extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @param null|string $manual_post_msg
+     * @param string|null $manual_post_msg
      */
     public function setManualPostMsg(?string $manual_post_msg): void
     {
@@ -170,7 +245,15 @@ final class Wizard extends Base
     }
 
     /**
-     * @param null|string $acc_number
+     * @return string|null
+     */
+    public function getManualPostMsg(): ?string
+    {
+        return $this->manual_post_msg;
+    }
+
+    /**
+     * @param string|null $acc_number
      */
     public function setAccNumber(?string $acc_number): void
     {
@@ -178,7 +261,15 @@ final class Wizard extends Base
     }
 
     /**
-     * @param null|string $journal_name
+     * @return string|null
+     */
+    public function getAccNumber(): ?string
+    {
+        return $this->acc_number;
+    }
+
+    /**
+     * @param string|null $journal_name
      */
     public function setJournalName(?string $journal_name): void
     {
@@ -186,7 +277,7 @@ final class Wizard extends Base
     }
 
     /**
-     * @param null|string $manual_name
+     * @param string|null $manual_name
      */
     public function setManualName(?string $manual_name): void
     {
@@ -194,7 +285,23 @@ final class Wizard extends Base
     }
 
     /**
-     * @param null|string $stripe_publishable_key
+     * @param string|null $payment_method
+     */
+    public function setPaymentMethod(?string $payment_method): void
+    {
+        $this->payment_method = $payment_method;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getManualName(): ?string
+    {
+        return $this->manual_name;
+    }
+
+    /**
+     * @param string|null $stripe_publishable_key
      */
     public function setStripePublishableKey(?string $stripe_publishable_key): void
     {
@@ -202,7 +309,31 @@ final class Wizard extends Base
     }
 
     /**
-     * @param null|string $paypal_pdt_token
+     * @return string|null
+     */
+    public function getStripePublishableKey(): ?string
+    {
+        return $this->stripe_publishable_key;
+    }
+
+    /**
+     * @param string|null $stripe_secret_key
+     */
+    public function setStripeSecretKey(?string $stripe_secret_key): void
+    {
+        $this->stripe_secret_key = $stripe_secret_key;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getStripeSecretKey(): ?string
+    {
+        return $this->stripe_secret_key;
+    }
+
+    /**
+     * @param string|null $paypal_pdt_token
      */
     public function setPaypalPdtToken(?string $paypal_pdt_token): void
     {
@@ -210,22 +341,15 @@ final class Wizard extends Base
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return string|null
      */
-    public function hasPaymentMethod($item, bool $strict = true): bool
+    public function getPaypalPdtToken(): ?string
     {
-        if (null === $this->payment_method) {
-            return false;
-        }
-
-        return in_array($item, $this->payment_method, $strict);
+        return $this->paypal_pdt_token;
     }
 
     /**
-     * @param null|string $paypal_seller_account
+     * @param string|null $paypal_seller_account
      */
     public function setPaypalSellerAccount(?string $paypal_seller_account): void
     {
@@ -233,7 +357,15 @@ final class Wizard extends Base
     }
 
     /**
-     * @param null|string $paypal_email_account
+     * @return string|null
+     */
+    public function getPaypalSellerAccount(): ?string
+    {
+        return $this->paypal_seller_account;
+    }
+
+    /**
+     * @param string|null $paypal_email_account
      */
     public function setPaypalEmailAccount(?string $paypal_email_account): void
     {
@@ -241,95 +373,34 @@ final class Wizard extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return string|null
      */
-    public function removePaypalUserType($item): void
+    public function getPaypalEmailAccount(): ?string
     {
-        if (null === $this->paypal_user_type) {
-            $this->paypal_user_type = [];
-        }
-
-        if ($this->hasPaypalUserType($item)) {
-            $index = array_search($item, $this->paypal_user_type);
-            unset($this->paypal_user_type[$index]);
-        }
+        return $this->paypal_email_account;
     }
 
     /**
-     * @param mixed $item
+     * @param string|null $paypal_user_type
      */
-    public function addPaypalUserType($item): void
-    {
-        if ($this->hasPaypalUserType($item)) {
-            return;
-        }
-
-        if (null === $this->paypal_user_type) {
-            $this->paypal_user_type = [];
-        }
-
-        $this->paypal_user_type[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasPaypalUserType($item, bool $strict = true): bool
-    {
-        if (null === $this->paypal_user_type) {
-            return false;
-        }
-
-        return in_array($item, $this->paypal_user_type, $strict);
-    }
-
-    /**
-     * @param null|array $paypal_user_type
-     */
-    public function setPaypalUserType(?array $paypal_user_type): void
+    public function setPaypalUserType(?string $paypal_user_type): void
     {
         $this->paypal_user_type = $paypal_user_type;
     }
 
     /**
-     * @param mixed $item
+     * @return string|null
      */
-    public function removePaymentMethod($item): void
+    public function getPaypalUserType(): ?string
     {
-        if (null === $this->payment_method) {
-            $this->payment_method = [];
-        }
-
-        if ($this->hasPaymentMethod($item)) {
-            $index = array_search($item, $this->payment_method);
-            unset($this->payment_method[$index]);
-        }
+        return $this->paypal_user_type;
     }
 
     /**
-     * @param mixed $item
+     * @param DateTimeInterface|null $write_date
      */
-    public function addPaymentMethod($item): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        if ($this->hasPaymentMethod($item)) {
-            return;
-        }
-
-        if (null === $this->payment_method) {
-            $this->payment_method = [];
-        }
-
-        $this->payment_method[] = $item;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

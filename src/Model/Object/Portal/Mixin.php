@@ -14,30 +14,38 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Mixin extends Base
 {
+    public const ODOO_MODEL_NAME = 'portal.mixin';
+
     /**
      * Portal Access URL
      * Customer Portal URL
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $access_url;
 
     /**
      * Security Token
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $access_token;
 
     /**
      * Access warning
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $access_warning;
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getAccessUrl(): ?string
     {
@@ -45,7 +53,15 @@ final class Mixin extends Base
     }
 
     /**
-     * @return null|string
+     * @param string|null $access_url
+     */
+    public function setAccessUrl(?string $access_url): void
+    {
+        $this->access_url = $access_url;
+    }
+
+    /**
+     * @return string|null
      */
     public function getAccessToken(): ?string
     {
@@ -53,10 +69,26 @@ final class Mixin extends Base
     }
 
     /**
-     * @return null|string
+     * @param string|null $access_token
+     */
+    public function setAccessToken(?string $access_token): void
+    {
+        $this->access_token = $access_token;
+    }
+
+    /**
+     * @return string|null
      */
     public function getAccessWarning(): ?string
     {
         return $this->access_warning;
+    }
+
+    /**
+     * @param string|null $access_warning
+     */
+    public function setAccessWarning(?string $access_warning): void
+    {
+        $this->access_warning = $access_warning;
     }
 }

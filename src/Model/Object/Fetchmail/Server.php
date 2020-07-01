@@ -6,9 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Fetchmail;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Model;
-use Flux\OdooApiClient\Model\Object\Mail\Mail;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : fetchmail.server
@@ -18,8 +16,12 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  */
 final class Server extends Base
 {
+    public const ODOO_MODEL_NAME = 'fetchmail.server';
+
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -27,45 +29,66 @@ final class Server extends Base
 
     /**
      * Active
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $active;
 
     /**
      * Status
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> draft (Not Confirmed)
+     *     -> done (Confirmed)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $state;
 
     /**
      * Server Name
      * Hostname or IP of the mail server
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $server;
 
     /**
      * Port
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $port;
 
     /**
      * Server Type
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> pop (POP Server)
+     *     -> imap (IMAP Server)
+     *     -> local (Local Server)
      *
-     * @var array
+     *
+     * @var string
      */
     private $server_type;
 
     /**
      * SSL/TLS
      * Connections are encrypted with SSL/TLS through a dedicated port (default: IMAPS=993, POP3S=995)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $is_ssl;
 
@@ -73,8 +96,10 @@ final class Server extends Base
      * Keep Attachments
      * Whether attachments should be downloaded. If not enabled, incoming emails will be stripped of any attachments
      * before being processed
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $attach;
 
@@ -82,29 +107,37 @@ final class Server extends Base
      * Keep Original
      * Whether a full original copy of each email should be kept for reference and attached to each processed
      * message. This will usually double the size of your message database.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $original;
 
     /**
      * Last Fetch Date
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $date;
 
     /**
      * Username
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $user;
 
     /**
      * Password
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $password;
 
@@ -112,120 +145,107 @@ final class Server extends Base
      * Create a New Record
      * Process each incoming mail as part of a conversation corresponding to this document type. This will create new
      * documents for new conversations, or attach follow-up emails to the existing conversations (documents).
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Model
+     * @var OdooRelation|null
      */
     private $object_id;
 
     /**
      * Server Priority
      * Defines the order of processing, lower values mean higher priority
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $priority;
 
     /**
      * Messages
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Mail[]
+     * @var OdooRelation[]|null
      */
     private $message_ids;
 
     /**
      * Configuration
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $configuration;
 
     /**
      * Script
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $script;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Name
-     * @param array $server_type Server Type
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $server_type Server Type
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> pop (POP Server)
+     *            -> imap (IMAP Server)
+     *            -> local (Local Server)
+     *
      */
-    public function __construct(string $name, array $server_type)
+    public function __construct(string $name, string $server_type)
     {
         $this->name = $name;
         $this->server_type = $server_type;
     }
 
     /**
-     * @return null|DateTimeInterface
-     */
-    public function getDate(): ?DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getScript(): ?string
-    {
-        return $this->script;
-    }
-
-    /**
-     * @return null|string
+     * @return string|null
      */
     public function getConfiguration(): ?string
     {
@@ -233,15 +253,15 @@ final class Server extends Base
     }
 
     /**
-     * @return null|Mail[]
+     * @param OdooRelation|null $object_id
      */
-    public function getMessageIds(): ?array
+    public function setObjectId(?OdooRelation $object_id): void
     {
-        return $this->message_ids;
+        $this->object_id = $object_id;
     }
 
     /**
-     * @return null|int
+     * @return int|null
      */
     public function getPriority(): ?int
     {
@@ -249,15 +269,172 @@ final class Server extends Base
     }
 
     /**
-     * @param null|Model $object_id
+     * @param int|null $priority
      */
-    public function setObjectId(?Model $object_id): void
+    public function setPriority(?int $priority): void
     {
-        $this->object_id = $object_id;
+        $this->priority = $priority;
     }
 
     /**
-     * @return null|string
+     * @return OdooRelation[]|null
+     */
+    public function getMessageIds(): ?array
+    {
+        return $this->message_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_ids
+     */
+    public function setMessageIds(?array $message_ids): void
+    {
+        $this->message_ids = $message_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMessageIds(OdooRelation $item): bool
+    {
+        if (null === $this->message_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMessageIds(OdooRelation $item): void
+    {
+        if ($this->hasMessageIds($item)) {
+            return;
+        }
+
+        if (null === $this->message_ids) {
+            $this->message_ids = [];
+        }
+
+        $this->message_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMessageIds(OdooRelation $item): void
+    {
+        if (null === $this->message_ids) {
+            $this->message_ids = [];
+        }
+
+        if ($this->hasMessageIds($item)) {
+            $index = array_search($item, $this->message_ids);
+            unset($this->message_ids[$index]);
+        }
+    }
+
+    /**
+     * @param string|null $configuration
+     */
+    public function setConfiguration(?string $configuration): void
+    {
+        $this->configuration = $configuration;
+    }
+
+    /**
+     * @param string|null $password
+     */
+    public function setPassword(?string $password): void
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getScript(): ?string
+    {
+        return $this->script;
+    }
+
+    /**
+     * @param string|null $script
+     */
+    public function setScript(?string $script): void
+    {
+        $this->script = $script;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getObjectId(): ?OdooRelation
+    {
+        return $this->object_id;
+    }
+
+    /**
+     * @return string|null
      */
     public function getPassword(): ?string
     {
@@ -265,19 +442,19 @@ final class Server extends Base
     }
 
     /**
-     * @return null|string
+     * @return string
      */
-    public function getUser(): ?string
+    public function getName(): string
     {
-        return $this->user;
+        return $this->name;
     }
 
     /**
-     * @param null|bool $original
+     * @return string
      */
-    public function setOriginal(?bool $original): void
+    public function getServerType(): string
     {
-        $this->original = $original;
+        return $this->server_type;
     }
 
     /**
@@ -289,89 +466,15 @@ final class Server extends Base
     }
 
     /**
-     * @param null|bool $attach
+     * @return bool|null
      */
-    public function setAttach(?bool $attach): void
+    public function isActive(): ?bool
     {
-        $this->attach = $attach;
+        return $this->active;
     }
 
     /**
-     * @param null|bool $is_ssl
-     */
-    public function setIsSsl(?bool $is_ssl): void
-    {
-        $this->is_ssl = $is_ssl;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeServerType($item): void
-    {
-        if ($this->hasServerType($item)) {
-            $index = array_search($item, $this->server_type);
-            unset($this->server_type[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addServerType($item): void
-    {
-        if ($this->hasServerType($item)) {
-            return;
-        }
-
-        $this->server_type[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasServerType($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->server_type, $strict);
-    }
-
-    /**
-     * @param array $server_type
-     */
-    public function setServerType(array $server_type): void
-    {
-        $this->server_type = $server_type;
-    }
-
-    /**
-     * @return null|int
-     */
-    public function getPort(): ?int
-    {
-        return $this->port;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getServer(): ?string
-    {
-        return $this->server;
-    }
-
-    /**
-     * @return null|array
-     */
-    public function getState(): ?array
-    {
-        return $this->state;
-    }
-
-    /**
-     * @param null|bool $active
+     * @param bool|null $active
      */
     public function setActive(?bool $active): void
     {
@@ -379,10 +482,146 @@ final class Server extends Base
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return string|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getState(): ?string
     {
-        return $this->write_date;
+        return $this->state;
+    }
+
+    /**
+     * @param string|null $state
+     */
+    public function setState(?string $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getServer(): ?string
+    {
+        return $this->server;
+    }
+
+    /**
+     * @param string|null $server
+     */
+    public function setServer(?string $server): void
+    {
+        $this->server = $server;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPort(): ?int
+    {
+        return $this->port;
+    }
+
+    /**
+     * @param int|null $port
+     */
+    public function setPort(?int $port): void
+    {
+        $this->port = $port;
+    }
+
+    /**
+     * @param string $server_type
+     */
+    public function setServerType(string $server_type): void
+    {
+        $this->server_type = $server_type;
+    }
+
+    /**
+     * @param string|null $user
+     */
+    public function setUser(?string $user): void
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsSsl(): ?bool
+    {
+        return $this->is_ssl;
+    }
+
+    /**
+     * @param bool|null $is_ssl
+     */
+    public function setIsSsl(?bool $is_ssl): void
+    {
+        $this->is_ssl = $is_ssl;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isAttach(): ?bool
+    {
+        return $this->attach;
+    }
+
+    /**
+     * @param bool|null $attach
+     */
+    public function setAttach(?bool $attach): void
+    {
+        $this->attach = $attach;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isOriginal(): ?bool
+    {
+        return $this->original;
+    }
+
+    /**
+     * @param bool|null $original
+     */
+    public function setOriginal(?bool $original): void
+    {
+        $this->original = $original;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getDate(): ?DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $date
+     */
+    public function setDate(?DateTimeInterface $date): void
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUser(): ?string
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

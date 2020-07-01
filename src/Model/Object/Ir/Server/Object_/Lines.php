@@ -6,9 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Server\Object_;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Actions\Server;
-use Flux\OdooApiClient\Model\Object\Ir\Model\Fields;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.server.object.lines
@@ -16,36 +14,44 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Lines extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.server.object.lines';
+
     /**
      * Related Server Action
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Server
+     * @var OdooRelation|null
      */
     private $server_id;
 
     /**
      * Field
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Fields
+     * @var OdooRelation
      */
     private $col1;
 
     /**
      * Value
-     * Expression containing a value specification. 
+     * Expression containing a value specification.
      * When Formula type is selected, this field may be a Python expression  that can use the same values as for the
      * code field on the server action.
      * If Value type is selected, the value will be used directly without evaluation.
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -53,56 +59,84 @@ final class Lines extends Base
 
     /**
      * Evaluation Type
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> value (Value)
+     *     -> reference (Reference)
+     *     -> equation (Python expression)
      *
-     * @var array
+     *
+     * @var string
      */
     private $evaluation_type;
 
     /**
      * Record
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|mixed
+     * @var mixed|null
      */
     private $resource_ref;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param Fields $col1 Field
+     * @param OdooRelation $col1 Field
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $value Value
-     *        Expression containing a value specification. 
+     *        Expression containing a value specification.
      *        When Formula type is selected, this field may be a Python expression  that can use the same values as for the
      *        code field on the server action.
      *        If Value type is selected, the value will be used directly without evaluation.
-     * @param array $evaluation_type Evaluation Type
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $evaluation_type Evaluation Type
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> value (Value)
+     *            -> reference (Reference)
+     *            -> equation (Python expression)
+     *
      */
-    public function __construct(Fields $col1, string $value, array $evaluation_type)
+    public function __construct(OdooRelation $col1, string $value, string $evaluation_type)
     {
         $this->col1 = $col1;
         $this->value = $value;
@@ -110,19 +144,99 @@ final class Lines extends Base
     }
 
     /**
-     * @param null|Server $server_id
+     * @param mixed|null $resource_ref
      */
-    public function setServerId(?Server $server_id): void
+    public function setResourceRef($resource_ref): void
     {
-        $this->server_id = $server_id;
+        $this->resource_ref = $resource_ref;
     }
 
     /**
-     * @param Fields $col1
+     * @return DateTimeInterface|null
      */
-    public function setCol1(Fields $col1): void
+    public function getWriteDate(): ?DateTimeInterface
     {
-        $this->col1 = $col1;
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getResourceRef()
+    {
+        return $this->resource_ref;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getServerId(): ?OdooRelation
+    {
+        return $this->server_id;
+    }
+
+    /**
+     * @param string $evaluation_type
+     */
+    public function setEvaluationType(string $evaluation_type): void
+    {
+        $this->evaluation_type = $evaluation_type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEvaluationType(): string
+    {
+        return $this->evaluation_type;
     }
 
     /**
@@ -134,84 +248,42 @@ final class Lines extends Base
     }
 
     /**
-     * @param array $evaluation_type
+     * @return string
      */
-    public function setEvaluationType(array $evaluation_type): void
+    public function getValue(): string
     {
-        $this->evaluation_type = $evaluation_type;
+        return $this->value;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param OdooRelation $col1
      */
-    public function hasEvaluationType($item, bool $strict = true): bool
+    public function setCol1(OdooRelation $col1): void
     {
-        return in_array($item, $this->evaluation_type, $strict);
+        $this->col1 = $col1;
     }
 
     /**
-     * @param mixed $item
+     * @return OdooRelation
      */
-    public function addEvaluationType($item): void
+    public function getCol1(): OdooRelation
     {
-        if ($this->hasEvaluationType($item)) {
-            return;
-        }
-
-        $this->evaluation_type[] = $item;
+        return $this->col1;
     }
 
     /**
-     * @param mixed $item
+     * @param OdooRelation|null $server_id
      */
-    public function removeEvaluationType($item): void
+    public function setServerId(?OdooRelation $server_id): void
     {
-        if ($this->hasEvaluationType($item)) {
-            $index = array_search($item, $this->evaluation_type);
-            unset($this->evaluation_type[$index]);
-        }
+        $this->server_id = $server_id;
     }
 
     /**
-     * @param null|mixed $resource_ref
+     * @param DateTimeInterface|null $write_date
      */
-    public function setResourceRef($resource_ref): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->resource_ref = $resource_ref;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

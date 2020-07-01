@@ -6,6 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Res;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : res.lang
@@ -13,18 +14,22 @@ use Flux\OdooApiClient\Model\Object\Base;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Lang extends Base
 {
+    public const ODOO_MODEL_NAME = 'res.lang';
+
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -33,6 +38,8 @@ final class Lang extends Base
     /**
      * Locale Code
      * This field is used to set/get locales for user
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -41,14 +48,18 @@ final class Lang extends Base
     /**
      * ISO code
      * This ISO code is the name of po files to use for translations
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $iso_code;
 
     /**
      * URL Code
      * The Lang Code displayed in the URL
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -56,20 +67,30 @@ final class Lang extends Base
 
     /**
      * Active
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $active;
 
     /**
      * Direction
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> ltr (Left-to-Right)
+     *     -> rtl (Right-to-Left)
      *
-     * @var array
+     *
+     * @var string
      */
     private $direction;
 
     /**
      * Date Format
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -77,6 +98,8 @@ final class Lang extends Base
 
     /**
      * Time Format
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -84,8 +107,19 @@ final class Lang extends Base
 
     /**
      * First Day of Week
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> 1 (Monday)
+     *     -> 2 (Tuesday)
+     *     -> 3 (Wednesday)
+     *     -> 4 (Thursday)
+     *     -> 5 (Friday)
+     *     -> 6 (Saturday)
+     *     -> 7 (Sunday)
      *
-     * @var array
+     *
+     * @var string
      */
     private $week_start;
 
@@ -94,6 +128,8 @@ final class Lang extends Base
      * The Separator Format should be like [,n] where 0 < n :starting from Unit digit. -1 will end the separation.
      * e.g. [3,2,-1] will represent 106500 to be 1,06,500; [1,2,-1] will represent it to be 106,50,0;[3] will
      * represent it as 106,500. Provided ',' as the thousand separator in each case.
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -101,6 +137,8 @@ final class Lang extends Base
 
     /**
      * Decimal Separator
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -108,63 +146,104 @@ final class Lang extends Base
 
     /**
      * Thousands Separator
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $thousands_sep;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Name
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $code Locale Code
      *        This field is used to set/get locales for user
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $url_code URL Code
      *        The Lang Code displayed in the URL
-     * @param array $direction Direction
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $direction Direction
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> ltr (Left-to-Right)
+     *            -> rtl (Right-to-Left)
+     *
      * @param string $date_format Date Format
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $time_format Time Format
-     * @param array $week_start First Day of Week
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $week_start First Day of Week
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> 1 (Monday)
+     *            -> 2 (Tuesday)
+     *            -> 3 (Wednesday)
+     *            -> 4 (Thursday)
+     *            -> 5 (Friday)
+     *            -> 6 (Saturday)
+     *            -> 7 (Sunday)
+     *
      * @param string $grouping Separator Format
      *        The Separator Format should be like [,n] where 0 < n :starting from Unit digit. -1 will end the separation.
      *        e.g. [3,2,-1] will represent 106500 to be 1,06,500; [1,2,-1] will represent it to be 106,50,0;[3] will
      *        represent it as 106,500. Provided ',' as the thousand separator in each case.
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $decimal_point Decimal Separator
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         string $name,
         string $code,
         string $url_code,
-        array $direction,
+        string $direction,
         string $date_format,
         string $time_format,
-        array $week_start,
+        string $week_start,
         string $grouping,
         string $decimal_point
     ) {
@@ -180,23 +259,47 @@ final class Lang extends Base
     }
 
     /**
-     * @param array $week_start
+     * @return string
      */
-    public function setWeekStart(array $week_start): void
+    public function getWeekStart(): string
     {
-        $this->week_start = $week_start;
+        return $this->week_start;
     }
 
     /**
-     * @return null|Users
+     * @return DateTimeInterface|null
      */
-    public function getWriteUid(): ?Users
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -204,19 +307,35 @@ final class Lang extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @param null|string $thousands_sep
+     * @param string|null $thousands_sep
      */
     public function setThousandsSep(?string $thousands_sep): void
     {
         $this->thousands_sep = $thousands_sep;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getThousandsSep(): ?string
+    {
+        return $this->thousands_sep;
     }
 
     /**
@@ -228,6 +347,14 @@ final class Lang extends Base
     }
 
     /**
+     * @return string
+     */
+    public function getDecimalPoint(): string
+    {
+        return $this->decimal_point;
+    }
+
+    /**
      * @param string $grouping
      */
     public function setGrouping(string $grouping): void
@@ -236,37 +363,19 @@ final class Lang extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return string
      */
-    public function removeWeekStart($item): void
+    public function getGrouping(): string
     {
-        if ($this->hasWeekStart($item)) {
-            $index = array_search($item, $this->week_start);
-            unset($this->week_start[$index]);
-        }
+        return $this->grouping;
     }
 
     /**
-     * @param mixed $item
+     * @param string $week_start
      */
-    public function addWeekStart($item): void
+    public function setWeekStart(string $week_start): void
     {
-        if ($this->hasWeekStart($item)) {
-            return;
-        }
-
-        $this->week_start[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasWeekStart($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->week_start, $strict);
+        $this->week_start = $week_start;
     }
 
     /**
@@ -278,11 +387,19 @@ final class Lang extends Base
     }
 
     /**
-     * @param string $name
+     * @return string
      */
-    public function setName(string $name): void
+    public function getName(): string
     {
-        $this->name = $name;
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTimeFormat(): string
+    {
+        return $this->time_format;
     }
 
     /**
@@ -294,53 +411,43 @@ final class Lang extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return string
      */
-    public function removeDirection($item): void
+    public function getDateFormat(): string
     {
-        if ($this->hasDirection($item)) {
-            $index = array_search($item, $this->direction);
-            unset($this->direction[$index]);
-        }
+        return $this->date_format;
     }
 
     /**
-     * @param mixed $item
+     * @param string $direction
      */
-    public function addDirection($item): void
-    {
-        if ($this->hasDirection($item)) {
-            return;
-        }
-
-        $this->direction[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasDirection($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->direction, $strict);
-    }
-
-    /**
-     * @param array $direction
-     */
-    public function setDirection(array $direction): void
+    public function setDirection(string $direction): void
     {
         $this->direction = $direction;
     }
 
     /**
-     * @param null|bool $active
+     * @return string
+     */
+    public function getDirection(): string
+    {
+        return $this->direction;
+    }
+
+    /**
+     * @param bool|null $active
      */
     public function setActive(?bool $active): void
     {
         $this->active = $active;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isActive(): ?bool
+    {
+        return $this->active;
     }
 
     /**
@@ -352,11 +459,27 @@ final class Lang extends Base
     }
 
     /**
-     * @param null|string $iso_code
+     * @return string
+     */
+    public function getUrlCode(): string
+    {
+        return $this->url_code;
+    }
+
+    /**
+     * @param string|null $iso_code
      */
     public function setIsoCode(?string $iso_code): void
     {
         $this->iso_code = $iso_code;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIsoCode(): ?string
+    {
+        return $this->iso_code;
     }
 
     /**
@@ -368,10 +491,26 @@ final class Lang extends Base
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return string
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getCode(): string
     {
-        return $this->write_date;
+        return $this->code;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

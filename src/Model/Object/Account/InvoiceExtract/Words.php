@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Account\InvoiceExtract;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Move;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.invoice_extract.words
@@ -15,28 +14,34 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Words extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.invoice_extract.words';
+
     /**
      * Invoice
      * Invoice id
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Move
+     * @var OdooRelation|null
      */
     private $invoice_id;
 
     /**
      * Field
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $field;
 
@@ -44,193 +49,171 @@ final class Words extends Base
      * Invoice extract selected status.
      * 0for 'not selected', 1 for 'ocr selected with no user selection' and 2 for 'ocr selected with user selection
      * (user may have selected the same box)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $selected_status;
 
     /**
      * User Selected
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $user_selected;
 
     /**
      * Word Text
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $word_text;
 
     /**
      * Word Page
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $word_page;
 
     /**
      * Word Box Midx
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $word_box_midX;
 
     /**
      * Word Box Midy
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $word_box_midY;
 
     /**
      * Word Box Width
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $word_box_width;
 
     /**
      * Word Box Height
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $word_box_height;
 
     /**
      * Word Box Angle
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $word_box_angle;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param null|Move $invoice_id
+     * @return OdooRelation|null
      */
-    public function setInvoiceId(?Move $invoice_id): void
+    public function getInvoiceId(): ?OdooRelation
     {
-        $this->invoice_id = $invoice_id;
+        return $this->invoice_id;
     }
 
     /**
-     * @param null|string $field
+     * @return float|null
      */
-    public function setField(?string $field): void
+    public function getWordBoxWidth(): ?float
     {
-        $this->field = $field;
+        return $this->word_box_width;
     }
 
     /**
-     * @param null|int $selected_status
+     * @return DateTimeInterface|null
      */
-    public function setSelectedStatus(?int $selected_status): void
+    public function getWriteDate(): ?DateTimeInterface
     {
-        $this->selected_status = $selected_status;
+        return $this->write_date;
     }
 
     /**
-     * @param null|bool $user_selected
+     * @param OdooRelation|null $write_uid
      */
-    public function setUserSelected(?bool $user_selected): void
+    public function setWriteUid(?OdooRelation $write_uid): void
     {
-        $this->user_selected = $user_selected;
+        $this->write_uid = $write_uid;
     }
 
     /**
-     * @param null|string $word_text
+     * @return OdooRelation|null
      */
-    public function setWordText(?string $word_text): void
+    public function getWriteUid(): ?OdooRelation
     {
-        $this->word_text = $word_text;
+        return $this->write_uid;
     }
 
     /**
-     * @param null|int $word_page
+     * @param DateTimeInterface|null $create_date
      */
-    public function setWordPage(?int $word_page): void
+    public function setCreateDate(?DateTimeInterface $create_date): void
     {
-        $this->word_page = $word_page;
+        $this->create_date = $create_date;
     }
 
     /**
-     * @param null|float $word_box_midX
-     */
-    public function setWordBoxMidX(?float $word_box_midX): void
-    {
-        $this->word_box_midX = $word_box_midX;
-    }
-
-    /**
-     * @param null|float $word_box_midY
-     */
-    public function setWordBoxMidY(?float $word_box_midY): void
-    {
-        $this->word_box_midY = $word_box_midY;
-    }
-
-    /**
-     * @param null|float $word_box_width
-     */
-    public function setWordBoxWidth(?float $word_box_width): void
-    {
-        $this->word_box_width = $word_box_width;
-    }
-
-    /**
-     * @param null|float $word_box_height
-     */
-    public function setWordBoxHeight(?float $word_box_height): void
-    {
-        $this->word_box_height = $word_box_height;
-    }
-
-    /**
-     * @param null|float $word_box_angle
-     */
-    public function setWordBoxAngle(?float $word_box_angle): void
-    {
-        $this->word_box_angle = $word_box_angle;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -238,18 +221,186 @@ final class Words extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getWriteUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->write_uid;
+        $this->create_uid = $create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return OdooRelation|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getCreateUid(): ?OdooRelation
     {
-        return $this->write_date;
+        return $this->create_uid;
+    }
+
+    /**
+     * @param float|null $word_box_angle
+     */
+    public function setWordBoxAngle(?float $word_box_angle): void
+    {
+        $this->word_box_angle = $word_box_angle;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getWordBoxAngle(): ?float
+    {
+        return $this->word_box_angle;
+    }
+
+    /**
+     * @param float|null $word_box_height
+     */
+    public function setWordBoxHeight(?float $word_box_height): void
+    {
+        $this->word_box_height = $word_box_height;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getWordBoxHeight(): ?float
+    {
+        return $this->word_box_height;
+    }
+
+    /**
+     * @param float|null $word_box_width
+     */
+    public function setWordBoxWidth(?float $word_box_width): void
+    {
+        $this->word_box_width = $word_box_width;
+    }
+
+    /**
+     * @param float|null $word_box_midY
+     */
+    public function setWordBoxMidY(?float $word_box_midY): void
+    {
+        $this->word_box_midY = $word_box_midY;
+    }
+
+    /**
+     * @param OdooRelation|null $invoice_id
+     */
+    public function setInvoiceId(?OdooRelation $invoice_id): void
+    {
+        $this->invoice_id = $invoice_id;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getWordBoxMidY(): ?float
+    {
+        return $this->word_box_midY;
+    }
+
+    /**
+     * @param float|null $word_box_midX
+     */
+    public function setWordBoxMidX(?float $word_box_midX): void
+    {
+        $this->word_box_midX = $word_box_midX;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getWordBoxMidX(): ?float
+    {
+        return $this->word_box_midX;
+    }
+
+    /**
+     * @param int|null $word_page
+     */
+    public function setWordPage(?int $word_page): void
+    {
+        $this->word_page = $word_page;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getWordPage(): ?int
+    {
+        return $this->word_page;
+    }
+
+    /**
+     * @param string|null $word_text
+     */
+    public function setWordText(?string $word_text): void
+    {
+        $this->word_text = $word_text;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getWordText(): ?string
+    {
+        return $this->word_text;
+    }
+
+    /**
+     * @param bool|null $user_selected
+     */
+    public function setUserSelected(?bool $user_selected): void
+    {
+        $this->user_selected = $user_selected;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isUserSelected(): ?bool
+    {
+        return $this->user_selected;
+    }
+
+    /**
+     * @param int|null $selected_status
+     */
+    public function setSelectedStatus(?int $selected_status): void
+    {
+        $this->selected_status = $selected_status;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSelectedStatus(): ?int
+    {
+        return $this->selected_status;
+    }
+
+    /**
+     * @param string|null $field
+     */
+    public function setField(?string $field): void
+    {
+        $this->field = $field;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getField(): ?string
+    {
+        return $this->field;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

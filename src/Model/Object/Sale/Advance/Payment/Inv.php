@@ -5,158 +5,220 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Sale\Advance\Payment;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Account;
-use Flux\OdooApiClient\Model\Object\Account\Tax;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Product\Product;
-use Flux\OdooApiClient\Model\Object\Res\Currency;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : sale.advance.payment.inv
  * Name : sale.advance.payment.inv
  * Info :
  * Model super-class for transient records, meant to be temporarily
- * persistent, and regularly vacuum-cleaned.
+ *         persistent, and regularly vacuum-cleaned.
  *
- * A TransientModel has a simplified access rights management, all users can
- * create new records, and may only access the records they created. The
- * superuser has unrestricted access to all TransientModel records.
+ *         A TransientModel has a simplified access rights management, all users can
+ *         create new records, and may only access the records they created. The
+ *         superuser has unrestricted access to all TransientModel records.
  */
 final class Inv extends Base
 {
+    public const ODOO_MODEL_NAME = 'sale.advance.payment.inv';
+
     /**
      * Create Invoice
      * A standard invoice is issued with all the order lines ready for invoicing,         according to their
      * invoicing policy (based on ordered or delivered quantity).
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> delivered (Regular invoice)
+     *     -> percentage (Down payment (percentage))
+     *     -> fixed (Down payment (fixed amount))
      *
-     * @var array
+     *
+     * @var string
      */
     private $advance_payment_method;
 
     /**
      * Deduct down payments
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $deduct_down_payments;
 
     /**
      * Has down payments
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $has_down_payments;
 
     /**
      * Down Payment Product
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Product
+     * @var OdooRelation|null
      */
     private $product_id;
 
     /**
      * Order Count
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $count;
 
     /**
      * Down Payment Amount
      * The percentage of amount to be invoiced in advance, taxes excluded.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $amount;
 
     /**
      * Currency
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Currency
+     * @var OdooRelation|null
      */
     private $currency_id;
 
     /**
      * Down Payment Amount(Fixed)
      * The fixed amount to be invoiced in advance, taxes excluded.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $fixed_amount;
 
     /**
      * Income Account
      * Account used for deposits
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Account
+     * @var OdooRelation|null
      */
     private $deposit_account_id;
 
     /**
      * Customer Taxes
      * Taxes used for deposits
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Tax[]
+     * @var OdooRelation[]|null
      */
     private $deposit_taxes_id;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param array $advance_payment_method Create Invoice
+     * @param string $advance_payment_method Create Invoice
      *        A standard invoice is issued with all the order lines ready for invoicing,         according to their
      *        invoicing policy (based on ordered or delivered quantity).
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> delivered (Regular invoice)
+     *            -> percentage (Down payment (percentage))
+     *            -> fixed (Down payment (fixed amount))
+     *
      */
-    public function __construct(array $advance_payment_method)
+    public function __construct(string $advance_payment_method)
     {
         $this->advance_payment_method = $advance_payment_method;
     }
 
     /**
-     * @param null|float $fixed_amount
+     * @return OdooRelation|null
      */
-    public function setFixedAmount(?float $fixed_amount): void
+    public function getDepositAccountId(): ?OdooRelation
     {
-        $this->fixed_amount = $fixed_amount;
+        return $this->deposit_account_id;
     }
 
     /**
-     * @return null|Users
+     * @return DateTimeInterface|null
      */
-    public function getWriteUid(): ?Users
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -164,17 +226,25 @@ final class Inv extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @param Tax $item
+     * @param OdooRelation $item
      */
-    public function removeDepositTaxesId(Tax $item): void
+    public function removeDepositTaxesId(OdooRelation $item): void
     {
         if (null === $this->deposit_taxes_id) {
             $this->deposit_taxes_id = [];
@@ -187,9 +257,9 @@ final class Inv extends Base
     }
 
     /**
-     * @param Tax $item
+     * @param OdooRelation $item
      */
-    public function addDepositTaxesId(Tax $item): void
+    public function addDepositTaxesId(OdooRelation $item): void
     {
         if ($this->hasDepositTaxesId($item)) {
             return;
@@ -203,22 +273,21 @@ final class Inv extends Base
     }
 
     /**
-     * @param Tax $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasDepositTaxesId(Tax $item, bool $strict = true): bool
+    public function hasDepositTaxesId(OdooRelation $item): bool
     {
         if (null === $this->deposit_taxes_id) {
             return false;
         }
 
-        return in_array($item, $this->deposit_taxes_id, $strict);
+        return in_array($item, $this->deposit_taxes_id);
     }
 
     /**
-     * @param null|Tax[] $deposit_taxes_id
+     * @param OdooRelation[]|null $deposit_taxes_id
      */
     public function setDepositTaxesId(?array $deposit_taxes_id): void
     {
@@ -226,31 +295,63 @@ final class Inv extends Base
     }
 
     /**
-     * @param null|Account $deposit_account_id
+     * @return OdooRelation[]|null
      */
-    public function setDepositAccountId(?Account $deposit_account_id): void
+    public function getDepositTaxesId(): ?array
+    {
+        return $this->deposit_taxes_id;
+    }
+
+    /**
+     * @param OdooRelation|null $deposit_account_id
+     */
+    public function setDepositAccountId(?OdooRelation $deposit_account_id): void
     {
         $this->deposit_account_id = $deposit_account_id;
     }
 
     /**
-     * @param null|Currency $currency_id
+     * @param float|null $fixed_amount
      */
-    public function setCurrencyId(?Currency $currency_id): void
+    public function setFixedAmount(?float $fixed_amount): void
+    {
+        $this->fixed_amount = $fixed_amount;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAdvancePaymentMethod(): string
+    {
+        return $this->advance_payment_method;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getFixedAmount(): ?float
+    {
+        return $this->fixed_amount;
+    }
+
+    /**
+     * @param OdooRelation|null $currency_id
+     */
+    public function setCurrencyId(?OdooRelation $currency_id): void
     {
         $this->currency_id = $currency_id;
     }
 
     /**
-     * @param array $advance_payment_method
+     * @return OdooRelation|null
      */
-    public function setAdvancePaymentMethod(array $advance_payment_method): void
+    public function getCurrencyId(): ?OdooRelation
     {
-        $this->advance_payment_method = $advance_payment_method;
+        return $this->currency_id;
     }
 
     /**
-     * @param null|float $amount
+     * @param float|null $amount
      */
     public function setAmount(?float $amount): void
     {
@@ -258,7 +359,15 @@ final class Inv extends Base
     }
 
     /**
-     * @param null|int $count
+     * @return float|null
+     */
+    public function getAmount(): ?float
+    {
+        return $this->amount;
+    }
+
+    /**
+     * @param int|null $count
      */
     public function setCount(?int $count): void
     {
@@ -266,15 +375,39 @@ final class Inv extends Base
     }
 
     /**
-     * @param null|Product $product_id
+     * @return int|null
      */
-    public function setProductId(?Product $product_id): void
+    public function getCount(): ?int
+    {
+        return $this->count;
+    }
+
+    /**
+     * @param OdooRelation|null $product_id
+     */
+    public function setProductId(?OdooRelation $product_id): void
     {
         $this->product_id = $product_id;
     }
 
     /**
-     * @return null|bool
+     * @return OdooRelation|null
+     */
+    public function getProductId(): ?OdooRelation
+    {
+        return $this->product_id;
+    }
+
+    /**
+     * @param bool|null $has_down_payments
+     */
+    public function setHasDownPayments(?bool $has_down_payments): void
+    {
+        $this->has_down_payments = $has_down_payments;
+    }
+
+    /**
+     * @return bool|null
      */
     public function isHasDownPayments(): ?bool
     {
@@ -282,7 +415,7 @@ final class Inv extends Base
     }
 
     /**
-     * @param null|bool $deduct_down_payments
+     * @param bool|null $deduct_down_payments
      */
     public function setDeductDownPayments(?bool $deduct_down_payments): void
     {
@@ -290,44 +423,26 @@ final class Inv extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return bool|null
      */
-    public function removeAdvancePaymentMethod($item): void
+    public function isDeductDownPayments(): ?bool
     {
-        if ($this->hasAdvancePaymentMethod($item)) {
-            $index = array_search($item, $this->advance_payment_method);
-            unset($this->advance_payment_method[$index]);
-        }
+        return $this->deduct_down_payments;
     }
 
     /**
-     * @param mixed $item
+     * @param string $advance_payment_method
      */
-    public function addAdvancePaymentMethod($item): void
+    public function setAdvancePaymentMethod(string $advance_payment_method): void
     {
-        if ($this->hasAdvancePaymentMethod($item)) {
-            return;
-        }
-
-        $this->advance_payment_method[] = $item;
+        $this->advance_payment_method = $advance_payment_method;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param DateTimeInterface|null $write_date
      */
-    public function hasAdvancePaymentMethod($item, bool $strict = true): bool
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return in_array($item, $this->advance_payment_method, $strict);
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

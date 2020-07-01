@@ -6,9 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Product;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Product\Attribute\Value;
-use Flux\OdooApiClient\Model\Object\Product\Template\Attribute\Line;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : product.attribute
@@ -16,18 +14,22 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Attribute extends Base
 {
+    public const ODOO_MODEL_NAME = 'product.attribute';
+
     /**
      * Attribute
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -35,100 +37,150 @@ final class Attribute extends Base
 
     /**
      * Values
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Value[]
+     * @var OdooRelation[]|null
      */
     private $value_ids;
 
     /**
      * Sequence
      * Determine the display order
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $sequence;
 
     /**
      * Lines
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Line[]
+     * @var OdooRelation[]|null
      */
     private $attribute_line_ids;
 
     /**
      * Variants Creation Mode
      * - Instantly: All possible variants are created as soon as the attribute and its values are added to a product.
-     * - Dynamically: Each variant is created only when its corresponding attributes and values are added to a sales
-     * order.
-     * - Never: Variants are never created for the attribute.
-     * Note: the variants creation mode cannot be changed once the attribute is used on at least one product.
+     *                 - Dynamically: Each variant is created only when its corresponding attributes and values are
+     * added to a sales order.
+     *                 - Never: Variants are never created for the attribute.
+     *                 Note: the variants creation mode cannot be changed once the attribute is used on at least one
+     * product.
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> always (Instantly)
+     *     -> dynamic (Dynamically)
+     *     -> no_variant (Never)
      *
-     * @var array
+     *
+     * @var string
      */
     private $create_variant;
 
     /**
      * Used on Products
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $is_used_on_products;
 
     /**
      * Related Products
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Template[]
+     * @var OdooRelation[]|null
      */
     private $product_tmpl_ids;
 
     /**
      * Display Type
      * The display type used in the Product Configurator.
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> radio (Radio)
+     *     -> select (Select)
+     *     -> color (Color)
      *
-     * @var array
+     *
+     * @var string
      */
     private $display_type;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Attribute
-     * @param array $create_variant Variants Creation Mode
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $create_variant Variants Creation Mode
      *        - Instantly: All possible variants are created as soon as the attribute and its values are added to a product.
-     *        - Dynamically: Each variant is created only when its corresponding attributes and values are added to a sales
-     *        order.
-     *        - Never: Variants are never created for the attribute.
-     *        Note: the variants creation mode cannot be changed once the attribute is used on at least one product.
-     * @param array $display_type Display Type
+     *                        - Dynamically: Each variant is created only when its corresponding attributes and values are
+     *        added to a sales order.
+     *                        - Never: Variants are never created for the attribute.
+     *                        Note: the variants creation mode cannot be changed once the attribute is used on at least one
+     *        product.
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> always (Instantly)
+     *            -> dynamic (Dynamically)
+     *            -> no_variant (Never)
+     *
+     * @param string $display_type Display Type
      *        The display type used in the Product Configurator.
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> radio (Radio)
+     *            -> select (Select)
+     *            -> color (Color)
+     *
      */
-    public function __construct(string $name, array $create_variant, array $display_type)
+    public function __construct(string $name, string $create_variant, string $display_type)
     {
         $this->name = $name;
         $this->create_variant = $create_variant;
@@ -136,27 +188,47 @@ final class Attribute extends Base
     }
 
     /**
-     * @param mixed $item
+     * @param bool|null $is_used_on_products
      */
-    public function addCreateVariant($item): void
+    public function setIsUsedOnProducts(?bool $is_used_on_products): void
     {
-        if ($this->hasCreateVariant($item)) {
-            return;
-        }
-
-        $this->create_variant[] = $item;
+        $this->is_used_on_products = $is_used_on_products;
     }
 
     /**
-     * @return null|Users
+     * @return DateTimeInterface|null
      */
-    public function getWriteUid(): ?Users
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -164,57 +236,92 @@ final class Attribute extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @param mixed $item
+     * @param string $display_type
      */
-    public function removeDisplayType($item): void
-    {
-        if ($this->hasDisplayType($item)) {
-            $index = array_search($item, $this->display_type);
-            unset($this->display_type[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addDisplayType($item): void
-    {
-        if ($this->hasDisplayType($item)) {
-            return;
-        }
-
-        $this->display_type[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasDisplayType($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->display_type, $strict);
-    }
-
-    /**
-     * @param array $display_type
-     */
-    public function setDisplayType(array $display_type): void
+    public function setDisplayType(string $display_type): void
     {
         $this->display_type = $display_type;
     }
 
     /**
-     * @return null|Template[]
+     * @return string
+     */
+    public function getDisplayType(): string
+    {
+        return $this->display_type;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeProductTmplIds(OdooRelation $item): void
+    {
+        if (null === $this->product_tmpl_ids) {
+            $this->product_tmpl_ids = [];
+        }
+
+        if ($this->hasProductTmplIds($item)) {
+            $index = array_search($item, $this->product_tmpl_ids);
+            unset($this->product_tmpl_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addProductTmplIds(OdooRelation $item): void
+    {
+        if ($this->hasProductTmplIds($item)) {
+            return;
+        }
+
+        if (null === $this->product_tmpl_ids) {
+            $this->product_tmpl_ids = [];
+        }
+
+        $this->product_tmpl_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasProductTmplIds(OdooRelation $item): bool
+    {
+        if (null === $this->product_tmpl_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->product_tmpl_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $product_tmpl_ids
+     */
+    public function setProductTmplIds(?array $product_tmpl_ids): void
+    {
+        $this->product_tmpl_ids = $product_tmpl_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
      */
     public function getProductTmplIds(): ?array
     {
@@ -222,7 +329,7 @@ final class Attribute extends Base
     }
 
     /**
-     * @return null|bool
+     * @return bool|null
      */
     public function isIsUsedOnProducts(): ?bool
     {
@@ -230,25 +337,19 @@ final class Attribute extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return string
      */
-    public function removeCreateVariant($item): void
+    public function getName(): string
     {
-        if ($this->hasCreateVariant($item)) {
-            $index = array_search($item, $this->create_variant);
-            unset($this->create_variant[$index]);
-        }
+        return $this->name;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return int|null
      */
-    public function hasCreateVariant($item, bool $strict = true): bool
+    public function getSequence(): ?int
     {
-        return in_array($item, $this->create_variant, $strict);
+        return $this->sequence;
     }
 
     /**
@@ -260,94 +361,39 @@ final class Attribute extends Base
     }
 
     /**
-     * @param array $create_variant
+     * @return OdooRelation[]|null
      */
-    public function setCreateVariant(array $create_variant): void
+    public function getValueIds(): ?array
     {
-        $this->create_variant = $create_variant;
+        return $this->value_ids;
     }
 
     /**
-     * @param Line $item
+     * @param OdooRelation[]|null $value_ids
      */
-    public function removeAttributeLineIds(Line $item): void
+    public function setValueIds(?array $value_ids): void
     {
-        if (null === $this->attribute_line_ids) {
-            $this->attribute_line_ids = [];
-        }
-
-        if ($this->hasAttributeLineIds($item)) {
-            $index = array_search($item, $this->attribute_line_ids);
-            unset($this->attribute_line_ids[$index]);
-        }
+        $this->value_ids = $value_ids;
     }
 
     /**
-     * @param Line $item
-     */
-    public function addAttributeLineIds(Line $item): void
-    {
-        if ($this->hasAttributeLineIds($item)) {
-            return;
-        }
-
-        if (null === $this->attribute_line_ids) {
-            $this->attribute_line_ids = [];
-        }
-
-        $this->attribute_line_ids[] = $item;
-    }
-
-    /**
-     * @param Line $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasAttributeLineIds(Line $item, bool $strict = true): bool
+    public function hasValueIds(OdooRelation $item): bool
     {
-        if (null === $this->attribute_line_ids) {
+        if (null === $this->value_ids) {
             return false;
         }
 
-        return in_array($item, $this->attribute_line_ids, $strict);
+        return in_array($item, $this->value_ids);
     }
 
     /**
-     * @param null|Line[] $attribute_line_ids
+     * @param OdooRelation $item
      */
-    public function setAttributeLineIds(?array $attribute_line_ids): void
-    {
-        $this->attribute_line_ids = $attribute_line_ids;
-    }
-
-    /**
-     * @param null|int $sequence
-     */
-    public function setSequence(?int $sequence): void
-    {
-        $this->sequence = $sequence;
-    }
-
-    /**
-     * @param Value $item
-     */
-    public function removeValueIds(Value $item): void
-    {
-        if (null === $this->value_ids) {
-            $this->value_ids = [];
-        }
-
-        if ($this->hasValueIds($item)) {
-            $index = array_search($item, $this->value_ids);
-            unset($this->value_ids[$index]);
-        }
-    }
-
-    /**
-     * @param Value $item
-     */
-    public function addValueIds(Value $item): void
+    public function addValueIds(OdooRelation $item): void
     {
         if ($this->hasValueIds($item)) {
             return;
@@ -361,33 +407,110 @@ final class Attribute extends Base
     }
 
     /**
-     * @param Value $item
-     * @param bool $strict
+     * @param OdooRelation $item
+     */
+    public function removeValueIds(OdooRelation $item): void
+    {
+        if (null === $this->value_ids) {
+            $this->value_ids = [];
+        }
+
+        if ($this->hasValueIds($item)) {
+            $index = array_search($item, $this->value_ids);
+            unset($this->value_ids[$index]);
+        }
+    }
+
+    /**
+     * @param int|null $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * @param string $create_variant
+     */
+    public function setCreateVariant(string $create_variant): void
+    {
+        $this->create_variant = $create_variant;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getAttributeLineIds(): ?array
+    {
+        return $this->attribute_line_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $attribute_line_ids
+     */
+    public function setAttributeLineIds(?array $attribute_line_ids): void
+    {
+        $this->attribute_line_ids = $attribute_line_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasValueIds(Value $item, bool $strict = true): bool
+    public function hasAttributeLineIds(OdooRelation $item): bool
     {
-        if (null === $this->value_ids) {
+        if (null === $this->attribute_line_ids) {
             return false;
         }
 
-        return in_array($item, $this->value_ids, $strict);
+        return in_array($item, $this->attribute_line_ids);
     }
 
     /**
-     * @param null|Value[] $value_ids
+     * @param OdooRelation $item
      */
-    public function setValueIds(?array $value_ids): void
+    public function addAttributeLineIds(OdooRelation $item): void
     {
-        $this->value_ids = $value_ids;
+        if ($this->hasAttributeLineIds($item)) {
+            return;
+        }
+
+        if (null === $this->attribute_line_ids) {
+            $this->attribute_line_ids = [];
+        }
+
+        $this->attribute_line_ids[] = $item;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation $item
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function removeAttributeLineIds(OdooRelation $item): void
     {
-        return $this->write_date;
+        if (null === $this->attribute_line_ids) {
+            $this->attribute_line_ids = [];
+        }
+
+        if ($this->hasAttributeLineIds($item)) {
+            $index = array_search($item, $this->attribute_line_ids);
+            unset($this->attribute_line_ids[$index]);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreateVariant(): string
+    {
+        return $this->create_variant;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

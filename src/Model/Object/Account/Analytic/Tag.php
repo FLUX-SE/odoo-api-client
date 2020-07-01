@@ -6,8 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Analytic;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.analytic.tag
@@ -15,18 +14,22 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Tag extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.analytic.tag';
+
     /**
      * Analytic Tag
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -34,74 +37,197 @@ final class Tag extends Base
 
     /**
      * Color Index
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $color;
 
     /**
      * Active
      * Set active to false to hide the Analytic Tag without removing it.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $active;
 
     /**
      * Analytic Distribution
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $active_analytic_distribution;
 
     /**
      * Analytic Accounts
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Distribution[]
+     * @var OdooRelation[]|null
      */
     private $analytic_distribution_ids;
 
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Company
+     * @var OdooRelation|null
      */
     private $company_id;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Analytic Tag
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeAnalyticDistributionIds(OdooRelation $item): void
+    {
+        if (null === $this->analytic_distribution_ids) {
+            $this->analytic_distribution_ids = [];
+        }
+
+        if ($this->hasAnalyticDistributionIds($item)) {
+            $index = array_search($item, $this->analytic_distribution_ids);
+            unset($this->analytic_distribution_ids[$index]);
+        }
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addAnalyticDistributionIds(OdooRelation $item): void
+    {
+        if ($this->hasAnalyticDistributionIds($item)) {
+            return;
+        }
+
+        if (null === $this->analytic_distribution_ids) {
+            $this->analytic_distribution_ids = [];
+        }
+
+        $this->analytic_distribution_ids[] = $item;
     }
 
     /**
@@ -113,31 +239,29 @@ final class Tag extends Base
     }
 
     /**
-     * @return null|int
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function getColor(): ?int
+    public function hasAnalyticDistributionIds(OdooRelation $item): bool
     {
-        return $this->color;
+        if (null === $this->analytic_distribution_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->analytic_distribution_ids);
     }
 
     /**
-     * @return null|bool
+     * @param OdooRelation[]|null $analytic_distribution_ids
      */
-    public function isActive(): ?bool
+    public function setAnalyticDistributionIds(?array $analytic_distribution_ids): void
     {
-        return $this->active;
+        $this->analytic_distribution_ids = $analytic_distribution_ids;
     }
 
     /**
-     * @return null|bool
-     */
-    public function isActiveAnalyticDistribution(): ?bool
-    {
-        return $this->active_analytic_distribution;
-    }
-
-    /**
-     * @return null|Distribution[]
+     * @return OdooRelation[]|null
      */
     public function getAnalyticDistributionIds(): ?array
     {
@@ -145,42 +269,66 @@ final class Tag extends Base
     }
 
     /**
-     * @return null|Company
+     * @param bool|null $active_analytic_distribution
      */
-    public function getCompanyId(): ?Company
+    public function setActiveAnalyticDistribution(?bool $active_analytic_distribution): void
     {
-        return $this->company_id;
+        $this->active_analytic_distribution = $active_analytic_distribution;
     }
 
     /**
-     * @return null|Users
+     * @return bool|null
      */
-    public function getCreateUid(): ?Users
+    public function isActiveAnalyticDistribution(): ?bool
     {
-        return $this->create_uid;
+        return $this->active_analytic_distribution;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param bool|null $active
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function setActive(?bool $active): void
     {
-        return $this->create_date;
+        $this->active = $active;
     }
 
     /**
-     * @return null|Users
+     * @return bool|null
      */
-    public function getWriteUid(): ?Users
+    public function isActive(): ?bool
     {
-        return $this->write_uid;
+        return $this->active;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param int|null $color
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function setColor(?int $color): void
     {
-        return $this->write_date;
+        $this->color = $color;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getColor(): ?int
+    {
+        return $this->color;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

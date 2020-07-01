@@ -6,77 +6,94 @@ namespace Flux\OdooApiClient\Model\Object\Sms\Template;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Actions\ActWindow;
-use Flux\OdooApiClient\Model\Object\Ir\Model;
-use Flux\OdooApiClient\Model\Object\Ir\Model\Fields;
-use Flux\OdooApiClient\Model\Object\Res\Users;
-use Flux\OdooApiClient\Model\Object\Sms\Template;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : sms.template.preview
  * Name : sms.template.preview
  * Info :
  * Model super-class for transient records, meant to be temporarily
- * persistent, and regularly vacuum-cleaned.
+ *         persistent, and regularly vacuum-cleaned.
  *
- * A TransientModel has a simplified access rights management, all users can
- * create new records, and may only access the records they created. The
- * superuser has unrestricted access to all TransientModel records.
+ *         A TransientModel has a simplified access rights management, all users can
+ *         create new records, and may only access the records they created. The
+ *         superuser has unrestricted access to all TransientModel records.
  */
 final class Preview extends Base
 {
+    public const ODOO_MODEL_NAME = 'sms.template.preview';
+
     /**
      * Sms Template
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Template
+     * @var OdooRelation|null
      */
     private $sms_template_id;
 
     /**
      * Template Preview Language
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> en_US (English (US))
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $lang;
 
     /**
      * Applies to
      * The type of document this template can be used with
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var Model
+     * @var OdooRelation
      */
     private $model_id;
 
     /**
      * Record ID
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $res_id;
 
     /**
      * Record reference
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|mixed
+     * @var mixed|null
      */
     private $resource_ref;
 
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $name;
 
     /**
      * Related Document Model
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $model;
 
     /**
      * Body
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -85,8 +102,10 @@ final class Preview extends Base
     /**
      * Sidebar action
      * Sidebar action to make this template available on records of the related document model
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|ActWindow
+     * @var OdooRelation|null
      */
     private $sidebar_action_id;
 
@@ -95,8 +114,10 @@ final class Preview extends Base
      * Select target field from the related document model.
      * If it is a relationship field you will be able to select a target field at the destination of the
      * relationship.
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|Fields
+     * @var OdooRelation|null
      */
     private $model_object_field;
 
@@ -104,8 +125,10 @@ final class Preview extends Base
      * Sub-model
      * When a relationship field is selected as first field, this field shows the document model the relationship
      * goes to.
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|Model
+     * @var OdooRelation|null
      */
     private $sub_object;
 
@@ -113,108 +136,134 @@ final class Preview extends Base
      * Sub-field
      * When a relationship field is selected as first field, this field lets you select the target field within the
      * destination document model (sub-model).
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|Fields
+     * @var OdooRelation|null
      */
     private $sub_model_object_field;
 
     /**
      * Default Value
      * Optional value to use if the target field is empty
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $null_value;
 
     /**
      * Placeholder Expression
      * Final placeholder expression, to be copy-pasted in the desired template field.
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $copyvalue;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param Model $model_id Applies to
+     * @param OdooRelation $model_id Applies to
      *        The type of document this template can be used with
+     *        Searchable : yes
+     *        Sortable : no
      * @param string $body Body
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(Model $model_id, string $body)
+    public function __construct(OdooRelation $model_id, string $body)
     {
         $this->model_id = $model_id;
         $this->body = $body;
     }
 
     /**
-     * @return null|ActWindow
+     * @return string|null
      */
-    public function getSidebarActionId(): ?ActWindow
+    public function getCopyvalue(): ?string
     {
-        return $this->sidebar_action_id;
+        return $this->copyvalue;
     }
 
     /**
-     * @return null|Users
+     * @return OdooRelation|null
      */
-    public function getWriteUid(): ?Users
+    public function getSubObject(): ?OdooRelation
     {
-        return $this->write_uid;
+        return $this->sub_object;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $sub_object
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function setSubObject(?OdooRelation $sub_object): void
     {
-        return $this->create_date;
+        $this->sub_object = $sub_object;
     }
 
     /**
-     * @return null|Users
+     * @return OdooRelation|null
      */
-    public function getCreateUid(): ?Users
+    public function getSubModelObjectField(): ?OdooRelation
     {
-        return $this->create_uid;
+        return $this->sub_model_object_field;
     }
 
     /**
-     * @param null|string $copyvalue
+     * @param OdooRelation|null $sub_model_object_field
      */
-    public function setCopyvalue(?string $copyvalue): void
+    public function setSubModelObjectField(?OdooRelation $sub_model_object_field): void
     {
-        $this->copyvalue = $copyvalue;
+        $this->sub_model_object_field = $sub_model_object_field;
     }
 
     /**
-     * @param null|string $null_value
+     * @return string|null
+     */
+    public function getNullValue(): ?string
+    {
+        return $this->null_value;
+    }
+
+    /**
+     * @param string|null $null_value
      */
     public function setNullValue(?string $null_value): void
     {
@@ -222,27 +271,219 @@ final class Preview extends Base
     }
 
     /**
-     * @param null|Fields $sub_model_object_field
+     * @param string|null $copyvalue
      */
-    public function setSubModelObjectField(?Fields $sub_model_object_field): void
+    public function setCopyvalue(?string $copyvalue): void
     {
-        $this->sub_model_object_field = $sub_model_object_field;
+        $this->copyvalue = $copyvalue;
     }
 
     /**
-     * @return null|Model
+     * @return OdooRelation|null
      */
-    public function getSubObject(): ?Model
+    public function getModelObjectField(): ?OdooRelation
     {
-        return $this->sub_object;
+        return $this->model_object_field;
     }
 
     /**
-     * @param null|Fields $model_object_field
+     * @return OdooRelation|null
      */
-    public function setModelObjectField(?Fields $model_object_field): void
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $model_object_field
+     */
+    public function setModelObjectField(?OdooRelation $model_object_field): void
     {
         $this->model_object_field = $model_object_field;
+    }
+
+    /**
+     * @param OdooRelation|null $sidebar_action_id
+     */
+    public function setSidebarActionId(?OdooRelation $sidebar_action_id): void
+    {
+        $this->sidebar_action_id = $sidebar_action_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getSmsTemplateId(): ?OdooRelation
+    {
+        return $this->sms_template_id;
+    }
+
+    /**
+     * @param int|null $res_id
+     */
+    public function setResId(?int $res_id): void
+    {
+        $this->res_id = $res_id;
+    }
+
+    /**
+     * @param OdooRelation|null $sms_template_id
+     */
+    public function setSmsTemplateId(?OdooRelation $sms_template_id): void
+    {
+        $this->sms_template_id = $sms_template_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLang(): ?string
+    {
+        return $this->lang;
+    }
+
+    /**
+     * @param string|null $lang
+     */
+    public function setLang(?string $lang): void
+    {
+        $this->lang = $lang;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getModelId(): OdooRelation
+    {
+        return $this->model_id;
+    }
+
+    /**
+     * @param OdooRelation $model_id
+     */
+    public function setModelId(OdooRelation $model_id): void
+    {
+        $this->model_id = $model_id;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getResId(): ?int
+    {
+        return $this->res_id;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getResourceRef()
+    {
+        return $this->resource_ref;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getSidebarActionId(): ?OdooRelation
+    {
+        return $this->sidebar_action_id;
+    }
+
+    /**
+     * @param mixed|null $resource_ref
+     */
+    public function setResourceRef($resource_ref): void
+    {
+        $this->resource_ref = $resource_ref;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string|null $name
+     */
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getModel(): ?string
+    {
+        return $this->model;
+    }
+
+    /**
+     * @param string|null $model
+     */
+    public function setModel(?string $model): void
+    {
+        $this->model = $model;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBody(): string
+    {
+        return $this->body;
     }
 
     /**
@@ -254,112 +495,10 @@ final class Preview extends Base
     }
 
     /**
-     * @param null|Template $sms_template_id
+     * @param DateTimeInterface|null $write_date
      */
-    public function setSmsTemplateId(?Template $sms_template_id): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->sms_template_id = $sms_template_id;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getModel(): ?string
-    {
-        return $this->model;
-    }
-
-    /**
-     * @param null|string $name
-     */
-    public function setName(?string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @param null|mixed $resource_ref
-     */
-    public function setResourceRef($resource_ref): void
-    {
-        $this->resource_ref = $resource_ref;
-    }
-
-    /**
-     * @param null|int $res_id
-     */
-    public function setResId(?int $res_id): void
-    {
-        $this->res_id = $res_id;
-    }
-
-    /**
-     * @return Model
-     */
-    public function getModelId(): Model
-    {
-        return $this->model_id;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeLang($item): void
-    {
-        if (null === $this->lang) {
-            $this->lang = [];
-        }
-
-        if ($this->hasLang($item)) {
-            $index = array_search($item, $this->lang);
-            unset($this->lang[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addLang($item): void
-    {
-        if ($this->hasLang($item)) {
-            return;
-        }
-
-        if (null === $this->lang) {
-            $this->lang = [];
-        }
-
-        $this->lang[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasLang($item, bool $strict = true): bool
-    {
-        if (null === $this->lang) {
-            return false;
-        }
-
-        return in_array($item, $this->lang, $strict);
-    }
-
-    /**
-     * @param null|array $lang
-     */
-    public function setLang(?array $lang): void
-    {
-        $this->lang = $lang;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

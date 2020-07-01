@@ -6,9 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\DemoFailure\Wizard;
-use Flux\OdooApiClient\Model\Object\Ir\Module\Module;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.demo_failure
@@ -18,73 +16,107 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  */
 final class DemoFailure extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.demo_failure';
+
     /**
      * Module
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Module
+     * @var OdooRelation
      */
     private $module_id;
 
     /**
      * Error
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $error;
 
     /**
      * Wizard
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Wizard
+     * @var OdooRelation|null
      */
     private $wizard_id;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param Module $module_id Module
+     * @param OdooRelation $module_id Module
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(Module $module_id)
+    public function __construct(OdooRelation $module_id)
     {
         $this->module_id = $module_id;
     }
 
     /**
-     * @param Module $module_id
+     * @return OdooRelation
      */
-    public function setModuleId(Module $module_id): void
+    public function getModuleId(): OdooRelation
+    {
+        return $this->module_id;
+    }
+
+    /**
+     * @param OdooRelation $module_id
+     */
+    public function setModuleId(OdooRelation $module_id): void
     {
         $this->module_id = $module_id;
     }
 
     /**
-     * @param null|string $error
+     * @return string|null
+     */
+    public function getError(): ?string
+    {
+        return $this->error;
+    }
+
+    /**
+     * @param string|null $error
      */
     public function setError(?string $error): void
     {
@@ -92,23 +124,39 @@ final class DemoFailure extends Base
     }
 
     /**
-     * @param null|Wizard $wizard_id
+     * @return OdooRelation|null
      */
-    public function setWizardId(?Wizard $wizard_id): void
+    public function getWizardId(): ?OdooRelation
+    {
+        return $this->wizard_id;
+    }
+
+    /**
+     * @param OdooRelation|null $wizard_id
+     */
+    public function setWizardId(?OdooRelation $wizard_id): void
     {
         $this->wizard_id = $wizard_id;
     }
 
     /**
-     * @return null|Users
+     * @return OdooRelation|null
      */
-    public function getCreateUid(): ?Users
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -116,18 +164,42 @@ final class DemoFailure extends Base
     }
 
     /**
-     * @return null|Users
+     * @param DateTimeInterface|null $create_date
      */
-    public function getWriteUid(): ?Users
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

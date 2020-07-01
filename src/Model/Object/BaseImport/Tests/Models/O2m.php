@@ -6,8 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\BaseImport\Tests\Models;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\BaseImport\Tests\Models\O2m\Child;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : base_import.tests.models.o2m
@@ -15,60 +14,82 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class O2m extends Base
 {
+    public const ODOO_MODEL_NAME = 'base_import.tests.models.o2m';
+
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $name;
 
     /**
      * Value
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Child[]
+     * @var OdooRelation[]|null
      */
     private $value;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string|null $name
      */
     public function setName(?string $name): void
     {
@@ -76,7 +97,15 @@ final class O2m extends Base
     }
 
     /**
-     * @param null|Child[] $value
+     * @return OdooRelation[]|null
+     */
+    public function getValue(): ?array
+    {
+        return $this->value;
+    }
+
+    /**
+     * @param OdooRelation[]|null $value
      */
     public function setValue(?array $value): void
     {
@@ -84,24 +113,23 @@ final class O2m extends Base
     }
 
     /**
-     * @param Child $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasValue(Child $item, bool $strict = true): bool
+    public function hasValue(OdooRelation $item): bool
     {
         if (null === $this->value) {
             return false;
         }
 
-        return in_array($item, $this->value, $strict);
+        return in_array($item, $this->value);
     }
 
     /**
-     * @param Child $item
+     * @param OdooRelation $item
      */
-    public function addValue(Child $item): void
+    public function addValue(OdooRelation $item): void
     {
         if ($this->hasValue($item)) {
             return;
@@ -115,9 +143,9 @@ final class O2m extends Base
     }
 
     /**
-     * @param Child $item
+     * @param OdooRelation $item
      */
-    public function removeValue(Child $item): void
+    public function removeValue(OdooRelation $item): void
     {
         if (null === $this->value) {
             $this->value = [];
@@ -130,15 +158,23 @@ final class O2m extends Base
     }
 
     /**
-     * @return null|Users
+     * @return OdooRelation|null
      */
-    public function getCreateUid(): ?Users
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -146,18 +182,42 @@ final class O2m extends Base
     }
 
     /**
-     * @return null|Users
+     * @param DateTimeInterface|null $create_date
      */
-    public function getWriteUid(): ?Users
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

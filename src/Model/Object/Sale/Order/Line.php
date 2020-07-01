@@ -5,22 +5,8 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Sale\Order;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Analytic\Line as LineAliasAlias;
-use Flux\OdooApiClient\Model\Object\Account\Analytic\Tag;
-use Flux\OdooApiClient\Model\Object\Account\Move\Line as LineAlias;
-use Flux\OdooApiClient\Model\Object\Account\Tax;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Product\Attribute\Custom\Value;
-use Flux\OdooApiClient\Model\Object\Product\Product;
-use Flux\OdooApiClient\Model\Object\Product\Template;
-use Flux\OdooApiClient\Model\Object\Product\Template\Attribute\Value as ValueAlias;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Currency;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
-use Flux\OdooApiClient\Model\Object\Res\Users;
-use Flux\OdooApiClient\Model\Object\Sale\Order;
-use Flux\OdooApiClient\Model\Object\Uom\Category;
-use Flux\OdooApiClient\Model\Object\Uom\Uom;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : sale.order.line
@@ -28,25 +14,31 @@ use Flux\OdooApiClient\Model\Object\Uom\Uom;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Line extends Base
 {
+    public const ODOO_MODEL_NAME = 'sale.order.line';
+
     /**
      * Order Reference
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Order
+     * @var OdooRelation
      */
     private $order_id;
 
     /**
      * Description
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -54,27 +46,41 @@ final class Line extends Base
 
     /**
      * Sequence
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $sequence;
 
     /**
      * Invoice Lines
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|LineAlias[]
+     * @var OdooRelation[]|null
      */
     private $invoice_lines;
 
     /**
      * Invoice Status
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> upselling (Upselling Opportunity)
+     *     -> invoiced (Fully Invoiced)
+     *     -> to invoice (To Invoice)
+     *     -> no (Nothing to Invoice)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $invoice_status;
 
     /**
      * Unit Price
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var float
      */
@@ -82,83 +88,107 @@ final class Line extends Base
 
     /**
      * Subtotal
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $price_subtotal;
 
     /**
      * Total Tax
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $price_tax;
 
     /**
      * Total
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $price_total;
 
     /**
      * Price Reduce
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $price_reduce;
 
     /**
      * Taxes
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Tax[]
+     * @var OdooRelation[]|null
      */
     private $tax_id;
 
     /**
      * Price Reduce Tax inc
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $price_reduce_taxinc;
 
     /**
      * Price Reduce Tax excl
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $price_reduce_taxexcl;
 
     /**
      * Discount (%)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $discount;
 
     /**
      * Product
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Product
+     * @var OdooRelation|null
      */
     private $product_id;
 
     /**
      * Product Template
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Template
+     * @var OdooRelation|null
      */
     private $product_template_id;
 
     /**
      * Can Edit Product
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $product_updatable;
 
     /**
      * Quantity
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var float
      */
@@ -166,8 +196,10 @@ final class Line extends Base
 
     /**
      * Unit of Measure
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Uom
+     * @var OdooRelation|null
      */
     private $product_uom;
 
@@ -175,126 +207,165 @@ final class Line extends Base
      * Category
      * Conversion between Units of Measure can only occur if they belong to the same category. The conversion will be
      * made based on the ratios.
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Category
+     * @var OdooRelation|null
      */
     private $product_uom_category_id;
 
     /**
      * Custom Values
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Value[]
+     * @var OdooRelation[]|null
      */
     private $product_custom_attribute_value_ids;
 
     /**
      * Extra Values
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|ValueAlias[]
+     * @var OdooRelation[]|null
      */
     private $product_no_variant_attribute_value_ids;
 
     /**
      * Method to update delivered qty
      * According to product configuration, the delivered quantity can be automatically computed by mechanism :
-     * - Manual: the quantity is set manually on the line
-     * - Analytic From expenses: the quantity is the quantity sum from posted expenses
-     * - Timesheet: the quantity is the sum of hours recorded on tasks linked to this sale line
-     * - Stock Moves: the quantity comes from confirmed pickings
+     *     - Manual: the quantity is set manually on the line
+     *     - Analytic From expenses: the quantity is the quantity sum from posted expenses
+     *     - Timesheet: the quantity is the sum of hours recorded on tasks linked to this sale line
+     *     - Stock Moves: the quantity comes from confirmed pickings
      *
-     * @var null|array
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> manual (Manual)
+     *     -> analytic (Analytic From Expenses)
+     *
+     *
+     * @var string|null
      */
     private $qty_delivered_method;
 
     /**
      * Delivered Quantity
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $qty_delivered;
 
     /**
      * Delivered Manually
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $qty_delivered_manual;
 
     /**
      * To Invoice Quantity
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $qty_to_invoice;
 
     /**
      * Invoiced Quantity
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $qty_invoiced;
 
     /**
      * Untaxed Invoiced Amount
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $untaxed_amount_invoiced;
 
     /**
      * Untaxed Amount To Invoice
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $untaxed_amount_to_invoice;
 
     /**
      * Salesperson
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $salesman_id;
 
     /**
      * Currency
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Currency
+     * @var OdooRelation|null
      */
     private $currency_id;
 
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Company
+     * @var OdooRelation|null
      */
     private $company_id;
 
     /**
      * Customer
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Partner
+     * @var OdooRelation|null
      */
     private $order_partner_id;
 
     /**
      * Analytic Tags
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Tag[]
+     * @var OdooRelation[]|null
      */
     private $analytic_tag_ids;
 
     /**
      * Analytic lines
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|LineAliasAlias[]
+     * @var OdooRelation[]|null
      */
     private $analytic_line_ids;
 
     /**
      * Is expense
      * Is true if the sales order line comes from an expense or a vendor bills
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $is_expense;
 
@@ -302,21 +373,34 @@ final class Line extends Base
      * Is a down payment
      * Down payments are made when creating invoices from a sales order. They are not copied when duplicating a sales
      * order.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $is_downpayment;
 
     /**
      * Order Status
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> draft (Quotation)
+     *     -> sent (Quotation Sent)
+     *     -> sale (Sales Order)
+     *     -> done (Locked)
+     *     -> cancel (Cancelled)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $state;
 
     /**
      * Lead Time
      * Number of days between the order confirmation and the shipping of the products to the customer
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var float
      */
@@ -325,56 +409,82 @@ final class Line extends Base
     /**
      * Display Type
      * Technical field for UX purpose.
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> line_section (Section)
+     *     -> line_note (Note)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $display_type;
 
     /**
      * Optional Products Lines
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Option[]
+     * @var OdooRelation[]|null
      */
     private $sale_order_option_ids;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param Order $order_id Order Reference
+     * @param OdooRelation $order_id Order Reference
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $name Description
+     *        Searchable : yes
+     *        Sortable : yes
      * @param float $price_unit Unit Price
+     *        Searchable : yes
+     *        Sortable : yes
      * @param float $product_uom_qty Quantity
+     *        Searchable : yes
+     *        Sortable : yes
      * @param float $customer_lead Lead Time
      *        Number of days between the order confirmation and the shipping of the products to the customer
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
-        Order $order_id,
+        OdooRelation $order_id,
         string $name,
         float $price_unit,
         float $product_uom_qty,
@@ -388,112 +498,17 @@ final class Line extends Base
     }
 
     /**
-     * @param LineAliasAlias $item
+     * @return OdooRelation|null
      */
-    public function addAnalyticLineIds(LineAliasAlias $item): void
-    {
-        if ($this->hasAnalyticLineIds($item)) {
-            return;
-        }
-
-        if (null === $this->analytic_line_ids) {
-            $this->analytic_line_ids = [];
-        }
-
-        $this->analytic_line_ids[] = $item;
-    }
-
-    /**
-     * @return null|float
-     */
-    public function getQtyToInvoice(): ?float
-    {
-        return $this->qty_to_invoice;
-    }
-
-    /**
-     * @return null|float
-     */
-    public function getQtyInvoiced(): ?float
-    {
-        return $this->qty_invoiced;
-    }
-
-    /**
-     * @return null|float
-     */
-    public function getUntaxedAmountInvoiced(): ?float
-    {
-        return $this->untaxed_amount_invoiced;
-    }
-
-    /**
-     * @return null|float
-     */
-    public function getUntaxedAmountToInvoice(): ?float
-    {
-        return $this->untaxed_amount_to_invoice;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getSalesmanId(): ?Users
+    public function getSalesmanId(): ?OdooRelation
     {
         return $this->salesman_id;
     }
 
     /**
-     * @return null|Currency
+     * @param OdooRelation $item
      */
-    public function getCurrencyId(): ?Currency
-    {
-        return $this->currency_id;
-    }
-
-    /**
-     * @return null|Company
-     */
-    public function getCompanyId(): ?Company
-    {
-        return $this->company_id;
-    }
-
-    /**
-     * @param null|Partner $order_partner_id
-     */
-    public function setOrderPartnerId(?Partner $order_partner_id): void
-    {
-        $this->order_partner_id = $order_partner_id;
-    }
-
-    /**
-     * @param null|Tag[] $analytic_tag_ids
-     */
-    public function setAnalyticTagIds(?array $analytic_tag_ids): void
-    {
-        $this->analytic_tag_ids = $analytic_tag_ids;
-    }
-
-    /**
-     * @param Tag $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasAnalyticTagIds(Tag $item, bool $strict = true): bool
-    {
-        if (null === $this->analytic_tag_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->analytic_tag_ids, $strict);
-    }
-
-    /**
-     * @param Tag $item
-     */
-    public function addAnalyticTagIds(Tag $item): void
+    public function addAnalyticTagIds(OdooRelation $item): void
     {
         if ($this->hasAnalyticTagIds($item)) {
             return;
@@ -507,9 +522,199 @@ final class Line extends Base
     }
 
     /**
-     * @param Tag $item
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removeAnalyticTagIds(Tag $item): void
+    public function hasAnalyticTagIds(OdooRelation $item): bool
+    {
+        if (null === $this->analytic_tag_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->analytic_tag_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $analytic_tag_ids
+     */
+    public function setAnalyticTagIds(?array $analytic_tag_ids): void
+    {
+        $this->analytic_tag_ids = $analytic_tag_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getAnalyticTagIds(): ?array
+    {
+        return $this->analytic_tag_ids;
+    }
+
+    /**
+     * @param OdooRelation|null $order_partner_id
+     */
+    public function setOrderPartnerId(?OdooRelation $order_partner_id): void
+    {
+        $this->order_partner_id = $order_partner_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getOrderPartnerId(): ?OdooRelation
+    {
+        return $this->order_partner_id;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param OdooRelation|null $currency_id
+     */
+    public function setCurrencyId(?OdooRelation $currency_id): void
+    {
+        $this->currency_id = $currency_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCurrencyId(): ?OdooRelation
+    {
+        return $this->currency_id;
+    }
+
+    /**
+     * @param OdooRelation|null $salesman_id
+     */
+    public function setSalesmanId(?OdooRelation $salesman_id): void
+    {
+        $this->salesman_id = $salesman_id;
+    }
+
+    /**
+     * @param float|null $untaxed_amount_to_invoice
+     */
+    public function setUntaxedAmountToInvoice(?float $untaxed_amount_to_invoice): void
+    {
+        $this->untaxed_amount_to_invoice = $untaxed_amount_to_invoice;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getAnalyticLineIds(): ?array
+    {
+        return $this->analytic_line_ids;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getUntaxedAmountToInvoice(): ?float
+    {
+        return $this->untaxed_amount_to_invoice;
+    }
+
+    /**
+     * @param float|null $untaxed_amount_invoiced
+     */
+    public function setUntaxedAmountInvoiced(?float $untaxed_amount_invoiced): void
+    {
+        $this->untaxed_amount_invoiced = $untaxed_amount_invoiced;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getUntaxedAmountInvoiced(): ?float
+    {
+        return $this->untaxed_amount_invoiced;
+    }
+
+    /**
+     * @param float|null $qty_invoiced
+     */
+    public function setQtyInvoiced(?float $qty_invoiced): void
+    {
+        $this->qty_invoiced = $qty_invoiced;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getQtyInvoiced(): ?float
+    {
+        return $this->qty_invoiced;
+    }
+
+    /**
+     * @param float|null $qty_to_invoice
+     */
+    public function setQtyToInvoice(?float $qty_to_invoice): void
+    {
+        $this->qty_to_invoice = $qty_to_invoice;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getQtyToInvoice(): ?float
+    {
+        return $this->qty_to_invoice;
+    }
+
+    /**
+     * @param float|null $qty_delivered_manual
+     */
+    public function setQtyDeliveredManual(?float $qty_delivered_manual): void
+    {
+        $this->qty_delivered_manual = $qty_delivered_manual;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getQtyDeliveredManual(): ?float
+    {
+        return $this->qty_delivered_manual;
+    }
+
+    /**
+     * @param float|null $qty_delivered
+     */
+    public function setQtyDelivered(?float $qty_delivered): void
+    {
+        $this->qty_delivered = $qty_delivered;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getQtyDelivered(): ?float
+    {
+        return $this->qty_delivered;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeAnalyticTagIds(OdooRelation $item): void
     {
         if (null === $this->analytic_tag_ids) {
             $this->analytic_tag_ids = [];
@@ -522,7 +727,7 @@ final class Line extends Base
     }
 
     /**
-     * @param null|LineAliasAlias[] $analytic_line_ids
+     * @param OdooRelation[]|null $analytic_line_ids
      */
     public function setAnalyticLineIds(?array $analytic_line_ids): void
     {
@@ -530,61 +735,55 @@ final class Line extends Base
     }
 
     /**
-     * @param LineAliasAlias $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return string|null
      */
-    public function hasAnalyticLineIds(LineAliasAlias $item, bool $strict = true): bool
+    public function getQtyDeliveredMethod(): ?string
     {
-        if (null === $this->analytic_line_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->analytic_line_ids, $strict);
+        return $this->qty_delivered_method;
     }
 
     /**
-     * @param LineAliasAlias $item
+     * @return OdooRelation[]|null
      */
-    public function removeAnalyticLineIds(LineAliasAlias $item): void
+    public function getSaleOrderOptionIds(): ?array
     {
-        if (null === $this->analytic_line_ids) {
-            $this->analytic_line_ids = [];
-        }
-
-        if ($this->hasAnalyticLineIds($item)) {
-            $index = array_search($item, $this->analytic_line_ids);
-            unset($this->analytic_line_ids[$index]);
-        }
+        return $this->sale_order_option_ids;
     }
 
     /**
-     * @param null|float $qty_delivered
+     * @return DateTimeInterface|null
      */
-    public function setQtyDelivered(?float $qty_delivered): void
+    public function getWriteDate(): ?DateTimeInterface
     {
-        $this->qty_delivered = $qty_delivered;
+        return $this->write_date;
     }
 
     /**
-     * @param null|Option[] $sale_order_option_ids
+     * @param OdooRelation|null $write_uid
      */
-    public function setSaleOrderOptionIds(?array $sale_order_option_ids): void
+    public function setWriteUid(?OdooRelation $write_uid): void
     {
-        $this->sale_order_option_ids = $sale_order_option_ids;
+        $this->write_uid = $write_uid;
     }
 
     /**
-     * @return null|Users
+     * @return OdooRelation|null
      */
-    public function getWriteUid(): ?Users
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -592,17 +791,25 @@ final class Line extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @param Option $item
+     * @param OdooRelation $item
      */
-    public function removeSaleOrderOptionIds(Option $item): void
+    public function removeSaleOrderOptionIds(OdooRelation $item): void
     {
         if (null === $this->sale_order_option_ids) {
             $this->sale_order_option_ids = [];
@@ -615,9 +822,9 @@ final class Line extends Base
     }
 
     /**
-     * @param Option $item
+     * @param OdooRelation $item
      */
-    public function addSaleOrderOptionIds(Option $item): void
+    public function addSaleOrderOptionIds(OdooRelation $item): void
     {
         if ($this->hasSaleOrderOptionIds($item)) {
             return;
@@ -631,80 +838,55 @@ final class Line extends Base
     }
 
     /**
-     * @param Option $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasSaleOrderOptionIds(Option $item, bool $strict = true): bool
+    public function hasSaleOrderOptionIds(OdooRelation $item): bool
     {
         if (null === $this->sale_order_option_ids) {
             return false;
         }
 
-        return in_array($item, $this->sale_order_option_ids, $strict);
+        return in_array($item, $this->sale_order_option_ids);
     }
 
     /**
-     * @param mixed $item
+     * @param OdooRelation[]|null $sale_order_option_ids
      */
-    public function removeDisplayType($item): void
+    public function setSaleOrderOptionIds(?array $sale_order_option_ids): void
     {
-        if (null === $this->display_type) {
-            $this->display_type = [];
-        }
-
-        if ($this->hasDisplayType($item)) {
-            $index = array_search($item, $this->display_type);
-            unset($this->display_type[$index]);
-        }
+        $this->sale_order_option_ids = $sale_order_option_ids;
     }
 
     /**
-     * @param null|bool $is_expense
+     * @param string|null $display_type
      */
-    public function setIsExpense(?bool $is_expense): void
+    public function setDisplayType(?string $display_type): void
     {
-        $this->is_expense = $is_expense;
+        $this->display_type = $display_type;
     }
 
     /**
-     * @param mixed $item
-     */
-    public function addDisplayType($item): void
-    {
-        if ($this->hasDisplayType($item)) {
-            return;
-        }
-
-        if (null === $this->display_type) {
-            $this->display_type = [];
-        }
-
-        $this->display_type[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasDisplayType($item, bool $strict = true): bool
+    public function hasAnalyticLineIds(OdooRelation $item): bool
     {
-        if (null === $this->display_type) {
+        if (null === $this->analytic_line_ids) {
             return false;
         }
 
-        return in_array($item, $this->display_type, $strict);
+        return in_array($item, $this->analytic_line_ids);
     }
 
     /**
-     * @param null|array $display_type
+     * @return string|null
      */
-    public function setDisplayType(?array $display_type): void
+    public function getDisplayType(): ?string
     {
-        $this->display_type = $display_type;
+        return $this->display_type;
     }
 
     /**
@@ -716,15 +898,31 @@ final class Line extends Base
     }
 
     /**
-     * @return null|array
+     * @return float
      */
-    public function getState(): ?array
+    public function getCustomerLead(): float
+    {
+        return $this->customer_lead;
+    }
+
+    /**
+     * @param string|null $state
+     */
+    public function setState(?string $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getState(): ?string
     {
         return $this->state;
     }
 
     /**
-     * @param null|bool $is_downpayment
+     * @param bool|null $is_downpayment
      */
     public function setIsDownpayment(?bool $is_downpayment): void
     {
@@ -732,27 +930,177 @@ final class Line extends Base
     }
 
     /**
-     * @param null|float $qty_delivered_manual
+     * @return bool|null
      */
-    public function setQtyDeliveredManual(?float $qty_delivered_manual): void
+    public function isIsDownpayment(): ?bool
     {
-        $this->qty_delivered_manual = $qty_delivered_manual;
+        return $this->is_downpayment;
     }
 
     /**
-     * @return null|array
+     * @param bool|null $is_expense
      */
-    public function getQtyDeliveredMethod(): ?array
+    public function setIsExpense(?bool $is_expense): void
     {
-        return $this->qty_delivered_method;
+        $this->is_expense = $is_expense;
     }
 
     /**
-     * @param Order $order_id
+     * @return bool|null
      */
-    public function setOrderId(Order $order_id): void
+    public function isIsExpense(): ?bool
     {
-        $this->order_id = $order_id;
+        return $this->is_expense;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeAnalyticLineIds(OdooRelation $item): void
+    {
+        if (null === $this->analytic_line_ids) {
+            $this->analytic_line_ids = [];
+        }
+
+        if ($this->hasAnalyticLineIds($item)) {
+            $index = array_search($item, $this->analytic_line_ids);
+            unset($this->analytic_line_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addAnalyticLineIds(OdooRelation $item): void
+    {
+        if ($this->hasAnalyticLineIds($item)) {
+            return;
+        }
+
+        if (null === $this->analytic_line_ids) {
+            $this->analytic_line_ids = [];
+        }
+
+        $this->analytic_line_ids[] = $item;
+    }
+
+    /**
+     * @param string|null $qty_delivered_method
+     */
+    public function setQtyDeliveredMethod(?string $qty_delivered_method): void
+    {
+        $this->qty_delivered_method = $qty_delivered_method;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeProductNoVariantAttributeValueIds(OdooRelation $item): void
+    {
+        if (null === $this->product_no_variant_attribute_value_ids) {
+            $this->product_no_variant_attribute_value_ids = [];
+        }
+
+        if ($this->hasProductNoVariantAttributeValueIds($item)) {
+            $index = array_search($item, $this->product_no_variant_attribute_value_ids);
+            unset($this->product_no_variant_attribute_value_ids[$index]);
+        }
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getOrderId(): OdooRelation
+    {
+        return $this->order_id;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPriceUnit(): float
+    {
+        return $this->price_unit;
+    }
+
+    /**
+     * @param OdooRelation[]|null $tax_id
+     */
+    public function setTaxId(?array $tax_id): void
+    {
+        $this->tax_id = $tax_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getTaxId(): ?array
+    {
+        return $this->tax_id;
+    }
+
+    /**
+     * @param float|null $price_reduce
+     */
+    public function setPriceReduce(?float $price_reduce): void
+    {
+        $this->price_reduce = $price_reduce;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getPriceReduce(): ?float
+    {
+        return $this->price_reduce;
+    }
+
+    /**
+     * @param float|null $price_total
+     */
+    public function setPriceTotal(?float $price_total): void
+    {
+        $this->price_total = $price_total;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getPriceTotal(): ?float
+    {
+        return $this->price_total;
+    }
+
+    /**
+     * @param float|null $price_tax
+     */
+    public function setPriceTax(?float $price_tax): void
+    {
+        $this->price_tax = $price_tax;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getPriceTax(): ?float
+    {
+        return $this->price_tax;
+    }
+
+    /**
+     * @param float|null $price_subtotal
+     */
+    public function setPriceSubtotal(?float $price_subtotal): void
+    {
+        $this->price_subtotal = $price_subtotal;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getPriceSubtotal(): ?float
+    {
+        return $this->price_subtotal;
     }
 
     /**
@@ -764,157 +1112,17 @@ final class Line extends Base
     }
 
     /**
-     * @param Tax $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param string|null $invoice_status
      */
-    public function hasTaxId(Tax $item, bool $strict = true): bool
+    public function setInvoiceStatus(?string $invoice_status): void
     {
-        if (null === $this->tax_id) {
-            return false;
-        }
-
-        return in_array($item, $this->tax_id, $strict);
+        $this->invoice_status = $invoice_status;
     }
 
     /**
-     * @param null|Tax[] $tax_id
+     * @param OdooRelation $item
      */
-    public function setTaxId(?array $tax_id): void
-    {
-        $this->tax_id = $tax_id;
-    }
-
-    /**
-     * @return null|float
-     */
-    public function getPriceReduce(): ?float
-    {
-        return $this->price_reduce;
-    }
-
-    /**
-     * @return null|float
-     */
-    public function getPriceTotal(): ?float
-    {
-        return $this->price_total;
-    }
-
-    /**
-     * @return null|float
-     */
-    public function getPriceTax(): ?float
-    {
-        return $this->price_tax;
-    }
-
-    /**
-     * @return null|float
-     */
-    public function getPriceSubtotal(): ?float
-    {
-        return $this->price_subtotal;
-    }
-
-    /**
-     * @return null|array
-     */
-    public function getInvoiceStatus(): ?array
-    {
-        return $this->invoice_status;
-    }
-
-    /**
-     * @param Tax $item
-     */
-    public function removeTaxId(Tax $item): void
-    {
-        if (null === $this->tax_id) {
-            $this->tax_id = [];
-        }
-
-        if ($this->hasTaxId($item)) {
-            $index = array_search($item, $this->tax_id);
-            unset($this->tax_id[$index]);
-        }
-    }
-
-    /**
-     * @param LineAlias $item
-     */
-    public function removeInvoiceLines(LineAlias $item): void
-    {
-        if (null === $this->invoice_lines) {
-            $this->invoice_lines = [];
-        }
-
-        if ($this->hasInvoiceLines($item)) {
-            $index = array_search($item, $this->invoice_lines);
-            unset($this->invoice_lines[$index]);
-        }
-    }
-
-    /**
-     * @param LineAlias $item
-     */
-    public function addInvoiceLines(LineAlias $item): void
-    {
-        if ($this->hasInvoiceLines($item)) {
-            return;
-        }
-
-        if (null === $this->invoice_lines) {
-            $this->invoice_lines = [];
-        }
-
-        $this->invoice_lines[] = $item;
-    }
-
-    /**
-     * @param LineAlias $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasInvoiceLines(LineAlias $item, bool $strict = true): bool
-    {
-        if (null === $this->invoice_lines) {
-            return false;
-        }
-
-        return in_array($item, $this->invoice_lines, $strict);
-    }
-
-    /**
-     * @param null|LineAlias[] $invoice_lines
-     */
-    public function setInvoiceLines(?array $invoice_lines): void
-    {
-        $this->invoice_lines = $invoice_lines;
-    }
-
-    /**
-     * @param null|int $sequence
-     */
-    public function setSequence(?int $sequence): void
-    {
-        $this->sequence = $sequence;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @param Tax $item
-     */
-    public function addTaxId(Tax $item): void
+    public function addTaxId(OdooRelation $item): void
     {
         if ($this->hasTaxId($item)) {
             return;
@@ -928,40 +1136,147 @@ final class Line extends Base
     }
 
     /**
-     * @return null|float
+     * @return string|null
      */
-    public function getPriceReduceTaxinc(): ?float
+    public function getInvoiceStatus(): ?string
     {
-        return $this->price_reduce_taxinc;
+        return $this->invoice_status;
     }
 
     /**
-     * @param ValueAlias $item
+     * @param OdooRelation $item
      */
-    public function removeProductNoVariantAttributeValueIds(ValueAlias $item): void
+    public function removeInvoiceLines(OdooRelation $item): void
     {
-        if (null === $this->product_no_variant_attribute_value_ids) {
-            $this->product_no_variant_attribute_value_ids = [];
+        if (null === $this->invoice_lines) {
+            $this->invoice_lines = [];
         }
 
-        if ($this->hasProductNoVariantAttributeValueIds($item)) {
-            $index = array_search($item, $this->product_no_variant_attribute_value_ids);
-            unset($this->product_no_variant_attribute_value_ids[$index]);
+        if ($this->hasInvoiceLines($item)) {
+            $index = array_search($item, $this->invoice_lines);
+            unset($this->invoice_lines[$index]);
         }
     }
 
     /**
-     * @param null|Value[] $product_custom_attribute_value_ids
+     * @param OdooRelation $item
      */
-    public function setProductCustomAttributeValueIds(?array $product_custom_attribute_value_ids): void
+    public function addInvoiceLines(OdooRelation $item): void
     {
-        $this->product_custom_attribute_value_ids = $product_custom_attribute_value_ids;
+        if ($this->hasInvoiceLines($item)) {
+            return;
+        }
+
+        if (null === $this->invoice_lines) {
+            $this->invoice_lines = [];
+        }
+
+        $this->invoice_lines[] = $item;
     }
 
     /**
-     * @param ValueAlias $item
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function addProductNoVariantAttributeValueIds(ValueAlias $item): void
+    public function hasInvoiceLines(OdooRelation $item): bool
+    {
+        if (null === $this->invoice_lines) {
+            return false;
+        }
+
+        return in_array($item, $this->invoice_lines);
+    }
+
+    /**
+     * @param OdooRelation[]|null $invoice_lines
+     */
+    public function setInvoiceLines(?array $invoice_lines): void
+    {
+        $this->invoice_lines = $invoice_lines;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getInvoiceLines(): ?array
+    {
+        return $this->invoice_lines;
+    }
+
+    /**
+     * @param int|null $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSequence(): ?int
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param OdooRelation $order_id
+     */
+    public function setOrderId(OdooRelation $order_id): void
+    {
+        $this->order_id = $order_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasTaxId(OdooRelation $item): bool
+    {
+        if (null === $this->tax_id) {
+            return false;
+        }
+
+        return in_array($item, $this->tax_id);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeTaxId(OdooRelation $item): void
+    {
+        if (null === $this->tax_id) {
+            $this->tax_id = [];
+        }
+
+        if ($this->hasTaxId($item)) {
+            $index = array_search($item, $this->tax_id);
+            unset($this->tax_id[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addProductNoVariantAttributeValueIds(OdooRelation $item): void
     {
         if ($this->hasProductNoVariantAttributeValueIds($item)) {
             return;
@@ -975,22 +1290,29 @@ final class Line extends Base
     }
 
     /**
-     * @param ValueAlias $item
-     * @param bool $strict
+     * @return OdooRelation|null
+     */
+    public function getProductUom(): ?OdooRelation
+    {
+        return $this->product_uom;
+    }
+
+    /**
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasProductNoVariantAttributeValueIds(ValueAlias $item, bool $strict = true): bool
+    public function hasProductNoVariantAttributeValueIds(OdooRelation $item): bool
     {
         if (null === $this->product_no_variant_attribute_value_ids) {
             return false;
         }
 
-        return in_array($item, $this->product_no_variant_attribute_value_ids, $strict);
+        return in_array($item, $this->product_no_variant_attribute_value_ids);
     }
 
     /**
-     * @param null|ValueAlias[] $product_no_variant_attribute_value_ids
+     * @param OdooRelation[]|null $product_no_variant_attribute_value_ids
      */
     public function setProductNoVariantAttributeValueIds(
         ?array $product_no_variant_attribute_value_ids
@@ -999,9 +1321,17 @@ final class Line extends Base
     }
 
     /**
-     * @param Value $item
+     * @return OdooRelation[]|null
      */
-    public function removeProductCustomAttributeValueIds(Value $item): void
+    public function getProductNoVariantAttributeValueIds(): ?array
+    {
+        return $this->product_no_variant_attribute_value_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeProductCustomAttributeValueIds(OdooRelation $item): void
     {
         if (null === $this->product_custom_attribute_value_ids) {
             $this->product_custom_attribute_value_ids = [];
@@ -1014,9 +1344,9 @@ final class Line extends Base
     }
 
     /**
-     * @param Value $item
+     * @param OdooRelation $item
      */
-    public function addProductCustomAttributeValueIds(Value $item): void
+    public function addProductCustomAttributeValueIds(OdooRelation $item): void
     {
         if ($this->hasProductCustomAttributeValueIds($item)) {
             return;
@@ -1030,40 +1360,55 @@ final class Line extends Base
     }
 
     /**
-     * @param Value $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasProductCustomAttributeValueIds(Value $item, bool $strict = true): bool
+    public function hasProductCustomAttributeValueIds(OdooRelation $item): bool
     {
         if (null === $this->product_custom_attribute_value_ids) {
             return false;
         }
 
-        return in_array($item, $this->product_custom_attribute_value_ids, $strict);
+        return in_array($item, $this->product_custom_attribute_value_ids);
     }
 
     /**
-     * @return null|Category
+     * @param OdooRelation[]|null $product_custom_attribute_value_ids
      */
-    public function getProductUomCategoryId(): ?Category
+    public function setProductCustomAttributeValueIds(?array $product_custom_attribute_value_ids): void
+    {
+        $this->product_custom_attribute_value_ids = $product_custom_attribute_value_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getProductCustomAttributeValueIds(): ?array
+    {
+        return $this->product_custom_attribute_value_ids;
+    }
+
+    /**
+     * @param OdooRelation|null $product_uom_category_id
+     */
+    public function setProductUomCategoryId(?OdooRelation $product_uom_category_id): void
+    {
+        $this->product_uom_category_id = $product_uom_category_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getProductUomCategoryId(): ?OdooRelation
     {
         return $this->product_uom_category_id;
     }
 
     /**
-     * @return null|float
+     * @param OdooRelation|null $product_uom
      */
-    public function getPriceReduceTaxexcl(): ?float
-    {
-        return $this->price_reduce_taxexcl;
-    }
-
-    /**
-     * @param null|Uom $product_uom
-     */
-    public function setProductUom(?Uom $product_uom): void
+    public function setProductUom(?OdooRelation $product_uom): void
     {
         $this->product_uom = $product_uom;
     }
@@ -1077,7 +1422,31 @@ final class Line extends Base
     }
 
     /**
-     * @return null|bool
+     * @return float|null
+     */
+    public function getPriceReduceTaxinc(): ?float
+    {
+        return $this->price_reduce_taxinc;
+    }
+
+    /**
+     * @return float
+     */
+    public function getProductUomQty(): float
+    {
+        return $this->product_uom_qty;
+    }
+
+    /**
+     * @param bool|null $product_updatable
+     */
+    public function setProductUpdatable(?bool $product_updatable): void
+    {
+        $this->product_updatable = $product_updatable;
+    }
+
+    /**
+     * @return bool|null
      */
     public function isProductUpdatable(): ?bool
     {
@@ -1085,23 +1454,39 @@ final class Line extends Base
     }
 
     /**
-     * @return null|Template
+     * @param OdooRelation|null $product_template_id
      */
-    public function getProductTemplateId(): ?Template
+    public function setProductTemplateId(?OdooRelation $product_template_id): void
+    {
+        $this->product_template_id = $product_template_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getProductTemplateId(): ?OdooRelation
     {
         return $this->product_template_id;
     }
 
     /**
-     * @param null|Product $product_id
+     * @param OdooRelation|null $product_id
      */
-    public function setProductId(?Product $product_id): void
+    public function setProductId(?OdooRelation $product_id): void
     {
         $this->product_id = $product_id;
     }
 
     /**
-     * @param null|float $discount
+     * @return OdooRelation|null
+     */
+    public function getProductId(): ?OdooRelation
+    {
+        return $this->product_id;
+    }
+
+    /**
+     * @param float|null $discount
      */
     public function setDiscount(?float $discount): void
     {
@@ -1109,10 +1494,42 @@ final class Line extends Base
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return float|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getDiscount(): ?float
     {
-        return $this->write_date;
+        return $this->discount;
+    }
+
+    /**
+     * @param float|null $price_reduce_taxexcl
+     */
+    public function setPriceReduceTaxexcl(?float $price_reduce_taxexcl): void
+    {
+        $this->price_reduce_taxexcl = $price_reduce_taxexcl;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getPriceReduceTaxexcl(): ?float
+    {
+        return $this->price_reduce_taxexcl;
+    }
+
+    /**
+     * @param float|null $price_reduce_taxinc
+     */
+    public function setPriceReduceTaxinc(?float $price_reduce_taxinc): void
+    {
+        $this->price_reduce_taxinc = $price_reduce_taxinc;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

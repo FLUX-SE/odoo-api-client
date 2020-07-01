@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Flux\OdooApiClient\Serializer\Factory;
 
+use Flux\OdooApiClient\Serializer\OdooNameConverter;
+use Flux\OdooApiClient\Serializer\OdooRelationNormalizer;
 use Flux\OdooApiClient\Serializer\XmlRpcDecoder;
 use Flux\OdooApiClient\Serializer\XmlRpcEncoder;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
-use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -17,6 +18,9 @@ use Symfony\Component\Serializer\Serializer;
 
 final class SerializerFactory implements SerializerFactoryInterface
 {
+    /** @var string */
+    private $dateFormat = 'Y-m-d H:i:s';
+
     public function create(): Serializer
     {
         $normalizers = $this->setupNormalizers();
@@ -31,32 +35,15 @@ final class SerializerFactory implements SerializerFactoryInterface
 
     public function setupNormalizers(): array
     {
+        $objectNormalizer = $this->setupObjectNormalizer();
+
         return [
-            new DateTimeNormalizer(),
             new ArrayDenormalizer(),
-            new ObjectNormalizer(
-                null,
-                new CamelCaseToSnakeCaseNameConverter(),
-                null,
-                new PropertyInfoExtractor(
-                    [
-                        new ReflectionExtractor(),
-                    ],
-                    [
-                        new PhpDocExtractor(),
-                        new ReflectionExtractor(),
-                    ],
-                    [
-                        new PhpDocExtractor(),
-                    ],
-                    [
-                        new ReflectionExtractor(),
-                    ],
-                    [
-                        new ReflectionExtractor(),
-                    ]
-                )
-            ),
+            new DateTimeNormalizer([
+                DateTimeNormalizer::FORMAT_KEY => $this->dateFormat,
+            ]),
+            new OdooRelationNormalizer(),
+            $objectNormalizer,
         ];
     }
 
@@ -66,5 +53,59 @@ final class SerializerFactory implements SerializerFactoryInterface
             new XmlRpcEncoder(),
             new XmlRpcDecoder(),
         ];
+    }
+
+    /**
+     * @return ObjectNormalizer
+     */
+    public function setupObjectNormalizer(): ObjectNormalizer
+    {
+        return new ObjectNormalizer(
+            null,
+            new OdooNameConverter(),
+            null,
+            new PropertyInfoExtractor(
+                [
+                    new ReflectionExtractor(),
+                ],
+                [
+                    new PhpDocExtractor(),
+                    new ReflectionExtractor(),
+                ],
+                [
+                    new PhpDocExtractor(),
+                ],
+                [
+                    new ReflectionExtractor(),
+                ],
+                [
+                    new ReflectionExtractor(),
+                ]
+            ),
+            null,
+            null,
+            [
+                ObjectNormalizer::DISABLE_TYPE_ENFORCEMENT => true,
+                ObjectNormalizer::SKIP_NULL_VALUES => true,
+                ObjectNormalizer::IGNORED_ATTRIBUTES => [
+                    'id',
+                    'displayName',
+                    'lastUpdate',
+                ],
+                ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+                    return $object->getId() ?? 0;
+                },
+            ],
+        );
+    }
+
+    public function getDateFormat(): string
+    {
+        return $this->dateFormat;
+    }
+
+    public function setDateFormat(string $dateFormat): void
+    {
+        $this->dateFormat = $dateFormat;
     }
 }

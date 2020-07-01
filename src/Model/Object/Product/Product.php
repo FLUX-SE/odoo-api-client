@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Flux\OdooApiClient\Model\Object\Product;
 
-use Flux\OdooApiClient\Model\Object\Product\Product as ProductAlias;
-use Flux\OdooApiClient\Model\Object\Product\Template\Attribute\Value;
-use Flux\OdooApiClient\Model\Object\Uom\Uom;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : product.product
@@ -14,144 +12,299 @@ use Flux\OdooApiClient\Model\Object\Uom\Uom;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Product extends Template
 {
+    public const ODOO_MODEL_NAME = 'product.product';
+
     /**
      * Variant Price Extra
      * This is the sum of the extra price of all attributes
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|float
+     * @var float|null
      */
     private $price_extra;
 
     /**
      * Reference
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $code;
 
     /**
      * Customer Ref
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $partner_ref;
 
     /**
      * Product Template
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Template
+     * @var OdooRelation
      */
     private $product_tmpl_id;
 
     /**
      * Attribute Values
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Value[]
+     * @var OdooRelation[]|null
      */
     private $product_template_attribute_value_ids;
 
     /**
      * Combination Indices
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $combination_indices;
 
     /**
      * Variant Image
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $image_variant_1920;
 
     /**
      * Variant Image 1024
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $image_variant_1024;
 
     /**
      * Variant Image 512
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $image_variant_512;
 
     /**
      * Variant Image 256
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $image_variant_256;
 
     /**
      * Variant Image 128
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $image_variant_128;
 
     /**
      * Can Variant Image 1024 be zoomed
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $can_image_variant_1024_be_zoomed;
 
     /**
-     * @param Template $product_tmpl_id Product Template
+     * @param OdooRelation $product_tmpl_id Product Template
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $name Name
-     * @param array $type Product Type
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $type Product Type
      *        A storable product is a product for which you manage stock. The Inventory app has to be installed.
      *        A consumable product is a product for which stock is not managed.
      *        A service is a non-material product you provide.
-     * @param Category $categ_id Product Category
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> consu (Consumable)
+     *            -> service (Service)
+     *
+     * @param OdooRelation $categ_id Product Category
      *        Select category for the current product
-     * @param Uom $uom_id Unit of Measure
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $uom_id Unit of Measure
      *        Default unit of measure used for all stock operations.
-     * @param Uom $uom_po_id Purchase Unit of Measure
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $uom_po_id Purchase Unit of Measure
      *        Default unit of measure used for purchase orders. It must be in the same category as the default unit of
      *        measure.
-     * @param ProductAlias[] $product_variant_ids Products
-     * @param array $sale_line_warn Sales Order Line
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation[] $product_variant_ids Products
+     *        Searchable : yes
+     *        Sortable : no
+     * @param string $sale_line_warn Sales Order Line
      *        Selecting the "Warning" option will notify user with the message, Selecting "Blocking Message" will throw an
      *        exception with the message and block the flow. The Message has to be written in the next field.
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> no-message (No Message)
+     *            -> warning (Warning)
+     *            -> block (Blocking Message)
+     *
      */
     public function __construct(
-        Template $product_tmpl_id,
+        OdooRelation $product_tmpl_id,
         string $name,
-        array $type,
-        Category $categ_id,
-        Uom $uom_id,
-        Uom $uom_po_id,
+        string $type,
+        OdooRelation $categ_id,
+        OdooRelation $uom_id,
+        OdooRelation $uom_po_id,
         array $product_variant_ids,
-        array $sale_line_warn
+        string $sale_line_warn
     ) {
         $this->product_tmpl_id = $product_tmpl_id;
         parent::__construct(
-            $name, 
-            $type, 
-            $categ_id, 
-            $uom_id, 
-            $uom_po_id, 
-            $product_variant_ids, 
+            $name,
+            $type,
+            $categ_id,
+            $uom_id,
+            $uom_po_id,
+            $product_variant_ids,
             $sale_line_warn
         );
     }
 
     /**
-     * @return null|float
+     * @param string|null $combination_indices
+     */
+    public function setCombinationIndices(?string $combination_indices): void
+    {
+        $this->combination_indices = $combination_indices;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isCanImageVariant1024BeZoomed(): ?bool
+    {
+        return $this->can_image_variant_1024_be_zoomed;
+    }
+
+    /**
+     * @param int|null $image_variant_128
+     */
+    public function setImageVariant128(?int $image_variant_128): void
+    {
+        $this->image_variant_128 = $image_variant_128;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getImageVariant128(): ?int
+    {
+        return $this->image_variant_128;
+    }
+
+    /**
+     * @param int|null $image_variant_256
+     */
+    public function setImageVariant256(?int $image_variant_256): void
+    {
+        $this->image_variant_256 = $image_variant_256;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getImageVariant256(): ?int
+    {
+        return $this->image_variant_256;
+    }
+
+    /**
+     * @param int|null $image_variant_512
+     */
+    public function setImageVariant512(?int $image_variant_512): void
+    {
+        $this->image_variant_512 = $image_variant_512;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getImageVariant512(): ?int
+    {
+        return $this->image_variant_512;
+    }
+
+    /**
+     * @param int|null $image_variant_1024
+     */
+    public function setImageVariant1024(?int $image_variant_1024): void
+    {
+        $this->image_variant_1024 = $image_variant_1024;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getImageVariant1024(): ?int
+    {
+        return $this->image_variant_1024;
+    }
+
+    /**
+     * @param int|null $image_variant_1920
+     */
+    public function setImageVariant1920(?int $image_variant_1920): void
+    {
+        $this->image_variant_1920 = $image_variant_1920;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getImageVariant1920(): ?int
+    {
+        return $this->image_variant_1920;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCombinationIndices(): ?string
+    {
+        return $this->combination_indices;
+    }
+
+    /**
+     * @return float|null
      */
     public function getPriceExtra(): ?float
     {
@@ -159,56 +312,24 @@ final class Product extends Template
     }
 
     /**
-     * @return null|string
+     * @param OdooRelation $item
      */
-    public function getCode(): ?string
-    {
-        return $this->code;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getPartnerRef(): ?string
-    {
-        return $this->partner_ref;
-    }
-
-    /**
-     * @param Template $product_tmpl_id
-     */
-    public function setProductTmplId(Template $product_tmpl_id): void
-    {
-        $this->product_tmpl_id = $product_tmpl_id;
-    }
-
-    /**
-     * @param null|Value[] $product_template_attribute_value_ids
-     */
-    public function setProductTemplateAttributeValueIds(?array $product_template_attribute_value_ids): void
-    {
-        $this->product_template_attribute_value_ids = $product_template_attribute_value_ids;
-    }
-
-    /**
-     * @param Value $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasProductTemplateAttributeValueIds(Value $item, bool $strict = true): bool
+    public function removeProductTemplateAttributeValueIds(OdooRelation $item): void
     {
         if (null === $this->product_template_attribute_value_ids) {
-            return false;
+            $this->product_template_attribute_value_ids = [];
         }
 
-        return in_array($item, $this->product_template_attribute_value_ids, $strict);
+        if ($this->hasProductTemplateAttributeValueIds($item)) {
+            $index = array_search($item, $this->product_template_attribute_value_ids);
+            unset($this->product_template_attribute_value_ids[$index]);
+        }
     }
 
     /**
-     * @param Value $item
+     * @param OdooRelation $item
      */
-    public function addProductTemplateAttributeValueIds(Value $item): void
+    public function addProductTemplateAttributeValueIds(OdooRelation $item): void
     {
         if ($this->hasProductTemplateAttributeValueIds($item)) {
             return;
@@ -222,73 +343,96 @@ final class Product extends Template
     }
 
     /**
-     * @param Value $item
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removeProductTemplateAttributeValueIds(Value $item): void
+    public function hasProductTemplateAttributeValueIds(OdooRelation $item): bool
     {
         if (null === $this->product_template_attribute_value_ids) {
-            $this->product_template_attribute_value_ids = [];
+            return false;
         }
 
-        if ($this->hasProductTemplateAttributeValueIds($item)) {
-            $index = array_search($item, $this->product_template_attribute_value_ids);
-            unset($this->product_template_attribute_value_ids[$index]);
-        }
+        return in_array($item, $this->product_template_attribute_value_ids);
     }
 
     /**
-     * @return null|string
+     * @param OdooRelation[]|null $product_template_attribute_value_ids
      */
-    public function getCombinationIndices(): ?string
+    public function setProductTemplateAttributeValueIds(?array $product_template_attribute_value_ids): void
     {
-        return $this->combination_indices;
+        $this->product_template_attribute_value_ids = $product_template_attribute_value_ids;
     }
 
     /**
-     * @param null|int $image_variant_1920
+     * @return OdooRelation[]|null
      */
-    public function setImageVariant1920(?int $image_variant_1920): void
+    public function getProductTemplateAttributeValueIds(): ?array
     {
-        $this->image_variant_1920 = $image_variant_1920;
+        return $this->product_template_attribute_value_ids;
     }
 
     /**
-     * @return null|int
+     * @param OdooRelation $product_tmpl_id
      */
-    public function getImageVariant1024(): ?int
+    public function setProductTmplId(OdooRelation $product_tmpl_id): void
     {
-        return $this->image_variant_1024;
+        $this->product_tmpl_id = $product_tmpl_id;
     }
 
     /**
-     * @return null|int
+     * @return OdooRelation
      */
-    public function getImageVariant512(): ?int
+    public function getProductTmplId(): OdooRelation
     {
-        return $this->image_variant_512;
+        return $this->product_tmpl_id;
     }
 
     /**
-     * @return null|int
+     * @param string|null $partner_ref
      */
-    public function getImageVariant256(): ?int
+    public function setPartnerRef(?string $partner_ref): void
     {
-        return $this->image_variant_256;
+        $this->partner_ref = $partner_ref;
     }
 
     /**
-     * @return null|int
+     * @return string|null
      */
-    public function getImageVariant128(): ?int
+    public function getPartnerRef(): ?string
     {
-        return $this->image_variant_128;
+        return $this->partner_ref;
     }
 
     /**
-     * @return null|bool
+     * @param string|null $code
      */
-    public function isCanImageVariant1024BeZoomed(): ?bool
+    public function setCode(?string $code): void
     {
-        return $this->can_image_variant_1024_be_zoomed;
+        $this->code = $code;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param float|null $price_extra
+     */
+    public function setPriceExtra(?float $price_extra): void
+    {
+        $this->price_extra = $price_extra;
+    }
+
+    /**
+     * @param bool|null $can_image_variant_1024_be_zoomed
+     */
+    public function setCanImageVariant1024BeZoomed(?bool $can_image_variant_1024_be_zoomed): void
+    {
+        $this->can_image_variant_1024_be_zoomed = $can_image_variant_1024_be_zoomed;
     }
 }

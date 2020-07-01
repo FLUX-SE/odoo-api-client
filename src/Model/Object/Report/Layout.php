@@ -6,8 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Report;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Ui\View;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : report.layout
@@ -15,122 +14,142 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Layout extends Base
 {
+    public const ODOO_MODEL_NAME = 'report.layout';
+
     /**
      * Document Template
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var View
+     * @var OdooRelation
      */
     private $view_id;
 
     /**
      * Preview image src
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $image;
 
     /**
      * Preview pdf src
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $pdf;
 
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $name;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param View $view_id Document Template
+     * @param OdooRelation $view_id Document Template
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(View $view_id)
+    public function __construct(OdooRelation $view_id)
     {
         $this->view_id = $view_id;
     }
 
     /**
-     * @param View $view_id
+     * @return OdooRelation|null
      */
-    public function setViewId(View $view_id): void
-    {
-        $this->view_id = $view_id;
-    }
-
-    /**
-     * @param null|string $image
-     */
-    public function setImage(?string $image): void
-    {
-        $this->image = $image;
-    }
-
-    /**
-     * @param null|string $pdf
-     */
-    public function setPdf(?string $pdf): void
-    {
-        $this->pdf = $pdf;
-    }
-
-    /**
-     * @param null|string $name
-     */
-    public function setName(?string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -138,18 +157,82 @@ final class Layout extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getWriteUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->write_uid;
+        $this->create_uid = $create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param string|null $name
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function setName(?string $name): void
     {
-        return $this->write_date;
+        $this->name = $name;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getViewId(): OdooRelation
+    {
+        return $this->view_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string|null $pdf
+     */
+    public function setPdf(?string $pdf): void
+    {
+        $this->pdf = $pdf;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPdf(): ?string
+    {
+        return $this->pdf;
+    }
+
+    /**
+     * @param string|null $image
+     */
+    public function setImage(?string $image): void
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param OdooRelation $view_id
+     */
+    public function setViewId(OdooRelation $view_id): void
+    {
+        $this->view_id = $view_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

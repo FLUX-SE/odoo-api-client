@@ -6,24 +6,27 @@ namespace Flux\OdooApiClient\Model\Object\Portal;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : portal.share
  * Name : portal.share
  * Info :
  * Model super-class for transient records, meant to be temporarily
- * persistent, and regularly vacuum-cleaned.
+ *         persistent, and regularly vacuum-cleaned.
  *
- * A TransientModel has a simplified access rights management, all users can
- * create new records, and may only access the records they created. The
- * superuser has unrestricted access to all TransientModel records.
+ *         A TransientModel has a simplified access rights management, all users can
+ *         create new records, and may only access the records they created. The
+ *         superuser has unrestricted access to all TransientModel records.
  */
 final class Share extends Base
 {
+    public const ODOO_MODEL_NAME = 'portal.share';
+
     /**
      * Related Document Model
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -31,6 +34,8 @@ final class Share extends Base
 
     /**
      * Related Document ID
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var int
      */
@@ -38,65 +43,87 @@ final class Share extends Base
 
     /**
      * Recipients
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var Partner[]
+     * @var OdooRelation[]
      */
     private $partner_ids;
 
     /**
      * Note
      * Add extra content to display in the email
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $note;
 
     /**
      * Link
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $share_link;
 
     /**
      * Access warning
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $access_warning;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $res_model Related Document Model
+     *        Searchable : yes
+     *        Sortable : yes
      * @param int $res_id Related Document ID
-     * @param Partner[] $partner_ids Recipients
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation[] $partner_ids Recipients
+     *        Searchable : yes
+     *        Sortable : no
      */
     public function __construct(string $res_model, int $res_id, array $partner_ids)
     {
@@ -106,11 +133,164 @@ final class Share extends Base
     }
 
     /**
-     * @param string $res_model
+     * @param string|null $share_link
      */
-    public function setResModel(string $res_model): void
+    public function setShareLink(?string $share_link): void
     {
-        $this->res_model = $res_model;
+        $this->share_link = $share_link;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param string|null $access_warning
+     */
+    public function setAccessWarning(?string $access_warning): void
+    {
+        $this->access_warning = $access_warning;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAccessWarning(): ?string
+    {
+        return $this->access_warning;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getShareLink(): ?string
+    {
+        return $this->share_link;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResModel(): string
+    {
+        return $this->res_model;
+    }
+
+    /**
+     * @param string|null $note
+     */
+    public function setNote(?string $note): void
+    {
+        $this->note = $note;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNote(): ?string
+    {
+        return $this->note;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removePartnerIds(OdooRelation $item): void
+    {
+        if ($this->hasPartnerIds($item)) {
+            $index = array_search($item, $this->partner_ids);
+            unset($this->partner_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addPartnerIds(OdooRelation $item): void
+    {
+        if ($this->hasPartnerIds($item)) {
+            return;
+        }
+
+        $this->partner_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasPartnerIds(OdooRelation $item): bool
+    {
+        return in_array($item, $this->partner_ids);
+    }
+
+    /**
+     * @param OdooRelation[] $partner_ids
+     */
+    public function setPartnerIds(array $partner_ids): void
+    {
+        $this->partner_ids = $partner_ids;
+    }
+
+    /**
+     * @return OdooRelation[]
+     */
+    public function getPartnerIds(): array
+    {
+        return $this->partner_ids;
     }
 
     /**
@@ -122,100 +302,26 @@ final class Share extends Base
     }
 
     /**
-     * @param Partner[] $partner_ids
+     * @return int
      */
-    public function setPartnerIds(array $partner_ids): void
+    public function getResId(): int
     {
-        $this->partner_ids = $partner_ids;
+        return $this->res_id;
     }
 
     /**
-     * @param Partner $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param string $res_model
      */
-    public function hasPartnerIds(Partner $item, bool $strict = true): bool
+    public function setResModel(string $res_model): void
     {
-        return in_array($item, $this->partner_ids, $strict);
+        $this->res_model = $res_model;
     }
 
     /**
-     * @param Partner $item
+     * @param DateTimeInterface|null $write_date
      */
-    public function addPartnerIds(Partner $item): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        if ($this->hasPartnerIds($item)) {
-            return;
-        }
-
-        $this->partner_ids[] = $item;
-    }
-
-    /**
-     * @param Partner $item
-     */
-    public function removePartnerIds(Partner $item): void
-    {
-        if ($this->hasPartnerIds($item)) {
-            $index = array_search($item, $this->partner_ids);
-            unset($this->partner_ids[$index]);
-        }
-    }
-
-    /**
-     * @param null|string $note
-     */
-    public function setNote(?string $note): void
-    {
-        $this->note = $note;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getShareLink(): ?string
-    {
-        return $this->share_link;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getAccessWarning(): ?string
-    {
-        return $this->access_warning;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

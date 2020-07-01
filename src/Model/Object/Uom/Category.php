@@ -6,7 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Uom;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : uom.category
@@ -14,18 +14,22 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Category extends Base
 {
+    public const ODOO_MODEL_NAME = 'uom.category';
+
     /**
      * Unit of Measure Category
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -33,45 +37,72 @@ final class Category extends Base
 
     /**
      * Type of Measure
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> unit (Default Units)
+     *     -> weight (Default Weight)
+     *     -> working_time (Default Working Time)
+     *     -> length (Default Length)
+     *     -> volume (Default Volume)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $measure_type;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Unit of Measure Category
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     /**
@@ -83,69 +114,39 @@ final class Category extends Base
     }
 
     /**
-     * @param null|array $measure_type
+     * @return string|null
      */
-    public function setMeasureType(?array $measure_type): void
+    public function getMeasureType(): ?string
+    {
+        return $this->measure_type;
+    }
+
+    /**
+     * @param string|null $measure_type
+     */
+    public function setMeasureType(?string $measure_type): void
     {
         $this->measure_type = $measure_type;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return OdooRelation|null
      */
-    public function hasMeasureType($item, bool $strict = true): bool
-    {
-        if (null === $this->measure_type) {
-            return false;
-        }
-
-        return in_array($item, $this->measure_type, $strict);
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addMeasureType($item): void
-    {
-        if ($this->hasMeasureType($item)) {
-            return;
-        }
-
-        if (null === $this->measure_type) {
-            $this->measure_type = [];
-        }
-
-        $this->measure_type[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeMeasureType($item): void
-    {
-        if (null === $this->measure_type) {
-            $this->measure_type = [];
-        }
-
-        if ($this->hasMeasureType($item)) {
-            $index = array_search($item, $this->measure_type);
-            unset($this->measure_type[$index]);
-        }
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -153,18 +154,42 @@ final class Category extends Base
     }
 
     /**
-     * @return null|Users
+     * @param DateTimeInterface|null $create_date
      */
-    public function getWriteUid(): ?Users
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

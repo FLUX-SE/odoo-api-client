@@ -6,26 +6,26 @@ namespace Flux\OdooApiClient\Model\Object\Ir;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Model as ModelAlias;
-use Flux\OdooApiClient\Model\Object\Ir\Model\Access;
-use Flux\OdooApiClient\Model\Object\Ir\Model\Fields;
-use Flux\OdooApiClient\Model\Object\Ir\Ui\View;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.model
  * Name : ir.model
  * Info :
  * Mixin that overrides the create and write methods to properly generate
- * ir.model.data entries flagged with Studio for the corresponding resources.
- * Doesn't create an ir.model.data if the record is part of a module being
- * currently installed as the ir.model.data will be created automatically
- * afterwards.
+ *                 ir.model.data entries flagged with Studio for the corresponding resources.
+ *                 Doesn't create an ir.model.data if the record is part of a module being
+ *                 currently installed as the ir.model.data will be created automatically
+ *                 afterwards.
  */
 final class Model extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.model';
+
     /**
      * Model Description
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -33,6 +33,8 @@ final class Model extends Base
 
     /**
      * Model
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -40,141 +42,187 @@ final class Model extends Base
 
     /**
      * Information
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $info;
 
     /**
      * Fields
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var Fields[]
+     * @var OdooRelation[]
      */
     private $field_id;
 
     /**
      * Inherited models
      * The list of models that extends the current model.
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|ModelAlias[]
+     * @var OdooRelation[]|null
      */
     private $inherited_model_ids;
 
     /**
      * Type
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> manual (Custom Object)
+     *     -> base (Base Object)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $state;
 
     /**
      * Access
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Access[]
+     * @var OdooRelation[]|null
      */
     private $access_ids;
 
     /**
      * Record Rules
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Rule[]
+     * @var OdooRelation[]|null
      */
     private $rule_ids;
 
     /**
      * Transient Model
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $transient;
 
     /**
      * In Apps
      * List of modules in which the object is defined or inherited
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $modules;
 
     /**
      * Views
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|View[]
+     * @var OdooRelation[]|null
      */
     private $view_ids;
 
     /**
      * Count (Incl. Archived)
      * Total number of records in this model
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $count;
 
     /**
      * Mail Thread
      * Whether this model supports messages and notifications.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $is_mail_thread;
 
     /**
      * Mail Activity
      * Whether this model supports activities.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $is_mail_activity;
 
     /**
      * Mail Blacklist
      * Whether this model supports blacklist.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $is_mail_blacklist;
 
     /**
      * Mail Thread SMS
      * Whether this model supports messages and notifications through SMS
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $is_mail_thread_sms;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Model Description
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $model Model
-     * @param Fields[] $field_id Fields
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation[] $field_id Fields
+     *        Searchable : yes
+     *        Sortable : no
      */
     public function __construct(string $name, string $model, array $field_id)
     {
@@ -184,9 +232,380 @@ final class Model extends Base
     }
 
     /**
-     * @param Rule $item
+     * @return bool|null
      */
-    public function addRuleIds(Rule $item): void
+    public function isIsMailActivity(): ?bool
+    {
+        return $this->is_mail_activity;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getModules(): ?string
+    {
+        return $this->modules;
+    }
+
+    /**
+     * @param string|null $modules
+     */
+    public function setModules(?string $modules): void
+    {
+        $this->modules = $modules;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getViewIds(): ?array
+    {
+        return $this->view_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $view_ids
+     */
+    public function setViewIds(?array $view_ids): void
+    {
+        $this->view_ids = $view_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasViewIds(OdooRelation $item): bool
+    {
+        if (null === $this->view_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->view_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addViewIds(OdooRelation $item): void
+    {
+        if ($this->hasViewIds($item)) {
+            return;
+        }
+
+        if (null === $this->view_ids) {
+            $this->view_ids = [];
+        }
+
+        $this->view_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeViewIds(OdooRelation $item): void
+    {
+        if (null === $this->view_ids) {
+            $this->view_ids = [];
+        }
+
+        if ($this->hasViewIds($item)) {
+            $index = array_search($item, $this->view_ids);
+            unset($this->view_ids[$index]);
+        }
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCount(): ?int
+    {
+        return $this->count;
+    }
+
+    /**
+     * @param int|null $count
+     */
+    public function setCount(?int $count): void
+    {
+        $this->count = $count;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsMailThread(): ?bool
+    {
+        return $this->is_mail_thread;
+    }
+
+    /**
+     * @param bool|null $is_mail_thread
+     */
+    public function setIsMailThread(?bool $is_mail_thread): void
+    {
+        $this->is_mail_thread = $is_mail_thread;
+    }
+
+    /**
+     * @param bool|null $is_mail_activity
+     */
+    public function setIsMailActivity(?bool $is_mail_activity): void
+    {
+        $this->is_mail_activity = $is_mail_activity;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isTransient(): ?bool
+    {
+        return $this->transient;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsMailBlacklist(): ?bool
+    {
+        return $this->is_mail_blacklist;
+    }
+
+    /**
+     * @param bool|null $is_mail_blacklist
+     */
+    public function setIsMailBlacklist(?bool $is_mail_blacklist): void
+    {
+        $this->is_mail_blacklist = $is_mail_blacklist;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsMailThreadSms(): ?bool
+    {
+        return $this->is_mail_thread_sms;
+    }
+
+    /**
+     * @param bool|null $is_mail_thread_sms
+     */
+    public function setIsMailThreadSms(?bool $is_mail_thread_sms): void
+    {
+        $this->is_mail_thread_sms = $is_mail_thread_sms;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param bool|null $transient
+     */
+    public function setTransient(?bool $transient): void
+    {
+        $this->transient = $transient;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeRuleIds(OdooRelation $item): void
+    {
+        if (null === $this->rule_ids) {
+            $this->rule_ids = [];
+        }
+
+        if ($this->hasRuleIds($item)) {
+            $index = array_search($item, $this->rule_ids);
+            unset($this->rule_ids[$index]);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param OdooRelation[]|null $inherited_model_ids
+     */
+    public function setInheritedModelIds(?array $inherited_model_ids): void
+    {
+        $this->inherited_model_ids = $inherited_model_ids;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getModel(): string
+    {
+        return $this->model;
+    }
+
+    /**
+     * @param string $model
+     */
+    public function setModel(string $model): void
+    {
+        $this->model = $model;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getInfo(): ?string
+    {
+        return $this->info;
+    }
+
+    /**
+     * @param string|null $info
+     */
+    public function setInfo(?string $info): void
+    {
+        $this->info = $info;
+    }
+
+    /**
+     * @return OdooRelation[]
+     */
+    public function getFieldId(): array
+    {
+        return $this->field_id;
+    }
+
+    /**
+     * @param OdooRelation[] $field_id
+     */
+    public function setFieldId(array $field_id): void
+    {
+        $this->field_id = $field_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasFieldId(OdooRelation $item): bool
+    {
+        return in_array($item, $this->field_id);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addFieldId(OdooRelation $item): void
+    {
+        if ($this->hasFieldId($item)) {
+            return;
+        }
+
+        $this->field_id[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeFieldId(OdooRelation $item): void
+    {
+        if ($this->hasFieldId($item)) {
+            $index = array_search($item, $this->field_id);
+            unset($this->field_id[$index]);
+        }
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getInheritedModelIds(): ?array
+    {
+        return $this->inherited_model_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasInheritedModelIds(OdooRelation $item): bool
+    {
+        if (null === $this->inherited_model_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->inherited_model_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addRuleIds(OdooRelation $item): void
     {
         if ($this->hasRuleIds($item)) {
             return;
@@ -200,158 +619,86 @@ final class Model extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation $item
      */
-    public function getWriteUid(): ?Users
+    public function addInheritedModelIds(OdooRelation $item): void
     {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|bool
-     */
-    public function isIsMailThreadSms(): ?bool
-    {
-        return $this->is_mail_thread_sms;
-    }
-
-    /**
-     * @param null|bool $is_mail_blacklist
-     */
-    public function setIsMailBlacklist(?bool $is_mail_blacklist): void
-    {
-        $this->is_mail_blacklist = $is_mail_blacklist;
-    }
-
-    /**
-     * @param null|bool $is_mail_activity
-     */
-    public function setIsMailActivity(?bool $is_mail_activity): void
-    {
-        $this->is_mail_activity = $is_mail_activity;
-    }
-
-    /**
-     * @param null|bool $is_mail_thread
-     */
-    public function setIsMailThread(?bool $is_mail_thread): void
-    {
-        $this->is_mail_thread = $is_mail_thread;
-    }
-
-    /**
-     * @return null|int
-     */
-    public function getCount(): ?int
-    {
-        return $this->count;
-    }
-
-    /**
-     * @return null|View[]
-     */
-    public function getViewIds(): ?array
-    {
-        return $this->view_ids;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getModules(): ?string
-    {
-        return $this->modules;
-    }
-
-    /**
-     * @param null|bool $transient
-     */
-    public function setTransient(?bool $transient): void
-    {
-        $this->transient = $transient;
-    }
-
-    /**
-     * @param Rule $item
-     */
-    public function removeRuleIds(Rule $item): void
-    {
-        if (null === $this->rule_ids) {
-            $this->rule_ids = [];
+        if ($this->hasInheritedModelIds($item)) {
+            return;
         }
 
-        if ($this->hasRuleIds($item)) {
-            $index = array_search($item, $this->rule_ids);
-            unset($this->rule_ids[$index]);
+        if (null === $this->inherited_model_ids) {
+            $this->inherited_model_ids = [];
+        }
+
+        $this->inherited_model_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeInheritedModelIds(OdooRelation $item): void
+    {
+        if (null === $this->inherited_model_ids) {
+            $this->inherited_model_ids = [];
+        }
+
+        if ($this->hasInheritedModelIds($item)) {
+            $index = array_search($item, $this->inherited_model_ids);
+            unset($this->inherited_model_ids[$index]);
         }
     }
 
     /**
-     * @param Rule $item
-     * @param bool $strict
+     * @return string|null
+     */
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param string|null $state
+     */
+    public function setState(?string $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getAccessIds(): ?array
+    {
+        return $this->access_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $access_ids
+     */
+    public function setAccessIds(?array $access_ids): void
+    {
+        $this->access_ids = $access_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasRuleIds(Rule $item, bool $strict = true): bool
+    public function hasAccessIds(OdooRelation $item): bool
     {
-        if (null === $this->rule_ids) {
+        if (null === $this->access_ids) {
             return false;
         }
 
-        return in_array($item, $this->rule_ids, $strict);
+        return in_array($item, $this->access_ids);
     }
 
     /**
-     * @param string $name
+     * @param OdooRelation $item
      */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @param null|Rule[] $rule_ids
-     */
-    public function setRuleIds(?array $rule_ids): void
-    {
-        $this->rule_ids = $rule_ids;
-    }
-
-    /**
-     * @param Access $item
-     */
-    public function removeAccessIds(Access $item): void
-    {
-        if (null === $this->access_ids) {
-            $this->access_ids = [];
-        }
-
-        if ($this->hasAccessIds($item)) {
-            $index = array_search($item, $this->access_ids);
-            unset($this->access_ids[$index]);
-        }
-    }
-
-    /**
-     * @param Access $item
-     */
-    public function addAccessIds(Access $item): void
+    public function addAccessIds(OdooRelation $item): void
     {
         if ($this->hasAccessIds($item)) {
             return;
@@ -365,107 +712,55 @@ final class Model extends Base
     }
 
     /**
-     * @param Access $item
-     * @param bool $strict
+     * @param OdooRelation $item
+     */
+    public function removeAccessIds(OdooRelation $item): void
+    {
+        if (null === $this->access_ids) {
+            $this->access_ids = [];
+        }
+
+        if ($this->hasAccessIds($item)) {
+            $index = array_search($item, $this->access_ids);
+            unset($this->access_ids[$index]);
+        }
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getRuleIds(): ?array
+    {
+        return $this->rule_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $rule_ids
+     */
+    public function setRuleIds(?array $rule_ids): void
+    {
+        $this->rule_ids = $rule_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasAccessIds(Access $item, bool $strict = true): bool
+    public function hasRuleIds(OdooRelation $item): bool
     {
-        if (null === $this->access_ids) {
+        if (null === $this->rule_ids) {
             return false;
         }
 
-        return in_array($item, $this->access_ids, $strict);
+        return in_array($item, $this->rule_ids);
     }
 
     /**
-     * @param null|Access[] $access_ids
+     * @param DateTimeInterface|null $write_date
      */
-    public function setAccessIds(?array $access_ids): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->access_ids = $access_ids;
-    }
-
-    /**
-     * @return null|array
-     */
-    public function getState(): ?array
-    {
-        return $this->state;
-    }
-
-    /**
-     * @return null|ModelAlias[]
-     */
-    public function getInheritedModelIds(): ?array
-    {
-        return $this->inherited_model_ids;
-    }
-
-    /**
-     * @param Fields $item
-     */
-    public function removeFieldId(Fields $item): void
-    {
-        if ($this->hasFieldId($item)) {
-            $index = array_search($item, $this->field_id);
-            unset($this->field_id[$index]);
-        }
-    }
-
-    /**
-     * @param Fields $item
-     */
-    public function addFieldId(Fields $item): void
-    {
-        if ($this->hasFieldId($item)) {
-            return;
-        }
-
-        $this->field_id[] = $item;
-    }
-
-    /**
-     * @param Fields $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasFieldId(Fields $item, bool $strict = true): bool
-    {
-        return in_array($item, $this->field_id, $strict);
-    }
-
-    /**
-     * @param Fields[] $field_id
-     */
-    public function setFieldId(array $field_id): void
-    {
-        $this->field_id = $field_id;
-    }
-
-    /**
-     * @param null|string $info
-     */
-    public function setInfo(?string $info): void
-    {
-        $this->info = $info;
-    }
-
-    /**
-     * @param string $model
-     */
-    public function setModel(string $model): void
-    {
-        $this->model = $model;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

@@ -6,9 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Model\Fields;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.property
@@ -16,224 +14,194 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Property extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.property';
+
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $name;
 
     /**
      * Resource
      * If not set, acts as a default value for new resources
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $res_id;
 
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Company
+     * @var OdooRelation|null
      */
     private $company_id;
 
     /**
      * Field
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Fields
+     * @var OdooRelation
      */
     private $fields_id;
 
     /**
      * Value Float
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $value_float;
 
     /**
      * Value Integer
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $value_integer;
 
     /**
      * Value Text
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $value_text;
 
     /**
      * Value Binary
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $value_binary;
 
     /**
      * Value Reference
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $value_reference;
 
     /**
      * Value Datetime
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $value_datetime;
 
     /**
      * Type
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> char (Char)
+     *     -> float (Float)
+     *     -> boolean (Boolean)
+     *     -> integer (Integer)
+     *     -> text (Text)
+     *     -> binary (Binary)
+     *     -> many2one (Many2One)
+     *     -> date (Date)
+     *     -> datetime (DateTime)
+     *     -> selection (Selection)
      *
-     * @var array
+     *
+     * @var string
      */
     private $type;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param Fields $fields_id Field
-     * @param array $type Type
+     * @param OdooRelation $fields_id Field
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $type Type
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> char (Char)
+     *            -> float (Float)
+     *            -> boolean (Boolean)
+     *            -> integer (Integer)
+     *            -> text (Text)
+     *            -> binary (Binary)
+     *            -> many2one (Many2One)
+     *            -> date (Date)
+     *            -> datetime (DateTime)
+     *            -> selection (Selection)
+     *
      */
-    public function __construct(Fields $fields_id, array $type)
+    public function __construct(OdooRelation $fields_id, string $type)
     {
         $this->fields_id = $fields_id;
         $this->type = $type;
     }
 
     /**
-     * @param null|DateTimeInterface $value_datetime
-     */
-    public function setValueDatetime(?DateTimeInterface $value_datetime): void
-    {
-        $this->value_datetime = $value_datetime;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeType($item): void
-    {
-        if ($this->hasType($item)) {
-            $index = array_search($item, $this->type);
-            unset($this->type[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addType($item): void
-    {
-        if ($this->hasType($item)) {
-            return;
-        }
-
-        $this->type[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasType($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->type, $strict);
-    }
-
-    /**
-     * @param array $type
-     */
-    public function setType(array $type): void
-    {
-        $this->type = $type;
-    }
-
-    /**
-     * @param null|string $value_reference
-     */
-    public function setValueReference(?string $value_reference): void
-    {
-        $this->value_reference = $value_reference;
-    }
-
-    /**
-     * @param null|string $name
-     */
-    public function setName(?string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @param null|int $value_binary
+     * @param int|null $value_binary
      */
     public function setValueBinary(?int $value_binary): void
     {
@@ -241,7 +209,127 @@ final class Property extends Base
     }
 
     /**
-     * @param null|string $value_text
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType(string $type): void
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param DateTimeInterface|null $value_datetime
+     */
+    public function setValueDatetime(?DateTimeInterface $value_datetime): void
+    {
+        $this->value_datetime = $value_datetime;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getValueDatetime(): ?DateTimeInterface
+    {
+        return $this->value_datetime;
+    }
+
+    /**
+     * @param string|null $value_reference
+     */
+    public function setValueReference(?string $value_reference): void
+    {
+        $this->value_reference = $value_reference;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getValueReference(): ?string
+    {
+        return $this->value_reference;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getValueBinary(): ?int
+    {
+        return $this->value_binary;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string|null $value_text
      */
     public function setValueText(?string $value_text): void
     {
@@ -249,7 +337,15 @@ final class Property extends Base
     }
 
     /**
-     * @param null|int $value_integer
+     * @return string|null
+     */
+    public function getValueText(): ?string
+    {
+        return $this->value_text;
+    }
+
+    /**
+     * @param int|null $value_integer
      */
     public function setValueInteger(?int $value_integer): void
     {
@@ -257,7 +353,15 @@ final class Property extends Base
     }
 
     /**
-     * @param null|float $value_float
+     * @return int|null
+     */
+    public function getValueInteger(): ?int
+    {
+        return $this->value_integer;
+    }
+
+    /**
+     * @param float|null $value_float
      */
     public function setValueFloat(?float $value_float): void
     {
@@ -265,23 +369,47 @@ final class Property extends Base
     }
 
     /**
-     * @param Fields $fields_id
+     * @return float|null
      */
-    public function setFieldsId(Fields $fields_id): void
+    public function getValueFloat(): ?float
+    {
+        return $this->value_float;
+    }
+
+    /**
+     * @param OdooRelation $fields_id
+     */
+    public function setFieldsId(OdooRelation $fields_id): void
     {
         $this->fields_id = $fields_id;
     }
 
     /**
-     * @param null|Company $company_id
+     * @return OdooRelation
      */
-    public function setCompanyId(?Company $company_id): void
+    public function getFieldsId(): OdooRelation
+    {
+        return $this->fields_id;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
     {
         $this->company_id = $company_id;
     }
 
     /**
-     * @param null|string $res_id
+     * @return OdooRelation|null
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param string|null $res_id
      */
     public function setResId(?string $res_id): void
     {
@@ -289,10 +417,26 @@ final class Property extends Base
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return string|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getResId(): ?string
     {
-        return $this->write_date;
+        return $this->res_id;
+    }
+
+    /**
+     * @param string|null $name
+     */
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

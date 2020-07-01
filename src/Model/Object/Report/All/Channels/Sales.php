@@ -5,17 +5,8 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Report\All\Channels;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Analytic\Account;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Crm\Team;
-use Flux\OdooApiClient\Model\Object\Product\Category;
-use Flux\OdooApiClient\Model\Object\Product\Pricelist;
-use Flux\OdooApiClient\Model\Object\Product\Product;
-use Flux\OdooApiClient\Model\Object\Product\Template;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Country;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : report.all.channels.sales
@@ -23,123 +14,155 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Sales extends Base
 {
+    public const ODOO_MODEL_NAME = 'report.all.channels.sales';
+
     /**
      * Order Reference
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $name;
 
     /**
      * Partner
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Partner
+     * @var OdooRelation|null
      */
     private $partner_id;
 
     /**
      * Product
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Product
+     * @var OdooRelation|null
      */
     private $product_id;
 
     /**
      * Product Template
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Template
+     * @var OdooRelation|null
      */
     private $product_tmpl_id;
 
     /**
      * Date Order
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $date_order;
 
     /**
      * Salesperson
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $user_id;
 
     /**
      * Product Category
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Category
+     * @var OdooRelation|null
      */
     private $categ_id;
 
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Company
+     * @var OdooRelation|null
      */
     private $company_id;
 
     /**
      * Total
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $price_total;
 
     /**
      * Pricelist
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Pricelist
+     * @var OdooRelation|null
      */
     private $pricelist_id;
 
     /**
      * Partner Country
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Country
+     * @var OdooRelation|null
      */
     private $country_id;
 
     /**
      * Price Subtotal
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $price_subtotal;
 
     /**
      * Product Quantity
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $product_qty;
 
     /**
      * Analytic Account
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Account
+     * @var OdooRelation|null
      */
     private $analytic_account_id;
 
     /**
      * Sales Team
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Team
+     * @var OdooRelation|null
      */
     private $team_id;
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getName(): ?string
     {
@@ -147,63 +170,7 @@ final class Sales extends Base
     }
 
     /**
-     * @return null|Partner
-     */
-    public function getPartnerId(): ?Partner
-    {
-        return $this->partner_id;
-    }
-
-    /**
-     * @return null|Product
-     */
-    public function getProductId(): ?Product
-    {
-        return $this->product_id;
-    }
-
-    /**
-     * @return null|Template
-     */
-    public function getProductTmplId(): ?Template
-    {
-        return $this->product_tmpl_id;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getDateOrder(): ?DateTimeInterface
-    {
-        return $this->date_order;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getUserId(): ?Users
-    {
-        return $this->user_id;
-    }
-
-    /**
-     * @return null|Category
-     */
-    public function getCategId(): ?Category
-    {
-        return $this->categ_id;
-    }
-
-    /**
-     * @return null|Company
-     */
-    public function getCompanyId(): ?Company
-    {
-        return $this->company_id;
-    }
-
-    /**
-     * @return null|float
+     * @return float|null
      */
     public function getPriceTotal(): ?float
     {
@@ -211,31 +178,39 @@ final class Sales extends Base
     }
 
     /**
-     * @return null|Pricelist
+     * @return OdooRelation|null
      */
-    public function getPricelistId(): ?Pricelist
+    public function getTeamId(): ?OdooRelation
     {
-        return $this->pricelist_id;
+        return $this->team_id;
     }
 
     /**
-     * @return null|Country
+     * @param OdooRelation|null $analytic_account_id
      */
-    public function getCountryId(): ?Country
+    public function setAnalyticAccountId(?OdooRelation $analytic_account_id): void
     {
-        return $this->country_id;
+        $this->analytic_account_id = $analytic_account_id;
     }
 
     /**
-     * @return null|float
+     * @return OdooRelation|null
      */
-    public function getPriceSubtotal(): ?float
+    public function getAnalyticAccountId(): ?OdooRelation
     {
-        return $this->price_subtotal;
+        return $this->analytic_account_id;
     }
 
     /**
-     * @return null|float
+     * @param float|null $product_qty
+     */
+    public function setProductQty(?float $product_qty): void
+    {
+        $this->product_qty = $product_qty;
+    }
+
+    /**
+     * @return float|null
      */
     public function getProductQty(): ?float
     {
@@ -243,18 +218,186 @@ final class Sales extends Base
     }
 
     /**
-     * @return null|Account
+     * @param float|null $price_subtotal
      */
-    public function getAnalyticAccountId(): ?Account
+    public function setPriceSubtotal(?float $price_subtotal): void
     {
-        return $this->analytic_account_id;
+        $this->price_subtotal = $price_subtotal;
     }
 
     /**
-     * @return null|Team
+     * @return float|null
      */
-    public function getTeamId(): ?Team
+    public function getPriceSubtotal(): ?float
     {
-        return $this->team_id;
+        return $this->price_subtotal;
+    }
+
+    /**
+     * @param OdooRelation|null $country_id
+     */
+    public function setCountryId(?OdooRelation $country_id): void
+    {
+        $this->country_id = $country_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCountryId(): ?OdooRelation
+    {
+        return $this->country_id;
+    }
+
+    /**
+     * @param OdooRelation|null $pricelist_id
+     */
+    public function setPricelistId(?OdooRelation $pricelist_id): void
+    {
+        $this->pricelist_id = $pricelist_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPricelistId(): ?OdooRelation
+    {
+        return $this->pricelist_id;
+    }
+
+    /**
+     * @param float|null $price_total
+     */
+    public function setPriceTotal(?float $price_total): void
+    {
+        $this->price_total = $price_total;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @param string|null $name
+     */
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param OdooRelation|null $categ_id
+     */
+    public function setCategId(?OdooRelation $categ_id): void
+    {
+        $this->categ_id = $categ_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCategId(): ?OdooRelation
+    {
+        return $this->categ_id;
+    }
+
+    /**
+     * @param OdooRelation|null $user_id
+     */
+    public function setUserId(?OdooRelation $user_id): void
+    {
+        $this->user_id = $user_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getUserId(): ?OdooRelation
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $date_order
+     */
+    public function setDateOrder(?DateTimeInterface $date_order): void
+    {
+        $this->date_order = $date_order;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getDateOrder(): ?DateTimeInterface
+    {
+        return $this->date_order;
+    }
+
+    /**
+     * @param OdooRelation|null $product_tmpl_id
+     */
+    public function setProductTmplId(?OdooRelation $product_tmpl_id): void
+    {
+        $this->product_tmpl_id = $product_tmpl_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getProductTmplId(): ?OdooRelation
+    {
+        return $this->product_tmpl_id;
+    }
+
+    /**
+     * @param OdooRelation|null $product_id
+     */
+    public function setProductId(?OdooRelation $product_id): void
+    {
+        $this->product_id = $product_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getProductId(): ?OdooRelation
+    {
+        return $this->product_id;
+    }
+
+    /**
+     * @param OdooRelation|null $partner_id
+     */
+    public function setPartnerId(?OdooRelation $partner_id): void
+    {
+        $this->partner_id = $partner_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPartnerId(): ?OdooRelation
+    {
+        return $this->partner_id;
+    }
+
+    /**
+     * @param OdooRelation|null $team_id
+     */
+    public function setTeamId(?OdooRelation $team_id): void
+    {
+        $this->team_id = $team_id;
     }
 }

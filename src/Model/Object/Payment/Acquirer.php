@@ -5,49 +5,47 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Payment;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Journal;
-use Flux\OdooApiClient\Model\Object\Account\Payment\Method;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Module\Module;
-use Flux\OdooApiClient\Model\Object\Ir\Ui\View;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Country;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : payment.acquirer
  * Name : payment.acquirer
  * Info :
  * Acquirer Model. Each specific acquirer can extend the model by adding
- * its own fields, using the acquirer_name as a prefix for the new fields.
- * Using the required_if_provider='<name>' attribute on fields it is possible
- * to have required fields that depend on a specific acquirer.
+ *         its own fields, using the acquirer_name as a prefix for the new fields.
+ *         Using the required_if_provider='<name>' attribute on fields it is possible
+ *         to have required fields that depend on a specific acquirer.
  *
- * Each acquirer has a link to an ir.ui.view record that is a template of
- * a button used to display the payment form. See examples in ``payment_ingenico``
- * and ``payment_paypal`` modules.
+ *         Each acquirer has a link to an ir.ui.view record that is a template of
+ *         a button used to display the payment form. See examples in ``payment_ingenico``
+ *         and ``payment_paypal`` modules.
  *
- * Methods that should be added in an acquirer-specific implementation:
+ *         Methods that should be added in an acquirer-specific implementation:
  *
- * - ``<name>_form_generate_values(self, reference, amount, currency,
- * partner_id=False, partner_values=None, tx_custom_values=None)``:
- * method that generates the values used to render the form button template.
- * - ``<name>_get_form_action_url(self):``: method that returns the url of
- * the button form. It is used for example in ecommerce application if you
- * want to post some data to the acquirer.
- * - ``<name>_compute_fees(self, amount, currency_id, country_id)``: computes
- * the fees of the acquirer, using generic fields defined on the acquirer
- * model (see fields definition).
+ *           - ``<name>_form_generate_values(self, reference, amount, currency,
+ *               partner_id=False, partner_values=None, tx_custom_values=None)``:
+ *               method that generates the values used to render the form button template.
+ *           - ``<name>_get_form_action_url(self):``: method that returns the url of
+ *               the button form. It is used for example in ecommerce application if you
+ *               want to post some data to the acquirer.
+ *           - ``<name>_compute_fees(self, amount, currency_id, country_id)``: computes
+ *               the fees of the acquirer, using generic fields defined on the acquirer
+ *               model (see fields definition).
  *
- * Each acquirer should also define controllers to handle communication between
- * OpenERP and the acquirer. It generally consists in return urls given to the
- * button form and that the acquirer uses to send the customer back after the
- * transaction, with transaction details given as a POST request.
+ *         Each acquirer should also define controllers to handle communication between
+ *         OpenERP and the acquirer. It generally consists in return urls given to the
+ *         button form and that the acquirer uses to send the customer back after the
+ *         transaction, with transaction details given as a POST request.
  */
 final class Acquirer extends Base
 {
+    public const ODOO_MODEL_NAME = 'payment.acquirer';
+
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -55,38 +53,48 @@ final class Acquirer extends Base
 
     /**
      * Color
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $color;
 
     /**
      * Displayed as
      * How the acquirer is displayed to the customers.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $display_as;
 
     /**
      * Description
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $description;
 
     /**
      * Sequence
      * Determine the display order
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $sequence;
 
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Company
+     * @var OdooRelation
      */
     private $company_id;
 
@@ -104,43 +112,58 @@ final class Acquirer extends Base
      * partner_values: specific values about the buyer, for example coming from a shipping form
      * tx_values: transaction values
      * context: the current context dictionary
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|View
+     * @var OdooRelation|null
      */
     private $view_template_id;
 
     /**
      * S2S Form Template
      * Template for method registration
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|View
+     * @var OdooRelation|null
      */
     private $registration_view_template_id;
 
     /**
      * State
      * In test mode, a fake payment is processed through a test
-     * payment interface. This mode is advised when setting up the
-     * acquirer. Watch out, test and production modes require
-     * different credentials.
+     *                           payment interface. This mode is advised when setting up the
+     *                           acquirer. Watch out, test and production modes require
+     *                           different credentials.
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> disabled (Disabled)
+     *     -> enabled (Enabled)
+     *     -> test (Test Mode)
      *
-     * @var array
+     *
+     * @var string
      */
     private $state;
 
     /**
      * Capture Amount Manually
      * Capture the amount from Odoo, when the delivery is completed.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $capture_manually;
 
     /**
      * Payment Journal
      * Journal where the successful transactions will be posted
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Journal
+     * @var OdooRelation|null
      */
     private $journal_id;
 
@@ -148,9 +171,11 @@ final class Acquirer extends Base
      * Verify Card Validity
      * Trigger a transaction of 1 currency unit and its refund to check the validity of new credit cards entered in
      * the customer portal.
-     * Without this check, the validity will be verified at the very first transaction.
+     *                 Without this check, the validity will be verified at the very first transaction.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $check_validity;
 
@@ -158,48 +183,60 @@ final class Acquirer extends Base
      * Countries
      * This payment gateway is available for selected countries. If none is selected it is available for all
      * countries.
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Country[]
+     * @var OdooRelation[]|null
      */
     private $country_ids;
 
     /**
      * Help Message
      * Message displayed to explain and help the payment process.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $pre_msg;
 
     /**
      * Authorize Message
      * Message displayed if payment is authorized.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $auth_msg;
 
     /**
      * Pending Message
      * Message displayed, if order is in pending state after having done the payment process.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $pending_msg;
 
     /**
      * Done Message
      * Message displayed, if order is done successfully after having done the payment process.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $done_msg;
 
     /**
      * Cancel Message
      * Message displayed, if order is cancel during the payment process.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $cancel_msg;
 
@@ -208,114 +245,163 @@ final class Acquirer extends Base
      * This option allows customers to save their credit card as a payment token and to reuse it for a later
      * purchase. If you manage subscriptions (recurring invoicing), you need it to automatically charge the customer
      * when you issue an invoice.
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> none (Never)
+     *     -> ask (Let the customer decide)
+     *     -> always (Always)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $save_token;
 
     /**
      * Saving Card Data supported
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $token_implemented;
 
     /**
      * Authorize Mechanism Supported
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $authorize_implemented;
 
     /**
      * Fees Computation Supported
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $fees_implemented;
 
     /**
      * Add Extra Fees
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $fees_active;
 
     /**
      * Fixed domestic fees
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $fees_dom_fixed;
 
     /**
      * Variable domestic fees (in percents)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $fees_dom_var;
 
     /**
      * Fixed international fees
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $fees_int_fixed;
 
     /**
      * Variable international fees (in percents)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $fees_int_var;
 
     /**
      * Use SEPA QR Code
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $qr_code;
 
     /**
      * Corresponding Module
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Module
+     * @var OdooRelation|null
      */
     private $module_id;
 
     /**
      * Installation State
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> uninstallable (Uninstallable)
+     *     -> uninstalled (Not Installed)
+     *     -> installed (Installed)
+     *     -> to upgrade (To be upgraded)
+     *     -> to remove (To be removed)
+     *     -> to install (To be installed)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $module_state;
 
     /**
      * Odoo Enterprise Module
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $module_to_buy;
 
     /**
      * Image
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $image_128;
 
     /**
      * Supported Payment Icons
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Icon[]
+     * @var OdooRelation[]|null
      */
     private $payment_icon_ids;
 
     /**
      * Payment Flow
      * Note: Subscriptions does not take this field in account, it uses server to server by default.
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> form (Redirection to the acquirer website)
+     *     -> s2s (Payment from Odoo)
      *
-     * @var array
+     *
+     * @var string
      */
     private $payment_flow;
 
@@ -327,15 +413,23 @@ final class Acquirer extends Base
      * Batch Deposit: Encase several customer checks at once by generating a batch deposit to submit to your bank.
      * When encoding the bank statement in Odoo,you are suggested to reconcile the transaction with the batch
      * deposit. Enable this option from the settings.
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Method[]
+     * @var OdooRelation[]|null
      */
     private $inbound_payment_method_ids;
 
     /**
      * Provider
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> manual (Custom Payment Form)
+     *     -> transfer (Manual Payment)
      *
-     * @var array
+     *
+     * @var string
      */
     private $provider;
 
@@ -343,57 +437,94 @@ final class Acquirer extends Base
      * Communication
      * You can set here the communication type that will appear on sales orders.The communication will be given to
      * the customer when they choose the payment method.
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> so_name (Based on Document Reference)
+     *     -> partner (Based on Customer ID)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $so_reference_type;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Name
-     * @param Company $company_id Company
-     * @param array $state State
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $company_id Company
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $state State
      *        In test mode, a fake payment is processed through a test
-     *        payment interface. This mode is advised when setting up the
-     *        acquirer. Watch out, test and production modes require
-     *        different credentials.
-     * @param array $payment_flow Payment Flow
+     *                                  payment interface. This mode is advised when setting up the
+     *                                  acquirer. Watch out, test and production modes require
+     *                                  different credentials.
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> disabled (Disabled)
+     *            -> enabled (Enabled)
+     *            -> test (Test Mode)
+     *
+     * @param string $payment_flow Payment Flow
      *        Note: Subscriptions does not take this field in account, it uses server to server by default.
-     * @param array $provider Provider
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> form (Redirection to the acquirer website)
+     *            -> s2s (Payment from Odoo)
+     *
+     * @param string $provider Provider
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> manual (Custom Payment Form)
+     *            -> transfer (Manual Payment)
+     *
      */
     public function __construct(
         string $name,
-        Company $company_id,
-        array $state,
-        array $payment_flow,
-        array $provider
+        OdooRelation $company_id,
+        string $state,
+        string $payment_flow,
+        string $provider
     ) {
         $this->name = $name;
         $this->company_id = $company_id;
@@ -403,26 +534,7 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param mixed $item
-     */
-    public function removePaymentFlow($item): void
-    {
-        if ($this->hasPaymentFlow($item)) {
-            $index = array_search($item, $this->payment_flow);
-            unset($this->payment_flow[$index]);
-        }
-    }
-
-    /**
-     * @param null|float $fees_int_var
-     */
-    public function setFeesIntVar(?float $fees_int_var): void
-    {
-        $this->fees_int_var = $fees_int_var;
-    }
-
-    /**
-     * @param null|bool $qr_code
+     * @param bool|null $qr_code
      */
     public function setQrCode(?bool $qr_code): void
     {
@@ -430,31 +542,7 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param null|Module $module_id
-     */
-    public function setModuleId(?Module $module_id): void
-    {
-        $this->module_id = $module_id;
-    }
-
-    /**
-     * @return null|array
-     */
-    public function getModuleState(): ?array
-    {
-        return $this->module_state;
-    }
-
-    /**
-     * @return null|bool
-     */
-    public function isModuleToBuy(): ?bool
-    {
-        return $this->module_to_buy;
-    }
-
-    /**
-     * @param null|int $image_128
+     * @param int|null $image_128
      */
     public function setImage128(?int $image_128): void
     {
@@ -462,7 +550,71 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param null|Icon[] $payment_icon_ids
+     * @return int|null
+     */
+    public function getImage128(): ?int
+    {
+        return $this->image_128;
+    }
+
+    /**
+     * @param bool|null $module_to_buy
+     */
+    public function setModuleToBuy(?bool $module_to_buy): void
+    {
+        $this->module_to_buy = $module_to_buy;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isModuleToBuy(): ?bool
+    {
+        return $this->module_to_buy;
+    }
+
+    /**
+     * @param string|null $module_state
+     */
+    public function setModuleState(?string $module_state): void
+    {
+        $this->module_state = $module_state;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getModuleState(): ?string
+    {
+        return $this->module_state;
+    }
+
+    /**
+     * @param OdooRelation|null $module_id
+     */
+    public function setModuleId(?OdooRelation $module_id): void
+    {
+        $this->module_id = $module_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getModuleId(): ?OdooRelation
+    {
+        return $this->module_id;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isQrCode(): ?bool
+    {
+        return $this->qr_code;
+    }
+
+    /**
+     * @param OdooRelation[]|null $payment_icon_ids
      */
     public function setPaymentIconIds(?array $payment_icon_ids): void
     {
@@ -470,24 +622,191 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param Icon $item
-     * @param bool $strict
+     * @param float|null $fees_int_var
+     */
+    public function setFeesIntVar(?float $fees_int_var): void
+    {
+        $this->fees_int_var = $fees_int_var;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getFeesIntVar(): ?float
+    {
+        return $this->fees_int_var;
+    }
+
+    /**
+     * @param float|null $fees_int_fixed
+     */
+    public function setFeesIntFixed(?float $fees_int_fixed): void
+    {
+        $this->fees_int_fixed = $fees_int_fixed;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getFeesIntFixed(): ?float
+    {
+        return $this->fees_int_fixed;
+    }
+
+    /**
+     * @param float|null $fees_dom_var
+     */
+    public function setFeesDomVar(?float $fees_dom_var): void
+    {
+        $this->fees_dom_var = $fees_dom_var;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getFeesDomVar(): ?float
+    {
+        return $this->fees_dom_var;
+    }
+
+    /**
+     * @param float|null $fees_dom_fixed
+     */
+    public function setFeesDomFixed(?float $fees_dom_fixed): void
+    {
+        $this->fees_dom_fixed = $fees_dom_fixed;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getFeesDomFixed(): ?float
+    {
+        return $this->fees_dom_fixed;
+    }
+
+    /**
+     * @param bool|null $fees_active
+     */
+    public function setFeesActive(?bool $fees_active): void
+    {
+        $this->fees_active = $fees_active;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getPaymentIconIds(): ?array
+    {
+        return $this->payment_icon_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasPaymentIconIds(Icon $item, bool $strict = true): bool
+    public function hasPaymentIconIds(OdooRelation $item): bool
     {
         if (null === $this->payment_icon_ids) {
             return false;
         }
 
-        return in_array($item, $this->payment_icon_ids, $strict);
+        return in_array($item, $this->payment_icon_ids);
     }
 
     /**
-     * @param Icon $item
+     * @param bool|null $fees_implemented
      */
-    public function addPaymentIconIds(Icon $item): void
+    public function setFeesImplemented(?bool $fees_implemented): void
+    {
+        $this->fees_implemented = $fees_implemented;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSoReferenceType(): ?string
+    {
+        return $this->so_reference_type;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param string|null $so_reference_type
+     */
+    public function setSoReferenceType(?string $so_reference_type): void
+    {
+        $this->so_reference_type = $so_reference_type;
+    }
+
+    /**
+     * @param string $provider
+     */
+    public function setProvider(string $provider): void
+    {
+        $this->provider = $provider;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addPaymentIconIds(OdooRelation $item): void
     {
         if ($this->hasPaymentIconIds($item)) {
             return;
@@ -501,86 +820,32 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param Icon $item
+     * @return string
      */
-    public function removePaymentIconIds(Icon $item): void
+    public function getProvider(): string
     {
-        if (null === $this->payment_icon_ids) {
-            $this->payment_icon_ids = [];
-        }
-
-        if ($this->hasPaymentIconIds($item)) {
-            $index = array_search($item, $this->payment_icon_ids);
-            unset($this->payment_icon_ids[$index]);
-        }
+        return $this->provider;
     }
 
     /**
-     * @param array $payment_flow
+     * @param OdooRelation $item
      */
-    public function setPaymentFlow(array $payment_flow): void
-    {
-        $this->payment_flow = $payment_flow;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasPaymentFlow($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->payment_flow, $strict);
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addPaymentFlow($item): void
-    {
-        if ($this->hasPaymentFlow($item)) {
-            return;
-        }
-
-        $this->payment_flow[] = $item;
-    }
-
-    /**
-     * @param null|Method[] $inbound_payment_method_ids
-     */
-    public function setInboundPaymentMethodIds(?array $inbound_payment_method_ids): void
-    {
-        $this->inbound_payment_method_ids = $inbound_payment_method_ids;
-    }
-
-    /**
-     * @param null|float $fees_dom_var
-     */
-    public function setFeesDomVar(?float $fees_dom_var): void
-    {
-        $this->fees_dom_var = $fees_dom_var;
-    }
-
-    /**
-     * @param Method $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasInboundPaymentMethodIds(Method $item, bool $strict = true): bool
+    public function removeInboundPaymentMethodIds(OdooRelation $item): void
     {
         if (null === $this->inbound_payment_method_ids) {
-            return false;
+            $this->inbound_payment_method_ids = [];
         }
 
-        return in_array($item, $this->inbound_payment_method_ids, $strict);
+        if ($this->hasInboundPaymentMethodIds($item)) {
+            $index = array_search($item, $this->inbound_payment_method_ids);
+            unset($this->inbound_payment_method_ids[$index]);
+        }
     }
 
     /**
-     * @param Method $item
+     * @param OdooRelation $item
      */
-    public function addInboundPaymentMethodIds(Method $item): void
+    public function addInboundPaymentMethodIds(OdooRelation $item): void
     {
         if ($this->hasInboundPaymentMethodIds($item)) {
             return;
@@ -594,154 +859,240 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param Method $item
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removeInboundPaymentMethodIds(Method $item): void
+    public function hasInboundPaymentMethodIds(OdooRelation $item): bool
     {
         if (null === $this->inbound_payment_method_ids) {
-            $this->inbound_payment_method_ids = [];
-        }
-
-        if ($this->hasInboundPaymentMethodIds($item)) {
-            $index = array_search($item, $this->inbound_payment_method_ids);
-            unset($this->inbound_payment_method_ids[$index]);
-        }
-    }
-
-    /**
-     * @param array $provider
-     */
-    public function setProvider(array $provider): void
-    {
-        $this->provider = $provider;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasProvider($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->provider, $strict);
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addProvider($item): void
-    {
-        if ($this->hasProvider($item)) {
-            return;
-        }
-
-        $this->provider[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeProvider($item): void
-    {
-        if ($this->hasProvider($item)) {
-            $index = array_search($item, $this->provider);
-            unset($this->provider[$index]);
-        }
-    }
-
-    /**
-     * @param null|array $so_reference_type
-     */
-    public function setSoReferenceType(?array $so_reference_type): void
-    {
-        $this->so_reference_type = $so_reference_type;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasSoReferenceType($item, bool $strict = true): bool
-    {
-        if (null === $this->so_reference_type) {
             return false;
         }
 
-        return in_array($item, $this->so_reference_type, $strict);
+        return in_array($item, $this->inbound_payment_method_ids);
     }
 
     /**
-     * @param mixed $item
+     * @param OdooRelation[]|null $inbound_payment_method_ids
      */
-    public function addSoReferenceType($item): void
+    public function setInboundPaymentMethodIds(?array $inbound_payment_method_ids): void
     {
-        if ($this->hasSoReferenceType($item)) {
-            return;
+        $this->inbound_payment_method_ids = $inbound_payment_method_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getInboundPaymentMethodIds(): ?array
+    {
+        return $this->inbound_payment_method_ids;
+    }
+
+    /**
+     * @param string $payment_flow
+     */
+    public function setPaymentFlow(string $payment_flow): void
+    {
+        $this->payment_flow = $payment_flow;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentFlow(): string
+    {
+        return $this->payment_flow;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removePaymentIconIds(OdooRelation $item): void
+    {
+        if (null === $this->payment_icon_ids) {
+            $this->payment_icon_ids = [];
         }
 
-        if (null === $this->so_reference_type) {
-            $this->so_reference_type = [];
-        }
-
-        $this->so_reference_type[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeSoReferenceType($item): void
-    {
-        if (null === $this->so_reference_type) {
-            $this->so_reference_type = [];
-        }
-
-        if ($this->hasSoReferenceType($item)) {
-            $index = array_search($item, $this->so_reference_type);
-            unset($this->so_reference_type[$index]);
+        if ($this->hasPaymentIconIds($item)) {
+            $index = array_search($item, $this->payment_icon_ids);
+            unset($this->payment_icon_ids[$index]);
         }
     }
 
     /**
-     * @return null|Users
+     * @return bool|null
      */
-    public function getCreateUid(): ?Users
+    public function isFeesActive(): ?bool
     {
-        return $this->create_uid;
+        return $this->fees_active;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return bool|null
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function isFeesImplemented(): ?bool
     {
-        return $this->create_date;
+        return $this->fees_implemented;
     }
 
     /**
-     * @return null|Users
+     * @return string
      */
-    public function getWriteUid(): ?Users
+    public function getName(): string
     {
-        return $this->write_uid;
+        return $this->name;
     }
 
     /**
-     * @param null|float $fees_int_fixed
+     * @param OdooRelation $company_id
      */
-    public function setFeesIntFixed(?float $fees_int_fixed): void
+    public function setCompanyId(OdooRelation $company_id): void
     {
-        $this->fees_int_fixed = $fees_int_fixed;
+        $this->company_id = $company_id;
     }
 
     /**
-     * @param null|float $fees_dom_fixed
+     * @param bool|null $capture_manually
      */
-    public function setFeesDomFixed(?float $fees_dom_fixed): void
+    public function setCaptureManually(?bool $capture_manually): void
     {
-        $this->fees_dom_fixed = $fees_dom_fixed;
+        $this->capture_manually = $capture_manually;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isCaptureManually(): ?bool
+    {
+        return $this->capture_manually;
+    }
+
+    /**
+     * @param string $state
+     */
+    public function setState(string $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return string
+     */
+    public function getState(): string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param OdooRelation|null $registration_view_template_id
+     */
+    public function setRegistrationViewTemplateId(?OdooRelation $registration_view_template_id): void
+    {
+        $this->registration_view_template_id = $registration_view_template_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getRegistrationViewTemplateId(): ?OdooRelation
+    {
+        return $this->registration_view_template_id;
+    }
+
+    /**
+     * @param OdooRelation|null $view_template_id
+     */
+    public function setViewTemplateId(?OdooRelation $view_template_id): void
+    {
+        $this->view_template_id = $view_template_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getViewTemplateId(): ?OdooRelation
+    {
+        return $this->view_template_id;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getCompanyId(): OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param OdooRelation|null $journal_id
+     */
+    public function setJournalId(?OdooRelation $journal_id): void
+    {
+        $this->journal_id = $journal_id;
+    }
+
+    /**
+     * @param int|null $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSequence(): ?int
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * @param string|null $description
+     */
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string|null $display_as
+     */
+    public function setDisplayAs(?string $display_as): void
+    {
+        $this->display_as = $display_as;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDisplayAs(): ?string
+    {
+        return $this->display_as;
+    }
+
+    /**
+     * @param int|null $color
+     */
+    public function setColor(?int $color): void
+    {
+        $this->color = $color;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getColor(): ?int
+    {
+        return $this->color;
     }
 
     /**
@@ -753,129 +1104,119 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param null|Country[] $country_ids
+     * @return OdooRelation|null
      */
-    public function setCountryIds(?array $country_ids): void
+    public function getJournalId(): ?OdooRelation
     {
-        $this->country_ids = $country_ids;
+        return $this->journal_id;
     }
 
     /**
-     * @return null|int
+     * @return bool|null
      */
-    public function getColor(): ?int
+    public function isCheckValidity(): ?bool
     {
-        return $this->color;
+        return $this->check_validity;
     }
 
     /**
-     * @param null|string $display_as
+     * @param bool|null $authorize_implemented
      */
-    public function setDisplayAs(?string $display_as): void
+    public function setAuthorizeImplemented(?bool $authorize_implemented): void
     {
-        $this->display_as = $display_as;
+        $this->authorize_implemented = $authorize_implemented;
     }
 
     /**
-     * @param null|string $description
+     * @param string|null $pending_msg
      */
-    public function setDescription(?string $description): void
+    public function setPendingMsg(?string $pending_msg): void
     {
-        $this->description = $description;
+        $this->pending_msg = $pending_msg;
     }
 
     /**
-     * @param null|int $sequence
+     * @return bool|null
      */
-    public function setSequence(?int $sequence): void
+    public function isAuthorizeImplemented(): ?bool
     {
-        $this->sequence = $sequence;
+        return $this->authorize_implemented;
     }
 
     /**
-     * @param Company $company_id
+     * @param bool|null $token_implemented
      */
-    public function setCompanyId(Company $company_id): void
+    public function setTokenImplemented(?bool $token_implemented): void
     {
-        $this->company_id = $company_id;
+        $this->token_implemented = $token_implemented;
     }
 
     /**
-     * @param null|View $view_template_id
+     * @return bool|null
      */
-    public function setViewTemplateId(?View $view_template_id): void
+    public function isTokenImplemented(): ?bool
     {
-        $this->view_template_id = $view_template_id;
+        return $this->token_implemented;
     }
 
     /**
-     * @param null|View $registration_view_template_id
+     * @param string|null $save_token
      */
-    public function setRegistrationViewTemplateId(?View $registration_view_template_id): void
+    public function setSaveToken(?string $save_token): void
     {
-        $this->registration_view_template_id = $registration_view_template_id;
+        $this->save_token = $save_token;
     }
 
     /**
-     * @param array $state
+     * @return string|null
      */
-    public function setState(array $state): void
+    public function getSaveToken(): ?string
     {
-        $this->state = $state;
+        return $this->save_token;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param string|null $cancel_msg
      */
-    public function hasState($item, bool $strict = true): bool
+    public function setCancelMsg(?string $cancel_msg): void
     {
-        return in_array($item, $this->state, $strict);
+        $this->cancel_msg = $cancel_msg;
     }
 
     /**
-     * @param mixed $item
+     * @return string|null
      */
-    public function addState($item): void
+    public function getCancelMsg(): ?string
     {
-        if ($this->hasState($item)) {
-            return;
-        }
-
-        $this->state[] = $item;
+        return $this->cancel_msg;
     }
 
     /**
-     * @param mixed $item
+     * @param string|null $done_msg
      */
-    public function removeState($item): void
+    public function setDoneMsg(?string $done_msg): void
     {
-        if ($this->hasState($item)) {
-            $index = array_search($item, $this->state);
-            unset($this->state[$index]);
-        }
+        $this->done_msg = $done_msg;
     }
 
     /**
-     * @param null|bool $capture_manually
+     * @return string|null
      */
-    public function setCaptureManually(?bool $capture_manually): void
+    public function getDoneMsg(): ?string
     {
-        $this->capture_manually = $capture_manually;
+        return $this->done_msg;
     }
 
     /**
-     * @param null|Journal $journal_id
+     * @return string|null
      */
-    public function setJournalId(?Journal $journal_id): void
+    public function getPendingMsg(): ?string
     {
-        $this->journal_id = $journal_id;
+        return $this->pending_msg;
     }
 
     /**
-     * @param null|bool $check_validity
+     * @param bool|null $check_validity
      */
     public function setCheckValidity(?bool $check_validity): void
     {
@@ -883,32 +1224,56 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param Country $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param string|null $auth_msg
      */
-    public function hasCountryIds(Country $item, bool $strict = true): bool
+    public function setAuthMsg(?string $auth_msg): void
+    {
+        $this->auth_msg = $auth_msg;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAuthMsg(): ?string
+    {
+        return $this->auth_msg;
+    }
+
+    /**
+     * @param string|null $pre_msg
+     */
+    public function setPreMsg(?string $pre_msg): void
+    {
+        $this->pre_msg = $pre_msg;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPreMsg(): ?string
+    {
+        return $this->pre_msg;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeCountryIds(OdooRelation $item): void
     {
         if (null === $this->country_ids) {
-            return false;
+            $this->country_ids = [];
         }
 
-        return in_array($item, $this->country_ids, $strict);
+        if ($this->hasCountryIds($item)) {
+            $index = array_search($item, $this->country_ids);
+            unset($this->country_ids[$index]);
+        }
     }
 
     /**
-     * @param null|bool $fees_active
+     * @param OdooRelation $item
      */
-    public function setFeesActive(?bool $fees_active): void
-    {
-        $this->fees_active = $fees_active;
-    }
-
-    /**
-     * @param Country $item
-     */
-    public function addCountryIds(Country $item): void
+    public function addCountryIds(OdooRelation $item): void
     {
         if ($this->hasCountryIds($item)) {
             return;
@@ -922,143 +1287,40 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param Country $item
-     */
-    public function removeCountryIds(Country $item): void
-    {
-        if (null === $this->country_ids) {
-            $this->country_ids = [];
-        }
-
-        if ($this->hasCountryIds($item)) {
-            $index = array_search($item, $this->country_ids);
-            unset($this->country_ids[$index]);
-        }
-    }
-
-    /**
-     * @param null|string $pre_msg
-     */
-    public function setPreMsg(?string $pre_msg): void
-    {
-        $this->pre_msg = $pre_msg;
-    }
-
-    /**
-     * @param null|string $auth_msg
-     */
-    public function setAuthMsg(?string $auth_msg): void
-    {
-        $this->auth_msg = $auth_msg;
-    }
-
-    /**
-     * @param null|string $pending_msg
-     */
-    public function setPendingMsg(?string $pending_msg): void
-    {
-        $this->pending_msg = $pending_msg;
-    }
-
-    /**
-     * @param null|string $done_msg
-     */
-    public function setDoneMsg(?string $done_msg): void
-    {
-        $this->done_msg = $done_msg;
-    }
-
-    /**
-     * @param null|string $cancel_msg
-     */
-    public function setCancelMsg(?string $cancel_msg): void
-    {
-        $this->cancel_msg = $cancel_msg;
-    }
-
-    /**
-     * @param null|array $save_token
-     */
-    public function setSaveToken(?array $save_token): void
-    {
-        $this->save_token = $save_token;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasSaveToken($item, bool $strict = true): bool
+    public function hasCountryIds(OdooRelation $item): bool
     {
-        if (null === $this->save_token) {
+        if (null === $this->country_ids) {
             return false;
         }
 
-        return in_array($item, $this->save_token, $strict);
+        return in_array($item, $this->country_ids);
     }
 
     /**
-     * @param mixed $item
+     * @param OdooRelation[]|null $country_ids
      */
-    public function addSaveToken($item): void
+    public function setCountryIds(?array $country_ids): void
     {
-        if ($this->hasSaveToken($item)) {
-            return;
-        }
-
-        if (null === $this->save_token) {
-            $this->save_token = [];
-        }
-
-        $this->save_token[] = $item;
+        $this->country_ids = $country_ids;
     }
 
     /**
-     * @param mixed $item
+     * @return OdooRelation[]|null
      */
-    public function removeSaveToken($item): void
+    public function getCountryIds(): ?array
     {
-        if (null === $this->save_token) {
-            $this->save_token = [];
-        }
-
-        if ($this->hasSaveToken($item)) {
-            $index = array_search($item, $this->save_token);
-            unset($this->save_token[$index]);
-        }
+        return $this->country_ids;
     }
 
     /**
-     * @return null|bool
+     * @param DateTimeInterface|null $write_date
      */
-    public function isTokenImplemented(): ?bool
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->token_implemented;
-    }
-
-    /**
-     * @return null|bool
-     */
-    public function isAuthorizeImplemented(): ?bool
-    {
-        return $this->authorize_implemented;
-    }
-
-    /**
-     * @return null|bool
-     */
-    public function isFeesImplemented(): ?bool
-    {
-        return $this->fees_implemented;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

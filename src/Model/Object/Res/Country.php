@@ -6,9 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Res;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Ui\View;
-use Flux\OdooApiClient\Model\Object\Res\Country\Group;
-use Flux\OdooApiClient\Model\Object\Res\Country\State;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : res.country
@@ -16,19 +14,23 @@ use Flux\OdooApiClient\Model\Object\Res\Country\State;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Country extends Base
 {
+    public const ODOO_MODEL_NAME = 'res.country';
+
     /**
      * Country Name
      * The full name of the country.
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -36,10 +38,12 @@ final class Country extends Base
 
     /**
      * Country Code
-     * The ISO country code in two chars. 
+     * The ISO country code in two chars.
      * You can use this field for quick search.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $code;
 
@@ -53,8 +57,10 @@ final class Country extends Base
      * %(state_code)s: the code of the state
      * %(country_name)s: the name of the country
      * %(country_code)s: the code of the country
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $address_format;
 
@@ -63,93 +69,123 @@ final class Country extends Base
      * Use this field if you want to replace the usual way to encode a complete address. Note that the address_format
      * field is used to modify the way to display addresses (in reports for example), while this field is used to
      * modify the input form for addresses.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|View
+     * @var OdooRelation|null
      */
     private $address_view_id;
 
     /**
      * Currency
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Currency
+     * @var OdooRelation|null
      */
     private $currency_id;
 
     /**
      * Image
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $image;
 
     /**
      * Country Calling Code
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $phone_code;
 
     /**
      * Country Groups
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Group[]
+     * @var OdooRelation[]|null
      */
     private $country_group_ids;
 
     /**
      * States
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|State[]
+     * @var OdooRelation[]|null
      */
     private $state_ids;
 
     /**
      * Customer Name Position
      * Determines where the customer/company name should be placed, i.e. after or before the address.
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> before (Before Address)
+     *     -> after (After Address)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $name_position;
 
     /**
      * Vat Label
      * Use this field if you want to change vat label.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $vat_label;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Country Name
      *        The full name of the country.
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $name)
     {
@@ -157,125 +193,39 @@ final class Country extends Base
     }
 
     /**
-     * @param State $item
-     * @param bool $strict
+     * @return string|null
+     */
+    public function getVatLabel(): ?string
+    {
+        return $this->vat_label;
+    }
+
+    /**
+     * @param OdooRelation[]|null $state_ids
+     */
+    public function setStateIds(?array $state_ids): void
+    {
+        $this->state_ids = $state_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasStateIds(State $item, bool $strict = true): bool
+    public function hasStateIds(OdooRelation $item): bool
     {
         if (null === $this->state_ids) {
             return false;
         }
 
-        return in_array($item, $this->state_ids, $strict);
+        return in_array($item, $this->state_ids);
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation $item
      */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param null|string $vat_label
-     */
-    public function setVatLabel(?string $vat_label): void
-    {
-        $this->vat_label = $vat_label;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeNamePosition($item): void
-    {
-        if (null === $this->name_position) {
-            $this->name_position = [];
-        }
-
-        if ($this->hasNamePosition($item)) {
-            $index = array_search($item, $this->name_position);
-            unset($this->name_position[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addNamePosition($item): void
-    {
-        if ($this->hasNamePosition($item)) {
-            return;
-        }
-
-        if (null === $this->name_position) {
-            $this->name_position = [];
-        }
-
-        $this->name_position[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasNamePosition($item, bool $strict = true): bool
-    {
-        if (null === $this->name_position) {
-            return false;
-        }
-
-        return in_array($item, $this->name_position, $strict);
-    }
-
-    /**
-     * @param null|array $name_position
-     */
-    public function setNamePosition(?array $name_position): void
-    {
-        $this->name_position = $name_position;
-    }
-
-    /**
-     * @param State $item
-     */
-    public function removeStateIds(State $item): void
-    {
-        if (null === $this->state_ids) {
-            $this->state_ids = [];
-        }
-
-        if ($this->hasStateIds($item)) {
-            $index = array_search($item, $this->state_ids);
-            unset($this->state_ids[$index]);
-        }
-    }
-
-    /**
-     * @param State $item
-     */
-    public function addStateIds(State $item): void
+    public function addStateIds(OdooRelation $item): void
     {
         if ($this->hasStateIds($item)) {
             return;
@@ -289,25 +239,48 @@ final class Country extends Base
     }
 
     /**
-     * @param null|State[] $state_ids
+     * @param OdooRelation $item
      */
-    public function setStateIds(?array $state_ids): void
+    public function removeStateIds(OdooRelation $item): void
     {
-        $this->state_ids = $state_ids;
+        if (null === $this->state_ids) {
+            $this->state_ids = [];
+        }
+
+        if ($this->hasStateIds($item)) {
+            $index = array_search($item, $this->state_ids);
+            unset($this->state_ids[$index]);
+        }
     }
 
     /**
-     * @param string $name
+     * @return string|null
      */
-    public function setName(string $name): void
+    public function getNamePosition(): ?string
     {
-        $this->name = $name;
+        return $this->name_position;
     }
 
     /**
-     * @param Group $item
+     * @param string|null $name_position
      */
-    public function removeCountryGroupIds(Group $item): void
+    public function setNamePosition(?string $name_position): void
+    {
+        $this->name_position = $name_position;
+    }
+
+    /**
+     * @param string|null $vat_label
+     */
+    public function setVatLabel(?string $vat_label): void
+    {
+        $this->vat_label = $vat_label;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeCountryGroupIds(OdooRelation $item): void
     {
         if (null === $this->country_group_ids) {
             $this->country_group_ids = [];
@@ -320,9 +293,73 @@ final class Country extends Base
     }
 
     /**
-     * @param Group $item
+     * @return OdooRelation|null
      */
-    public function addCountryGroupIds(Group $item): void
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getStateIds(): ?array
+    {
+        return $this->state_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addCountryGroupIds(OdooRelation $item): void
     {
         if ($this->hasCountryGroupIds($item)) {
             return;
@@ -336,70 +373,39 @@ final class Country extends Base
     }
 
     /**
-     * @param Group $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return string
      */
-    public function hasCountryGroupIds(Group $item, bool $strict = true): bool
+    public function getName(): string
     {
-        if (null === $this->country_group_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->country_group_ids, $strict);
+        return $this->name;
     }
 
     /**
-     * @param null|Group[] $country_group_ids
+     * @param OdooRelation|null $address_view_id
      */
-    public function setCountryGroupIds(?array $country_group_ids): void
-    {
-        $this->country_group_ids = $country_group_ids;
-    }
-
-    /**
-     * @param null|int $phone_code
-     */
-    public function setPhoneCode(?int $phone_code): void
-    {
-        $this->phone_code = $phone_code;
-    }
-
-    /**
-     * @param null|int $image
-     */
-    public function setImage(?int $image): void
-    {
-        $this->image = $image;
-    }
-
-    /**
-     * @param null|Currency $currency_id
-     */
-    public function setCurrencyId(?Currency $currency_id): void
-    {
-        $this->currency_id = $currency_id;
-    }
-
-    /**
-     * @param null|View $address_view_id
-     */
-    public function setAddressViewId(?View $address_view_id): void
+    public function setAddressViewId(?OdooRelation $address_view_id): void
     {
         $this->address_view_id = $address_view_id;
     }
 
     /**
-     * @param null|string $address_format
+     * @param string $name
      */
-    public function setAddressFormat(?string $address_format): void
+    public function setName(string $name): void
     {
-        $this->address_format = $address_format;
+        $this->name = $name;
     }
 
     /**
-     * @param null|string $code
+     * @return string|null
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string|null $code
      */
     public function setCode(?string $code): void
     {
@@ -407,10 +413,112 @@ final class Country extends Base
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return string|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getAddressFormat(): ?string
     {
-        return $this->write_date;
+        return $this->address_format;
+    }
+
+    /**
+     * @param string|null $address_format
+     */
+    public function setAddressFormat(?string $address_format): void
+    {
+        $this->address_format = $address_format;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getAddressViewId(): ?OdooRelation
+    {
+        return $this->address_view_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCurrencyId(): ?OdooRelation
+    {
+        return $this->currency_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasCountryGroupIds(OdooRelation $item): bool
+    {
+        if (null === $this->country_group_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->country_group_ids);
+    }
+
+    /**
+     * @param OdooRelation|null $currency_id
+     */
+    public function setCurrencyId(?OdooRelation $currency_id): void
+    {
+        $this->currency_id = $currency_id;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getImage(): ?int
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param int|null $image
+     */
+    public function setImage(?int $image): void
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPhoneCode(): ?int
+    {
+        return $this->phone_code;
+    }
+
+    /**
+     * @param int|null $phone_code
+     */
+    public function setPhoneCode(?int $phone_code): void
+    {
+        $this->phone_code = $phone_code;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getCountryGroupIds(): ?array
+    {
+        return $this->country_group_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $country_group_ids
+     */
+    public function setCountryGroupIds(?array $country_group_ids): void
+    {
+        $this->country_group_ids = $country_group_ids;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

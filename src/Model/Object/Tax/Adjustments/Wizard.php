@@ -5,29 +5,28 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Tax\Adjustments;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Account;
-use Flux\OdooApiClient\Model\Object\Account\Journal;
-use Flux\OdooApiClient\Model\Object\Account\Tax\Report\Line;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Country;
-use Flux\OdooApiClient\Model\Object\Res\Currency;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : tax.adjustments.wizard
  * Name : tax.adjustments.wizard
  * Info :
  * Model super-class for transient records, meant to be temporarily
- * persistent, and regularly vacuum-cleaned.
+ *         persistent, and regularly vacuum-cleaned.
  *
- * A TransientModel has a simplified access rights management, all users can
- * create new records, and may only access the records they created. The
- * superuser has unrestricted access to all TransientModel records.
+ *         A TransientModel has a simplified access rights management, all users can
+ *         create new records, and may only access the records they created. The
+ *         superuser has unrestricted access to all TransientModel records.
  */
 final class Wizard extends Base
 {
+    public const ODOO_MODEL_NAME = 'tax.adjustments.wizard';
+
     /**
      * Justification
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -35,13 +34,17 @@ final class Wizard extends Base
 
     /**
      * Journal
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Journal
+     * @var OdooRelation
      */
     private $journal_id;
 
     /**
      * Date
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var DateTimeInterface
      */
@@ -49,20 +52,26 @@ final class Wizard extends Base
 
     /**
      * Debit account
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Account
+     * @var OdooRelation
      */
     private $debit_account_id;
 
     /**
      * Credit account
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Account
+     * @var OdooRelation
      */
     private $credit_account_id;
 
     /**
      * Amount
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var float
      */
@@ -70,81 +79,121 @@ final class Wizard extends Base
 
     /**
      * Adjustment Type
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> debit (Applied on debit journal item)
+     *     -> credit (Applied on credit journal item)
      *
-     * @var array
+     *
+     * @var string
      */
     private $adjustment_type;
 
     /**
      * Report Line
      * The report line to make an adjustment for.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Line
+     * @var OdooRelation
      */
     private $tax_report_line_id;
 
     /**
      * Company Currency
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Currency
+     * @var OdooRelation|null
      */
     private $company_currency_id;
 
     /**
      * Country
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Country
+     * @var OdooRelation|null
      */
     private $country_id;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $reason Justification
-     * @param Journal $journal_id Journal
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $journal_id Journal
+     *        Searchable : yes
+     *        Sortable : yes
      * @param DateTimeInterface $date Date
-     * @param Account $debit_account_id Debit account
-     * @param Account $credit_account_id Credit account
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $debit_account_id Debit account
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $credit_account_id Credit account
+     *        Searchable : yes
+     *        Sortable : yes
      * @param float $amount Amount
-     * @param array $adjustment_type Adjustment Type
-     * @param Line $tax_report_line_id Report Line
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $adjustment_type Adjustment Type
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> debit (Applied on debit journal item)
+     *            -> credit (Applied on credit journal item)
+     *
+     * @param OdooRelation $tax_report_line_id Report Line
      *        The report line to make an adjustment for.
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         string $reason,
-        Journal $journal_id,
+        OdooRelation $journal_id,
         DateTimeInterface $date,
-        Account $debit_account_id,
-        Account $credit_account_id,
+        OdooRelation $debit_account_id,
+        OdooRelation $credit_account_id,
         float $amount,
-        array $adjustment_type,
-        Line $tax_report_line_id
+        string $adjustment_type,
+        OdooRelation $tax_report_line_id
     ) {
         $this->reason = $reason;
         $this->journal_id = $journal_id;
@@ -157,26 +206,47 @@ final class Wizard extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return OdooRelation
      */
-    public function removeAdjustmentType($item): void
+    public function getTaxReportLineId(): OdooRelation
     {
-        if ($this->hasAdjustmentType($item)) {
-            $index = array_search($item, $this->adjustment_type);
-            unset($this->adjustment_type[$index]);
-        }
+        return $this->tax_report_line_id;
     }
 
     /**
-     * @return null|Users
+     * @return DateTimeInterface|null
      */
-    public function getWriteUid(): ?Users
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -184,74 +254,83 @@ final class Wizard extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @return null|Country
+     * @param OdooRelation|null $country_id
      */
-    public function getCountryId(): ?Country
+    public function setCountryId(?OdooRelation $country_id): void
+    {
+        $this->country_id = $country_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCountryId(): ?OdooRelation
     {
         return $this->country_id;
     }
 
     /**
-     * @return null|Currency
+     * @param OdooRelation|null $company_currency_id
      */
-    public function getCompanyCurrencyId(): ?Currency
+    public function setCompanyCurrencyId(?OdooRelation $company_currency_id): void
+    {
+        $this->company_currency_id = $company_currency_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCompanyCurrencyId(): ?OdooRelation
     {
         return $this->company_currency_id;
     }
 
     /**
-     * @param Line $tax_report_line_id
+     * @param OdooRelation $tax_report_line_id
      */
-    public function setTaxReportLineId(Line $tax_report_line_id): void
+    public function setTaxReportLineId(OdooRelation $tax_report_line_id): void
     {
         $this->tax_report_line_id = $tax_report_line_id;
     }
 
     /**
-     * @param mixed $item
+     * @param string $adjustment_type
      */
-    public function addAdjustmentType($item): void
-    {
-        if ($this->hasAdjustmentType($item)) {
-            return;
-        }
-
-        $this->adjustment_type[] = $item;
-    }
-
-    /**
-     * @param string $reason
-     */
-    public function setReason(string $reason): void
-    {
-        $this->reason = $reason;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasAdjustmentType($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->adjustment_type, $strict);
-    }
-
-    /**
-     * @param array $adjustment_type
-     */
-    public function setAdjustmentType(array $adjustment_type): void
+    public function setAdjustmentType(string $adjustment_type): void
     {
         $this->adjustment_type = $adjustment_type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReason(): string
+    {
+        return $this->reason;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAdjustmentType(): string
+    {
+        return $this->adjustment_type;
     }
 
     /**
@@ -263,19 +342,43 @@ final class Wizard extends Base
     }
 
     /**
-     * @param Account $credit_account_id
+     * @return float
      */
-    public function setCreditAccountId(Account $credit_account_id): void
+    public function getAmount(): float
+    {
+        return $this->amount;
+    }
+
+    /**
+     * @param OdooRelation $credit_account_id
+     */
+    public function setCreditAccountId(OdooRelation $credit_account_id): void
     {
         $this->credit_account_id = $credit_account_id;
     }
 
     /**
-     * @param Account $debit_account_id
+     * @return OdooRelation
      */
-    public function setDebitAccountId(Account $debit_account_id): void
+    public function getCreditAccountId(): OdooRelation
+    {
+        return $this->credit_account_id;
+    }
+
+    /**
+     * @param OdooRelation $debit_account_id
+     */
+    public function setDebitAccountId(OdooRelation $debit_account_id): void
     {
         $this->debit_account_id = $debit_account_id;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getDebitAccountId(): OdooRelation
+    {
+        return $this->debit_account_id;
     }
 
     /**
@@ -287,18 +390,42 @@ final class Wizard extends Base
     }
 
     /**
-     * @param Journal $journal_id
+     * @return DateTimeInterface
      */
-    public function setJournalId(Journal $journal_id): void
+    public function getDate(): DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param OdooRelation $journal_id
+     */
+    public function setJournalId(OdooRelation $journal_id): void
     {
         $this->journal_id = $journal_id;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return OdooRelation
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getJournalId(): OdooRelation
     {
-        return $this->write_date;
+        return $this->journal_id;
+    }
+
+    /**
+     * @param string $reason
+     */
+    public function setReason(string $reason): void
+    {
+        $this->reason = $reason;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

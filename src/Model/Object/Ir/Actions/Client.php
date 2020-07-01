@@ -6,8 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Actions;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Model;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.actions.client
@@ -15,18 +14,22 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Client extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.actions.client';
+
     /**
      * Action Name
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -34,6 +37,8 @@ final class Client extends Base
 
     /**
      * Action Type
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -43,6 +48,8 @@ final class Client extends Base
      * Client action tag
      * An arbitrary string, interpreted by the client according to its own needs and wishes. There is no central tag
      * repository across clients.
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -50,22 +57,34 @@ final class Client extends Base
 
     /**
      * Target Window
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> current (Current Window)
+     *     -> new (New Window)
+     *     -> fullscreen (Full Screen)
+     *     -> main (Main action of Current Window)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $target;
 
     /**
      * Destination Model
      * Optional model, mostly used for needactions.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $res_model;
 
     /**
      * Context Value
      * Context dictionary as Python expression, empty by default (Default: {})
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -74,99 +93,139 @@ final class Client extends Base
     /**
      * Supplementary arguments
      * Arguments sent to the client along with the view tag
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $params;
 
     /**
      * Params storage
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $params_store;
 
     /**
      * External ID
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $xml_id;
 
     /**
      * Action Description
      * Optional help text for the users with a description of the target view, such as its usage and purpose.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $help;
 
     /**
      * Binding Model
      * Setting a value makes this action available in the sidebar for the given model.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Model
+     * @var OdooRelation|null
      */
     private $binding_model_id;
 
     /**
      * Binding Type
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> action (Action)
+     *     -> report (Report)
      *
-     * @var array
+     *
+     * @var string
      */
     private $binding_type;
 
     /**
      * Binding View Types
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $binding_view_types;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Action Name
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $type Action Type
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $tag Client action tag
      *        An arbitrary string, interpreted by the client according to its own needs and wishes. There is no central tag
      *        repository across clients.
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $context Context Value
      *        Context dictionary as Python expression, empty by default (Default: {})
-     * @param array $binding_type Binding Type
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $binding_type Binding Type
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> action (Action)
+     *            -> report (Report)
+     *
      */
     public function __construct(
         string $name,
         string $type,
         string $tag,
         string $context,
-        array $binding_type
+        string $binding_type
     ) {
         $this->name = $name;
         $this->type = $type;
@@ -176,39 +235,55 @@ final class Client extends Base
     }
 
     /**
-     * @return null|string
+     * @param string|null $binding_view_types
      */
-    public function getHelp(): ?string
+    public function setBindingViewTypes(?string $binding_view_types): void
     {
-        return $this->help;
+        $this->binding_view_types = $binding_view_types;
     }
 
     /**
-     * @return null|Users
+     * @param string|null $help
      */
-    public function getWriteUid(): ?Users
+    public function setHelp(?string $help): void
     {
-        return $this->write_uid;
+        $this->help = $help;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return OdooRelation|null
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function getBindingModelId(): ?OdooRelation
     {
-        return $this->create_date;
+        return $this->binding_model_id;
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $binding_model_id
      */
-    public function getCreateUid(): ?Users
+    public function setBindingModelId(?OdooRelation $binding_model_id): void
     {
-        return $this->create_uid;
+        $this->binding_model_id = $binding_model_id;
     }
 
     /**
-     * @return null|string
+     * @return string
+     */
+    public function getBindingType(): string
+    {
+        return $this->binding_type;
+    }
+
+    /**
+     * @param string $binding_type
+     */
+    public function setBindingType(string $binding_type): void
+    {
+        $this->binding_type = $binding_type;
+    }
+
+    /**
+     * @return string|null
      */
     public function getBindingViewTypes(): ?string
     {
@@ -216,23 +291,79 @@ final class Client extends Base
     }
 
     /**
-     * @return array
+     * @return OdooRelation|null
      */
-    public function getBindingType(): array
+    public function getCreateUid(): ?OdooRelation
     {
-        return $this->binding_type;
+        return $this->create_uid;
     }
 
     /**
-     * @return null|Model
+     * @param string|null $xml_id
      */
-    public function getBindingModelId(): ?Model
+    public function setXmlId(?string $xml_id): void
     {
-        return $this->binding_model_id;
+        $this->xml_id = $xml_id;
     }
 
     /**
-     * @return null|string
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getHelp(): ?string
+    {
+        return $this->help;
+    }
+
+    /**
+     * @return string|null
      */
     public function getXmlId(): ?string
     {
@@ -248,51 +379,19 @@ final class Client extends Base
     }
 
     /**
-     * @return null|int
+     * @param string|null $target
      */
-    public function getParamsStore(): ?int
+    public function setTarget(?string $target): void
     {
-        return $this->params_store;
+        $this->target = $target;
     }
 
     /**
-     * @return null|int
+     * @param string $name
      */
-    public function getParams(): ?int
+    public function setName(string $name): void
     {
-        return $this->params;
-    }
-
-    /**
-     * @return string
-     */
-    public function getContext(): string
-    {
-        return $this->context;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getResModel(): ?string
-    {
-        return $this->res_model;
-    }
-
-    /**
-     * @return null|array
-     */
-    public function getTarget(): ?array
-    {
-        return $this->target;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTag(): string
-    {
-        return $this->tag;
+        $this->name = $name;
     }
 
     /**
@@ -304,10 +403,106 @@ final class Client extends Base
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param string $type
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function setType(string $type): void
     {
-        return $this->write_date;
+        $this->type = $type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTag(): string
+    {
+        return $this->tag;
+    }
+
+    /**
+     * @param string $tag
+     */
+    public function setTag(string $tag): void
+    {
+        $this->tag = $tag;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTarget(): ?string
+    {
+        return $this->target;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getResModel(): ?string
+    {
+        return $this->res_model;
+    }
+
+    /**
+     * @param int|null $params_store
+     */
+    public function setParamsStore(?int $params_store): void
+    {
+        $this->params_store = $params_store;
+    }
+
+    /**
+     * @param string|null $res_model
+     */
+    public function setResModel(?string $res_model): void
+    {
+        $this->res_model = $res_model;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContext(): string
+    {
+        return $this->context;
+    }
+
+    /**
+     * @param string $context
+     */
+    public function setContext(string $context): void
+    {
+        $this->context = $context;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getParams(): ?int
+    {
+        return $this->params;
+    }
+
+    /**
+     * @param int|null $params
+     */
+    public function setParams(?int $params): void
+    {
+        $this->params = $params;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getParamsStore(): ?int
+    {
+        return $this->params_store;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

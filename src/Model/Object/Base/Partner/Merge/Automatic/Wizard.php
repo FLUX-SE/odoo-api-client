@@ -6,196 +6,204 @@ namespace Flux\OdooApiClient\Model\Object\Base\Partner\Merge\Automatic;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Base\Partner\Merge\Line;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : base.partner.merge.automatic.wizard
  * Name : base.partner.merge.automatic.wizard
  * Info :
  * The idea behind this wizard is to create a list of potential partners to
- * merge. We use two objects, the first one is the wizard for the end-user.
- * And the second will contain the partner list to merge.
+ *                 merge. We use two objects, the first one is the wizard for the end-user.
+ *                 And the second will contain the partner list to merge.
  */
 final class Wizard extends Base
 {
+    public const ODOO_MODEL_NAME = 'base.partner.merge.automatic.wizard';
+
     /**
      * Email
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $group_by_email;
 
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $group_by_name;
 
     /**
      * Is Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $group_by_is_company;
 
     /**
      * VAT
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $group_by_vat;
 
     /**
      * Parent Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $group_by_parent_id;
 
     /**
      * State
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> option (Option)
+     *     -> selection (Selection)
+     *     -> finished (Finished)
      *
-     * @var array
+     *
+     * @var string
      */
     private $state;
 
     /**
      * Group of Contacts
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $number_group;
 
     /**
      * Current Line
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Line
+     * @var OdooRelation|null
      */
     private $current_line_id;
 
     /**
      * Lines
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Line[]
+     * @var OdooRelation[]|null
      */
     private $line_ids;
 
     /**
      * Contacts
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Partner[]
+     * @var OdooRelation[]|null
      */
     private $partner_ids;
 
     /**
      * Destination Contact
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Partner
+     * @var OdooRelation|null
      */
     private $dst_partner_id;
 
     /**
      * A user associated to the contact
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $exclude_contact;
 
     /**
      * Journal Items associated to the contact
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $exclude_journal_item;
 
     /**
      * Maximum of Group of Contacts
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $maximum_group;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param array $state State
+     * @param string $state State
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> option (Option)
+     *            -> selection (Selection)
+     *            -> finished (Finished)
+     *
      */
-    public function __construct(array $state)
+    public function __construct(string $state)
     {
         $this->state = $state;
     }
 
     /**
-     * @param null|Partner[] $partner_ids
-     */
-    public function setPartnerIds(?array $partner_ids): void
-    {
-        $this->partner_ids = $partner_ids;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param null|int $maximum_group
-     */
-    public function setMaximumGroup(?int $maximum_group): void
-    {
-        $this->maximum_group = $maximum_group;
-    }
-
-    /**
-     * @param null|bool $exclude_journal_item
+     * @param bool|null $exclude_journal_item
      */
     public function setExcludeJournalItem(?bool $exclude_journal_item): void
     {
@@ -203,40 +211,23 @@ final class Wizard extends Base
     }
 
     /**
-     * @param null|bool $exclude_contact
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setExcludeContact(?bool $exclude_contact): void
-    {
-        $this->exclude_contact = $exclude_contact;
-    }
-
-    /**
-     * @param null|Partner $dst_partner_id
-     */
-    public function setDstPartnerId(?Partner $dst_partner_id): void
-    {
-        $this->dst_partner_id = $dst_partner_id;
-    }
-
-    /**
-     * @param Partner $item
-     */
-    public function removePartnerIds(Partner $item): void
+    public function hasPartnerIds(OdooRelation $item): bool
     {
         if (null === $this->partner_ids) {
-            $this->partner_ids = [];
+            return false;
         }
 
-        if ($this->hasPartnerIds($item)) {
-            $index = array_search($item, $this->partner_ids);
-            unset($this->partner_ids[$index]);
-        }
+        return in_array($item, $this->partner_ids);
     }
 
     /**
-     * @param Partner $item
+     * @param OdooRelation $item
      */
-    public function addPartnerIds(Partner $item): void
+    public function addPartnerIds(OdooRelation $item): void
     {
         if ($this->hasPartnerIds($item)) {
             return;
@@ -250,24 +241,152 @@ final class Wizard extends Base
     }
 
     /**
-     * @param Partner $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param OdooRelation $item
      */
-    public function hasPartnerIds(Partner $item, bool $strict = true): bool
+    public function removePartnerIds(OdooRelation $item): void
     {
         if (null === $this->partner_ids) {
-            return false;
+            $this->partner_ids = [];
         }
 
-        return in_array($item, $this->partner_ids, $strict);
+        if ($this->hasPartnerIds($item)) {
+            $index = array_search($item, $this->partner_ids);
+            unset($this->partner_ids[$index]);
+        }
     }
 
     /**
-     * @param Line $item
+     * @return OdooRelation|null
      */
-    public function removeLineIds(Line $item): void
+    public function getDstPartnerId(): ?OdooRelation
+    {
+        return $this->dst_partner_id;
+    }
+
+    /**
+     * @param OdooRelation|null $dst_partner_id
+     */
+    public function setDstPartnerId(?OdooRelation $dst_partner_id): void
+    {
+        $this->dst_partner_id = $dst_partner_id;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isExcludeContact(): ?bool
+    {
+        return $this->exclude_contact;
+    }
+
+    /**
+     * @param bool|null $exclude_contact
+     */
+    public function setExcludeContact(?bool $exclude_contact): void
+    {
+        $this->exclude_contact = $exclude_contact;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isExcludeJournalItem(): ?bool
+    {
+        return $this->exclude_journal_item;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getMaximumGroup(): ?int
+    {
+        return $this->maximum_group;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getPartnerIds(): ?array
+    {
+        return $this->partner_ids;
+    }
+
+    /**
+     * @param int|null $maximum_group
+     */
+    public function setMaximumGroup(?int $maximum_group): void
+    {
+        $this->maximum_group = $maximum_group;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation[]|null $partner_ids
+     */
+    public function setPartnerIds(?array $partner_ids): void
+    {
+        $this->partner_ids = $partner_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeLineIds(OdooRelation $item): void
     {
         if (null === $this->line_ids) {
             $this->line_ids = [];
@@ -280,7 +399,23 @@ final class Wizard extends Base
     }
 
     /**
-     * @param null|bool $group_by_email
+     * @return bool|null
+     */
+    public function isGroupByEmail(): ?bool
+    {
+        return $this->group_by_email;
+    }
+
+    /**
+     * @param bool|null $group_by_parent_id
+     */
+    public function setGroupByParentId(?bool $group_by_parent_id): void
+    {
+        $this->group_by_parent_id = $group_by_parent_id;
+    }
+
+    /**
+     * @param bool|null $group_by_email
      */
     public function setGroupByEmail(?bool $group_by_email): void
     {
@@ -288,9 +423,73 @@ final class Wizard extends Base
     }
 
     /**
-     * @param Line $item
+     * @return bool|null
      */
-    public function addLineIds(Line $item): void
+    public function isGroupByName(): ?bool
+    {
+        return $this->group_by_name;
+    }
+
+    /**
+     * @param bool|null $group_by_name
+     */
+    public function setGroupByName(?bool $group_by_name): void
+    {
+        $this->group_by_name = $group_by_name;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isGroupByIsCompany(): ?bool
+    {
+        return $this->group_by_is_company;
+    }
+
+    /**
+     * @param bool|null $group_by_is_company
+     */
+    public function setGroupByIsCompany(?bool $group_by_is_company): void
+    {
+        $this->group_by_is_company = $group_by_is_company;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isGroupByVat(): ?bool
+    {
+        return $this->group_by_vat;
+    }
+
+    /**
+     * @param bool|null $group_by_vat
+     */
+    public function setGroupByVat(?bool $group_by_vat): void
+    {
+        $this->group_by_vat = $group_by_vat;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isGroupByParentId(): ?bool
+    {
+        return $this->group_by_parent_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getState(): string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addLineIds(OdooRelation $item): void
     {
         if ($this->hasLineIds($item)) {
             return;
@@ -304,38 +503,15 @@ final class Wizard extends Base
     }
 
     /**
-     * @param Line $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param string $state
      */
-    public function hasLineIds(Line $item, bool $strict = true): bool
+    public function setState(string $state): void
     {
-        if (null === $this->line_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->line_ids, $strict);
+        $this->state = $state;
     }
 
     /**
-     * @param null|Line[] $line_ids
-     */
-    public function setLineIds(?array $line_ids): void
-    {
-        $this->line_ids = $line_ids;
-    }
-
-    /**
-     * @param null|Line $current_line_id
-     */
-    public function setCurrentLineId(?Line $current_line_id): void
-    {
-        $this->current_line_id = $current_line_id;
-    }
-
-    /**
-     * @return null|int
+     * @return int|null
      */
     public function getNumberGroup(): ?int
     {
@@ -343,50 +519,64 @@ final class Wizard extends Base
     }
 
     /**
-     * @return array
+     * @param int|null $number_group
      */
-    public function getState(): array
+    public function setNumberGroup(?int $number_group): void
     {
-        return $this->state;
+        $this->number_group = $number_group;
     }
 
     /**
-     * @param null|bool $group_by_parent_id
+     * @return OdooRelation|null
      */
-    public function setGroupByParentId(?bool $group_by_parent_id): void
+    public function getCurrentLineId(): ?OdooRelation
     {
-        $this->group_by_parent_id = $group_by_parent_id;
+        return $this->current_line_id;
     }
 
     /**
-     * @param null|bool $group_by_vat
+     * @param OdooRelation|null $current_line_id
      */
-    public function setGroupByVat(?bool $group_by_vat): void
+    public function setCurrentLineId(?OdooRelation $current_line_id): void
     {
-        $this->group_by_vat = $group_by_vat;
+        $this->current_line_id = $current_line_id;
     }
 
     /**
-     * @param null|bool $group_by_is_company
+     * @return OdooRelation[]|null
      */
-    public function setGroupByIsCompany(?bool $group_by_is_company): void
+    public function getLineIds(): ?array
     {
-        $this->group_by_is_company = $group_by_is_company;
+        return $this->line_ids;
     }
 
     /**
-     * @param null|bool $group_by_name
+     * @param OdooRelation[]|null $line_ids
      */
-    public function setGroupByName(?bool $group_by_name): void
+    public function setLineIds(?array $line_ids): void
     {
-        $this->group_by_name = $group_by_name;
+        $this->line_ids = $line_ids;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function hasLineIds(OdooRelation $item): bool
     {
-        return $this->write_date;
+        if (null === $this->line_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->line_ids);
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

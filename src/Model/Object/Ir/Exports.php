@@ -6,8 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Exports\Line;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.exports
@@ -15,67 +14,162 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Exports extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.exports';
+
     /**
      * Export Name
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $name;
 
     /**
      * Resource
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $resource;
 
     /**
      * Export ID
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Line[]
+     * @var OdooRelation[]|null
      */
     private $export_fields;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeExportFields(OdooRelation $item): void
+    {
+        if (null === $this->export_fields) {
+            $this->export_fields = [];
+        }
+
+        if ($this->hasExportFields($item)) {
+            $index = array_search($item, $this->export_fields);
+            unset($this->export_fields[$index]);
+        }
+    }
+
+    /**
+     * @param string|null $name
      */
     public function setName(?string $name): void
     {
@@ -83,40 +177,9 @@ final class Exports extends Base
     }
 
     /**
-     * @param null|string $resource
+     * @param OdooRelation $item
      */
-    public function setResource(?string $resource): void
-    {
-        $this->resource = $resource;
-    }
-
-    /**
-     * @param null|Line[] $export_fields
-     */
-    public function setExportFields(?array $export_fields): void
-    {
-        $this->export_fields = $export_fields;
-    }
-
-    /**
-     * @param Line $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasExportFields(Line $item, bool $strict = true): bool
-    {
-        if (null === $this->export_fields) {
-            return false;
-        }
-
-        return in_array($item, $this->export_fields, $strict);
-    }
-
-    /**
-     * @param Line $item
-     */
-    public function addExportFields(Line $item): void
+    public function addExportFields(OdooRelation $item): void
     {
         if ($this->hasExportFields($item)) {
             return;
@@ -130,49 +193,56 @@ final class Exports extends Base
     }
 
     /**
-     * @param Line $item
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removeExportFields(Line $item): void
+    public function hasExportFields(OdooRelation $item): bool
     {
         if (null === $this->export_fields) {
-            $this->export_fields = [];
+            return false;
         }
 
-        if ($this->hasExportFields($item)) {
-            $index = array_search($item, $this->export_fields);
-            unset($this->export_fields[$index]);
-        }
+        return in_array($item, $this->export_fields);
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation[]|null $export_fields
      */
-    public function getCreateUid(): ?Users
+    public function setExportFields(?array $export_fields): void
     {
-        return $this->create_uid;
+        $this->export_fields = $export_fields;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return OdooRelation[]|null
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function getExportFields(): ?array
     {
-        return $this->create_date;
+        return $this->export_fields;
     }
 
     /**
-     * @return null|Users
+     * @param string|null $resource
      */
-    public function getWriteUid(): ?Users
+    public function setResource(?string $resource): void
     {
-        return $this->write_uid;
+        $this->resource = $resource;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return string|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getResource(): ?string
     {
-        return $this->write_date;
+        return $this->resource;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

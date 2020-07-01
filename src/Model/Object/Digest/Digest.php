@@ -6,10 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Digest;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Mail\Template;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Currency;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : digest.digest
@@ -17,18 +14,22 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Digest extends Base
 {
+    public const ODOO_MODEL_NAME = 'digest.digest';
+
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -36,171 +37,237 @@ final class Digest extends Base
 
     /**
      * Recipients
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Users[]
+     * @var OdooRelation[]|null
      */
     private $user_ids;
 
     /**
      * Periodicity
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> weekly (Weekly)
+     *     -> monthly (Monthly)
+     *     -> quarterly (Quarterly)
      *
-     * @var array
+     *
+     * @var string
      */
     private $periodicity;
 
     /**
      * Next Send Date
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $next_run_date;
 
     /**
      * Email Template
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Template
+     * @var OdooRelation
      */
     private $template_id;
 
     /**
      * Currency
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Currency
+     * @var OdooRelation|null
      */
     private $currency_id;
 
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Company
+     * @var OdooRelation|null
      */
     private $company_id;
 
     /**
      * Available Fields
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $available_fields;
 
     /**
      * Is user subscribed
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $is_subscribed;
 
     /**
      * Status
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> activated (Activated)
+     *     -> deactivated (Deactivated)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $state;
 
     /**
      * Connected Users
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $kpi_res_users_connected;
 
     /**
      * Kpi Res Users Connected Value
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $kpi_res_users_connected_value;
 
     /**
      * Messages
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $kpi_mail_message_total;
 
     /**
      * Kpi Mail Message Total Value
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $kpi_mail_message_total_value;
 
     /**
      * Revenue
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $kpi_account_total_revenue;
 
     /**
      * Kpi Account Total Revenue Value
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|float
+     * @var float|null
      */
     private $kpi_account_total_revenue_value;
 
     /**
      * Bank & Cash Moves
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $kpi_account_bank_cash;
 
     /**
      * Kpi Account Bank Cash Value
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|float
+     * @var float|null
      */
     private $kpi_account_bank_cash_value;
 
     /**
      * All Sales
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $kpi_all_sale_total;
 
     /**
      * Kpi All Sale Total Value
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|float
+     * @var float|null
      */
     private $kpi_all_sale_total_value;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Name
-     * @param array $periodicity Periodicity
-     * @param Template $template_id Email Template
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $periodicity Periodicity
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> weekly (Weekly)
+     *            -> monthly (Monthly)
+     *            -> quarterly (Quarterly)
+     *
+     * @param OdooRelation $template_id Email Template
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(string $name, array $periodicity, Template $template_id)
+    public function __construct(string $name, string $periodicity, OdooRelation $template_id)
     {
         $this->name = $name;
         $this->periodicity = $periodicity;
@@ -208,95 +275,15 @@ final class Digest extends Base
     }
 
     /**
-     * @return null|array
+     * @param float|null $kpi_account_bank_cash_value
      */
-    public function getState(): ?array
+    public function setKpiAccountBankCashValue(?float $kpi_account_bank_cash_value): void
     {
-        return $this->state;
+        $this->kpi_account_bank_cash_value = $kpi_account_bank_cash_value;
     }
 
     /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|float
-     */
-    public function getKpiAllSaleTotalValue(): ?float
-    {
-        return $this->kpi_all_sale_total_value;
-    }
-
-    /**
-     * @param null|bool $kpi_all_sale_total
-     */
-    public function setKpiAllSaleTotal(?bool $kpi_all_sale_total): void
-    {
-        $this->kpi_all_sale_total = $kpi_all_sale_total;
-    }
-
-    /**
-     * @return null|float
-     */
-    public function getKpiAccountBankCashValue(): ?float
-    {
-        return $this->kpi_account_bank_cash_value;
-    }
-
-    /**
-     * @param null|bool $kpi_account_bank_cash
-     */
-    public function setKpiAccountBankCash(?bool $kpi_account_bank_cash): void
-    {
-        $this->kpi_account_bank_cash = $kpi_account_bank_cash;
-    }
-
-    /**
-     * @return null|float
-     */
-    public function getKpiAccountTotalRevenueValue(): ?float
-    {
-        return $this->kpi_account_total_revenue_value;
-    }
-
-    /**
-     * @param null|bool $kpi_account_total_revenue
-     */
-    public function setKpiAccountTotalRevenue(?bool $kpi_account_total_revenue): void
-    {
-        $this->kpi_account_total_revenue = $kpi_account_total_revenue;
-    }
-
-    /**
-     * @return null|int
-     */
-    public function getKpiMailMessageTotalValue(): ?int
-    {
-        return $this->kpi_mail_message_total_value;
-    }
-
-    /**
-     * @param null|bool $kpi_mail_message_total
+     * @param bool|null $kpi_mail_message_total
      */
     public function setKpiMailMessageTotal(?bool $kpi_mail_message_total): void
     {
@@ -304,7 +291,183 @@ final class Digest extends Base
     }
 
     /**
-     * @return null|int
+     * @return int|null
+     */
+    public function getKpiMailMessageTotalValue(): ?int
+    {
+        return $this->kpi_mail_message_total_value;
+    }
+
+    /**
+     * @param int|null $kpi_mail_message_total_value
+     */
+    public function setKpiMailMessageTotalValue(?int $kpi_mail_message_total_value): void
+    {
+        $this->kpi_mail_message_total_value = $kpi_mail_message_total_value;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isKpiAccountTotalRevenue(): ?bool
+    {
+        return $this->kpi_account_total_revenue;
+    }
+
+    /**
+     * @param bool|null $kpi_account_total_revenue
+     */
+    public function setKpiAccountTotalRevenue(?bool $kpi_account_total_revenue): void
+    {
+        $this->kpi_account_total_revenue = $kpi_account_total_revenue;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getKpiAccountTotalRevenueValue(): ?float
+    {
+        return $this->kpi_account_total_revenue_value;
+    }
+
+    /**
+     * @param float|null $kpi_account_total_revenue_value
+     */
+    public function setKpiAccountTotalRevenueValue(?float $kpi_account_total_revenue_value): void
+    {
+        $this->kpi_account_total_revenue_value = $kpi_account_total_revenue_value;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isKpiAccountBankCash(): ?bool
+    {
+        return $this->kpi_account_bank_cash;
+    }
+
+    /**
+     * @param bool|null $kpi_account_bank_cash
+     */
+    public function setKpiAccountBankCash(?bool $kpi_account_bank_cash): void
+    {
+        $this->kpi_account_bank_cash = $kpi_account_bank_cash;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getKpiAccountBankCashValue(): ?float
+    {
+        return $this->kpi_account_bank_cash_value;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isKpiAllSaleTotal(): ?bool
+    {
+        return $this->kpi_all_sale_total;
+    }
+
+    /**
+     * @param int|null $kpi_res_users_connected_value
+     */
+    public function setKpiResUsersConnectedValue(?int $kpi_res_users_connected_value): void
+    {
+        $this->kpi_res_users_connected_value = $kpi_res_users_connected_value;
+    }
+
+    /**
+     * @param bool|null $kpi_all_sale_total
+     */
+    public function setKpiAllSaleTotal(?bool $kpi_all_sale_total): void
+    {
+        $this->kpi_all_sale_total = $kpi_all_sale_total;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getKpiAllSaleTotalValue(): ?float
+    {
+        return $this->kpi_all_sale_total_value;
+    }
+
+    /**
+     * @param float|null $kpi_all_sale_total_value
+     */
+    public function setKpiAllSaleTotalValue(?float $kpi_all_sale_total_value): void
+    {
+        $this->kpi_all_sale_total_value = $kpi_all_sale_total_value;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isKpiMailMessageTotal(): ?bool
+    {
+        return $this->kpi_mail_message_total;
+    }
+
+    /**
+     * @return int|null
      */
     public function getKpiResUsersConnectedValue(): ?int
     {
@@ -312,19 +475,19 @@ final class Digest extends Base
     }
 
     /**
-     * @param null|bool $kpi_res_users_connected
+     * @return string
      */
-    public function setKpiResUsersConnected(?bool $kpi_res_users_connected): void
+    public function getName(): string
     {
-        $this->kpi_res_users_connected = $kpi_res_users_connected;
+        return $this->name;
     }
 
     /**
-     * @return null|bool
+     * @return OdooRelation
      */
-    public function isIsSubscribed(): ?bool
+    public function getTemplateId(): OdooRelation
     {
-        return $this->is_subscribed;
+        return $this->template_id;
     }
 
     /**
@@ -336,106 +499,39 @@ final class Digest extends Base
     }
 
     /**
-     * @return null|string
+     * @return OdooRelation[]|null
      */
-    public function getAvailableFields(): ?string
+    public function getUserIds(): ?array
     {
-        return $this->available_fields;
+        return $this->user_ids;
     }
 
     /**
-     * @param null|Company $company_id
+     * @param OdooRelation[]|null $user_ids
      */
-    public function setCompanyId(?Company $company_id): void
+    public function setUserIds(?array $user_ids): void
     {
-        $this->company_id = $company_id;
+        $this->user_ids = $user_ids;
     }
 
     /**
-     * @param null|Currency $currency_id
-     */
-    public function setCurrencyId(?Currency $currency_id): void
-    {
-        $this->currency_id = $currency_id;
-    }
-
-    /**
-     * @param Template $template_id
-     */
-    public function setTemplateId(Template $template_id): void
-    {
-        $this->template_id = $template_id;
-    }
-
-    /**
-     * @param null|DateTimeInterface $next_run_date
-     */
-    public function setNextRunDate(?DateTimeInterface $next_run_date): void
-    {
-        $this->next_run_date = $next_run_date;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removePeriodicity($item): void
-    {
-        if ($this->hasPeriodicity($item)) {
-            $index = array_search($item, $this->periodicity);
-            unset($this->periodicity[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addPeriodicity($item): void
-    {
-        if ($this->hasPeriodicity($item)) {
-            return;
-        }
-
-        $this->periodicity[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasPeriodicity($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->periodicity, $strict);
-    }
-
-    /**
-     * @param array $periodicity
-     */
-    public function setPeriodicity(array $periodicity): void
-    {
-        $this->periodicity = $periodicity;
-    }
-
-    /**
-     * @param Users $item
-     */
-    public function removeUserIds(Users $item): void
+    public function hasUserIds(OdooRelation $item): bool
     {
         if (null === $this->user_ids) {
-            $this->user_ids = [];
+            return false;
         }
 
-        if ($this->hasUserIds($item)) {
-            $index = array_search($item, $this->user_ids);
-            unset($this->user_ids[$index]);
-        }
+        return in_array($item, $this->user_ids);
     }
 
     /**
-     * @param Users $item
+     * @param OdooRelation $item
      */
-    public function addUserIds(Users $item): void
+    public function addUserIds(OdooRelation $item): void
     {
         if ($this->hasUserIds($item)) {
             return;
@@ -449,33 +545,161 @@ final class Digest extends Base
     }
 
     /**
-     * @param Users $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param OdooRelation $item
      */
-    public function hasUserIds(Users $item, bool $strict = true): bool
+    public function removeUserIds(OdooRelation $item): void
     {
         if (null === $this->user_ids) {
-            return false;
+            $this->user_ids = [];
         }
 
-        return in_array($item, $this->user_ids, $strict);
+        if ($this->hasUserIds($item)) {
+            $index = array_search($item, $this->user_ids);
+            unset($this->user_ids[$index]);
+        }
     }
 
     /**
-     * @param null|Users[] $user_ids
+     * @return string
      */
-    public function setUserIds(?array $user_ids): void
+    public function getPeriodicity(): string
     {
-        $this->user_ids = $user_ids;
+        return $this->periodicity;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param string $periodicity
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function setPeriodicity(string $periodicity): void
     {
-        return $this->write_date;
+        $this->periodicity = $periodicity;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getNextRunDate(): ?DateTimeInterface
+    {
+        return $this->next_run_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $next_run_date
+     */
+    public function setNextRunDate(?DateTimeInterface $next_run_date): void
+    {
+        $this->next_run_date = $next_run_date;
+    }
+
+    /**
+     * @param OdooRelation $template_id
+     */
+    public function setTemplateId(OdooRelation $template_id): void
+    {
+        $this->template_id = $template_id;
+    }
+
+    /**
+     * @param bool|null $kpi_res_users_connected
+     */
+    public function setKpiResUsersConnected(?bool $kpi_res_users_connected): void
+    {
+        $this->kpi_res_users_connected = $kpi_res_users_connected;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCurrencyId(): ?OdooRelation
+    {
+        return $this->currency_id;
+    }
+
+    /**
+     * @param OdooRelation|null $currency_id
+     */
+    public function setCurrencyId(?OdooRelation $currency_id): void
+    {
+        $this->currency_id = $currency_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAvailableFields(): ?string
+    {
+        return $this->available_fields;
+    }
+
+    /**
+     * @param string|null $available_fields
+     */
+    public function setAvailableFields(?string $available_fields): void
+    {
+        $this->available_fields = $available_fields;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsSubscribed(): ?bool
+    {
+        return $this->is_subscribed;
+    }
+
+    /**
+     * @param bool|null $is_subscribed
+     */
+    public function setIsSubscribed(?bool $is_subscribed): void
+    {
+        $this->is_subscribed = $is_subscribed;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param string|null $state
+     */
+    public function setState(?string $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isKpiResUsersConnected(): ?bool
+    {
+        return $this->kpi_res_users_connected;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

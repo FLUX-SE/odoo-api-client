@@ -6,9 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Model\Fields;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.default
@@ -18,39 +16,51 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  */
 final class Default_ extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.default';
+
     /**
      * Field
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Fields
+     * @var OdooRelation
      */
     private $field_id;
 
     /**
      * User
      * If set, action binding only applies for this user.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $user_id;
 
     /**
      * Company
      * If set, action binding only applies for this company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Company
+     * @var OdooRelation|null
      */
     private $company_id;
 
     /**
      * Condition
      * If set, applies the default upon condition.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $condition;
 
     /**
      * Default Value (JSON format)
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -58,72 +68,52 @@ final class Default_ extends Base
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param Fields $field_id Field
+     * @param OdooRelation $field_id Field
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $json_value Default Value (JSON format)
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(Fields $field_id, string $json_value)
+    public function __construct(OdooRelation $field_id, string $json_value)
     {
         $this->field_id = $field_id;
         $this->json_value = $json_value;
-    }
-
-    /**
-     * @param Fields $field_id
-     */
-    public function setFieldId(Fields $field_id): void
-    {
-        $this->field_id = $field_id;
-    }
-
-    /**
-     * @param null|Users $user_id
-     */
-    public function setUserId(?Users $user_id): void
-    {
-        $this->user_id = $user_id;
-    }
-
-    /**
-     * @param null|Company $company_id
-     */
-    public function setCompanyId(?Company $company_id): void
-    {
-        $this->company_id = $company_id;
-    }
-
-    /**
-     * @param null|string $condition
-     */
-    public function setCondition(?string $condition): void
-    {
-        $this->condition = $condition;
     }
 
     /**
@@ -135,15 +125,39 @@ final class Default_ extends Base
     }
 
     /**
-     * @return null|Users
+     * @return DateTimeInterface|null
      */
-    public function getCreateUid(): ?Users
+    public function getWriteDate(): ?DateTimeInterface
     {
-        return $this->create_uid;
+        return $this->write_date;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -151,18 +165,98 @@ final class Default_ extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getWriteUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->write_uid;
+        $this->create_uid = $create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return OdooRelation|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getCreateUid(): ?OdooRelation
     {
-        return $this->write_date;
+        return $this->create_uid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getJsonValue(): string
+    {
+        return $this->json_value;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getFieldId(): OdooRelation
+    {
+        return $this->field_id;
+    }
+
+    /**
+     * @param string|null $condition
+     */
+    public function setCondition(?string $condition): void
+    {
+        $this->condition = $condition;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCondition(): ?string
+    {
+        return $this->condition;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param OdooRelation|null $user_id
+     */
+    public function setUserId(?OdooRelation $user_id): void
+    {
+        $this->user_id = $user_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getUserId(): ?OdooRelation
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @param OdooRelation $field_id
+     */
+    public function setFieldId(OdooRelation $field_id): void
+    {
+        $this->field_id = $field_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

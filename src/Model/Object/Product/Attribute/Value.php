@@ -6,9 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Product\Attribute;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Product\Attribute;
-use Flux\OdooApiClient\Model\Object\Product\Template\Attribute\Line;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : product.attribute.value
@@ -16,18 +14,22 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Value extends Base
 {
+    public const ODOO_MODEL_NAME = 'product.attribute.value';
+
     /**
      * Value
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -36,38 +38,48 @@ final class Value extends Base
     /**
      * Sequence
      * Determine the display order
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $sequence;
 
     /**
      * Attribute
      * The attribute cannot be changed once the value is used on at least one product.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Attribute
+     * @var OdooRelation
      */
     private $attribute_id;
 
     /**
      * Lines
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Line[]
+     * @var OdooRelation[]|null
      */
     private $pav_attribute_line_ids;
 
     /**
      * Used on Products
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $is_used_on_products;
 
     /**
      * Is custom value
      * Allow users to input custom values for this attribute value
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $is_custom;
 
@@ -75,109 +87,226 @@ final class Value extends Base
      * Color
      * Here you can set a specific HTML color index (e.g. #ff0000) to display the color if the attribute type is
      * 'Color'.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $html_color;
 
     /**
      * Display Type
      * The display type used in the Product Configurator.
+     * Searchable : yes
+     * Sortable : no
+     * Selection : (default value, usually null)
+     *     -> radio (Radio)
+     *     -> select (Select)
+     *     -> color (Color)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $display_type;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Value
-     * @param Attribute $attribute_id Attribute
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $attribute_id Attribute
      *        The attribute cannot be changed once the value is used on at least one product.
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(string $name, Attribute $attribute_id)
+    public function __construct(string $name, OdooRelation $attribute_id)
     {
         $this->name = $name;
         $this->attribute_id = $attribute_id;
     }
 
     /**
-     * @param string $name
+     * @param bool|null $is_custom
      */
-    public function setName(string $name): void
+    public function setIsCustom(?bool $is_custom): void
     {
-        $this->name = $name;
+        $this->is_custom = $is_custom;
     }
 
     /**
-     * @param null|int $sequence
+     * @return DateTimeInterface|null
      */
-    public function setSequence(?int $sequence): void
+    public function getWriteDate(): ?DateTimeInterface
     {
-        $this->sequence = $sequence;
+        return $this->write_date;
     }
 
     /**
-     * @param Attribute $attribute_id
+     * @param OdooRelation|null $write_uid
      */
-    public function setAttributeId(Attribute $attribute_id): void
+    public function setWriteUid(?OdooRelation $write_uid): void
     {
-        $this->attribute_id = $attribute_id;
+        $this->write_uid = $write_uid;
     }
 
     /**
-     * @param null|Line[] $pav_attribute_line_ids
+     * @return OdooRelation|null
      */
-    public function setPavAttributeLineIds(?array $pav_attribute_line_ids): void
+    public function getWriteUid(): ?OdooRelation
     {
-        $this->pav_attribute_line_ids = $pav_attribute_line_ids;
+        return $this->write_uid;
     }
 
     /**
-     * @param Line $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param DateTimeInterface|null $create_date
      */
-    public function hasPavAttributeLineIds(Line $item, bool $strict = true): bool
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param string|null $display_type
+     */
+    public function setDisplayType(?string $display_type): void
+    {
+        $this->display_type = $display_type;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDisplayType(): ?string
+    {
+        return $this->display_type;
+    }
+
+    /**
+     * @param string|null $html_color
+     */
+    public function setHtmlColor(?string $html_color): void
+    {
+        $this->html_color = $html_color;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getHtmlColor(): ?string
+    {
+        return $this->html_color;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsCustom(): ?bool
+    {
+        return $this->is_custom;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param bool|null $is_used_on_products
+     */
+    public function setIsUsedOnProducts(?bool $is_used_on_products): void
+    {
+        $this->is_used_on_products = $is_used_on_products;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsUsedOnProducts(): ?bool
+    {
+        return $this->is_used_on_products;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removePavAttributeLineIds(OdooRelation $item): void
     {
         if (null === $this->pav_attribute_line_ids) {
-            return false;
+            $this->pav_attribute_line_ids = [];
         }
 
-        return in_array($item, $this->pav_attribute_line_ids, $strict);
+        if ($this->hasPavAttributeLineIds($item)) {
+            $index = array_search($item, $this->pav_attribute_line_ids);
+            unset($this->pav_attribute_line_ids[$index]);
+        }
     }
 
     /**
-     * @param Line $item
+     * @param OdooRelation $item
      */
-    public function addPavAttributeLineIds(Line $item): void
+    public function addPavAttributeLineIds(OdooRelation $item): void
     {
         if ($this->hasPavAttributeLineIds($item)) {
             return;
@@ -191,81 +320,80 @@ final class Value extends Base
     }
 
     /**
-     * @param Line $item
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removePavAttributeLineIds(Line $item): void
+    public function hasPavAttributeLineIds(OdooRelation $item): bool
     {
         if (null === $this->pav_attribute_line_ids) {
-            $this->pav_attribute_line_ids = [];
+            return false;
         }
 
-        if ($this->hasPavAttributeLineIds($item)) {
-            $index = array_search($item, $this->pav_attribute_line_ids);
-            unset($this->pav_attribute_line_ids[$index]);
-        }
+        return in_array($item, $this->pav_attribute_line_ids);
     }
 
     /**
-     * @return null|bool
+     * @param OdooRelation[]|null $pav_attribute_line_ids
      */
-    public function isIsUsedOnProducts(): ?bool
+    public function setPavAttributeLineIds(?array $pav_attribute_line_ids): void
     {
-        return $this->is_used_on_products;
+        $this->pav_attribute_line_ids = $pav_attribute_line_ids;
     }
 
     /**
-     * @param null|bool $is_custom
+     * @return OdooRelation[]|null
      */
-    public function setIsCustom(?bool $is_custom): void
+    public function getPavAttributeLineIds(): ?array
     {
-        $this->is_custom = $is_custom;
+        return $this->pav_attribute_line_ids;
     }
 
     /**
-     * @param null|string $html_color
+     * @param OdooRelation $attribute_id
      */
-    public function setHtmlColor(?string $html_color): void
+    public function setAttributeId(OdooRelation $attribute_id): void
     {
-        $this->html_color = $html_color;
+        $this->attribute_id = $attribute_id;
     }
 
     /**
-     * @return null|array
+     * @return OdooRelation
      */
-    public function getDisplayType(): ?array
+    public function getAttributeId(): OdooRelation
     {
-        return $this->display_type;
+        return $this->attribute_id;
     }
 
     /**
-     * @return null|Users
+     * @param int|null $sequence
      */
-    public function getCreateUid(): ?Users
+    public function setSequence(?int $sequence): void
     {
-        return $this->create_uid;
+        $this->sequence = $sequence;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return int|null
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function getSequence(): ?int
     {
-        return $this->create_date;
+        return $this->sequence;
     }
 
     /**
-     * @return null|Users
+     * @param string $name
      */
-    public function getWriteUid(): ?Users
+    public function setName(string $name): void
     {
-        return $this->write_uid;
+        $this->name = $name;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param DateTimeInterface|null $write_date
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

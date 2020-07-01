@@ -6,9 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Resource_\Calendar;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Users;
-use Flux\OdooApiClient\Model\Object\Resource_\Calendar;
-use Flux\OdooApiClient\Model\Object\Resource_\Resource_;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : resource.calendar.attendance
@@ -16,18 +14,22 @@ use Flux\OdooApiClient\Model\Object\Resource_\Resource_;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Attendance extends Base
 {
+    public const ODOO_MODEL_NAME = 'resource.calendar.attendance';
+
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -35,22 +37,37 @@ final class Attendance extends Base
 
     /**
      * Day of Week
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> 0 (Monday)
+     *     -> 1 (Tuesday)
+     *     -> 2 (Wednesday)
+     *     -> 3 (Thursday)
+     *     -> 4 (Friday)
+     *     -> 5 (Saturday)
+     *     -> 6 (Sunday)
      *
-     * @var array
+     *
+     * @var string
      */
     private $dayofweek;
 
     /**
      * Starting Date
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $date_from;
 
     /**
      * End Date
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $date_to;
 
@@ -58,6 +75,8 @@ final class Attendance extends Base
      * Work from
      * Start and End time of working.
      * A specific value of 24:00 is interpreted as 23:59:59.999999.
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var float
      */
@@ -65,6 +84,8 @@ final class Attendance extends Base
 
     /**
      * Work to
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var float
      */
@@ -72,100 +93,158 @@ final class Attendance extends Base
 
     /**
      * Resource's Calendar
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Calendar
+     * @var OdooRelation
      */
     private $calendar_id;
 
     /**
      * Day Period
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> morning (Morning)
+     *     -> afternoon (Afternoon)
      *
-     * @var array
+     *
+     * @var string
      */
     private $day_period;
 
     /**
      * Resource
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Resource_
+     * @var OdooRelation|null
      */
     private $resource_id;
 
     /**
      * Week Even/Odd
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> 1 (Odd week)
+     *     -> 0 (Even week)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $week_type;
 
     /**
      * Calendar in 2 weeks mode
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $two_weeks_calendar;
 
     /**
      * Display Type
      * Technical field for UX purpose.
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> line_section (Section)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $display_type;
 
     /**
      * Sequence
      * Gives the sequence of this line when displaying the resource calendar.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $sequence;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Name
-     * @param array $dayofweek Day of Week
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $dayofweek Day of Week
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> 0 (Monday)
+     *            -> 1 (Tuesday)
+     *            -> 2 (Wednesday)
+     *            -> 3 (Thursday)
+     *            -> 4 (Friday)
+     *            -> 5 (Saturday)
+     *            -> 6 (Sunday)
+     *
      * @param float $hour_from Work from
      *        Start and End time of working.
      *        A specific value of 24:00 is interpreted as 23:59:59.999999.
+     *        Searchable : yes
+     *        Sortable : yes
      * @param float $hour_to Work to
-     * @param Calendar $calendar_id Resource's Calendar
-     * @param array $day_period Day Period
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $calendar_id Resource's Calendar
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $day_period Day Period
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> morning (Morning)
+     *            -> afternoon (Afternoon)
+     *
      */
     public function __construct(
         string $name,
-        array $dayofweek,
+        string $dayofweek,
         float $hour_from,
         float $hour_to,
-        Calendar $calendar_id,
-        array $day_period
+        OdooRelation $calendar_id,
+        string $day_period
     ) {
         $this->name = $name;
         $this->dayofweek = $dayofweek;
@@ -176,39 +255,7 @@ final class Attendance extends Base
     }
 
     /**
-     * @param null|array $week_type
-     */
-    public function setWeekType(?array $week_type): void
-    {
-        $this->week_type = $week_type;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param null|int $sequence
+     * @param int|null $sequence
      */
     public function setSequence(?int $sequence): void
     {
@@ -216,61 +263,15 @@ final class Attendance extends Base
     }
 
     /**
-     * @param mixed $item
+     * @param string|null $week_type
      */
-    public function removeDisplayType($item): void
+    public function setWeekType(?string $week_type): void
     {
-        if (null === $this->display_type) {
-            $this->display_type = [];
-        }
-
-        if ($this->hasDisplayType($item)) {
-            $index = array_search($item, $this->display_type);
-            unset($this->display_type[$index]);
-        }
+        $this->week_type = $week_type;
     }
 
     /**
-     * @param mixed $item
-     */
-    public function addDisplayType($item): void
-    {
-        if ($this->hasDisplayType($item)) {
-            return;
-        }
-
-        if (null === $this->display_type) {
-            $this->display_type = [];
-        }
-
-        $this->display_type[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasDisplayType($item, bool $strict = true): bool
-    {
-        if (null === $this->display_type) {
-            return false;
-        }
-
-        return in_array($item, $this->display_type, $strict);
-    }
-
-    /**
-     * @param null|array $display_type
-     */
-    public function setDisplayType(?array $display_type): void
-    {
-        $this->display_type = $display_type;
-    }
-
-    /**
-     * @return null|bool
+     * @return bool|null
      */
     public function isTwoWeeksCalendar(): ?bool
     {
@@ -278,57 +279,131 @@ final class Attendance extends Base
     }
 
     /**
-     * @param mixed $item
+     * @param bool|null $two_weeks_calendar
      */
-    public function removeWeekType($item): void
+    public function setTwoWeeksCalendar(?bool $two_weeks_calendar): void
     {
-        if (null === $this->week_type) {
-            $this->week_type = [];
-        }
-
-        if ($this->hasWeekType($item)) {
-            $index = array_search($item, $this->week_type);
-            unset($this->week_type[$index]);
-        }
+        $this->two_weeks_calendar = $two_weeks_calendar;
     }
 
     /**
-     * @param mixed $item
+     * @return string|null
      */
-    public function addWeekType($item): void
+    public function getDisplayType(): ?string
     {
-        if ($this->hasWeekType($item)) {
-            return;
-        }
-
-        if (null === $this->week_type) {
-            $this->week_type = [];
-        }
-
-        $this->week_type[] = $item;
+        return $this->display_type;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param string|null $display_type
      */
-    public function hasWeekType($item, bool $strict = true): bool
+    public function setDisplayType(?string $display_type): void
     {
-        if (null === $this->week_type) {
-            return false;
-        }
-
-        return in_array($item, $this->week_type, $strict);
+        $this->display_type = $display_type;
     }
 
     /**
-     * @param null|Resource_ $resource_id
+     * @return int|null
      */
-    public function setResourceId(?Resource_ $resource_id): void
+    public function getSequence(): ?int
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $resource_id
+     */
+    public function setResourceId(?OdooRelation $resource_id): void
     {
         $this->resource_id = $resource_id;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getWeekType(): ?string
+    {
+        return $this->week_type;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getResourceId(): ?OdooRelation
+    {
+        return $this->resource_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param DateTimeInterface|null $date_to
+     */
+    public function setDateTo(?DateTimeInterface $date_to): void
+    {
+        $this->date_to = $date_to;
     }
 
     /**
@@ -340,61 +415,59 @@ final class Attendance extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return string
      */
-    public function removeDayPeriod($item): void
+    public function getDayofweek(): string
     {
-        if ($this->hasDayPeriod($item)) {
-            $index = array_search($item, $this->day_period);
-            unset($this->day_period[$index]);
-        }
+        return $this->dayofweek;
     }
 
     /**
-     * @param mixed $item
+     * @param string $dayofweek
      */
-    public function addDayPeriod($item): void
+    public function setDayofweek(string $dayofweek): void
     {
-        if ($this->hasDayPeriod($item)) {
-            return;
-        }
-
-        $this->day_period[] = $item;
+        $this->dayofweek = $dayofweek;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return DateTimeInterface|null
      */
-    public function hasDayPeriod($item, bool $strict = true): bool
+    public function getDateFrom(): ?DateTimeInterface
     {
-        return in_array($item, $this->day_period, $strict);
+        return $this->date_from;
     }
 
     /**
-     * @param array $day_period
+     * @param DateTimeInterface|null $date_from
      */
-    public function setDayPeriod(array $day_period): void
+    public function setDateFrom(?DateTimeInterface $date_from): void
+    {
+        $this->date_from = $date_from;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getDateTo(): ?DateTimeInterface
+    {
+        return $this->date_to;
+    }
+
+    /**
+     * @return float
+     */
+    public function getHourFrom(): float
+    {
+        return $this->hour_from;
+    }
+
+    /**
+     * @param string $day_period
+     */
+    public function setDayPeriod(string $day_period): void
     {
         $this->day_period = $day_period;
-    }
-
-    /**
-     * @param Calendar $calendar_id
-     */
-    public function setCalendarId(Calendar $calendar_id): void
-    {
-        $this->calendar_id = $calendar_id;
-    }
-
-    /**
-     * @param float $hour_to
-     */
-    public function setHourTo(float $hour_to): void
-    {
-        $this->hour_to = $hour_to;
     }
 
     /**
@@ -406,68 +479,50 @@ final class Attendance extends Base
     }
 
     /**
-     * @param null|DateTimeInterface $date_to
+     * @return float
      */
-    public function setDateTo(?DateTimeInterface $date_to): void
+    public function getHourTo(): float
     {
-        $this->date_to = $date_to;
+        return $this->hour_to;
     }
 
     /**
-     * @param null|DateTimeInterface $date_from
+     * @param float $hour_to
      */
-    public function setDateFrom(?DateTimeInterface $date_from): void
+    public function setHourTo(float $hour_to): void
     {
-        $this->date_from = $date_from;
+        $this->hour_to = $hour_to;
     }
 
     /**
-     * @param mixed $item
+     * @return OdooRelation
      */
-    public function removeDayofweek($item): void
+    public function getCalendarId(): OdooRelation
     {
-        if ($this->hasDayofweek($item)) {
-            $index = array_search($item, $this->dayofweek);
-            unset($this->dayofweek[$index]);
-        }
+        return $this->calendar_id;
     }
 
     /**
-     * @param mixed $item
+     * @param OdooRelation $calendar_id
      */
-    public function addDayofweek($item): void
+    public function setCalendarId(OdooRelation $calendar_id): void
     {
-        if ($this->hasDayofweek($item)) {
-            return;
-        }
-
-        $this->dayofweek[] = $item;
+        $this->calendar_id = $calendar_id;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return string
      */
-    public function hasDayofweek($item, bool $strict = true): bool
+    public function getDayPeriod(): string
     {
-        return in_array($item, $this->dayofweek, $strict);
+        return $this->day_period;
     }
 
     /**
-     * @param array $dayofweek
+     * @param DateTimeInterface|null $write_date
      */
-    public function setDayofweek(array $dayofweek): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->dayofweek = $dayofweek;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

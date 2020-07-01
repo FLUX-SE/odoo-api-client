@@ -5,42 +5,47 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Asset;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Account;
-use Flux\OdooApiClient\Model\Object\Account\Asset;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Currency;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : asset.modify
  * Name : asset.modify
  * Info :
  * Model super-class for transient records, meant to be temporarily
- * persistent, and regularly vacuum-cleaned.
+ *         persistent, and regularly vacuum-cleaned.
  *
- * A TransientModel has a simplified access rights management, all users can
- * create new records, and may only access the records they created. The
- * superuser has unrestricted access to all TransientModel records.
+ *         A TransientModel has a simplified access rights management, all users can
+ *         create new records, and may only access the records they created. The
+ *         superuser has unrestricted access to all TransientModel records.
  */
 final class Modify extends Base
 {
+    public const ODOO_MODEL_NAME = 'asset.modify';
+
     /**
      * Reason
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $name;
 
     /**
      * Asset
      * The asset to be modified by this wizard
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Asset
+     * @var OdooRelation
      */
     private $asset_id;
 
     /**
      * Number of Depreciations
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var int
      */
@@ -49,189 +54,227 @@ final class Modify extends Base
     /**
      * Number of Months in a Period
      * The amount of time between two depreciations
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> 1 (Months)
+     *     -> 12 (Years)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $method_period;
 
     /**
      * Depreciable Amount
      * New residual amount for the asset
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $value_residual;
 
     /**
      * Not Depreciable Amount
      * New salvage amount for the asset
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $salvage_value;
 
     /**
      * Currency
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Currency
+     * @var OdooRelation|null
      */
     private $currency_id;
 
     /**
      * Date
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $date;
 
     /**
      * Need Date
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $need_date;
 
     /**
      * Gain Value
      * Technical field to know if we should display the fields for the creation of gross increase asset
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $gain_value;
 
     /**
      * Asset Gross Increase Account
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Account
+     * @var OdooRelation|null
      */
     private $account_asset_id;
 
     /**
      * Account Asset Counterpart
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Account
+     * @var OdooRelation|null
      */
     private $account_asset_counterpart_id;
 
     /**
      * Account Depreciation
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Account
+     * @var OdooRelation|null
      */
     private $account_depreciation_id;
 
     /**
      * Account Depreciation Expense
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Account
+     * @var OdooRelation|null
      */
     private $account_depreciation_expense_id;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param Asset $asset_id Asset
+     * @param OdooRelation $asset_id Asset
      *        The asset to be modified by this wizard
+     *        Searchable : yes
+     *        Sortable : yes
      * @param int $method_number Number of Depreciations
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(Asset $asset_id, int $method_number)
+    public function __construct(OdooRelation $asset_id, int $method_number)
     {
         $this->asset_id = $asset_id;
         $this->method_number = $method_number;
     }
 
     /**
-     * @return null|bool
+     * @return OdooRelation|null
      */
-    public function isNeedDate(): ?bool
+    public function getAccountDepreciationExpenseId(): ?OdooRelation
     {
-        return $this->need_date;
+        return $this->account_depreciation_expense_id;
     }
 
     /**
-     * @return null|Users
+     * @return OdooRelation|null
      */
-    public function getWriteUid(): ?Users
+    public function getAccountAssetId(): ?OdooRelation
     {
-        return $this->write_uid;
+        return $this->account_asset_id;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $account_asset_id
      */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param null|Account $account_depreciation_expense_id
-     */
-    public function setAccountDepreciationExpenseId(?Account $account_depreciation_expense_id): void
-    {
-        $this->account_depreciation_expense_id = $account_depreciation_expense_id;
-    }
-
-    /**
-     * @param null|Account $account_depreciation_id
-     */
-    public function setAccountDepreciationId(?Account $account_depreciation_id): void
-    {
-        $this->account_depreciation_id = $account_depreciation_id;
-    }
-
-    /**
-     * @param null|Account $account_asset_counterpart_id
-     */
-    public function setAccountAssetCounterpartId(?Account $account_asset_counterpart_id): void
-    {
-        $this->account_asset_counterpart_id = $account_asset_counterpart_id;
-    }
-
-    /**
-     * @param null|Account $account_asset_id
-     */
-    public function setAccountAssetId(?Account $account_asset_id): void
+    public function setAccountAssetId(?OdooRelation $account_asset_id): void
     {
         $this->account_asset_id = $account_asset_id;
     }
 
     /**
-     * @return null|bool
+     * @return OdooRelation|null
+     */
+    public function getAccountAssetCounterpartId(): ?OdooRelation
+    {
+        return $this->account_asset_counterpart_id;
+    }
+
+    /**
+     * @param OdooRelation|null $account_asset_counterpart_id
+     */
+    public function setAccountAssetCounterpartId(?OdooRelation $account_asset_counterpart_id): void
+    {
+        $this->account_asset_counterpart_id = $account_asset_counterpart_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getAccountDepreciationId(): ?OdooRelation
+    {
+        return $this->account_depreciation_id;
+    }
+
+    /**
+     * @param OdooRelation|null $account_depreciation_id
+     */
+    public function setAccountDepreciationId(?OdooRelation $account_depreciation_id): void
+    {
+        $this->account_depreciation_id = $account_depreciation_id;
+    }
+
+    /**
+     * @param OdooRelation|null $account_depreciation_expense_id
+     */
+    public function setAccountDepreciationExpenseId(?OdooRelation $account_depreciation_expense_id): void
+    {
+        $this->account_depreciation_expense_id = $account_depreciation_expense_id;
+    }
+
+    /**
+     * @return bool|null
      */
     public function isGainValue(): ?bool
     {
@@ -239,15 +282,95 @@ final class Modify extends Base
     }
 
     /**
-     * @param null|DateTimeInterface $date
+     * @return OdooRelation|null
      */
-    public function setDate(?DateTimeInterface $date): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->date = $date;
+        return $this->create_uid;
     }
 
     /**
-     * @param null|string $name
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param bool|null $gain_value
+     */
+    public function setGainValue(?bool $gain_value): void
+    {
+        $this->gain_value = $gain_value;
+    }
+
+    /**
+     * @param bool|null $need_date
+     */
+    public function setNeedDate(?bool $need_date): void
+    {
+        $this->need_date = $need_date;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string|null $method_period
+     */
+    public function setMethodPeriod(?string $method_period): void
+    {
+        $this->method_period = $method_period;
+    }
+
+    /**
+     * @param string|null $name
      */
     public function setName(?string $name): void
     {
@@ -255,81 +378,27 @@ final class Modify extends Base
     }
 
     /**
-     * @return null|Currency
+     * @return OdooRelation
      */
-    public function getCurrencyId(): ?Currency
+    public function getAssetId(): OdooRelation
     {
-        return $this->currency_id;
+        return $this->asset_id;
     }
 
     /**
-     * @param null|float $salvage_value
+     * @param OdooRelation $asset_id
      */
-    public function setSalvageValue(?float $salvage_value): void
+    public function setAssetId(OdooRelation $asset_id): void
     {
-        $this->salvage_value = $salvage_value;
+        $this->asset_id = $asset_id;
     }
 
     /**
-     * @param null|float $value_residual
+     * @return int
      */
-    public function setValueResidual(?float $value_residual): void
+    public function getMethodNumber(): int
     {
-        $this->value_residual = $value_residual;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeMethodPeriod($item): void
-    {
-        if (null === $this->method_period) {
-            $this->method_period = [];
-        }
-
-        if ($this->hasMethodPeriod($item)) {
-            $index = array_search($item, $this->method_period);
-            unset($this->method_period[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addMethodPeriod($item): void
-    {
-        if ($this->hasMethodPeriod($item)) {
-            return;
-        }
-
-        if (null === $this->method_period) {
-            $this->method_period = [];
-        }
-
-        $this->method_period[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasMethodPeriod($item, bool $strict = true): bool
-    {
-        if (null === $this->method_period) {
-            return false;
-        }
-
-        return in_array($item, $this->method_period, $strict);
-    }
-
-    /**
-     * @param null|array $method_period
-     */
-    public function setMethodPeriod(?array $method_period): void
-    {
-        $this->method_period = $method_period;
+        return $this->method_number;
     }
 
     /**
@@ -341,18 +410,90 @@ final class Modify extends Base
     }
 
     /**
-     * @param Asset $asset_id
+     * @return string|null
      */
-    public function setAssetId(Asset $asset_id): void
+    public function getMethodPeriod(): ?string
     {
-        $this->asset_id = $asset_id;
+        return $this->method_period;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return float|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getValueResidual(): ?float
     {
-        return $this->write_date;
+        return $this->value_residual;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isNeedDate(): ?bool
+    {
+        return $this->need_date;
+    }
+
+    /**
+     * @param float|null $value_residual
+     */
+    public function setValueResidual(?float $value_residual): void
+    {
+        $this->value_residual = $value_residual;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getSalvageValue(): ?float
+    {
+        return $this->salvage_value;
+    }
+
+    /**
+     * @param float|null $salvage_value
+     */
+    public function setSalvageValue(?float $salvage_value): void
+    {
+        $this->salvage_value = $salvage_value;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCurrencyId(): ?OdooRelation
+    {
+        return $this->currency_id;
+    }
+
+    /**
+     * @param OdooRelation|null $currency_id
+     */
+    public function setCurrencyId(?OdooRelation $currency_id): void
+    {
+        $this->currency_id = $currency_id;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getDate(): ?DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $date
+     */
+    public function setDate(?DateTimeInterface $date): void
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

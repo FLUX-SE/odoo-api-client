@@ -6,7 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Res;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Currency\Rate;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : res.currency
@@ -14,19 +14,23 @@ use Flux\OdooApiClient\Model\Object\Res\Currency\Rate;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Currency extends Base
 {
+    public const ODOO_MODEL_NAME = 'res.currency';
+
     /**
      * Currency
      * Currency Code (ISO 4217)
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -35,6 +39,8 @@ final class Currency extends Base
     /**
      * Symbol
      * Currency sign, to be used when printing amounts.
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -43,103 +49,137 @@ final class Currency extends Base
     /**
      * Current Rate
      * The rate of the currency to the currency of rate 1.
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|float
+     * @var float|null
      */
     private $rate;
 
     /**
      * Rates
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Rate[]
+     * @var OdooRelation[]|null
      */
     private $rate_ids;
 
     /**
      * Rounding Factor
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $rounding;
 
     /**
      * Decimal Places
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $decimal_places;
 
     /**
      * Active
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $active;
 
     /**
      * Symbol Position
      * Determines where the currency symbol should be placed after or before the amount.
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> after (After Amount)
+     *     -> before (Before Amount)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $position;
 
     /**
      * Date
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $date;
 
     /**
      * Currency Unit
      * Currency Unit Name
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $currency_unit_label;
 
     /**
      * Currency Subunit
      * Currency Subunit Name
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $currency_subunit_label;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Currency
      *        Currency Code (ISO 4217)
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $symbol Symbol
      *        Currency sign, to be used when printing amounts.
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $name, string $symbol)
     {
@@ -148,30 +188,47 @@ final class Currency extends Base
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return string|null
      */
-    public function hasPosition($item, bool $strict = true): bool
+    public function getPosition(): ?string
     {
-        if (null === $this->position) {
-            return false;
-        }
-
-        return in_array($item, $this->position, $strict);
+        return $this->position;
     }
 
     /**
-     * @return null|Users
+     * @return DateTimeInterface|null
      */
-    public function getWriteUid(): ?Users
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -179,15 +236,23 @@ final class Currency extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @param null|string $currency_subunit_label
+     * @param string|null $currency_subunit_label
      */
     public function setCurrencySubunitLabel(?string $currency_subunit_label): void
     {
@@ -195,7 +260,15 @@ final class Currency extends Base
     }
 
     /**
-     * @param null|string $currency_unit_label
+     * @return string|null
+     */
+    public function getCurrencySubunitLabel(): ?string
+    {
+        return $this->currency_subunit_label;
+    }
+
+    /**
+     * @param string|null $currency_unit_label
      */
     public function setCurrencyUnitLabel(?string $currency_unit_label): void
     {
@@ -203,7 +276,23 @@ final class Currency extends Base
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return string|null
+     */
+    public function getCurrencyUnitLabel(): ?string
+    {
+        return $this->currency_unit_label;
+    }
+
+    /**
+     * @param DateTimeInterface|null $date
+     */
+    public function setDate(?DateTimeInterface $date): void
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getDate(): ?DateTimeInterface
     {
@@ -211,42 +300,35 @@ final class Currency extends Base
     }
 
     /**
-     * @param mixed $item
+     * @param string|null $position
      */
-    public function removePosition($item): void
-    {
-        if (null === $this->position) {
-            $this->position = [];
-        }
-
-        if ($this->hasPosition($item)) {
-            $index = array_search($item, $this->position);
-            unset($this->position[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addPosition($item): void
-    {
-        if ($this->hasPosition($item)) {
-            return;
-        }
-
-        if (null === $this->position) {
-            $this->position = [];
-        }
-
-        $this->position[] = $item;
-    }
-
-    /**
-     * @param null|array $position
-     */
-    public function setPosition(?array $position): void
+    public function setPosition(?string $position): void
     {
         $this->position = $position;
+    }
+
+    /**
+     * @param bool|null $active
+     */
+    public function setActive(?bool $active): void
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param OdooRelation[]|null $rate_ids
+     */
+    public function setRateIds(?array $rate_ids): void
+    {
+        $this->rate_ids = $rate_ids;
     }
 
     /**
@@ -258,48 +340,71 @@ final class Currency extends Base
     }
 
     /**
-     * @param null|bool $active
+     * @return string
      */
-    public function setActive(?bool $active): void
+    public function getSymbol(): string
     {
-        $this->active = $active;
+        return $this->symbol;
     }
 
     /**
-     * @return null|int
+     * @param string $symbol
      */
-    public function getDecimalPlaces(): ?int
+    public function setSymbol(string $symbol): void
     {
-        return $this->decimal_places;
+        $this->symbol = $symbol;
     }
 
     /**
-     * @param null|float $rounding
+     * @return float|null
      */
-    public function setRounding(?float $rounding): void
+    public function getRate(): ?float
     {
-        $this->rounding = $rounding;
+        return $this->rate;
     }
 
     /**
-     * @param Rate $item
+     * @param float|null $rate
      */
-    public function removeRateIds(Rate $item): void
+    public function setRate(?float $rate): void
+    {
+        $this->rate = $rate;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getRateIds(): ?array
+    {
+        return $this->rate_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasRateIds(OdooRelation $item): bool
     {
         if (null === $this->rate_ids) {
-            $this->rate_ids = [];
+            return false;
         }
 
-        if ($this->hasRateIds($item)) {
-            $index = array_search($item, $this->rate_ids);
-            unset($this->rate_ids[$index]);
-        }
+        return in_array($item, $this->rate_ids);
     }
 
     /**
-     * @param Rate $item
+     * @return bool|null
      */
-    public function addRateIds(Rate $item): void
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addRateIds(OdooRelation $item): void
     {
         if ($this->hasRateIds($item)) {
             return;
@@ -313,49 +418,57 @@ final class Currency extends Base
     }
 
     /**
-     * @param Rate $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param OdooRelation $item
      */
-    public function hasRateIds(Rate $item, bool $strict = true): bool
+    public function removeRateIds(OdooRelation $item): void
     {
         if (null === $this->rate_ids) {
-            return false;
+            $this->rate_ids = [];
         }
 
-        return in_array($item, $this->rate_ids, $strict);
+        if ($this->hasRateIds($item)) {
+            $index = array_search($item, $this->rate_ids);
+            unset($this->rate_ids[$index]);
+        }
     }
 
     /**
-     * @param null|Rate[] $rate_ids
+     * @return float|null
      */
-    public function setRateIds(?array $rate_ids): void
+    public function getRounding(): ?float
     {
-        $this->rate_ids = $rate_ids;
+        return $this->rounding;
     }
 
     /**
-     * @return null|float
+     * @param float|null $rounding
      */
-    public function getRate(): ?float
+    public function setRounding(?float $rounding): void
     {
-        return $this->rate;
+        $this->rounding = $rounding;
     }
 
     /**
-     * @param string $symbol
+     * @return int|null
      */
-    public function setSymbol(string $symbol): void
+    public function getDecimalPlaces(): ?int
     {
-        $this->symbol = $symbol;
+        return $this->decimal_places;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param int|null $decimal_places
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function setDecimalPlaces(?int $decimal_places): void
     {
-        return $this->write_date;
+        $this->decimal_places = $decimal_places;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

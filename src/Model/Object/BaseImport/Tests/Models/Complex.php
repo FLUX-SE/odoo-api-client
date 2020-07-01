@@ -6,8 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\BaseImport\Tests\Models;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Currency;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : base_import.tests.models.complex
@@ -15,88 +14,110 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Complex extends Base
 {
+    public const ODOO_MODEL_NAME = 'base_import.tests.models.complex';
+
     /**
      * F
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $f;
 
     /**
      * M
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $m;
 
     /**
      * C
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $c;
 
     /**
      * Currency
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Currency
+     * @var OdooRelation|null
      */
     private $currency_id;
 
     /**
      * D
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $d;
 
     /**
      * Dt
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $dt;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @return null|float
+     * @return float|null
      */
     public function getF(): ?float
     {
@@ -104,55 +125,47 @@ final class Complex extends Base
     }
 
     /**
-     * @return null|float
+     * @param DateTimeInterface|null $dt
      */
-    public function getM(): ?float
+    public function setDt(?DateTimeInterface $dt): void
     {
-        return $this->m;
+        $this->dt = $dt;
     }
 
     /**
-     * @return null|string
+     * @return DateTimeInterface|null
      */
-    public function getC(): ?string
+    public function getWriteDate(): ?DateTimeInterface
     {
-        return $this->c;
+        return $this->write_date;
     }
 
     /**
-     * @return null|Currency
+     * @param OdooRelation|null $write_uid
      */
-    public function getCurrencyId(): ?Currency
+    public function setWriteUid(?OdooRelation $write_uid): void
     {
-        return $this->currency_id;
+        $this->write_uid = $write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return OdooRelation|null
      */
-    public function getD(): ?DateTimeInterface
+    public function getWriteUid(): ?OdooRelation
     {
-        return $this->d;
+        return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param DateTimeInterface|null $create_date
      */
-    public function getDt(): ?DateTimeInterface
+    public function setCreateDate(?DateTimeInterface $create_date): void
     {
-        return $this->dt;
+        $this->create_date = $create_date;
     }
 
     /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -160,18 +173,106 @@ final class Complex extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getWriteUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->write_uid;
+        $this->create_uid = $create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return OdooRelation|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getCreateUid(): ?OdooRelation
     {
-        return $this->write_date;
+        return $this->create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getDt(): ?DateTimeInterface
+    {
+        return $this->dt;
+    }
+
+    /**
+     * @param float|null $f
+     */
+    public function setF(?float $f): void
+    {
+        $this->f = $f;
+    }
+
+    /**
+     * @param DateTimeInterface|null $d
+     */
+    public function setD(?DateTimeInterface $d): void
+    {
+        $this->d = $d;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getD(): ?DateTimeInterface
+    {
+        return $this->d;
+    }
+
+    /**
+     * @param OdooRelation|null $currency_id
+     */
+    public function setCurrencyId(?OdooRelation $currency_id): void
+    {
+        $this->currency_id = $currency_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCurrencyId(): ?OdooRelation
+    {
+        return $this->currency_id;
+    }
+
+    /**
+     * @param string|null $c
+     */
+    public function setC(?string $c): void
+    {
+        $this->c = $c;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getC(): ?string
+    {
+        return $this->c;
+    }
+
+    /**
+     * @param float|null $m
+     */
+    public function setM(?float $m): void
+    {
+        $this->m = $m;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getM(): ?float
+    {
+        return $this->m;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

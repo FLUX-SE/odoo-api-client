@@ -5,113 +5,159 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Account\Print_;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Journal as JournalAlias;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.print.journal
  * Name : account.print.journal
  * Info :
  * Model super-class for transient records, meant to be temporarily
- * persistent, and regularly vacuum-cleaned.
+ *         persistent, and regularly vacuum-cleaned.
  *
- * A TransientModel has a simplified access rights management, all users can
- * create new records, and may only access the records they created. The
- * superuser has unrestricted access to all TransientModel records.
+ *         A TransientModel has a simplified access rights management, all users can
+ *         create new records, and may only access the records they created. The
+ *         superuser has unrestricted access to all TransientModel records.
  */
 final class Journal extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.print.journal';
+
     /**
      * Entries Sorted by
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> date (Date)
+     *     -> move_name (Journal Entry Number)
      *
-     * @var array
+     *
+     * @var string
      */
     private $sort_selection;
 
     /**
      * Journals
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var JournalAlias[]
+     * @var OdooRelation[]
      */
     private $journal_ids;
 
     /**
      * With Currency
      * Print Report with the currency column if the currency differs from the company currency.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $amount_currency;
 
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Company
+     * @var OdooRelation
      */
     private $company_id;
 
     /**
      * Start Date
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $date_from;
 
     /**
      * End Date
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $date_to;
 
     /**
      * Target Moves
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> posted (All Posted Entries)
+     *     -> all (All Entries)
      *
-     * @var array
+     *
+     * @var string
      */
     private $target_move;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param array $sort_selection Entries Sorted by
-     * @param JournalAlias[] $journal_ids Journals
-     * @param Company $company_id Company
-     * @param array $target_move Target Moves
+     * @param string $sort_selection Entries Sorted by
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> date (Date)
+     *            -> move_name (Journal Entry Number)
+     *
+     * @param OdooRelation[] $journal_ids Journals
+     *        Searchable : yes
+     *        Sortable : no
+     * @param OdooRelation $company_id Company
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $target_move Target Moves
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> posted (All Posted Entries)
+     *            -> all (All Entries)
+     *
      */
     public function __construct(
-        array $sort_selection,
+        string $sort_selection,
         array $journal_ids,
-        Company $company_id,
-        array $target_move
+        OdooRelation $company_id,
+        string $target_move
     ) {
         $this->sort_selection = $sort_selection;
         $this->journal_ids = $journal_ids;
@@ -120,23 +166,47 @@ final class Journal extends Base
     }
 
     /**
-     * @param null|DateTimeInterface $date_from
+     * @return DateTimeInterface|null
      */
-    public function setDateFrom(?DateTimeInterface $date_from): void
+    public function getDateTo(): ?DateTimeInterface
     {
-        $this->date_from = $date_from;
+        return $this->date_to;
     }
 
     /**
-     * @return null|Users
+     * @return DateTimeInterface|null
      */
-    public function getWriteUid(): ?Users
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -144,57 +214,39 @@ final class Journal extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @param mixed $item
+     * @param string $target_move
      */
-    public function removeTargetMove($item): void
-    {
-        if ($this->hasTargetMove($item)) {
-            $index = array_search($item, $this->target_move);
-            unset($this->target_move[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addTargetMove($item): void
-    {
-        if ($this->hasTargetMove($item)) {
-            return;
-        }
-
-        $this->target_move[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasTargetMove($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->target_move, $strict);
-    }
-
-    /**
-     * @param array $target_move
-     */
-    public function setTargetMove(array $target_move): void
+    public function setTargetMove(string $target_move): void
     {
         $this->target_move = $target_move;
     }
 
     /**
-     * @param null|DateTimeInterface $date_to
+     * @return string
+     */
+    public function getTargetMove(): string
+    {
+        return $this->target_move;
+    }
+
+    /**
+     * @param DateTimeInterface|null $date_to
      */
     public function setDateTo(?DateTimeInterface $date_to): void
     {
@@ -202,23 +254,47 @@ final class Journal extends Base
     }
 
     /**
-     * @param Company $company_id
+     * @param DateTimeInterface|null $date_from
      */
-    public function setCompanyId(Company $company_id): void
+    public function setDateFrom(?DateTimeInterface $date_from): void
+    {
+        $this->date_from = $date_from;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSortSelection(): string
+    {
+        return $this->sort_selection;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getDateFrom(): ?DateTimeInterface
+    {
+        return $this->date_from;
+    }
+
+    /**
+     * @param OdooRelation $company_id
+     */
+    public function setCompanyId(OdooRelation $company_id): void
     {
         $this->company_id = $company_id;
     }
 
     /**
-     * @param array $sort_selection
+     * @return OdooRelation
      */
-    public function setSortSelection(array $sort_selection): void
+    public function getCompanyId(): OdooRelation
     {
-        $this->sort_selection = $sort_selection;
+        return $this->company_id;
     }
 
     /**
-     * @param null|bool $amount_currency
+     * @param bool|null $amount_currency
      */
     public function setAmountCurrency(?bool $amount_currency): void
     {
@@ -226,9 +302,17 @@ final class Journal extends Base
     }
 
     /**
-     * @param JournalAlias $item
+     * @return bool|null
      */
-    public function removeJournalIds(JournalAlias $item): void
+    public function isAmountCurrency(): ?bool
+    {
+        return $this->amount_currency;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeJournalIds(OdooRelation $item): void
     {
         if ($this->hasJournalIds($item)) {
             $index = array_search($item, $this->journal_ids);
@@ -237,9 +321,9 @@ final class Journal extends Base
     }
 
     /**
-     * @param JournalAlias $item
+     * @param OdooRelation $item
      */
-    public function addJournalIds(JournalAlias $item): void
+    public function addJournalIds(OdooRelation $item): void
     {
         if ($this->hasJournalIds($item)) {
             return;
@@ -249,18 +333,17 @@ final class Journal extends Base
     }
 
     /**
-     * @param JournalAlias $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasJournalIds(JournalAlias $item, bool $strict = true): bool
+    public function hasJournalIds(OdooRelation $item): bool
     {
-        return in_array($item, $this->journal_ids, $strict);
+        return in_array($item, $this->journal_ids);
     }
 
     /**
-     * @param JournalAlias[] $journal_ids
+     * @param OdooRelation[] $journal_ids
      */
     public function setJournalIds(array $journal_ids): void
     {
@@ -268,44 +351,26 @@ final class Journal extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return OdooRelation[]
      */
-    public function removeSortSelection($item): void
+    public function getJournalIds(): array
     {
-        if ($this->hasSortSelection($item)) {
-            $index = array_search($item, $this->sort_selection);
-            unset($this->sort_selection[$index]);
-        }
+        return $this->journal_ids;
     }
 
     /**
-     * @param mixed $item
+     * @param string $sort_selection
      */
-    public function addSortSelection($item): void
+    public function setSortSelection(string $sort_selection): void
     {
-        if ($this->hasSortSelection($item)) {
-            return;
-        }
-
-        $this->sort_selection[] = $item;
+        $this->sort_selection = $sort_selection;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param DateTimeInterface|null $write_date
      */
-    public function hasSortSelection($item, bool $strict = true): bool
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return in_array($item, $this->sort_selection, $strict);
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

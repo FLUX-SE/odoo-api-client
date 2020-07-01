@@ -6,9 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Product;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Users;
-use Flux\OdooApiClient\Model\Object\Uom\Uom;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : product.packaging
@@ -16,18 +14,22 @@ use Flux\OdooApiClient\Model\Object\Uom\Uom;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Packaging extends Base
 {
+    public const ODOO_MODEL_NAME = 'product.packaging';
+
     /**
      * Package Type
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -36,23 +38,29 @@ final class Packaging extends Base
     /**
      * Sequence
      * The first in the sequence is the default one.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $sequence;
 
     /**
      * Product
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Product
+     * @var OdooRelation|null
      */
     private $product_id;
 
     /**
      * Contained Quantity
      * Quantity of products contained in the packaging.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $qty;
 
@@ -60,60 +68,236 @@ final class Packaging extends Base
      * Barcode
      * Barcode used for packaging identification. Scan this packaging barcode from a transfer in the Barcode app to
      * move all the contained units
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $barcode;
 
     /**
      * Unit of Measure
      * Default unit of measure used for all stock operations.
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Uom
+     * @var OdooRelation|null
      */
     private $product_uom_id;
 
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Company
+     * @var OdooRelation|null
      */
     private $company_id;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Package Type
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @param OdooRelation|null $product_uom_id
+     */
+    public function setProductUomId(?OdooRelation $product_uom_id): void
+    {
+        $this->product_uom_id = $product_uom_id;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getProductUomId(): ?OdooRelation
+    {
+        return $this->product_uom_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string|null $barcode
+     */
+    public function setBarcode(?string $barcode): void
+    {
+        $this->barcode = $barcode;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getBarcode(): ?string
+    {
+        return $this->barcode;
+    }
+
+    /**
+     * @param float|null $qty
+     */
+    public function setQty(?float $qty): void
+    {
+        $this->qty = $qty;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getQty(): ?float
+    {
+        return $this->qty;
+    }
+
+    /**
+     * @param OdooRelation|null $product_id
+     */
+    public function setProductId(?OdooRelation $product_id): void
+    {
+        $this->product_id = $product_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getProductId(): ?OdooRelation
+    {
+        return $this->product_id;
+    }
+
+    /**
+     * @param int|null $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSequence(): ?int
+    {
+        return $this->sequence;
     }
 
     /**
@@ -125,82 +309,10 @@ final class Packaging extends Base
     }
 
     /**
-     * @param null|int $sequence
+     * @param DateTimeInterface|null $write_date
      */
-    public function setSequence(?int $sequence): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->sequence = $sequence;
-    }
-
-    /**
-     * @param null|Product $product_id
-     */
-    public function setProductId(?Product $product_id): void
-    {
-        $this->product_id = $product_id;
-    }
-
-    /**
-     * @param null|float $qty
-     */
-    public function setQty(?float $qty): void
-    {
-        $this->qty = $qty;
-    }
-
-    /**
-     * @param null|string $barcode
-     */
-    public function setBarcode(?string $barcode): void
-    {
-        $this->barcode = $barcode;
-    }
-
-    /**
-     * @return null|Uom
-     */
-    public function getProductUomId(): ?Uom
-    {
-        return $this->product_uom_id;
-    }
-
-    /**
-     * @param null|Company $company_id
-     */
-    public function setCompanyId(?Company $company_id): void
-    {
-        $this->company_id = $company_id;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

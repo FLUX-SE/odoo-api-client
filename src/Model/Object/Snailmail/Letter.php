@@ -6,14 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Snailmail;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Actions\Report;
-use Flux\OdooApiClient\Model\Object\Ir\Attachment;
-use Flux\OdooApiClient\Model\Object\Mail\Message;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Country;
-use Flux\OdooApiClient\Model\Object\Res\Country\State;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : snailmail.letter
@@ -21,25 +14,31 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Letter extends Base
 {
+    public const ODOO_MODEL_NAME = 'snailmail.letter';
+
     /**
      * Sent by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $user_id;
 
     /**
      * Model
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -47,6 +46,8 @@ final class Letter extends Base
 
     /**
      * Document ID
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var int
      */
@@ -54,64 +55,82 @@ final class Letter extends Base
 
     /**
      * Recipient
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Partner
+     * @var OdooRelation
      */
     private $partner_id;
 
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Company
+     * @var OdooRelation
      */
     private $company_id;
 
     /**
      * Optional report to print and attach
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Report
+     * @var OdooRelation|null
      */
     private $report_template;
 
     /**
      * Attachment
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Attachment
+     * @var OdooRelation|null
      */
     private $attachment_id;
 
     /**
      * Document
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $attachment_datas;
 
     /**
      * Attachment Filename
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $attachment_fname;
 
     /**
      * Color
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $color;
 
     /**
      * Cover Page
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $cover;
 
     /**
      * Both side
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $duplex;
 
@@ -120,125 +139,185 @@ final class Letter extends Base
      * When a letter is created, the status is 'Pending'.
      * If the letter is correctly sent, the status goes in 'Sent',
      * If not, it will got in state 'Error' and the error message will be displayed in the field 'Error Message'.
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> pending (In Queue)
+     *     -> sent (Sent)
+     *     -> error (Error)
+     *     -> canceled (Canceled)
      *
-     * @var array
+     *
+     * @var string
      */
     private $state;
 
     /**
      * Error
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> MISSING_REQUIRED_FIELDS (MISSING_REQUIRED_FIELDS)
+     *     -> CREDIT_ERROR (CREDIT_ERROR)
+     *     -> TRIAL_ERROR (TRIAL_ERROR)
+     *     -> NO_PRICE_AVAILABLE (NO_PRICE_AVAILABLE)
+     *     -> FORMAT_ERROR (FORMAT_ERROR)
+     *     -> UNKNOWN_ERROR (UNKNOWN_ERROR)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $error_code;
 
     /**
      * Information
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $info_msg;
 
     /**
      * Related Record
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $reference;
 
     /**
      * Snailmail Status Message
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Message
+     * @var OdooRelation|null
      */
     private $message_id;
 
     /**
      * Street
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $street;
 
     /**
      * Street2
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $street2;
 
     /**
      * Zip
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $zip;
 
     /**
      * City
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $city;
 
     /**
      * State
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|State
+     * @var OdooRelation|null
      */
     private $state_id;
 
     /**
      * Country
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Country
+     * @var OdooRelation|null
      */
     private $country_id;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $model Model
+     *        Searchable : yes
+     *        Sortable : yes
      * @param int $res_id Document ID
-     * @param Partner $partner_id Recipient
-     * @param Company $company_id Company
-     * @param array $state Status
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $partner_id Recipient
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $company_id Company
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $state Status
      *        When a letter is created, the status is 'Pending'.
      *        If the letter is correctly sent, the status goes in 'Sent',
      *        If not, it will got in state 'Error' and the error message will be displayed in the field 'Error Message'.
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> pending (In Queue)
+     *            -> sent (Sent)
+     *            -> error (Error)
+     *            -> canceled (Canceled)
+     *
      */
     public function __construct(
         string $model,
         int $res_id,
-        Partner $partner_id,
-        Company $company_id,
-        array $state
+        OdooRelation $partner_id,
+        OdooRelation $company_id,
+        string $state
     ) {
         $this->model = $model;
         $this->res_id = $res_id;
@@ -248,111 +327,15 @@ final class Letter extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return string|null
      */
-    public function addErrorCode($item): void
+    public function getCity(): ?string
     {
-        if ($this->hasErrorCode($item)) {
-            return;
-        }
-
-        if (null === $this->error_code) {
-            $this->error_code = [];
-        }
-
-        $this->error_code[] = $item;
+        return $this->city;
     }
 
     /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param null|Country $country_id
-     */
-    public function setCountryId(?Country $country_id): void
-    {
-        $this->country_id = $country_id;
-    }
-
-    /**
-     * @param null|State $state_id
-     */
-    public function setStateId(?State $state_id): void
-    {
-        $this->state_id = $state_id;
-    }
-
-    /**
-     * @param null|string $city
-     */
-    public function setCity(?string $city): void
-    {
-        $this->city = $city;
-    }
-
-    /**
-     * @param null|string $zip
-     */
-    public function setZip(?string $zip): void
-    {
-        $this->zip = $zip;
-    }
-
-    /**
-     * @param null|string $street2
-     */
-    public function setStreet2(?string $street2): void
-    {
-        $this->street2 = $street2;
-    }
-
-    /**
-     * @param null|string $street
-     */
-    public function setStreet(?string $street): void
-    {
-        $this->street = $street;
-    }
-
-    /**
-     * @param null|Message $message_id
-     */
-    public function setMessageId(?Message $message_id): void
-    {
-        $this->message_id = $message_id;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getReference(): ?string
-    {
-        return $this->reference;
-    }
-
-    /**
-     * @param null|string $info_msg
+     * @param string|null $info_msg
      */
     public function setInfoMsg(?string $info_msg): void
     {
@@ -360,137 +343,235 @@ final class Letter extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return string|null
      */
-    public function removeErrorCode($item): void
+    public function getReference(): ?string
     {
-        if (null === $this->error_code) {
-            $this->error_code = [];
-        }
-
-        if ($this->hasErrorCode($item)) {
-            $index = array_search($item, $this->error_code);
-            unset($this->error_code[$index]);
-        }
+        return $this->reference;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param string|null $reference
      */
-    public function hasErrorCode($item, bool $strict = true): bool
+    public function setReference(?string $reference): void
     {
-        if (null === $this->error_code) {
-            return false;
-        }
-
-        return in_array($item, $this->error_code, $strict);
+        $this->reference = $reference;
     }
 
     /**
-     * @param null|Users $user_id
+     * @return OdooRelation|null
      */
-    public function setUserId(?Users $user_id): void
+    public function getMessageId(): ?OdooRelation
     {
-        $this->user_id = $user_id;
+        return $this->message_id;
     }
 
     /**
-     * @param null|array $error_code
+     * @param OdooRelation|null $message_id
      */
-    public function setErrorCode(?array $error_code): void
+    public function setMessageId(?OdooRelation $message_id): void
+    {
+        $this->message_id = $message_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getStreet(): ?string
+    {
+        return $this->street;
+    }
+
+    /**
+     * @param string|null $street
+     */
+    public function setStreet(?string $street): void
+    {
+        $this->street = $street;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getStreet2(): ?string
+    {
+        return $this->street2;
+    }
+
+    /**
+     * @param string|null $street2
+     */
+    public function setStreet2(?string $street2): void
+    {
+        $this->street2 = $street2;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getZip(): ?string
+    {
+        return $this->zip;
+    }
+
+    /**
+     * @param string|null $zip
+     */
+    public function setZip(?string $zip): void
+    {
+        $this->zip = $zip;
+    }
+
+    /**
+     * @param string|null $city
+     */
+    public function setCity(?string $city): void
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @param string|null $error_code
+     */
+    public function setErrorCode(?string $error_code): void
     {
         $this->error_code = $error_code;
     }
 
     /**
-     * @return array
+     * @return OdooRelation|null
      */
-    public function getState(): array
+    public function getStateId(): ?OdooRelation
     {
-        return $this->state;
+        return $this->state_id;
     }
 
     /**
-     * @param null|bool $duplex
+     * @param OdooRelation|null $state_id
      */
-    public function setDuplex(?bool $duplex): void
+    public function setStateId(?OdooRelation $state_id): void
     {
-        $this->duplex = $duplex;
+        $this->state_id = $state_id;
     }
 
     /**
-     * @param null|bool $cover
+     * @return OdooRelation|null
      */
-    public function setCover(?bool $cover): void
+    public function getCountryId(): ?OdooRelation
     {
-        $this->cover = $cover;
+        return $this->country_id;
     }
 
     /**
-     * @param null|bool $color
+     * @param OdooRelation|null $country_id
      */
-    public function setColor(?bool $color): void
+    public function setCountryId(?OdooRelation $country_id): void
     {
-        $this->color = $color;
+        $this->country_id = $country_id;
     }
 
     /**
-     * @return null|string
+     * @return OdooRelation|null
      */
-    public function getAttachmentFname(): ?string
+    public function getCreateUid(): ?OdooRelation
     {
-        return $this->attachment_fname;
+        return $this->create_uid;
     }
 
     /**
-     * @return null|int
+     * @param OdooRelation|null $create_uid
      */
-    public function getAttachmentDatas(): ?int
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->attachment_datas;
+        $this->create_uid = $create_uid;
     }
 
     /**
-     * @param null|Attachment $attachment_id
+     * @return DateTimeInterface|null
      */
-    public function setAttachmentId(?Attachment $attachment_id): void
+    public function getCreateDate(): ?DateTimeInterface
     {
-        $this->attachment_id = $attachment_id;
+        return $this->create_date;
     }
 
     /**
-     * @param null|Report $report_template
+     * @param DateTimeInterface|null $create_date
      */
-    public function setReportTemplate(?Report $report_template): void
+    public function setCreateDate(?DateTimeInterface $create_date): void
     {
-        $this->report_template = $report_template;
+        $this->create_date = $create_date;
     }
 
     /**
-     * @return Company
+     * @return OdooRelation|null
      */
-    public function getCompanyId(): Company
+    public function getWriteUid(): ?OdooRelation
     {
-        return $this->company_id;
+        return $this->write_uid;
     }
 
     /**
-     * @param Partner $partner_id
+     * @param OdooRelation|null $write_uid
      */
-    public function setPartnerId(Partner $partner_id): void
+    public function setWriteUid(?OdooRelation $write_uid): void
     {
-        $this->partner_id = $partner_id;
+        $this->write_uid = $write_uid;
     }
 
     /**
-     * @param int $res_id
+     * @return DateTimeInterface|null
      */
-    public function setResId(int $res_id): void
+    public function getWriteDate(): ?DateTimeInterface
     {
-        $this->res_id = $res_id;
+        return $this->write_date;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getInfoMsg(): ?string
+    {
+        return $this->info_msg;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getErrorCode(): ?string
+    {
+        return $this->error_code;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getUserId(): ?OdooRelation
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getAttachmentId(): ?OdooRelation
+    {
+        return $this->attachment_id;
+    }
+
+    /**
+     * @param OdooRelation|null $user_id
+     */
+    public function setUserId(?OdooRelation $user_id): void
+    {
+        $this->user_id = $user_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getModel(): string
+    {
+        return $this->model;
     }
 
     /**
@@ -502,10 +583,178 @@ final class Letter extends Base
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return int
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getResId(): int
     {
-        return $this->write_date;
+        return $this->res_id;
+    }
+
+    /**
+     * @param int $res_id
+     */
+    public function setResId(int $res_id): void
+    {
+        $this->res_id = $res_id;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getPartnerId(): OdooRelation
+    {
+        return $this->partner_id;
+    }
+
+    /**
+     * @param OdooRelation $partner_id
+     */
+    public function setPartnerId(OdooRelation $partner_id): void
+    {
+        $this->partner_id = $partner_id;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getCompanyId(): OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param OdooRelation $company_id
+     */
+    public function setCompanyId(OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getReportTemplate(): ?OdooRelation
+    {
+        return $this->report_template;
+    }
+
+    /**
+     * @param OdooRelation|null $report_template
+     */
+    public function setReportTemplate(?OdooRelation $report_template): void
+    {
+        $this->report_template = $report_template;
+    }
+
+    /**
+     * @param OdooRelation|null $attachment_id
+     */
+    public function setAttachmentId(?OdooRelation $attachment_id): void
+    {
+        $this->attachment_id = $attachment_id;
+    }
+
+    /**
+     * @param string $state
+     */
+    public function setState(string $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getAttachmentDatas(): ?int
+    {
+        return $this->attachment_datas;
+    }
+
+    /**
+     * @param int|null $attachment_datas
+     */
+    public function setAttachmentDatas(?int $attachment_datas): void
+    {
+        $this->attachment_datas = $attachment_datas;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAttachmentFname(): ?string
+    {
+        return $this->attachment_fname;
+    }
+
+    /**
+     * @param string|null $attachment_fname
+     */
+    public function setAttachmentFname(?string $attachment_fname): void
+    {
+        $this->attachment_fname = $attachment_fname;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isColor(): ?bool
+    {
+        return $this->color;
+    }
+
+    /**
+     * @param bool|null $color
+     */
+    public function setColor(?bool $color): void
+    {
+        $this->color = $color;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isCover(): ?bool
+    {
+        return $this->cover;
+    }
+
+    /**
+     * @param bool|null $cover
+     */
+    public function setCover(?bool $cover): void
+    {
+        $this->cover = $cover;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isDuplex(): ?bool
+    {
+        return $this->duplex;
+    }
+
+    /**
+     * @param bool|null $duplex
+     */
+    public function setDuplex(?bool $duplex): void
+    {
+        $this->duplex = $duplex;
+    }
+
+    /**
+     * @return string
+     */
+    public function getState(): string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

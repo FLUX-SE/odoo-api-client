@@ -6,7 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Mail;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.moderation
@@ -14,18 +14,22 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Moderation extends Base
 {
+    public const ODOO_MODEL_NAME = 'mail.moderation';
+
     /**
      * Email
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -33,56 +37,90 @@ final class Moderation extends Base
 
     /**
      * Status
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> allow (Always Allow)
+     *     -> ban (Permanent Ban)
      *
-     * @var array
+     *
+     * @var string
      */
     private $status;
 
     /**
      * Channel
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Channel
+     * @var OdooRelation
      */
     private $channel_id;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $email Email
-     * @param array $status Status
-     * @param Channel $channel_id Channel
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $status Status
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> allow (Always Allow)
+     *            -> ban (Permanent Ban)
+     *
+     * @param OdooRelation $channel_id Channel
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(string $email, array $status, Channel $channel_id)
+    public function __construct(string $email, string $status, OdooRelation $channel_id)
     {
         $this->email = $email;
         $this->status = $status;
         $this->channel_id = $channel_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
     }
 
     /**
@@ -94,65 +132,55 @@ final class Moderation extends Base
     }
 
     /**
-     * @param array $status
+     * @return string
      */
-    public function setStatus(array $status): void
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setStatus(string $status): void
     {
         $this->status = $status;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return OdooRelation
      */
-    public function hasStatus($item, bool $strict = true): bool
+    public function getChannelId(): OdooRelation
     {
-        return in_array($item, $this->status, $strict);
+        return $this->channel_id;
     }
 
     /**
-     * @param mixed $item
+     * @param OdooRelation $channel_id
      */
-    public function addStatus($item): void
-    {
-        if ($this->hasStatus($item)) {
-            return;
-        }
-
-        $this->status[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeStatus($item): void
-    {
-        if ($this->hasStatus($item)) {
-            $index = array_search($item, $this->status);
-            unset($this->status[$index]);
-        }
-    }
-
-    /**
-     * @param Channel $channel_id
-     */
-    public function setChannelId(Channel $channel_id): void
+    public function setChannelId(OdooRelation $channel_id): void
     {
         $this->channel_id = $channel_id;
     }
 
     /**
-     * @return null|Users
+     * @return OdooRelation|null
      */
-    public function getCreateUid(): ?Users
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -160,18 +188,42 @@ final class Moderation extends Base
     }
 
     /**
-     * @return null|Users
+     * @param DateTimeInterface|null $create_date
      */
-    public function getWriteUid(): ?Users
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

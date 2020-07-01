@@ -11,9 +11,10 @@ use Flux\OdooApiClient\Model\Object\Base;
  * Name : ir.qweb.field.barcode
  * Info :
  * ``barcode`` widget rendering, inserts a data:uri-using image tag in the
- * document. May be overridden by e.g. the website module to generate links
- * instead.
+ *         document. May be overridden by e.g. the website module to generate links
+ *         instead.
  */
 final class Barcode extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.qweb.field.barcode';
 }

@@ -6,8 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Fiscal;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.fiscal.year
@@ -15,18 +14,22 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Year extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.fiscal.year';
+
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -35,6 +38,8 @@ final class Year extends Base
     /**
      * Start Date
      * Start Date, included in the fiscal year.
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var DateTimeInterface
      */
@@ -43,6 +48,8 @@ final class Year extends Base
     /**
      * End Date
      * Ending Date, included in the fiscal year.
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var DateTimeInterface
      */
@@ -50,52 +57,70 @@ final class Year extends Base
 
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Company
+     * @var OdooRelation
      */
     private $company_id;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Name
+     *        Searchable : yes
+     *        Sortable : yes
      * @param DateTimeInterface $date_from Start Date
      *        Start Date, included in the fiscal year.
+     *        Searchable : yes
+     *        Sortable : yes
      * @param DateTimeInterface $date_to End Date
      *        Ending Date, included in the fiscal year.
-     * @param Company $company_id Company
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $company_id Company
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         string $name,
         DateTimeInterface $date_from,
         DateTimeInterface $date_to,
-        Company $company_id
+        OdooRelation $company_id
     ) {
         $this->name = $name;
         $this->date_from = $date_from;
@@ -104,19 +129,83 @@ final class Year extends Base
     }
 
     /**
-     * @param string $name
+     * @return OdooRelation|null
      */
-    public function setName(string $name): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->name = $name;
+        return $this->create_uid;
     }
 
     /**
-     * @param DateTimeInterface $date_from
+     * @return DateTimeInterface|null
      */
-    public function setDateFrom(DateTimeInterface $date_from): void
+    public function getWriteDate(): ?DateTimeInterface
     {
-        $this->date_from = $date_from;
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @param OdooRelation $company_id
+     */
+    public function setCompanyId(OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getCompanyId(): OdooRelation
+    {
+        return $this->company_id;
     }
 
     /**
@@ -128,42 +217,42 @@ final class Year extends Base
     }
 
     /**
-     * @param Company $company_id
+     * @return DateTimeInterface
      */
-    public function setCompanyId(Company $company_id): void
+    public function getDateTo(): DateTimeInterface
     {
-        $this->company_id = $company_id;
+        return $this->date_to;
     }
 
     /**
-     * @return null|Users
+     * @param DateTimeInterface $date_from
      */
-    public function getCreateUid(): ?Users
+    public function setDateFrom(DateTimeInterface $date_from): void
     {
-        return $this->create_uid;
+        $this->date_from = $date_from;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return DateTimeInterface
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function getDateFrom(): DateTimeInterface
     {
-        return $this->create_date;
+        return $this->date_from;
     }
 
     /**
-     * @return null|Users
+     * @param string $name
      */
-    public function getWriteUid(): ?Users
+    public function setName(string $name): void
     {
-        return $this->write_uid;
+        $this->name = $name;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param DateTimeInterface|null $write_date
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

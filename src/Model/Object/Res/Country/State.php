@@ -6,8 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Res\Country;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Country;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : res.country.state
@@ -15,26 +14,32 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class State extends Base
 {
+    public const ODOO_MODEL_NAME = 'res.country.state';
+
     /**
      * Country
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Country
+     * @var OdooRelation
      */
     private $country_id;
 
     /**
      * State Name
      * Administrative divisions of a country. E.g. Fed. State, Departement, Canton
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -43,6 +48,8 @@ final class State extends Base
     /**
      * State Code
      * The state code.
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -50,40 +57,54 @@ final class State extends Base
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param Country $country_id Country
+     * @param OdooRelation $country_id Country
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $name State Name
      *        Administrative divisions of a country. E.g. Fed. State, Departement, Canton
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $code State Code
      *        The state code.
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(Country $country_id, string $name, string $code)
+    public function __construct(OdooRelation $country_id, string $name, string $code)
     {
         $this->country_id = $country_id;
         $this->name = $name;
@@ -91,11 +112,27 @@ final class State extends Base
     }
 
     /**
-     * @param Country $country_id
+     * @return OdooRelation
      */
-    public function setCountryId(Country $country_id): void
+    public function getCountryId(): OdooRelation
+    {
+        return $this->country_id;
+    }
+
+    /**
+     * @param OdooRelation $country_id
+     */
+    public function setCountryId(OdooRelation $country_id): void
     {
         $this->country_id = $country_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     /**
@@ -107,6 +144,14 @@ final class State extends Base
     }
 
     /**
+     * @return string
+     */
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    /**
      * @param string $code
      */
     public function setCode(string $code): void
@@ -115,15 +160,23 @@ final class State extends Base
     }
 
     /**
-     * @return null|Users
+     * @return OdooRelation|null
      */
-    public function getCreateUid(): ?Users
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -131,18 +184,42 @@ final class State extends Base
     }
 
     /**
-     * @return null|Users
+     * @param DateTimeInterface|null $create_date
      */
-    public function getWriteUid(): ?Users
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

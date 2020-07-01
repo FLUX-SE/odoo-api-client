@@ -12,13 +12,14 @@ use Flux\OdooApiClient\Model\Object\Base;
  * Info :
  * Used to convert a t-field specification into an output HTML field.
  *
- * :meth:`~.to_html` is the entry point of this conversion from QWeb, it:
+ *         :meth:`~.to_html` is the entry point of this conversion from QWeb, it:
  *
- * * converts the record value to html using :meth:`~.record_to_html`
- * * generates the metadata attributes (``data-oe-``) to set on the root
- * result node
- * * generates the root result node itself through :meth:`~.render_element`
+ *         * converts the record value to html using :meth:`~.record_to_html`
+ *         * generates the metadata attributes (``data-oe-``) to set on the root
+ *             result node
+ *         * generates the root result node itself through :meth:`~.render_element`
  */
 final class Date extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.qweb.field.date';
 }

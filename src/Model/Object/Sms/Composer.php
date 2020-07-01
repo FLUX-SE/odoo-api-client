@@ -6,159 +6,205 @@ namespace Flux\OdooApiClient\Model\Object\Sms;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : sms.composer
  * Name : sms.composer
  * Info :
  * Model super-class for transient records, meant to be temporarily
- * persistent, and regularly vacuum-cleaned.
+ *         persistent, and regularly vacuum-cleaned.
  *
- * A TransientModel has a simplified access rights management, all users can
- * create new records, and may only access the records they created. The
- * superuser has unrestricted access to all TransientModel records.
+ *         A TransientModel has a simplified access rights management, all users can
+ *         create new records, and may only access the records they created. The
+ *         superuser has unrestricted access to all TransientModel records.
  */
 final class Composer extends Base
 {
+    public const ODOO_MODEL_NAME = 'sms.composer';
+
     /**
      * Composition Mode
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> numbers (Send to numbers)
+     *     -> comment (Post on a document)
+     *     -> mass (Send SMS in batch)
      *
-     * @var array
+     *
+     * @var string
      */
     private $composition_mode;
 
     /**
      * Document Model Name
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $res_model;
 
     /**
      * Document ID
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $res_id;
 
     /**
      * Document IDs
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $res_ids;
 
     /**
      * Visible records count
      * UX field computing the number of recipients in mass mode without active domain
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $res_ids_count;
 
     /**
      * Use active domain
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $use_active_domain;
 
     /**
      * Active domain
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $active_domain;
 
     /**
      * Active records count
      * UX field computing the number of recipients in mass mode based on given active domain
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $active_domain_count;
 
     /**
      * Keep a note on document
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $mass_keep_log;
 
     /**
      * Send directly
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $mass_force_send;
 
     /**
      * Use blacklist
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $mass_use_blacklist;
 
     /**
      * Recipients (Partners)
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $recipient_description;
 
     /**
      * # Valid recipients
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $recipient_count;
 
     /**
      * # Invalid recipients
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $recipient_invalid_count;
 
     /**
      * Field holding number
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $number_field_name;
 
     /**
      * Partner
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Partner[]
+     * @var OdooRelation[]|null
      */
     private $partner_ids;
 
     /**
      * Recipients (Numbers)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $numbers;
 
     /**
      * Sanitized Number
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $sanitized_numbers;
 
     /**
      * Use Template
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Template
+     * @var OdooRelation|null
      */
     private $template_id;
 
     /**
      * Message
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -166,125 +212,117 @@ final class Composer extends Base
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param array $composition_mode Composition Mode
+     * @param string $composition_mode Composition Mode
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> numbers (Send to numbers)
+     *            -> comment (Post on a document)
+     *            -> mass (Send SMS in batch)
+     *
      * @param string $body Message
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(array $composition_mode, string $body)
+    public function __construct(string $composition_mode, string $body)
     {
         $this->composition_mode = $composition_mode;
         $this->body = $body;
     }
 
     /**
-     * @return null|int
+     * @param string|null $sanitized_numbers
      */
-    public function getRecipientCount(): ?int
+    public function setSanitizedNumbers(?string $sanitized_numbers): void
     {
-        return $this->recipient_count;
+        $this->sanitized_numbers = $sanitized_numbers;
     }
 
     /**
-     * @return null|Users
+     * @return string|null
      */
-    public function getWriteUid(): ?Users
+    public function getNumberFieldName(): ?string
     {
-        return $this->write_uid;
+        return $this->number_field_name;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param string|null $number_field_name
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function setNumberFieldName(?string $number_field_name): void
     {
-        return $this->create_date;
+        $this->number_field_name = $number_field_name;
     }
 
     /**
-     * @return null|Users
+     * @return OdooRelation[]|null
      */
-    public function getCreateUid(): ?Users
+    public function getPartnerIds(): ?array
     {
-        return $this->create_uid;
+        return $this->partner_ids;
     }
 
     /**
-     * @param string $body
+     * @param OdooRelation[]|null $partner_ids
      */
-    public function setBody(string $body): void
+    public function setPartnerIds(?array $partner_ids): void
     {
-        $this->body = $body;
+        $this->partner_ids = $partner_ids;
     }
 
     /**
-     * @param null|Template $template_id
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setTemplateId(?Template $template_id): void
-    {
-        $this->template_id = $template_id;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getSanitizedNumbers(): ?string
-    {
-        return $this->sanitized_numbers;
-    }
-
-    /**
-     * @param null|string $numbers
-     */
-    public function setNumbers(?string $numbers): void
-    {
-        $this->numbers = $numbers;
-    }
-
-    /**
-     * @param Partner $item
-     */
-    public function removePartnerIds(Partner $item): void
+    public function hasPartnerIds(OdooRelation $item): bool
     {
         if (null === $this->partner_ids) {
-            $this->partner_ids = [];
+            return false;
         }
 
-        if ($this->hasPartnerIds($item)) {
-            $index = array_search($item, $this->partner_ids);
-            unset($this->partner_ids[$index]);
-        }
+        return in_array($item, $this->partner_ids);
     }
 
     /**
-     * @param Partner $item
+     * @param OdooRelation $item
      */
-    public function addPartnerIds(Partner $item): void
+    public function addPartnerIds(OdooRelation $item): void
     {
         if ($this->hasPartnerIds($item)) {
             return;
@@ -298,38 +336,54 @@ final class Composer extends Base
     }
 
     /**
-     * @param Partner $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param OdooRelation $item
      */
-    public function hasPartnerIds(Partner $item, bool $strict = true): bool
+    public function removePartnerIds(OdooRelation $item): void
     {
         if (null === $this->partner_ids) {
-            return false;
+            $this->partner_ids = [];
         }
 
-        return in_array($item, $this->partner_ids, $strict);
+        if ($this->hasPartnerIds($item)) {
+            $index = array_search($item, $this->partner_ids);
+            unset($this->partner_ids[$index]);
+        }
     }
 
     /**
-     * @param null|Partner[] $partner_ids
+     * @return string|null
      */
-    public function setPartnerIds(?array $partner_ids): void
+    public function getNumbers(): ?string
     {
-        $this->partner_ids = $partner_ids;
+        return $this->numbers;
     }
 
     /**
-     * @param null|string $number_field_name
+     * @param string|null $numbers
      */
-    public function setNumberFieldName(?string $number_field_name): void
+    public function setNumbers(?string $numbers): void
     {
-        $this->number_field_name = $number_field_name;
+        $this->numbers = $numbers;
     }
 
     /**
-     * @return null|int
+     * @return string|null
+     */
+    public function getSanitizedNumbers(): ?string
+    {
+        return $this->sanitized_numbers;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getTemplateId(): ?OdooRelation
+    {
+        return $this->template_id;
+    }
+
+    /**
+     * @return int|null
      */
     public function getRecipientInvalidCount(): ?int
     {
@@ -337,63 +391,111 @@ final class Composer extends Base
     }
 
     /**
-     * @return null|string
+     * @param OdooRelation|null $template_id
      */
-    public function getRecipientDescription(): ?string
+    public function setTemplateId(?OdooRelation $template_id): void
     {
-        return $this->recipient_description;
+        $this->template_id = $template_id;
     }
 
     /**
-     * @param array $composition_mode
+     * @return string
      */
-    public function setCompositionMode(array $composition_mode): void
+    public function getBody(): string
     {
-        $this->composition_mode = $composition_mode;
+        return $this->body;
     }
 
     /**
-     * @param null|bool $mass_use_blacklist
+     * @param string $body
      */
-    public function setMassUseBlacklist(?bool $mass_use_blacklist): void
+    public function setBody(string $body): void
     {
-        $this->mass_use_blacklist = $mass_use_blacklist;
+        $this->body = $body;
     }
 
     /**
-     * @param null|bool $mass_force_send
+     * @return OdooRelation|null
      */
-    public function setMassForceSend(?bool $mass_force_send): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->mass_force_send = $mass_force_send;
+        return $this->create_uid;
     }
 
     /**
-     * @param null|bool $mass_keep_log
+     * @param OdooRelation|null $create_uid
      */
-    public function setMassKeepLog(?bool $mass_keep_log): void
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        $this->mass_keep_log = $mass_keep_log;
+        $this->create_uid = $create_uid;
     }
 
     /**
-     * @return null|int
+     * @return DateTimeInterface|null
      */
-    public function getActiveDomainCount(): ?int
+    public function getCreateDate(): ?DateTimeInterface
     {
-        return $this->active_domain_count;
+        return $this->create_date;
     }
 
     /**
-     * @return null|string
+     * @param DateTimeInterface|null $create_date
      */
-    public function getActiveDomain(): ?string
+    public function setCreateDate(?DateTimeInterface $create_date): void
     {
-        return $this->active_domain;
+        $this->create_date = $create_date;
     }
 
     /**
-     * @param null|bool $use_active_domain
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param int|null $recipient_invalid_count
+     */
+    public function setRecipientInvalidCount(?int $recipient_invalid_count): void
+    {
+        $this->recipient_invalid_count = $recipient_invalid_count;
+    }
+
+    /**
+     * @param int|null $recipient_count
+     */
+    public function setRecipientCount(?int $recipient_count): void
+    {
+        $this->recipient_count = $recipient_count;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCompositionMode(): string
+    {
+        return $this->composition_mode;
+    }
+
+    /**
+     * @param bool|null $use_active_domain
      */
     public function setUseActiveDomain(?bool $use_active_domain): void
     {
@@ -401,31 +503,23 @@ final class Composer extends Base
     }
 
     /**
-     * @return null|int
+     * @param string $composition_mode
      */
-    public function getResIdsCount(): ?int
+    public function setCompositionMode(string $composition_mode): void
     {
-        return $this->res_ids_count;
+        $this->composition_mode = $composition_mode;
     }
 
     /**
-     * @param null|string $res_ids
+     * @return string|null
      */
-    public function setResIds(?string $res_ids): void
+    public function getResModel(): ?string
     {
-        $this->res_ids = $res_ids;
+        return $this->res_model;
     }
 
     /**
-     * @param null|int $res_id
-     */
-    public function setResId(?int $res_id): void
-    {
-        $this->res_id = $res_id;
-    }
-
-    /**
-     * @param null|string $res_model
+     * @param string|null $res_model
      */
     public function setResModel(?string $res_model): void
     {
@@ -433,44 +527,170 @@ final class Composer extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return int|null
      */
-    public function removeCompositionMode($item): void
+    public function getResId(): ?int
     {
-        if ($this->hasCompositionMode($item)) {
-            $index = array_search($item, $this->composition_mode);
-            unset($this->composition_mode[$index]);
-        }
+        return $this->res_id;
     }
 
     /**
-     * @param mixed $item
+     * @param int|null $res_id
      */
-    public function addCompositionMode($item): void
+    public function setResId(?int $res_id): void
     {
-        if ($this->hasCompositionMode($item)) {
-            return;
-        }
-
-        $this->composition_mode[] = $item;
+        $this->res_id = $res_id;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return string|null
      */
-    public function hasCompositionMode($item, bool $strict = true): bool
+    public function getResIds(): ?string
     {
-        return in_array($item, $this->composition_mode, $strict);
+        return $this->res_ids;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param string|null $res_ids
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function setResIds(?string $res_ids): void
     {
-        return $this->write_date;
+        $this->res_ids = $res_ids;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getResIdsCount(): ?int
+    {
+        return $this->res_ids_count;
+    }
+
+    /**
+     * @param int|null $res_ids_count
+     */
+    public function setResIdsCount(?int $res_ids_count): void
+    {
+        $this->res_ids_count = $res_ids_count;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isUseActiveDomain(): ?bool
+    {
+        return $this->use_active_domain;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getActiveDomain(): ?string
+    {
+        return $this->active_domain;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getRecipientCount(): ?int
+    {
+        return $this->recipient_count;
+    }
+
+    /**
+     * @param string|null $active_domain
+     */
+    public function setActiveDomain(?string $active_domain): void
+    {
+        $this->active_domain = $active_domain;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getActiveDomainCount(): ?int
+    {
+        return $this->active_domain_count;
+    }
+
+    /**
+     * @param int|null $active_domain_count
+     */
+    public function setActiveDomainCount(?int $active_domain_count): void
+    {
+        $this->active_domain_count = $active_domain_count;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isMassKeepLog(): ?bool
+    {
+        return $this->mass_keep_log;
+    }
+
+    /**
+     * @param bool|null $mass_keep_log
+     */
+    public function setMassKeepLog(?bool $mass_keep_log): void
+    {
+        $this->mass_keep_log = $mass_keep_log;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isMassForceSend(): ?bool
+    {
+        return $this->mass_force_send;
+    }
+
+    /**
+     * @param bool|null $mass_force_send
+     */
+    public function setMassForceSend(?bool $mass_force_send): void
+    {
+        $this->mass_force_send = $mass_force_send;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isMassUseBlacklist(): ?bool
+    {
+        return $this->mass_use_blacklist;
+    }
+
+    /**
+     * @param bool|null $mass_use_blacklist
+     */
+    public function setMassUseBlacklist(?bool $mass_use_blacklist): void
+    {
+        $this->mass_use_blacklist = $mass_use_blacklist;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRecipientDescription(): ?string
+    {
+        return $this->recipient_description;
+    }
+
+    /**
+     * @param string|null $recipient_description
+     */
+    public function setRecipientDescription(?string $recipient_description): void
+    {
+        $this->recipient_description = $recipient_description;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

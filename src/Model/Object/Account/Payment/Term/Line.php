@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Account\Payment\Term;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Payment\Term;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.payment.term.line
@@ -15,34 +14,47 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Line extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.payment.term.line';
+
     /**
      * Type
      * Select here the kind of valuation related to this payment terms line.
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> balance (Balance)
+     *     -> percent (Percent)
+     *     -> fixed (Fixed Amount)
      *
-     * @var array
+     *
+     * @var string
      */
     private $value;
 
     /**
      * Value
      * For percent enter a ratio between 0-100.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $value_amount;
 
     /**
      * Number of Days
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var int
      */
@@ -53,69 +65,108 @@ final class Line extends Base
      * Day of the month on which the invoice must come to its term. If zero or negative, this value will be ignored,
      * and no specific day will be set. If greater than the last day of a month, this number will instead select the
      * last day of this month.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $day_of_the_month;
 
     /**
      * Options
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> day_after_invoice_date (days after the invoice date)
+     *     -> day_following_month (of the following month)
+     *     -> day_current_month (of the current month)
      *
-     * @var array
+     *
+     * @var string
      */
     private $option;
 
     /**
      * Payment Terms
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Term
+     * @var OdooRelation
      */
     private $payment_id;
 
     /**
      * Sequence
      * Gives the sequence order when displaying a list of payment terms lines.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $sequence;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param array $value Type
+     * @param string $value Type
      *        Select here the kind of valuation related to this payment terms line.
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> balance (Balance)
+     *            -> percent (Percent)
+     *            -> fixed (Fixed Amount)
+     *
      * @param int $days Number of Days
-     * @param array $option Options
-     * @param Term $payment_id Payment Terms
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $option Options
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> day_after_invoice_date (days after the invoice date)
+     *            -> day_following_month (of the following month)
+     *            -> day_current_month (of the current month)
+     *
+     * @param OdooRelation $payment_id Payment Terms
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(array $value, int $days, array $option, Term $payment_id)
+    public function __construct(string $value, int $days, string $option, OdooRelation $payment_id)
     {
         $this->value = $value;
         $this->days = $days;
@@ -124,27 +175,47 @@ final class Line extends Base
     }
 
     /**
-     * @param mixed $item
+     * @param OdooRelation $payment_id
      */
-    public function addOption($item): void
+    public function setPaymentId(OdooRelation $payment_id): void
     {
-        if ($this->hasOption($item)) {
-            return;
-        }
-
-        $this->option[] = $item;
+        $this->payment_id = $payment_id;
     }
 
     /**
-     * @return null|Users
+     * @return DateTimeInterface|null
      */
-    public function getWriteUid(): ?Users
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -152,15 +223,23 @@ final class Line extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @param null|int $sequence
+     * @param int|null $sequence
      */
     public function setSequence(?int $sequence): void
     {
@@ -168,57 +247,59 @@ final class Line extends Base
     }
 
     /**
-     * @param Term $payment_id
+     * @return int|null
      */
-    public function setPaymentId(Term $payment_id): void
+    public function getSequence(): ?int
     {
-        $this->payment_id = $payment_id;
+        return $this->sequence;
     }
 
     /**
-     * @param mixed $item
+     * @return OdooRelation
      */
-    public function removeOption($item): void
+    public function getPaymentId(): OdooRelation
     {
-        if ($this->hasOption($item)) {
-            $index = array_search($item, $this->option);
-            unset($this->option[$index]);
-        }
+        return $this->payment_id;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return string
      */
-    public function hasOption($item, bool $strict = true): bool
+    public function getValue(): string
     {
-        return in_array($item, $this->option, $strict);
+        return $this->value;
     }
 
     /**
-     * @param array $value
+     * @param string $option
      */
-    public function setValue(array $value): void
-    {
-        $this->value = $value;
-    }
-
-    /**
-     * @param array $option
-     */
-    public function setOption(array $option): void
+    public function setOption(string $option): void
     {
         $this->option = $option;
     }
 
     /**
-     * @param null|int $day_of_the_month
+     * @return string
+     */
+    public function getOption(): string
+    {
+        return $this->option;
+    }
+
+    /**
+     * @param int|null $day_of_the_month
      */
     public function setDayOfTheMonth(?int $day_of_the_month): void
     {
         $this->day_of_the_month = $day_of_the_month;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getDayOfTheMonth(): ?int
+    {
+        return $this->day_of_the_month;
     }
 
     /**
@@ -230,7 +311,15 @@ final class Line extends Base
     }
 
     /**
-     * @param null|float $value_amount
+     * @return int
+     */
+    public function getDays(): int
+    {
+        return $this->days;
+    }
+
+    /**
+     * @param float|null $value_amount
      */
     public function setValueAmount(?float $value_amount): void
     {
@@ -238,44 +327,26 @@ final class Line extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return float|null
      */
-    public function removeValue($item): void
+    public function getValueAmount(): ?float
     {
-        if ($this->hasValue($item)) {
-            $index = array_search($item, $this->value);
-            unset($this->value[$index]);
-        }
+        return $this->value_amount;
     }
 
     /**
-     * @param mixed $item
+     * @param string $value
      */
-    public function addValue($item): void
+    public function setValue(string $value): void
     {
-        if ($this->hasValue($item)) {
-            return;
-        }
-
-        $this->value[] = $item;
+        $this->value = $value;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param DateTimeInterface|null $write_date
      */
-    public function hasValue($item, bool $strict = true): bool
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return in_array($item, $this->value, $strict);
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

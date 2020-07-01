@@ -6,174 +6,116 @@ namespace Flux\OdooApiClient\Model\Object\Product\Template\Attribute;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Product\Attribute;
-use Flux\OdooApiClient\Model\Object\Product\Attribute\Value;
-use Flux\OdooApiClient\Model\Object\Product\Template;
-use Flux\OdooApiClient\Model\Object\Product\Template\Attribute\Value as ValueAlias;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : product.template.attribute.line
  * Name : product.template.attribute.line
  * Info :
  * Attributes available on product.template with their selected values in a m2m.
- * Used as a configuration model to generate the appropriate product.template.attribute.value
+ *         Used as a configuration model to generate the appropriate product.template.attribute.value
  */
 final class Line extends Base
 {
+    public const ODOO_MODEL_NAME = 'product.template.attribute.line';
+
     /**
      * Active
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $active;
 
     /**
      * Product Template
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Template
+     * @var OdooRelation
      */
     private $product_tmpl_id;
 
     /**
      * Attribute
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Attribute
+     * @var OdooRelation
      */
     private $attribute_id;
 
     /**
      * Values
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Value[]
+     * @var OdooRelation[]|null
      */
     private $value_ids;
 
     /**
      * Product Attribute Values
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|ValueAlias[]
+     * @var OdooRelation[]|null
      */
     private $product_template_value_ids;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param Template $product_tmpl_id Product Template
-     * @param Attribute $attribute_id Attribute
+     * @param OdooRelation $product_tmpl_id Product Template
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $attribute_id Attribute
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(Template $product_tmpl_id, Attribute $attribute_id)
+    public function __construct(OdooRelation $product_tmpl_id, OdooRelation $attribute_id)
     {
         $this->product_tmpl_id = $product_tmpl_id;
         $this->attribute_id = $attribute_id;
     }
 
     /**
-     * @param null|bool $active
-     */
-    public function setActive(?bool $active): void
-    {
-        $this->active = $active;
-    }
-
-    /**
-     * @param Template $product_tmpl_id
-     */
-    public function setProductTmplId(Template $product_tmpl_id): void
-    {
-        $this->product_tmpl_id = $product_tmpl_id;
-    }
-
-    /**
-     * @param Attribute $attribute_id
-     */
-    public function setAttributeId(Attribute $attribute_id): void
-    {
-        $this->attribute_id = $attribute_id;
-    }
-
-    /**
-     * @param null|Value[] $value_ids
-     */
-    public function setValueIds(?array $value_ids): void
-    {
-        $this->value_ids = $value_ids;
-    }
-
-    /**
-     * @param Value $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasValueIds(Value $item, bool $strict = true): bool
-    {
-        if (null === $this->value_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->value_ids, $strict);
-    }
-
-    /**
-     * @param Value $item
-     */
-    public function addValueIds(Value $item): void
-    {
-        if ($this->hasValueIds($item)) {
-            return;
-        }
-
-        if (null === $this->value_ids) {
-            $this->value_ids = [];
-        }
-
-        $this->value_ids[] = $item;
-    }
-
-    /**
-     * @param Value $item
-     */
-    public function removeValueIds(Value $item): void
-    {
-        if (null === $this->value_ids) {
-            $this->value_ids = [];
-        }
-
-        if ($this->hasValueIds($item)) {
-            $index = array_search($item, $this->value_ids);
-            unset($this->value_ids[$index]);
-        }
-    }
-
-    /**
-     * @param null|ValueAlias[] $product_template_value_ids
+     * @param OdooRelation[]|null $product_template_value_ids
      */
     public function setProductTemplateValueIds(?array $product_template_value_ids): void
     {
@@ -181,24 +123,80 @@ final class Line extends Base
     }
 
     /**
-     * @param ValueAlias $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return DateTimeInterface|null
      */
-    public function hasProductTemplateValueIds(ValueAlias $item, bool $strict = true): bool
+    public function getWriteDate(): ?DateTimeInterface
     {
-        if (null === $this->product_template_value_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->product_template_value_ids, $strict);
+        return $this->write_date;
     }
 
     /**
-     * @param ValueAlias $item
+     * @param OdooRelation|null $write_uid
      */
-    public function addProductTemplateValueIds(ValueAlias $item): void
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeProductTemplateValueIds(OdooRelation $item): void
+    {
+        if (null === $this->product_template_value_ids) {
+            $this->product_template_value_ids = [];
+        }
+
+        if ($this->hasProductTemplateValueIds($item)) {
+            $index = array_search($item, $this->product_template_value_ids);
+            unset($this->product_template_value_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addProductTemplateValueIds(OdooRelation $item): void
     {
         if ($this->hasProductTemplateValueIds($item)) {
             return;
@@ -212,49 +210,141 @@ final class Line extends Base
     }
 
     /**
-     * @param ValueAlias $item
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removeProductTemplateValueIds(ValueAlias $item): void
+    public function hasProductTemplateValueIds(OdooRelation $item): bool
     {
         if (null === $this->product_template_value_ids) {
-            $this->product_template_value_ids = [];
+            return false;
         }
 
-        if ($this->hasProductTemplateValueIds($item)) {
-            $index = array_search($item, $this->product_template_value_ids);
-            unset($this->product_template_value_ids[$index]);
+        return in_array($item, $this->product_template_value_ids);
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getProductTemplateValueIds(): ?array
+    {
+        return $this->product_template_value_ids;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeValueIds(OdooRelation $item): void
+    {
+        if (null === $this->value_ids) {
+            $this->value_ids = [];
+        }
+
+        if ($this->hasValueIds($item)) {
+            $index = array_search($item, $this->value_ids);
+            unset($this->value_ids[$index]);
         }
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation $item
      */
-    public function getCreateUid(): ?Users
+    public function addValueIds(OdooRelation $item): void
     {
-        return $this->create_uid;
+        if ($this->hasValueIds($item)) {
+            return;
+        }
+
+        if (null === $this->value_ids) {
+            $this->value_ids = [];
+        }
+
+        $this->value_ids[] = $item;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function hasValueIds(OdooRelation $item): bool
     {
-        return $this->create_date;
+        if (null === $this->value_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->value_ids);
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation[]|null $value_ids
      */
-    public function getWriteUid(): ?Users
+    public function setValueIds(?array $value_ids): void
     {
-        return $this->write_uid;
+        $this->value_ids = $value_ids;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return OdooRelation[]|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getValueIds(): ?array
     {
-        return $this->write_date;
+        return $this->value_ids;
+    }
+
+    /**
+     * @param OdooRelation $attribute_id
+     */
+    public function setAttributeId(OdooRelation $attribute_id): void
+    {
+        $this->attribute_id = $attribute_id;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getAttributeId(): OdooRelation
+    {
+        return $this->attribute_id;
+    }
+
+    /**
+     * @param OdooRelation $product_tmpl_id
+     */
+    public function setProductTmplId(OdooRelation $product_tmpl_id): void
+    {
+        $this->product_tmpl_id = $product_tmpl_id;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getProductTmplId(): OdooRelation
+    {
+        return $this->product_tmpl_id;
+    }
+
+    /**
+     * @param bool|null $active
+     */
+    public function setActive(?bool $active): void
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

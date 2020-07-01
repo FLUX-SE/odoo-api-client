@@ -5,29 +5,28 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Account\Accrual\Accounting;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Account;
-use Flux\OdooApiClient\Model\Object\Account\Journal;
-use Flux\OdooApiClient\Model\Object\Account\Move\Line;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Currency;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.accrual.accounting.wizard
  * Name : account.accrual.accounting.wizard
  * Info :
  * Model super-class for transient records, meant to be temporarily
- * persistent, and regularly vacuum-cleaned.
+ *         persistent, and regularly vacuum-cleaned.
  *
- * A TransientModel has a simplified access rights management, all users can
- * create new records, and may only access the records they created. The
- * superuser has unrestricted access to all TransientModel records.
+ *         A TransientModel has a simplified access rights management, all users can
+ *         create new records, and may only access the records they created. The
+ *         superuser has unrestricted access to all TransientModel records.
  */
 final class Wizard extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.accrual.accounting.wizard';
+
     /**
      * Date
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var DateTimeInterface
      */
@@ -35,105 +34,141 @@ final class Wizard extends Base
 
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Company
+     * @var OdooRelation
      */
     private $company_id;
 
     /**
      * Account Type
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> income (Revenue)
+     *     -> expense (Expense)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $account_type;
 
     /**
      * Active Move Line
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Line[]
+     * @var OdooRelation[]|null
      */
     private $active_move_line_ids;
 
     /**
      * Accrual Default Journal
      * Journal used by default for moving the period of an entry
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var Journal
+     * @var OdooRelation
      */
     private $journal_id;
 
     /**
      * Expense Accrual Account
      * Account used to move the period of an expense
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Account
+     * @var OdooRelation|null
      */
     private $expense_accrual_account;
 
     /**
      * Revenue Accrual Account
      * Account used to move the period of a revenue
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Account
+     * @var OdooRelation|null
      */
     private $revenue_accrual_account;
 
     /**
      * Percentage
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $percentage;
 
     /**
      * Total Amount
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|float
+     * @var float|null
      */
     private $total_amount;
 
     /**
      * Currency
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Currency
+     * @var OdooRelation|null
      */
     private $company_currency_id;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param DateTimeInterface $date Date
-     * @param Company $company_id Company
-     * @param Journal $journal_id Accrual Default Journal
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $company_id Company
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $journal_id Accrual Default Journal
      *        Journal used by default for moving the period of an entry
+     *        Searchable : yes
+     *        Sortable : no
      */
-    public function __construct(DateTimeInterface $date, Company $company_id, Journal $journal_id)
+    public function __construct(DateTimeInterface $date, OdooRelation $company_id, OdooRelation $journal_id)
     {
         $this->date = $date;
         $this->company_id = $company_id;
@@ -141,23 +176,47 @@ final class Wizard extends Base
     }
 
     /**
-     * @param Journal $journal_id
+     * @param OdooRelation|null $revenue_accrual_account
      */
-    public function setJournalId(Journal $journal_id): void
+    public function setRevenueAccrualAccount(?OdooRelation $revenue_accrual_account): void
     {
-        $this->journal_id = $journal_id;
+        $this->revenue_accrual_account = $revenue_accrual_account;
     }
 
     /**
-     * @return null|Users
+     * @return DateTimeInterface|null
      */
-    public function getWriteUid(): ?Users
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -165,23 +224,47 @@ final class Wizard extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @return null|Currency
+     * @param OdooRelation|null $company_currency_id
      */
-    public function getCompanyCurrencyId(): ?Currency
+    public function setCompanyCurrencyId(?OdooRelation $company_currency_id): void
+    {
+        $this->company_currency_id = $company_currency_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCompanyCurrencyId(): ?OdooRelation
     {
         return $this->company_currency_id;
     }
 
     /**
-     * @return null|float
+     * @param float|null $total_amount
+     */
+    public function setTotalAmount(?float $total_amount): void
+    {
+        $this->total_amount = $total_amount;
+    }
+
+    /**
+     * @return float|null
      */
     public function getTotalAmount(): ?float
     {
@@ -189,7 +272,7 @@ final class Wizard extends Base
     }
 
     /**
-     * @param null|float $percentage
+     * @param float|null $percentage
      */
     public function setPercentage(?float $percentage): void
     {
@@ -197,25 +280,65 @@ final class Wizard extends Base
     }
 
     /**
-     * @param null|Account $revenue_accrual_account
+     * @return float|null
      */
-    public function setRevenueAccrualAccount(?Account $revenue_accrual_account): void
+    public function getPercentage(): ?float
     {
-        $this->revenue_accrual_account = $revenue_accrual_account;
+        return $this->percentage;
     }
 
     /**
-     * @param null|Account $expense_accrual_account
+     * @return OdooRelation|null
      */
-    public function setExpenseAccrualAccount(?Account $expense_accrual_account): void
+    public function getRevenueAccrualAccount(): ?OdooRelation
+    {
+        return $this->revenue_accrual_account;
+    }
+
+    /**
+     * @return DateTimeInterface
+     */
+    public function getDate(): DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param OdooRelation|null $expense_accrual_account
+     */
+    public function setExpenseAccrualAccount(?OdooRelation $expense_accrual_account): void
     {
         $this->expense_accrual_account = $expense_accrual_account;
     }
 
     /**
-     * @param Line $item
+     * @return OdooRelation|null
      */
-    public function removeActiveMoveLineIds(Line $item): void
+    public function getExpenseAccrualAccount(): ?OdooRelation
+    {
+        return $this->expense_accrual_account;
+    }
+
+    /**
+     * @param OdooRelation $journal_id
+     */
+    public function setJournalId(OdooRelation $journal_id): void
+    {
+        $this->journal_id = $journal_id;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getJournalId(): OdooRelation
+    {
+        return $this->journal_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeActiveMoveLineIds(OdooRelation $item): void
     {
         if (null === $this->active_move_line_ids) {
             $this->active_move_line_ids = [];
@@ -228,17 +351,9 @@ final class Wizard extends Base
     }
 
     /**
-     * @param DateTimeInterface $date
+     * @param OdooRelation $item
      */
-    public function setDate(DateTimeInterface $date): void
-    {
-        $this->date = $date;
-    }
-
-    /**
-     * @param Line $item
-     */
-    public function addActiveMoveLineIds(Line $item): void
+    public function addActiveMoveLineIds(OdooRelation $item): void
     {
         if ($this->hasActiveMoveLineIds($item)) {
             return;
@@ -252,22 +367,21 @@ final class Wizard extends Base
     }
 
     /**
-     * @param Line $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasActiveMoveLineIds(Line $item, bool $strict = true): bool
+    public function hasActiveMoveLineIds(OdooRelation $item): bool
     {
         if (null === $this->active_move_line_ids) {
             return false;
         }
 
-        return in_array($item, $this->active_move_line_ids, $strict);
+        return in_array($item, $this->active_move_line_ids);
     }
 
     /**
-     * @param null|Line[] $active_move_line_ids
+     * @param OdooRelation[]|null $active_move_line_ids
      */
     public function setActiveMoveLineIds(?array $active_move_line_ids): void
     {
@@ -275,72 +389,58 @@ final class Wizard extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return OdooRelation[]|null
      */
-    public function removeAccountType($item): void
+    public function getActiveMoveLineIds(): ?array
     {
-        if (null === $this->account_type) {
-            $this->account_type = [];
-        }
-
-        if ($this->hasAccountType($item)) {
-            $index = array_search($item, $this->account_type);
-            unset($this->account_type[$index]);
-        }
+        return $this->active_move_line_ids;
     }
 
     /**
-     * @param mixed $item
+     * @param string|null $account_type
      */
-    public function addAccountType($item): void
-    {
-        if ($this->hasAccountType($item)) {
-            return;
-        }
-
-        if (null === $this->account_type) {
-            $this->account_type = [];
-        }
-
-        $this->account_type[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasAccountType($item, bool $strict = true): bool
-    {
-        if (null === $this->account_type) {
-            return false;
-        }
-
-        return in_array($item, $this->account_type, $strict);
-    }
-
-    /**
-     * @param null|array $account_type
-     */
-    public function setAccountType(?array $account_type): void
+    public function setAccountType(?string $account_type): void
     {
         $this->account_type = $account_type;
     }
 
     /**
-     * @param Company $company_id
+     * @return string|null
      */
-    public function setCompanyId(Company $company_id): void
+    public function getAccountType(): ?string
+    {
+        return $this->account_type;
+    }
+
+    /**
+     * @param OdooRelation $company_id
+     */
+    public function setCompanyId(OdooRelation $company_id): void
     {
         $this->company_id = $company_id;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return OdooRelation
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getCompanyId(): OdooRelation
     {
-        return $this->write_date;
+        return $this->company_id;
+    }
+
+    /**
+     * @param DateTimeInterface $date
+     */
+    public function setDate(DateTimeInterface $date): void
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

@@ -6,9 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Payment;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : payment.token
@@ -16,54 +14,68 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Token extends Base
 {
+    public const ODOO_MODEL_NAME = 'payment.token';
+
     /**
      * Name
      * Name of the payment token
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $name;
 
     /**
      * Short name
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $short_name;
 
     /**
      * Partner
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Partner
+     * @var OdooRelation
      */
     private $partner_id;
 
     /**
      * Acquirer Account
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Acquirer
+     * @var OdooRelation
      */
     private $acquirer_id;
 
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Company
+     * @var OdooRelation|null
      */
     private $company_id;
 
     /**
      * Acquirer Ref.
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -71,59 +83,79 @@ final class Token extends Base
 
     /**
      * Active
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $active;
 
     /**
      * Payment Transactions
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Transaction[]
+     * @var OdooRelation[]|null
      */
     private $payment_ids;
 
     /**
      * Verified
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $verified;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param Partner $partner_id Partner
-     * @param Acquirer $acquirer_id Acquirer Account
+     * @param OdooRelation $partner_id Partner
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $acquirer_id Acquirer Account
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $acquirer_ref Acquirer Ref.
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(Partner $partner_id, Acquirer $acquirer_id, string $acquirer_ref)
+    public function __construct(OdooRelation $partner_id, OdooRelation $acquirer_id, string $acquirer_ref)
     {
         $this->partner_id = $partner_id;
         $this->acquirer_id = $acquirer_id;
@@ -131,30 +163,47 @@ final class Token extends Base
     }
 
     /**
-     * @param Transaction $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param OdooRelation[]|null $payment_ids
      */
-    public function hasPaymentIds(Transaction $item, bool $strict = true): bool
+    public function setPaymentIds(?array $payment_ids): void
     {
-        if (null === $this->payment_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->payment_ids, $strict);
+        $this->payment_ids = $payment_ids;
     }
 
     /**
-     * @return null|Users
+     * @return DateTimeInterface|null
      */
-    public function getWriteUid(): ?Users
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -162,15 +211,23 @@ final class Token extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @param null|bool $verified
+     * @param bool|null $verified
      */
     public function setVerified(?bool $verified): void
     {
@@ -178,9 +235,17 @@ final class Token extends Base
     }
 
     /**
-     * @param Transaction $item
+     * @return bool|null
      */
-    public function removePaymentIds(Transaction $item): void
+    public function isVerified(): ?bool
+    {
+        return $this->verified;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removePaymentIds(OdooRelation $item): void
     {
         if (null === $this->payment_ids) {
             $this->payment_ids = [];
@@ -193,9 +258,9 @@ final class Token extends Base
     }
 
     /**
-     * @param Transaction $item
+     * @param OdooRelation $item
      */
-    public function addPaymentIds(Transaction $item): void
+    public function addPaymentIds(OdooRelation $item): void
     {
         if ($this->hasPaymentIds($item)) {
             return;
@@ -209,27 +274,49 @@ final class Token extends Base
     }
 
     /**
-     * @param null|Transaction[] $payment_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setPaymentIds(?array $payment_ids): void
+    public function hasPaymentIds(OdooRelation $item): bool
     {
-        $this->payment_ids = $payment_ids;
+        if (null === $this->payment_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->payment_ids);
     }
 
     /**
-     * @param null|string $name
+     * @return OdooRelation[]|null
      */
-    public function setName(?string $name): void
+    public function getPaymentIds(): ?array
     {
-        $this->name = $name;
+        return $this->payment_ids;
     }
 
     /**
-     * @param null|bool $active
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param bool|null $active
      */
     public function setActive(?bool $active): void
     {
         $this->active = $active;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isActive(): ?bool
+    {
+        return $this->active;
     }
 
     /**
@@ -241,31 +328,71 @@ final class Token extends Base
     }
 
     /**
-     * @return null|Company
+     * @return string
      */
-    public function getCompanyId(): ?Company
+    public function getAcquirerRef(): string
+    {
+        return $this->acquirer_ref;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCompanyId(): ?OdooRelation
     {
         return $this->company_id;
     }
 
     /**
-     * @param Acquirer $acquirer_id
+     * @param OdooRelation $acquirer_id
      */
-    public function setAcquirerId(Acquirer $acquirer_id): void
+    public function setAcquirerId(OdooRelation $acquirer_id): void
     {
         $this->acquirer_id = $acquirer_id;
     }
 
     /**
-     * @param Partner $partner_id
+     * @return OdooRelation
      */
-    public function setPartnerId(Partner $partner_id): void
+    public function getAcquirerId(): OdooRelation
+    {
+        return $this->acquirer_id;
+    }
+
+    /**
+     * @param OdooRelation $partner_id
+     */
+    public function setPartnerId(OdooRelation $partner_id): void
     {
         $this->partner_id = $partner_id;
     }
 
     /**
-     * @return null|string
+     * @return OdooRelation
+     */
+    public function getPartnerId(): OdooRelation
+    {
+        return $this->partner_id;
+    }
+
+    /**
+     * @param string|null $short_name
+     */
+    public function setShortName(?string $short_name): void
+    {
+        $this->short_name = $short_name;
+    }
+
+    /**
+     * @return string|null
      */
     public function getShortName(): ?string
     {
@@ -273,10 +400,18 @@ final class Token extends Base
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param string|null $name
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function setName(?string $name): void
     {
-        return $this->write_date;
+        $this->name = $name;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

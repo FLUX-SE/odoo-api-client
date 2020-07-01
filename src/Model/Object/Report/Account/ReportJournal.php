@@ -14,4 +14,5 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class ReportJournal extends Base
 {
+    public const ODOO_MODEL_NAME = 'report.account.report_journal';
 }

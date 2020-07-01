@@ -6,102 +6,119 @@ namespace Flux\OdooApiClient\Model\Object\Mail;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Attachment;
-use Flux\OdooApiClient\Model\Object\Ir\MailServer;
-use Flux\OdooApiClient\Model\Object\Mail\Activity\Type;
-use Flux\OdooApiClient\Model\Object\Mail\Message as MessageAlias;
-use Flux\OdooApiClient\Model\Object\Mail\Message\Subtype;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
-use Flux\OdooApiClient\Model\Object\Res\Users;
-use Flux\OdooApiClient\Model\Object\Snailmail\Letter;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.message
  * Name : mail.message
  * Info :
  * Override MailMessage class in order to add a new type: SMS messages.
- * Those messages comes with their own notification method, using SMS
- * gateway.
+ *         Those messages comes with their own notification method, using SMS
+ *         gateway.
  */
 class Message extends Base
 {
+    public const ODOO_MODEL_NAME = 'mail.message';
+
     /**
      * Subject
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     protected $subject;
 
     /**
      * Date
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     protected $date;
 
     /**
      * Contents
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     protected $body;
 
     /**
      * Attachments
      * Attachments are linked to a document through model / res_id and to the message through this field.
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Attachment[]
+     * @var OdooRelation[]|null
      */
     protected $attachment_ids;
 
     /**
      * Parent Message
      * Initial thread message.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|MessageAlias
+     * @var OdooRelation|null
      */
     protected $parent_id;
 
     /**
      * Child Messages
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|MessageAlias[]
+     * @var OdooRelation[]|null
      */
     protected $child_ids;
 
     /**
      * Related Document Model
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     protected $model;
 
     /**
      * Related Document ID
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     protected $res_id;
 
     /**
      * Message Record Name
      * Name get of the related document.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     protected $record_name;
 
     /**
      * Subtype
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Subtype
+     * @var OdooRelation|null
      */
     protected $subtype_id;
 
     /**
      * Mail Activity Type
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Type
+     * @var OdooRelation|null
      */
     protected $mail_activity_type_id;
 
@@ -109,183 +126,238 @@ class Message extends Base
      * From
      * Email address of the sender. This field is set when no matching partner is found and replaces the author_id
      * field in the chatter.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     protected $email_from;
 
     /**
      * Author
      * Author of the message. If not set, email_from may hold an email address that did not match any partner.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Partner
+     * @var OdooRelation|null
      */
     protected $author_id;
 
     /**
      * Author's avatar
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     protected $author_avatar;
 
     /**
      * Recipients
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Partner[]
+     * @var OdooRelation[]|null
      */
     protected $partner_ids;
 
     /**
      * Partners with Need Action
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Partner[]
+     * @var OdooRelation[]|null
      */
     protected $notified_partner_ids;
 
     /**
      * Need Action
      * Need Action
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     protected $needaction;
 
     /**
      * Has error
      * Has error
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     protected $has_error;
 
     /**
      * Channels
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Channel[]
+     * @var OdooRelation[]|null
      */
     protected $channel_ids;
 
     /**
      * Notifications
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Notification[]
+     * @var OdooRelation[]|null
      */
     protected $notification_ids;
 
     /**
      * Favorited By
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Partner[]
+     * @var OdooRelation[]|null
      */
     protected $starred_partner_ids;
 
     /**
      * Starred
      * Current user has a starred notification linked to this message
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     protected $starred;
 
     /**
      * No threading for answers
      * Answers do not go in the original document discussion thread. This has an impact on the generated message-id.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     protected $no_auto_thread;
 
     /**
      * Message-Id
      * Message unique identifier
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     protected $message_id;
 
     /**
      * Reply-To
      * Reply email address. Setting the reply_to bypasses the automatic thread creation.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     protected $reply_to;
 
     /**
      * Outgoing mail server
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|MailServer
+     * @var OdooRelation|null
      */
     protected $mail_server_id;
 
     /**
      * Moderation Status
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> pending_moderation (Pending Moderation)
+     *     -> accepted (Accepted)
+     *     -> rejected (Rejected)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     protected $moderation_status;
 
     /**
      * Moderated By
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     protected $moderator_id;
 
     /**
      * Need moderation
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     protected $need_moderation;
 
     /**
      * Layout
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     protected $email_layout_xmlid;
 
     /**
      * Add Sign
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     protected $add_sign;
 
     /**
      * Mails
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Mail[]
+     * @var OdooRelation[]|null
      */
     protected $mail_ids;
 
     /**
      * Canned Responses
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|Shortcode[]
+     * @var OdooRelation[]|null
      */
     protected $canned_response_ids;
 
     /**
      * Snailmail message in error
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     protected $snailmail_error;
 
     /**
      * Snailmail Status
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     protected $snailmail_status;
 
     /**
      * Letter
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Letter[]
+     * @var OdooRelation[]|null
      */
     protected $letter_ids;
 
@@ -293,98 +365,105 @@ class Message extends Base
      * Type
      * Message type: email for email message, notification for system message, comment for other messages such as
      * user replies
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> email (Email)
+     *     -> comment (Comment)
+     *     -> notification (System notification)
+     *     -> user_notification (User Specific Notification)
+     *     -> snailmail (Snailmail)
+     *     -> sms (SMS)
      *
-     * @var array
+     *
+     * @var string
      */
     protected $message_type;
 
     /**
      * Has SMS error
      * Has error
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     protected $has_sms_error;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     protected $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     protected $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     protected $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     protected $write_date;
 
     /**
-     * @param array $message_type Type
+     * @param string $message_type Type
      *        Message type: email for email message, notification for system message, comment for other messages such as
      *        user replies
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> email (Email)
+     *            -> comment (Comment)
+     *            -> notification (System notification)
+     *            -> user_notification (User Specific Notification)
+     *            -> snailmail (Snailmail)
+     *            -> sms (SMS)
+     *
      */
-    public function __construct(array $message_type)
+    public function __construct(string $message_type)
     {
         $this->message_type = $message_type;
     }
 
     /**
-     * @param mixed $item
+     * @param OdooRelation|null $mail_server_id
      */
-    public function addModerationStatus($item): void
+    public function setMailServerId(?OdooRelation $mail_server_id): void
     {
-        if ($this->hasModerationStatus($item)) {
-            return;
-        }
-
-        if (null === $this->moderation_status) {
-            $this->moderation_status = [];
-        }
-
-        $this->moderation_status[] = $item;
+        $this->mail_server_id = $mail_server_id;
     }
 
     /**
-     * @param Mail $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return OdooRelation[]|null
      */
-    public function hasMailIds(Mail $item, bool $strict = true): bool
+    public function getMailIds(): ?array
     {
-        if (null === $this->mail_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->mail_ids, $strict);
+        return $this->mail_ids;
     }
 
     /**
-     * @param null|Mail[] $mail_ids
-     */
-    public function setMailIds(?array $mail_ids): void
-    {
-        $this->mail_ids = $mail_ids;
-    }
-
-    /**
-     * @param null|bool $add_sign
+     * @param bool|null $add_sign
      */
     public function setAddSign(?bool $add_sign): void
     {
@@ -392,7 +471,15 @@ class Message extends Base
     }
 
     /**
-     * @param null|string $email_layout_xmlid
+     * @return bool|null
+     */
+    public function isAddSign(): ?bool
+    {
+        return $this->add_sign;
+    }
+
+    /**
+     * @param string|null $email_layout_xmlid
      */
     public function setEmailLayoutXmlid(?string $email_layout_xmlid): void
     {
@@ -400,7 +487,23 @@ class Message extends Base
     }
 
     /**
-     * @return null|bool
+     * @return string|null
+     */
+    public function getEmailLayoutXmlid(): ?string
+    {
+        return $this->email_layout_xmlid;
+    }
+
+    /**
+     * @param bool|null $need_moderation
+     */
+    public function setNeedModeration(?bool $need_moderation): void
+    {
+        $this->need_moderation = $need_moderation;
+    }
+
+    /**
+     * @return bool|null
      */
     public function isNeedModeration(): ?bool
     {
@@ -408,76 +511,61 @@ class Message extends Base
     }
 
     /**
-     * @param null|Users $moderator_id
+     * @param OdooRelation|null $moderator_id
      */
-    public function setModeratorId(?Users $moderator_id): void
+    public function setModeratorId(?OdooRelation $moderator_id): void
     {
         $this->moderator_id = $moderator_id;
     }
 
     /**
-     * @param mixed $item
+     * @return OdooRelation|null
      */
-    public function removeModerationStatus($item): void
+    public function getModeratorId(): ?OdooRelation
     {
-        if (null === $this->moderation_status) {
-            $this->moderation_status = [];
-        }
-
-        if ($this->hasModerationStatus($item)) {
-            $index = array_search($item, $this->moderation_status);
-            unset($this->moderation_status[$index]);
-        }
+        return $this->moderator_id;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param string|null $moderation_status
      */
-    public function hasModerationStatus($item, bool $strict = true): bool
-    {
-        if (null === $this->moderation_status) {
-            return false;
-        }
-
-        return in_array($item, $this->moderation_status, $strict);
-    }
-
-    /**
-     * @param Mail $item
-     */
-    public function removeMailIds(Mail $item): void
-    {
-        if (null === $this->mail_ids) {
-            $this->mail_ids = [];
-        }
-
-        if ($this->hasMailIds($item)) {
-            $index = array_search($item, $this->mail_ids);
-            unset($this->mail_ids[$index]);
-        }
-    }
-
-    /**
-     * @param null|array $moderation_status
-     */
-    public function setModerationStatus(?array $moderation_status): void
+    public function setModerationStatus(?string $moderation_status): void
     {
         $this->moderation_status = $moderation_status;
     }
 
     /**
-     * @param null|MailServer $mail_server_id
+     * @return string|null
      */
-    public function setMailServerId(?MailServer $mail_server_id): void
+    public function getModerationStatus(): ?string
     {
-        $this->mail_server_id = $mail_server_id;
+        return $this->moderation_status;
     }
 
     /**
-     * @param null|string $reply_to
+     * @return OdooRelation|null
+     */
+    public function getMailServerId(): ?OdooRelation
+    {
+        return $this->mail_server_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMailIds(OdooRelation $item): bool
+    {
+        if (null === $this->mail_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->mail_ids);
+    }
+
+    /**
+     * @param string|null $reply_to
      */
     public function setReplyTo(?string $reply_to): void
     {
@@ -485,7 +573,23 @@ class Message extends Base
     }
 
     /**
-     * @return null|string
+     * @return string|null
+     */
+    public function getReplyTo(): ?string
+    {
+        return $this->reply_to;
+    }
+
+    /**
+     * @param string|null $message_id
+     */
+    public function setMessageId(?string $message_id): void
+    {
+        $this->message_id = $message_id;
+    }
+
+    /**
+     * @return string|null
      */
     public function getMessageId(): ?string
     {
@@ -493,7 +597,7 @@ class Message extends Base
     }
 
     /**
-     * @param null|bool $no_auto_thread
+     * @param bool|null $no_auto_thread
      */
     public function setNoAutoThread(?bool $no_auto_thread): void
     {
@@ -501,7 +605,23 @@ class Message extends Base
     }
 
     /**
-     * @return null|bool
+     * @return bool|null
+     */
+    public function isNoAutoThread(): ?bool
+    {
+        return $this->no_auto_thread;
+    }
+
+    /**
+     * @param bool|null $starred
+     */
+    public function setStarred(?bool $starred): void
+    {
+        $this->starred = $starred;
+    }
+
+    /**
+     * @return bool|null
      */
     public function isStarred(): ?bool
     {
@@ -509,9 +629,9 @@ class Message extends Base
     }
 
     /**
-     * @param Partner $item
+     * @param OdooRelation $item
      */
-    public function removeStarredPartnerIds(Partner $item): void
+    public function removeStarredPartnerIds(OdooRelation $item): void
     {
         if (null === $this->starred_partner_ids) {
             $this->starred_partner_ids = [];
@@ -524,238 +644,9 @@ class Message extends Base
     }
 
     /**
-     * @param Mail $item
+     * @param OdooRelation $item
      */
-    public function addMailIds(Mail $item): void
-    {
-        if ($this->hasMailIds($item)) {
-            return;
-        }
-
-        if (null === $this->mail_ids) {
-            $this->mail_ids = [];
-        }
-
-        $this->mail_ids[] = $item;
-    }
-
-    /**
-     * @param null|Shortcode[] $canned_response_ids
-     */
-    public function setCannedResponseIds(?array $canned_response_ids): void
-    {
-        $this->canned_response_ids = $canned_response_ids;
-    }
-
-    /**
-     * @param Partner $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasStarredPartnerIds(Partner $item, bool $strict = true): bool
-    {
-        if (null === $this->starred_partner_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->starred_partner_ids, $strict);
-    }
-
-    /**
-     * @param array $message_type
-     */
-    public function setMessageType(array $message_type): void
-    {
-        $this->message_type = $message_type;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|bool
-     */
-    public function isHasSmsError(): ?bool
-    {
-        return $this->has_sms_error;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeMessageType($item): void
-    {
-        if ($this->hasMessageType($item)) {
-            $index = array_search($item, $this->message_type);
-            unset($this->message_type[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addMessageType($item): void
-    {
-        if ($this->hasMessageType($item)) {
-            return;
-        }
-
-        $this->message_type[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasMessageType($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->message_type, $strict);
-    }
-
-    /**
-     * @param Letter $item
-     */
-    public function removeLetterIds(Letter $item): void
-    {
-        if (null === $this->letter_ids) {
-            $this->letter_ids = [];
-        }
-
-        if ($this->hasLetterIds($item)) {
-            $index = array_search($item, $this->letter_ids);
-            unset($this->letter_ids[$index]);
-        }
-    }
-
-    /**
-     * @param Shortcode $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasCannedResponseIds(Shortcode $item, bool $strict = true): bool
-    {
-        if (null === $this->canned_response_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->canned_response_ids, $strict);
-    }
-
-    /**
-     * @param Letter $item
-     */
-    public function addLetterIds(Letter $item): void
-    {
-        if ($this->hasLetterIds($item)) {
-            return;
-        }
-
-        if (null === $this->letter_ids) {
-            $this->letter_ids = [];
-        }
-
-        $this->letter_ids[] = $item;
-    }
-
-    /**
-     * @param Letter $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasLetterIds(Letter $item, bool $strict = true): bool
-    {
-        if (null === $this->letter_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->letter_ids, $strict);
-    }
-
-    /**
-     * @param null|Letter[] $letter_ids
-     */
-    public function setLetterIds(?array $letter_ids): void
-    {
-        $this->letter_ids = $letter_ids;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getSnailmailStatus(): ?string
-    {
-        return $this->snailmail_status;
-    }
-
-    /**
-     * @return null|bool
-     */
-    public function isSnailmailError(): ?bool
-    {
-        return $this->snailmail_error;
-    }
-
-    /**
-     * @param Shortcode $item
-     */
-    public function removeCannedResponseIds(Shortcode $item): void
-    {
-        if (null === $this->canned_response_ids) {
-            $this->canned_response_ids = [];
-        }
-
-        if ($this->hasCannedResponseIds($item)) {
-            $index = array_search($item, $this->canned_response_ids);
-            unset($this->canned_response_ids[$index]);
-        }
-    }
-
-    /**
-     * @param Shortcode $item
-     */
-    public function addCannedResponseIds(Shortcode $item): void
-    {
-        if ($this->hasCannedResponseIds($item)) {
-            return;
-        }
-
-        if (null === $this->canned_response_ids) {
-            $this->canned_response_ids = [];
-        }
-
-        $this->canned_response_ids[] = $item;
-    }
-
-    /**
-     * @param Partner $item
-     */
-    public function addStarredPartnerIds(Partner $item): void
+    public function addStarredPartnerIds(OdooRelation $item): void
     {
         if ($this->hasStarredPartnerIds($item)) {
             return;
@@ -769,7 +660,21 @@ class Message extends Base
     }
 
     /**
-     * @param null|Partner[] $starred_partner_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasStarredPartnerIds(OdooRelation $item): bool
+    {
+        if (null === $this->starred_partner_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->starred_partner_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $starred_partner_ids
      */
     public function setStarredPartnerIds(?array $starred_partner_ids): void
     {
@@ -777,213 +682,33 @@ class Message extends Base
     }
 
     /**
-     * @param null|string $subject
+     * @param OdooRelation[]|null $mail_ids
      */
-    public function setSubject(?string $subject): void
+    public function setMailIds(?array $mail_ids): void
     {
-        $this->subject = $subject;
+        $this->mail_ids = $mail_ids;
     }
 
     /**
-     * @param MessageAlias $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param OdooRelation $item
      */
-    public function hasChildIds(MessageAlias $item, bool $strict = true): bool
+    public function addMailIds(OdooRelation $item): void
     {
-        if (null === $this->child_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->child_ids, $strict);
-    }
-
-    /**
-     * @param null|Type $mail_activity_type_id
-     */
-    public function setMailActivityTypeId(?Type $mail_activity_type_id): void
-    {
-        $this->mail_activity_type_id = $mail_activity_type_id;
-    }
-
-    /**
-     * @param null|Subtype $subtype_id
-     */
-    public function setSubtypeId(?Subtype $subtype_id): void
-    {
-        $this->subtype_id = $subtype_id;
-    }
-
-    /**
-     * @param null|string $record_name
-     */
-    public function setRecordName(?string $record_name): void
-    {
-        $this->record_name = $record_name;
-    }
-
-    /**
-     * @param null|int $res_id
-     */
-    public function setResId(?int $res_id): void
-    {
-        $this->res_id = $res_id;
-    }
-
-    /**
-     * @param null|string $model
-     */
-    public function setModel(?string $model): void
-    {
-        $this->model = $model;
-    }
-
-    /**
-     * @param MessageAlias $item
-     */
-    public function removeChildIds(MessageAlias $item): void
-    {
-        if (null === $this->child_ids) {
-            $this->child_ids = [];
-        }
-
-        if ($this->hasChildIds($item)) {
-            $index = array_search($item, $this->child_ids);
-            unset($this->child_ids[$index]);
-        }
-    }
-
-    /**
-     * @param MessageAlias $item
-     */
-    public function addChildIds(MessageAlias $item): void
-    {
-        if ($this->hasChildIds($item)) {
+        if ($this->hasMailIds($item)) {
             return;
         }
 
-        if (null === $this->child_ids) {
-            $this->child_ids = [];
+        if (null === $this->mail_ids) {
+            $this->mail_ids = [];
         }
 
-        $this->child_ids[] = $item;
+        $this->mail_ids[] = $item;
     }
 
     /**
-     * @param null|MessageAlias[] $child_ids
+     * @param OdooRelation $item
      */
-    public function setChildIds(?array $child_ids): void
-    {
-        $this->child_ids = $child_ids;
-    }
-
-    /**
-     * @param null|Partner $author_id
-     */
-    public function setAuthorId(?Partner $author_id): void
-    {
-        $this->author_id = $author_id;
-    }
-
-    /**
-     * @param null|MessageAlias $parent_id
-     */
-    public function setParentId(?MessageAlias $parent_id): void
-    {
-        $this->parent_id = $parent_id;
-    }
-
-    /**
-     * @param Attachment $item
-     */
-    public function removeAttachmentIds(Attachment $item): void
-    {
-        if (null === $this->attachment_ids) {
-            $this->attachment_ids = [];
-        }
-
-        if ($this->hasAttachmentIds($item)) {
-            $index = array_search($item, $this->attachment_ids);
-            unset($this->attachment_ids[$index]);
-        }
-    }
-
-    /**
-     * @param Attachment $item
-     */
-    public function addAttachmentIds(Attachment $item): void
-    {
-        if ($this->hasAttachmentIds($item)) {
-            return;
-        }
-
-        if (null === $this->attachment_ids) {
-            $this->attachment_ids = [];
-        }
-
-        $this->attachment_ids[] = $item;
-    }
-
-    /**
-     * @param Attachment $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasAttachmentIds(Attachment $item, bool $strict = true): bool
-    {
-        if (null === $this->attachment_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->attachment_ids, $strict);
-    }
-
-    /**
-     * @param null|Attachment[] $attachment_ids
-     */
-    public function setAttachmentIds(?array $attachment_ids): void
-    {
-        $this->attachment_ids = $attachment_ids;
-    }
-
-    /**
-     * @param null|string $body
-     */
-    public function setBody(?string $body): void
-    {
-        $this->body = $body;
-    }
-
-    /**
-     * @param null|DateTimeInterface $date
-     */
-    public function setDate(?DateTimeInterface $date): void
-    {
-        $this->date = $date;
-    }
-
-    /**
-     * @param null|string $email_from
-     */
-    public function setEmailFrom(?string $email_from): void
-    {
-        $this->email_from = $email_from;
-    }
-
-    /**
-     * @param null|int $author_avatar
-     */
-    public function setAuthorAvatar(?int $author_avatar): void
-    {
-        $this->author_avatar = $author_avatar;
-    }
-
-    /**
-     * @param Notification $item
-     */
-    public function removeNotificationIds(Notification $item): void
+    public function removeNotificationIds(OdooRelation $item): void
     {
         if (null === $this->notification_ids) {
             $this->notification_ids = [];
@@ -996,17 +721,274 @@ class Message extends Base
     }
 
     /**
-     * @return null|bool
+     * @param OdooRelation $item
      */
-    public function isHasError(): ?bool
+    public function removeLetterIds(OdooRelation $item): void
     {
-        return $this->has_error;
+        if (null === $this->letter_ids) {
+            $this->letter_ids = [];
+        }
+
+        if ($this->hasLetterIds($item)) {
+            $index = array_search($item, $this->letter_ids);
+            unset($this->letter_ids[$index]);
+        }
     }
 
     /**
-     * @param Notification $item
+     * @return DateTimeInterface|null
      */
-    public function addNotificationIds(Notification $item): void
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param bool|null $has_sms_error
+     */
+    public function setHasSmsError(?bool $has_sms_error): void
+    {
+        $this->has_sms_error = $has_sms_error;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isHasSmsError(): ?bool
+    {
+        return $this->has_sms_error;
+    }
+
+    /**
+     * @param string $message_type
+     */
+    public function setMessageType(string $message_type): void
+    {
+        $this->message_type = $message_type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessageType(): string
+    {
+        return $this->message_type;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addLetterIds(OdooRelation $item): void
+    {
+        if ($this->hasLetterIds($item)) {
+            return;
+        }
+
+        if (null === $this->letter_ids) {
+            $this->letter_ids = [];
+        }
+
+        $this->letter_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMailIds(OdooRelation $item): void
+    {
+        if (null === $this->mail_ids) {
+            $this->mail_ids = [];
+        }
+
+        if ($this->hasMailIds($item)) {
+            $index = array_search($item, $this->mail_ids);
+            unset($this->mail_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasLetterIds(OdooRelation $item): bool
+    {
+        if (null === $this->letter_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->letter_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $letter_ids
+     */
+    public function setLetterIds(?array $letter_ids): void
+    {
+        $this->letter_ids = $letter_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getLetterIds(): ?array
+    {
+        return $this->letter_ids;
+    }
+
+    /**
+     * @param string|null $snailmail_status
+     */
+    public function setSnailmailStatus(?string $snailmail_status): void
+    {
+        $this->snailmail_status = $snailmail_status;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSnailmailStatus(): ?string
+    {
+        return $this->snailmail_status;
+    }
+
+    /**
+     * @param bool|null $snailmail_error
+     */
+    public function setSnailmailError(?bool $snailmail_error): void
+    {
+        $this->snailmail_error = $snailmail_error;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isSnailmailError(): ?bool
+    {
+        return $this->snailmail_error;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeCannedResponseIds(OdooRelation $item): void
+    {
+        if (null === $this->canned_response_ids) {
+            $this->canned_response_ids = [];
+        }
+
+        if ($this->hasCannedResponseIds($item)) {
+            $index = array_search($item, $this->canned_response_ids);
+            unset($this->canned_response_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addCannedResponseIds(OdooRelation $item): void
+    {
+        if ($this->hasCannedResponseIds($item)) {
+            return;
+        }
+
+        if (null === $this->canned_response_ids) {
+            $this->canned_response_ids = [];
+        }
+
+        $this->canned_response_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasCannedResponseIds(OdooRelation $item): bool
+    {
+        if (null === $this->canned_response_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->canned_response_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $canned_response_ids
+     */
+    public function setCannedResponseIds(?array $canned_response_ids): void
+    {
+        $this->canned_response_ids = $canned_response_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getCannedResponseIds(): ?array
+    {
+        return $this->canned_response_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getStarredPartnerIds(): ?array
+    {
+        return $this->starred_partner_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addNotificationIds(OdooRelation $item): void
     {
         if ($this->hasNotificationIds($item)) {
             return;
@@ -1020,22 +1002,310 @@ class Message extends Base
     }
 
     /**
-     * @param Notification $item
-     * @param bool $strict
+     * @return string|null
+     */
+    public function getSubject(): ?string
+    {
+        return $this->subject;
+    }
+
+    /**
+     * @param OdooRelation[]|null $child_ids
+     */
+    public function setChildIds(?array $child_ids): void
+    {
+        $this->child_ids = $child_ids;
+    }
+
+    /**
+     * @param OdooRelation|null $subtype_id
+     */
+    public function setSubtypeId(?OdooRelation $subtype_id): void
+    {
+        $this->subtype_id = $subtype_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getSubtypeId(): ?OdooRelation
+    {
+        return $this->subtype_id;
+    }
+
+    /**
+     * @param string|null $record_name
+     */
+    public function setRecordName(?string $record_name): void
+    {
+        $this->record_name = $record_name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRecordName(): ?string
+    {
+        return $this->record_name;
+    }
+
+    /**
+     * @param int|null $res_id
+     */
+    public function setResId(?int $res_id): void
+    {
+        $this->res_id = $res_id;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getResId(): ?int
+    {
+        return $this->res_id;
+    }
+
+    /**
+     * @param string|null $model
+     */
+    public function setModel(?string $model): void
+    {
+        $this->model = $model;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getModel(): ?string
+    {
+        return $this->model;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeChildIds(OdooRelation $item): void
+    {
+        if (null === $this->child_ids) {
+            $this->child_ids = [];
+        }
+
+        if ($this->hasChildIds($item)) {
+            $index = array_search($item, $this->child_ids);
+            unset($this->child_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addChildIds(OdooRelation $item): void
+    {
+        if ($this->hasChildIds($item)) {
+            return;
+        }
+
+        if (null === $this->child_ids) {
+            $this->child_ids = [];
+        }
+
+        $this->child_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasNotificationIds(Notification $item, bool $strict = true): bool
+    public function hasChildIds(OdooRelation $item): bool
+    {
+        if (null === $this->child_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->child_ids);
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getChildIds(): ?array
+    {
+        return $this->child_ids;
+    }
+
+    /**
+     * @param OdooRelation|null $mail_activity_type_id
+     */
+    public function setMailActivityTypeId(?OdooRelation $mail_activity_type_id): void
+    {
+        $this->mail_activity_type_id = $mail_activity_type_id;
+    }
+
+    /**
+     * @param OdooRelation|null $parent_id
+     */
+    public function setParentId(?OdooRelation $parent_id): void
+    {
+        $this->parent_id = $parent_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getParentId(): ?OdooRelation
+    {
+        return $this->parent_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeAttachmentIds(OdooRelation $item): void
+    {
+        if (null === $this->attachment_ids) {
+            $this->attachment_ids = [];
+        }
+
+        if ($this->hasAttachmentIds($item)) {
+            $index = array_search($item, $this->attachment_ids);
+            unset($this->attachment_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addAttachmentIds(OdooRelation $item): void
+    {
+        if ($this->hasAttachmentIds($item)) {
+            return;
+        }
+
+        if (null === $this->attachment_ids) {
+            $this->attachment_ids = [];
+        }
+
+        $this->attachment_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasAttachmentIds(OdooRelation $item): bool
+    {
+        if (null === $this->attachment_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->attachment_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $attachment_ids
+     */
+    public function setAttachmentIds(?array $attachment_ids): void
+    {
+        $this->attachment_ids = $attachment_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getAttachmentIds(): ?array
+    {
+        return $this->attachment_ids;
+    }
+
+    /**
+     * @param string|null $body
+     */
+    public function setBody(?string $body): void
+    {
+        $this->body = $body;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getBody(): ?string
+    {
+        return $this->body;
+    }
+
+    /**
+     * @param DateTimeInterface|null $date
+     */
+    public function setDate(?DateTimeInterface $date): void
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getDate(): ?DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param string|null $subject
+     */
+    public function setSubject(?string $subject): void
+    {
+        $this->subject = $subject;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getMailActivityTypeId(): ?OdooRelation
+    {
+        return $this->mail_activity_type_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getEmailFrom(): ?string
+    {
+        return $this->email_from;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasNotificationIds(OdooRelation $item): bool
     {
         if (null === $this->notification_ids) {
             return false;
         }
 
-        return in_array($item, $this->notification_ids, $strict);
+        return in_array($item, $this->notification_ids);
     }
 
     /**
-     * @param null|Notification[] $notification_ids
+     * @param OdooRelation $item
+     */
+    public function removeNotifiedPartnerIds(OdooRelation $item): void
+    {
+        if (null === $this->notified_partner_ids) {
+            $this->notified_partner_ids = [];
+        }
+
+        if ($this->hasNotifiedPartnerIds($item)) {
+            $index = array_search($item, $this->notified_partner_ids);
+            unset($this->notified_partner_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation[]|null $notification_ids
      */
     public function setNotificationIds(?array $notification_ids): void
     {
@@ -1043,9 +1313,17 @@ class Message extends Base
     }
 
     /**
-     * @param Channel $item
+     * @return OdooRelation[]|null
      */
-    public function removeChannelIds(Channel $item): void
+    public function getNotificationIds(): ?array
+    {
+        return $this->notification_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeChannelIds(OdooRelation $item): void
     {
         if (null === $this->channel_ids) {
             $this->channel_ids = [];
@@ -1058,9 +1336,9 @@ class Message extends Base
     }
 
     /**
-     * @param Channel $item
+     * @param OdooRelation $item
      */
-    public function addChannelIds(Channel $item): void
+    public function addChannelIds(OdooRelation $item): void
     {
         if ($this->hasChannelIds($item)) {
             return;
@@ -1074,22 +1352,21 @@ class Message extends Base
     }
 
     /**
-     * @param Channel $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasChannelIds(Channel $item, bool $strict = true): bool
+    public function hasChannelIds(OdooRelation $item): bool
     {
         if (null === $this->channel_ids) {
             return false;
         }
 
-        return in_array($item, $this->channel_ids, $strict);
+        return in_array($item, $this->channel_ids);
     }
 
     /**
-     * @param null|Channel[] $channel_ids
+     * @param OdooRelation[]|null $channel_ids
      */
     public function setChannelIds(?array $channel_ids): void
     {
@@ -1097,7 +1374,39 @@ class Message extends Base
     }
 
     /**
-     * @return null|bool
+     * @return OdooRelation[]|null
+     */
+    public function getChannelIds(): ?array
+    {
+        return $this->channel_ids;
+    }
+
+    /**
+     * @param bool|null $has_error
+     */
+    public function setHasError(?bool $has_error): void
+    {
+        $this->has_error = $has_error;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isHasError(): ?bool
+    {
+        return $this->has_error;
+    }
+
+    /**
+     * @param bool|null $needaction
+     */
+    public function setNeedaction(?bool $needaction): void
+    {
+        $this->needaction = $needaction;
+    }
+
+    /**
+     * @return bool|null
      */
     public function isNeedaction(): ?bool
     {
@@ -1105,32 +1414,9 @@ class Message extends Base
     }
 
     /**
-     * @param null|Partner[] $partner_ids
+     * @param OdooRelation $item
      */
-    public function setPartnerIds(?array $partner_ids): void
-    {
-        $this->partner_ids = $partner_ids;
-    }
-
-    /**
-     * @param Partner $item
-     */
-    public function removeNotifiedPartnerIds(Partner $item): void
-    {
-        if (null === $this->notified_partner_ids) {
-            $this->notified_partner_ids = [];
-        }
-
-        if ($this->hasNotifiedPartnerIds($item)) {
-            $index = array_search($item, $this->notified_partner_ids);
-            unset($this->notified_partner_ids[$index]);
-        }
-    }
-
-    /**
-     * @param Partner $item
-     */
-    public function addNotifiedPartnerIds(Partner $item): void
+    public function addNotifiedPartnerIds(OdooRelation $item): void
     {
         if ($this->hasNotifiedPartnerIds($item)) {
             return;
@@ -1144,22 +1430,29 @@ class Message extends Base
     }
 
     /**
-     * @param Partner $item
-     * @param bool $strict
+     * @param string|null $email_from
+     */
+    public function setEmailFrom(?string $email_from): void
+    {
+        $this->email_from = $email_from;
+    }
+
+    /**
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasNotifiedPartnerIds(Partner $item, bool $strict = true): bool
+    public function hasNotifiedPartnerIds(OdooRelation $item): bool
     {
         if (null === $this->notified_partner_ids) {
             return false;
         }
 
-        return in_array($item, $this->notified_partner_ids, $strict);
+        return in_array($item, $this->notified_partner_ids);
     }
 
     /**
-     * @param null|Partner[] $notified_partner_ids
+     * @param OdooRelation[]|null $notified_partner_ids
      */
     public function setNotifiedPartnerIds(?array $notified_partner_ids): void
     {
@@ -1167,9 +1460,17 @@ class Message extends Base
     }
 
     /**
-     * @param Partner $item
+     * @return OdooRelation[]|null
      */
-    public function removePartnerIds(Partner $item): void
+    public function getNotifiedPartnerIds(): ?array
+    {
+        return $this->notified_partner_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removePartnerIds(OdooRelation $item): void
     {
         if (null === $this->partner_ids) {
             $this->partner_ids = [];
@@ -1182,9 +1483,9 @@ class Message extends Base
     }
 
     /**
-     * @param Partner $item
+     * @param OdooRelation $item
      */
-    public function addPartnerIds(Partner $item): void
+    public function addPartnerIds(OdooRelation $item): void
     {
         if ($this->hasPartnerIds($item)) {
             return;
@@ -1198,25 +1499,72 @@ class Message extends Base
     }
 
     /**
-     * @param Partner $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasPartnerIds(Partner $item, bool $strict = true): bool
+    public function hasPartnerIds(OdooRelation $item): bool
     {
         if (null === $this->partner_ids) {
             return false;
         }
 
-        return in_array($item, $this->partner_ids, $strict);
+        return in_array($item, $this->partner_ids);
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation[]|null $partner_ids
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function setPartnerIds(?array $partner_ids): void
     {
-        return $this->write_date;
+        $this->partner_ids = $partner_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getPartnerIds(): ?array
+    {
+        return $this->partner_ids;
+    }
+
+    /**
+     * @param int|null $author_avatar
+     */
+    public function setAuthorAvatar(?int $author_avatar): void
+    {
+        $this->author_avatar = $author_avatar;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getAuthorAvatar(): ?int
+    {
+        return $this->author_avatar;
+    }
+
+    /**
+     * @param OdooRelation|null $author_id
+     */
+    public function setAuthorId(?OdooRelation $author_id): void
+    {
+        $this->author_id = $author_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getAuthorId(): ?OdooRelation
+    {
+        return $this->author_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

@@ -6,22 +6,24 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Model;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Model;
-use Flux\OdooApiClient\Model\Object\Ir\Module\Module;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.model.relation
  * Name : ir.model.relation
  * Info :
  * This model tracks PostgreSQL tables used to implement Odoo many2many
- * relations.
+ *         relations.
  */
 final class Relation extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.model.relation';
+
     /**
      * Relation Name
      * PostgreSQL table name implementing a many2many relation.
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -29,57 +31,83 @@ final class Relation extends Base
 
     /**
      * Model
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Model
+     * @var OdooRelation
      */
     private $model;
 
     /**
      * Module
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Module
+     * @var OdooRelation
      */
     private $module;
 
     /**
      * Write Date
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * Create Date
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * @param string $name Relation Name
      *        PostgreSQL table name implementing a many2many relation.
-     * @param Model $model Model
-     * @param Module $module Module
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $model Model
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $module Module
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(string $name, Model $model, Module $module)
+    public function __construct(string $name, OdooRelation $model, OdooRelation $module)
     {
         $this->name = $name;
         $this->model = $model;
         $this->module = $module;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     /**
@@ -91,23 +119,47 @@ final class Relation extends Base
     }
 
     /**
-     * @param Model $model
+     * @return OdooRelation
      */
-    public function setModel(Model $model): void
+    public function getModel(): OdooRelation
+    {
+        return $this->model;
+    }
+
+    /**
+     * @param OdooRelation $model
+     */
+    public function setModel(OdooRelation $model): void
     {
         $this->model = $model;
     }
 
     /**
-     * @param Module $module
+     * @return OdooRelation
      */
-    public function setModule(Module $module): void
+    public function getModule(): OdooRelation
+    {
+        return $this->module;
+    }
+
+    /**
+     * @param OdooRelation $module
+     */
+    public function setModule(OdooRelation $module): void
     {
         $this->module = $module;
     }
 
     /**
-     * @param null|DateTimeInterface $write_date
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
      */
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
@@ -115,7 +167,15 @@ final class Relation extends Base
     }
 
     /**
-     * @param null|DateTimeInterface $create_date
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
      */
     public function setCreateDate(?DateTimeInterface $create_date): void
     {
@@ -123,18 +183,34 @@ final class Relation extends Base
     }
 
     /**
-     * @return null|Users
+     * @return OdooRelation|null
      */
-    public function getCreateUid(): ?Users
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getWriteUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
     }
 }

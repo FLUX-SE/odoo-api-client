@@ -5,12 +5,8 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Account\Chart;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Account\Template as TemplateAliasAlias;
-use Flux\OdooApiClient\Model\Object\Account\Chart\Template as TemplateAlias;
-use Flux\OdooApiClient\Model\Object\Account\Tax\Template as Template2;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Currency;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.chart.template
@@ -18,18 +14,22 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Template extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.chart.template';
+
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -37,14 +37,18 @@ final class Template extends Base
 
     /**
      * Parent Chart Template
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|TemplateAlias
+     * @var OdooRelation|null
      */
     private $parent_id;
 
     /**
      * # of Digits
      * No. of Digits to use for account code
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var int
      */
@@ -55,22 +59,28 @@ final class Template extends Base
      * Set this to False if you don't want this template to be used actively in the wizard that generate Chart of
      * Accounts from templates, this is useful when you want to generate accounts of this template only when loading
      * its child template.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $visible;
 
     /**
      * Currency
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Currency
+     * @var OdooRelation
      */
     private $currency_id;
 
     /**
      * Use Anglo-Saxon accounting
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $use_anglo_saxon;
 
@@ -78,28 +88,36 @@ final class Template extends Base
      * Complete Set of Taxes
      * This boolean helps you to choose if you want to propose to the user to encode the sale and purchase rates or
      * choose from list of taxes. This last choice assumes that the set of tax defined on this template is complete
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $complete_tax_set;
 
     /**
      * Associated Account Templates
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|TemplateAliasAlias[]
+     * @var OdooRelation[]|null
      */
     private $account_ids;
 
     /**
      * Tax Template List
      * List of all the taxes that have to be installed by the wizard
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Template2[]
+     * @var OdooRelation[]|null
      */
     private $tax_template_ids;
 
     /**
      * Prefix of the bank accounts
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -107,6 +125,8 @@ final class Template extends Base
 
     /**
      * Prefix of the main cash accounts
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -114,6 +134,8 @@ final class Template extends Base
 
     /**
      * Prefix of the main transfer accounts
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -121,164 +143,218 @@ final class Template extends Base
 
     /**
      * Gain Exchange Rate Account
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|TemplateAliasAlias
+     * @var OdooRelation|null
      */
     private $income_currency_exchange_account_id;
 
     /**
      * Loss Exchange Rate Account
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|TemplateAliasAlias
+     * @var OdooRelation|null
      */
     private $expense_currency_exchange_account_id;
 
     /**
      * Cash Difference Income Account
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|TemplateAliasAlias
+     * @var OdooRelation|null
      */
     private $default_cash_difference_income_account_id;
 
     /**
      * Cash Difference Expense Account
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|TemplateAliasAlias
+     * @var OdooRelation|null
      */
     private $default_cash_difference_expense_account_id;
 
     /**
      * PoS receivable account
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|TemplateAliasAlias
+     * @var OdooRelation|null
      */
     private $default_pos_receivable_account_id;
 
     /**
      * Receivable Account
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|TemplateAliasAlias
+     * @var OdooRelation|null
      */
     private $property_account_receivable_id;
 
     /**
      * Payable Account
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|TemplateAliasAlias
+     * @var OdooRelation|null
      */
     private $property_account_payable_id;
 
     /**
      * Category of Expense Account
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|TemplateAliasAlias
+     * @var OdooRelation|null
      */
     private $property_account_expense_categ_id;
 
     /**
      * Category of Income Account
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|TemplateAliasAlias
+     * @var OdooRelation|null
      */
     private $property_account_income_categ_id;
 
     /**
      * Expense Account on Product Template
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|TemplateAliasAlias
+     * @var OdooRelation|null
      */
     private $property_account_expense_id;
 
     /**
      * Income Account on Product Template
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|TemplateAliasAlias
+     * @var OdooRelation|null
      */
     private $property_account_income_id;
 
     /**
      * Input Account for Stock Valuation
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|TemplateAliasAlias
+     * @var OdooRelation|null
      */
     private $property_stock_account_input_categ_id;
 
     /**
      * Output Account for Stock Valuation
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|TemplateAliasAlias
+     * @var OdooRelation|null
      */
     private $property_stock_account_output_categ_id;
 
     /**
      * Account Template for Stock Valuation
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|TemplateAliasAlias
+     * @var OdooRelation|null
      */
     private $property_stock_valuation_account_id;
 
     /**
      * Tax current account (payable)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|TemplateAliasAlias
+     * @var OdooRelation|null
      */
     private $property_tax_payable_account_id;
 
     /**
      * Tax current account (receivable)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|TemplateAliasAlias
+     * @var OdooRelation|null
      */
     private $property_tax_receivable_account_id;
 
     /**
      * Advance tax payment account
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|TemplateAliasAlias
+     * @var OdooRelation|null
      */
     private $property_advance_tax_payment_account_id;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Name
+     *        Searchable : yes
+     *        Sortable : yes
      * @param int $code_digits # of Digits
      *        No. of Digits to use for account code
-     * @param Currency $currency_id Currency
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $currency_id Currency
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $bank_account_code_prefix Prefix of the bank accounts
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $cash_account_code_prefix Prefix of the main cash accounts
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $transfer_account_code_prefix Prefix of the main transfer accounts
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         string $name,
         int $code_digits,
-        Currency $currency_id,
+        OdooRelation $currency_id,
         string $bank_account_code_prefix,
         string $cash_account_code_prefix,
         string $transfer_account_code_prefix
@@ -292,138 +368,192 @@ final class Template extends Base
     }
 
     /**
-     * @param null|TemplateAliasAlias $property_stock_account_input_categ_id
+     * @param OdooRelation|null $property_account_expense_categ_id
      */
-    public function setPropertyStockAccountInputCategId(
-        ?TemplateAliasAlias $property_stock_account_input_categ_id
-    ): void {
-        $this->property_stock_account_input_categ_id = $property_stock_account_input_categ_id;
-    }
-
-    /**
-     * @param null|TemplateAliasAlias $default_pos_receivable_account_id
-     */
-    public function setDefaultPosReceivableAccountId(
-        ?TemplateAliasAlias $default_pos_receivable_account_id
-    ): void {
-        $this->default_pos_receivable_account_id = $default_pos_receivable_account_id;
-    }
-
-    /**
-     * @param null|TemplateAliasAlias $property_account_receivable_id
-     */
-    public function setPropertyAccountReceivableId(
-        ?TemplateAliasAlias $property_account_receivable_id
-    ): void {
-        $this->property_account_receivable_id = $property_account_receivable_id;
-    }
-
-    /**
-     * @param null|TemplateAliasAlias $property_account_payable_id
-     */
-    public function setPropertyAccountPayableId(?TemplateAliasAlias $property_account_payable_id): void
+    public function setPropertyAccountExpenseCategId(?OdooRelation $property_account_expense_categ_id): void
     {
-        $this->property_account_payable_id = $property_account_payable_id;
-    }
-
-    /**
-     * @param null|TemplateAliasAlias $property_account_expense_categ_id
-     */
-    public function setPropertyAccountExpenseCategId(
-        ?TemplateAliasAlias $property_account_expense_categ_id
-    ): void {
         $this->property_account_expense_categ_id = $property_account_expense_categ_id;
     }
 
     /**
-     * @param null|TemplateAliasAlias $property_account_income_categ_id
+     * @param OdooRelation|null $property_account_income_id
      */
-    public function setPropertyAccountIncomeCategId(
-        ?TemplateAliasAlias $property_account_income_categ_id
-    ): void {
-        $this->property_account_income_categ_id = $property_account_income_categ_id;
-    }
-
-    /**
-     * @param null|TemplateAliasAlias $property_account_expense_id
-     */
-    public function setPropertyAccountExpenseId(?TemplateAliasAlias $property_account_expense_id): void
-    {
-        $this->property_account_expense_id = $property_account_expense_id;
-    }
-
-    /**
-     * @param null|TemplateAliasAlias $property_account_income_id
-     */
-    public function setPropertyAccountIncomeId(?TemplateAliasAlias $property_account_income_id): void
+    public function setPropertyAccountIncomeId(?OdooRelation $property_account_income_id): void
     {
         $this->property_account_income_id = $property_account_income_id;
     }
 
     /**
-     * @param null|TemplateAliasAlias $property_stock_account_output_categ_id
+     * @return OdooRelation|null
      */
-    public function setPropertyStockAccountOutputCategId(
-        ?TemplateAliasAlias $property_stock_account_output_categ_id
-    ): void {
-        $this->property_stock_account_output_categ_id = $property_stock_account_output_categ_id;
+    public function getPropertyAccountIncomeId(): ?OdooRelation
+    {
+        return $this->property_account_income_id;
     }
 
     /**
-     * @param null|TemplateAliasAlias $default_cash_difference_income_account_id
+     * @param OdooRelation|null $property_account_expense_id
      */
-    public function setDefaultCashDifferenceIncomeAccountId(
-        ?TemplateAliasAlias $default_cash_difference_income_account_id
-    ): void {
-        $this->default_cash_difference_income_account_id = $default_cash_difference_income_account_id;
+    public function setPropertyAccountExpenseId(?OdooRelation $property_account_expense_id): void
+    {
+        $this->property_account_expense_id = $property_account_expense_id;
     }
 
     /**
-     * @param null|TemplateAliasAlias $property_stock_valuation_account_id
+     * @return OdooRelation|null
      */
-    public function setPropertyStockValuationAccountId(
-        ?TemplateAliasAlias $property_stock_valuation_account_id
-    ): void {
-        $this->property_stock_valuation_account_id = $property_stock_valuation_account_id;
+    public function getPropertyAccountExpenseId(): ?OdooRelation
+    {
+        return $this->property_account_expense_id;
     }
 
     /**
-     * @param null|TemplateAliasAlias $property_tax_payable_account_id
+     * @param OdooRelation|null $property_account_income_categ_id
      */
-    public function setPropertyTaxPayableAccountId(
-        ?TemplateAliasAlias $property_tax_payable_account_id
-    ): void {
-        $this->property_tax_payable_account_id = $property_tax_payable_account_id;
+    public function setPropertyAccountIncomeCategId(?OdooRelation $property_account_income_categ_id): void
+    {
+        $this->property_account_income_categ_id = $property_account_income_categ_id;
     }
 
     /**
-     * @param null|TemplateAliasAlias $property_tax_receivable_account_id
+     * @return OdooRelation|null
      */
-    public function setPropertyTaxReceivableAccountId(
-        ?TemplateAliasAlias $property_tax_receivable_account_id
-    ): void {
-        $this->property_tax_receivable_account_id = $property_tax_receivable_account_id;
+    public function getPropertyAccountIncomeCategId(): ?OdooRelation
+    {
+        return $this->property_account_income_categ_id;
     }
 
     /**
-     * @param null|TemplateAliasAlias $property_advance_tax_payment_account_id
+     * @return OdooRelation|null
      */
-    public function setPropertyAdvanceTaxPaymentAccountId(
-        ?TemplateAliasAlias $property_advance_tax_payment_account_id
-    ): void {
-        $this->property_advance_tax_payment_account_id = $property_advance_tax_payment_account_id;
+    public function getPropertyAccountExpenseCategId(): ?OdooRelation
+    {
+        return $this->property_account_expense_categ_id;
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $property_stock_account_input_categ_id
      */
-    public function getCreateUid(): ?Users
+    public function setPropertyStockAccountInputCategId(
+        ?OdooRelation $property_stock_account_input_categ_id
+    ): void {
+        $this->property_stock_account_input_categ_id = $property_stock_account_input_categ_id;
+    }
+
+    /**
+     * @param OdooRelation|null $property_account_payable_id
+     */
+    public function setPropertyAccountPayableId(?OdooRelation $property_account_payable_id): void
+    {
+        $this->property_account_payable_id = $property_account_payable_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPropertyAccountPayableId(): ?OdooRelation
+    {
+        return $this->property_account_payable_id;
+    }
+
+    /**
+     * @param OdooRelation|null $property_account_receivable_id
+     */
+    public function setPropertyAccountReceivableId(?OdooRelation $property_account_receivable_id): void
+    {
+        $this->property_account_receivable_id = $property_account_receivable_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPropertyAccountReceivableId(): ?OdooRelation
+    {
+        return $this->property_account_receivable_id;
+    }
+
+    /**
+     * @param OdooRelation|null $default_pos_receivable_account_id
+     */
+    public function setDefaultPosReceivableAccountId(?OdooRelation $default_pos_receivable_account_id): void
+    {
+        $this->default_pos_receivable_account_id = $default_pos_receivable_account_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getDefaultPosReceivableAccountId(): ?OdooRelation
+    {
+        return $this->default_pos_receivable_account_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPropertyStockAccountInputCategId(): ?OdooRelation
+    {
+        return $this->property_stock_account_input_categ_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPropertyStockAccountOutputCategId(): ?OdooRelation
+    {
+        return $this->property_stock_account_output_categ_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getDefaultCashDifferenceExpenseAccountId(): ?OdooRelation
+    {
+        return $this->default_cash_difference_expense_account_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -431,60 +561,199 @@ final class Template extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getWriteUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->write_uid;
+        $this->create_uid = $create_uid;
     }
 
     /**
-     * @param null|TemplateAliasAlias $default_cash_difference_expense_account_id
+     * @param OdooRelation|null $property_advance_tax_payment_account_id
+     */
+    public function setPropertyAdvanceTaxPaymentAccountId(
+        ?OdooRelation $property_advance_tax_payment_account_id
+    ): void {
+        $this->property_advance_tax_payment_account_id = $property_advance_tax_payment_account_id;
+    }
+
+    /**
+     * @param OdooRelation|null $property_stock_account_output_categ_id
+     */
+    public function setPropertyStockAccountOutputCategId(
+        ?OdooRelation $property_stock_account_output_categ_id
+    ): void {
+        $this->property_stock_account_output_categ_id = $property_stock_account_output_categ_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPropertyAdvanceTaxPaymentAccountId(): ?OdooRelation
+    {
+        return $this->property_advance_tax_payment_account_id;
+    }
+
+    /**
+     * @param OdooRelation|null $property_tax_receivable_account_id
+     */
+    public function setPropertyTaxReceivableAccountId(
+        ?OdooRelation $property_tax_receivable_account_id
+    ): void {
+        $this->property_tax_receivable_account_id = $property_tax_receivable_account_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPropertyTaxReceivableAccountId(): ?OdooRelation
+    {
+        return $this->property_tax_receivable_account_id;
+    }
+
+    /**
+     * @param OdooRelation|null $property_tax_payable_account_id
+     */
+    public function setPropertyTaxPayableAccountId(?OdooRelation $property_tax_payable_account_id): void
+    {
+        $this->property_tax_payable_account_id = $property_tax_payable_account_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPropertyTaxPayableAccountId(): ?OdooRelation
+    {
+        return $this->property_tax_payable_account_id;
+    }
+
+    /**
+     * @param OdooRelation|null $property_stock_valuation_account_id
+     */
+    public function setPropertyStockValuationAccountId(
+        ?OdooRelation $property_stock_valuation_account_id
+    ): void {
+        $this->property_stock_valuation_account_id = $property_stock_valuation_account_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPropertyStockValuationAccountId(): ?OdooRelation
+    {
+        return $this->property_stock_valuation_account_id;
+    }
+
+    /**
+     * @param OdooRelation|null $default_cash_difference_expense_account_id
      */
     public function setDefaultCashDifferenceExpenseAccountId(
-        ?TemplateAliasAlias $default_cash_difference_expense_account_id
+        ?OdooRelation $default_cash_difference_expense_account_id
     ): void {
         $this->default_cash_difference_expense_account_id = $default_cash_difference_expense_account_id;
     }
 
     /**
-     * @param null|TemplateAliasAlias $expense_currency_exchange_account_id
+     * @param OdooRelation|null $default_cash_difference_income_account_id
      */
-    public function setExpenseCurrencyExchangeAccountId(
-        ?TemplateAliasAlias $expense_currency_exchange_account_id
+    public function setDefaultCashDifferenceIncomeAccountId(
+        ?OdooRelation $default_cash_difference_income_account_id
     ): void {
-        $this->expense_currency_exchange_account_id = $expense_currency_exchange_account_id;
+        $this->default_cash_difference_income_account_id = $default_cash_difference_income_account_id;
     }
 
     /**
-     * @param string $name
+     * @return string
      */
-    public function setName(string $name): void
+    public function getName(): string
     {
-        $this->name = $name;
+        return $this->name;
     }
 
     /**
-     * @param TemplateAliasAlias $item
-     * @param bool $strict
+     * @return OdooRelation
+     */
+    public function getCurrencyId(): OdooRelation
+    {
+        return $this->currency_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getAccountIds(): ?array
+    {
+        return $this->account_ids;
+    }
+
+    /**
+     * @param bool|null $complete_tax_set
+     */
+    public function setCompleteTaxSet(?bool $complete_tax_set): void
+    {
+        $this->complete_tax_set = $complete_tax_set;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isCompleteTaxSet(): ?bool
+    {
+        return $this->complete_tax_set;
+    }
+
+    /**
+     * @param bool|null $use_anglo_saxon
+     */
+    public function setUseAngloSaxon(?bool $use_anglo_saxon): void
+    {
+        $this->use_anglo_saxon = $use_anglo_saxon;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isUseAngloSaxon(): ?bool
+    {
+        return $this->use_anglo_saxon;
+    }
+
+    /**
+     * @param OdooRelation $currency_id
+     */
+    public function setCurrencyId(OdooRelation $currency_id): void
+    {
+        $this->currency_id = $currency_id;
+    }
+
+    /**
+     * @param bool|null $visible
+     */
+    public function setVisible(?bool $visible): void
+    {
+        $this->visible = $visible;
+    }
+
+    /**
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasAccountIds(TemplateAliasAlias $item, bool $strict = true): bool
+    public function hasAccountIds(OdooRelation $item): bool
     {
         if (null === $this->account_ids) {
             return false;
         }
 
-        return in_array($item, $this->account_ids, $strict);
+        return in_array($item, $this->account_ids);
     }
 
     /**
-     * @param null|TemplateAlias $parent_id
+     * @return bool|null
      */
-    public function setParentId(?TemplateAlias $parent_id): void
+    public function isVisible(): ?bool
     {
-        $this->parent_id = $parent_id;
+        return $this->visible;
     }
 
     /**
@@ -496,39 +765,39 @@ final class Template extends Base
     }
 
     /**
-     * @param null|bool $visible
+     * @return int
      */
-    public function setVisible(?bool $visible): void
+    public function getCodeDigits(): int
     {
-        $this->visible = $visible;
+        return $this->code_digits;
     }
 
     /**
-     * @param Currency $currency_id
+     * @param OdooRelation|null $parent_id
      */
-    public function setCurrencyId(Currency $currency_id): void
+    public function setParentId(?OdooRelation $parent_id): void
     {
-        $this->currency_id = $currency_id;
+        $this->parent_id = $parent_id;
     }
 
     /**
-     * @param null|bool $use_anglo_saxon
+     * @return OdooRelation|null
      */
-    public function setUseAngloSaxon(?bool $use_anglo_saxon): void
+    public function getParentId(): ?OdooRelation
     {
-        $this->use_anglo_saxon = $use_anglo_saxon;
+        return $this->parent_id;
     }
 
     /**
-     * @param null|bool $complete_tax_set
+     * @param string $name
      */
-    public function setCompleteTaxSet(?bool $complete_tax_set): void
+    public function setName(string $name): void
     {
-        $this->complete_tax_set = $complete_tax_set;
+        $this->name = $name;
     }
 
     /**
-     * @param null|TemplateAliasAlias[] $account_ids
+     * @param OdooRelation[]|null $account_ids
      */
     public function setAccountIds(?array $account_ids): void
     {
@@ -536,9 +805,9 @@ final class Template extends Base
     }
 
     /**
-     * @param TemplateAliasAlias $item
+     * @param OdooRelation $item
      */
-    public function addAccountIds(TemplateAliasAlias $item): void
+    public function addAccountIds(OdooRelation $item): void
     {
         if ($this->hasAccountIds($item)) {
             return;
@@ -552,18 +821,83 @@ final class Template extends Base
     }
 
     /**
-     * @param null|TemplateAliasAlias $income_currency_exchange_account_id
+     * @return OdooRelation|null
+     */
+    public function getDefaultCashDifferenceIncomeAccountId(): ?OdooRelation
+    {
+        return $this->default_cash_difference_income_account_id;
+    }
+
+    /**
+     * @param string $cash_account_code_prefix
+     */
+    public function setCashAccountCodePrefix(string $cash_account_code_prefix): void
+    {
+        $this->cash_account_code_prefix = $cash_account_code_prefix;
+    }
+
+    /**
+     * @param OdooRelation|null $expense_currency_exchange_account_id
+     */
+    public function setExpenseCurrencyExchangeAccountId(
+        ?OdooRelation $expense_currency_exchange_account_id
+    ): void {
+        $this->expense_currency_exchange_account_id = $expense_currency_exchange_account_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getExpenseCurrencyExchangeAccountId(): ?OdooRelation
+    {
+        return $this->expense_currency_exchange_account_id;
+    }
+
+    /**
+     * @param OdooRelation|null $income_currency_exchange_account_id
      */
     public function setIncomeCurrencyExchangeAccountId(
-        ?TemplateAliasAlias $income_currency_exchange_account_id
+        ?OdooRelation $income_currency_exchange_account_id
     ): void {
         $this->income_currency_exchange_account_id = $income_currency_exchange_account_id;
     }
 
     /**
-     * @param TemplateAliasAlias $item
+     * @return OdooRelation|null
      */
-    public function removeAccountIds(TemplateAliasAlias $item): void
+    public function getIncomeCurrencyExchangeAccountId(): ?OdooRelation
+    {
+        return $this->income_currency_exchange_account_id;
+    }
+
+    /**
+     * @param string $transfer_account_code_prefix
+     */
+    public function setTransferAccountCodePrefix(string $transfer_account_code_prefix): void
+    {
+        $this->transfer_account_code_prefix = $transfer_account_code_prefix;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTransferAccountCodePrefix(): string
+    {
+        return $this->transfer_account_code_prefix;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCashAccountCodePrefix(): string
+    {
+        return $this->cash_account_code_prefix;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeAccountIds(OdooRelation $item): void
     {
         if (null === $this->account_ids) {
             $this->account_ids = [];
@@ -576,32 +910,40 @@ final class Template extends Base
     }
 
     /**
-     * @param null|Template2[] $tax_template_ids
+     * @param string $bank_account_code_prefix
      */
-    public function setTaxTemplateIds(?array $tax_template_ids): void
+    public function setBankAccountCodePrefix(string $bank_account_code_prefix): void
     {
-        $this->tax_template_ids = $tax_template_ids;
+        $this->bank_account_code_prefix = $bank_account_code_prefix;
     }
 
     /**
-     * @param Template2 $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return string
      */
-    public function hasTaxTemplateIds(Template2 $item, bool $strict = true): bool
+    public function getBankAccountCodePrefix(): string
+    {
+        return $this->bank_account_code_prefix;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeTaxTemplateIds(OdooRelation $item): void
     {
         if (null === $this->tax_template_ids) {
-            return false;
+            $this->tax_template_ids = [];
         }
 
-        return in_array($item, $this->tax_template_ids, $strict);
+        if ($this->hasTaxTemplateIds($item)) {
+            $index = array_search($item, $this->tax_template_ids);
+            unset($this->tax_template_ids[$index]);
+        }
     }
 
     /**
-     * @param Template2 $item
+     * @param OdooRelation $item
      */
-    public function addTaxTemplateIds(Template2 $item): void
+    public function addTaxTemplateIds(OdooRelation $item): void
     {
         if ($this->hasTaxTemplateIds($item)) {
             return;
@@ -615,49 +957,40 @@ final class Template extends Base
     }
 
     /**
-     * @param Template2 $item
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removeTaxTemplateIds(Template2 $item): void
+    public function hasTaxTemplateIds(OdooRelation $item): bool
     {
         if (null === $this->tax_template_ids) {
-            $this->tax_template_ids = [];
+            return false;
         }
 
-        if ($this->hasTaxTemplateIds($item)) {
-            $index = array_search($item, $this->tax_template_ids);
-            unset($this->tax_template_ids[$index]);
-        }
+        return in_array($item, $this->tax_template_ids);
     }
 
     /**
-     * @param string $bank_account_code_prefix
+     * @param OdooRelation[]|null $tax_template_ids
      */
-    public function setBankAccountCodePrefix(string $bank_account_code_prefix): void
+    public function setTaxTemplateIds(?array $tax_template_ids): void
     {
-        $this->bank_account_code_prefix = $bank_account_code_prefix;
+        $this->tax_template_ids = $tax_template_ids;
     }
 
     /**
-     * @param string $cash_account_code_prefix
+     * @return OdooRelation[]|null
      */
-    public function setCashAccountCodePrefix(string $cash_account_code_prefix): void
+    public function getTaxTemplateIds(): ?array
     {
-        $this->cash_account_code_prefix = $cash_account_code_prefix;
+        return $this->tax_template_ids;
     }
 
     /**
-     * @param string $transfer_account_code_prefix
+     * @param DateTimeInterface|null $write_date
      */
-    public function setTransferAccountCodePrefix(string $transfer_account_code_prefix): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->transfer_account_code_prefix = $transfer_account_code_prefix;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

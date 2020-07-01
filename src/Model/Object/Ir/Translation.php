@@ -12,18 +12,22 @@ use Flux\OdooApiClient\Model\Object\Base;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Translation extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.translation';
+
     /**
      * Translated field
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -31,64 +35,95 @@ final class Translation extends Base
 
     /**
      * Record ID
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $res_id;
 
     /**
      * Language
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> en_US (English (US))
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $lang;
 
     /**
      * Type
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> model (Model Field)
+     *     -> model_terms (Structured Model Field)
+     *     -> code (Code)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $type;
 
     /**
      * Internal Source
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $src;
 
     /**
      * Translation Value
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $value;
 
     /**
      * Module
      * Module this term belongs to
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $module;
 
     /**
      * Status
      * Automatically set to let administators find new terms that might need to be translated
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> to_translate (To Translate)
+     *     -> inprogress (Translation in Progress)
+     *     -> translated (Translated)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $state;
 
     /**
      * Translation comments
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $comments;
 
     /**
      * @param string $name Translated field
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $name)
     {
@@ -96,92 +131,7 @@ final class Translation extends Base
     }
 
     /**
-     * @param mixed $item
-     */
-    public function removeType($item): void
-    {
-        if (null === $this->type) {
-            $this->type = [];
-        }
-
-        if ($this->hasType($item)) {
-            $index = array_search($item, $this->type);
-            unset($this->type[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeState($item): void
-    {
-        if (null === $this->state) {
-            $this->state = [];
-        }
-
-        if ($this->hasState($item)) {
-            $index = array_search($item, $this->state);
-            unset($this->state[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addState($item): void
-    {
-        if ($this->hasState($item)) {
-            return;
-        }
-
-        if (null === $this->state) {
-            $this->state = [];
-        }
-
-        $this->state[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasState($item, bool $strict = true): bool
-    {
-        if (null === $this->state) {
-            return false;
-        }
-
-        return in_array($item, $this->state, $strict);
-    }
-
-    /**
-     * @param null|array $state
-     */
-    public function setState(?array $state): void
-    {
-        $this->state = $state;
-    }
-
-    /**
-     * @param null|string $module
-     */
-    public function setModule(?string $module): void
-    {
-        $this->module = $module;
-    }
-
-    /**
-     * @param null|string $value
-     */
-    public function setValue(?string $value): void
-    {
-        $this->value = $value;
-    }
-
-    /**
-     * @param null|string $src
+     * @param string|null $src
      */
     public function setSrc(?string $src): void
     {
@@ -189,19 +139,123 @@ final class Translation extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return string|null
      */
-    public function addType($item): void
+    public function getComments(): ?string
     {
-        if ($this->hasType($item)) {
-            return;
-        }
+        return $this->comments;
+    }
 
-        if (null === $this->type) {
-            $this->type = [];
-        }
+    /**
+     * @param string|null $state
+     */
+    public function setState(?string $state): void
+    {
+        $this->state = $state;
+    }
 
-        $this->type[] = $item;
+    /**
+     * @return string|null
+     */
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param string|null $module
+     */
+    public function setModule(?string $module): void
+    {
+        $this->module = $module;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getModule(): ?string
+    {
+        return $this->module;
+    }
+
+    /**
+     * @param string|null $value
+     */
+    public function setValue(?string $value): void
+    {
+        $this->value = $value;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getValue(): ?string
+    {
+        return $this->value;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSrc(): ?string
+    {
+        return $this->src;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string|null $type
+     */
+    public function setType(?string $type): void
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string|null $lang
+     */
+    public function setLang(?string $lang): void
+    {
+        $this->lang = $lang;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLang(): ?string
+    {
+        return $this->lang;
+    }
+
+    /**
+     * @param int|null $res_id
+     */
+    public function setResId(?int $res_id): void
+    {
+        $this->res_id = $res_id;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getResId(): ?int
+    {
+        return $this->res_id;
     }
 
     /**
@@ -213,92 +267,7 @@ final class Translation extends Base
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasType($item, bool $strict = true): bool
-    {
-        if (null === $this->type) {
-            return false;
-        }
-
-        return in_array($item, $this->type, $strict);
-    }
-
-    /**
-     * @param null|array $type
-     */
-    public function setType(?array $type): void
-    {
-        $this->type = $type;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeLang($item): void
-    {
-        if (null === $this->lang) {
-            $this->lang = [];
-        }
-
-        if ($this->hasLang($item)) {
-            $index = array_search($item, $this->lang);
-            unset($this->lang[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addLang($item): void
-    {
-        if ($this->hasLang($item)) {
-            return;
-        }
-
-        if (null === $this->lang) {
-            $this->lang = [];
-        }
-
-        $this->lang[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasLang($item, bool $strict = true): bool
-    {
-        if (null === $this->lang) {
-            return false;
-        }
-
-        return in_array($item, $this->lang, $strict);
-    }
-
-    /**
-     * @param null|array $lang
-     */
-    public function setLang(?array $lang): void
-    {
-        $this->lang = $lang;
-    }
-
-    /**
-     * @param null|int $res_id
-     */
-    public function setResId(?int $res_id): void
-    {
-        $this->res_id = $res_id;
-    }
-
-    /**
-     * @param null|string $comments
+     * @param string|null $comments
      */
     public function setComments(?string $comments): void
     {

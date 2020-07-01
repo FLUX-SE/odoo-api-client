@@ -11,9 +11,10 @@ use Flux\OdooApiClient\Model\Object\Base;
  * Name : ir.qweb
  * Info :
  * allows to render reports with full branding on every node, including the context available
- * to evaluate every node. The context is composed of all the variables available at this point
- * in the report, and their type.
+ *         to evaluate every node. The context is composed of all the variables available at this point
+ *         in the report, and their type.
  */
 final class Qweb extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.qweb';
 }

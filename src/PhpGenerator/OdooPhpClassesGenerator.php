@@ -60,21 +60,40 @@ final class OdooPhpClassesGenerator implements OdooPhpClassesGeneratorInterface
             $this->classBuilder->setExtendClass($config['extends']);
             $this->classBuilder->getClassModel()->getPhpDoc()->setLines($config['description']);
 
-            foreach ($config['properties'] as $propertyConfig) {
+            $constantsConfig = $config['constants'] ?? [];
+            foreach ($constantsConfig as $constantConfig) {
+                $description = $constantConfig['description'] ?? [];
+                $description = implode($eol, $description);
+                $constant = $this->classBuilder->createConstant(
+                    $constantConfig['name'],
+                    $constantConfig['types'] ?? [],
+                    $constantConfig['default'] ?? null,
+                    $description
+                );
+
+                $constant->setReadable($constantConfig['readable'] ?? false);
+                $constant->setWriteable($constantConfig['writable'] ?? false);
+                $constant->setInherited($constantConfig['inherited'] ?? false);
+
+                $this->classBuilder->addProperty($constant);
+            }
+
+            $propertiesConfig = $config['properties'];
+            foreach ($propertiesConfig as $propertyConfig) {
                 $property = $this->classBuilder->createProperty(
                     $propertyConfig['name'],
                     $propertyConfig['types'],
                     $propertyConfig['default'],
-                    $propertyConfig['description']
+                    implode($eol, $propertyConfig['description'])
                 );
 
                 if ($config['type'] !== ClassBuilderInterface::CLASS_TYPE_FINAL) {
                     $property->setScope('protected');
                 }
 
-                $property->setReadable($propertyConfig['readable']);
-                $property->setWriteable($propertyConfig['writable']);
-                $property->setInherited($propertyConfig['inherited']);
+                $property->setReadable($propertyConfig['readable'] ?? true);
+                $property->setWriteable($propertyConfig['writable'] ?? true);
+                $property->setInherited($propertyConfig['inherited'] ?? false);
 
                 $this->classBuilder->addProperty($property);
             }
@@ -144,5 +163,4 @@ final class OdooPhpClassesGenerator implements OdooPhpClassesGeneratorInterface
     {
         $this->classBuilder = $classBuilder;
     }
-
 }

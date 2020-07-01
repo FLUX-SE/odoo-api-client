@@ -6,7 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Uom;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : uom.uom
@@ -14,18 +14,22 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Uom extends Base
 {
+    public const ODOO_MODEL_NAME = 'uom.uom';
+
     /**
      * Unit of Measure
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -35,8 +39,10 @@ final class Uom extends Base
      * Category
      * Conversion between Units of Measure can only occur if they belong to the same category. The conversion will be
      * made based on the ratios.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Category
+     * @var OdooRelation
      */
     private $category_id;
 
@@ -44,6 +50,8 @@ final class Uom extends Base
      * Ratio
      * How much bigger or smaller this unit is compared to the reference Unit of Measure for this category: 1 *
      * (reference unit) = ratio * (this unit)
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var float
      */
@@ -53,6 +61,8 @@ final class Uom extends Base
      * Bigger Ratio
      * How many times this Unit of Measure is bigger than the reference Unit of Measure in this category: 1 * (this
      * unit) = ratio * (reference unit)
+     * Searchable : no
+     * Sortable : no
      *
      * @var float
      */
@@ -62,6 +72,8 @@ final class Uom extends Base
      * Rounding Precision
      * The computed quantity will be a multiple of this value. Use 1.0 for a Unit of Measure that cannot be further
      * split, such as a piece.
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var float
      */
@@ -70,76 +82,119 @@ final class Uom extends Base
     /**
      * Active
      * Uncheck the active field to disable a unit of measure without deleting it.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $active;
 
     /**
      * Type
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> bigger (Bigger than the reference Unit of Measure)
+     *     -> reference (Reference Unit of Measure for this category)
+     *     -> smaller (Smaller than the reference Unit of Measure)
      *
-     * @var array
+     *
+     * @var string
      */
     private $uom_type;
 
     /**
      * Type of measurement category
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> unit (Default Units)
+     *     -> weight (Default Weight)
+     *     -> working_time (Default Working Time)
+     *     -> length (Default Length)
+     *     -> volume (Default Volume)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $measure_type;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Unit of Measure
-     * @param Category $category_id Category
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $category_id Category
      *        Conversion between Units of Measure can only occur if they belong to the same category. The conversion will be
      *        made based on the ratios.
+     *        Searchable : yes
+     *        Sortable : yes
      * @param float $factor Ratio
      *        How much bigger or smaller this unit is compared to the reference Unit of Measure for this category: 1 *
      *        (reference unit) = ratio * (this unit)
+     *        Searchable : yes
+     *        Sortable : yes
      * @param float $factor_inv Bigger Ratio
      *        How many times this Unit of Measure is bigger than the reference Unit of Measure in this category: 1 * (this
      *        unit) = ratio * (reference unit)
+     *        Searchable : no
+     *        Sortable : no
      * @param float $rounding Rounding Precision
      *        The computed quantity will be a multiple of this value. Use 1.0 for a Unit of Measure that cannot be further
      *        split, such as a piece.
-     * @param array $uom_type Type
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $uom_type Type
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> bigger (Bigger than the reference Unit of Measure)
+     *            -> reference (Reference Unit of Measure for this category)
+     *            -> smaller (Smaller than the reference Unit of Measure)
+     *
      */
     public function __construct(
         string $name,
-        Category $category_id,
+        OdooRelation $category_id,
         float $factor,
         float $factor_inv,
         float $rounding,
-        array $uom_type
+        string $uom_type
     ) {
         $this->name = $name;
         $this->category_id = $category_id;
@@ -150,19 +205,147 @@ final class Uom extends Base
     }
 
     /**
-     * @param string $name
+     * @return string
      */
-    public function setName(string $name): void
+    public function getUomType(): string
     {
-        $this->name = $name;
+        return $this->uom_type;
     }
 
     /**
-     * @param Category $category_id
+     * @return DateTimeInterface|null
      */
-    public function setCategoryId(Category $category_id): void
+    public function getWriteDate(): ?DateTimeInterface
     {
-        $this->category_id = $category_id;
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param string|null $measure_type
+     */
+    public function setMeasureType(?string $measure_type): void
+    {
+        $this->measure_type = $measure_type;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMeasureType(): ?string
+    {
+        return $this->measure_type;
+    }
+
+    /**
+     * @param string $uom_type
+     */
+    public function setUomType(string $uom_type): void
+    {
+        $this->uom_type = $uom_type;
+    }
+
+    /**
+     * @param bool|null $active
+     */
+    public function setActive(?bool $active): void
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param float $rounding
+     */
+    public function setRounding(float $rounding): void
+    {
+        $this->rounding = $rounding;
+    }
+
+    /**
+     * @return float
+     */
+    public function getRounding(): float
+    {
+        return $this->rounding;
+    }
+
+    /**
+     * @param float $factor_inv
+     */
+    public function setFactorInv(float $factor_inv): void
+    {
+        $this->factor_inv = $factor_inv;
+    }
+
+    /**
+     * @return float
+     */
+    public function getFactorInv(): float
+    {
+        return $this->factor_inv;
     }
 
     /**
@@ -176,106 +359,40 @@ final class Uom extends Base
     /**
      * @return float
      */
-    public function getFactorInv(): float
+    public function getFactor(): float
     {
-        return $this->factor_inv;
+        return $this->factor;
     }
 
     /**
-     * @param float $rounding
+     * @param OdooRelation $category_id
      */
-    public function setRounding(float $rounding): void
+    public function setCategoryId(OdooRelation $category_id): void
     {
-        $this->rounding = $rounding;
+        $this->category_id = $category_id;
     }
 
     /**
-     * @param null|bool $active
+     * @return OdooRelation
      */
-    public function setActive(?bool $active): void
+    public function getCategoryId(): OdooRelation
     {
-        $this->active = $active;
+        return $this->category_id;
     }
 
     /**
-     * @param array $uom_type
+     * @param string $name
      */
-    public function setUomType(array $uom_type): void
+    public function setName(string $name): void
     {
-        $this->uom_type = $uom_type;
+        $this->name = $name;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param DateTimeInterface|null $write_date
      */
-    public function hasUomType($item, bool $strict = true): bool
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return in_array($item, $this->uom_type, $strict);
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addUomType($item): void
-    {
-        if ($this->hasUomType($item)) {
-            return;
-        }
-
-        $this->uom_type[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeUomType($item): void
-    {
-        if ($this->hasUomType($item)) {
-            $index = array_search($item, $this->uom_type);
-            unset($this->uom_type[$index]);
-        }
-    }
-
-    /**
-     * @return null|array
-     */
-    public function getMeasureType(): ?array
-    {
-        return $this->measure_type;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

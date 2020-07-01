@@ -4,172 +4,297 @@ declare(strict_types=1);
 
 namespace Flux\OdooApiClient\Model\Object\Account\Invoice;
 
-use Flux\OdooApiClient\Model\Object\Account\Move;
 use Flux\OdooApiClient\Model\Object\Mail\Compose\Message;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.invoice.send
  * Name : account.invoice.send
  * Info :
  * Model super-class for transient records, meant to be temporarily
- * persistent, and regularly vacuum-cleaned.
+ *         persistent, and regularly vacuum-cleaned.
  *
- * A TransientModel has a simplified access rights management, all users can
- * create new records, and may only access the records they created. The
- * superuser has unrestricted access to all TransientModel records.
+ *         A TransientModel has a simplified access rights management, all users can
+ *         create new records, and may only access the records they created. The
+ *         superuser has unrestricted access to all TransientModel records.
  */
 final class Send extends Message
 {
+    public const ODOO_MODEL_NAME = 'account.invoice.send';
+
     /**
      * Email
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $is_email;
 
     /**
      * invoice(s) that will not be sent
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $invoice_without_email;
 
     /**
      * Print
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $is_print;
 
     /**
      * Is Printed
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $printed;
 
     /**
      * Invoices
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Move[]
+     * @var OdooRelation[]|null
      */
     private $invoice_ids;
 
     /**
      * Composer
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Message
+     * @var OdooRelation
      */
     private $composer_id;
 
     /**
      * Partner
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|Partner
+     * @var OdooRelation|null
      */
     private $partner_id;
 
     /**
      * Send by Post
      * Allows to send the document by Snailmail (coventional posting delivery service)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $snailmail_is_letter;
 
     /**
      * Stamp(s)
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|float
+     * @var float|null
      */
     private $snailmail_cost;
 
     /**
      * Invalid Addresses Count
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $invalid_addresses;
 
     /**
      * Invalid Addresses
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|Move[]
+     * @var OdooRelation[]|null
      */
     private $invalid_invoice_ids;
 
     /**
-     * @param Message $composer_id Composer
-     * @param array $message_type Type
+     * @param OdooRelation $composer_id Composer
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $message_type Type
      *        Message type: email for email message, notification for system message, comment for other messages such as
      *        user replies
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> comment (Comment)
+     *            -> notification (System notification)
+     *
      */
-    public function __construct(Message $composer_id, array $message_type)
+    public function __construct(OdooRelation $composer_id, string $message_type)
     {
         $this->composer_id = $composer_id;
         parent::__construct($message_type);
     }
 
     /**
-     * @param null|bool $is_email
+     * @param OdooRelation $composer_id
      */
-    public function setIsEmail(?bool $is_email): void
+    public function setComposerId(OdooRelation $composer_id): void
     {
-        $this->is_email = $is_email;
+        $this->composer_id = $composer_id;
     }
 
     /**
-     * @return null|string
+     * @param OdooRelation $item
      */
-    public function getInvoiceWithoutEmail(): ?string
+    public function addInvalidInvoiceIds(OdooRelation $item): void
     {
-        return $this->invoice_without_email;
+        if ($this->hasInvalidInvoiceIds($item)) {
+            return;
+        }
+
+        if (null === $this->invalid_invoice_ids) {
+            $this->invalid_invoice_ids = [];
+        }
+
+        $this->invalid_invoice_ids[] = $item;
     }
 
     /**
-     * @param null|bool $is_print
-     */
-    public function setIsPrint(?bool $is_print): void
-    {
-        $this->is_print = $is_print;
-    }
-
-    /**
-     * @param null|bool $printed
-     */
-    public function setPrinted(?bool $printed): void
-    {
-        $this->printed = $printed;
-    }
-
-    /**
-     * @param null|Move[] $invoice_ids
-     */
-    public function setInvoiceIds(?array $invoice_ids): void
-    {
-        $this->invoice_ids = $invoice_ids;
-    }
-
-    /**
-     * @param Move $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasInvoiceIds(Move $item, bool $strict = true): bool
+    public function hasInvalidInvoiceIds(OdooRelation $item): bool
     {
-        if (null === $this->invoice_ids) {
+        if (null === $this->invalid_invoice_ids) {
             return false;
         }
 
-        return in_array($item, $this->invoice_ids, $strict);
+        return in_array($item, $this->invalid_invoice_ids);
     }
 
     /**
-     * @param Move $item
+     * @param OdooRelation[]|null $invalid_invoice_ids
      */
-    public function addInvoiceIds(Move $item): void
+    public function setInvalidInvoiceIds(?array $invalid_invoice_ids): void
+    {
+        $this->invalid_invoice_ids = $invalid_invoice_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getInvalidInvoiceIds(): ?array
+    {
+        return $this->invalid_invoice_ids;
+    }
+
+    /**
+     * @param int|null $invalid_addresses
+     */
+    public function setInvalidAddresses(?int $invalid_addresses): void
+    {
+        $this->invalid_addresses = $invalid_addresses;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getInvalidAddresses(): ?int
+    {
+        return $this->invalid_addresses;
+    }
+
+    /**
+     * @param float|null $snailmail_cost
+     */
+    public function setSnailmailCost(?float $snailmail_cost): void
+    {
+        $this->snailmail_cost = $snailmail_cost;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getSnailmailCost(): ?float
+    {
+        return $this->snailmail_cost;
+    }
+
+    /**
+     * @param bool|null $snailmail_is_letter
+     */
+    public function setSnailmailIsLetter(?bool $snailmail_is_letter): void
+    {
+        $this->snailmail_is_letter = $snailmail_is_letter;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isSnailmailIsLetter(): ?bool
+    {
+        return $this->snailmail_is_letter;
+    }
+
+    /**
+     * @param OdooRelation|null $partner_id
+     */
+    public function setPartnerId(?OdooRelation $partner_id): void
+    {
+        $this->partner_id = $partner_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPartnerId(): ?OdooRelation
+    {
+        return $this->partner_id;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getComposerId(): OdooRelation
+    {
+        return $this->composer_id;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsEmail(): ?bool
+    {
+        return $this->is_email;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeInvoiceIds(OdooRelation $item): void
+    {
+        if (null === $this->invoice_ids) {
+            $this->invoice_ids = [];
+        }
+
+        if ($this->hasInvoiceIds($item)) {
+            $index = array_search($item, $this->invoice_ids);
+            unset($this->invoice_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addInvoiceIds(OdooRelation $item): void
     {
         if ($this->hasInvoiceIds($item)) {
             return;
@@ -183,65 +308,103 @@ final class Send extends Message
     }
 
     /**
-     * @param Move $item
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removeInvoiceIds(Move $item): void
+    public function hasInvoiceIds(OdooRelation $item): bool
     {
         if (null === $this->invoice_ids) {
-            $this->invoice_ids = [];
+            return false;
         }
 
-        if ($this->hasInvoiceIds($item)) {
-            $index = array_search($item, $this->invoice_ids);
-            unset($this->invoice_ids[$index]);
+        return in_array($item, $this->invoice_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $invoice_ids
+     */
+    public function setInvoiceIds(?array $invoice_ids): void
+    {
+        $this->invoice_ids = $invoice_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getInvoiceIds(): ?array
+    {
+        return $this->invoice_ids;
+    }
+
+    /**
+     * @param bool|null $printed
+     */
+    public function setPrinted(?bool $printed): void
+    {
+        $this->printed = $printed;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isPrinted(): ?bool
+    {
+        return $this->printed;
+    }
+
+    /**
+     * @param bool|null $is_print
+     */
+    public function setIsPrint(?bool $is_print): void
+    {
+        $this->is_print = $is_print;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsPrint(): ?bool
+    {
+        return $this->is_print;
+    }
+
+    /**
+     * @param string|null $invoice_without_email
+     */
+    public function setInvoiceWithoutEmail(?string $invoice_without_email): void
+    {
+        $this->invoice_without_email = $invoice_without_email;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getInvoiceWithoutEmail(): ?string
+    {
+        return $this->invoice_without_email;
+    }
+
+    /**
+     * @param bool|null $is_email
+     */
+    public function setIsEmail(?bool $is_email): void
+    {
+        $this->is_email = $is_email;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeInvalidInvoiceIds(OdooRelation $item): void
+    {
+        if (null === $this->invalid_invoice_ids) {
+            $this->invalid_invoice_ids = [];
         }
-    }
 
-    /**
-     * @param Message $composer_id
-     */
-    public function setComposerId(Message $composer_id): void
-    {
-        $this->composer_id = $composer_id;
-    }
-
-    /**
-     * @return null|Partner
-     */
-    public function getPartnerId(): ?Partner
-    {
-        return $this->partner_id;
-    }
-
-    /**
-     * @param null|bool $snailmail_is_letter
-     */
-    public function setSnailmailIsLetter(?bool $snailmail_is_letter): void
-    {
-        $this->snailmail_is_letter = $snailmail_is_letter;
-    }
-
-    /**
-     * @return null|float
-     */
-    public function getSnailmailCost(): ?float
-    {
-        return $this->snailmail_cost;
-    }
-
-    /**
-     * @return null|int
-     */
-    public function getInvalidAddresses(): ?int
-    {
-        return $this->invalid_addresses;
-    }
-
-    /**
-     * @return null|Move[]
-     */
-    public function getInvalidInvoiceIds(): ?array
-    {
-        return $this->invalid_invoice_ids;
+        if ($this->hasInvalidInvoiceIds($item)) {
+            $index = array_search($item, $this->invalid_invoice_ids);
+            unset($this->invalid_invoice_ids[$index]);
+        }
     }
 }

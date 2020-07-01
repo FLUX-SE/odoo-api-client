@@ -6,121 +6,288 @@ namespace Flux\OdooApiClient\Model\Object\Mail\Resend;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Mail\Message as MessageAlias;
-use Flux\OdooApiClient\Model\Object\Mail\Notification;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.resend.message
  * Name : mail.resend.message
  * Info :
  * Model super-class for transient records, meant to be temporarily
- * persistent, and regularly vacuum-cleaned.
+ *         persistent, and regularly vacuum-cleaned.
  *
- * A TransientModel has a simplified access rights management, all users can
- * create new records, and may only access the records they created. The
- * superuser has unrestricted access to all TransientModel records.
+ *         A TransientModel has a simplified access rights management, all users can
+ *         create new records, and may only access the records they created. The
+ *         superuser has unrestricted access to all TransientModel records.
  */
 final class Message extends Base
 {
+    public const ODOO_MODEL_NAME = 'mail.resend.message';
+
     /**
      * Message
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|MessageAlias
+     * @var OdooRelation|null
      */
     private $mail_message_id;
 
     /**
      * Recipients
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Partner[]
+     * @var OdooRelation[]|null
      */
     private $partner_ids;
 
     /**
      * Notifications
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Notification[]
+     * @var OdooRelation[]|null
      */
     private $notification_ids;
 
     /**
      * Has Cancel
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $has_cancel;
 
     /**
      * Partner Readonly
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $partner_readonly;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @return null|MessageAlias
+     * @return OdooRelation|null
      */
-    public function getMailMessageId(): ?MessageAlias
+    public function getMailMessageId(): ?OdooRelation
     {
         return $this->mail_message_id;
     }
 
     /**
-     * @param null|Partner[] $partner_ids
+     * @param bool|null $has_cancel
      */
-    public function setPartnerIds(?array $partner_ids): void
+    public function setHasCancel(?bool $has_cancel): void
     {
-        $this->partner_ids = $partner_ids;
+        $this->has_cancel = $has_cancel;
     }
 
     /**
-     * @param Partner $item
-     * @param bool $strict
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param bool|null $partner_readonly
+     */
+    public function setPartnerReadonly(?bool $partner_readonly): void
+    {
+        $this->partner_readonly = $partner_readonly;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isPartnerReadonly(): ?bool
+    {
+        return $this->partner_readonly;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isHasCancel(): ?bool
+    {
+        return $this->has_cancel;
+    }
+
+    /**
+     * @param OdooRelation|null $mail_message_id
+     */
+    public function setMailMessageId(?OdooRelation $mail_message_id): void
+    {
+        $this->mail_message_id = $mail_message_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeNotificationIds(OdooRelation $item): void
+    {
+        if (null === $this->notification_ids) {
+            $this->notification_ids = [];
+        }
+
+        if ($this->hasNotificationIds($item)) {
+            $index = array_search($item, $this->notification_ids);
+            unset($this->notification_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addNotificationIds(OdooRelation $item): void
+    {
+        if ($this->hasNotificationIds($item)) {
+            return;
+        }
+
+        if (null === $this->notification_ids) {
+            $this->notification_ids = [];
+        }
+
+        $this->notification_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasPartnerIds(Partner $item, bool $strict = true): bool
+    public function hasNotificationIds(OdooRelation $item): bool
     {
-        if (null === $this->partner_ids) {
+        if (null === $this->notification_ids) {
             return false;
         }
 
-        return in_array($item, $this->partner_ids, $strict);
+        return in_array($item, $this->notification_ids);
     }
 
     /**
-     * @param Partner $item
+     * @param OdooRelation[]|null $notification_ids
      */
-    public function addPartnerIds(Partner $item): void
+    public function setNotificationIds(?array $notification_ids): void
+    {
+        $this->notification_ids = $notification_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getNotificationIds(): ?array
+    {
+        return $this->notification_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removePartnerIds(OdooRelation $item): void
+    {
+        if (null === $this->partner_ids) {
+            $this->partner_ids = [];
+        }
+
+        if ($this->hasPartnerIds($item)) {
+            $index = array_search($item, $this->partner_ids);
+            unset($this->partner_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addPartnerIds(OdooRelation $item): void
     {
         if ($this->hasPartnerIds($item)) {
             return;
@@ -134,73 +301,40 @@ final class Message extends Base
     }
 
     /**
-     * @param Partner $item
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removePartnerIds(Partner $item): void
+    public function hasPartnerIds(OdooRelation $item): bool
     {
         if (null === $this->partner_ids) {
-            $this->partner_ids = [];
+            return false;
         }
 
-        if ($this->hasPartnerIds($item)) {
-            $index = array_search($item, $this->partner_ids);
-            unset($this->partner_ids[$index]);
-        }
+        return in_array($item, $this->partner_ids);
     }
 
     /**
-     * @return null|Notification[]
+     * @param OdooRelation[]|null $partner_ids
      */
-    public function getNotificationIds(): ?array
+    public function setPartnerIds(?array $partner_ids): void
     {
-        return $this->notification_ids;
+        $this->partner_ids = $partner_ids;
     }
 
     /**
-     * @return null|bool
+     * @return OdooRelation[]|null
      */
-    public function isHasCancel(): ?bool
+    public function getPartnerIds(): ?array
     {
-        return $this->has_cancel;
+        return $this->partner_ids;
     }
 
     /**
-     * @return null|bool
+     * @param DateTimeInterface|null $write_date
      */
-    public function isPartnerReadonly(): ?bool
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->partner_readonly;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

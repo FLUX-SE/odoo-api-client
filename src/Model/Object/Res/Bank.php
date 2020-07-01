@@ -6,7 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Res;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Country\State;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : res.bank
@@ -14,18 +14,22 @@ use Flux\OdooApiClient\Model\Object\Res\Country\State;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Bank extends Base
 {
+    public const ODOO_MODEL_NAME = 'res.bank';
+
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -33,109 +37,363 @@ final class Bank extends Base
 
     /**
      * Street
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $street;
 
     /**
      * Street2
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $street2;
 
     /**
      * Zip
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $zip;
 
     /**
      * City
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $city;
 
     /**
      * Fed. State
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|State
+     * @var OdooRelation|null
      */
     private $state;
 
     /**
      * Country
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Country
+     * @var OdooRelation|null
      */
     private $country;
 
     /**
      * Email
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $email;
 
     /**
      * Phone
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $phone;
 
     /**
      * Active
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $active;
 
     /**
      * Bank Identifier Code
      * Sometimes called BIC or Swift.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $bic;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Name
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @param string|null $email
+     */
+    public function setEmail(?string $email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param string|null $bic
+     */
+    public function setBic(?string $bic): void
+    {
+        $this->bic = $bic;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getBic(): ?string
+    {
+        return $this->bic;
+    }
+
+    /**
+     * @param bool|null $active
+     */
+    public function setActive(?bool $active): void
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param string|null $phone
+     */
+    public function setPhone(?string $phone): void
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param OdooRelation|null $country
+     */
+    public function setCountry(?OdooRelation $country): void
+    {
+        $this->country = $country;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCountry(): ?OdooRelation
+    {
+        return $this->country;
+    }
+
+    /**
+     * @param OdooRelation|null $state
+     */
+    public function setState(?OdooRelation $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getState(): ?OdooRelation
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param string|null $city
+     */
+    public function setCity(?string $city): void
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param string|null $zip
+     */
+    public function setZip(?string $zip): void
+    {
+        $this->zip = $zip;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getZip(): ?string
+    {
+        return $this->zip;
+    }
+
+    /**
+     * @param string|null $street2
+     */
+    public function setStreet2(?string $street2): void
+    {
+        $this->street2 = $street2;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getStreet2(): ?string
+    {
+        return $this->street2;
+    }
+
+    /**
+     * @param string|null $street
+     */
+    public function setStreet(?string $street): void
+    {
+        $this->street = $street;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getStreet(): ?string
+    {
+        return $this->street;
     }
 
     /**
@@ -147,114 +405,10 @@ final class Bank extends Base
     }
 
     /**
-     * @param null|string $street
+     * @param DateTimeInterface|null $write_date
      */
-    public function setStreet(?string $street): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->street = $street;
-    }
-
-    /**
-     * @param null|string $street2
-     */
-    public function setStreet2(?string $street2): void
-    {
-        $this->street2 = $street2;
-    }
-
-    /**
-     * @param null|string $zip
-     */
-    public function setZip(?string $zip): void
-    {
-        $this->zip = $zip;
-    }
-
-    /**
-     * @param null|string $city
-     */
-    public function setCity(?string $city): void
-    {
-        $this->city = $city;
-    }
-
-    /**
-     * @param null|State $state
-     */
-    public function setState(?State $state): void
-    {
-        $this->state = $state;
-    }
-
-    /**
-     * @param null|Country $country
-     */
-    public function setCountry(?Country $country): void
-    {
-        $this->country = $country;
-    }
-
-    /**
-     * @param null|string $email
-     */
-    public function setEmail(?string $email): void
-    {
-        $this->email = $email;
-    }
-
-    /**
-     * @param null|string $phone
-     */
-    public function setPhone(?string $phone): void
-    {
-        $this->phone = $phone;
-    }
-
-    /**
-     * @param null|bool $active
-     */
-    public function setActive(?bool $active): void
-    {
-        $this->active = $active;
-    }
-
-    /**
-     * @param null|string $bic
-     */
-    public function setBic(?string $bic): void
-    {
-        $this->bic = $bic;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

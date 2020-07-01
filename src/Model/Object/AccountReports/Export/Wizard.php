@@ -5,28 +5,33 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\AccountReports\Export;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\AccountReports\Export\Wizard\Format;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account_reports.export.wizard
  * Name : account_reports.export.wizard
  * Info :
  * Wizard allowing to export an accounting report in several different formats
- * at once, saving them as attachments.
+ *         at once, saving them as attachments.
  */
 final class Wizard extends Base
 {
+    public const ODOO_MODEL_NAME = 'account_reports.export.wizard';
+
     /**
      * Export to
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Format[]
+     * @var OdooRelation[]|null
      */
     private $export_format_ids;
 
     /**
      * Report Model
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -34,6 +39,8 @@ final class Wizard extends Base
 
     /**
      * Parent Report Id
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var int
      */
@@ -42,42 +49,56 @@ final class Wizard extends Base
     /**
      * Documents Name
      * Name to give to the generated documents.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $doc_name;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $report_model Report Model
+     *        Searchable : yes
+     *        Sortable : yes
      * @param int $report_id Parent Report Id
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $report_model, int $report_id)
     {
@@ -86,32 +107,136 @@ final class Wizard extends Base
     }
 
     /**
-     * @param null|Format[] $export_format_ids
+     * @param string|null $doc_name
      */
-    public function setExportFormatIds(?array $export_format_ids): void
+    public function setDocName(?string $doc_name): void
     {
-        $this->export_format_ids = $export_format_ids;
+        $this->doc_name = $doc_name;
     }
 
     /**
-     * @param Format $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @return DateTimeInterface|null
      */
-    public function hasExportFormatIds(Format $item, bool $strict = true): bool
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDocName(): ?string
+    {
+        return $this->doc_name;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getExportFormatIds(): ?array
+    {
+        return $this->export_format_ids;
+    }
+
+    /**
+     * @param int $report_id
+     */
+    public function setReportId(int $report_id): void
+    {
+        $this->report_id = $report_id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getReportId(): int
+    {
+        return $this->report_id;
+    }
+
+    /**
+     * @param string $report_model
+     */
+    public function setReportModel(string $report_model): void
+    {
+        $this->report_model = $report_model;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReportModel(): string
+    {
+        return $this->report_model;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeExportFormatIds(OdooRelation $item): void
     {
         if (null === $this->export_format_ids) {
-            return false;
+            $this->export_format_ids = [];
         }
 
-        return in_array($item, $this->export_format_ids, $strict);
+        if ($this->hasExportFormatIds($item)) {
+            $index = array_search($item, $this->export_format_ids);
+            unset($this->export_format_ids[$index]);
+        }
     }
 
     /**
-     * @param Format $item
+     * @param OdooRelation $item
      */
-    public function addExportFormatIds(Format $item): void
+    public function addExportFormatIds(OdooRelation $item): void
     {
         if ($this->hasExportFormatIds($item)) {
             return;
@@ -125,73 +250,32 @@ final class Wizard extends Base
     }
 
     /**
-     * @param Format $item
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removeExportFormatIds(Format $item): void
+    public function hasExportFormatIds(OdooRelation $item): bool
     {
         if (null === $this->export_format_ids) {
-            $this->export_format_ids = [];
+            return false;
         }
 
-        if ($this->hasExportFormatIds($item)) {
-            $index = array_search($item, $this->export_format_ids);
-            unset($this->export_format_ids[$index]);
-        }
+        return in_array($item, $this->export_format_ids);
     }
 
     /**
-     * @param string $report_model
+     * @param OdooRelation[]|null $export_format_ids
      */
-    public function setReportModel(string $report_model): void
+    public function setExportFormatIds(?array $export_format_ids): void
     {
-        $this->report_model = $report_model;
+        $this->export_format_ids = $export_format_ids;
     }
 
     /**
-     * @param int $report_id
+     * @param DateTimeInterface|null $write_date
      */
-    public function setReportId(int $report_id): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->report_id = $report_id;
-    }
-
-    /**
-     * @param null|string $doc_name
-     */
-    public function setDocName(?string $doc_name): void
-    {
-        $this->doc_name = $doc_name;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

@@ -6,9 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Sms;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Mail\Message;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : sms.sms
@@ -16,198 +14,180 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Sms extends Base
 {
+    public const ODOO_MODEL_NAME = 'sms.sms';
+
     /**
      * Number
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $number;
 
     /**
      * Body
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $body;
 
     /**
      * Customer
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Partner
+     * @var OdooRelation|null
      */
     private $partner_id;
 
     /**
      * Mail Message
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Message
+     * @var OdooRelation|null
      */
     private $mail_message_id;
 
     /**
      * SMS Status
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> outgoing (In Queue)
+     *     -> sent (Sent)
+     *     -> error (Error)
+     *     -> canceled (Canceled)
      *
-     * @var array
+     *
+     * @var string
      */
     private $state;
 
     /**
      * Error Code
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> sms_number_missing (Missing Number)
+     *     -> sms_number_format (Wrong Number Format)
+     *     -> sms_credit (Insufficient Credit)
+     *     -> sms_server (Server Error)
+     *     -> sms_blacklist (Blacklisted)
+     *     -> sms_duplicate (Duplicate)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $error_code;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param array $state SMS Status
+     * @param string $state SMS Status
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> outgoing (In Queue)
+     *            -> sent (Sent)
+     *            -> error (Error)
+     *            -> canceled (Canceled)
+     *
      */
-    public function __construct(array $state)
+    public function __construct(string $state)
     {
         $this->state = $state;
     }
 
     /**
-     * @param null|string $number
+     * @return string|null
      */
-    public function setNumber(?string $number): void
+    public function getErrorCode(): ?string
     {
-        $this->number = $number;
+        return $this->error_code;
     }
 
     /**
-     * @param null|string $body
+     * @return DateTimeInterface|null
      */
-    public function setBody(?string $body): void
+    public function getWriteDate(): ?DateTimeInterface
     {
-        $this->body = $body;
+        return $this->write_date;
     }
 
     /**
-     * @param null|Partner $partner_id
+     * @param OdooRelation|null $write_uid
      */
-    public function setPartnerId(?Partner $partner_id): void
+    public function setWriteUid(?OdooRelation $write_uid): void
     {
-        $this->partner_id = $partner_id;
+        $this->write_uid = $write_uid;
     }
 
     /**
-     * @param null|Message $mail_message_id
+     * @return OdooRelation|null
      */
-    public function setMailMessageId(?Message $mail_message_id): void
+    public function getWriteUid(): ?OdooRelation
     {
-        $this->mail_message_id = $mail_message_id;
+        return $this->write_uid;
     }
 
     /**
-     * @return array
+     * @param DateTimeInterface|null $create_date
      */
-    public function getState(): array
+    public function setCreateDate(?DateTimeInterface $create_date): void
     {
-        return $this->state;
+        $this->create_date = $create_date;
     }
 
     /**
-     * @param null|array $error_code
-     */
-    public function setErrorCode(?array $error_code): void
-    {
-        $this->error_code = $error_code;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasErrorCode($item, bool $strict = true): bool
-    {
-        if (null === $this->error_code) {
-            return false;
-        }
-
-        return in_array($item, $this->error_code, $strict);
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addErrorCode($item): void
-    {
-        if ($this->hasErrorCode($item)) {
-            return;
-        }
-
-        if (null === $this->error_code) {
-            $this->error_code = [];
-        }
-
-        $this->error_code[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeErrorCode($item): void
-    {
-        if (null === $this->error_code) {
-            $this->error_code = [];
-        }
-
-        if ($this->hasErrorCode($item)) {
-            $index = array_search($item, $this->error_code);
-            unset($this->error_code[$index]);
-        }
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -215,18 +195,114 @@ final class Sms extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getWriteUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->write_uid;
+        $this->create_uid = $create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return OdooRelation|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getCreateUid(): ?OdooRelation
     {
-        return $this->write_date;
+        return $this->create_uid;
+    }
+
+    /**
+     * @param string|null $error_code
+     */
+    public function setErrorCode(?string $error_code): void
+    {
+        $this->error_code = $error_code;
+    }
+
+    /**
+     * @param string $state
+     */
+    public function setState(string $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNumber(): ?string
+    {
+        return $this->number;
+    }
+
+    /**
+     * @return string
+     */
+    public function getState(): string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param OdooRelation|null $mail_message_id
+     */
+    public function setMailMessageId(?OdooRelation $mail_message_id): void
+    {
+        $this->mail_message_id = $mail_message_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getMailMessageId(): ?OdooRelation
+    {
+        return $this->mail_message_id;
+    }
+
+    /**
+     * @param OdooRelation|null $partner_id
+     */
+    public function setPartnerId(?OdooRelation $partner_id): void
+    {
+        $this->partner_id = $partner_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPartnerId(): ?OdooRelation
+    {
+        return $this->partner_id;
+    }
+
+    /**
+     * @param string|null $body
+     */
+    public function setBody(?string $body): void
+    {
+        $this->body = $body;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getBody(): ?string
+    {
+        return $this->body;
+    }
+
+    /**
+     * @param string|null $number
+     */
+    public function setNumber(?string $number): void
+    {
+        $this->number = $number;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

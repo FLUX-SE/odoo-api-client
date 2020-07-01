@@ -6,158 +6,165 @@ namespace Flux\OdooApiClient\Model\Object\Mail\Resend;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Partner as PartnerAlias;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.resend.partner
  * Name : mail.resend.partner
  * Info :
  * Model super-class for transient records, meant to be temporarily
- * persistent, and regularly vacuum-cleaned.
+ *         persistent, and regularly vacuum-cleaned.
  *
- * A TransientModel has a simplified access rights management, all users can
- * create new records, and may only access the records they created. The
- * superuser has unrestricted access to all TransientModel records.
+ *         A TransientModel has a simplified access rights management, all users can
+ *         create new records, and may only access the records they created. The
+ *         superuser has unrestricted access to all TransientModel records.
  */
 final class Partner extends Base
 {
+    public const ODOO_MODEL_NAME = 'mail.resend.partner';
+
     /**
      * Partner
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var PartnerAlias
+     * @var OdooRelation
      */
     private $partner_id;
 
     /**
      * Name
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $name;
 
     /**
      * Email
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $email;
 
     /**
      * Send Again
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $resend;
 
     /**
      * Resend wizard
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Message
+     * @var OdooRelation|null
      */
     private $resend_wizard_id;
 
     /**
      * Help message
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $message;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param PartnerAlias $partner_id Partner
+     * @param OdooRelation $partner_id Partner
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(PartnerAlias $partner_id)
+    public function __construct(OdooRelation $partner_id)
     {
         $this->partner_id = $partner_id;
     }
 
     /**
-     * @param PartnerAlias $partner_id
+     * @return string|null
      */
-    public function setPartnerId(PartnerAlias $partner_id): void
+    public function getMessage(): ?string
     {
-        $this->partner_id = $partner_id;
+        return $this->message;
     }
 
     /**
-     * @param null|string $name
+     * @return DateTimeInterface|null
      */
-    public function setName(?string $name): void
+    public function getWriteDate(): ?DateTimeInterface
     {
-        $this->name = $name;
+        return $this->write_date;
     }
 
     /**
-     * @param null|string $email
+     * @param OdooRelation|null $write_uid
      */
-    public function setEmail(?string $email): void
+    public function setWriteUid(?OdooRelation $write_uid): void
     {
-        $this->email = $email;
+        $this->write_uid = $write_uid;
     }
 
     /**
-     * @param null|bool $resend
+     * @return OdooRelation|null
      */
-    public function setResend(?bool $resend): void
+    public function getWriteUid(): ?OdooRelation
     {
-        $this->resend = $resend;
+        return $this->write_uid;
     }
 
     /**
-     * @param null|Message $resend_wizard_id
+     * @param DateTimeInterface|null $create_date
      */
-    public function setResendWizardId(?Message $resend_wizard_id): void
+    public function setCreateDate(?DateTimeInterface $create_date): void
     {
-        $this->resend_wizard_id = $resend_wizard_id;
+        $this->create_date = $create_date;
     }
 
     /**
-     * @param null|string $message
-     */
-    public function setMessage(?string $message): void
-    {
-        $this->message = $message;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -165,18 +172,114 @@ final class Partner extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getWriteUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->write_uid;
+        $this->create_uid = $create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return OdooRelation|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getCreateUid(): ?OdooRelation
     {
-        return $this->write_date;
+        return $this->create_uid;
+    }
+
+    /**
+     * @param string|null $message
+     */
+    public function setMessage(?string $message): void
+    {
+        $this->message = $message;
+    }
+
+    /**
+     * @param OdooRelation|null $resend_wizard_id
+     */
+    public function setResendWizardId(?OdooRelation $resend_wizard_id): void
+    {
+        $this->resend_wizard_id = $resend_wizard_id;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getPartnerId(): OdooRelation
+    {
+        return $this->partner_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getResendWizardId(): ?OdooRelation
+    {
+        return $this->resend_wizard_id;
+    }
+
+    /**
+     * @param bool|null $resend
+     */
+    public function setResend(?bool $resend): void
+    {
+        $this->resend = $resend;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isResend(): ?bool
+    {
+        return $this->resend;
+    }
+
+    /**
+     * @param string|null $email
+     */
+    public function setEmail(?string $email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string|null $name
+     */
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param OdooRelation $partner_id
+     */
+    public function setPartnerId(OdooRelation $partner_id): void
+    {
+        $this->partner_id = $partner_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

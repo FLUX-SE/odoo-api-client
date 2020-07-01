@@ -14,4 +14,5 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Contract extends Base
 {
+    public const ODOO_MODEL_NAME = 'publisher_warranty.contract';
 }

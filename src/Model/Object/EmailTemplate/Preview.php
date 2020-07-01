@@ -6,76 +6,90 @@ namespace Flux\OdooApiClient\Model\Object\EmailTemplate;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Actions\ActWindow;
-use Flux\OdooApiClient\Model\Object\Ir\Actions\Report;
-use Flux\OdooApiClient\Model\Object\Ir\Attachment;
-use Flux\OdooApiClient\Model\Object\Ir\MailServer;
-use Flux\OdooApiClient\Model\Object\Ir\Model;
-use Flux\OdooApiClient\Model\Object\Ir\Model\Fields;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : email_template.preview
  * Name : email_template.preview
  * Info :
  * Model super-class for transient records, meant to be temporarily
- * persistent, and regularly vacuum-cleaned.
+ *         persistent, and regularly vacuum-cleaned.
  *
- * A TransientModel has a simplified access rights management, all users can
- * create new records, and may only access the records they created. The
- * superuser has unrestricted access to all TransientModel records.
+ *         A TransientModel has a simplified access rights management, all users can
+ *         create new records, and may only access the records they created. The
+ *         superuser has unrestricted access to all TransientModel records.
  */
 final class Preview extends Base
 {
+    public const ODOO_MODEL_NAME = 'email_template.preview';
+
     /**
      * Sample Document
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $res_id;
 
     /**
      * Recipients
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Partner[]
+     * @var OdooRelation[]|null
      */
     private $partner_ids;
 
     /**
      * Attachments
      * You may attach files to this template, to be added to all emails created from this template
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|Attachment[]
+     * @var OdooRelation[]|null
      */
     private $attachment_ids;
 
     /**
      * Template Preview Language
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> en_US (English (US))
      *
-     * @var null|array
+     *
+     * @var string|null
      */
     private $preview_lang;
 
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $name;
 
     /**
      * Applies to
      * The type of document this template can be used with
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Model
+     * @var OdooRelation|null
      */
     private $model_id;
 
     /**
      * Related Document Model
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $model;
 
@@ -84,24 +98,30 @@ final class Preview extends Base
      * Optional translation language (ISO code) to select when sending out an email. If not set, the english version
      * will be used. This should usually be a placeholder expression that provides the appropriate language, e.g.
      * ${object.partner_id.lang}.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $lang;
 
     /**
      * Add Signature
      * If checked, the user's signature will be appended to the text version of the message
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $user_signature;
 
     /**
      * Subject
      * Subject (placeholders may be used here)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $subject;
 
@@ -109,8 +129,10 @@ final class Preview extends Base
      * From
      * Sender address (placeholders may be used here). If not set, the default value will be the author's email alias
      * if configured, or email address.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $email_from;
 
@@ -119,55 +141,69 @@ final class Preview extends Base
      * Default recipients of the record:
      * - partner (using id on a partner or the partner_id field) OR
      * - email (using email_from or email field)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $use_default_to;
 
     /**
      * To (Emails)
      * Comma-separated recipient addresses (placeholders may be used here)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $email_to;
 
     /**
      * To (Partners)
      * Comma-separated ids of recipient partners (placeholders may be used here)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $partner_to;
 
     /**
      * Cc
      * Carbon copy recipients (placeholders may be used here)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $email_cc;
 
     /**
      * Reply-To
      * Preferred response address (placeholders may be used here)
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $reply_to;
 
     /**
      * Outgoing Mail Server
      * Optional preferred server for outgoing mails. If not set, the highest priority one will be used.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|MailServer
+     * @var OdooRelation|null
      */
     private $mail_server_id;
 
     /**
      * Body
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $body_html;
 
@@ -175,31 +211,39 @@ final class Preview extends Base
      * Report Filename
      * Name to use for the generated report file (may contain placeholders)
      * The extension can be omitted and will then come from the report type.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $report_name;
 
     /**
      * Optional report to print and attach
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Report
+     * @var OdooRelation|null
      */
     private $report_template;
 
     /**
      * Sidebar action
      * Sidebar action to make this template available on records of the related document model
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|ActWindow
+     * @var OdooRelation|null
      */
     private $ref_ir_act_window;
 
     /**
      * Auto Delete
      * Permanently delete this email after sending it, to save space
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $auto_delete;
 
@@ -208,8 +252,10 @@ final class Preview extends Base
      * Select target field from the related document model.
      * If it is a relationship field you will be able to select a target field at the destination of the
      * relationship.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Fields
+     * @var OdooRelation|null
      */
     private $model_object_field;
 
@@ -217,8 +263,10 @@ final class Preview extends Base
      * Sub-model
      * When a relationship field is selected as first field, this field shows the document model the relationship
      * goes to.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Model
+     * @var OdooRelation|null
      */
     private $sub_object;
 
@@ -226,24 +274,30 @@ final class Preview extends Base
      * Sub-field
      * When a relationship field is selected as first field, this field lets you select the target field within the
      * destination document model (sub-model).
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Fields
+     * @var OdooRelation|null
      */
     private $sub_model_object_field;
 
     /**
      * Default Value
      * Optional value to use if the target field is empty
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $null_value;
 
     /**
      * Placeholder Expression
      * Final placeholder expression, to be copy-pasted in the desired template field.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $copyvalue;
 
@@ -251,89 +305,91 @@ final class Preview extends Base
      * Scheduled Date
      * If set, the queue manager will send the email after the date. If not set, the email will be send as soon as
      * possible. Jinja2 placeholders may be used.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $scheduled_date;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param null|array $res_id
+     * @return string|null
      */
-    public function setResId(?array $res_id): void
+    public function getResId(): ?string
     {
-        $this->res_id = $res_id;
+        return $this->res_id;
     }
 
     /**
-     * @param null|bool $auto_delete
+     * @return OdooRelation|null
      */
-    public function setAutoDelete(?bool $auto_delete): void
+    public function getSubObject(): ?OdooRelation
     {
-        $this->auto_delete = $auto_delete;
+        return $this->sub_object;
     }
 
     /**
-     * @param null|string $partner_to
+     * @return OdooRelation|null
      */
-    public function setPartnerTo(?string $partner_to): void
+    public function getMailServerId(): ?OdooRelation
     {
-        $this->partner_to = $partner_to;
+        return $this->mail_server_id;
     }
 
     /**
-     * @param null|string $email_cc
+     * @param OdooRelation|null $mail_server_id
      */
-    public function setEmailCc(?string $email_cc): void
-    {
-        $this->email_cc = $email_cc;
-    }
-
-    /**
-     * @param null|string $reply_to
-     */
-    public function setReplyTo(?string $reply_to): void
-    {
-        $this->reply_to = $reply_to;
-    }
-
-    /**
-     * @param null|MailServer $mail_server_id
-     */
-    public function setMailServerId(?MailServer $mail_server_id): void
+    public function setMailServerId(?OdooRelation $mail_server_id): void
     {
         $this->mail_server_id = $mail_server_id;
     }
 
     /**
-     * @param null|string $body_html
+     * @return string|null
+     */
+    public function getBodyHtml(): ?string
+    {
+        return $this->body_html;
+    }
+
+    /**
+     * @param string|null $body_html
      */
     public function setBodyHtml(?string $body_html): void
     {
@@ -341,7 +397,15 @@ final class Preview extends Base
     }
 
     /**
-     * @param null|string $report_name
+     * @return string|null
+     */
+    public function getReportName(): ?string
+    {
+        return $this->report_name;
+    }
+
+    /**
+     * @param string|null $report_name
      */
     public function setReportName(?string $report_name): void
     {
@@ -349,87 +413,127 @@ final class Preview extends Base
     }
 
     /**
-     * @param null|Report $report_template
+     * @return OdooRelation|null
      */
-    public function setReportTemplate(?Report $report_template): void
+    public function getReportTemplate(): ?OdooRelation
+    {
+        return $this->report_template;
+    }
+
+    /**
+     * @param OdooRelation|null $report_template
+     */
+    public function setReportTemplate(?OdooRelation $report_template): void
     {
         $this->report_template = $report_template;
     }
 
     /**
-     * @return null|ActWindow
+     * @return OdooRelation|null
      */
-    public function getRefIrActWindow(): ?ActWindow
+    public function getRefIrActWindow(): ?OdooRelation
     {
         return $this->ref_ir_act_window;
     }
 
     /**
-     * @param null|Fields $model_object_field
+     * @param OdooRelation|null $ref_ir_act_window
      */
-    public function setModelObjectField(?Fields $model_object_field): void
+    public function setRefIrActWindow(?OdooRelation $ref_ir_act_window): void
+    {
+        $this->ref_ir_act_window = $ref_ir_act_window;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isAutoDelete(): ?bool
+    {
+        return $this->auto_delete;
+    }
+
+    /**
+     * @param bool|null $auto_delete
+     */
+    public function setAutoDelete(?bool $auto_delete): void
+    {
+        $this->auto_delete = $auto_delete;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getModelObjectField(): ?OdooRelation
+    {
+        return $this->model_object_field;
+    }
+
+    /**
+     * @param OdooRelation|null $model_object_field
+     */
+    public function setModelObjectField(?OdooRelation $model_object_field): void
     {
         $this->model_object_field = $model_object_field;
     }
 
     /**
-     * @param null|bool $use_default_to
+     * @param OdooRelation|null $sub_object
      */
-    public function setUseDefaultTo(?bool $use_default_to): void
+    public function setSubObject(?OdooRelation $sub_object): void
     {
-        $this->use_default_to = $use_default_to;
+        $this->sub_object = $sub_object;
     }
 
     /**
-     * @return null|Model
+     * @return string|null
      */
-    public function getSubObject(): ?Model
+    public function getReplyTo(): ?string
     {
-        return $this->sub_object;
+        return $this->reply_to;
     }
 
     /**
-     * @param null|Fields $sub_model_object_field
+     * @return OdooRelation|null
      */
-    public function setSubModelObjectField(?Fields $sub_model_object_field): void
-    {
-        $this->sub_model_object_field = $sub_model_object_field;
-    }
-
-    /**
-     * @param null|string $null_value
-     */
-    public function setNullValue(?string $null_value): void
-    {
-        $this->null_value = $null_value;
-    }
-
-    /**
-     * @param null|string $copyvalue
-     */
-    public function setCopyvalue(?string $copyvalue): void
-    {
-        $this->copyvalue = $copyvalue;
-    }
-
-    /**
-     * @param null|string $scheduled_date
-     */
-    public function setScheduledDate(?string $scheduled_date): void
-    {
-        $this->scheduled_date = $scheduled_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
+    public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -437,48 +541,166 @@ final class Preview extends Base
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation|null $create_uid
      */
-    public function getWriteUid(): ?Users
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->write_uid;
+        $this->create_uid = $create_uid;
     }
 
     /**
-     * @param null|string $email_to
+     * @param string|null $scheduled_date
      */
-    public function setEmailTo(?string $email_to): void
+    public function setScheduledDate(?string $scheduled_date): void
     {
-        $this->email_to = $email_to;
+        $this->scheduled_date = $scheduled_date;
     }
 
     /**
-     * @param null|string $email_from
+     * @return OdooRelation|null
      */
-    public function setEmailFrom(?string $email_from): void
+    public function getSubModelObjectField(): ?OdooRelation
     {
-        $this->email_from = $email_from;
+        return $this->sub_model_object_field;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
+     * @return string|null
+     */
+    public function getScheduledDate(): ?string
+    {
+        return $this->scheduled_date;
+    }
+
+    /**
+     * @param string|null $copyvalue
+     */
+    public function setCopyvalue(?string $copyvalue): void
+    {
+        $this->copyvalue = $copyvalue;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCopyvalue(): ?string
+    {
+        return $this->copyvalue;
+    }
+
+    /**
+     * @param string|null $null_value
+     */
+    public function setNullValue(?string $null_value): void
+    {
+        $this->null_value = $null_value;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNullValue(): ?string
+    {
+        return $this->null_value;
+    }
+
+    /**
+     * @param OdooRelation|null $sub_model_object_field
+     */
+    public function setSubModelObjectField(?OdooRelation $sub_model_object_field): void
+    {
+        $this->sub_model_object_field = $sub_model_object_field;
+    }
+
+    /**
+     * @param string|null $reply_to
+     */
+    public function setReplyTo(?string $reply_to): void
+    {
+        $this->reply_to = $reply_to;
+    }
+
+    /**
+     * @param string|null $email_cc
+     */
+    public function setEmailCc(?string $email_cc): void
+    {
+        $this->email_cc = $email_cc;
+    }
+
+    /**
+     * @param string|null $res_id
+     */
+    public function setResId(?string $res_id): void
+    {
+        $this->res_id = $res_id;
+    }
+
+    /**
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasResId($item, bool $strict = true): bool
+    public function hasAttachmentIds(OdooRelation $item): bool
     {
-        if (null === $this->res_id) {
+        if (null === $this->attachment_ids) {
             return false;
         }
 
-        return in_array($item, $this->res_id, $strict);
+        return in_array($item, $this->attachment_ids);
     }
 
     /**
-     * @param Attachment $item
+     * @param string|null $name
      */
-    public function addAttachmentIds(Attachment $item): void
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string|null $preview_lang
+     */
+    public function setPreviewLang(?string $preview_lang): void
+    {
+        $this->preview_lang = $preview_lang;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPreviewLang(): ?string
+    {
+        return $this->preview_lang;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeAttachmentIds(OdooRelation $item): void
+    {
+        if (null === $this->attachment_ids) {
+            $this->attachment_ids = [];
+        }
+
+        if ($this->hasAttachmentIds($item)) {
+            $index = array_search($item, $this->attachment_ids);
+            unset($this->attachment_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addAttachmentIds(OdooRelation $item): void
     {
         if ($this->hasAttachmentIds($item)) {
             return;
@@ -492,63 +714,48 @@ final class Preview extends Base
     }
 
     /**
-     * @param mixed $item
+     * @param OdooRelation[]|null $attachment_ids
      */
-    public function addResId($item): void
+    public function setAttachmentIds(?array $attachment_ids): void
     {
-        if ($this->hasResId($item)) {
-            return;
-        }
-
-        if (null === $this->res_id) {
-            $this->res_id = [];
-        }
-
-        $this->res_id[] = $item;
+        $this->attachment_ids = $attachment_ids;
     }
 
     /**
-     * @param mixed $item
+     * @param OdooRelation|null $model_id
      */
-    public function removeResId($item): void
+    public function setModelId(?OdooRelation $model_id): void
     {
-        if (null === $this->res_id) {
-            $this->res_id = [];
-        }
-
-        if ($this->hasResId($item)) {
-            $index = array_search($item, $this->res_id);
-            unset($this->res_id[$index]);
-        }
+        $this->model_id = $model_id;
     }
 
     /**
-     * @param null|Partner[] $partner_ids
+     * @return OdooRelation[]|null
      */
-    public function setPartnerIds(?array $partner_ids): void
+    public function getAttachmentIds(): ?array
     {
-        $this->partner_ids = $partner_ids;
+        return $this->attachment_ids;
     }
 
     /**
-     * @param Partner $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param OdooRelation $item
      */
-    public function hasPartnerIds(Partner $item, bool $strict = true): bool
+    public function removePartnerIds(OdooRelation $item): void
     {
         if (null === $this->partner_ids) {
-            return false;
+            $this->partner_ids = [];
         }
 
-        return in_array($item, $this->partner_ids, $strict);
+        if ($this->hasPartnerIds($item)) {
+            $index = array_search($item, $this->partner_ids);
+            unset($this->partner_ids[$index]);
+        }
     }
 
     /**
-     * @param Partner $item
+     * @param OdooRelation $item
      */
-    public function addPartnerIds(Partner $item): void
+    public function addPartnerIds(OdooRelation $item): void
     {
         if ($this->hasPartnerIds($item)) {
             return;
@@ -562,138 +769,45 @@ final class Preview extends Base
     }
 
     /**
-     * @param Partner $item
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removePartnerIds(Partner $item): void
+    public function hasPartnerIds(OdooRelation $item): bool
     {
         if (null === $this->partner_ids) {
-            $this->partner_ids = [];
-        }
-
-        if ($this->hasPartnerIds($item)) {
-            $index = array_search($item, $this->partner_ids);
-            unset($this->partner_ids[$index]);
-        }
-    }
-
-    /**
-     * @param null|Attachment[] $attachment_ids
-     */
-    public function setAttachmentIds(?array $attachment_ids): void
-    {
-        $this->attachment_ids = $attachment_ids;
-    }
-
-    /**
-     * @param Attachment $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasAttachmentIds(Attachment $item, bool $strict = true): bool
-    {
-        if (null === $this->attachment_ids) {
             return false;
         }
 
-        return in_array($item, $this->attachment_ids, $strict);
+        return in_array($item, $this->partner_ids);
     }
 
     /**
-     * @param Attachment $item
+     * @param OdooRelation[]|null $partner_ids
      */
-    public function removeAttachmentIds(Attachment $item): void
+    public function setPartnerIds(?array $partner_ids): void
     {
-        if (null === $this->attachment_ids) {
-            $this->attachment_ids = [];
-        }
-
-        if ($this->hasAttachmentIds($item)) {
-            $index = array_search($item, $this->attachment_ids);
-            unset($this->attachment_ids[$index]);
-        }
+        $this->partner_ids = $partner_ids;
     }
 
     /**
-     * @param null|string $subject
+     * @return OdooRelation[]|null
      */
-    public function setSubject(?string $subject): void
+    public function getPartnerIds(): ?array
     {
-        $this->subject = $subject;
+        return $this->partner_ids;
     }
 
     /**
-     * @param null|array $preview_lang
+     * @return OdooRelation|null
      */
-    public function setPreviewLang(?array $preview_lang): void
+    public function getModelId(): ?OdooRelation
     {
-        $this->preview_lang = $preview_lang;
+        return $this->model_id;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasPreviewLang($item, bool $strict = true): bool
-    {
-        if (null === $this->preview_lang) {
-            return false;
-        }
-
-        return in_array($item, $this->preview_lang, $strict);
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addPreviewLang($item): void
-    {
-        if ($this->hasPreviewLang($item)) {
-            return;
-        }
-
-        if (null === $this->preview_lang) {
-            $this->preview_lang = [];
-        }
-
-        $this->preview_lang[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removePreviewLang($item): void
-    {
-        if (null === $this->preview_lang) {
-            $this->preview_lang = [];
-        }
-
-        if ($this->hasPreviewLang($item)) {
-            $index = array_search($item, $this->preview_lang);
-            unset($this->preview_lang[$index]);
-        }
-    }
-
-    /**
-     * @param null|string $name
-     */
-    public function setName(?string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @param null|Model $model_id
-     */
-    public function setModelId(?Model $model_id): void
-    {
-        $this->model_id = $model_id;
-    }
-
-    /**
-     * @return null|string
+     * @return string|null
      */
     public function getModel(): ?string
     {
@@ -701,15 +815,103 @@ final class Preview extends Base
     }
 
     /**
-     * @param null|string $lang
+     * @return string|null
      */
-    public function setLang(?string $lang): void
+    public function getEmailCc(): ?string
     {
-        $this->lang = $lang;
+        return $this->email_cc;
     }
 
     /**
-     * @param null|bool $user_signature
+     * @param string|null $email_from
+     */
+    public function setEmailFrom(?string $email_from): void
+    {
+        $this->email_from = $email_from;
+    }
+
+    /**
+     * @param string|null $partner_to
+     */
+    public function setPartnerTo(?string $partner_to): void
+    {
+        $this->partner_to = $partner_to;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPartnerTo(): ?string
+    {
+        return $this->partner_to;
+    }
+
+    /**
+     * @param string|null $email_to
+     */
+    public function setEmailTo(?string $email_to): void
+    {
+        $this->email_to = $email_to;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getEmailTo(): ?string
+    {
+        return $this->email_to;
+    }
+
+    /**
+     * @param bool|null $use_default_to
+     */
+    public function setUseDefaultTo(?bool $use_default_to): void
+    {
+        $this->use_default_to = $use_default_to;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isUseDefaultTo(): ?bool
+    {
+        return $this->use_default_to;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getEmailFrom(): ?string
+    {
+        return $this->email_from;
+    }
+
+    /**
+     * @param string|null $model
+     */
+    public function setModel(?string $model): void
+    {
+        $this->model = $model;
+    }
+
+    /**
+     * @param string|null $subject
+     */
+    public function setSubject(?string $subject): void
+    {
+        $this->subject = $subject;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSubject(): ?string
+    {
+        return $this->subject;
+    }
+
+    /**
+     * @param bool|null $user_signature
      */
     public function setUserSignature(?bool $user_signature): void
     {
@@ -717,10 +919,34 @@ final class Preview extends Base
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return bool|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function isUserSignature(): ?bool
     {
-        return $this->write_date;
+        return $this->user_signature;
+    }
+
+    /**
+     * @param string|null $lang
+     */
+    public function setLang(?string $lang): void
+    {
+        $this->lang = $lang;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLang(): ?string
+    {
+        return $this->lang;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

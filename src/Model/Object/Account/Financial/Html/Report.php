@@ -5,12 +5,8 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Account\Financial\Html;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Financial\Html\Report\Line;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Filters;
-use Flux\OdooApiClient\Model\Object\Ir\Ui\Menu;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.financial.html.report
@@ -18,210 +14,271 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Report extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.financial.html.report';
+
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $name;
 
     /**
      * Show Credit and Debit Columns
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $debit_credit;
 
     /**
      * Lines
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Line[]
+     * @var OdooRelation[]|null
      */
     private $line_ids;
 
     /**
      * Based on date ranges
      * specify if the report use date_range or single date
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $date_range;
 
     /**
      * Allow comparison
      * display the comparison filter
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $comparison;
 
     /**
      * Allow analytic filters
      * display the analytic filters
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $analytic;
 
     /**
      * Enable the hierarchy option
      * Display the hierarchy choice in the report options
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $hierarchy_option;
 
     /**
      * Allow filtering by journals
      * display the journal filter in the report
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $show_journal_filter;
 
     /**
      * Show unfold all filter
      * display the unfold all options in report
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $unfold_all_filter;
 
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Company
+     * @var OdooRelation|null
      */
     private $company_id;
 
     /**
      * Menu Item
      * The menu item generated for this report, or None if there isn't any.
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Menu
+     * @var OdooRelation|null
      */
     private $generated_menu_id;
 
     /**
      * Parent Menu
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Menu
+     * @var OdooRelation|null
      */
     private $parent_id;
 
     /**
      * Tax Report
      * Set to True to automatically filter out journal items that have the boolean field 'tax_exigible' set to False
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $tax_report;
 
     /**
      * Applicable Filters
      * Filters that can be used to filter and group lines in this report. This uses saved filters on journal items.
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Filters[]
+     * @var OdooRelation[]|null
      */
     private $applicable_filters_ids;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
-     * @param null|string $name
+     * @return string|null
      */
-    public function setName(?string $name): void
+    public function getName(): ?string
     {
-        $this->name = $name;
+        return $this->name;
     }
 
     /**
-     * @param null|Menu $generated_menu_id
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setGeneratedMenuId(?Menu $generated_menu_id): void
+    public function hasApplicableFiltersIds(OdooRelation $item): bool
+    {
+        if (null === $this->applicable_filters_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->applicable_filters_ids);
+    }
+
+    /**
+     * @param OdooRelation|null $generated_menu_id
+     */
+    public function setGeneratedMenuId(?OdooRelation $generated_menu_id): void
     {
         $this->generated_menu_id = $generated_menu_id;
     }
 
     /**
-     * @return null|Users
+     * @return OdooRelation|null
      */
-    public function getWriteUid(): ?Users
+    public function getParentId(): ?OdooRelation
     {
-        return $this->write_uid;
+        return $this->parent_id;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation|null $parent_id
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function setParentId(?OdooRelation $parent_id): void
     {
-        return $this->create_date;
+        $this->parent_id = $parent_id;
     }
 
     /**
-     * @return null|Users
+     * @return bool|null
      */
-    public function getCreateUid(): ?Users
+    public function isTaxReport(): ?bool
     {
-        return $this->create_uid;
+        return $this->tax_report;
     }
 
     /**
-     * @param Filters $item
+     * @param bool|null $tax_report
      */
-    public function removeApplicableFiltersIds(Filters $item): void
+    public function setTaxReport(?bool $tax_report): void
     {
-        if (null === $this->applicable_filters_ids) {
-            $this->applicable_filters_ids = [];
-        }
-
-        if ($this->hasApplicableFiltersIds($item)) {
-            $index = array_search($item, $this->applicable_filters_ids);
-            unset($this->applicable_filters_ids[$index]);
-        }
+        $this->tax_report = $tax_report;
     }
 
     /**
-     * @param Filters $item
+     * @return OdooRelation[]|null
      */
-    public function addApplicableFiltersIds(Filters $item): void
+    public function getApplicableFiltersIds(): ?array
+    {
+        return $this->applicable_filters_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $applicable_filters_ids
+     */
+    public function setApplicableFiltersIds(?array $applicable_filters_ids): void
+    {
+        $this->applicable_filters_ids = $applicable_filters_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addApplicableFiltersIds(OdooRelation $item): void
     {
         if ($this->hasApplicableFiltersIds($item)) {
             return;
@@ -235,102 +292,110 @@ final class Report extends Base
     }
 
     /**
-     * @param Filters $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param OdooRelation|null $company_id
      */
-    public function hasApplicableFiltersIds(Filters $item, bool $strict = true): bool
-    {
-        if (null === $this->applicable_filters_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->applicable_filters_ids, $strict);
-    }
-
-    /**
-     * @param null|Filters[] $applicable_filters_ids
-     */
-    public function setApplicableFiltersIds(?array $applicable_filters_ids): void
-    {
-        $this->applicable_filters_ids = $applicable_filters_ids;
-    }
-
-    /**
-     * @param null|bool $tax_report
-     */
-    public function setTaxReport(?bool $tax_report): void
-    {
-        $this->tax_report = $tax_report;
-    }
-
-    /**
-     * @param null|Menu $parent_id
-     */
-    public function setParentId(?Menu $parent_id): void
-    {
-        $this->parent_id = $parent_id;
-    }
-
-    /**
-     * @param null|Company $company_id
-     */
-    public function setCompanyId(?Company $company_id): void
+    public function setCompanyId(?OdooRelation $company_id): void
     {
         $this->company_id = $company_id;
     }
 
     /**
-     * @param null|bool $debit_credit
+     * @param OdooRelation $item
      */
-    public function setDebitCredit(?bool $debit_credit): void
+    public function removeApplicableFiltersIds(OdooRelation $item): void
     {
-        $this->debit_credit = $debit_credit;
+        if (null === $this->applicable_filters_ids) {
+            $this->applicable_filters_ids = [];
+        }
+
+        if ($this->hasApplicableFiltersIds($item)) {
+            $index = array_search($item, $this->applicable_filters_ids);
+            unset($this->applicable_filters_ids[$index]);
+        }
     }
 
     /**
-     * @param null|bool $unfold_all_filter
+     * @return OdooRelation|null
      */
-    public function setUnfoldAllFilter(?bool $unfold_all_filter): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->unfold_all_filter = $unfold_all_filter;
+        return $this->create_uid;
     }
 
     /**
-     * @param null|bool $show_journal_filter
+     * @param OdooRelation|null $create_uid
      */
-    public function setShowJournalFilter(?bool $show_journal_filter): void
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        $this->show_journal_filter = $show_journal_filter;
+        $this->create_uid = $create_uid;
     }
 
     /**
-     * @param null|bool $hierarchy_option
+     * @return DateTimeInterface|null
      */
-    public function setHierarchyOption(?bool $hierarchy_option): void
+    public function getCreateDate(): ?DateTimeInterface
     {
-        $this->hierarchy_option = $hierarchy_option;
+        return $this->create_date;
     }
 
     /**
-     * @param null|bool $analytic
+     * @param DateTimeInterface|null $create_date
      */
-    public function setAnalytic(?bool $analytic): void
+    public function setCreateDate(?DateTimeInterface $create_date): void
     {
-        $this->analytic = $analytic;
+        $this->create_date = $create_date;
     }
 
     /**
-     * @param null|bool $comparison
+     * @return OdooRelation|null
      */
-    public function setComparison(?bool $comparison): void
+    public function getWriteUid(): ?OdooRelation
     {
-        $this->comparison = $comparison;
+        return $this->write_uid;
     }
 
     /**
-     * @param null|bool $date_range
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getGeneratedMenuId(): ?OdooRelation
+    {
+        return $this->generated_menu_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param string|null $name
+     */
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param bool|null $date_range
      */
     public function setDateRange(?bool $date_range): void
     {
@@ -338,24 +403,55 @@ final class Report extends Base
     }
 
     /**
-     * @param Line $item
+     * @return bool|null
      */
-    public function removeLineIds(Line $item): void
+    public function isDebitCredit(): ?bool
     {
-        if (null === $this->line_ids) {
-            $this->line_ids = [];
-        }
-
-        if ($this->hasLineIds($item)) {
-            $index = array_search($item, $this->line_ids);
-            unset($this->line_ids[$index]);
-        }
+        return $this->debit_credit;
     }
 
     /**
-     * @param Line $item
+     * @param bool|null $debit_credit
      */
-    public function addLineIds(Line $item): void
+    public function setDebitCredit(?bool $debit_credit): void
+    {
+        $this->debit_credit = $debit_credit;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getLineIds(): ?array
+    {
+        return $this->line_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $line_ids
+     */
+    public function setLineIds(?array $line_ids): void
+    {
+        $this->line_ids = $line_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasLineIds(OdooRelation $item): bool
+    {
+        if (null === $this->line_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->line_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addLineIds(OdooRelation $item): void
     {
         if ($this->hasLineIds($item)) {
             return;
@@ -369,33 +465,113 @@ final class Report extends Base
     }
 
     /**
-     * @param Line $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param OdooRelation $item
      */
-    public function hasLineIds(Line $item, bool $strict = true): bool
+    public function removeLineIds(OdooRelation $item): void
     {
         if (null === $this->line_ids) {
-            return false;
+            $this->line_ids = [];
         }
 
-        return in_array($item, $this->line_ids, $strict);
+        if ($this->hasLineIds($item)) {
+            $index = array_search($item, $this->line_ids);
+            unset($this->line_ids[$index]);
+        }
     }
 
     /**
-     * @param null|Line[] $line_ids
+     * @return bool|null
      */
-    public function setLineIds(?array $line_ids): void
+    public function isDateRange(): ?bool
     {
-        $this->line_ids = $line_ids;
+        return $this->date_range;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @return bool|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function isComparison(): ?bool
     {
-        return $this->write_date;
+        return $this->comparison;
+    }
+
+    /**
+     * @param bool|null $unfold_all_filter
+     */
+    public function setUnfoldAllFilter(?bool $unfold_all_filter): void
+    {
+        $this->unfold_all_filter = $unfold_all_filter;
+    }
+
+    /**
+     * @param bool|null $comparison
+     */
+    public function setComparison(?bool $comparison): void
+    {
+        $this->comparison = $comparison;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isAnalytic(): ?bool
+    {
+        return $this->analytic;
+    }
+
+    /**
+     * @param bool|null $analytic
+     */
+    public function setAnalytic(?bool $analytic): void
+    {
+        $this->analytic = $analytic;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isHierarchyOption(): ?bool
+    {
+        return $this->hierarchy_option;
+    }
+
+    /**
+     * @param bool|null $hierarchy_option
+     */
+    public function setHierarchyOption(?bool $hierarchy_option): void
+    {
+        $this->hierarchy_option = $hierarchy_option;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isShowJournalFilter(): ?bool
+    {
+        return $this->show_journal_filter;
+    }
+
+    /**
+     * @param bool|null $show_journal_filter
+     */
+    public function setShowJournalFilter(?bool $show_journal_filter): void
+    {
+        $this->show_journal_filter = $show_journal_filter;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isUnfoldAllFilter(): ?bool
+    {
+        return $this->unfold_all_filter;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }

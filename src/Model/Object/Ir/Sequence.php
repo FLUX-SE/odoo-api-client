@@ -6,9 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Ir\Sequence\DateRange;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.sequence
@@ -16,14 +14,18 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Sequence model.
  *
- * The sequence model allows to define and use so-called sequence objects.
- * Such objects are used to generate unique identifiers in a transaction-safe
- * way.
+ *         The sequence model allows to define and use so-called sequence objects.
+ *         Such objects are used to generate unique identifiers in a transaction-safe
+ *         way.
  */
 final class Sequence extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.sequence';
+
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -31,8 +33,10 @@ final class Sequence extends Base
 
     /**
      * Sequence Code
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $code;
 
@@ -42,37 +46,51 @@ final class Sequence extends Base
      * sequence number has been assigned already. While this sequence implementation will not skip any sequence
      * number upon assignation, there can still be gaps in the sequence if records are deleted. The 'no gap'
      * implementation is slower than the standard one.
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> standard (Standard)
+     *     -> no_gap (No gap)
      *
-     * @var array
+     *
+     * @var string
      */
     private $implementation;
 
     /**
      * Active
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $active;
 
     /**
      * Prefix
      * Prefix value of the record for the sequence
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $prefix;
 
     /**
      * Suffix
      * Suffix value of the record for the sequence
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $suffix;
 
     /**
      * Next Number
      * Next number of this sequence
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var int
      */
@@ -82,14 +100,18 @@ final class Sequence extends Base
      * Actual Next Number
      * Next number that will be used. This number can be incremented frequently so the displayed value might already
      * be obsolete
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $number_next_actual;
 
     /**
      * Step
      * The next number of the sequence will be incremented by this number
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var int
      */
@@ -98,6 +120,8 @@ final class Sequence extends Base
     /**
      * Sequence Size
      * Odoo will automatically adds some '0' on the left of the 'Next Number' to get the required padding size.
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var int
      */
@@ -105,70 +129,98 @@ final class Sequence extends Base
 
     /**
      * Company
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Company
+     * @var OdooRelation|null
      */
     private $company_id;
 
     /**
      * Use subsequences per date_range
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $use_date_range;
 
     /**
      * Subsequences
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|DateRange[]
+     * @var OdooRelation[]|null
      */
     private $date_range_ids;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Name
-     * @param array $implementation Implementation
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $implementation Implementation
      *        While assigning a sequence number to a record, the 'no gap' sequence implementation ensures that each previous
      *        sequence number has been assigned already. While this sequence implementation will not skip any sequence
      *        number upon assignation, there can still be gaps in the sequence if records are deleted. The 'no gap'
      *        implementation is slower than the standard one.
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> standard (Standard)
+     *            -> no_gap (No gap)
+     *
      * @param int $number_next Next Number
      *        Next number of this sequence
+     *        Searchable : yes
+     *        Sortable : yes
      * @param int $number_increment Step
      *        The next number of the sequence will be incremented by this number
+     *        Searchable : yes
+     *        Sortable : yes
      * @param int $padding Sequence Size
      *        Odoo will automatically adds some '0' on the left of the 'Next Number' to get the required padding size.
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         string $name,
-        array $implementation,
+        string $implementation,
         int $number_next,
         int $number_increment,
         int $padding
@@ -181,56 +233,9 @@ final class Sequence extends Base
     }
 
     /**
-     * @param int $padding
+     * @param OdooRelation $item
      */
-    public function setPadding(int $padding): void
-    {
-        $this->padding = $padding;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param DateRange $item
-     */
-    public function removeDateRangeIds(DateRange $item): void
-    {
-        if (null === $this->date_range_ids) {
-            $this->date_range_ids = [];
-        }
-
-        if ($this->hasDateRangeIds($item)) {
-            $index = array_search($item, $this->date_range_ids);
-            unset($this->date_range_ids[$index]);
-        }
-    }
-
-    /**
-     * @param DateRange $item
-     */
-    public function addDateRangeIds(DateRange $item): void
+    public function addDateRangeIds(OdooRelation $item): void
     {
         if ($this->hasDateRangeIds($item)) {
             return;
@@ -244,30 +249,23 @@ final class Sequence extends Base
     }
 
     /**
-     * @param DateRange $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param OdooRelation|null $company_id
      */
-    public function hasDateRangeIds(DateRange $item, bool $strict = true): bool
+    public function setCompanyId(?OdooRelation $company_id): void
     {
-        if (null === $this->date_range_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->date_range_ids, $strict);
+        $this->company_id = $company_id;
     }
 
     /**
-     * @param null|DateRange[] $date_range_ids
+     * @return bool|null
      */
-    public function setDateRangeIds(?array $date_range_ids): void
+    public function isUseDateRange(): ?bool
     {
-        $this->date_range_ids = $date_range_ids;
+        return $this->use_date_range;
     }
 
     /**
-     * @param null|bool $use_date_range
+     * @param bool|null $use_date_range
      */
     public function setUseDateRange(?bool $use_date_range): void
     {
@@ -275,19 +273,144 @@ final class Sequence extends Base
     }
 
     /**
-     * @param null|Company $company_id
+     * @return OdooRelation[]|null
      */
-    public function setCompanyId(?Company $company_id): void
+    public function getDateRangeIds(): ?array
     {
-        $this->company_id = $company_id;
+        return $this->date_range_ids;
     }
 
     /**
-     * @param int $number_increment
+     * @param OdooRelation[]|null $date_range_ids
      */
-    public function setNumberIncrement(int $number_increment): void
+    public function setDateRangeIds(?array $date_range_ids): void
     {
-        $this->number_increment = $number_increment;
+        $this->date_range_ids = $date_range_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasDateRangeIds(OdooRelation $item): bool
+    {
+        if (null === $this->date_range_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->date_range_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeDateRangeIds(OdooRelation $item): void
+    {
+        if (null === $this->date_range_ids) {
+            $this->date_range_ids = [];
+        }
+
+        if ($this->hasDateRangeIds($item)) {
+            $index = array_search($item, $this->date_range_ids);
+            unset($this->date_range_ids[$index]);
+        }
+    }
+
+    /**
+     * @param int $padding
+     */
+    public function setPadding(int $padding): void
+    {
+        $this->padding = $padding;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPadding(): int
+    {
+        return $this->padding;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPrefix(): ?string
+    {
+        return $this->prefix;
     }
 
     /**
@@ -299,11 +422,91 @@ final class Sequence extends Base
     }
 
     /**
-     * @param null|int $number_next_actual
+     * @return string|null
      */
-    public function setNumberNextActual(?int $number_next_actual): void
+    public function getCode(): ?string
     {
-        $this->number_next_actual = $number_next_actual;
+        return $this->code;
+    }
+
+    /**
+     * @param string|null $code
+     */
+    public function setCode(?string $code): void
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImplementation(): string
+    {
+        return $this->implementation;
+    }
+
+    /**
+     * @param string $implementation
+     */
+    public function setImplementation(string $implementation): void
+    {
+        $this->implementation = $implementation;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param bool|null $active
+     */
+    public function setActive(?bool $active): void
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @param string|null $prefix
+     */
+    public function setPrefix(?string $prefix): void
+    {
+        $this->prefix = $prefix;
+    }
+
+    /**
+     * @param int $number_increment
+     */
+    public function setNumberIncrement(int $number_increment): void
+    {
+        $this->number_increment = $number_increment;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSuffix(): ?string
+    {
+        return $this->suffix;
+    }
+
+    /**
+     * @param string|null $suffix
+     */
+    public function setSuffix(?string $suffix): void
+    {
+        $this->suffix = $suffix;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumberNext(): int
+    {
+        return $this->number_next;
     }
 
     /**
@@ -315,84 +518,34 @@ final class Sequence extends Base
     }
 
     /**
-     * @param null|string $suffix
+     * @return int|null
      */
-    public function setSuffix(?string $suffix): void
+    public function getNumberNextActual(): ?int
     {
-        $this->suffix = $suffix;
+        return $this->number_next_actual;
     }
 
     /**
-     * @param null|string $prefix
+     * @param int|null $number_next_actual
      */
-    public function setPrefix(?string $prefix): void
+    public function setNumberNextActual(?int $number_next_actual): void
     {
-        $this->prefix = $prefix;
+        $this->number_next_actual = $number_next_actual;
     }
 
     /**
-     * @param null|bool $active
+     * @return int
      */
-    public function setActive(?bool $active): void
+    public function getNumberIncrement(): int
     {
-        $this->active = $active;
+        return $this->number_increment;
     }
 
     /**
-     * @param mixed $item
+     * @param DateTimeInterface|null $write_date
      */
-    public function removeImplementation($item): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        if ($this->hasImplementation($item)) {
-            $index = array_search($item, $this->implementation);
-            unset($this->implementation[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addImplementation($item): void
-    {
-        if ($this->hasImplementation($item)) {
-            return;
-        }
-
-        $this->implementation[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
-     */
-    public function hasImplementation($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->implementation, $strict);
-    }
-
-    /**
-     * @param array $implementation
-     */
-    public function setImplementation(array $implementation): void
-    {
-        $this->implementation = $implementation;
-    }
-
-    /**
-     * @param null|string $code
-     */
-    public function setCode(?string $code): void
-    {
-        $this->code = $code;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

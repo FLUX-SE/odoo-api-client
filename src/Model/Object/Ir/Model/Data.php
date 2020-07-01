@@ -6,27 +6,31 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Model;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.model.data
  * Name : ir.model.data
  * Info :
  * Holds external identifier keys for records in the database.
- * This has two main uses:
+ *               This has two main uses:
  *
- * * allows easy data integration with third-party systems,
- * making import/export/sync of data possible, as records
- * can be uniquely identified across multiple systems
- * * allows tracking the origin of data installed by Odoo
- * modules themselves, thus making it possible to later
- * update them seamlessly.
+ *                       * allows easy data integration with third-party systems,
+ *                           making import/export/sync of data possible, as records
+ *                           can be uniquely identified across multiple systems
+ *                       * allows tracking the origin of data installed by Odoo
+ *                           modules themselves, thus making it possible to later
+ *                           update them seamlessly.
  */
 final class Data extends Base
 {
+    public const ODOO_MODEL_NAME = 'ir.model.data';
+
     /**
      * External Identifier
      * External Key/Identifier that can be used for data integration with third-party systems
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -34,13 +38,17 @@ final class Data extends Base
 
     /**
      * Complete ID
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $complete_name;
 
     /**
      * Model Name
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -48,6 +56,8 @@ final class Data extends Base
 
     /**
      * Module
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -56,72 +66,96 @@ final class Data extends Base
     /**
      * Record ID
      * ID of the target record in the database
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $res_id;
 
     /**
      * Non Updatable
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|bool
+     * @var bool|null
      */
     private $noupdate;
 
     /**
      * Update Date
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $date_update;
 
     /**
      * Init Date
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $date_init;
 
     /**
      * Reference
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $reference;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name External Identifier
      *        External Key/Identifier that can be used for data integration with third-party systems
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $model Model Name
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $module Module
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $name, string $model, string $module)
     {
@@ -131,27 +165,147 @@ final class Data extends Base
     }
 
     /**
-     * @param string $name
+     * @param DateTimeInterface|null $date_update
      */
-    public function setName(string $name): void
+    public function setDateUpdate(?DateTimeInterface $date_update): void
     {
-        $this->name = $name;
+        $this->date_update = $date_update;
     }
 
     /**
-     * @return null|string
+     * @return DateTimeInterface|null
      */
-    public function getCompleteName(): ?string
+    public function getWriteDate(): ?DateTimeInterface
     {
-        return $this->complete_name;
+        return $this->write_date;
     }
 
     /**
-     * @param string $model
+     * @param OdooRelation|null $write_uid
      */
-    public function setModel(string $model): void
+    public function setWriteUid(?OdooRelation $write_uid): void
     {
-        $this->model = $model;
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param string|null $reference
+     */
+    public function setReference(?string $reference): void
+    {
+        $this->reference = $reference;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+
+    /**
+     * @param DateTimeInterface|null $date_init
+     */
+    public function setDateInit(?DateTimeInterface $date_init): void
+    {
+        $this->date_init = $date_init;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getDateInit(): ?DateTimeInterface
+    {
+        return $this->date_init;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getDateUpdate(): ?DateTimeInterface
+    {
+        return $this->date_update;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param bool|null $noupdate
+     */
+    public function setNoupdate(?bool $noupdate): void
+    {
+        $this->noupdate = $noupdate;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isNoupdate(): ?bool
+    {
+        return $this->noupdate;
+    }
+
+    /**
+     * @param int|null $res_id
+     */
+    public function setResId(?int $res_id): void
+    {
+        $this->res_id = $res_id;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getResId(): ?int
+    {
+        return $this->res_id;
     }
 
     /**
@@ -163,74 +317,58 @@ final class Data extends Base
     }
 
     /**
-     * @param null|int $res_id
+     * @return string
      */
-    public function setResId(?int $res_id): void
+    public function getModule(): string
     {
-        $this->res_id = $res_id;
+        return $this->module;
     }
 
     /**
-     * @param null|bool $noupdate
+     * @param string $model
      */
-    public function setNoupdate(?bool $noupdate): void
+    public function setModel(string $model): void
     {
-        $this->noupdate = $noupdate;
+        $this->model = $model;
     }
 
     /**
-     * @param null|DateTimeInterface $date_update
+     * @return string
      */
-    public function setDateUpdate(?DateTimeInterface $date_update): void
+    public function getModel(): string
     {
-        $this->date_update = $date_update;
+        return $this->model;
     }
 
     /**
-     * @param null|DateTimeInterface $date_init
+     * @param string|null $complete_name
      */
-    public function setDateInit(?DateTimeInterface $date_init): void
+    public function setCompleteName(?string $complete_name): void
     {
-        $this->date_init = $date_init;
+        $this->complete_name = $complete_name;
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
-    public function getReference(): ?string
+    public function getCompleteName(): ?string
     {
-        return $this->reference;
+        return $this->complete_name;
     }
 
     /**
-     * @return null|Users
+     * @param string $name
      */
-    public function getCreateUid(): ?Users
+    public function setName(string $name): void
     {
-        return $this->create_uid;
+        $this->name = $name;
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param DateTimeInterface|null $write_date
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

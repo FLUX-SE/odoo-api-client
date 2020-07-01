@@ -5,13 +5,8 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Account\Transfer;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Account;
-use Flux\OdooApiClient\Model\Object\Account\Journal;
-use Flux\OdooApiClient\Model\Object\Account\Move;
-use Flux\OdooApiClient\Model\Object\Account\Transfer\Model\Line;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.transfer.model
@@ -19,18 +14,22 @@ use Flux\OdooApiClient\Model\Object\Res\Users;
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
- * Odoo models are created by inheriting from this class::
+ *         Odoo models are created by inheriting from this class::
  *
- * class user(Model):
- * ...
+ *                 class user(Model):
+ *                         ...
  *
- * The system will later instantiate the class once per database (on
- * which the class' module is installed).
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Model extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.transfer.model';
+
     /**
      * Name
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -38,21 +37,27 @@ final class Model extends Base
 
     /**
      * Destination Journal
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var Journal
+     * @var OdooRelation
      */
     private $journal_id;
 
     /**
      * Company
      * Company related to this journal
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Company
+     * @var OdooRelation|null
      */
     private $company_id;
 
     /**
      * Start Date
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var DateTimeInterface
      */
@@ -60,101 +65,153 @@ final class Model extends Base
 
     /**
      * Stop Date
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $date_stop;
 
     /**
      * Frequency
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> month (Monthly)
+     *     -> quarter (Quarterly)
+     *     -> year (Yearly)
      *
-     * @var array
+     *
+     * @var string
      */
     private $frequency;
 
     /**
      * Origin Accounts
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Account[]
+     * @var OdooRelation[]|null
      */
     private $account_ids;
 
     /**
      * Destination Accounts
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Line[]
+     * @var OdooRelation[]|null
      */
     private $line_ids;
 
     /**
      * Generated Moves
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|Move[]
+     * @var OdooRelation[]|null
      */
     private $move_ids;
 
     /**
      * Move Ids Count
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|int
+     * @var int|null
      */
     private $move_ids_count;
 
     /**
      * Total Percent
+     * Searchable : no
+     * Sortable : no
      *
-     * @var null|float
+     * @var float|null
      */
     private $total_percent;
 
     /**
      * State
+     * Searchable : yes
+     * Sortable : yes
+     * Selection : (default value, usually null)
+     *     -> disabled (Disabled)
+     *     -> in_progress (Running)
      *
-     * @var array
+     *
+     * @var string
      */
     private $state;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Name
-     * @param Journal $journal_id Destination Journal
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $journal_id Destination Journal
+     *        Searchable : yes
+     *        Sortable : yes
      * @param DateTimeInterface $date_start Start Date
-     * @param array $frequency Frequency
-     * @param array $state State
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $frequency Frequency
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> month (Monthly)
+     *            -> quarter (Quarterly)
+     *            -> year (Yearly)
+     *
+     * @param string $state State
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> disabled (Disabled)
+     *            -> in_progress (Running)
+     *
      */
     public function __construct(
         string $name,
-        Journal $journal_id,
+        OdooRelation $journal_id,
         DateTimeInterface $date_start,
-        array $frequency,
-        array $state
+        string $frequency,
+        string $state
     ) {
         $this->name = $name;
         $this->journal_id = $journal_id;
@@ -164,121 +221,39 @@ final class Model extends Base
     }
 
     /**
-     * @param Line $item
+     * @param float|null $total_percent
      */
-    public function removeLineIds(Line $item): void
+    public function setTotalPercent(?float $total_percent): void
     {
-        if (null === $this->line_ids) {
-            $this->line_ids = [];
-        }
-
-        if ($this->hasLineIds($item)) {
-            $index = array_search($item, $this->line_ids);
-            unset($this->line_ids[$index]);
-        }
+        $this->total_percent = $total_percent;
     }
 
     /**
-     * @return null|Users
+     * @param OdooRelation[]|null $move_ids
      */
-    public function getWriteUid(): ?Users
+    public function setMoveIds(?array $move_ids): void
     {
-        return $this->write_uid;
+        $this->move_ids = $move_ids;
     }
 
     /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeState($item): void
-    {
-        if ($this->hasState($item)) {
-            $index = array_search($item, $this->state);
-            unset($this->state[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addState($item): void
-    {
-        if ($this->hasState($item)) {
-            return;
-        }
-
-        $this->state[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     * @param bool $strict
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasState($item, bool $strict = true): bool
-    {
-        return in_array($item, $this->state, $strict);
-    }
-
-    /**
-     * @param array $state
-     */
-    public function setState(array $state): void
-    {
-        $this->state = $state;
-    }
-
-    /**
-     * @return null|float
-     */
-    public function getTotalPercent(): ?float
-    {
-        return $this->total_percent;
-    }
-
-    /**
-     * @return null|int
-     */
-    public function getMoveIdsCount(): ?int
-    {
-        return $this->move_ids_count;
-    }
-
-    /**
-     * @param Move $item
-     */
-    public function removeMoveIds(Move $item): void
+    public function hasMoveIds(OdooRelation $item): bool
     {
         if (null === $this->move_ids) {
-            $this->move_ids = [];
+            return false;
         }
 
-        if ($this->hasMoveIds($item)) {
-            $index = array_search($item, $this->move_ids);
-            unset($this->move_ids[$index]);
-        }
+        return in_array($item, $this->move_ids);
     }
 
     /**
-     * @param Move $item
+     * @param OdooRelation $item
      */
-    public function addMoveIds(Move $item): void
+    public function addMoveIds(OdooRelation $item): void
     {
         if ($this->hasMoveIds($item)) {
             return;
@@ -292,32 +267,143 @@ final class Model extends Base
     }
 
     /**
-     * @param Move $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param OdooRelation $item
      */
-    public function hasMoveIds(Move $item, bool $strict = true): bool
+    public function removeMoveIds(OdooRelation $item): void
     {
         if (null === $this->move_ids) {
-            return false;
+            $this->move_ids = [];
         }
 
-        return in_array($item, $this->move_ids, $strict);
+        if ($this->hasMoveIds($item)) {
+            $index = array_search($item, $this->move_ids);
+            unset($this->move_ids[$index]);
+        }
     }
 
     /**
-     * @param null|Move[] $move_ids
+     * @return int|null
      */
-    public function setMoveIds(?array $move_ids): void
+    public function getMoveIdsCount(): ?int
     {
-        $this->move_ids = $move_ids;
+        return $this->move_ids_count;
     }
 
     /**
-     * @param Line $item
+     * @param int|null $move_ids_count
      */
-    public function addLineIds(Line $item): void
+    public function setMoveIdsCount(?int $move_ids_count): void
+    {
+        $this->move_ids_count = $move_ids_count;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getTotalPercent(): ?float
+    {
+        return $this->total_percent;
+    }
+
+    /**
+     * @return string
+     */
+    public function getState(): string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeLineIds(OdooRelation $item): void
+    {
+        if (null === $this->line_ids) {
+            $this->line_ids = [];
+        }
+
+        if ($this->hasLineIds($item)) {
+            $index = array_search($item, $this->line_ids);
+            unset($this->line_ids[$index]);
+        }
+    }
+
+    /**
+     * @param string $state
+     */
+    public function setState(string $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getMoveIds(): ?array
+    {
+        return $this->move_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addLineIds(OdooRelation $item): void
     {
         if ($this->hasLineIds($item)) {
             return;
@@ -331,6 +417,22 @@ final class Model extends Base
     }
 
     /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param DateTimeInterface|null $date_stop
+     */
+    public function setDateStop(?DateTimeInterface $date_stop): void
+    {
+        $this->date_stop = $date_stop;
+    }
+
+    /**
      * @param string $name
      */
     public function setName(string $name): void
@@ -339,47 +441,125 @@ final class Model extends Base
     }
 
     /**
-     * @param Line $item
-     * @param bool $strict
+     * @return OdooRelation
+     */
+    public function getJournalId(): OdooRelation
+    {
+        return $this->journal_id;
+    }
+
+    /**
+     * @param OdooRelation $journal_id
+     */
+    public function setJournalId(OdooRelation $journal_id): void
+    {
+        $this->journal_id = $journal_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return DateTimeInterface
+     */
+    public function getDateStart(): DateTimeInterface
+    {
+        return $this->date_start;
+    }
+
+    /**
+     * @param DateTimeInterface $date_start
+     */
+    public function setDateStart(DateTimeInterface $date_start): void
+    {
+        $this->date_start = $date_start;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getDateStop(): ?DateTimeInterface
+    {
+        return $this->date_stop;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFrequency(): string
+    {
+        return $this->frequency;
+    }
+
+    /**
+     * @param OdooRelation $item
      *
      * @return bool
      */
-    public function hasLineIds(Line $item, bool $strict = true): bool
+    public function hasLineIds(OdooRelation $item): bool
     {
         if (null === $this->line_ids) {
             return false;
         }
 
-        return in_array($item, $this->line_ids, $strict);
+        return in_array($item, $this->line_ids);
     }
 
     /**
-     * @param null|Line[] $line_ids
+     * @param string $frequency
      */
-    public function setLineIds(?array $line_ids): void
+    public function setFrequency(string $frequency): void
     {
-        $this->line_ids = $line_ids;
+        $this->frequency = $frequency;
     }
 
     /**
-     * @param Account $item
+     * @return OdooRelation[]|null
      */
-    public function removeAccountIds(Account $item): void
+    public function getAccountIds(): ?array
+    {
+        return $this->account_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $account_ids
+     */
+    public function setAccountIds(?array $account_ids): void
+    {
+        $this->account_ids = $account_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasAccountIds(OdooRelation $item): bool
     {
         if (null === $this->account_ids) {
-            $this->account_ids = [];
+            return false;
         }
 
-        if ($this->hasAccountIds($item)) {
-            $index = array_search($item, $this->account_ids);
-            unset($this->account_ids[$index]);
-        }
+        return in_array($item, $this->account_ids);
     }
 
     /**
-     * @param Account $item
+     * @param OdooRelation $item
      */
-    public function addAccountIds(Account $item): void
+    public function addAccountIds(OdooRelation $item): void
     {
         if ($this->hasAccountIds($item)) {
             return;
@@ -393,107 +573,41 @@ final class Model extends Base
     }
 
     /**
-     * @param Account $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param OdooRelation $item
      */
-    public function hasAccountIds(Account $item, bool $strict = true): bool
+    public function removeAccountIds(OdooRelation $item): void
     {
         if (null === $this->account_ids) {
-            return false;
+            $this->account_ids = [];
         }
 
-        return in_array($item, $this->account_ids, $strict);
-    }
-
-    /**
-     * @param null|Account[] $account_ids
-     */
-    public function setAccountIds(?array $account_ids): void
-    {
-        $this->account_ids = $account_ids;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeFrequency($item): void
-    {
-        if ($this->hasFrequency($item)) {
-            $index = array_search($item, $this->frequency);
-            unset($this->frequency[$index]);
+        if ($this->hasAccountIds($item)) {
+            $index = array_search($item, $this->account_ids);
+            unset($this->account_ids[$index]);
         }
     }
 
     /**
-     * @param mixed $item
+     * @return OdooRelation[]|null
      */
-    public function addFrequency($item): void
+    public function getLineIds(): ?array
     {
-        if ($this->hasFrequency($item)) {
-            return;
-        }
-
-        $this->frequency[] = $item;
+        return $this->line_ids;
     }
 
     /**
-     * @param mixed $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param OdooRelation[]|null $line_ids
      */
-    public function hasFrequency($item, bool $strict = true): bool
+    public function setLineIds(?array $line_ids): void
     {
-        return in_array($item, $this->frequency, $strict);
+        $this->line_ids = $line_ids;
     }
 
     /**
-     * @param array $frequency
+     * @param DateTimeInterface|null $write_date
      */
-    public function setFrequency(array $frequency): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->frequency = $frequency;
-    }
-
-    /**
-     * @param null|DateTimeInterface $date_stop
-     */
-    public function setDateStop(?DateTimeInterface $date_stop): void
-    {
-        $this->date_stop = $date_stop;
-    }
-
-    /**
-     * @param DateTimeInterface $date_start
-     */
-    public function setDateStart(DateTimeInterface $date_start): void
-    {
-        $this->date_start = $date_start;
-    }
-
-    /**
-     * @return null|Company
-     */
-    public function getCompanyId(): ?Company
-    {
-        return $this->company_id;
-    }
-
-    /**
-     * @param Journal $journal_id
-     */
-    public function setJournalId(Journal $journal_id): void
-    {
-        $this->journal_id = $journal_id;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
+        $this->write_date = $write_date;
     }
 }

@@ -5,21 +5,24 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Account\Online;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Account\Journal as JournalAlias;
 use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\Object\Res\Users;
+use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.online.journal
  * Name : account.online.journal
  * Info :
  * This class is used as an interface.
- * It is used to save the state of the current online accout.
+ *         It is used to save the state of the current online accout.
  */
 final class Journal extends Base
 {
+    public const ODOO_MODEL_NAME = 'account.online.journal';
+
     /**
      * Journal Name
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -27,109 +30,139 @@ final class Journal extends Base
 
     /**
      * Account Online Provider
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Provider
+     * @var OdooRelation|null
      */
     private $account_online_provider_id;
 
     /**
      * Journal
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|JournalAlias[]
+     * @var OdooRelation[]|null
      */
     private $journal_ids;
 
     /**
      * Account Number
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $account_number;
 
     /**
      * Last synchronization
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $last_sync;
 
     /**
      * Online Identifier
      * id use to identify account in provider system
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $online_identifier;
 
     /**
      * Provider
      * name of the banking institution
+     * Searchable : yes
+     * Sortable : no
      *
-     * @var null|string
+     * @var string|null
      */
     private $provider_name;
 
     /**
      * Balance
      * balance of the account sent by the third party provider
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|float
+     * @var float|null
      */
     private $balance;
 
     /**
      * Ponto Last Synchronization Identifier
      * id of ponto synchronization
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $ponto_last_synchronization_identifier;
 
     /**
      * Yodlee Account Status
      * Active/Inactive on Yodlee system
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|string
+     * @var string|null
      */
     private $yodlee_account_status;
 
     /**
      * Yodlee Status Code
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|int
+     * @var int|null
      */
     private $yodlee_status_code;
 
     /**
      * Created by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $create_uid;
 
     /**
      * Created on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $create_date;
 
     /**
      * Last Updated by
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|Users
+     * @var OdooRelation|null
      */
     private $write_uid;
 
     /**
      * Last Updated on
+     * Searchable : yes
+     * Sortable : yes
      *
-     * @var null|DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $write_date;
 
     /**
      * @param string $name Journal Name
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $name)
     {
@@ -137,63 +170,7 @@ final class Journal extends Base
     }
 
     /**
-     * @return null|string
-     */
-    public function getProviderName(): ?string
-    {
-        return $this->provider_name;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getWriteUid(): ?Users
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return null|DateTimeInterface
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return null|Users
-     */
-    public function getCreateUid(): ?Users
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return null|int
-     */
-    public function getYodleeStatusCode(): ?int
-    {
-        return $this->yodlee_status_code;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getYodleeAccountStatus(): ?string
-    {
-        return $this->yodlee_account_status;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getPontoLastSynchronizationIdentifier(): ?string
-    {
-        return $this->ponto_last_synchronization_identifier;
-    }
-
-    /**
-     * @return null|float
+     * @return float|null
      */
     public function getBalance(): ?float
     {
@@ -201,56 +178,138 @@ final class Journal extends Base
     }
 
     /**
-     * @return null|string
+     * @return DateTimeInterface|null
      */
-    public function getOnlineIdentifier(): ?string
+    public function getWriteDate(): ?DateTimeInterface
     {
-        return $this->online_identifier;
+        return $this->write_date;
     }
 
     /**
-     * @param string $name
+     * @param OdooRelation|null $write_uid
      */
-    public function setName(string $name): void
+    public function setWriteUid(?OdooRelation $write_uid): void
     {
-        $this->name = $name;
+        $this->write_uid = $write_uid;
     }
 
     /**
-     * @param null|DateTimeInterface $last_sync
+     * @return OdooRelation|null
      */
-    public function setLastSync(?DateTimeInterface $last_sync): void
+    public function getWriteUid(): ?OdooRelation
     {
-        $this->last_sync = $last_sync;
+        return $this->write_uid;
     }
 
     /**
-     * @param null|string $account_number
+     * @param DateTimeInterface|null $create_date
      */
-    public function setAccountNumber(?string $account_number): void
+    public function setCreateDate(?DateTimeInterface $create_date): void
     {
-        $this->account_number = $account_number;
+        $this->create_date = $create_date;
     }
 
     /**
-     * @param JournalAlias $item
+     * @return DateTimeInterface|null
      */
-    public function removeJournalIds(JournalAlias $item): void
+    public function getCreateDate(): ?DateTimeInterface
     {
-        if (null === $this->journal_ids) {
-            $this->journal_ids = [];
-        }
-
-        if ($this->hasJournalIds($item)) {
-            $index = array_search($item, $this->journal_ids);
-            unset($this->journal_ids[$index]);
-        }
+        return $this->create_date;
     }
 
     /**
-     * @param JournalAlias $item
+     * @param OdooRelation|null $create_uid
      */
-    public function addJournalIds(JournalAlias $item): void
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param int|null $yodlee_status_code
+     */
+    public function setYodleeStatusCode(?int $yodlee_status_code): void
+    {
+        $this->yodlee_status_code = $yodlee_status_code;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getYodleeStatusCode(): ?int
+    {
+        return $this->yodlee_status_code;
+    }
+
+    /**
+     * @param string|null $yodlee_account_status
+     */
+    public function setYodleeAccountStatus(?string $yodlee_account_status): void
+    {
+        $this->yodlee_account_status = $yodlee_account_status;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getYodleeAccountStatus(): ?string
+    {
+        return $this->yodlee_account_status;
+    }
+
+    /**
+     * @param string|null $ponto_last_synchronization_identifier
+     */
+    public function setPontoLastSynchronizationIdentifier(
+        ?string $ponto_last_synchronization_identifier
+    ): void {
+        $this->ponto_last_synchronization_identifier = $ponto_last_synchronization_identifier;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPontoLastSynchronizationIdentifier(): ?string
+    {
+        return $this->ponto_last_synchronization_identifier;
+    }
+
+    /**
+     * @param float|null $balance
+     */
+    public function setBalance(?float $balance): void
+    {
+        $this->balance = $balance;
+    }
+
+    /**
+     * @param string|null $provider_name
+     */
+    public function setProviderName(?string $provider_name): void
+    {
+        $this->provider_name = $provider_name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addJournalIds(OdooRelation $item): void
     {
         if ($this->hasJournalIds($item)) {
             return;
@@ -264,22 +323,39 @@ final class Journal extends Base
     }
 
     /**
-     * @param JournalAlias $item
-     * @param bool $strict
-     *
-     * @return bool
+     * @param string $name
      */
-    public function hasJournalIds(JournalAlias $item, bool $strict = true): bool
+    public function setName(string $name): void
     {
-        if (null === $this->journal_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->journal_ids, $strict);
+        $this->name = $name;
     }
 
     /**
-     * @param null|JournalAlias[] $journal_ids
+     * @return OdooRelation|null
+     */
+    public function getAccountOnlineProviderId(): ?OdooRelation
+    {
+        return $this->account_online_provider_id;
+    }
+
+    /**
+     * @param OdooRelation|null $account_online_provider_id
+     */
+    public function setAccountOnlineProviderId(?OdooRelation $account_online_provider_id): void
+    {
+        $this->account_online_provider_id = $account_online_provider_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getJournalIds(): ?array
+    {
+        return $this->journal_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $journal_ids
      */
     public function setJournalIds(?array $journal_ids): void
     {
@@ -287,18 +363,95 @@ final class Journal extends Base
     }
 
     /**
-     * @return null|Provider
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function getAccountOnlineProviderId(): ?Provider
+    public function hasJournalIds(OdooRelation $item): bool
     {
-        return $this->account_online_provider_id;
+        if (null === $this->journal_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->journal_ids);
     }
 
     /**
-     * @return null|DateTimeInterface
+     * @param OdooRelation $item
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function removeJournalIds(OdooRelation $item): void
     {
-        return $this->write_date;
+        if (null === $this->journal_ids) {
+            $this->journal_ids = [];
+        }
+
+        if ($this->hasJournalIds($item)) {
+            $index = array_search($item, $this->journal_ids);
+            unset($this->journal_ids[$index]);
+        }
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProviderName(): ?string
+    {
+        return $this->provider_name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAccountNumber(): ?string
+    {
+        return $this->account_number;
+    }
+
+    /**
+     * @param string|null $account_number
+     */
+    public function setAccountNumber(?string $account_number): void
+    {
+        $this->account_number = $account_number;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getLastSync(): ?DateTimeInterface
+    {
+        return $this->last_sync;
+    }
+
+    /**
+     * @param DateTimeInterface|null $last_sync
+     */
+    public function setLastSync(?DateTimeInterface $last_sync): void
+    {
+        $this->last_sync = $last_sync;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOnlineIdentifier(): ?string
+    {
+        return $this->online_identifier;
+    }
+
+    /**
+     * @param string|null $online_identifier
+     */
+    public function setOnlineIdentifier(?string $online_identifier): void
+    {
+        $this->online_identifier = $online_identifier;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 }
