@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Digest extends Base
 {
-    public const ODOO_MODEL_NAME = 'digest.digest';
-
     /**
      * Name
      * Searchable : yes
@@ -262,7 +260,7 @@ final class Digest extends Base
      *            -> weekly (Weekly)
      *            -> monthly (Monthly)
      *            -> quarterly (Quarterly)
-     *
+     *       
      * @param OdooRelation $template_id Email Template
      *        Searchable : yes
      *        Sortable : yes
@@ -456,6 +454,14 @@ final class Digest extends Base
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -696,10 +702,10 @@ final class Digest extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'digest.digest';
     }
 }

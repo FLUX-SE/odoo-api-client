@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Template extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.tax.template';
-
     /**
      * Chart Template
      * Searchable : yes
@@ -272,7 +270,7 @@ final class Template extends Base
      *            -> sale (Sales)
      *            -> purchase (Purchases)
      *            -> none (None)
-     *
+     *       
      * @param string $amount_type Tax Computation
      *        Searchable : yes
      *        Sortable : yes
@@ -281,7 +279,7 @@ final class Template extends Base
      *            -> fixed (Fixed)
      *            -> percent (Percentage of Price)
      *            -> division (Percentage of Price Tax Included)
-     *
+     *       
      * @param int $sequence Sequence
      *        The sequence field is used to define order in which the tax lines are applied.
      *        Searchable : yes
@@ -307,11 +305,11 @@ final class Template extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $tax_exigibility
      */
-    public function getTaxExigibility(): ?string
+    public function setTaxExigibility(?string $tax_exigibility): void
     {
-        return $this->tax_exigibility;
+        $this->tax_exigibility = $tax_exigibility;
     }
 
     /**
@@ -437,19 +435,11 @@ final class Template extends Base
     }
 
     /**
-     * @param string|null $tax_exigibility
+     * @return string|null
      */
-    public function setTaxExigibility(?string $tax_exigibility): void
+    public function getTaxExigibility(): ?string
     {
-        $this->tax_exigibility = $tax_exigibility;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getInvoiceRepartitionLineIds(): ?array
-    {
-        return $this->invoice_repartition_line_ids;
+        return $this->tax_exigibility;
     }
 
     /**
@@ -458,6 +448,14 @@ final class Template extends Base
     public function getCashBasisTransitionAccountId(): ?OdooRelation
     {
         return $this->cash_basis_transition_account_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getInvoiceRepartitionLineIds(): ?array
+    {
+        return $this->invoice_repartition_line_ids;
     }
 
     /**
@@ -538,6 +536,14 @@ final class Template extends Base
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -786,10 +792,10 @@ final class Template extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.tax.template';
     }
 }

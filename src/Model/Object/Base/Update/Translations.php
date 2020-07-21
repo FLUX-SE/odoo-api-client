@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Translations extends Base
 {
-    public const ODOO_MODEL_NAME = 'base.update.translations';
-
     /**
      * Language
      * Searchable : yes
@@ -77,7 +75,7 @@ final class Translations extends Base
      *        Sortable : yes
      *        Selection : (default value, usually null)
      *            -> en_US (English (US))
-     *
+     *       
      */
     public function __construct(string $lang)
     {
@@ -162,5 +160,13 @@ final class Translations extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'base.update.translations';
     }
 }

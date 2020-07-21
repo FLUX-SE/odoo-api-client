@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Layout extends Base
 {
-    public const ODOO_MODEL_NAME = 'report.layout';
-
     /**
      * Document Template
      * Searchable : yes
@@ -109,11 +107,19 @@ final class Layout extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->create_uid;
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -157,19 +163,11 @@ final class Layout extends Base
     }
 
     /**
-     * @param OdooRelation|null $create_uid
+     * @return OdooRelation|null
      */
-    public function setCreateUid(?OdooRelation $create_uid): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @param string|null $name
-     */
-    public function setName(?string $name): void
-    {
-        $this->name = $name;
+        return $this->create_uid;
     }
 
     /**
@@ -178,6 +176,14 @@ final class Layout extends Base
     public function getViewId(): OdooRelation
     {
         return $this->view_id;
+    }
+
+    /**
+     * @param string|null $name
+     */
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
     }
 
     /**
@@ -229,10 +235,10 @@ final class Layout extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'report.layout';
     }
 }

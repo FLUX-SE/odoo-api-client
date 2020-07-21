@@ -16,8 +16,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Wizard extends Base
 {
-    public const ODOO_MODEL_NAME = 'l10n_eu_service.wizard';
-
     /**
      * Company
      * Searchable : yes
@@ -136,11 +134,19 @@ final class Wizard extends Base
     }
 
     /**
-     * @return OdooRelation[]
+     * @param OdooRelation[] $todo_country_ids
      */
-    public function getTodoCountryIds(): array
+    public function setTodoCountryIds(array $todo_country_ids): void
     {
-        return $this->todo_country_ids;
+        $this->todo_country_ids = $todo_country_ids;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -233,11 +239,19 @@ final class Wizard extends Base
     }
 
     /**
-     * @param OdooRelation[] $todo_country_ids
+     * @return OdooRelation[]
      */
-    public function setTodoCountryIds(array $todo_country_ids): void
+    public function getTodoCountryIds(): array
     {
-        $this->todo_country_ids = $todo_country_ids;
+        return $this->todo_country_ids;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getCompanyId(): OdooRelation
+    {
+        return $this->company_id;
     }
 
     /**
@@ -253,14 +267,6 @@ final class Wizard extends Base
             $index = array_search($item, $this->done_country_ids);
             unset($this->done_country_ids[$index]);
         }
-    }
-
-    /**
-     * @return OdooRelation
-     */
-    public function getCompanyId(): OdooRelation
-    {
-        return $this->company_id;
     }
 
     /**
@@ -366,10 +372,10 @@ final class Wizard extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'l10n_eu_service.wizard';
     }
 }

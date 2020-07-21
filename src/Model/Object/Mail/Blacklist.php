@@ -16,8 +16,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Blacklist extends Base
 {
-    public const ODOO_MODEL_NAME = 'mail.blacklist';
-
     /**
      * Email Address
      * This field is case insensitive.
@@ -228,11 +226,11 @@ final class Blacklist extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @param OdooRelation[]|null $website_message_ids
      */
-    public function getWebsiteMessageIds(): ?array
+    public function setWebsiteMessageIds(?array $website_message_ids): void
     {
-        return $this->website_message_ids;
+        $this->website_message_ids = $website_message_ids;
     }
 
     /**
@@ -324,19 +322,11 @@ final class Blacklist extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $website_message_ids
+     * @return OdooRelation[]|null
      */
-    public function setWebsiteMessageIds(?array $website_message_ids): void
+    public function getWebsiteMessageIds(): ?array
     {
-        $this->website_message_ids = $website_message_ids;
-    }
-
-    /**
-     * @param int|null $message_unread_counter
-     */
-    public function setMessageUnreadCounter(?int $message_unread_counter): void
-    {
-        $this->message_unread_counter = $message_unread_counter;
+        return $this->website_message_ids;
     }
 
     /**
@@ -351,6 +341,14 @@ final class Blacklist extends Base
         }
 
         return in_array($item, $this->website_message_ids);
+    }
+
+    /**
+     * @param int|null $message_unread_counter
+     */
+    public function setMessageUnreadCounter(?int $message_unread_counter): void
+    {
+        $this->message_unread_counter = $message_unread_counter;
     }
 
     /**
@@ -454,6 +452,14 @@ final class Blacklist extends Base
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -781,10 +787,10 @@ final class Blacklist extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'mail.blacklist';
     }
 }

@@ -15,8 +15,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Mixin extends Base
 {
-    public const ODOO_MODEL_NAME = 'utm.mixin';
-
     /**
      * Campaign
      * This is a name that helps you keep track of your different campaign efforts, e.g. Fall_Drive,
@@ -94,5 +92,13 @@ final class Mixin extends Base
     public function setMediumId(?OdooRelation $medium_id): void
     {
         $this->medium_id = $medium_id;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'utm.mixin';
     }
 }

@@ -14,5 +14,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Journal extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.consolidated.journal';
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'account.consolidated.journal';
+    }
 }

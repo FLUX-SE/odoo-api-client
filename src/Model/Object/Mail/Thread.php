@@ -49,8 +49,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Thread extends Base
 {
-    public const ODOO_MODEL_NAME = 'mail.thread';
-
     /**
      * Is Follower
      * Searchable : yes
@@ -203,19 +201,11 @@ final class Thread extends Base
     }
 
     /**
-     * @param int|null $message_has_error_counter
+     * @return int|null
      */
-    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
+    public function getMessageAttachmentCount(): ?int
     {
-        $this->message_has_error_counter = $message_has_error_counter;
-    }
-
-    /**
-     * @param int|null $message_unread_counter
-     */
-    public function setMessageUnreadCounter(?int $message_unread_counter): void
-    {
-        $this->message_unread_counter = $message_unread_counter;
+        return $this->message_attachment_count;
     }
 
     /**
@@ -275,19 +265,11 @@ final class Thread extends Base
     }
 
     /**
-     * @return int|null
+     * @param int|null $message_has_error_counter
      */
-    public function getMessageAttachmentCount(): ?int
+    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
     {
-        return $this->message_attachment_count;
-    }
-
-    /**
-     * @param bool|null $message_unread
-     */
-    public function setMessageUnread(?bool $message_unread): void
-    {
-        $this->message_unread = $message_unread;
+        $this->message_has_error_counter = $message_has_error_counter;
     }
 
     /**
@@ -296,6 +278,14 @@ final class Thread extends Base
     public function setMessageAttachmentCount(?int $message_attachment_count): void
     {
         $this->message_attachment_count = $message_attachment_count;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getMessageUnreadCounter(): ?int
+    {
+        return $this->message_unread_counter;
     }
 
     /**
@@ -384,19 +374,27 @@ final class Thread extends Base
     }
 
     /**
-     * @return int|null
+     * @param bool|null $message_has_sms_error
      */
-    public function getMessageUnreadCounter(): ?int
+    public function setMessageHasSmsError(?bool $message_has_sms_error): void
     {
-        return $this->message_unread_counter;
+        $this->message_has_sms_error = $message_has_sms_error;
     }
 
     /**
-     * @return bool|null
+     * @param int|null $message_unread_counter
      */
-    public function isMessageUnread(): ?bool
+    public function setMessageUnreadCounter(?int $message_unread_counter): void
     {
-        return $this->message_unread;
+        $this->message_unread_counter = $message_unread_counter;
+    }
+
+    /**
+     * @param bool|null $message_unread
+     */
+    public function setMessageUnread(?bool $message_unread): void
+    {
+        $this->message_unread = $message_unread;
     }
 
     /**
@@ -410,17 +408,16 @@ final class Thread extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addMessagePartnerIds(OdooRelation $item): void
+    public function removeMessagePartnerIds(OdooRelation $item): void
     {
-        if ($this->hasMessagePartnerIds($item)) {
-            return;
-        }
-
         if (null === $this->message_partner_ids) {
             $this->message_partner_ids = [];
         }
 
-        $this->message_partner_ids[] = $item;
+        if ($this->hasMessagePartnerIds($item)) {
+            $index = array_search($item, $this->message_partner_ids);
+            unset($this->message_partner_ids[$index]);
+        }
     }
 
     /**
@@ -517,31 +514,17 @@ final class Thread extends Base
     /**
      * @param OdooRelation $item
      */
-    public function removeMessagePartnerIds(OdooRelation $item): void
+    public function addMessagePartnerIds(OdooRelation $item): void
     {
+        if ($this->hasMessagePartnerIds($item)) {
+            return;
+        }
+
         if (null === $this->message_partner_ids) {
             $this->message_partner_ids = [];
         }
 
-        if ($this->hasMessagePartnerIds($item)) {
-            $index = array_search($item, $this->message_partner_ids);
-            unset($this->message_partner_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMessageIds(OdooRelation $item): void
-    {
-        if (null === $this->message_ids) {
-            $this->message_ids = [];
-        }
-
-        if ($this->hasMessageIds($item)) {
-            $index = array_search($item, $this->message_ids);
-            unset($this->message_ids[$index]);
-        }
+        $this->message_partner_ids[] = $item;
     }
 
     /**
@@ -550,6 +533,14 @@ final class Thread extends Base
     public function getMessageChannelIds(): ?array
     {
         return $this->message_channel_ids;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isMessageUnread(): ?bool
+    {
+        return $this->message_unread;
     }
 
     /**
@@ -652,10 +643,25 @@ final class Thread extends Base
     }
 
     /**
-     * @param bool|null $message_has_sms_error
+     * @param OdooRelation $item
      */
-    public function setMessageHasSmsError(?bool $message_has_sms_error): void
+    public function removeMessageIds(OdooRelation $item): void
     {
-        $this->message_has_sms_error = $message_has_sms_error;
+        if (null === $this->message_ids) {
+            $this->message_ids = [];
+        }
+
+        if ($this->hasMessageIds($item)) {
+            $index = array_search($item, $this->message_ids);
+            unset($this->message_ids[$index]);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'mail.thread';
     }
 }

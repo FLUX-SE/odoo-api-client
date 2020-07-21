@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Wizard extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.online.link.wizard';
-
     /**
      * Journal
      * Searchable : yes
@@ -158,6 +156,14 @@ final class Wizard extends Base
     public function setAccountNumber(?string $account_number): void
     {
         $this->account_number = $account_number;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -329,10 +335,10 @@ final class Wizard extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.online.link.wizard';
     }
 }

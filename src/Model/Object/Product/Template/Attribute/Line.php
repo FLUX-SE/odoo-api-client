@@ -17,8 +17,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Line extends Base
 {
-    public const ODOO_MODEL_NAME = 'product.template.attribute.line';
-
     /**
      * Active
      * Searchable : yes
@@ -115,11 +113,25 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $product_template_value_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setProductTemplateValueIds(?array $product_template_value_ids): void
+    public function hasProductTemplateValueIds(OdooRelation $item): bool
     {
-        $this->product_template_value_ids = $product_template_value_ids;
+        if (null === $this->product_template_value_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->product_template_value_ids);
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -210,25 +222,11 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param OdooRelation[]|null $product_template_value_ids
      */
-    public function hasProductTemplateValueIds(OdooRelation $item): bool
+    public function setProductTemplateValueIds(?array $product_template_value_ids): void
     {
-        if (null === $this->product_template_value_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->product_template_value_ids);
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getProductTemplateValueIds(): ?array
-    {
-        return $this->product_template_value_ids;
+        $this->product_template_value_ids = $product_template_value_ids;
     }
 
     /**
@@ -237,6 +235,14 @@ final class Line extends Base
     public function isActive(): ?bool
     {
         return $this->active;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getProductTemplateValueIds(): ?array
+    {
+        return $this->product_template_value_ids;
     }
 
     /**
@@ -341,10 +347,10 @@ final class Line extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'product.template.attribute.line';
     }
 }

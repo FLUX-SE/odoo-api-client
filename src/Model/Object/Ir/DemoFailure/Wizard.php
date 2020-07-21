@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Wizard extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.demo_failure.wizard';
-
     /**
      * Demo Installation Failures
      * Searchable : yes
@@ -216,5 +214,13 @@ final class Wizard extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'ir.demo_failure.wizard';
     }
 }

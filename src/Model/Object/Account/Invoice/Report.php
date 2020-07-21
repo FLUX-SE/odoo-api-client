@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Report extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.invoice.report';
-
     /**
      * Move
      * Searchable : yes
@@ -504,6 +502,14 @@ final class Report extends Base
     }
 
     /**
+     * @param OdooRelation|null $team_id
+     */
+    public function setTeamId(?OdooRelation $team_id): void
+    {
+        $this->team_id = $team_id;
+    }
+
+    /**
      * @return OdooRelation|null
      */
     public function getInvoicePartnerBankId(): ?OdooRelation
@@ -736,10 +742,10 @@ final class Report extends Base
     }
 
     /**
-     * @param OdooRelation|null $team_id
+     * @return string
      */
-    public function setTeamId(?OdooRelation $team_id): void
+    public static function getOdooModelName(): string
     {
-        $this->team_id = $team_id;
+        return 'account.invoice.report';
     }
 }

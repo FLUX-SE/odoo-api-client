@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Exclusion extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.module.module.exclusion';
-
     /**
      * Name
      * Searchable : yes
@@ -116,6 +114,70 @@ final class Exclusion extends Base
     }
 
     /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
      * @param string|null $name
      */
     public function setName(?string $name): void
@@ -124,11 +186,35 @@ final class Exclusion extends Base
     }
 
     /**
+     * @param string|null $state
+     */
+    public function setState(?string $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param OdooRelation|null $exclusion_id
+     */
+    public function setExclusionId(?OdooRelation $exclusion_id): void
+    {
+        $this->exclusion_id = $exclusion_id;
+    }
+
+    /**
      * @return OdooRelation|null
      */
-    public function getModuleId(): ?OdooRelation
+    public function getExclusionId(): ?OdooRelation
     {
-        return $this->module_id;
+        return $this->exclusion_id;
     }
 
     /**
@@ -142,96 +228,16 @@ final class Exclusion extends Base
     /**
      * @return OdooRelation|null
      */
-    public function getExclusionId(): ?OdooRelation
+    public function getModuleId(): ?OdooRelation
     {
-        return $this->exclusion_id;
+        return $this->module_id;
     }
 
     /**
-     * @param OdooRelation|null $exclusion_id
+     * @return string
      */
-    public function setExclusionId(?OdooRelation $exclusion_id): void
+    public static function getOdooModelName(): string
     {
-        $this->exclusion_id = $exclusion_id;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getState(): ?string
-    {
-        return $this->state;
-    }
-
-    /**
-     * @param string|null $state
-     */
-    public function setState(?string $state): void
-    {
-        $this->state = $state;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $create_uid
-     */
-    public function setCreateUid(?OdooRelation $create_uid): void
-    {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $write_date
-     */
-    public function setWriteDate(?DateTimeInterface $write_date): void
-    {
-        $this->write_date = $write_date;
+        return 'ir.module.module.exclusion';
     }
 }

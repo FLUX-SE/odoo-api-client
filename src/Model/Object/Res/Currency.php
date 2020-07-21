@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Currency extends Base
 {
-    public const ODOO_MODEL_NAME = 'res.currency';
-
     /**
      * Currency
      * Currency Code (ISO 4217)
@@ -188,62 +186,6 @@ final class Currency extends Base
     }
 
     /**
-     * @return string|null
-     */
-    public function getPosition(): ?string
-    {
-        return $this->position;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @param OdooRelation|null $create_uid
-     */
-    public function setCreateUid(?OdooRelation $create_uid): void
-    {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
      * @return OdooRelation|null
      */
     public function getCreateUid(): ?OdooRelation
@@ -252,19 +194,27 @@ final class Currency extends Base
     }
 
     /**
-     * @param string|null $currency_subunit_label
+     * @return DateTimeInterface|null
      */
-    public function setCurrencySubunitLabel(?string $currency_subunit_label): void
+    public function getDate(): ?DateTimeInterface
     {
-        $this->currency_subunit_label = $currency_subunit_label;
+        return $this->date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $date
+     */
+    public function setDate(?DateTimeInterface $date): void
+    {
+        $this->date = $date;
     }
 
     /**
      * @return string|null
      */
-    public function getCurrencySubunitLabel(): ?string
+    public function getCurrencyUnitLabel(): ?string
     {
-        return $this->currency_subunit_label;
+        return $this->currency_unit_label;
     }
 
     /**
@@ -278,25 +228,81 @@ final class Currency extends Base
     /**
      * @return string|null
      */
-    public function getCurrencyUnitLabel(): ?string
+    public function getCurrencySubunitLabel(): ?string
     {
-        return $this->currency_unit_label;
+        return $this->currency_subunit_label;
     }
 
     /**
-     * @param DateTimeInterface|null $date
+     * @param string|null $currency_subunit_label
      */
-    public function setDate(?DateTimeInterface $date): void
+    public function setCurrencySubunitLabel(?string $currency_subunit_label): void
     {
-        $this->date = $date;
+        $this->currency_subunit_label = $currency_subunit_label;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPosition(): ?string
+    {
+        return $this->position;
     }
 
     /**
      * @return DateTimeInterface|null
      */
-    public function getDate(): ?DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
-        return $this->date;
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -465,10 +471,10 @@ final class Currency extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'res.currency';
     }
 }

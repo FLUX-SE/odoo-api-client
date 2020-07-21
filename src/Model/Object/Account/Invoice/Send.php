@@ -20,8 +20,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Send extends Message
 {
-    public const ODOO_MODEL_NAME = 'account.invoice.send';
-
     /**
      * Email
      * Searchable : yes
@@ -134,7 +132,7 @@ final class Send extends Message
      *        Selection : (default value, usually null)
      *            -> comment (Comment)
      *            -> notification (System notification)
-     *
+     *       
      */
     public function __construct(OdooRelation $composer_id, string $message_type)
     {
@@ -143,11 +141,26 @@ final class Send extends Message
     }
 
     /**
-     * @param OdooRelation $composer_id
+     * @return OdooRelation|null
      */
-    public function setComposerId(OdooRelation $composer_id): void
+    public function getPartnerId(): ?OdooRelation
     {
-        $this->composer_id = $composer_id;
+        return $this->partner_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeInvalidInvoiceIds(OdooRelation $item): void
+    {
+        if (null === $this->invalid_invoice_ids) {
+            $this->invalid_invoice_ids = [];
+        }
+
+        if ($this->hasInvalidInvoiceIds($item)) {
+            $index = array_search($item, $this->invalid_invoice_ids);
+            unset($this->invalid_invoice_ids[$index]);
+        }
     }
 
     /**
@@ -253,19 +266,11 @@ final class Send extends Message
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation $composer_id
      */
-    public function getPartnerId(): ?OdooRelation
+    public function setComposerId(OdooRelation $composer_id): void
     {
-        return $this->partner_id;
-    }
-
-    /**
-     * @return OdooRelation
-     */
-    public function getComposerId(): OdooRelation
-    {
-        return $this->composer_id;
+        $this->composer_id = $composer_id;
     }
 
     /**
@@ -274,6 +279,14 @@ final class Send extends Message
     public function isIsEmail(): ?bool
     {
         return $this->is_email;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getComposerId(): OdooRelation
+    {
+        return $this->composer_id;
     }
 
     /**
@@ -394,17 +407,10 @@ final class Send extends Message
     }
 
     /**
-     * @param OdooRelation $item
+     * @return string
      */
-    public function removeInvalidInvoiceIds(OdooRelation $item): void
+    public static function getOdooModelName(): string
     {
-        if (null === $this->invalid_invoice_ids) {
-            $this->invalid_invoice_ids = [];
-        }
-
-        if ($this->hasInvalidInvoiceIds($item)) {
-            $index = array_search($item, $this->invalid_invoice_ids);
-            unset($this->invalid_invoice_ids[$index]);
-        }
+        return 'account.invoice.send';
     }
 }

@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Tag extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.analytic.tag';
-
     /**
      * Analytic Tag
      * Searchable : yes
@@ -140,6 +138,14 @@ final class Tag extends Base
             $index = array_search($item, $this->analytic_distribution_ids);
             unset($this->analytic_distribution_ids[$index]);
         }
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -325,10 +331,10 @@ final class Tag extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.analytic.tag';
     }
 }

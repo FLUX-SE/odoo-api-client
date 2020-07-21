@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Term extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.payment.term';
-
     /**
      * Payment Terms
      * Searchable : yes
@@ -137,6 +135,14 @@ final class Term extends Base
     public function setCompanyId(?OdooRelation $company_id): void
     {
         $this->company_id = $company_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -329,10 +335,10 @@ final class Term extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.payment.term';
     }
 }

@@ -17,5 +17,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class FloatTime extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.qweb.field.float_time';
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'ir.qweb.field.float_time';
+    }
 }

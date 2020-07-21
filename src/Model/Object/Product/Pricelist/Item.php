@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Item extends Base
 {
-    public const ODOO_MODEL_NAME = 'product.pricelist.item';
-
     /**
      * Product
      * Specify a template if this rule only applies to one product template. Keep empty otherwise.
@@ -318,7 +316,7 @@ final class Item extends Base
      *            -> 2_product_category (Product Category)
      *            -> 1_product (Product)
      *            -> 0_product_variant (Product Variant)
-     *
+     *       
      * @param string $base Based on
      *        Base price for computation.
      *        Sales Price: The base price will be the Sales Price.
@@ -330,7 +328,7 @@ final class Item extends Base
      *            -> list_price (Sales Price)
      *            -> standard_price (Cost)
      *            -> pricelist (Other Pricelist)
-     *
+     *       
      * @param OdooRelation $pricelist_id Pricelist
      *        Searchable : yes
      *        Sortable : yes
@@ -341,7 +339,7 @@ final class Item extends Base
      *            -> fixed (Fixed Price)
      *            -> percentage (Percentage (discount))
      *            -> formula (Formula)
-     *
+     *       
      */
     public function __construct(
         string $applied_on,
@@ -356,19 +354,11 @@ final class Item extends Base
     }
 
     /**
-     * @return float|null
+     * @param float|null $percent_price
      */
-    public function getPercentPrice(): ?float
+    public function setPercentPrice(?float $percent_price): void
     {
-        return $this->percent_price;
-    }
-
-    /**
-     * @param OdooRelation|null $currency_id
-     */
-    public function setCurrencyId(?OdooRelation $currency_id): void
-    {
-        $this->currency_id = $currency_id;
+        $this->percent_price = $percent_price;
     }
 
     /**
@@ -452,19 +442,11 @@ final class Item extends Base
     }
 
     /**
-     * @param float|null $percent_price
+     * @return float|null
      */
-    public function setPercentPrice(?float $percent_price): void
+    public function getPercentPrice(): ?float
     {
-        $this->percent_price = $percent_price;
-    }
-
-    /**
-     * @param OdooRelation|null $company_id
-     */
-    public function setCompanyId(?OdooRelation $company_id): void
-    {
-        $this->company_id = $company_id;
+        return $this->percent_price;
     }
 
     /**
@@ -473,6 +455,14 @@ final class Item extends Base
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCurrencyId(): ?OdooRelation
+    {
+        return $this->currency_id;
     }
 
     /**
@@ -556,19 +546,27 @@ final class Item extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param DateTimeInterface|null $write_date
      */
-    public function getCurrencyId(): ?OdooRelation
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->currency_id;
+        $this->write_date = $write_date;
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $currency_id
      */
-    public function getCompanyId(): ?OdooRelation
+    public function setCurrencyId(?OdooRelation $currency_id): void
     {
-        return $this->company_id;
+        $this->currency_id = $currency_id;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
     }
 
     /**
@@ -684,11 +682,11 @@ final class Item extends Base
     }
 
     /**
-     * @param float|null $price_max_margin
+     * @return OdooRelation|null
      */
-    public function setPriceMaxMargin(?float $price_max_margin): void
+    public function getCompanyId(): ?OdooRelation
     {
-        $this->price_max_margin = $price_max_margin;
+        return $this->company_id;
     }
 
     /**
@@ -780,10 +778,18 @@ final class Item extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @param float|null $price_max_margin
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function setPriceMaxMargin(?float $price_max_margin): void
     {
-        $this->write_date = $write_date;
+        $this->price_max_margin = $price_max_margin;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'product.pricelist.item';
     }
 }

@@ -16,8 +16,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Date extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.change.lock.date';
-
     /**
      * Lock Date for Non-Advisers
      * Only users with the Adviser role can edit accounts prior to and inclusive of this date. Use it for period
@@ -196,5 +194,13 @@ final class Date extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'account.change.lock.date';
     }
 }

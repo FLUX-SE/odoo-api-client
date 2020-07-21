@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Supplierinfo extends Base
 {
-    public const ODOO_MODEL_NAME = 'product.supplierinfo';
-
     /**
      * Vendor
      * Vendor of this product
@@ -250,19 +248,11 @@ final class Supplierinfo extends Base
     }
 
     /**
-     * @return int
+     * @param int $delay
      */
-    public function getDelay(): int
+    public function setDelay(int $delay): void
     {
-        return $this->delay;
-    }
-
-    /**
-     * @param DateTimeInterface|null $date_end
-     */
-    public function setDateEnd(?DateTimeInterface $date_end): void
-    {
-        $this->date_end = $date_end;
+        $this->delay = $delay;
     }
 
     /**
@@ -314,19 +304,11 @@ final class Supplierinfo extends Base
     }
 
     /**
-     * @param int $delay
+     * @return int
      */
-    public function setDelay(int $delay): void
+    public function getDelay(): int
     {
-        $this->delay = $delay;
-    }
-
-    /**
-     * @param DateTimeInterface|null $date_start
-     */
-    public function setDateStart(?DateTimeInterface $date_start): void
-    {
-        $this->date_start = $date_start;
+        return $this->delay;
     }
 
     /**
@@ -335,6 +317,14 @@ final class Supplierinfo extends Base
     public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getDateEnd(): ?DateTimeInterface
+    {
+        return $this->date_end;
     }
 
     /**
@@ -386,19 +376,27 @@ final class Supplierinfo extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
+     * @param DateTimeInterface|null $write_date
      */
-    public function getDateEnd(): ?DateTimeInterface
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->date_end;
+        $this->write_date = $write_date;
     }
 
     /**
-     * @return DateTimeInterface|null
+     * @param DateTimeInterface|null $date_end
      */
-    public function getDateStart(): ?DateTimeInterface
+    public function setDateEnd(?DateTimeInterface $date_end): void
     {
-        return $this->date_start;
+        $this->date_end = $date_end;
+    }
+
+    /**
+     * @param DateTimeInterface|null $date_start
+     */
+    public function setDateStart(?DateTimeInterface $date_start): void
+    {
+        $this->date_start = $date_start;
     }
 
     /**
@@ -482,11 +480,11 @@ final class Supplierinfo extends Base
     }
 
     /**
-     * @param OdooRelation $currency_id
+     * @return DateTimeInterface|null
      */
-    public function setCurrencyId(OdooRelation $currency_id): void
+    public function getDateStart(): ?DateTimeInterface
     {
-        $this->currency_id = $currency_id;
+        return $this->date_start;
     }
 
     /**
@@ -546,10 +544,18 @@ final class Supplierinfo extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @param OdooRelation $currency_id
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function setCurrencyId(OdooRelation $currency_id): void
     {
-        $this->write_date = $write_date;
+        $this->currency_id = $currency_id;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'product.supplierinfo';
     }
 }

@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Test extends Base
 {
-    public const ODOO_MODEL_NAME = 'resource.test';
-
     /**
      * Name
      * Searchable : yes
@@ -715,11 +713,19 @@ final class Test extends Base
     }
 
     /**
-     * @param string|null $tz
+     * @return OdooRelation|null
      */
-    public function setTz(?string $tz): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->tz = $tz;
+        return $this->create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -771,19 +777,11 @@ final class Test extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param string|null $tz
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setTz(?string $tz): void
     {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getTz(): ?string
-    {
-        return $this->tz;
+        $this->tz = $tz;
     }
 
     /**
@@ -792,6 +790,14 @@ final class Test extends Base
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTz(): ?string
+    {
+        return $this->tz;
     }
 
     /**
@@ -851,10 +857,10 @@ final class Test extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'resource.test';
     }
 }

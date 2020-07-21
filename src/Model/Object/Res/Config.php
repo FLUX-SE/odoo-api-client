@@ -20,8 +20,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Config extends Base
 {
-    public const ODOO_MODEL_NAME = 'res.config';
-
     /**
      * Created by
      * Searchable : yes
@@ -120,5 +118,13 @@ final class Config extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'res.config';
     }
 }

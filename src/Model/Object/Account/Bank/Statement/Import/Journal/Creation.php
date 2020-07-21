@@ -20,8 +20,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Creation extends Journal
 {
-    public const ODOO_MODEL_NAME = 'account.bank.statement.import.journal.creation';
-
     /**
      * Journal
      * Searchable : yes
@@ -55,7 +53,7 @@ final class Creation extends Journal
      *            -> cash (Cash)
      *            -> bank (Bank)
      *            -> general (Miscellaneous)
-     *
+     *       
      * @param OdooRelation $sequence_id Entry Sequence
      *        This field contains the information related to the numbering of the journal entries of this journal.
      *        Searchable : yes
@@ -69,7 +67,7 @@ final class Creation extends Journal
      *            -> none (Free)
      *            -> partner (Based on Customer)
      *            -> invoice (Based on Invoice)
-     *
+     *       
      * @param string $invoice_reference_model Communication Standard
      *        You can choose different models for each type of reference. The default one is the Odoo reference.
      *        Searchable : yes
@@ -77,7 +75,7 @@ final class Creation extends Journal
      *        Selection : (default value, usually null)
      *            -> odoo (Odoo)
      *            -> euro (European)
-     *
+     *       
      * @param OdooRelation $company_id Company
      *        Company related to this journal
      *        Searchable : yes
@@ -95,12 +93,12 @@ final class Creation extends Journal
     ) {
         $this->journal_id = $journal_id;
         parent::__construct(
-            $name,
-            $code,
-            $type,
-            $sequence_id,
-            $invoice_reference_type,
-            $invoice_reference_model,
+            $name, 
+            $code, 
+            $type, 
+            $sequence_id, 
+            $invoice_reference_type, 
+            $invoice_reference_model, 
             $company_id
         );
     }
@@ -119,5 +117,13 @@ final class Creation extends Journal
     public function setJournalId(OdooRelation $journal_id): void
     {
         $this->journal_id = $journal_id;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'account.bank.statement.import.journal.creation';
     }
 }

@@ -23,8 +23,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 class Message extends Base
 {
-    public const ODOO_MODEL_NAME = 'mail.compose.message';
-
     /**
      * Subject
      * Searchable : yes
@@ -326,7 +324,7 @@ class Message extends Base
      *        Selection : (default value, usually null)
      *            -> comment (Comment)
      *            -> notification (System notification)
-     *
+     *       
      */
     public function __construct(string $message_type)
     {
@@ -334,19 +332,11 @@ class Message extends Base
     }
 
     /**
-     * @param bool|null $auto_delete_message
+     * @return OdooRelation|null
      */
-    public function setAutoDeleteMessage(?bool $auto_delete_message): void
+    public function getTemplateId(): ?OdooRelation
     {
-        $this->auto_delete_message = $auto_delete_message;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getPartnerIds(): ?array
-    {
-        return $this->partner_ids;
+        return $this->template_id;
     }
 
     /**
@@ -475,19 +465,11 @@ class Message extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param bool|null $auto_delete_message
      */
-    public function getTemplateId(): ?OdooRelation
+    public function setAutoDeleteMessage(?bool $auto_delete_message): void
     {
-        return $this->template_id;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isIsLog(): ?bool
-    {
-        return $this->is_log;
+        $this->auto_delete_message = $auto_delete_message;
     }
 
     /**
@@ -496,6 +478,14 @@ class Message extends Base
     public function setTemplateId(?OdooRelation $template_id): void
     {
         $this->template_id = $template_id;
+    }
+
+    /**
+     * @param bool|null $is_log
+     */
+    public function setIsLog(?bool $is_log): void
+    {
+        $this->is_log = $is_log;
     }
 
     /**
@@ -603,19 +593,27 @@ class Message extends Base
     }
 
     /**
-     * @param bool|null $is_log
+     * @param DateTimeInterface|null $write_date
      */
-    public function setIsLog(?bool $is_log): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->is_log = $is_log;
+        $this->write_date = $write_date;
     }
 
     /**
-     * @param bool|null $no_auto_thread
+     * @return OdooRelation[]|null
      */
-    public function setNoAutoThread(?bool $no_auto_thread): void
+    public function getPartnerIds(): ?array
     {
-        $this->no_auto_thread = $no_auto_thread;
+        return $this->partner_ids;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsLog(): ?bool
+    {
+        return $this->is_log;
     }
 
     /**
@@ -776,75 +774,11 @@ class Message extends Base
     }
 
     /**
-     * @return bool|null
+     * @param bool|null $no_auto_thread
      */
-    public function isNoAutoThread(): ?bool
+    public function setNoAutoThread(?bool $no_auto_thread): void
     {
-        return $this->no_auto_thread;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getResId(): ?int
-    {
-        return $this->res_id;
-    }
-
-    /**
-     * @param int|null $res_id
-     */
-    public function setResId(?int $res_id): void
-    {
-        $this->res_id = $res_id;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getRecordName(): ?string
-    {
-        return $this->record_name;
-    }
-
-    /**
-     * @param string|null $record_name
-     */
-    public function setRecordName(?string $record_name): void
-    {
-        $this->record_name = $record_name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMessageType(): string
-    {
-        return $this->message_type;
-    }
-
-    /**
-     * @param string $message_type
-     */
-    public function setMessageType(string $message_type): void
-    {
-        $this->message_type = $message_type;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getSubtypeId(): ?OdooRelation
-    {
-        return $this->subtype_id;
-    }
-
-    /**
-     * @param OdooRelation|null $subtype_id
-     */
-    public function setSubtypeId(?OdooRelation $subtype_id): void
-    {
-        $this->subtype_id = $subtype_id;
+        $this->no_auto_thread = $no_auto_thread;
     }
 
     /**
@@ -856,19 +790,27 @@ class Message extends Base
     }
 
     /**
-     * @param OdooRelation|null $mail_activity_type_id
+     * @return bool|null
      */
-    public function setMailActivityTypeId(?OdooRelation $mail_activity_type_id): void
+    public function isNoAutoThread(): ?bool
     {
-        $this->mail_activity_type_id = $mail_activity_type_id;
+        return $this->no_auto_thread;
+    }
+
+    /**
+     * @param string|null $reply_to
+     */
+    public function setReplyTo(?string $reply_to): void
+    {
+        $this->reply_to = $reply_to;
     }
 
     /**
      * @return string|null
      */
-    public function getCompositionMode(): ?string
+    public function getReplyTo(): ?string
     {
-        return $this->composition_mode;
+        return $this->reply_to;
     }
 
     /**
@@ -882,24 +824,88 @@ class Message extends Base
     /**
      * @return string|null
      */
-    public function getReplyTo(): ?string
+    public function getCompositionMode(): ?string
     {
-        return $this->reply_to;
+        return $this->composition_mode;
     }
 
     /**
-     * @param string|null $reply_to
+     * @param OdooRelation|null $mail_activity_type_id
      */
-    public function setReplyTo(?string $reply_to): void
+    public function setMailActivityTypeId(?OdooRelation $mail_activity_type_id): void
     {
-        $this->reply_to = $reply_to;
+        $this->mail_activity_type_id = $mail_activity_type_id;
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @param OdooRelation|null $subtype_id
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function setSubtypeId(?OdooRelation $subtype_id): void
     {
-        $this->write_date = $write_date;
+        $this->subtype_id = $subtype_id;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getResId(): ?int
+    {
+        return $this->res_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getSubtypeId(): ?OdooRelation
+    {
+        return $this->subtype_id;
+    }
+
+    /**
+     * @param string $message_type
+     */
+    public function setMessageType(string $message_type): void
+    {
+        $this->message_type = $message_type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessageType(): string
+    {
+        return $this->message_type;
+    }
+
+    /**
+     * @param string|null $record_name
+     */
+    public function setRecordName(?string $record_name): void
+    {
+        $this->record_name = $record_name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRecordName(): ?string
+    {
+        return $this->record_name;
+    }
+
+    /**
+     * @param int|null $res_id
+     */
+    public function setResId(?int $res_id): void
+    {
+        $this->res_id = $res_id;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'mail.compose.message';
     }
 }

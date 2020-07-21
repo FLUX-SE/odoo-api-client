@@ -20,8 +20,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Access extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.model.access';
-
     /**
      * Name
      * Searchable : yes
@@ -147,11 +145,19 @@ final class Access extends Base
     }
 
     /**
-     * @return bool|null
+     * @param bool|null $perm_create
      */
-    public function isPermCreate(): ?bool
+    public function setPermCreate(?bool $perm_create): void
     {
-        return $this->perm_create;
+        $this->perm_create = $perm_create;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -227,19 +233,11 @@ final class Access extends Base
     }
 
     /**
-     * @param bool|null $perm_create
+     * @return bool|null
      */
-    public function setPermCreate(?bool $perm_create): void
+    public function isPermCreate(): ?bool
     {
-        $this->perm_create = $perm_create;
-    }
-
-    /**
-     * @param bool|null $perm_write
-     */
-    public function setPermWrite(?bool $perm_write): void
-    {
-        $this->perm_write = $perm_write;
+        return $this->perm_create;
     }
 
     /**
@@ -248,6 +246,14 @@ final class Access extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @param bool|null $perm_write
+     */
+    public function setPermWrite(?bool $perm_write): void
+    {
+        $this->perm_write = $perm_write;
     }
 
     /**
@@ -331,10 +337,10 @@ final class Access extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'ir.model.access';
     }
 }

@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Report extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.common.journal.report';
-
     /**
      * With Currency
      * Print Report with the currency column if the currency differs from the company currency.
@@ -131,7 +129,7 @@ final class Report extends Base
      *        Selection : (default value, usually null)
      *            -> posted (All Posted Entries)
      *            -> all (All Entries)
-     *
+     *       
      */
     public function __construct(OdooRelation $company_id, array $journal_ids, string $target_move)
     {
@@ -146,6 +144,14 @@ final class Report extends Base
     public function setDateTo(?DateTimeInterface $date_to): void
     {
         $this->date_to = $date_to;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -326,10 +332,10 @@ final class Report extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.common.journal.report';
     }
 }

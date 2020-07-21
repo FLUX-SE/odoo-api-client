@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Tip extends Base
 {
-    public const ODOO_MODEL_NAME = 'digest.tip';
-
     /**
      * Sequence
      * Used to display digest tip in email template base on order
@@ -109,11 +107,19 @@ final class Tip extends Base
     }
 
     /**
-     * @param OdooRelation|null $group_id
+     * @return OdooRelation|null
      */
-    public function setGroupId(?OdooRelation $group_id): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->group_id = $group_id;
+        return $this->create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -165,19 +171,11 @@ final class Tip extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $group_id
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setGroupId(?OdooRelation $group_id): void
     {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getGroupId(): ?OdooRelation
-    {
-        return $this->group_id;
+        $this->group_id = $group_id;
     }
 
     /**
@@ -186,6 +184,14 @@ final class Tip extends Base
     public function setSequence(?int $sequence): void
     {
         $this->sequence = $sequence;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getGroupId(): ?OdooRelation
+    {
+        return $this->group_id;
     }
 
     /**
@@ -266,10 +272,10 @@ final class Tip extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'digest.tip';
     }
 }

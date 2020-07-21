@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Words extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.invoice_extract.words';
-
     /**
      * Invoice
      * Invoice id
@@ -178,6 +176,14 @@ final class Words extends Base
     public function getWordBoxWidth(): ?float
     {
         return $this->word_box_width;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -397,10 +403,10 @@ final class Words extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.invoice_extract.words';
     }
 }

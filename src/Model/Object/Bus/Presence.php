@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Presence extends Base
 {
-    public const ODOO_MODEL_NAME = 'bus.presence';
-
     /**
      * Users
      * Searchable : yes
@@ -136,5 +134,13 @@ final class Presence extends Base
     public function setStatus(?string $status): void
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'bus.presence';
     }
 }

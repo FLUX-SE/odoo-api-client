@@ -21,5 +21,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Contact extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.qweb.field.contact';
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'ir.qweb.field.contact';
+    }
 }

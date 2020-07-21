@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Packaging extends Base
 {
-    public const ODOO_MODEL_NAME = 'product.packaging';
-
     /**
      * Package Type
      * Searchable : yes
@@ -141,11 +139,19 @@ final class Packaging extends Base
     }
 
     /**
-     * @param OdooRelation|null $product_uom_id
+     * @return OdooRelation|null
      */
-    public function setProductUomId(?OdooRelation $product_uom_id): void
+    public function getCompanyId(): ?OdooRelation
     {
-        $this->product_uom_id = $product_uom_id;
+        return $this->company_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -213,19 +219,11 @@ final class Packaging extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $product_uom_id
      */
-    public function getCompanyId(): ?OdooRelation
+    public function setProductUomId(?OdooRelation $product_uom_id): void
     {
-        return $this->company_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getProductUomId(): ?OdooRelation
-    {
-        return $this->product_uom_id;
+        $this->product_uom_id = $product_uom_id;
     }
 
     /**
@@ -234,6 +232,14 @@ final class Packaging extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getProductUomId(): ?OdooRelation
+    {
+        return $this->product_uom_id;
     }
 
     /**
@@ -309,10 +315,10 @@ final class Packaging extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'product.packaging';
     }
 }

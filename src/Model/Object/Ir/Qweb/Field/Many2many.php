@@ -21,5 +21,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Many2many extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.qweb.field.many2many';
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'ir.qweb.field.many2many';
+    }
 }

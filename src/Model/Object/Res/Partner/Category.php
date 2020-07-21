@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Category extends Base
 {
-    public const ODOO_MODEL_NAME = 'res.partner.category';
-
     /**
      * Tag Name
      * Searchable : yes
@@ -137,11 +135,19 @@ final class Category extends Base
     }
 
     /**
-     * @param string|null $parent_path
+     * @return OdooRelation[]|null
      */
-    public function setParentPath(?string $parent_path): void
+    public function getPartnerIds(): ?array
     {
-        $this->parent_path = $parent_path;
+        return $this->partner_ids;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -254,19 +260,11 @@ final class Category extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @param string|null $parent_path
      */
-    public function getPartnerIds(): ?array
+    public function setParentPath(?string $parent_path): void
     {
-        return $this->partner_ids;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getParentPath(): ?string
-    {
-        return $this->parent_path;
+        $this->parent_path = $parent_path;
     }
 
     /**
@@ -275,6 +273,14 @@ final class Category extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getParentPath(): ?string
+    {
+        return $this->parent_path;
     }
 
     /**
@@ -395,10 +401,10 @@ final class Category extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'res.partner.category';
     }
 }

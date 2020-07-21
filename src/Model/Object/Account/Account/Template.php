@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Template extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.account.template';
-
     /**
      * Name
      * Searchable : yes
@@ -200,19 +198,11 @@ final class Template extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $root_id
      */
-    public function getRootId(): ?OdooRelation
+    public function setRootId(?OdooRelation $root_id): void
     {
-        return $this->root_id;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getTagIds(): ?array
-    {
-        return $this->tag_ids;
+        $this->root_id = $root_id;
     }
 
     /**
@@ -285,19 +275,11 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation|null $root_id
-     */
-    public function setRootId(?OdooRelation $root_id): void
-    {
-        $this->root_id = $root_id;
-    }
-
-    /**
      * @return OdooRelation|null
      */
-    public function getChartTemplateId(): ?OdooRelation
+    public function getRootId(): ?OdooRelation
     {
-        return $this->chart_template_id;
+        return $this->root_id;
     }
 
     /**
@@ -306,6 +288,14 @@ final class Template extends Base
     public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $chart_template_id
+     */
+    public function setChartTemplateId(?OdooRelation $chart_template_id): void
+    {
+        $this->chart_template_id = $chart_template_id;
     }
 
     /**
@@ -357,19 +347,27 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation|null $chart_template_id
+     * @param DateTimeInterface|null $write_date
      */
-    public function setChartTemplateId(?OdooRelation $chart_template_id): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->chart_template_id = $chart_template_id;
+        $this->write_date = $write_date;
     }
 
     /**
-     * @param bool|null $nocreate
+     * @return OdooRelation[]|null
      */
-    public function setNocreate(?bool $nocreate): void
+    public function getTagIds(): ?array
     {
-        $this->nocreate = $nocreate;
+        return $this->tag_ids;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getChartTemplateId(): ?OdooRelation
+    {
+        return $this->chart_template_id;
     }
 
     /**
@@ -453,11 +451,11 @@ final class Template extends Base
     }
 
     /**
-     * @return bool|null
+     * @param bool|null $nocreate
      */
-    public function isNocreate(): ?bool
+    public function setNocreate(?bool $nocreate): void
     {
-        return $this->nocreate;
+        $this->nocreate = $nocreate;
     }
 
     /**
@@ -538,10 +536,18 @@ final class Template extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return bool|null
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function isNocreate(): ?bool
     {
-        $this->write_date = $write_date;
+        return $this->nocreate;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'account.account.template';
     }
 }

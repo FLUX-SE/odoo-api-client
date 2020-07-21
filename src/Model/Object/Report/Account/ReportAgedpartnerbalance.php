@@ -14,5 +14,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class ReportAgedpartnerbalance extends Base
 {
-    public const ODOO_MODEL_NAME = 'report.account.report_agedpartnerbalance';
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'report.account.report_agedpartnerbalance';
+    }
 }

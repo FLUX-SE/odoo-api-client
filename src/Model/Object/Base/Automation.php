@@ -20,8 +20,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Automation extends Server
 {
-    public const ODOO_MODEL_NAME = 'base.automation';
-
     /**
      * Server Actions
      * Searchable : yes
@@ -173,7 +171,7 @@ final class Automation extends Server
      *            -> on_unlink (On Deletion)
      *            -> on_change (Based on Form Modification)
      *            -> on_time (Based on Timed Condition)
-     *
+     *       
      * @param string $name Action Name
      *        Searchable : yes
      *        Sortable : yes
@@ -192,7 +190,7 @@ final class Automation extends Server
      *        Selection : (default value, usually null)
      *            -> specific (Specific User)
      *            -> generic (Generic User From Record)
-     *
+     *       
      * @param string $usage Usage
      *        Searchable : yes
      *        Sortable : yes
@@ -200,7 +198,7 @@ final class Automation extends Server
      *            -> ir_actions_server (Server Action)
      *            -> ir_cron (Scheduled Action)
      *            -> base_automation (Automated Action)
-     *
+     *       
      * @param string $state Action To Do
      *        Type of server action. The following values are available:
      *        - 'Execute Python Code': a block of python code that will be executed
@@ -221,14 +219,14 @@ final class Automation extends Server
      *            -> followers (Add Followers)
      *            -> next_activity (Create Next Activity)
      *            -> sms (Send SMS Text Message)
-     *
+     *       
      * @param string $binding_type Binding Type
      *        Searchable : yes
      *        Sortable : yes
      *        Selection : (default value, usually null)
      *            -> action (Action)
      *            -> report (Report)
-     *
+     *       
      */
     public function __construct(
         OdooRelation $action_server_id,
@@ -244,12 +242,12 @@ final class Automation extends Server
         $this->action_server_id = $action_server_id;
         $this->trigger = $trigger;
         parent::__construct(
-            $name,
-            $type,
-            $model_id,
-            $activity_user_type,
-            $usage,
-            $state,
+            $name, 
+            $type, 
+            $model_id, 
+            $activity_user_type, 
+            $usage, 
+            $state, 
             $binding_type
         );
     }
@@ -260,6 +258,21 @@ final class Automation extends Server
     public function getFilterPreDomain(): ?string
     {
         return $this->filter_pre_domain;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeTriggerFieldIds(OdooRelation $item): void
+    {
+        if (null === $this->trigger_field_ids) {
+            $this->trigger_field_ids = [];
+        }
+
+        if ($this->hasTriggerFieldIds($item)) {
+            $index = array_search($item, $this->trigger_field_ids);
+            unset($this->trigger_field_ids[$index]);
+        }
     }
 
     /**
@@ -477,17 +490,10 @@ final class Automation extends Server
     }
 
     /**
-     * @param OdooRelation $item
+     * @return string
      */
-    public function removeTriggerFieldIds(OdooRelation $item): void
+    public static function getOdooModelName(): string
     {
-        if (null === $this->trigger_field_ids) {
-            $this->trigger_field_ids = [];
-        }
-
-        if ($this->hasTriggerFieldIds($item)) {
-            $index = array_search($item, $this->trigger_field_ids);
-            unset($this->trigger_field_ids[$index]);
-        }
+        return 'base.automation';
     }
 }

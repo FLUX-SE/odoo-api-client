@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Industry extends Base
 {
-    public const ODOO_MODEL_NAME = 'res.partner.industry';
-
     /**
      * Name
      * Searchable : yes
@@ -199,5 +197,13 @@ final class Industry extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'res.partner.industry';
     }
 }

@@ -22,8 +22,6 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Translation extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.translation';
-
     /**
      * Translated field
      * Searchable : yes
@@ -131,11 +129,19 @@ final class Translation extends Base
     }
 
     /**
-     * @param string|null $src
+     * @return string|null
      */
-    public function setSrc(?string $src): void
+    public function getValue(): ?string
     {
-        $this->src = $src;
+        return $this->value;
+    }
+
+    /**
+     * @param string|null $comments
+     */
+    public function setComments(?string $comments): void
+    {
+        $this->comments = $comments;
     }
 
     /**
@@ -187,19 +193,11 @@ final class Translation extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $src
      */
-    public function getValue(): ?string
+    public function setSrc(?string $src): void
     {
-        return $this->value;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSrc(): ?string
-    {
-        return $this->src;
+        $this->src = $src;
     }
 
     /**
@@ -208,6 +206,14 @@ final class Translation extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSrc(): ?string
+    {
+        return $this->src;
     }
 
     /**
@@ -267,10 +273,10 @@ final class Translation extends Base
     }
 
     /**
-     * @param string|null $comments
+     * @return string
      */
-    public function setComments(?string $comments): void
+    public static function getOdooModelName(): string
     {
-        $this->comments = $comments;
+        return 'ir.translation';
     }
 }

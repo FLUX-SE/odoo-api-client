@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Option extends Base
 {
-    public const ODOO_MODEL_NAME = 'sale.order.template.option';
-
     /**
      * Quotation Template Reference
      * Searchable : yes
@@ -81,7 +79,7 @@ final class Option extends Base
     private $discount;
 
     /**
-     * Unit of Measure
+     * Unit of Measure 
      * Searchable : yes
      * Sortable : yes
      *
@@ -158,7 +156,7 @@ final class Option extends Base
      * @param float $price_unit Unit Price
      *        Searchable : yes
      *        Sortable : yes
-     * @param OdooRelation $uom_id Unit of Measure
+     * @param OdooRelation $uom_id Unit of Measure 
      *        Searchable : yes
      *        Sortable : yes
      * @param float $quantity Quantity
@@ -182,11 +180,19 @@ final class Option extends Base
     }
 
     /**
-     * @param OdooRelation $uom_id
+     * @return OdooRelation|null
      */
-    public function setUomId(OdooRelation $uom_id): void
+    public function getProductUomCategoryId(): ?OdooRelation
     {
-        $this->uom_id = $uom_id;
+        return $this->product_uom_category_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -270,19 +276,11 @@ final class Option extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation $uom_id
      */
-    public function getProductUomCategoryId(): ?OdooRelation
+    public function setUomId(OdooRelation $uom_id): void
     {
-        return $this->product_uom_category_id;
-    }
-
-    /**
-     * @return OdooRelation
-     */
-    public function getUomId(): OdooRelation
-    {
-        return $this->uom_id;
+        $this->uom_id = $uom_id;
     }
 
     /**
@@ -291,6 +289,14 @@ final class Option extends Base
     public function getSaleOrderTemplateId(): OdooRelation
     {
         return $this->sale_order_template_id;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getUomId(): OdooRelation
+    {
+        return $this->uom_id;
     }
 
     /**
@@ -382,10 +388,10 @@ final class Option extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'sale.order.template.option';
     }
 }

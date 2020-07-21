@@ -18,8 +18,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Blacklist extends Base
 {
-    public const ODOO_MODEL_NAME = 'mail.thread.blacklist';
-
     /**
      * Blacklist
      * If the email address is on the blacklist, the contact won't receive mass mailing anymore, from any list
@@ -203,19 +201,11 @@ final class Blacklist extends Base
     }
 
     /**
-     * @return int|null
+     * @param int|null $message_attachment_count
      */
-    public function getMessageAttachmentCount(): ?int
+    public function setMessageAttachmentCount(?int $message_attachment_count): void
     {
-        return $this->message_attachment_count;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getMessageUnreadCounter(): ?int
-    {
-        return $this->message_unread_counter;
+        $this->message_attachment_count = $message_attachment_count;
     }
 
     /**
@@ -291,19 +281,11 @@ final class Blacklist extends Base
     }
 
     /**
-     * @param int|null $message_attachment_count
+     * @return int|null
      */
-    public function setMessageAttachmentCount(?int $message_attachment_count): void
+    public function getMessageAttachmentCount(): ?int
     {
-        $this->message_attachment_count = $message_attachment_count;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isMessageUnread(): ?bool
-    {
-        return $this->message_unread;
+        return $this->message_attachment_count;
     }
 
     /**
@@ -312,6 +294,14 @@ final class Blacklist extends Base
     public function getMessageMainAttachmentId(): ?OdooRelation
     {
         return $this->message_main_attachment_id;
+    }
+
+    /**
+     * @param bool|null $message_unread
+     */
+    public function setMessageUnread(?bool $message_unread): void
+    {
+        $this->message_unread = $message_unread;
     }
 
     /**
@@ -408,26 +398,27 @@ final class Blacklist extends Base
     }
 
     /**
-     * @param bool|null $message_unread
+     * @param string|null $email_normalized
      */
-    public function setMessageUnread(?bool $message_unread): void
+    public function setEmailNormalized(?string $email_normalized): void
     {
-        $this->message_unread = $message_unread;
+        $this->email_normalized = $email_normalized;
     }
 
     /**
-     * @param OdooRelation $item
+     * @return int|null
      */
-    public function removeMessageIds(OdooRelation $item): void
+    public function getMessageUnreadCounter(): ?int
     {
-        if (null === $this->message_ids) {
-            $this->message_ids = [];
-        }
+        return $this->message_unread_counter;
+    }
 
-        if ($this->hasMessageIds($item)) {
-            $index = array_search($item, $this->message_ids);
-            unset($this->message_ids[$index]);
-        }
+    /**
+     * @return bool|null
+     */
+    public function isMessageUnread(): ?bool
+    {
+        return $this->message_unread;
     }
 
     /**
@@ -564,17 +555,16 @@ final class Blacklist extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addMessageIds(OdooRelation $item): void
+    public function removeMessageIds(OdooRelation $item): void
     {
-        if ($this->hasMessageIds($item)) {
-            return;
-        }
-
         if (null === $this->message_ids) {
             $this->message_ids = [];
         }
 
-        $this->message_ids[] = $item;
+        if ($this->hasMessageIds($item)) {
+            $index = array_search($item, $this->message_ids);
+            unset($this->message_ids[$index]);
+        }
     }
 
     /**
@@ -700,10 +690,26 @@ final class Blacklist extends Base
     }
 
     /**
-     * @param string|null $email_normalized
+     * @param OdooRelation $item
      */
-    public function setEmailNormalized(?string $email_normalized): void
+    public function addMessageIds(OdooRelation $item): void
     {
-        $this->email_normalized = $email_normalized;
+        if ($this->hasMessageIds($item)) {
+            return;
+        }
+
+        if (null === $this->message_ids) {
+            $this->message_ids = [];
+        }
+
+        $this->message_ids[] = $item;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'mail.thread.blacklist';
     }
 }

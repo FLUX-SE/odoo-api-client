@@ -49,8 +49,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Cc extends Base
 {
-    public const ODOO_MODEL_NAME = 'mail.thread.cc';
-
     /**
      * Email cc
      * List of cc from incoming emails.
@@ -213,19 +211,11 @@ final class Cc extends Base
     }
 
     /**
-     * @param int|null $message_has_error_counter
-     */
-    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
-    {
-        $this->message_has_error_counter = $message_has_error_counter;
-    }
-
-    /**
      * @return int|null
      */
-    public function getMessageUnreadCounter(): ?int
+    public function getMessageAttachmentCount(): ?int
     {
-        return $this->message_unread_counter;
+        return $this->message_attachment_count;
     }
 
     /**
@@ -293,19 +283,11 @@ final class Cc extends Base
     }
 
     /**
-     * @return int|null
+     * @param int|null $message_has_error_counter
      */
-    public function getMessageAttachmentCount(): ?int
+    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
     {
-        return $this->message_attachment_count;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isMessageUnread(): ?bool
-    {
-        return $this->message_unread;
+        $this->message_has_error_counter = $message_has_error_counter;
     }
 
     /**
@@ -314,6 +296,14 @@ final class Cc extends Base
     public function setMessageAttachmentCount(?int $message_attachment_count): void
     {
         $this->message_attachment_count = $message_attachment_count;
+    }
+
+    /**
+     * @param bool|null $message_unread
+     */
+    public function setMessageUnread(?bool $message_unread): void
+    {
+        $this->message_unread = $message_unread;
     }
 
     /**
@@ -402,26 +392,27 @@ final class Cc extends Base
     }
 
     /**
-     * @param bool|null $message_unread
+     * @param bool|null $message_has_sms_error
      */
-    public function setMessageUnread(?bool $message_unread): void
+    public function setMessageHasSmsError(?bool $message_has_sms_error): void
     {
-        $this->message_unread = $message_unread;
+        $this->message_has_sms_error = $message_has_sms_error;
     }
 
     /**
-     * @param OdooRelation $item
+     * @return int|null
      */
-    public function removeMessageIds(OdooRelation $item): void
+    public function getMessageUnreadCounter(): ?int
     {
-        if (null === $this->message_ids) {
-            $this->message_ids = [];
-        }
+        return $this->message_unread_counter;
+    }
 
-        if ($this->hasMessageIds($item)) {
-            $index = array_search($item, $this->message_ids);
-            unset($this->message_ids[$index]);
-        }
+    /**
+     * @return bool|null
+     */
+    public function isMessageUnread(): ?bool
+    {
+        return $this->message_unread;
     }
 
     /**
@@ -558,17 +549,16 @@ final class Cc extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addMessageIds(OdooRelation $item): void
+    public function removeMessageIds(OdooRelation $item): void
     {
-        if ($this->hasMessageIds($item)) {
-            return;
-        }
-
         if (null === $this->message_ids) {
             $this->message_ids = [];
         }
 
-        $this->message_ids[] = $item;
+        if ($this->hasMessageIds($item)) {
+            $index = array_search($item, $this->message_ids);
+            unset($this->message_ids[$index]);
+        }
     }
 
     /**
@@ -678,10 +668,26 @@ final class Cc extends Base
     }
 
     /**
-     * @param bool|null $message_has_sms_error
+     * @param OdooRelation $item
      */
-    public function setMessageHasSmsError(?bool $message_has_sms_error): void
+    public function addMessageIds(OdooRelation $item): void
     {
-        $this->message_has_sms_error = $message_has_sms_error;
+        if ($this->hasMessageIds($item)) {
+            return;
+        }
+
+        if (null === $this->message_ids) {
+            $this->message_ids = [];
+        }
+
+        $this->message_ids[] = $item;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'mail.thread.cc';
     }
 }

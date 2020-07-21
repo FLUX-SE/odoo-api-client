@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Resource_ extends Base
 {
-    public const ODOO_MODEL_NAME = 'resource.resource';
-
     /**
      * Name
      * Searchable : yes
@@ -750,7 +748,7 @@ final class Resource_ extends Base
      *        Selection : (default value, usually null)
      *            -> user (Human)
      *            -> material (Material)
-     *
+     *       
      * @param float $time_efficiency Efficiency Factor
      *        This field is used to calculate the the expected duration of a work order at this work center. For example, if
      *        a work order takes one hour and the efficiency factor is 100%, then the expected duration will be one hour. If
@@ -1359,7 +1357,7 @@ final class Resource_ extends Base
      *            -> Etc/UTC (Etc/UTC)
      *            -> Etc/Universal (Etc/Universal)
      *            -> Etc/Zulu (Etc/Zulu)
-     *
+     *       
      */
     public function __construct(
         string $name,
@@ -1376,11 +1374,19 @@ final class Resource_ extends Base
     }
 
     /**
-     * @return OdooRelation
+     * @param OdooRelation $calendar_id
      */
-    public function getCalendarId(): OdooRelation
+    public function setCalendarId(OdooRelation $calendar_id): void
     {
-        return $this->calendar_id;
+        $this->calendar_id = $calendar_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -1456,19 +1462,11 @@ final class Resource_ extends Base
     }
 
     /**
-     * @param OdooRelation $calendar_id
+     * @return OdooRelation
      */
-    public function setCalendarId(OdooRelation $calendar_id): void
+    public function getCalendarId(): OdooRelation
     {
-        $this->calendar_id = $calendar_id;
-    }
-
-    /**
-     * @param float $time_efficiency
-     */
-    public function setTimeEfficiency(float $time_efficiency): void
-    {
-        $this->time_efficiency = $time_efficiency;
+        return $this->calendar_id;
     }
 
     /**
@@ -1477,6 +1475,14 @@ final class Resource_ extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @param float $time_efficiency
+     */
+    public function setTimeEfficiency(float $time_efficiency): void
+    {
+        $this->time_efficiency = $time_efficiency;
     }
 
     /**
@@ -1560,10 +1566,10 @@ final class Resource_ extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'resource.resource';
     }
 }

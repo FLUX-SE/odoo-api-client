@@ -20,8 +20,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Groups extends Base
 {
-    public const ODOO_MODEL_NAME = 'res.groups';
-
     /**
      * Name
      * Searchable : yes
@@ -430,6 +428,14 @@ final class Groups extends Base
     }
 
     /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
+    }
+
+    /**
      * @return OdooRelation|null
      */
     public function getCategoryId(): ?OdooRelation
@@ -767,10 +773,10 @@ final class Groups extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'res.groups';
     }
 }

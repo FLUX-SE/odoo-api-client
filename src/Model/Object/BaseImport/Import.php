@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Import extends Base
 {
-    public const ODOO_MODEL_NAME = 'base_import.import';
-
     /**
      * Model
      * Searchable : yes
@@ -105,6 +103,70 @@ final class Import extends Base
     }
 
     /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
      * @param string|null $res_model
      */
     public function setResModel(?string $res_model): void
@@ -113,27 +175,19 @@ final class Import extends Base
     }
 
     /**
-     * @return int|null
+     * @param string|null $file_type
      */
-    public function getFile(): ?int
+    public function setFileType(?string $file_type): void
     {
-        return $this->file;
-    }
-
-    /**
-     * @param int|null $file
-     */
-    public function setFile(?int $file): void
-    {
-        $this->file = $file;
+        $this->file_type = $file_type;
     }
 
     /**
      * @return string|null
      */
-    public function getFileName(): ?string
+    public function getFileType(): ?string
     {
-        return $this->file_name;
+        return $this->file_type;
     }
 
     /**
@@ -147,80 +201,32 @@ final class Import extends Base
     /**
      * @return string|null
      */
-    public function getFileType(): ?string
+    public function getFileName(): ?string
     {
-        return $this->file_type;
+        return $this->file_name;
     }
 
     /**
-     * @param string|null $file_type
+     * @param int|null $file
      */
-    public function setFileType(?string $file_type): void
+    public function setFile(?int $file): void
     {
-        $this->file_type = $file_type;
+        $this->file = $file;
     }
 
     /**
-     * @return OdooRelation|null
+     * @return int|null
      */
-    public function getCreateUid(): ?OdooRelation
+    public function getFile(): ?int
     {
-        return $this->create_uid;
+        return $this->file;
     }
 
     /**
-     * @param OdooRelation|null $create_uid
+     * @return string
      */
-    public function setCreateUid(?OdooRelation $create_uid): void
+    public static function getOdooModelName(): string
     {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $write_date
-     */
-    public function setWriteDate(?DateTimeInterface $write_date): void
-    {
-        $this->write_date = $write_date;
+        return 'base_import.import';
     }
 }

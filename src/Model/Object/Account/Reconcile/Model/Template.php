@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Template extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.reconcile.model.template';
-
     /**
      * Chart Template
      * Searchable : yes
@@ -502,7 +500,7 @@ final class Template extends Base
      *            -> writeoff_button (Manually create a write-off on clicked button.)
      *            -> writeoff_suggestion (Suggest a write-off.)
      *            -> invoice_matching (Match existing invoices/bills.)
-     *
+     *       
      * @param string $match_nature Amount Nature
      *        The reconciliation model will only be applied to the selected transaction type:
      *                        * Amount Received: Only applied when receiving an amount.
@@ -514,7 +512,7 @@ final class Template extends Base
      *            -> amount_received (Amount Received)
      *            -> amount_paid (Amount Paid)
      *            -> both (Amount Paid/Received)
-     *
+     *       
      * @param string $amount_type Amount Type
      *        Searchable : yes
      *        Sortable : yes
@@ -522,7 +520,7 @@ final class Template extends Base
      *            -> fixed (Fixed)
      *            -> percentage (Percentage of balance)
      *            -> regex (From label)
-     *
+     *       
      * @param float $amount Write-off Amount
      *        Fixed amount will count as a debit if it is negative, as a credit if it is positive.
      *        Searchable : yes
@@ -534,7 +532,7 @@ final class Template extends Base
      *            -> fixed (Fixed)
      *            -> percentage (Percentage of amount)
      *            -> regex (From label)
-     *
+     *       
      * @param float $second_amount Second Write-off Amount
      *        Fixed amount will count as a debit if it is negative, as a credit if it is positive.
      *        Searchable : yes
@@ -568,6 +566,22 @@ final class Template extends Base
     public function setAmountFromLabelRegex(?string $amount_from_label_regex): void
     {
         $this->amount_from_label_regex = $amount_from_label_regex;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addTaxIds(OdooRelation $item): void
+    {
+        if ($this->hasTaxIds($item)) {
+            return;
+        }
+
+        if (null === $this->tax_ids) {
+            $this->tax_ids = [];
+        }
+
+        $this->tax_ids[] = $item;
     }
 
     /**
@@ -657,18 +671,11 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return OdooRelation|null
      */
-    public function removeTaxIds(OdooRelation $item): void
+    public function getSecondAccountId(): ?OdooRelation
     {
-        if (null === $this->tax_ids) {
-            $this->tax_ids = [];
-        }
-
-        if ($this->hasTaxIds($item)) {
-            $index = array_search($item, $this->tax_ids);
-            unset($this->tax_ids[$index]);
-        }
+        return $this->second_account_id;
     }
 
     /**
@@ -769,25 +776,24 @@ final class Template extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addTaxIds(OdooRelation $item): void
+    public function removeTaxIds(OdooRelation $item): void
     {
-        if ($this->hasTaxIds($item)) {
-            return;
-        }
-
         if (null === $this->tax_ids) {
             $this->tax_ids = [];
         }
 
-        $this->tax_ids[] = $item;
+        if ($this->hasTaxIds($item)) {
+            $index = array_search($item, $this->tax_ids);
+            unset($this->tax_ids[$index]);
+        }
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $second_account_id
      */
-    public function getSecondAccountId(): ?OdooRelation
+    public function setSecondAccountId(?OdooRelation $second_account_id): void
     {
-        return $this->second_account_id;
+        $this->second_account_id = $second_account_id;
     }
 
     /**
@@ -799,11 +805,25 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $second_tax_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setSecondTaxIds(?array $second_tax_ids): void
+    public function hasSecondTaxIds(OdooRelation $item): bool
     {
-        $this->second_tax_ids = $second_tax_ids;
+        if (null === $this->second_tax_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->second_tax_ids);
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -894,17 +914,19 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param OdooRelation[]|null $second_tax_ids
      */
-    public function hasSecondTaxIds(OdooRelation $item): bool
+    public function setSecondTaxIds(?array $second_tax_ids): void
     {
-        if (null === $this->second_tax_ids) {
-            return false;
-        }
+        $this->second_tax_ids = $second_tax_ids;
+    }
 
-        return in_array($item, $this->second_tax_ids);
+    /**
+     * @return string|null
+     */
+    public function getSecondLabel(): ?string
+    {
+        return $this->second_label;
     }
 
     /**
@@ -913,14 +935,6 @@ final class Template extends Base
     public function getSecondTaxIds(): ?array
     {
         return $this->second_tax_ids;
-    }
-
-    /**
-     * @param OdooRelation|null $second_account_id
-     */
-    public function setSecondAccountId(?OdooRelation $second_account_id): void
-    {
-        $this->second_account_id = $second_account_id;
     }
 
     /**
@@ -993,14 +1007,6 @@ final class Template extends Base
     public function setSecondLabel(?string $second_label): void
     {
         $this->second_label = $second_label;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSecondLabel(): ?string
-    {
-        return $this->second_label;
     }
 
     /**
@@ -1468,10 +1474,10 @@ final class Template extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.reconcile.model.template';
     }
 }

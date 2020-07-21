@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Sub extends Base
 {
-    public const ODOO_MODEL_NAME = 'web_editor.converter.test.sub';
-
     /**
      * Name
      * Searchable : yes
@@ -149,5 +147,13 @@ final class Sub extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'web_editor.converter.test.sub';
     }
 }

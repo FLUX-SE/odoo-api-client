@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Import extends Base
 {
-    public const ODOO_MODEL_NAME = 'base.language.import';
-
     /**
      * Language Name
      * Searchable : yes
@@ -131,11 +129,19 @@ final class Import extends Base
     }
 
     /**
-     * @param bool|null $overwrite
+     * @return OdooRelation|null
      */
-    public function setOverwrite(?bool $overwrite): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->overwrite = $overwrite;
+        return $this->create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -187,19 +193,11 @@ final class Import extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param bool|null $overwrite
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setOverwrite(?bool $overwrite): void
     {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isOverwrite(): ?bool
-    {
-        return $this->overwrite;
+        $this->overwrite = $overwrite;
     }
 
     /**
@@ -208,6 +206,14 @@ final class Import extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isOverwrite(): ?bool
+    {
+        return $this->overwrite;
     }
 
     /**
@@ -267,10 +273,10 @@ final class Import extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'base.language.import';
     }
 }

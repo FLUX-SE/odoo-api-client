@@ -16,8 +16,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Line extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.cashbox.line';
-
     /**
      * Coin/Bill Value
      * Searchable : yes
@@ -111,11 +109,19 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation|null $currency_id
+     * @return OdooRelation|null
      */
-    public function setCurrencyId(?OdooRelation $currency_id): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->currency_id = $currency_id;
+        return $this->create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -167,19 +173,11 @@ final class Line extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $currency_id
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setCurrencyId(?OdooRelation $currency_id): void
     {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getCurrencyId(): ?OdooRelation
-    {
-        return $this->currency_id;
+        $this->currency_id = $currency_id;
     }
 
     /**
@@ -188,6 +186,14 @@ final class Line extends Base
     public function getCoinValue(): float
     {
         return $this->coin_value;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCurrencyId(): ?OdooRelation
+    {
+        return $this->currency_id;
     }
 
     /**
@@ -247,10 +253,10 @@ final class Line extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.cashbox.line';
     }
 }

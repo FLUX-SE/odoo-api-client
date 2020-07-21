@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Actions extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.actions.actions';
-
     /**
      * Name
      * Searchable : yes
@@ -144,7 +142,7 @@ final class Actions extends Base
      *        Selection : (default value, usually null)
      *            -> action (Action)
      *            -> report (Report)
-     *
+     *       
      */
     public function __construct(string $name, string $type, string $binding_type)
     {
@@ -154,11 +152,19 @@ final class Actions extends Base
     }
 
     /**
-     * @param string $binding_type
+     * @return string|null
      */
-    public function setBindingType(string $binding_type): void
+    public function getBindingViewTypes(): ?string
     {
-        $this->binding_type = $binding_type;
+        return $this->binding_view_types;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -226,19 +232,11 @@ final class Actions extends Base
     }
 
     /**
-     * @return string|null
+     * @param string $binding_type
      */
-    public function getBindingViewTypes(): ?string
+    public function setBindingType(string $binding_type): void
     {
-        return $this->binding_view_types;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBindingType(): string
-    {
-        return $this->binding_type;
+        $this->binding_type = $binding_type;
     }
 
     /**
@@ -247,6 +245,14 @@ final class Actions extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBindingType(): string
+    {
+        return $this->binding_type;
     }
 
     /**
@@ -322,10 +328,10 @@ final class Actions extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'ir.actions.actions';
     }
 }

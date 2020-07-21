@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Group extends Base
 {
-    public const ODOO_MODEL_NAME = 'res.country.group';
-
     /**
      * Name
      * Searchable : yes
@@ -102,17 +100,24 @@ final class Group extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addPricelistIds(OdooRelation $item): void
+    public function removePricelistIds(OdooRelation $item): void
     {
-        if ($this->hasPricelistIds($item)) {
-            return;
-        }
-
         if (null === $this->pricelist_ids) {
             $this->pricelist_ids = [];
         }
 
-        $this->pricelist_ids[] = $item;
+        if ($this->hasPricelistIds($item)) {
+            $index = array_search($item, $this->pricelist_ids);
+            unset($this->pricelist_ids[$index]);
+        }
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -174,16 +179,25 @@ final class Group extends Base
     /**
      * @param OdooRelation $item
      */
-    public function removePricelistIds(OdooRelation $item): void
+    public function addPricelistIds(OdooRelation $item): void
     {
+        if ($this->hasPricelistIds($item)) {
+            return;
+        }
+
         if (null === $this->pricelist_ids) {
             $this->pricelist_ids = [];
         }
 
-        if ($this->hasPricelistIds($item)) {
-            $index = array_search($item, $this->pricelist_ids);
-            unset($this->pricelist_ids[$index]);
-        }
+        $this->pricelist_ids[] = $item;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     /**
@@ -198,14 +212,6 @@ final class Group extends Base
         }
 
         return in_array($item, $this->pricelist_ids);
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
     }
 
     /**
@@ -294,10 +300,10 @@ final class Group extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'res.country.group';
     }
 }

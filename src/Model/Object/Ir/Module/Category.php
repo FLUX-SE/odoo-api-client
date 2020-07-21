@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Category extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.module.category';
-
     /**
      * Name
      * Searchable : yes
@@ -163,19 +161,11 @@ final class Category extends Base
     }
 
     /**
-     * @param string|null $xml_id
+     * @return OdooRelation|null
      */
-    public function setXmlId(?string $xml_id): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->xml_id = $xml_id;
-    }
-
-    /**
-     * @param int|null $sequence
-     */
-    public function setSequence(?int $sequence): void
-    {
-        $this->sequence = $sequence;
+        return $this->create_uid;
     }
 
     /**
@@ -219,19 +209,11 @@ final class Category extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param string|null $xml_id
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setXmlId(?string $xml_id): void
     {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param string|null $description
-     */
-    public function setDescription(?string $description): void
-    {
-        $this->description = $description;
+        $this->xml_id = $xml_id;
     }
 
     /**
@@ -240,6 +222,14 @@ final class Category extends Base
     public function setCreateUid(?OdooRelation $create_uid): void
     {
         $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSequence(): ?int
+    {
+        return $this->sequence;
     }
 
     /**
@@ -283,19 +273,27 @@ final class Category extends Base
     }
 
     /**
-     * @return int|null
+     * @param DateTimeInterface|null $write_date
      */
-    public function getSequence(): ?int
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->sequence;
+        $this->write_date = $write_date;
     }
 
     /**
-     * @return string|null
+     * @param int|null $sequence
      */
-    public function getDescription(): ?string
+    public function setSequence(?int $sequence): void
     {
-        return $this->description;
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * @param string|null $description
+     */
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
     }
 
     /**
@@ -392,18 +390,11 @@ final class Category extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return string|null
      */
-    public function removeModuleIds(OdooRelation $item): void
+    public function getDescription(): ?string
     {
-        if (null === $this->module_ids) {
-            $this->module_ids = [];
-        }
-
-        if ($this->hasModuleIds($item)) {
-            $index = array_search($item, $this->module_ids);
-            unset($this->module_ids[$index]);
-        }
+        return $this->description;
     }
 
     /**
@@ -469,10 +460,25 @@ final class Category extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @param OdooRelation $item
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function removeModuleIds(OdooRelation $item): void
     {
-        $this->write_date = $write_date;
+        if (null === $this->module_ids) {
+            $this->module_ids = [];
+        }
+
+        if ($this->hasModuleIds($item)) {
+            $index = array_search($item, $this->module_ids);
+            unset($this->module_ids[$index]);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'ir.module.category';
     }
 }

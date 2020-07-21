@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Account extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.account';
-
     /**
      * Name
      * Searchable : yes
@@ -319,7 +317,7 @@ final class Account extends Base
      *            -> no (No)
      *            -> draft (Create in draft)
      *            -> validate (Create and validate)
-     *
+     *       
      */
     public function __construct(
         string $name,
@@ -336,26 +334,11 @@ final class Account extends Base
     }
 
     /**
-     * @param string $create_asset
+     * @return bool|null
      */
-    public function setCreateAsset(string $create_asset): void
+    public function isCanCreateAsset(): ?bool
     {
-        $this->create_asset = $create_asset;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeTagIds(OdooRelation $item): void
-    {
-        if (null === $this->tag_ids) {
-            $this->tag_ids = [];
-        }
-
-        if ($this->hasTagIds($item)) {
-            $index = array_search($item, $this->tag_ids);
-            unset($this->tag_ids[$index]);
-        }
+        return $this->can_create_asset;
     }
 
     /**
@@ -447,25 +430,11 @@ final class Account extends Base
     }
 
     /**
-     * @return bool|null
+     * @param string $create_asset
      */
-    public function isCanCreateAsset(): ?bool
+    public function setCreateAsset(string $create_asset): void
     {
-        return $this->can_create_asset;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasTagIds(OdooRelation $item): bool
-    {
-        if (null === $this->tag_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->tag_ids);
+        $this->create_asset = $create_asset;
     }
 
     /**
@@ -474,6 +443,22 @@ final class Account extends Base
     public function setCanCreateAsset(?bool $can_create_asset): void
     {
         $this->can_create_asset = $can_create_asset;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addTagIds(OdooRelation $item): void
+    {
+        if ($this->hasTagIds($item)) {
+            return;
+        }
+
+        if (null === $this->tag_ids) {
+            $this->tag_ids = [];
+        }
+
+        $this->tag_ids[] = $item;
     }
 
     /**
@@ -565,27 +550,40 @@ final class Account extends Base
     }
 
     /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
+    }
+
+    /**
      * @param OdooRelation $item
      */
-    public function addTagIds(OdooRelation $item): void
+    public function removeTagIds(OdooRelation $item): void
     {
-        if ($this->hasTagIds($item)) {
-            return;
-        }
-
         if (null === $this->tag_ids) {
             $this->tag_ids = [];
         }
 
-        $this->tag_ids[] = $item;
+        if ($this->hasTagIds($item)) {
+            $index = array_search($item, $this->tag_ids);
+            unset($this->tag_ids[$index]);
+        }
     }
 
     /**
-     * @param OdooRelation[]|null $tag_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setTagIds(?array $tag_ids): void
+    public function hasTagIds(OdooRelation $item): bool
     {
-        $this->tag_ids = $tag_ids;
+        if (null === $this->tag_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->tag_ids);
     }
 
     /**
@@ -709,11 +707,11 @@ final class Account extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @param OdooRelation[]|null $tag_ids
      */
-    public function getTagIds(): ?array
+    public function setTagIds(?array $tag_ids): void
     {
-        return $this->tag_ids;
+        $this->tag_ids = $tag_ids;
     }
 
     /**
@@ -834,10 +832,18 @@ final class Account extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return OdooRelation[]|null
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function getTagIds(): ?array
     {
-        $this->write_date = $write_date;
+        return $this->tag_ids;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'account.account';
     }
 }

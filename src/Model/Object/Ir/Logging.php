@@ -23,8 +23,6 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Logging extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.logging';
-
     /**
      * Created by
      * Searchable : yes
@@ -147,7 +145,7 @@ final class Logging extends Base
      *        Selection : (default value, usually null)
      *            -> client (Client)
      *            -> server (Server)
-     *
+     *       
      * @param string $message Message
      *        Searchable : yes
      *        Sortable : yes
@@ -178,11 +176,19 @@ final class Logging extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $dbname
      */
-    public function getDbname(): ?string
+    public function setDbname(?string $dbname): void
     {
-        return $this->dbname;
+        $this->dbname = $dbname;
+    }
+
+    /**
+     * @param string $line
+     */
+    public function setLine(string $line): void
+    {
+        $this->line = $line;
     }
 
     /**
@@ -258,19 +264,11 @@ final class Logging extends Base
     }
 
     /**
-     * @param string|null $dbname
+     * @return string|null
      */
-    public function setDbname(?string $dbname): void
+    public function getDbname(): ?string
     {
-        $this->dbname = $dbname;
-    }
-
-    /**
-     * @param string $type
-     */
-    public function setType(string $type): void
-    {
-        $this->type = $type;
+        return $this->dbname;
     }
 
     /**
@@ -279,6 +277,14 @@ final class Logging extends Base
     public function getCreateUid(): ?int
     {
         return $this->create_uid;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType(string $type): void
+    {
+        $this->type = $type;
     }
 
     /**
@@ -362,10 +368,10 @@ final class Logging extends Base
     }
 
     /**
-     * @param string $line
+     * @return string
      */
-    public function setLine(string $line): void
+    public static function getOdooModelName(): string
     {
-        $this->line = $line;
+        return 'ir.logging';
     }
 }

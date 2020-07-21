@@ -16,8 +16,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class User extends Base
 {
-    public const ODOO_MODEL_NAME = 'change.password.user';
-
     /**
      * Wizard
      * Searchable : yes
@@ -105,11 +103,19 @@ final class User extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->create_uid;
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -153,19 +159,11 @@ final class User extends Base
     }
 
     /**
-     * @param OdooRelation|null $create_uid
+     * @return OdooRelation|null
      */
-    public function setCreateUid(?OdooRelation $create_uid): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @param string|null $new_passwd
-     */
-    public function setNewPasswd(?string $new_passwd): void
-    {
-        $this->new_passwd = $new_passwd;
+        return $this->create_uid;
     }
 
     /**
@@ -174,6 +172,14 @@ final class User extends Base
     public function getWizardId(): OdooRelation
     {
         return $this->wizard_id;
+    }
+
+    /**
+     * @param string|null $new_passwd
+     */
+    public function setNewPasswd(?string $new_passwd): void
+    {
+        $this->new_passwd = $new_passwd;
     }
 
     /**
@@ -225,10 +231,10 @@ final class User extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'change.password.user';
     }
 }

@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Preview extends Base
 {
-    public const ODOO_MODEL_NAME = 'email_template.preview';
-
     /**
      * Sample Document
      * Searchable : yes
@@ -357,35 +355,91 @@ final class Preview extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $report_template
      */
-    public function getSubObject(): ?OdooRelation
+    public function setReportTemplate(?OdooRelation $report_template): void
     {
-        return $this->sub_object;
+        $this->report_template = $report_template;
+    }
+
+    /**
+     * @param OdooRelation|null $model_object_field
+     */
+    public function setModelObjectField(?OdooRelation $model_object_field): void
+    {
+        $this->model_object_field = $model_object_field;
     }
 
     /**
      * @return OdooRelation|null
      */
-    public function getMailServerId(): ?OdooRelation
+    public function getModelObjectField(): ?OdooRelation
     {
-        return $this->mail_server_id;
+        return $this->model_object_field;
     }
 
     /**
-     * @param OdooRelation|null $mail_server_id
+     * @param bool|null $auto_delete
      */
-    public function setMailServerId(?OdooRelation $mail_server_id): void
+    public function setAutoDelete(?bool $auto_delete): void
     {
-        $this->mail_server_id = $mail_server_id;
+        $this->auto_delete = $auto_delete;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isAutoDelete(): ?bool
+    {
+        return $this->auto_delete;
+    }
+
+    /**
+     * @param OdooRelation|null $ref_ir_act_window
+     */
+    public function setRefIrActWindow(?OdooRelation $ref_ir_act_window): void
+    {
+        $this->ref_ir_act_window = $ref_ir_act_window;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getRefIrActWindow(): ?OdooRelation
+    {
+        return $this->ref_ir_act_window;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getReportTemplate(): ?OdooRelation
+    {
+        return $this->report_template;
+    }
+
+    /**
+     * @param OdooRelation|null $sub_object
+     */
+    public function setSubObject(?OdooRelation $sub_object): void
+    {
+        $this->sub_object = $sub_object;
+    }
+
+    /**
+     * @param string|null $report_name
+     */
+    public function setReportName(?string $report_name): void
+    {
+        $this->report_name = $report_name;
     }
 
     /**
      * @return string|null
      */
-    public function getBodyHtml(): ?string
+    public function getReportName(): ?string
     {
-        return $this->body_html;
+        return $this->report_name;
     }
 
     /**
@@ -399,89 +453,41 @@ final class Preview extends Base
     /**
      * @return string|null
      */
-    public function getReportName(): ?string
+    public function getBodyHtml(): ?string
     {
-        return $this->report_name;
+        return $this->body_html;
     }
 
     /**
-     * @param string|null $report_name
+     * @param OdooRelation|null $mail_server_id
      */
-    public function setReportName(?string $report_name): void
+    public function setMailServerId(?OdooRelation $mail_server_id): void
     {
-        $this->report_name = $report_name;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getReportTemplate(): ?OdooRelation
-    {
-        return $this->report_template;
-    }
-
-    /**
-     * @param OdooRelation|null $report_template
-     */
-    public function setReportTemplate(?OdooRelation $report_template): void
-    {
-        $this->report_template = $report_template;
+        $this->mail_server_id = $mail_server_id;
     }
 
     /**
      * @return OdooRelation|null
      */
-    public function getRefIrActWindow(): ?OdooRelation
+    public function getMailServerId(): ?OdooRelation
     {
-        return $this->ref_ir_act_window;
-    }
-
-    /**
-     * @param OdooRelation|null $ref_ir_act_window
-     */
-    public function setRefIrActWindow(?OdooRelation $ref_ir_act_window): void
-    {
-        $this->ref_ir_act_window = $ref_ir_act_window;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isAutoDelete(): ?bool
-    {
-        return $this->auto_delete;
-    }
-
-    /**
-     * @param bool|null $auto_delete
-     */
-    public function setAutoDelete(?bool $auto_delete): void
-    {
-        $this->auto_delete = $auto_delete;
+        return $this->mail_server_id;
     }
 
     /**
      * @return OdooRelation|null
      */
-    public function getModelObjectField(): ?OdooRelation
+    public function getSubObject(): ?OdooRelation
     {
-        return $this->model_object_field;
+        return $this->sub_object;
     }
 
     /**
-     * @param OdooRelation|null $model_object_field
+     * @return OdooRelation|null
      */
-    public function setModelObjectField(?OdooRelation $model_object_field): void
+    public function getSubModelObjectField(): ?OdooRelation
     {
-        $this->model_object_field = $model_object_field;
-    }
-
-    /**
-     * @param OdooRelation|null $sub_object
-     */
-    public function setSubObject(?OdooRelation $sub_object): void
-    {
-        $this->sub_object = $sub_object;
+        return $this->sub_model_object_field;
     }
 
     /**
@@ -493,11 +499,19 @@ final class Preview extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->create_uid;
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -541,11 +555,19 @@ final class Preview extends Base
     }
 
     /**
-     * @param OdooRelation|null $create_uid
+     * @return OdooRelation|null
      */
-    public function setCreateUid(?OdooRelation $create_uid): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->create_uid = $create_uid;
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $sub_model_object_field
+     */
+    public function setSubModelObjectField(?OdooRelation $sub_model_object_field): void
+    {
+        $this->sub_model_object_field = $sub_model_object_field;
     }
 
     /**
@@ -554,14 +576,6 @@ final class Preview extends Base
     public function setScheduledDate(?string $scheduled_date): void
     {
         $this->scheduled_date = $scheduled_date;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getSubModelObjectField(): ?OdooRelation
-    {
-        return $this->sub_model_object_field;
     }
 
     /**
@@ -602,14 +616,6 @@ final class Preview extends Base
     public function getNullValue(): ?string
     {
         return $this->null_value;
-    }
-
-    /**
-     * @param OdooRelation|null $sub_model_object_field
-     */
-    public function setSubModelObjectField(?OdooRelation $sub_model_object_field): void
-    {
-        $this->sub_model_object_field = $sub_model_object_field;
     }
 
     /**
@@ -943,10 +949,10 @@ final class Preview extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'email_template.preview';
     }
 }

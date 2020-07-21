@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Rate extends Base
 {
-    public const ODOO_MODEL_NAME = 'res.currency.rate';
-
     /**
      * Date
      * Searchable : yes
@@ -110,11 +108,19 @@ final class Rate extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->create_uid;
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -158,19 +164,11 @@ final class Rate extends Base
     }
 
     /**
-     * @param OdooRelation|null $create_uid
+     * @return OdooRelation|null
      */
-    public function setCreateUid(?OdooRelation $create_uid): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $company_id
-     */
-    public function setCompanyId(?OdooRelation $company_id): void
-    {
-        $this->company_id = $company_id;
+        return $this->create_uid;
     }
 
     /**
@@ -179,6 +177,14 @@ final class Rate extends Base
     public function getName(): DateTimeInterface
     {
         return $this->name;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
     }
 
     /**
@@ -230,10 +236,10 @@ final class Rate extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'res.currency.rate';
     }
 }

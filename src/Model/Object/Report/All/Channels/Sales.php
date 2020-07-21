@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Sales extends Base
 {
-    public const ODOO_MODEL_NAME = 'report.all.channels.sales';
-
     /**
      * Order Reference
      * Searchable : yes
@@ -175,6 +173,14 @@ final class Sales extends Base
     public function getPriceTotal(): ?float
     {
         return $this->price_total;
+    }
+
+    /**
+     * @param OdooRelation|null $team_id
+     */
+    public function setTeamId(?OdooRelation $team_id): void
+    {
+        $this->team_id = $team_id;
     }
 
     /**
@@ -394,10 +400,10 @@ final class Sales extends Base
     }
 
     /**
-     * @param OdooRelation|null $team_id
+     * @return string
      */
-    public function setTeamId(?OdooRelation $team_id): void
+    public static function getOdooModelName(): string
     {
-        $this->team_id = $team_id;
+        return 'report.all.channels.sales';
     }
 }

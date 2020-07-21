@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Lines extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.server.object.lines';
-
     /**
      * Related Server Action
      * Searchable : yes
@@ -46,7 +44,7 @@ final class Lines extends Base
 
     /**
      * Value
-     * Expression containing a value specification.
+     * Expression containing a value specification. 
      * When Formula type is selected, this field may be a Python expression  that can use the same values as for the
      * code field on the server action.
      * If Value type is selected, the value will be used directly without evaluation.
@@ -121,7 +119,7 @@ final class Lines extends Base
      *        Searchable : yes
      *        Sortable : yes
      * @param string $value Value
-     *        Expression containing a value specification.
+     *        Expression containing a value specification. 
      *        When Formula type is selected, this field may be a Python expression  that can use the same values as for the
      *        code field on the server action.
      *        If Value type is selected, the value will be used directly without evaluation.
@@ -134,7 +132,7 @@ final class Lines extends Base
      *            -> value (Value)
      *            -> reference (Reference)
      *            -> equation (Python expression)
-     *
+     *       
      */
     public function __construct(OdooRelation $col1, string $value, string $evaluation_type)
     {
@@ -144,11 +142,19 @@ final class Lines extends Base
     }
 
     /**
-     * @param mixed|null $resource_ref
+     * @return OdooRelation|null
      */
-    public function setResourceRef($resource_ref): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->resource_ref = $resource_ref;
+        return $this->create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -200,19 +206,11 @@ final class Lines extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param mixed|null $resource_ref
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setResourceRef($resource_ref): void
     {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return mixed|null
-     */
-    public function getResourceRef()
-    {
-        return $this->resource_ref;
+        $this->resource_ref = $resource_ref;
     }
 
     /**
@@ -221,6 +219,14 @@ final class Lines extends Base
     public function getServerId(): ?OdooRelation
     {
         return $this->server_id;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getResourceRef()
+    {
+        return $this->resource_ref;
     }
 
     /**
@@ -280,10 +286,10 @@ final class Lines extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'ir.server.object.lines';
     }
 }

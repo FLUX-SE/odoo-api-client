@@ -16,8 +16,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Cron extends Server
 {
-    public const ODOO_MODEL_NAME = 'ir.cron';
-
     /**
      * Server action
      * Searchable : yes
@@ -160,7 +158,7 @@ final class Cron extends Server
      *        Selection : (default value, usually null)
      *            -> specific (Specific User)
      *            -> generic (Generic User From Record)
-     *
+     *       
      * @param string $usage Usage
      *        Searchable : yes
      *        Sortable : yes
@@ -168,7 +166,7 @@ final class Cron extends Server
      *            -> ir_actions_server (Server Action)
      *            -> ir_cron (Scheduled Action)
      *            -> base_automation (Automated Action)
-     *
+     *       
      * @param string $state Action To Do
      *        Type of server action. The following values are available:
      *        - 'Execute Python Code': a block of python code that will be executed
@@ -189,14 +187,14 @@ final class Cron extends Server
      *            -> followers (Add Followers)
      *            -> next_activity (Create Next Activity)
      *            -> sms (Send SMS Text Message)
-     *
+     *       
      * @param string $binding_type Binding Type
      *        Searchable : yes
      *        Sortable : yes
      *        Selection : (default value, usually null)
      *            -> action (Action)
      *            -> report (Report)
-     *
+     *       
      */
     public function __construct(
         OdooRelation $ir_actions_server_id,
@@ -214,22 +212,30 @@ final class Cron extends Server
         $this->user_id = $user_id;
         $this->nextcall = $nextcall;
         parent::__construct(
-            $name,
-            $type,
-            $model_id,
-            $activity_user_type,
-            $usage,
-            $state,
+            $name, 
+            $type, 
+            $model_id, 
+            $activity_user_type, 
+            $usage, 
+            $state, 
             $binding_type
         );
     }
 
     /**
-     * @param string|null $interval_type
+     * @return int|null
      */
-    public function setIntervalType(?string $interval_type): void
+    public function getNumbercall(): ?int
     {
-        $this->interval_type = $interval_type;
+        return $this->numbercall;
+    }
+
+    /**
+     * @param int|null $priority
+     */
+    public function setPriority(?int $priority): void
+    {
+        $this->priority = $priority;
     }
 
     /**
@@ -297,19 +303,11 @@ final class Cron extends Server
     }
 
     /**
-     * @return int|null
+     * @param string|null $interval_type
      */
-    public function getNumbercall(): ?int
+    public function setIntervalType(?string $interval_type): void
     {
-        return $this->numbercall;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getIntervalType(): ?string
-    {
-        return $this->interval_type;
+        $this->interval_type = $interval_type;
     }
 
     /**
@@ -318,6 +316,14 @@ final class Cron extends Server
     public function getIrActionsServerId(): OdooRelation
     {
         return $this->ir_actions_server_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIntervalType(): ?string
+    {
+        return $this->interval_type;
     }
 
     /**
@@ -393,10 +399,10 @@ final class Cron extends Server
     }
 
     /**
-     * @param int|null $priority
+     * @return string
      */
-    public function setPriority(?int $priority): void
+    public static function getOdooModelName(): string
     {
-        $this->priority = $priority;
+        return 'ir.cron';
     }
 }

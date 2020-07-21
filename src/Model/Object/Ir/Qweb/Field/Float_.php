@@ -15,5 +15,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Float_ extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.qweb.field.float';
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'ir.qweb.field.float';
+    }
 }

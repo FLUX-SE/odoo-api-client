@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Payment extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.batch.payment';
-
     /**
      * Reference
      * Searchable : yes
@@ -230,7 +228,7 @@ final class Payment extends Base
      *        Selection : (default value, usually null)
      *            -> inbound (Inbound)
      *            -> outbound (Outbound)
-     *
+     *       
      * @param OdooRelation $payment_method_id Payment Method
      *        The payment method used by the payments in this batch.
      *        Searchable : yes
@@ -255,25 +253,16 @@ final class Payment extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addAvailablePaymentMethodIds(OdooRelation $item): void
+    public function removeAvailablePaymentMethodIds(OdooRelation $item): void
     {
-        if ($this->hasAvailablePaymentMethodIds($item)) {
-            return;
-        }
-
         if (null === $this->available_payment_method_ids) {
             $this->available_payment_method_ids = [];
         }
 
-        $this->available_payment_method_ids[] = $item;
-    }
-
-    /**
-     * @param DateTimeInterface|null $export_file_create_date
-     */
-    public function setExportFileCreateDate(?DateTimeInterface $export_file_create_date): void
-    {
-        $this->export_file_create_date = $export_file_create_date;
+        if ($this->hasAvailablePaymentMethodIds($item)) {
+            $index = array_search($item, $this->available_payment_method_ids);
+            unset($this->available_payment_method_ids[$index]);
+        }
     }
 
     /**
@@ -341,24 +330,17 @@ final class Payment extends Base
     /**
      * @param OdooRelation $item
      */
-    public function removeAvailablePaymentMethodIds(OdooRelation $item): void
+    public function addAvailablePaymentMethodIds(OdooRelation $item): void
     {
+        if ($this->hasAvailablePaymentMethodIds($item)) {
+            return;
+        }
+
         if (null === $this->available_payment_method_ids) {
             $this->available_payment_method_ids = [];
         }
 
-        if ($this->hasAvailablePaymentMethodIds($item)) {
-            $index = array_search($item, $this->available_payment_method_ids);
-            unset($this->available_payment_method_ids[$index]);
-        }
-    }
-
-    /**
-     * @param string|null $payment_method_code
-     */
-    public function setPaymentMethodCode(?string $payment_method_code): void
-    {
-        $this->payment_method_code = $payment_method_code;
+        $this->available_payment_method_ids[] = $item;
     }
 
     /**
@@ -367,6 +349,14 @@ final class Payment extends Base
     public function isFileGenerationEnabled(): ?bool
     {
         return $this->file_generation_enabled;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getExportFileCreateDate(): ?DateTimeInterface
+    {
+        return $this->export_file_create_date;
     }
 
     /**
@@ -434,19 +424,27 @@ final class Payment extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
+     * @param DateTimeInterface|null $write_date
      */
-    public function getExportFileCreateDate(): ?DateTimeInterface
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->export_file_create_date;
+        $this->write_date = $write_date;
     }
 
     /**
-     * @return string|null
+     * @param DateTimeInterface|null $export_file_create_date
      */
-    public function getPaymentMethodCode(): ?string
+    public function setExportFileCreateDate(?DateTimeInterface $export_file_create_date): void
     {
-        return $this->payment_method_code;
+        $this->export_file_create_date = $export_file_create_date;
+    }
+
+    /**
+     * @param string|null $payment_method_code
+     */
+    public function setPaymentMethodCode(?string $payment_method_code): void
+    {
+        $this->payment_method_code = $payment_method_code;
     }
 
     /**
@@ -458,11 +456,13 @@ final class Payment extends Base
     }
 
     /**
-     * @param OdooRelation[] $payment_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setPaymentIds(array $payment_ids): void
+    public function hasPaymentIds(OdooRelation $item): bool
     {
-        $this->payment_ids = $payment_ids;
+        return in_array($item, $this->payment_ids);
     }
 
     /**
@@ -530,21 +530,11 @@ final class Payment extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param OdooRelation[] $payment_ids
      */
-    public function hasPaymentIds(OdooRelation $item): bool
+    public function setPaymentIds(array $payment_ids): void
     {
-        return in_array($item, $this->payment_ids);
-    }
-
-    /**
-     * @param OdooRelation $payment_method_id
-     */
-    public function setPaymentMethodId(OdooRelation $payment_method_id): void
-    {
-        $this->payment_method_id = $payment_method_id;
+        $this->payment_ids = $payment_ids;
     }
 
     /**
@@ -557,6 +547,14 @@ final class Payment extends Base
         }
 
         $this->payment_ids[] = $item;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPaymentMethodCode(): ?string
+    {
+        return $this->payment_method_code;
     }
 
     /**
@@ -627,10 +625,18 @@ final class Payment extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @param OdooRelation $payment_method_id
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function setPaymentMethodId(OdooRelation $payment_method_id): void
     {
-        $this->write_date = $write_date;
+        $this->payment_method_id = $payment_method_id;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'account.batch.payment';
     }
 }

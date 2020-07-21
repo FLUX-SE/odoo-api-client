@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Group extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.analytic.group';
-
     /**
      * Name
      * Searchable : yes
@@ -141,6 +139,14 @@ final class Group extends Base
     public function getCompleteName(): ?string
     {
         return $this->complete_name;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -349,10 +355,10 @@ final class Group extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.analytic.group';
     }
 }

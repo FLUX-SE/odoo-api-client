@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Client extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.actions.client';
-
     /**
      * Action Name
      * Searchable : yes
@@ -218,7 +216,7 @@ final class Client extends Base
      *        Selection : (default value, usually null)
      *            -> action (Action)
      *            -> report (Report)
-     *
+     *       
      */
     public function __construct(
         string $name,
@@ -235,19 +233,11 @@ final class Client extends Base
     }
 
     /**
-     * @param string|null $binding_view_types
+     * @return OdooRelation|null
      */
-    public function setBindingViewTypes(?string $binding_view_types): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->binding_view_types = $binding_view_types;
-    }
-
-    /**
-     * @param string|null $help
-     */
-    public function setHelp(?string $help): void
-    {
-        $this->help = $help;
+        return $this->create_uid;
     }
 
     /**
@@ -291,19 +281,11 @@ final class Client extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param string|null $binding_view_types
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setBindingViewTypes(?string $binding_view_types): void
     {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param string|null $xml_id
-     */
-    public function setXmlId(?string $xml_id): void
-    {
-        $this->xml_id = $xml_id;
+        $this->binding_view_types = $binding_view_types;
     }
 
     /**
@@ -312,6 +294,14 @@ final class Client extends Base
     public function setCreateUid(?OdooRelation $create_uid): void
     {
         $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getHelp(): ?string
+    {
+        return $this->help;
     }
 
     /**
@@ -355,19 +345,27 @@ final class Client extends Base
     }
 
     /**
-     * @return string|null
+     * @param DateTimeInterface|null $write_date
      */
-    public function getHelp(): ?string
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->help;
+        $this->write_date = $write_date;
     }
 
     /**
-     * @return string|null
+     * @param string|null $help
      */
-    public function getXmlId(): ?string
+    public function setHelp(?string $help): void
     {
-        return $this->xml_id;
+        $this->help = $help;
+    }
+
+    /**
+     * @param string|null $xml_id
+     */
+    public function setXmlId(?string $xml_id): void
+    {
+        $this->xml_id = $xml_id;
     }
 
     /**
@@ -443,11 +441,11 @@ final class Client extends Base
     }
 
     /**
-     * @param int|null $params_store
+     * @return string|null
      */
-    public function setParamsStore(?int $params_store): void
+    public function getXmlId(): ?string
     {
-        $this->params_store = $params_store;
+        return $this->xml_id;
     }
 
     /**
@@ -499,10 +497,18 @@ final class Client extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @param int|null $params_store
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function setParamsStore(?int $params_store): void
     {
-        $this->write_date = $write_date;
+        $this->params_store = $params_store;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'ir.actions.client';
     }
 }

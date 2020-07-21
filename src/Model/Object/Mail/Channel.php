@@ -15,8 +15,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Channel extends Alias
 {
-    public const ODOO_MODEL_NAME = 'mail.channel';
-
     /**
      * Name
      * Searchable : yes
@@ -412,7 +410,7 @@ final class Channel extends Alias
      *            -> public (Everyone)
      *            -> private (Invited people only)
      *            -> groups (Selected group of users)
-     *
+     *       
      * @param OdooRelation $alias_id Alias
      *        Searchable : yes
      *        Sortable : yes
@@ -430,14 +428,14 @@ final class Channel extends Alias
      *        - everyone: everyone can post
      *        - partners: only authenticated partners
      *        - followers: only followers of the related document or members of following channels
-     *
+     *       
      *        Searchable : yes
      *        Sortable : yes
      *        Selection : (default value, usually null)
      *            -> everyone (Everyone)
      *            -> partners (Authenticated Partners)
      *            -> followers (Followers only)
-     *
+     *       
      */
     public function __construct(
         string $name,
@@ -454,11 +452,33 @@ final class Channel extends Alias
     }
 
     /**
-     * @param OdooRelation[]|null $message_follower_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setMessageFollowerIds(?array $message_follower_ids): void
+    public function hasMessageFollowerIds(OdooRelation $item): bool
     {
-        $this->message_follower_ids = $message_follower_ids;
+        if (null === $this->message_follower_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_follower_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMessageChannelIds(OdooRelation $item): void
+    {
+        if ($this->hasMessageChannelIds($item)) {
+            return;
+        }
+
+        if (null === $this->message_channel_ids) {
+            $this->message_channel_ids = [];
+        }
+
+        $this->message_channel_ids[] = $item;
     }
 
     /**
@@ -584,17 +604,19 @@ final class Channel extends Alias
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param OdooRelation[]|null $message_follower_ids
      */
-    public function hasMessageFollowerIds(OdooRelation $item): bool
+    public function setMessageFollowerIds(?array $message_follower_ids): void
     {
-        if (null === $this->message_follower_ids) {
-            return false;
-        }
+        $this->message_follower_ids = $message_follower_ids;
+    }
 
-        return in_array($item, $this->message_follower_ids);
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getMessageIds(): ?array
+    {
+        return $this->message_ids;
     }
 
     /**
@@ -603,21 +625,6 @@ final class Channel extends Alias
     public function getMessageFollowerIds(): ?array
     {
         return $this->message_follower_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMessageChannelIds(OdooRelation $item): void
-    {
-        if (null === $this->message_channel_ids) {
-            $this->message_channel_ids = [];
-        }
-
-        if ($this->hasMessageChannelIds($item)) {
-            $index = array_search($item, $this->message_channel_ids);
-            unset($this->message_channel_ids[$index]);
-        }
     }
 
     /**
@@ -711,25 +718,24 @@ final class Channel extends Alias
     /**
      * @param OdooRelation $item
      */
-    public function addMessageChannelIds(OdooRelation $item): void
+    public function removeMessageChannelIds(OdooRelation $item): void
     {
-        if ($this->hasMessageChannelIds($item)) {
-            return;
-        }
-
         if (null === $this->message_channel_ids) {
             $this->message_channel_ids = [];
         }
 
-        $this->message_channel_ids[] = $item;
+        if ($this->hasMessageChannelIds($item)) {
+            $index = array_search($item, $this->message_channel_ids);
+            unset($this->message_channel_ids[$index]);
+        }
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @param OdooRelation[]|null $message_ids
      */
-    public function getMessageIds(): ?array
+    public function setMessageIds(?array $message_ids): void
     {
-        return $this->message_ids;
+        $this->message_ids = $message_ids;
     }
 
     /**
@@ -741,11 +747,19 @@ final class Channel extends Alias
     }
 
     /**
-     * @return int|null
+     * @param int|null $message_has_error_counter
      */
-    public function getMessageHasErrorCounter(): ?int
+    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
     {
-        return $this->message_has_error_counter;
+        $this->message_has_error_counter = $message_has_error_counter;
+    }
+
+    /**
+     * @param bool|null $message_has_sms_error
+     */
+    public function setMessageHasSmsError(?bool $message_has_sms_error): void
+    {
+        $this->message_has_sms_error = $message_has_sms_error;
     }
 
     /**
@@ -850,11 +864,25 @@ final class Channel extends Alias
     }
 
     /**
-     * @param int|null $message_has_error_counter
+     * @return int|null
      */
-    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
+    public function getMessageHasErrorCounter(): ?int
     {
-        $this->message_has_error_counter = $message_has_error_counter;
+        return $this->message_has_error_counter;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMessageIds(OdooRelation $item): bool
+    {
+        if (null === $this->message_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_ids);
     }
 
     /**
@@ -863,14 +891,6 @@ final class Channel extends Alias
     public function setMessageHasError(?bool $message_has_error): void
     {
         $this->message_has_error = $message_has_error;
-    }
-
-    /**
-     * @param OdooRelation[]|null $message_ids
-     */
-    public function setMessageIds(?array $message_ids): void
-    {
-        $this->message_ids = $message_ids;
     }
 
     /**
@@ -974,20 +994,6 @@ final class Channel extends Alias
         }
 
         $this->message_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasMessageIds(OdooRelation $item): bool
-    {
-        if (null === $this->message_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_ids);
     }
 
     /**
@@ -1581,10 +1587,10 @@ final class Channel extends Alias
     }
 
     /**
-     * @param bool|null $message_has_sms_error
+     * @return string
      */
-    public function setMessageHasSmsError(?bool $message_has_sms_error): void
+    public static function getOdooModelName(): string
     {
-        $this->message_has_sms_error = $message_has_sms_error;
+        return 'mail.channel';
     }
 }

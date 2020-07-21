@@ -16,8 +16,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Invite extends Base
 {
-    public const ODOO_MODEL_NAME = 'mail.wizard.invite';
-
     /**
      * Related Document Model
      * Model of the followed resource
@@ -125,18 +123,19 @@ final class Invite extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return string|null
      */
-    public function removeChannelIds(OdooRelation $item): void
+    public function getMessage(): ?string
     {
-        if (null === $this->channel_ids) {
-            $this->channel_ids = [];
-        }
+        return $this->message;
+    }
 
-        if ($this->hasChannelIds($item)) {
-            $index = array_search($item, $this->channel_ids);
-            unset($this->channel_ids[$index]);
-        }
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -220,11 +219,26 @@ final class Invite extends Base
     }
 
     /**
-     * @return string|null
+     * @param OdooRelation $item
      */
-    public function getMessage(): ?string
+    public function removeChannelIds(OdooRelation $item): void
     {
-        return $this->message;
+        if (null === $this->channel_ids) {
+            $this->channel_ids = [];
+        }
+
+        if ($this->hasChannelIds($item)) {
+            $index = array_search($item, $this->channel_ids);
+            unset($this->channel_ids[$index]);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getResModel(): string
+    {
+        return $this->res_model;
     }
 
     /**
@@ -241,14 +255,6 @@ final class Invite extends Base
         }
 
         $this->channel_ids[] = $item;
-    }
-
-    /**
-     * @return string
-     */
-    public function getResModel(): string
-    {
-        return $this->res_model;
     }
 
     /**
@@ -367,10 +373,10 @@ final class Invite extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'mail.wizard.invite';
     }
 }

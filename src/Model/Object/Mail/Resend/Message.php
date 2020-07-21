@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Message extends Base
 {
-    public const ODOO_MODEL_NAME = 'mail.resend.message';
-
     /**
      * Message
      * Searchable : yes
@@ -118,6 +116,14 @@ final class Message extends Base
     public function setHasCancel(?bool $has_cancel): void
     {
         $this->has_cancel = $has_cancel;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -331,10 +337,10 @@ final class Message extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'mail.resend.message';
     }
 }

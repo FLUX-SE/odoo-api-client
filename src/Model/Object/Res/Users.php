@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Users extends Partner
 {
-    public const ODOO_MODEL_NAME = 'res.users';
-
     /**
      * Related Partner
      * Partner-related data of the user
@@ -601,6 +599,10 @@ final class Users extends Partner
      *        Used to log into the system
      *        Searchable : yes
      *        Sortable : yes
+     * @param OdooRelation $company_id Company
+     *        The default company for this user.
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $notification_type Notification
      *        Policy on how to handle Chatter notifications:
      *        - Handle by Emails: notifications are sent to your email address
@@ -610,7 +612,7 @@ final class Users extends Partner
      *        Selection : (default value, usually null)
      *            -> email (Handle by Emails)
      *            -> inbox (Handle in Odoo)
-     *
+     *       
      * @param string $odoobot_state OdooBot Status
      *        Searchable : yes
      *        Sortable : yes
@@ -622,7 +624,7 @@ final class Users extends Partner
      *            -> onboarding_ping (Onboarding ping)
      *            -> idle (Idle)
      *            -> disabled (Disabled)
-     *
+     *       
      * @param OdooRelation $property_account_payable_id Account Payable
      *        This account will be used instead of the default one as the payable account for the current partner
      *        Searchable : yes
@@ -635,6 +637,7 @@ final class Users extends Partner
     public function __construct(
         OdooRelation $partner_id,
         string $login,
+        OdooRelation $company_id,
         string $notification_type,
         string $odoobot_state,
         OdooRelation $property_account_payable_id,
@@ -644,7 +647,7 @@ final class Users extends Partner
         $this->login = $login;
         $this->notification_type = $notification_type;
         $this->odoobot_state = $odoobot_state;
-        parent::__construct($property_account_payable_id, $property_account_receivable_id);
+        parent::__construct($company_id, $property_account_payable_id, $property_account_receivable_id);
     }
 
     /**
@@ -653,6 +656,14 @@ final class Users extends Partner
     public function isInGroup28(): ?bool
     {
         return $this->in_group_28;
+    }
+
+    /**
+     * @param bool|null $in_group_30
+     */
+    public function setInGroup30(?bool $in_group_30): void
+    {
+        $this->in_group_30 = $in_group_30;
     }
 
     /**
@@ -760,11 +771,11 @@ final class Users extends Partner
     }
 
     /**
-     * @return bool|null
+     * @param bool|null $in_group_11
      */
-    public function isInGroup11(): ?bool
+    public function setInGroup11(?bool $in_group_11): void
     {
-        return $this->in_group_11;
+        $this->in_group_11 = $in_group_11;
     }
 
     /**
@@ -872,19 +883,19 @@ final class Users extends Partner
     }
 
     /**
-     * @param bool|null $in_group_30
+     * @return bool|null
      */
-    public function setInGroup30(?bool $in_group_30): void
+    public function isInGroup11(): ?bool
     {
-        $this->in_group_30 = $in_group_30;
+        return $this->in_group_11;
     }
 
     /**
-     * @param bool|null $in_group_11
+     * @return bool|null
      */
-    public function setInGroup11(?bool $in_group_11): void
+    public function isInGroup16(): ?bool
     {
-        $this->in_group_11 = $in_group_11;
+        return $this->in_group_16;
     }
 
     /**
@@ -896,11 +907,19 @@ final class Users extends Partner
     }
 
     /**
-     * @param string|null $sel_groups_19_20_21
+     * @return string|null
      */
-    public function setSelGroups192021(?string $sel_groups_19_20_21): void
+    public function getSelGroups222526(): ?string
     {
-        $this->sel_groups_19_20_21 = $sel_groups_19_20_21;
+        return $this->sel_groups_22_25_26;
+    }
+
+    /**
+     * @param bool|null $in_group_10
+     */
+    public function setInGroup10(?bool $in_group_10): void
+    {
+        $this->in_group_10 = $in_group_10;
     }
 
     /**
@@ -1000,11 +1019,19 @@ final class Users extends Partner
     }
 
     /**
-     * @return string|null
+     * @param string|null $sel_groups_19_20_21
      */
-    public function getSelGroups222526(): ?string
+    public function setSelGroups192021(?string $sel_groups_19_20_21): void
     {
-        return $this->sel_groups_22_25_26;
+        $this->sel_groups_19_20_21 = $sel_groups_19_20_21;
+    }
+
+    /**
+     * @param bool|null $in_group_16
+     */
+    public function setInGroup16(?bool $in_group_16): void
+    {
+        $this->in_group_16 = $in_group_16;
     }
 
     /**
@@ -1013,14 +1040,6 @@ final class Users extends Partner
     public function getSelGroups192021(): ?string
     {
         return $this->sel_groups_19_20_21;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isInGroup16(): ?bool
-    {
-        return $this->in_group_16;
     }
 
     /**
@@ -1117,14 +1136,6 @@ final class Users extends Partner
     public function isInGroup17(): ?bool
     {
         return $this->in_group_17;
-    }
-
-    /**
-     * @param bool|null $in_group_16
-     */
-    public function setInGroup16(?bool $in_group_16): void
-    {
-        $this->in_group_16 = $in_group_16;
     }
 
     /**
@@ -1745,10 +1756,10 @@ final class Users extends Partner
     }
 
     /**
-     * @param bool|null $in_group_10
+     * @return string
      */
-    public function setInGroup10(?bool $in_group_10): void
+    public static function getOdooModelName(): string
     {
-        $this->in_group_10 = $in_group_10;
+        return 'res.users';
     }
 }

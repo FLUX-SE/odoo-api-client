@@ -14,5 +14,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class PrintBatchPayment extends Base
 {
-    public const ODOO_MODEL_NAME = 'report.account_batch_payment.print_batch_payment';
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'report.account_batch_payment.print_batch_payment';
+    }
 }

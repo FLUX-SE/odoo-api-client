@@ -18,8 +18,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Subtype extends Base
 {
-    public const ODOO_MODEL_NAME = 'mail.message.subtype';
-
     /**
      * Message Type
      * Message subtype gives a more precise type on the message, especially for system notifications. For example, it
@@ -165,11 +163,19 @@ final class Subtype extends Base
     }
 
     /**
-     * @param bool|null $default
+     * @return int|null
      */
-    public function setDefault(?bool $default): void
+    public function getSequence(): ?int
     {
-        $this->default = $default;
+        return $this->sequence;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -253,19 +259,11 @@ final class Subtype extends Base
     }
 
     /**
-     * @return int|null
+     * @param bool|null $default
      */
-    public function getSequence(): ?int
+    public function setDefault(?bool $default): void
     {
-        return $this->sequence;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isDefault(): ?bool
-    {
-        return $this->default;
+        $this->default = $default;
     }
 
     /**
@@ -274,6 +272,14 @@ final class Subtype extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isDefault(): ?bool
+    {
+        return $this->default;
     }
 
     /**
@@ -365,10 +371,10 @@ final class Subtype extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'mail.message.subtype';
     }
 }

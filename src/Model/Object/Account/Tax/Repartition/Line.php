@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Line extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.tax.repartition.line';
-
     /**
      * %
      * Factor to apply on the account move lines generated from this repartition line, in percents
@@ -187,7 +185,7 @@ final class Line extends Base
      *        Selection : (default value, usually null)
      *            -> base (Base)
      *            -> tax (of tax)
-     *
+     *       
      * @param OdooRelation $company_id Company
      *        The company this repartition line belongs to.
      *        Searchable : yes
@@ -203,49 +201,57 @@ final class Line extends Base
     /**
      * @return OdooRelation|null
      */
-    public function getTaxId(): ?OdooRelation
+    public function getCreateUid(): ?OdooRelation
     {
-        return $this->tax_id;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
+        return $this->create_uid;
     }
 
     /**
      * @return OdooRelation|null
      */
-    public function getWriteUid(): ?OdooRelation
+    public function getCountryId(): ?OdooRelation
     {
-        return $this->write_uid;
+        return $this->country_id;
     }
 
     /**
-     * @param DateTimeInterface|null $create_date
+     * @param OdooRelation|null $country_id
      */
-    public function setCreateDate(?DateTimeInterface $create_date): void
+    public function setCountryId(?OdooRelation $country_id): void
     {
-        $this->create_date = $create_date;
+        $this->country_id = $country_id;
     }
 
     /**
-     * @return DateTimeInterface|null
+     * @return OdooRelation
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function getCompanyId(): OdooRelation
     {
-        return $this->create_date;
+        return $this->company_id;
+    }
+
+    /**
+     * @param OdooRelation $company_id
+     */
+    public function setCompanyId(OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSequence(): ?int
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * @param int|null $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
     }
 
     /**
@@ -259,57 +265,57 @@ final class Line extends Base
     /**
      * @return OdooRelation|null
      */
-    public function getCreateUid(): ?OdooRelation
+    public function getTaxId(): ?OdooRelation
     {
-        return $this->create_uid;
+        return $this->tax_id;
     }
 
     /**
-     * @param int|null $sequence
+     * @return DateTimeInterface|null
      */
-    public function setSequence(?int $sequence): void
+    public function getCreateDate(): ?DateTimeInterface
     {
-        $this->sequence = $sequence;
+        return $this->create_date;
     }
 
     /**
-     * @return int|null
+     * @param DateTimeInterface|null $create_date
      */
-    public function getSequence(): ?int
+    public function setCreateDate(?DateTimeInterface $create_date): void
     {
-        return $this->sequence;
-    }
-
-    /**
-     * @param OdooRelation $company_id
-     */
-    public function setCompanyId(OdooRelation $company_id): void
-    {
-        $this->company_id = $company_id;
-    }
-
-    /**
-     * @return OdooRelation
-     */
-    public function getCompanyId(): OdooRelation
-    {
-        return $this->company_id;
-    }
-
-    /**
-     * @param OdooRelation|null $country_id
-     */
-    public function setCountryId(?OdooRelation $country_id): void
-    {
-        $this->country_id = $country_id;
+        $this->create_date = $create_date;
     }
 
     /**
      * @return OdooRelation|null
      */
-    public function getCountryId(): ?OdooRelation
+    public function getWriteUid(): ?OdooRelation
     {
-        return $this->country_id;
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -478,10 +484,10 @@ final class Line extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.tax.repartition.line';
     }
 }

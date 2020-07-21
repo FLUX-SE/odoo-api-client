@@ -16,8 +16,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Module extends Base
 {
-    public const ODOO_MODEL_NAME = 'base.import.module';
-
     /**
      * Module .ZIP file
      * Searchable : yes
@@ -106,11 +104,19 @@ final class Module extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->create_uid;
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -154,19 +160,11 @@ final class Module extends Base
     }
 
     /**
-     * @param OdooRelation|null $create_uid
+     * @return OdooRelation|null
      */
-    public function setCreateUid(?OdooRelation $create_uid): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @param bool|null $force
-     */
-    public function setForce(?bool $force): void
-    {
-        $this->force = $force;
+        return $this->create_uid;
     }
 
     /**
@@ -175,6 +173,14 @@ final class Module extends Base
     public function getModuleFile(): int
     {
         return $this->module_file;
+    }
+
+    /**
+     * @param bool|null $force
+     */
+    public function setForce(?bool $force): void
+    {
+        $this->force = $force;
     }
 
     /**
@@ -226,10 +232,10 @@ final class Module extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'base.import.module';
     }
 }

@@ -20,8 +20,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class View extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.actions.act_window.view';
-
     /**
      * Sequence
      * Searchable : yes
@@ -137,7 +135,7 @@ final class View extends Base
      *            -> grid (Grid)
      *            -> activity (Activity)
      *            -> map (Map)
-     *
+     *       
      */
     public function __construct(string $view_mode)
     {
@@ -145,11 +143,19 @@ final class View extends Base
     }
 
     /**
-     * @param string $view_mode
+     * @return OdooRelation|null
      */
-    public function setViewMode(string $view_mode): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->view_mode = $view_mode;
+        return $this->create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -201,19 +207,11 @@ final class View extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param string $view_mode
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setViewMode(string $view_mode): void
     {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return string
-     */
-    public function getViewMode(): string
-    {
-        return $this->view_mode;
+        $this->view_mode = $view_mode;
     }
 
     /**
@@ -222,6 +220,14 @@ final class View extends Base
     public function getSequence(): ?int
     {
         return $this->sequence;
+    }
+
+    /**
+     * @return string
+     */
+    public function getViewMode(): string
+    {
+        return $this->view_mode;
     }
 
     /**
@@ -281,10 +287,10 @@ final class View extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'ir.actions.act_window.view';
     }
 }

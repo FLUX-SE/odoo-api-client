@@ -22,8 +22,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Product extends Template
 {
-    public const ODOO_MODEL_NAME = 'product.product';
-
     /**
      * Variant Price Extra
      * This is the sum of the extra price of all attributes
@@ -149,7 +147,7 @@ final class Product extends Template
      *        Selection : (default value, usually null)
      *            -> consu (Consumable)
      *            -> service (Service)
-     *
+     *       
      * @param OdooRelation $categ_id Product Category
      *        Select category for the current product
      *        Searchable : yes
@@ -175,7 +173,7 @@ final class Product extends Template
      *            -> no-message (No Message)
      *            -> warning (Warning)
      *            -> block (Blocking Message)
-     *
+     *       
      */
     public function __construct(
         OdooRelation $product_tmpl_id,
@@ -189,12 +187,12 @@ final class Product extends Template
     ) {
         $this->product_tmpl_id = $product_tmpl_id;
         parent::__construct(
-            $name,
-            $type,
-            $categ_id,
-            $uom_id,
-            $uom_po_id,
-            $product_variant_ids,
+            $name, 
+            $type, 
+            $categ_id, 
+            $uom_id, 
+            $uom_po_id, 
+            $product_variant_ids, 
             $sale_line_warn
         );
     }
@@ -205,6 +203,14 @@ final class Product extends Template
     public function setCombinationIndices(?string $combination_indices): void
     {
         $this->combination_indices = $combination_indices;
+    }
+
+    /**
+     * @param bool|null $can_image_variant_1024_be_zoomed
+     */
+    public function setCanImageVariant1024BeZoomed(?bool $can_image_variant_1024_be_zoomed): void
+    {
+        $this->can_image_variant_1024_be_zoomed = $can_image_variant_1024_be_zoomed;
     }
 
     /**
@@ -429,10 +435,10 @@ final class Product extends Template
     }
 
     /**
-     * @param bool|null $can_image_variant_1024_be_zoomed
+     * @return string
      */
-    public function setCanImageVariant1024BeZoomed(?bool $can_image_variant_1024_be_zoomed): void
+    public static function getOdooModelName(): string
     {
-        $this->can_image_variant_1024_be_zoomed = $can_image_variant_1024_be_zoomed;
+        return 'product.product';
     }
 }

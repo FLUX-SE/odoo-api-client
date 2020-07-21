@@ -16,8 +16,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Layout extends Base
 {
-    public const ODOO_MODEL_NAME = 'base.document.layout';
-
     /**
      * Company
      * Searchable : yes
@@ -210,19 +208,11 @@ final class Layout extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $preview
      */
-    public function getPreview(): ?string
+    public function setPreview(?string $preview): void
     {
-        return $this->preview;
-    }
-
-    /**
-     * @param bool|null $custom_colors
-     */
-    public function setCustomColors(?bool $custom_colors): void
-    {
-        $this->custom_colors = $custom_colors;
+        $this->preview = $preview;
     }
 
     /**
@@ -274,19 +264,11 @@ final class Layout extends Base
     }
 
     /**
-     * @param string|null $preview
+     * @return string|null
      */
-    public function setPreview(?string $preview): void
+    public function getPreview(): ?string
     {
-        $this->preview = $preview;
-    }
-
-    /**
-     * @param string|null $secondary_color
-     */
-    public function setSecondaryColor(?string $secondary_color): void
-    {
-        $this->secondary_color = $secondary_color;
+        return $this->preview;
     }
 
     /**
@@ -295,6 +277,14 @@ final class Layout extends Base
     public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isCustomColors(): ?bool
+    {
+        return $this->custom_colors;
     }
 
     /**
@@ -346,19 +336,27 @@ final class Layout extends Base
     }
 
     /**
-     * @return bool|null
+     * @param DateTimeInterface|null $write_date
      */
-    public function isCustomColors(): ?bool
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->custom_colors;
+        $this->write_date = $write_date;
     }
 
     /**
-     * @return string|null
+     * @param bool|null $custom_colors
      */
-    public function getSecondaryColor(): ?string
+    public function setCustomColors(?bool $custom_colors): void
     {
-        return $this->secondary_color;
+        $this->custom_colors = $custom_colors;
+    }
+
+    /**
+     * @param string|null $secondary_color
+     */
+    public function setSecondaryColor(?string $secondary_color): void
+    {
+        $this->secondary_color = $secondary_color;
     }
 
     /**
@@ -442,11 +440,11 @@ final class Layout extends Base
     }
 
     /**
-     * @param string|null $primary_color
+     * @return string|null
      */
-    public function setPrimaryColor(?string $primary_color): void
+    public function getSecondaryColor(): ?string
     {
-        $this->primary_color = $primary_color;
+        return $this->secondary_color;
     }
 
     /**
@@ -506,10 +504,18 @@ final class Layout extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @param string|null $primary_color
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function setPrimaryColor(?string $primary_color): void
     {
-        $this->write_date = $write_date;
+        $this->primary_color = $primary_color;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'base.document.layout';
     }
 }

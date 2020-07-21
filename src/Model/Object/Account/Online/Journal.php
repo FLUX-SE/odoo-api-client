@@ -17,8 +17,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Journal extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.online.journal';
-
     /**
      * Journal Name
      * Searchable : yes
@@ -170,62 +168,6 @@ final class Journal extends Base
     }
 
     /**
-     * @return float|null
-     */
-    public function getBalance(): ?float
-    {
-        return $this->balance;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @param OdooRelation|null $create_uid
-     */
-    public function setCreateUid(?OdooRelation $create_uid): void
-    {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
      * @return OdooRelation|null
      */
     public function getCreateUid(): ?OdooRelation
@@ -234,35 +176,11 @@ final class Journal extends Base
     }
 
     /**
-     * @param int|null $yodlee_status_code
-     */
-    public function setYodleeStatusCode(?int $yodlee_status_code): void
-    {
-        $this->yodlee_status_code = $yodlee_status_code;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getYodleeStatusCode(): ?int
-    {
-        return $this->yodlee_status_code;
-    }
-
-    /**
-     * @param string|null $yodlee_account_status
-     */
-    public function setYodleeAccountStatus(?string $yodlee_account_status): void
-    {
-        $this->yodlee_account_status = $yodlee_account_status;
-    }
-
-    /**
      * @return string|null
      */
-    public function getYodleeAccountStatus(): ?string
+    public function getPontoLastSynchronizationIdentifier(): ?string
     {
-        return $this->yodlee_account_status;
+        return $this->ponto_last_synchronization_identifier;
     }
 
     /**
@@ -277,9 +195,97 @@ final class Journal extends Base
     /**
      * @return string|null
      */
-    public function getPontoLastSynchronizationIdentifier(): ?string
+    public function getYodleeAccountStatus(): ?string
     {
-        return $this->ponto_last_synchronization_identifier;
+        return $this->yodlee_account_status;
+    }
+
+    /**
+     * @param string|null $yodlee_account_status
+     */
+    public function setYodleeAccountStatus(?string $yodlee_account_status): void
+    {
+        $this->yodlee_account_status = $yodlee_account_status;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getYodleeStatusCode(): ?int
+    {
+        return $this->yodlee_status_code;
+    }
+
+    /**
+     * @param int|null $yodlee_status_code
+     */
+    public function setYodleeStatusCode(?int $yodlee_status_code): void
+    {
+        $this->yodlee_status_code = $yodlee_status_code;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getBalance(): ?float
+    {
+        return $this->balance;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -448,10 +454,10 @@ final class Journal extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.online.journal';
     }
 }

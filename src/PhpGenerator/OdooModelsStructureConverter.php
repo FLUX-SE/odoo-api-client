@@ -6,6 +6,7 @@ namespace Flux\OdooApiClient\PhpGenerator;
 
 use DateTimeInterface;
 use Exception;
+use Flux\OdooApiClient\Model\BaseInterface;
 use Flux\OdooApiClient\Model\OdooRelation;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\InspectionOperationsInterface;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\FieldsGetOptions;
@@ -271,6 +272,19 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         $className = $this->getClassNameFormModelName($modelName);
         $classType = ClassBuilderInterface::CLASS_TYPE_FINAL;
         $extends = $baseModelClass;
+        $implements = [];
+        $constants = [];
+        $methods = [
+            [
+                'scope' => 'public',
+                'name' => 'getOdooModelName',
+                'return_types' => ['string'],
+                'body' => [
+                    sprintf('return \'%s\';', $modelName),
+                ],
+                'static' => true,
+            ]
+        ];
 
         foreach ($item['inherited_model_ids'] as $inheritedModelId) {
             $inheritedModel = $this->modelIdToModelName[$inheritedModelId];
@@ -281,12 +295,6 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         $fieldsInfos = $this->fields_get($modelName);
 
         $properties = $this->convertModelProperties($fieldsInfos, $baseModelNamespace, $item);
-        $constants = [
-            [
-                'name' => 'ODOO_MODEL_NAME',
-                'default' => sprintf('\'%s\'', $modelName),
-            ]
-        ];
 
         if ($item['abstract'] ?? false) {
             $classType = ClassBuilderInterface::CLASS_TYPE_ABSTRACT;
@@ -298,6 +306,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
 
         if ($modelName === self::BASE_MODEL_NAME) {
             $extends = null;
+            $implements[] = BaseInterface::class;
         }
 
         $info = trim($item['info'], '"');
@@ -307,6 +316,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             'class' => $className,
             'type' => $classType,
             'extends' => $extends,
+            'implements' => $implements,
             'description' => [
                 PhpDocInterface::TYPE_DESCRIPTION => [
                     sprintf('Odoo model : %s', $modelName),
@@ -317,6 +327,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             ],
             'constants' => $constants,
             'properties' => $properties,
+            'methods' => $methods,
         ];
     }
 

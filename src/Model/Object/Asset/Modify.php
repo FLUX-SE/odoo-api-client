@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Modify extends Base
 {
-    public const ODOO_MODEL_NAME = 'asset.modify';
-
     /**
      * Reason
      * Searchable : yes
@@ -210,19 +208,11 @@ final class Modify extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $account_depreciation_expense_id
      */
-    public function getAccountDepreciationExpenseId(): ?OdooRelation
+    public function setAccountDepreciationExpenseId(?OdooRelation $account_depreciation_expense_id): void
     {
-        return $this->account_depreciation_expense_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getAccountAssetId(): ?OdooRelation
-    {
-        return $this->account_asset_id;
+        $this->account_depreciation_expense_id = $account_depreciation_expense_id;
     }
 
     /**
@@ -266,19 +256,11 @@ final class Modify extends Base
     }
 
     /**
-     * @param OdooRelation|null $account_depreciation_expense_id
+     * @return OdooRelation|null
      */
-    public function setAccountDepreciationExpenseId(?OdooRelation $account_depreciation_expense_id): void
+    public function getAccountDepreciationExpenseId(): ?OdooRelation
     {
-        $this->account_depreciation_expense_id = $account_depreciation_expense_id;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isGainValue(): ?bool
-    {
-        return $this->gain_value;
+        return $this->account_depreciation_expense_id;
     }
 
     /**
@@ -287,6 +269,14 @@ final class Modify extends Base
     public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
+    }
+
+    /**
+     * @param bool|null $gain_value
+     */
+    public function setGainValue(?bool $gain_value): void
+    {
+        $this->gain_value = $gain_value;
     }
 
     /**
@@ -338,19 +328,27 @@ final class Modify extends Base
     }
 
     /**
-     * @param bool|null $gain_value
+     * @param DateTimeInterface|null $write_date
      */
-    public function setGainValue(?bool $gain_value): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->gain_value = $gain_value;
+        $this->write_date = $write_date;
     }
 
     /**
-     * @param bool|null $need_date
+     * @return OdooRelation|null
      */
-    public function setNeedDate(?bool $need_date): void
+    public function getAccountAssetId(): ?OdooRelation
     {
-        $this->need_date = $need_date;
+        return $this->account_asset_id;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isGainValue(): ?bool
+    {
+        return $this->gain_value;
     }
 
     /**
@@ -362,11 +360,11 @@ final class Modify extends Base
     }
 
     /**
-     * @param string|null $method_period
+     * @return float|null
      */
-    public function setMethodPeriod(?string $method_period): void
+    public function getValueResidual(): ?float
     {
-        $this->method_period = $method_period;
+        return $this->value_residual;
     }
 
     /**
@@ -418,19 +416,11 @@ final class Modify extends Base
     }
 
     /**
-     * @return float|null
+     * @param string|null $method_period
      */
-    public function getValueResidual(): ?float
+    public function setMethodPeriod(?string $method_period): void
     {
-        return $this->value_residual;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isNeedDate(): ?bool
-    {
-        return $this->need_date;
+        $this->method_period = $method_period;
     }
 
     /**
@@ -439,6 +429,14 @@ final class Modify extends Base
     public function setValueResidual(?float $value_residual): void
     {
         $this->value_residual = $value_residual;
+    }
+
+    /**
+     * @param bool|null $need_date
+     */
+    public function setNeedDate(?bool $need_date): void
+    {
+        $this->need_date = $need_date;
     }
 
     /**
@@ -490,10 +488,18 @@ final class Modify extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return bool|null
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function isNeedDate(): ?bool
     {
-        $this->write_date = $write_date;
+        return $this->need_date;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'asset.modify';
     }
 }

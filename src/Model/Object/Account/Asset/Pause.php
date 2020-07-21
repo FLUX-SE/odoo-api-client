@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Pause extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.asset.pause';
-
     /**
      * Pause date
      * Searchable : yes
@@ -185,5 +183,13 @@ final class Pause extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'account.asset.pause';
     }
 }

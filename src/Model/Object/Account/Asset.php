@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Asset extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.asset';
-
     /**
      * # Posted Depreciation Entries
      * Searchable : no
@@ -702,19 +700,17 @@ final class Asset extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $message_follower_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setMessageFollowerIds(?array $message_follower_ids): void
+    public function hasMessageFollowerIds(OdooRelation $item): bool
     {
-        $this->message_follower_ids = $message_follower_ids;
-    }
+        if (null === $this->message_follower_ids) {
+            return false;
+        }
 
-    /**
-     * @return string|null
-     */
-    public function getActivityExceptionDecoration(): ?string
-    {
-        return $this->activity_exception_decoration;
+        return in_array($item, $this->message_follower_ids);
     }
 
     /**
@@ -766,25 +762,11 @@ final class Asset extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param OdooRelation[]|null $message_follower_ids
      */
-    public function hasMessageFollowerIds(OdooRelation $item): bool
+    public function setMessageFollowerIds(?array $message_follower_ids): void
     {
-        if (null === $this->message_follower_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_follower_ids);
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getActivitySummary(): ?string
-    {
-        return $this->activity_summary;
+        $this->message_follower_ids = $message_follower_ids;
     }
 
     /**
@@ -801,6 +783,14 @@ final class Asset extends Base
         }
 
         $this->message_follower_ids[] = $item;
+    }
+
+    /**
+     * @param string|null $activity_summary
+     */
+    public function setActivitySummary(?string $activity_summary): void
+    {
+        $this->activity_summary = $activity_summary;
     }
 
     /**
@@ -880,27 +870,27 @@ final class Asset extends Base
     }
 
     /**
-     * @param string|null $activity_summary
+     * @return OdooRelation[]|null
      */
-    public function setActivitySummary(?string $activity_summary): void
+    public function getMessageChannelIds(): ?array
     {
-        $this->activity_summary = $activity_summary;
+        return $this->message_channel_ids;
     }
 
     /**
-     * @param DateTimeInterface|null $activity_date_deadline
+     * @return string|null
      */
-    public function setActivityDateDeadline(?DateTimeInterface $activity_date_deadline): void
+    public function getActivityExceptionDecoration(): ?string
     {
-        $this->activity_date_deadline = $activity_date_deadline;
+        return $this->activity_exception_decoration;
     }
 
     /**
-     * @param OdooRelation[]|null $message_channel_ids
+     * @return string|null
      */
-    public function setMessageChannelIds(?array $message_channel_ids): void
+    public function getActivitySummary(): ?string
     {
-        $this->message_channel_ids = $message_channel_ids;
+        return $this->activity_summary;
     }
 
     /**
@@ -908,21 +898,29 @@ final class Asset extends Base
      *
      * @return bool
      */
-    public function hasActivityIds(OdooRelation $item): bool
+    public function hasMessageChannelIds(OdooRelation $item): bool
     {
-        if (null === $this->activity_ids) {
+        if (null === $this->message_channel_ids) {
             return false;
         }
 
-        return in_array($item, $this->activity_ids);
+        return in_array($item, $this->message_channel_ids);
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @param OdooRelation $item
      */
-    public function getChildrenIds(): ?array
+    public function addActivityIds(OdooRelation $item): void
     {
-        return $this->children_ids;
+        if ($this->hasActivityIds($item)) {
+            return;
+        }
+
+        if (null === $this->activity_ids) {
+            $this->activity_ids = [];
+        }
+
+        $this->activity_ids[] = $item;
     }
 
     /**
@@ -996,26 +994,16 @@ final class Asset extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function addActivityIds(OdooRelation $item): void
+    public function hasActivityIds(OdooRelation $item): bool
     {
-        if ($this->hasActivityIds($item)) {
-            return;
-        }
-
         if (null === $this->activity_ids) {
-            $this->activity_ids = [];
+            return false;
         }
 
-        $this->activity_ids[] = $item;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getActivityDateDeadline(): ?DateTimeInterface
-    {
-        return $this->activity_date_deadline;
+        return in_array($item, $this->activity_ids);
     }
 
     /**
@@ -1031,6 +1019,14 @@ final class Asset extends Base
             $index = array_search($item, $this->activity_ids);
             unset($this->activity_ids[$index]);
         }
+    }
+
+    /**
+     * @param DateTimeInterface|null $activity_date_deadline
+     */
+    public function setActivityDateDeadline(?DateTimeInterface $activity_date_deadline): void
+    {
+        $this->activity_date_deadline = $activity_date_deadline;
     }
 
     /**
@@ -1082,49 +1078,51 @@ final class Asset extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @return DateTimeInterface|null
      */
-    public function getMessageChannelIds(): ?array
+    public function getActivityDateDeadline(): ?DateTimeInterface
     {
-        return $this->message_channel_ids;
+        return $this->activity_date_deadline;
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_channel_ids
+     */
+    public function setMessageChannelIds(?array $message_channel_ids): void
+    {
+        $this->message_channel_ids = $message_channel_ids;
     }
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasMessageChannelIds(OdooRelation $item): bool
+    public function addMessageChannelIds(OdooRelation $item): void
     {
-        if (null === $this->message_channel_ids) {
-            return false;
+        if ($this->hasMessageChannelIds($item)) {
+            return;
         }
 
-        return in_array($item, $this->message_channel_ids);
+        if (null === $this->message_channel_ids) {
+            $this->message_channel_ids = [];
+        }
+
+        $this->message_channel_ids[] = $item;
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $parent_id
      */
-    public function getParentId(): ?OdooRelation
+    public function setParentId(?OdooRelation $parent_id): void
     {
-        return $this->parent_id;
+        $this->parent_id = $parent_id;
     }
 
     /**
-     * @return bool|null
+     * @param bool|null $message_has_sms_error
      */
-    public function isMessageHasSmsError(): ?bool
+    public function setMessageHasSmsError(?bool $message_has_sms_error): void
     {
-        return $this->message_has_sms_error;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getMessageMainAttachmentId(): ?OdooRelation
-    {
-        return $this->message_main_attachment_id;
+        $this->message_has_sms_error = $message_has_sms_error;
     }
 
     /**
@@ -1197,19 +1195,11 @@ final class Asset extends Base
     }
 
     /**
-     * @param bool|null $message_has_sms_error
+     * @return bool|null
      */
-    public function setMessageHasSmsError(?bool $message_has_sms_error): void
+    public function isMessageHasSmsError(): ?bool
     {
-        $this->message_has_sms_error = $message_has_sms_error;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getMessageAttachmentCount(): ?int
-    {
-        return $this->message_attachment_count;
+        return $this->message_has_sms_error;
     }
 
     /**
@@ -1218,6 +1208,14 @@ final class Asset extends Base
     public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
+    }
+
+    /**
+     * @param int|null $message_attachment_count
+     */
+    public function setMessageAttachmentCount(?int $message_attachment_count): void
+    {
+        $this->message_attachment_count = $message_attachment_count;
     }
 
     /**
@@ -1269,43 +1267,27 @@ final class Asset extends Base
     }
 
     /**
-     * @param int|null $message_attachment_count
+     * @param DateTimeInterface|null $write_date
      */
-    public function setMessageAttachmentCount(?int $message_attachment_count): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->message_attachment_count = $message_attachment_count;
+        $this->write_date = $write_date;
     }
 
     /**
-     * @param int|null $message_has_error_counter
+     * @return OdooRelation|null
      */
-    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
+    public function getMessageMainAttachmentId(): ?OdooRelation
     {
-        $this->message_has_error_counter = $message_has_error_counter;
+        return $this->message_main_attachment_id;
     }
 
     /**
-     * @param OdooRelation $item
+     * @return int|null
      */
-    public function addMessageChannelIds(OdooRelation $item): void
+    public function getMessageAttachmentCount(): ?int
     {
-        if ($this->hasMessageChannelIds($item)) {
-            return;
-        }
-
-        if (null === $this->message_channel_ids) {
-            $this->message_channel_ids = [];
-        }
-
-        $this->message_channel_ids[] = $item;
-    }
-
-    /**
-     * @param bool|null $message_unread
-     */
-    public function setMessageUnread(?bool $message_unread): void
-    {
-        $this->message_unread = $message_unread;
+        return $this->message_attachment_count;
     }
 
     /**
@@ -1321,6 +1303,14 @@ final class Asset extends Base
             $index = array_search($item, $this->message_channel_ids);
             unset($this->message_channel_ids[$index]);
         }
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getMessageUnreadCounter(): ?int
+    {
+        return $this->message_unread_counter;
     }
 
     /**
@@ -1393,19 +1383,11 @@ final class Asset extends Base
     }
 
     /**
-     * @return int|null
+     * @param bool|null $message_unread
      */
-    public function getMessageUnreadCounter(): ?int
+    public function setMessageUnread(?bool $message_unread): void
     {
-        return $this->message_unread_counter;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getMessageHasErrorCounter(): ?int
-    {
-        return $this->message_has_error_counter;
+        $this->message_unread = $message_unread;
     }
 
     /**
@@ -1414,6 +1396,14 @@ final class Asset extends Base
     public function setMessageUnreadCounter(?int $message_unread_counter): void
     {
         $this->message_unread_counter = $message_unread_counter;
+    }
+
+    /**
+     * @param int|null $message_has_error_counter
+     */
+    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
+    {
+        $this->message_has_error_counter = $message_has_error_counter;
     }
 
     /**
@@ -1465,19 +1455,27 @@ final class Asset extends Base
     }
 
     /**
-     * @param OdooRelation|null $parent_id
+     * @return int|null
      */
-    public function setParentId(?OdooRelation $parent_id): void
+    public function getMessageHasErrorCounter(): ?int
     {
-        $this->parent_id = $parent_id;
+        return $this->message_has_error_counter;
     }
 
     /**
-     * @param bool|null $display_account_asset_id
+     * @return OdooRelation[]|null
      */
-    public function setDisplayAccountAssetId(?bool $display_account_asset_id): void
+    public function getChildrenIds(): ?array
     {
-        $this->display_account_asset_id = $display_account_asset_id;
+        return $this->children_ids;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getParentId(): ?OdooRelation
+    {
+        return $this->parent_id;
     }
 
     /**
@@ -1801,27 +1799,19 @@ final class Asset extends Base
     }
 
     /**
-     * @return bool|null
+     * @param bool|null $display_account_asset_id
      */
-    public function isDisplayAccountAssetId(): ?bool
+    public function setDisplayAccountAssetId(?bool $display_account_asset_id): void
     {
-        return $this->display_account_asset_id;
+        $this->display_account_asset_id = $display_account_asset_id;
     }
 
     /**
-     * @param DateTimeInterface|null $acquisition_date
+     * @return DateTimeInterface|null
      */
-    public function setAcquisitionDate(?DateTimeInterface $acquisition_date): void
+    public function getDisposalDate(): ?DateTimeInterface
     {
-        $this->acquisition_date = $acquisition_date;
-    }
-
-    /**
-     * @param OdooRelation[]|null $analytic_tag_ids
-     */
-    public function setAnalyticTagIds(?array $analytic_tag_ids): void
-    {
-        $this->analytic_tag_ids = $analytic_tag_ids;
+        return $this->disposal_date;
     }
 
     /**
@@ -1894,19 +1884,11 @@ final class Asset extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
+     * @param DateTimeInterface|null $acquisition_date
      */
-    public function getDisposalDate(): ?DateTimeInterface
+    public function setAcquisitionDate(?DateTimeInterface $acquisition_date): void
     {
-        return $this->disposal_date;
-    }
-
-    /**
-     * @param OdooRelation|null $account_analytic_id
-     */
-    public function setAccountAnalyticId(?OdooRelation $account_analytic_id): void
-    {
-        $this->account_analytic_id = $account_analytic_id;
+        $this->acquisition_date = $acquisition_date;
     }
 
     /**
@@ -1915,6 +1897,14 @@ final class Asset extends Base
     public function setDisposalDate(?DateTimeInterface $disposal_date): void
     {
         $this->disposal_date = $disposal_date;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getAnalyticTagIds(): ?array
+    {
+        return $this->analytic_tag_ids;
     }
 
     /**
@@ -1966,19 +1956,27 @@ final class Asset extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @return bool|null
      */
-    public function getAnalyticTagIds(): ?array
+    public function isDisplayAccountAssetId(): ?bool
     {
-        return $this->analytic_tag_ids;
+        return $this->display_account_asset_id;
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation[]|null $analytic_tag_ids
      */
-    public function getAccountAnalyticId(): ?OdooRelation
+    public function setAnalyticTagIds(?array $analytic_tag_ids): void
     {
-        return $this->account_analytic_id;
+        $this->analytic_tag_ids = $analytic_tag_ids;
+    }
+
+    /**
+     * @param OdooRelation|null $account_analytic_id
+     */
+    public function setAccountAnalyticId(?OdooRelation $account_analytic_id): void
+    {
+        $this->account_analytic_id = $account_analytic_id;
     }
 
     /**
@@ -2062,18 +2060,11 @@ final class Asset extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return OdooRelation|null
      */
-    public function removeOriginalMoveLineIds(OdooRelation $item): void
+    public function getAccountAnalyticId(): ?OdooRelation
     {
-        if (null === $this->original_move_line_ids) {
-            $this->original_move_line_ids = [];
-        }
-
-        if ($this->hasOriginalMoveLineIds($item)) {
-            $index = array_search($item, $this->original_move_line_ids);
-            unset($this->original_move_line_ids[$index]);
-        }
+        return $this->account_analytic_id;
     }
 
     /**
@@ -2168,10 +2159,25 @@ final class Asset extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @param OdooRelation $item
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function removeOriginalMoveLineIds(OdooRelation $item): void
     {
-        $this->write_date = $write_date;
+        if (null === $this->original_move_line_ids) {
+            $this->original_move_line_ids = [];
+        }
+
+        if ($this->hasOriginalMoveLineIds($item)) {
+            $index = array_search($item, $this->original_move_line_ids);
+            unset($this->original_move_line_ids[$index]);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'account.asset';
     }
 }

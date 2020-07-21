@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Create extends Base
 {
-    public const ODOO_MODEL_NAME = 'wizard.ir.model.menu.create';
-
     /**
      * Parent Menu
      * Searchable : yes
@@ -185,5 +183,13 @@ final class Create extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'wizard.ir.model.menu.create';
     }
 }

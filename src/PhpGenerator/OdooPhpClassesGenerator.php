@@ -57,8 +57,9 @@ final class OdooPhpClassesGenerator implements OdooPhpClassesGeneratorInterface
             $classFilePath = rtrim($this->basePath . '/' . $classPath, '/') . '/' . $className . '.php';
 
             $this->classBuilder->setClassType($config['type']);
-            $this->classBuilder->setExtendClass($config['extends']);
-            $this->classBuilder->getClassModel()->getPhpDoc()->setLines($config['description']);
+            $this->classBuilder->setExtendClass($config['extends'] ?? null);
+            $this->classBuilder->setImplements($config['implements'] ?? []);
+            $this->classBuilder->getClassModel()->getPhpDoc()->setLines($config['description'] ?? []);
 
             $constantsConfig = $config['constants'] ?? [];
             foreach ($constantsConfig as $constantConfig) {
@@ -78,7 +79,7 @@ final class OdooPhpClassesGenerator implements OdooPhpClassesGeneratorInterface
                 $this->classBuilder->addProperty($constant);
             }
 
-            $propertiesConfig = $config['properties'];
+            $propertiesConfig = $config['properties'] ?? [];
             foreach ($propertiesConfig as $propertyConfig) {
                 $property = $this->classBuilder->createProperty(
                     $propertyConfig['name'],
@@ -96,6 +97,18 @@ final class OdooPhpClassesGenerator implements OdooPhpClassesGeneratorInterface
                 $property->setInherited($propertyConfig['inherited'] ?? false);
 
                 $this->classBuilder->addProperty($property);
+            }
+
+            $methodsConfig = $config['methods'] ?? [];
+            foreach ($methodsConfig as $methodConfig) {
+                $method = $this->classBuilder->createMethod(
+                    $methodConfig['scope'] ?? 'public',
+                    $methodConfig['name'],
+                    $methodConfig['return_types'] ?? [],
+                    $methodConfig['static'] ?? false,
+                );
+                $method->addMultipleLines(implode($methodConfig['body'], "\n"), "\n");
+                $this->classBuilder->addMethod($method);
             }
 
             $classContent = $this->classBuilder->build($classNamespace, $className);

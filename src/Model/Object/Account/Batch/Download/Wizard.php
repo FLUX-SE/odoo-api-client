@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Wizard extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.batch.download.wizard';
-
     /**
      * Batch Payment
      * Batch payment from which the file has been generated.
@@ -111,11 +109,19 @@ final class Wizard extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->create_uid;
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -159,19 +165,11 @@ final class Wizard extends Base
     }
 
     /**
-     * @param OdooRelation|null $create_uid
+     * @return OdooRelation|null
      */
-    public function setCreateUid(?OdooRelation $create_uid): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @param string|null $warning_message
-     */
-    public function setWarningMessage(?string $warning_message): void
-    {
-        $this->warning_message = $warning_message;
+        return $this->create_uid;
     }
 
     /**
@@ -180,6 +178,14 @@ final class Wizard extends Base
     public function getBatchPaymentId(): OdooRelation
     {
         return $this->batch_payment_id;
+    }
+
+    /**
+     * @param string|null $warning_message
+     */
+    public function setWarningMessage(?string $warning_message): void
+    {
+        $this->warning_message = $warning_message;
     }
 
     /**
@@ -231,10 +237,10 @@ final class Wizard extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.batch.download.wizard';
     }
 }

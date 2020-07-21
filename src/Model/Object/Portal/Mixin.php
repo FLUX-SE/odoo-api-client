@@ -14,8 +14,6 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Mixin extends Base
 {
-    public const ODOO_MODEL_NAME = 'portal.mixin';
-
     /**
      * Portal Access URL
      * Customer Portal URL
@@ -90,5 +88,13 @@ final class Mixin extends Base
     public function setAccessWarning(?string $access_warning): void
     {
         $this->access_warning = $access_warning;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'portal.mixin';
     }
 }

@@ -14,5 +14,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Receivable extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.aged.receivable';
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'account.aged.receivable';
+    }
 }

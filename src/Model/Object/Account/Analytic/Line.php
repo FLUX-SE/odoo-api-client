@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Line extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.analytic.line';
-
     /**
      * Description
      * Searchable : yes
@@ -267,11 +265,11 @@ final class Line extends Base
     }
 
     /**
-     * @param string|null $code
+     * @return string|null
      */
-    public function setCode(?string $code): void
+    public function getRef(): ?string
     {
-        $this->code = $code;
+        return $this->ref;
     }
 
     /**
@@ -347,19 +345,11 @@ final class Line extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $code
      */
-    public function getRef(): ?string
+    public function setCode(?string $code): void
     {
-        return $this->ref;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getCurrencyId(): ?OdooRelation
-    {
-        return $this->currency_id;
+        $this->code = $code;
     }
 
     /**
@@ -368,6 +358,14 @@ final class Line extends Base
     public function setRef(?string $ref): void
     {
         $this->ref = $ref;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCurrencyId(): ?OdooRelation
+    {
+        return $this->currency_id;
     }
 
     /**
@@ -440,6 +438,14 @@ final class Line extends Base
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -672,10 +678,10 @@ final class Line extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.analytic.line';
     }
 }

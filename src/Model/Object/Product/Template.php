@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 class Template extends Base
 {
-    public const ODOO_MODEL_NAME = 'product.template';
-
     /**
      * Name
      * Searchable : yes
@@ -876,7 +874,7 @@ class Template extends Base
      *        Selection : (default value, usually null)
      *            -> consu (Consumable)
      *            -> service (Service)
-     *
+     *       
      * @param OdooRelation $categ_id Product Category
      *        Select category for the current product
      *        Searchable : yes
@@ -902,7 +900,7 @@ class Template extends Base
      *            -> no-message (No Message)
      *            -> warning (Warning)
      *            -> block (Blocking Message)
-     *
+     *       
      */
     public function __construct(
         string $name,
@@ -923,19 +921,11 @@ class Template extends Base
     }
 
     /**
-     * @param string|null $activity_state
+     * @return OdooRelation|null
      */
-    public function setActivityState(?string $activity_state): void
+    public function getActivityUserId(): ?OdooRelation
     {
-        $this->activity_state = $activity_state;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getImage256(): ?int
-    {
-        return $this->image_256;
+        return $this->activity_user_id;
     }
 
     /**
@@ -1032,19 +1022,11 @@ class Template extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param string|null $activity_state
      */
-    public function getActivityUserId(): ?OdooRelation
+    public function setActivityState(?string $activity_state): void
     {
-        return $this->activity_user_id;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getImage512(): ?int
-    {
-        return $this->image_512;
+        $this->activity_state = $activity_state;
     }
 
     /**
@@ -1053,6 +1035,14 @@ class Template extends Base
     public function setActivityUserId(?OdooRelation $activity_user_id): void
     {
         $this->activity_user_id = $activity_user_id;
+    }
+
+    /**
+     * @param int|null $image_512
+     */
+    public function setImage512(?int $image_512): void
+    {
+        $this->image_512 = $image_512;
     }
 
     /**
@@ -1128,49 +1118,43 @@ class Template extends Base
     }
 
     /**
-     * @param int|null $image_512
+     * @param string|null $activity_exception_icon
      */
-    public function setImage512(?int $image_512): void
+    public function setActivityExceptionIcon(?string $activity_exception_icon): void
     {
-        $this->image_512 = $image_512;
+        $this->activity_exception_icon = $activity_exception_icon;
     }
 
     /**
-     * @param int|null $image_1024
+     * @return int|null
      */
-    public function setImage1024(?int $image_1024): void
+    public function getImage256(): ?int
     {
-        $this->image_1024 = $image_1024;
+        return $this->image_256;
     }
 
     /**
-     * @return bool|null
+     * @return int|null
      */
-    public function isMessageIsFollower(): ?bool
+    public function getImage512(): ?int
     {
-        return $this->message_is_follower;
+        return $this->image_512;
     }
 
     /**
-     * @param string $sale_line_warn
+     * @param bool|null $message_is_follower
      */
-    public function setSaleLineWarn(string $sale_line_warn): void
+    public function setMessageIsFollower(?bool $message_is_follower): void
     {
-        $this->sale_line_warn = $sale_line_warn;
+        $this->message_is_follower = $message_is_follower;
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @return string|null
      */
-    public function hasSupplierTaxesId(OdooRelation $item): bool
+    public function getSaleLineWarnMsg(): ?string
     {
-        if (null === $this->supplier_taxes_id) {
-            return false;
-        }
-
-        return in_array($item, $this->supplier_taxes_id);
+        return $this->sale_line_warn_msg;
     }
 
     /**
@@ -1261,19 +1245,11 @@ class Template extends Base
     }
 
     /**
-     * @return string|null
+     * @param string $sale_line_warn
      */
-    public function getSaleLineWarnMsg(): ?string
+    public function setSaleLineWarn(string $sale_line_warn): void
     {
-        return $this->sale_line_warn_msg;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getImage1024(): ?int
-    {
-        return $this->image_1024;
+        $this->sale_line_warn = $sale_line_warn;
     }
 
     /**
@@ -1282,6 +1258,14 @@ class Template extends Base
     public function setSaleLineWarnMsg(?string $sale_line_warn_msg): void
     {
         $this->sale_line_warn_msg = $sale_line_warn_msg;
+    }
+
+    /**
+     * @param int|null $image_1024
+     */
+    public function setImage1024(?int $image_1024): void
+    {
+        $this->image_1024 = $image_1024;
     }
 
     /**
@@ -1365,49 +1349,51 @@ class Template extends Base
     }
 
     /**
-     * @param string|null $activity_exception_icon
+     * @return int|null
      */
-    public function setActivityExceptionIcon(?string $activity_exception_icon): void
+    public function getImage1024(): ?int
     {
-        $this->activity_exception_icon = $activity_exception_icon;
-    }
-
-    /**
-     * @param bool|null $message_is_follower
-     */
-    public function setMessageIsFollower(?bool $message_is_follower): void
-    {
-        $this->message_is_follower = $message_is_follower;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getSupplierTaxesId(): ?array
-    {
-        return $this->supplier_taxes_id;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasWebsiteMessageIds(OdooRelation $item): bool
-    {
-        if (null === $this->website_message_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->website_message_ids);
+        return $this->image_1024;
     }
 
     /**
      * @return bool|null
      */
-    public function isMessageHasError(): ?bool
+    public function isMessageIsFollower(): ?bool
     {
-        return $this->message_has_error;
+        return $this->message_is_follower;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getMessageFollowerIds(): ?array
+    {
+        return $this->message_follower_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $supplier_taxes_id
+     */
+    public function setSupplierTaxesId(?array $supplier_taxes_id): void
+    {
+        $this->supplier_taxes_id = $supplier_taxes_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addWebsiteMessageIds(OdooRelation $item): void
+    {
+        if ($this->hasWebsiteMessageIds($item)) {
+            return;
+        }
+
+        if (null === $this->website_message_ids) {
+            $this->website_message_ids = [];
+        }
+
+        $this->website_message_ids[] = $item;
     }
 
     /**
@@ -1484,26 +1470,16 @@ class Template extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function addWebsiteMessageIds(OdooRelation $item): void
+    public function hasWebsiteMessageIds(OdooRelation $item): bool
     {
-        if ($this->hasWebsiteMessageIds($item)) {
-            return;
-        }
-
         if (null === $this->website_message_ids) {
-            $this->website_message_ids = [];
+            return false;
         }
 
-        $this->website_message_ids[] = $item;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getMessageNeedactionCounter(): ?int
-    {
-        return $this->message_needaction_counter;
+        return in_array($item, $this->website_message_ids);
     }
 
     /**
@@ -1519,6 +1495,14 @@ class Template extends Base
             $index = array_search($item, $this->website_message_ids);
             unset($this->website_message_ids[$index]);
         }
+    }
+
+    /**
+     * @param int|null $message_needaction_counter
+     */
+    public function setMessageNeedactionCounter(?int $message_needaction_counter): void
+    {
+        $this->message_needaction_counter = $message_needaction_counter;
     }
 
     /**
@@ -1594,35 +1578,27 @@ class Template extends Base
     }
 
     /**
-     * @param int|null $message_needaction_counter
+     * @param DateTimeInterface|null $write_date
      */
-    public function setMessageNeedactionCounter(?int $message_needaction_counter): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->message_needaction_counter = $message_needaction_counter;
+        $this->write_date = $write_date;
     }
 
     /**
-     * @param bool|null $message_needaction
+     * @return bool|null
      */
-    public function setMessageNeedaction(?bool $message_needaction): void
+    public function isMessageHasError(): ?bool
     {
-        $this->message_needaction = $message_needaction;
+        return $this->message_has_error;
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @return int|null
      */
-    public function getMessageFollowerIds(): ?array
+    public function getMessageNeedactionCounter(): ?int
     {
-        return $this->message_follower_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $message_channel_ids
-     */
-    public function setMessageChannelIds(?array $message_channel_ids): void
-    {
-        $this->message_channel_ids = $message_channel_ids;
+        return $this->message_needaction_counter;
     }
 
     /**
@@ -1631,6 +1607,20 @@ class Template extends Base
     public function setMessageFollowerIds(?array $message_follower_ids): void
     {
         $this->message_follower_ids = $message_follower_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMessageChannelIds(OdooRelation $item): bool
+    {
+        if (null === $this->message_channel_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_channel_ids);
     }
 
     /**
@@ -1748,25 +1738,11 @@ class Template extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param OdooRelation[]|null $message_channel_ids
      */
-    public function hasMessageChannelIds(OdooRelation $item): bool
+    public function setMessageChannelIds(?array $message_channel_ids): void
     {
-        if (null === $this->message_channel_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_channel_ids);
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isMessageNeedaction(): ?bool
-    {
-        return $this->message_needaction;
+        $this->message_channel_ids = $message_channel_ids;
     }
 
     /**
@@ -1783,6 +1759,14 @@ class Template extends Base
         }
 
         $this->message_channel_ids[] = $item;
+    }
+
+    /**
+     * @param bool|null $message_needaction
+     */
+    public function setMessageNeedaction(?bool $message_needaction): void
+    {
+        $this->message_needaction = $message_needaction;
     }
 
     /**
@@ -1894,26 +1878,33 @@ class Template extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $supplier_taxes_id
+     * @return bool|null
      */
-    public function setSupplierTaxesId(?array $supplier_taxes_id): void
+    public function isMessageNeedaction(): ?bool
     {
-        $this->supplier_taxes_id = $supplier_taxes_id;
+        return $this->message_needaction;
     }
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removeTaxesId(OdooRelation $item): void
+    public function hasSupplierTaxesId(OdooRelation $item): bool
     {
-        if (null === $this->taxes_id) {
-            $this->taxes_id = [];
+        if (null === $this->supplier_taxes_id) {
+            return false;
         }
 
-        if ($this->hasTaxesId($item)) {
-            $index = array_search($item, $this->taxes_id);
-            unset($this->taxes_id[$index]);
-        }
+        return in_array($item, $this->supplier_taxes_id);
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getSupplierTaxesId(): ?array
+    {
+        return $this->supplier_taxes_id;
     }
 
     /**
@@ -2349,17 +2340,16 @@ class Template extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addTaxesId(OdooRelation $item): void
+    public function removeTaxesId(OdooRelation $item): void
     {
-        if ($this->hasTaxesId($item)) {
-            return;
-        }
-
         if (null === $this->taxes_id) {
             $this->taxes_id = [];
         }
 
-        $this->taxes_id[] = $item;
+        if ($this->hasTaxesId($item)) {
+            $index = array_search($item, $this->taxes_id);
+            unset($this->taxes_id[$index]);
+        }
     }
 
     /**
@@ -2567,6 +2557,22 @@ class Template extends Base
         }
 
         return in_array($item, $this->taxes_id);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addTaxesId(OdooRelation $item): void
+    {
+        if ($this->hasTaxesId($item)) {
+            return;
+        }
+
+        if (null === $this->taxes_id) {
+            $this->taxes_id = [];
+        }
+
+        $this->taxes_id[] = $item;
     }
 
     /**
@@ -2878,10 +2884,10 @@ class Template extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'product.template';
     }
 }

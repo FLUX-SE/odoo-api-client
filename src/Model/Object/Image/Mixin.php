@@ -14,8 +14,6 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Mixin extends Base
 {
-    public const ODOO_MODEL_NAME = 'image.mixin';
-
     /**
      * Image
      * Searchable : yes
@@ -139,5 +137,13 @@ final class Mixin extends Base
     public function setImage128(?int $image_128): void
     {
         $this->image_128 = $image_128;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'image.mixin';
     }
 }

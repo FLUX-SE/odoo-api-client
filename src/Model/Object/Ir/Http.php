@@ -14,5 +14,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Http extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.http';
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'ir.http';
+    }
 }

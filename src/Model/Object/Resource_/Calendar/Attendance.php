@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Attendance extends Base
 {
-    public const ODOO_MODEL_NAME = 'resource.calendar.attendance';
-
     /**
      * Name
      * Searchable : yes
@@ -218,7 +216,7 @@ final class Attendance extends Base
      *            -> 4 (Friday)
      *            -> 5 (Saturday)
      *            -> 6 (Sunday)
-     *
+     *       
      * @param float $hour_from Work from
      *        Start and End time of working.
      *        A specific value of 24:00 is interpreted as 23:59:59.999999.
@@ -236,7 +234,7 @@ final class Attendance extends Base
      *        Selection : (default value, usually null)
      *            -> morning (Morning)
      *            -> afternoon (Afternoon)
-     *
+     *       
      */
     public function __construct(
         string $name,
@@ -255,19 +253,11 @@ final class Attendance extends Base
     }
 
     /**
-     * @param int|null $sequence
+     * @return OdooRelation|null
      */
-    public function setSequence(?int $sequence): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->sequence = $sequence;
-    }
-
-    /**
-     * @param string|null $week_type
-     */
-    public function setWeekType(?string $week_type): void
-    {
-        $this->week_type = $week_type;
+        return $this->create_uid;
     }
 
     /**
@@ -311,19 +301,11 @@ final class Attendance extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param int|null $sequence
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setSequence(?int $sequence): void
     {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $resource_id
-     */
-    public function setResourceId(?OdooRelation $resource_id): void
-    {
-        $this->resource_id = $resource_id;
+        $this->sequence = $sequence;
     }
 
     /**
@@ -332,6 +314,14 @@ final class Attendance extends Base
     public function setCreateUid(?OdooRelation $create_uid): void
     {
         $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getWeekType(): ?string
+    {
+        return $this->week_type;
     }
 
     /**
@@ -375,19 +365,27 @@ final class Attendance extends Base
     }
 
     /**
-     * @return string|null
+     * @param DateTimeInterface|null $write_date
      */
-    public function getWeekType(): ?string
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->week_type;
+        $this->write_date = $write_date;
     }
 
     /**
-     * @return OdooRelation|null
+     * @param string|null $week_type
      */
-    public function getResourceId(): ?OdooRelation
+    public function setWeekType(?string $week_type): void
     {
-        return $this->resource_id;
+        $this->week_type = $week_type;
+    }
+
+    /**
+     * @param OdooRelation|null $resource_id
+     */
+    public function setResourceId(?OdooRelation $resource_id): void
+    {
+        $this->resource_id = $resource_id;
     }
 
     /**
@@ -463,11 +461,11 @@ final class Attendance extends Base
     }
 
     /**
-     * @param string $day_period
+     * @return OdooRelation|null
      */
-    public function setDayPeriod(string $day_period): void
+    public function getResourceId(): ?OdooRelation
     {
-        $this->day_period = $day_period;
+        return $this->resource_id;
     }
 
     /**
@@ -519,10 +517,18 @@ final class Attendance extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @param string $day_period
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function setDayPeriod(string $day_period): void
     {
-        $this->write_date = $write_date;
+        $this->day_period = $day_period;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'resource.calendar.attendance';
     }
 }

@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Attribute extends Base
 {
-    public const ODOO_MODEL_NAME = 'product.attribute';
-
     /**
      * Attribute
      * Searchable : yes
@@ -169,7 +167,7 @@ final class Attribute extends Base
      *            -> always (Instantly)
      *            -> dynamic (Dynamically)
      *            -> no_variant (Never)
-     *
+     *       
      * @param string $display_type Display Type
      *        The display type used in the Product Configurator.
      *        Searchable : yes
@@ -178,69 +176,13 @@ final class Attribute extends Base
      *            -> radio (Radio)
      *            -> select (Select)
      *            -> color (Color)
-     *
+     *       
      */
     public function __construct(string $name, string $create_variant, string $display_type)
     {
         $this->name = $name;
         $this->create_variant = $create_variant;
         $this->display_type = $display_type;
-    }
-
-    /**
-     * @param bool|null $is_used_on_products
-     */
-    public function setIsUsedOnProducts(?bool $is_used_on_products): void
-    {
-        $this->is_used_on_products = $is_used_on_products;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @param OdooRelation|null $create_uid
-     */
-    public function setCreateUid(?OdooRelation $create_uid): void
-    {
-        $this->create_uid = $create_uid;
     }
 
     /**
@@ -252,34 +194,25 @@ final class Attribute extends Base
     }
 
     /**
-     * @param string $display_type
+     * @param OdooRelation[]|null $product_tmpl_ids
      */
-    public function setDisplayType(string $display_type): void
+    public function setProductTmplIds(?array $product_tmpl_ids): void
     {
-        $this->display_type = $display_type;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDisplayType(): string
-    {
-        return $this->display_type;
+        $this->product_tmpl_ids = $product_tmpl_ids;
     }
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removeProductTmplIds(OdooRelation $item): void
+    public function hasProductTmplIds(OdooRelation $item): bool
     {
         if (null === $this->product_tmpl_ids) {
-            $this->product_tmpl_ids = [];
+            return false;
         }
 
-        if ($this->hasProductTmplIds($item)) {
-            $index = array_search($item, $this->product_tmpl_ids);
-            unset($this->product_tmpl_ids[$index]);
-        }
+        return in_array($item, $this->product_tmpl_ids);
     }
 
     /**
@@ -300,24 +233,97 @@ final class Attribute extends Base
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasProductTmplIds(OdooRelation $item): bool
+    public function removeProductTmplIds(OdooRelation $item): void
     {
         if (null === $this->product_tmpl_ids) {
-            return false;
+            $this->product_tmpl_ids = [];
         }
 
-        return in_array($item, $this->product_tmpl_ids);
+        if ($this->hasProductTmplIds($item)) {
+            $index = array_search($item, $this->product_tmpl_ids);
+            unset($this->product_tmpl_ids[$index]);
+        }
     }
 
     /**
-     * @param OdooRelation[]|null $product_tmpl_ids
+     * @return string
      */
-    public function setProductTmplIds(?array $product_tmpl_ids): void
+    public function getDisplayType(): string
     {
-        $this->product_tmpl_ids = $product_tmpl_ids;
+        return $this->display_type;
+    }
+
+    /**
+     * @param string $display_type
+     */
+    public function setDisplayType(string $display_type): void
+    {
+        $this->display_type = $display_type;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @param bool|null $is_used_on_products
+     */
+    public function setIsUsedOnProducts(?bool $is_used_on_products): void
+    {
+        $this->is_used_on_products = $is_used_on_products;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -507,10 +513,10 @@ final class Attribute extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'product.attribute';
     }
 }

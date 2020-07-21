@@ -40,8 +40,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Acquirer extends Base
 {
-    public const ODOO_MODEL_NAME = 'payment.acquirer';
-
     /**
      * Name
      * Searchable : yes
@@ -502,7 +500,7 @@ final class Acquirer extends Base
      *            -> disabled (Disabled)
      *            -> enabled (Enabled)
      *            -> test (Test Mode)
-     *
+     *       
      * @param string $payment_flow Payment Flow
      *        Note: Subscriptions does not take this field in account, it uses server to server by default.
      *        Searchable : yes
@@ -510,14 +508,14 @@ final class Acquirer extends Base
      *        Selection : (default value, usually null)
      *            -> form (Redirection to the acquirer website)
      *            -> s2s (Payment from Odoo)
-     *
+     *       
      * @param string $provider Provider
      *        Searchable : yes
      *        Sortable : yes
      *        Selection : (default value, usually null)
      *            -> manual (Custom Payment Form)
      *            -> transfer (Manual Payment)
-     *
+     *       
      */
     public function __construct(
         string $name,
@@ -729,6 +727,14 @@ final class Acquirer extends Base
     public function getSoReferenceType(): ?string
     {
         return $this->so_reference_type;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -1317,10 +1323,10 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'payment.acquirer';
     }
 }

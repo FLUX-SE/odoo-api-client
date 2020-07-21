@@ -17,8 +17,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Wizard extends Base
 {
-    public const ODOO_MODEL_NAME = 'account_reports.export.wizard';
-
     /**
      * Export to
      * Searchable : yes
@@ -112,6 +110,14 @@ final class Wizard extends Base
     public function setDocName(?string $doc_name): void
     {
         $this->doc_name = $doc_name;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -272,10 +278,10 @@ final class Wizard extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account_reports.export.wizard';
     }
 }

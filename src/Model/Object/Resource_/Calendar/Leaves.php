@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Leaves extends Base
 {
-    public const ODOO_MODEL_NAME = 'resource.calendar.leaves';
-
     /**
      * Reason
      * Searchable : yes
@@ -147,11 +145,19 @@ final class Leaves extends Base
     }
 
     /**
-     * @param OdooRelation|null $resource_id
+     * @return string|null
      */
-    public function setResourceId(?OdooRelation $resource_id): void
+    public function getTimeType(): ?string
     {
-        $this->resource_id = $resource_id;
+        return $this->time_type;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -219,19 +225,11 @@ final class Leaves extends Base
     }
 
     /**
-     * @return string|null
+     * @param OdooRelation|null $resource_id
      */
-    public function getTimeType(): ?string
+    public function setResourceId(?OdooRelation $resource_id): void
     {
-        return $this->time_type;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getResourceId(): ?OdooRelation
-    {
-        return $this->resource_id;
+        $this->resource_id = $resource_id;
     }
 
     /**
@@ -240,6 +238,14 @@ final class Leaves extends Base
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getResourceId(): ?OdooRelation
+    {
+        return $this->resource_id;
     }
 
     /**
@@ -315,10 +321,10 @@ final class Leaves extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'resource.calendar.leaves';
     }
 }

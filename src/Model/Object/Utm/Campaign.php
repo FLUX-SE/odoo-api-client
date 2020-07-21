@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Campaign extends Base
 {
-    public const ODOO_MODEL_NAME = 'utm.campaign';
-
     /**
      * Campaign Name
      * Searchable : yes
@@ -177,6 +175,14 @@ final class Campaign extends Base
     public function setQuotationCount(?int $quotation_count): void
     {
         $this->quotation_count = $quotation_count;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -433,10 +439,10 @@ final class Campaign extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'utm.campaign';
     }
 }

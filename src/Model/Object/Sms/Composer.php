@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Composer extends Base
 {
-    public const ODOO_MODEL_NAME = 'sms.composer';
-
     /**
      * Composition Mode
      * Searchable : yes
@@ -254,7 +252,7 @@ final class Composer extends Base
      *            -> numbers (Send to numbers)
      *            -> comment (Post on a document)
      *            -> mass (Send SMS in batch)
-     *
+     *       
      * @param string $body Message
      *        Searchable : yes
      *        Sortable : yes
@@ -468,6 +466,14 @@ final class Composer extends Base
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -687,10 +693,10 @@ final class Composer extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'sms.composer';
     }
 }

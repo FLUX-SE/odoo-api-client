@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Export extends Base
 {
-    public const ODOO_MODEL_NAME = 'base.language.export';
-
     /**
      * File Name
      * Searchable : yes
@@ -133,7 +131,7 @@ final class Export extends Base
      *        Selection : (default value, usually null)
      *            -> __new__ (New Language (Empty translation template))
      *            -> en_US (English (US))
-     *
+     *       
      * @param string $format File Format
      *        Searchable : yes
      *        Sortable : yes
@@ -141,7 +139,7 @@ final class Export extends Base
      *            -> csv (CSV File)
      *            -> po (PO File)
      *            -> tgz (TGZ Archive)
-     *
+     *       
      */
     public function __construct(string $lang, string $format)
     {
@@ -155,6 +153,14 @@ final class Export extends Base
     public function setData(?int $data): void
     {
         $this->data = $data;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -347,10 +353,10 @@ final class Export extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'base.language.export';
     }
 }

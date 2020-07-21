@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class ActUrl extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.actions.act_url';
-
     /**
      * Action Name
      * Searchable : yes
@@ -169,14 +167,14 @@ final class ActUrl extends Base
      *        Selection : (default value, usually null)
      *            -> new (New Window)
      *            -> self (This Window)
-     *
+     *       
      * @param string $binding_type Binding Type
      *        Searchable : yes
      *        Sortable : yes
      *        Selection : (default value, usually null)
      *            -> action (Action)
      *            -> report (Report)
-     *
+     *       
      */
     public function __construct(
         string $name,
@@ -193,11 +191,19 @@ final class ActUrl extends Base
     }
 
     /**
-     * @param OdooRelation|null $binding_model_id
+     * @return string
      */
-    public function setBindingModelId(?OdooRelation $binding_model_id): void
+    public function getBindingType(): string
     {
-        $this->binding_model_id = $binding_model_id;
+        return $this->binding_type;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -281,19 +287,11 @@ final class ActUrl extends Base
     }
 
     /**
-     * @return string
+     * @param OdooRelation|null $binding_model_id
      */
-    public function getBindingType(): string
+    public function setBindingModelId(?OdooRelation $binding_model_id): void
     {
-        return $this->binding_type;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getBindingModelId(): ?OdooRelation
-    {
-        return $this->binding_model_id;
+        $this->binding_model_id = $binding_model_id;
     }
 
     /**
@@ -302,6 +300,14 @@ final class ActUrl extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getBindingModelId(): ?OdooRelation
+    {
+        return $this->binding_model_id;
     }
 
     /**
@@ -393,10 +399,10 @@ final class ActUrl extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'ir.actions.act_url';
     }
 }

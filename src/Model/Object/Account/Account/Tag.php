@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Tag extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.account.tag';
-
     /**
      * Tag Name
      * Searchable : yes
@@ -144,7 +142,7 @@ final class Tag extends Base
      *        Selection : (default value, usually null)
      *            -> accounts (Accounts)
      *            -> taxes (Taxes)
-     *
+     *       
      */
     public function __construct(string $name, string $applicability)
     {
@@ -158,6 +156,14 @@ final class Tag extends Base
     public function isTaxNegate(): ?bool
     {
         return $this->tax_negate;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -366,10 +372,10 @@ final class Tag extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.account.tag';
     }
 }

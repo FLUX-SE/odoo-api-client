@@ -23,8 +23,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Root extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.root';
-
     /**
      * Name
      * Searchable : yes
@@ -98,5 +96,13 @@ final class Root extends Base
     public function setCompanyId(?OdooRelation $company_id): void
     {
         $this->company_id = $company_id;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'account.root';
     }
 }

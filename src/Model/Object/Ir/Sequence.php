@@ -20,8 +20,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Sequence extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.sequence';
-
     /**
      * Name
      * Searchable : yes
@@ -204,7 +202,7 @@ final class Sequence extends Base
      *        Selection : (default value, usually null)
      *            -> standard (Standard)
      *            -> no_gap (No gap)
-     *
+     *       
      * @param int $number_next Next Number
      *        Next number of this sequence
      *        Searchable : yes
@@ -235,17 +233,16 @@ final class Sequence extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addDateRangeIds(OdooRelation $item): void
+    public function removeDateRangeIds(OdooRelation $item): void
     {
-        if ($this->hasDateRangeIds($item)) {
-            return;
-        }
-
         if (null === $this->date_range_ids) {
             $this->date_range_ids = [];
         }
 
-        $this->date_range_ids[] = $item;
+        if ($this->hasDateRangeIds($item)) {
+            $index = array_search($item, $this->date_range_ids);
+            unset($this->date_range_ids[$index]);
+        }
     }
 
     /**
@@ -305,24 +302,17 @@ final class Sequence extends Base
     /**
      * @param OdooRelation $item
      */
-    public function removeDateRangeIds(OdooRelation $item): void
+    public function addDateRangeIds(OdooRelation $item): void
     {
+        if ($this->hasDateRangeIds($item)) {
+            return;
+        }
+
         if (null === $this->date_range_ids) {
             $this->date_range_ids = [];
         }
 
-        if ($this->hasDateRangeIds($item)) {
-            $index = array_search($item, $this->date_range_ids);
-            unset($this->date_range_ids[$index]);
-        }
-    }
-
-    /**
-     * @param int $padding
-     */
-    public function setPadding(int $padding): void
-    {
-        $this->padding = $padding;
+        $this->date_range_ids[] = $item;
     }
 
     /**
@@ -331,6 +321,14 @@ final class Sequence extends Base
     public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
+    }
+
+    /**
+     * @param int $padding
+     */
+    public function setPadding(int $padding): void
+    {
+        $this->padding = $padding;
     }
 
     /**
@@ -379,6 +377,14 @@ final class Sequence extends Base
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -542,10 +548,10 @@ final class Sequence extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'ir.sequence';
     }
 }

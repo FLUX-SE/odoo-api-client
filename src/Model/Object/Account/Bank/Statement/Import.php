@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Import extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.bank.statement.import';
-
     /**
      * Files
      * Get you bank statements in electronic format from your bank and select them here.
@@ -191,5 +189,13 @@ final class Import extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'account.bank.statement.import';
     }
 }

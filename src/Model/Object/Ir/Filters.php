@@ -20,8 +20,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Filters extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.filters';
-
     /**
      * Filter Name
      * Searchable : yes
@@ -832,7 +830,7 @@ final class Filters extends Base
      *            -> web_editor.converter.test (Web Editor Converter Test)
      *            -> account.online.wizard (Wizard to link synchronized accounts to journal)
      *            -> resource.calendar.attendance (Work Detail)
-     *
+     *       
      */
     public function __construct(
         string $name,
@@ -849,11 +847,19 @@ final class Filters extends Base
     }
 
     /**
-     * @param bool|null $is_default
+     * @return OdooRelation|null
      */
-    public function setIsDefault(?bool $is_default): void
+    public function getActionId(): ?OdooRelation
     {
-        $this->is_default = $is_default;
+        return $this->action_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -937,19 +943,11 @@ final class Filters extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param bool|null $is_default
      */
-    public function getActionId(): ?OdooRelation
+    public function setIsDefault(?bool $is_default): void
     {
-        return $this->action_id;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isIsDefault(): ?bool
-    {
-        return $this->is_default;
+        $this->is_default = $is_default;
     }
 
     /**
@@ -958,6 +956,14 @@ final class Filters extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsDefault(): ?bool
+    {
+        return $this->is_default;
     }
 
     /**
@@ -1049,10 +1055,10 @@ final class Filters extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'ir.filters';
     }
 }

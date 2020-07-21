@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Template extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.chart.template';
-
     /**
      * Name
      * Searchable : yes
@@ -368,11 +366,19 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation|null $property_account_expense_categ_id
+     * @return OdooRelation|null
      */
-    public function setPropertyAccountExpenseCategId(?OdooRelation $property_account_expense_categ_id): void
+    public function getPropertyAccountIncomeCategId(): ?OdooRelation
     {
-        $this->property_account_expense_categ_id = $property_account_expense_categ_id;
+        return $this->property_account_income_categ_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPropertyStockAccountInputCategId(): ?OdooRelation
+    {
+        return $this->property_stock_account_input_categ_id;
     }
 
     /**
@@ -416,11 +422,19 @@ final class Template extends Base
     }
 
     /**
+     * @param OdooRelation|null $property_account_expense_categ_id
+     */
+    public function setPropertyAccountExpenseCategId(?OdooRelation $property_account_expense_categ_id): void
+    {
+        $this->property_account_expense_categ_id = $property_account_expense_categ_id;
+    }
+
+    /**
      * @return OdooRelation|null
      */
-    public function getPropertyAccountIncomeCategId(): ?OdooRelation
+    public function getPropertyStockAccountOutputCategId(): ?OdooRelation
     {
-        return $this->property_account_income_categ_id;
+        return $this->property_stock_account_output_categ_id;
     }
 
     /**
@@ -429,15 +443,6 @@ final class Template extends Base
     public function getPropertyAccountExpenseCategId(): ?OdooRelation
     {
         return $this->property_account_expense_categ_id;
-    }
-
-    /**
-     * @param OdooRelation|null $property_stock_account_input_categ_id
-     */
-    public function setPropertyStockAccountInputCategId(
-        ?OdooRelation $property_stock_account_input_categ_id
-    ): void {
-        $this->property_stock_account_input_categ_id = $property_stock_account_input_categ_id;
     }
 
     /**
@@ -481,43 +486,46 @@ final class Template extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $property_stock_account_input_categ_id
      */
-    public function getDefaultPosReceivableAccountId(): ?OdooRelation
-    {
-        return $this->default_pos_receivable_account_id;
+    public function setPropertyStockAccountInputCategId(
+        ?OdooRelation $property_stock_account_input_categ_id
+    ): void {
+        $this->property_stock_account_input_categ_id = $property_stock_account_input_categ_id;
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $property_stock_account_output_categ_id
      */
-    public function getPropertyStockAccountInputCategId(): ?OdooRelation
-    {
-        return $this->property_stock_account_input_categ_id;
+    public function setPropertyStockAccountOutputCategId(
+        ?OdooRelation $property_stock_account_output_categ_id
+    ): void {
+        $this->property_stock_account_output_categ_id = $property_stock_account_output_categ_id;
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $default_cash_difference_expense_account_id
      */
-    public function getPropertyStockAccountOutputCategId(): ?OdooRelation
-    {
-        return $this->property_stock_account_output_categ_id;
+    public function setDefaultCashDifferenceExpenseAccountId(
+        ?OdooRelation $default_cash_difference_expense_account_id
+    ): void {
+        $this->default_cash_difference_expense_account_id = $default_cash_difference_expense_account_id;
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $create_uid
      */
-    public function getDefaultCashDifferenceExpenseAccountId(): ?OdooRelation
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->default_cash_difference_expense_account_id;
+        $this->create_uid = $create_uid;
     }
 
     /**
-     * @return OdooRelation|null
+     * @param DateTimeInterface|null $write_date
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->create_uid;
+        $this->write_date = $write_date;
     }
 
     /**
@@ -561,11 +569,19 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation|null $create_uid
+     * @return OdooRelation|null
      */
-    public function setCreateUid(?OdooRelation $create_uid): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->create_uid = $create_uid;
+        return $this->create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPropertyStockValuationAccountId(): ?OdooRelation
+    {
+        return $this->property_stock_valuation_account_id;
     }
 
     /**
@@ -575,15 +591,6 @@ final class Template extends Base
         ?OdooRelation $property_advance_tax_payment_account_id
     ): void {
         $this->property_advance_tax_payment_account_id = $property_advance_tax_payment_account_id;
-    }
-
-    /**
-     * @param OdooRelation|null $property_stock_account_output_categ_id
-     */
-    public function setPropertyStockAccountOutputCategId(
-        ?OdooRelation $property_stock_account_output_categ_id
-    ): void {
-        $this->property_stock_account_output_categ_id = $property_stock_account_output_categ_id;
     }
 
     /**
@@ -639,27 +646,17 @@ final class Template extends Base
     /**
      * @return OdooRelation|null
      */
-    public function getPropertyStockValuationAccountId(): ?OdooRelation
+    public function getDefaultPosReceivableAccountId(): ?OdooRelation
     {
-        return $this->property_stock_valuation_account_id;
+        return $this->default_pos_receivable_account_id;
     }
 
     /**
-     * @param OdooRelation|null $default_cash_difference_expense_account_id
+     * @return OdooRelation|null
      */
-    public function setDefaultCashDifferenceExpenseAccountId(
-        ?OdooRelation $default_cash_difference_expense_account_id
-    ): void {
-        $this->default_cash_difference_expense_account_id = $default_cash_difference_expense_account_id;
-    }
-
-    /**
-     * @param OdooRelation|null $default_cash_difference_income_account_id
-     */
-    public function setDefaultCashDifferenceIncomeAccountId(
-        ?OdooRelation $default_cash_difference_income_account_id
-    ): void {
-        $this->default_cash_difference_income_account_id = $default_cash_difference_income_account_id;
+    public function getDefaultCashDifferenceExpenseAccountId(): ?OdooRelation
+    {
+        return $this->default_cash_difference_expense_account_id;
     }
 
     /**
@@ -671,11 +668,19 @@ final class Template extends Base
     }
 
     /**
-     * @return OdooRelation
+     * @param OdooRelation $currency_id
      */
-    public function getCurrencyId(): OdooRelation
+    public function setCurrencyId(OdooRelation $currency_id): void
     {
-        return $this->currency_id;
+        $this->currency_id = $currency_id;
+    }
+
+    /**
+     * @param OdooRelation[]|null $account_ids
+     */
+    public function setAccountIds(?array $account_ids): void
+    {
+        $this->account_ids = $account_ids;
     }
 
     /**
@@ -719,11 +724,27 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation $currency_id
+     * @return OdooRelation
      */
-    public function setCurrencyId(OdooRelation $currency_id): void
+    public function getCurrencyId(): OdooRelation
     {
-        $this->currency_id = $currency_id;
+        return $this->currency_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addAccountIds(OdooRelation $item): void
+    {
+        if ($this->hasAccountIds($item)) {
+            return;
+        }
+
+        if (null === $this->account_ids) {
+            $this->account_ids = [];
+        }
+
+        $this->account_ids[] = $item;
     }
 
     /**
@@ -732,20 +753,6 @@ final class Template extends Base
     public function setVisible(?bool $visible): void
     {
         $this->visible = $visible;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasAccountIds(OdooRelation $item): bool
-    {
-        if (null === $this->account_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->account_ids);
     }
 
     /**
@@ -797,27 +804,49 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $account_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setAccountIds(?array $account_ids): void
+    public function hasAccountIds(OdooRelation $item): bool
     {
-        $this->account_ids = $account_ids;
+        if (null === $this->account_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->account_ids);
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function addAccountIds(OdooRelation $item): void
+    public function removeAccountIds(OdooRelation $item): void
     {
-        if ($this->hasAccountIds($item)) {
-            return;
-        }
-
         if (null === $this->account_ids) {
             $this->account_ids = [];
         }
 
-        $this->account_ids[] = $item;
+        if ($this->hasAccountIds($item)) {
+            $index = array_search($item, $this->account_ids);
+            unset($this->account_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation|null $default_cash_difference_income_account_id
+     */
+    public function setDefaultCashDifferenceIncomeAccountId(
+        ?OdooRelation $default_cash_difference_income_account_id
+    ): void {
+        $this->default_cash_difference_income_account_id = $default_cash_difference_income_account_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTransferAccountCodePrefix(): string
+    {
+        return $this->transfer_account_code_prefix;
     }
 
     /**
@@ -826,14 +855,6 @@ final class Template extends Base
     public function getDefaultCashDifferenceIncomeAccountId(): ?OdooRelation
     {
         return $this->default_cash_difference_income_account_id;
-    }
-
-    /**
-     * @param string $cash_account_code_prefix
-     */
-    public function setCashAccountCodePrefix(string $cash_account_code_prefix): void
-    {
-        $this->cash_account_code_prefix = $cash_account_code_prefix;
     }
 
     /**
@@ -879,11 +900,19 @@ final class Template extends Base
     }
 
     /**
-     * @return string
+     * @param string $cash_account_code_prefix
      */
-    public function getTransferAccountCodePrefix(): string
+    public function setCashAccountCodePrefix(string $cash_account_code_prefix): void
     {
-        return $this->transfer_account_code_prefix;
+        $this->cash_account_code_prefix = $cash_account_code_prefix;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getTaxTemplateIds(): ?array
+    {
+        return $this->tax_template_ids;
     }
 
     /**
@@ -892,21 +921,6 @@ final class Template extends Base
     public function getCashAccountCodePrefix(): string
     {
         return $this->cash_account_code_prefix;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeAccountIds(OdooRelation $item): void
-    {
-        if (null === $this->account_ids) {
-            $this->account_ids = [];
-        }
-
-        if ($this->hasAccountIds($item)) {
-            $index = array_search($item, $this->account_ids);
-            unset($this->account_ids[$index]);
-        }
     }
 
     /**
@@ -979,18 +993,10 @@ final class Template extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @return string
      */
-    public function getTaxTemplateIds(): ?array
+    public static function getOdooModelName(): string
     {
-        return $this->tax_template_ids;
-    }
-
-    /**
-     * @param DateTimeInterface|null $write_date
-     */
-    public function setWriteDate(?DateTimeInterface $write_date): void
-    {
-        $this->write_date = $write_date;
+        return 'account.chart.template';
     }
 }

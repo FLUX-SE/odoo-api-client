@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Lang extends Base
 {
-    public const ODOO_MODEL_NAME = 'res.lang';
-
     /**
      * Name
      * Searchable : yes
@@ -207,7 +205,7 @@ final class Lang extends Base
      *        Selection : (default value, usually null)
      *            -> ltr (Left-to-Right)
      *            -> rtl (Right-to-Left)
-     *
+     *       
      * @param string $date_format Date Format
      *        Searchable : yes
      *        Sortable : yes
@@ -225,7 +223,7 @@ final class Lang extends Base
      *            -> 5 (Friday)
      *            -> 6 (Saturday)
      *            -> 7 (Sunday)
-     *
+     *       
      * @param string $grouping Separator Format
      *        The Separator Format should be like [,n] where 0 < n :starting from Unit digit. -1 will end the separation.
      *        e.g. [3,2,-1] will represent 106500 to be 1,06,500; [1,2,-1] will represent it to be 106,50,0;[3] will
@@ -259,11 +257,19 @@ final class Lang extends Base
     }
 
     /**
-     * @return string
+     * @param string $week_start
      */
-    public function getWeekStart(): string
+    public function setWeekStart(string $week_start): void
     {
-        return $this->week_start;
+        $this->week_start = $week_start;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -371,19 +377,11 @@ final class Lang extends Base
     }
 
     /**
-     * @param string $week_start
+     * @return string
      */
-    public function setWeekStart(string $week_start): void
+    public function getWeekStart(): string
     {
-        $this->week_start = $week_start;
-    }
-
-    /**
-     * @param string $time_format
-     */
-    public function setTimeFormat(string $time_format): void
-    {
-        $this->time_format = $time_format;
+        return $this->week_start;
     }
 
     /**
@@ -395,27 +393,91 @@ final class Lang extends Base
     }
 
     /**
-     * @return string
+     * @param string $url_code
      */
-    public function getTimeFormat(): string
+    public function setUrlCode(string $url_code): void
     {
-        return $this->time_format;
+        $this->url_code = $url_code;
     }
 
     /**
-     * @param string $date_format
+     * @param string $name
      */
-    public function setDateFormat(string $date_format): void
+    public function setName(string $name): void
     {
-        $this->date_format = $date_format;
+        $this->name = $name;
     }
 
     /**
      * @return string
      */
-    public function getDateFormat(): string
+    public function getCode(): string
     {
-        return $this->date_format;
+        return $this->code;
+    }
+
+    /**
+     * @param string $code
+     */
+    public function setCode(string $code): void
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIsoCode(): ?string
+    {
+        return $this->iso_code;
+    }
+
+    /**
+     * @param string|null $iso_code
+     */
+    public function setIsoCode(?string $iso_code): void
+    {
+        $this->iso_code = $iso_code;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrlCode(): string
+    {
+        return $this->url_code;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param string $time_format
+     */
+    public function setTimeFormat(string $time_format): void
+    {
+        $this->time_format = $time_format;
+    }
+
+    /**
+     * @param bool|null $active
+     */
+    public function setActive(?bool $active): void
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDirection(): string
+    {
+        return $this->direction;
     }
 
     /**
@@ -429,88 +491,32 @@ final class Lang extends Base
     /**
      * @return string
      */
-    public function getDirection(): string
+    public function getDateFormat(): string
     {
-        return $this->direction;
+        return $this->date_format;
     }
 
     /**
-     * @param bool|null $active
+     * @param string $date_format
      */
-    public function setActive(?bool $active): void
+    public function setDateFormat(string $date_format): void
     {
-        $this->active = $active;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isActive(): ?bool
-    {
-        return $this->active;
-    }
-
-    /**
-     * @param string $url_code
-     */
-    public function setUrlCode(string $url_code): void
-    {
-        $this->url_code = $url_code;
+        $this->date_format = $date_format;
     }
 
     /**
      * @return string
      */
-    public function getUrlCode(): string
+    public function getTimeFormat(): string
     {
-        return $this->url_code;
-    }
-
-    /**
-     * @param string|null $iso_code
-     */
-    public function setIsoCode(?string $iso_code): void
-    {
-        $this->iso_code = $iso_code;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getIsoCode(): ?string
-    {
-        return $this->iso_code;
-    }
-
-    /**
-     * @param string $code
-     */
-    public function setCode(string $code): void
-    {
-        $this->code = $code;
+        return $this->time_format;
     }
 
     /**
      * @return string
      */
-    public function getCode(): string
+    public static function getOdooModelName(): string
     {
-        return $this->code;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @param DateTimeInterface|null $write_date
-     */
-    public function setWriteDate(?DateTimeInterface $write_date): void
-    {
-        $this->write_date = $write_date;
+        return 'res.lang';
     }
 }

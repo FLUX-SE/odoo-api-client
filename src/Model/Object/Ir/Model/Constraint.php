@@ -17,8 +17,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Constraint extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.model.constraint';
-
     /**
      * Constraint
      * PostgreSQL constraint or foreign key name.
@@ -138,11 +136,19 @@ final class Constraint extends Base
     }
 
     /**
-     * @return string
+     * @param string $type
      */
-    public function getType(): string
+    public function setType(string $type): void
     {
-        return $this->type;
+        $this->type = $type;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
     }
 
     /**
@@ -202,19 +208,11 @@ final class Constraint extends Base
     }
 
     /**
-     * @param string $type
+     * @return string
      */
-    public function setType(string $type): void
+    public function getType(): string
     {
-        $this->type = $type;
-    }
-
-    /**
-     * @param OdooRelation $module
-     */
-    public function setModule(OdooRelation $module): void
-    {
-        $this->module = $module;
+        return $this->type;
     }
 
     /**
@@ -223,6 +221,14 @@ final class Constraint extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @param OdooRelation $module
+     */
+    public function setModule(OdooRelation $module): void
+    {
+        $this->module = $module;
     }
 
     /**
@@ -290,10 +296,10 @@ final class Constraint extends Base
     }
 
     /**
-     * @param OdooRelation|null $write_uid
+     * @return string
      */
-    public function setWriteUid(?OdooRelation $write_uid): void
+    public static function getOdooModelName(): string
     {
-        $this->write_uid = $write_uid;
+        return 'ir.model.constraint';
     }
 }

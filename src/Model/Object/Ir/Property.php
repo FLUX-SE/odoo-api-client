@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Property extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.property';
-
     /**
      * Name
      * Searchable : yes
@@ -192,7 +190,7 @@ final class Property extends Base
      *            -> date (Date)
      *            -> datetime (DateTime)
      *            -> selection (Selection)
-     *
+     *       
      */
     public function __construct(OdooRelation $fields_id, string $type)
     {
@@ -201,11 +199,19 @@ final class Property extends Base
     }
 
     /**
-     * @param int|null $value_binary
+     * @return string|null
      */
-    public function setValueBinary(?int $value_binary): void
+    public function getValueReference(): ?string
     {
-        $this->value_binary = $value_binary;
+        return $this->value_reference;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -305,19 +311,11 @@ final class Property extends Base
     }
 
     /**
-     * @return string|null
+     * @param int|null $value_binary
      */
-    public function getValueReference(): ?string
+    public function setValueBinary(?int $value_binary): void
     {
-        return $this->value_reference;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getValueBinary(): ?int
-    {
-        return $this->value_binary;
+        $this->value_binary = $value_binary;
     }
 
     /**
@@ -326,6 +324,14 @@ final class Property extends Base
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getValueBinary(): ?int
+    {
+        return $this->value_binary;
     }
 
     /**
@@ -433,10 +439,10 @@ final class Property extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'ir.property';
     }
 }

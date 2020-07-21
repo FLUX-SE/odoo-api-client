@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Report extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.financial.html.report';
-
     /**
      * Name
      * Searchable : yes
@@ -207,16 +205,18 @@ final class Report extends Base
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasApplicableFiltersIds(OdooRelation $item): bool
+    public function addApplicableFiltersIds(OdooRelation $item): void
     {
-        if (null === $this->applicable_filters_ids) {
-            return false;
+        if ($this->hasApplicableFiltersIds($item)) {
+            return;
         }
 
-        return in_array($item, $this->applicable_filters_ids);
+        if (null === $this->applicable_filters_ids) {
+            $this->applicable_filters_ids = [];
+        }
+
+        $this->applicable_filters_ids[] = $item;
     }
 
     /**
@@ -277,26 +277,16 @@ final class Report extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function addApplicableFiltersIds(OdooRelation $item): void
+    public function hasApplicableFiltersIds(OdooRelation $item): bool
     {
-        if ($this->hasApplicableFiltersIds($item)) {
-            return;
-        }
-
         if (null === $this->applicable_filters_ids) {
-            $this->applicable_filters_ids = [];
+            return false;
         }
 
-        $this->applicable_filters_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation|null $company_id
-     */
-    public function setCompanyId(?OdooRelation $company_id): void
-    {
-        $this->company_id = $company_id;
+        return in_array($item, $this->applicable_filters_ids);
     }
 
     /**
@@ -312,6 +302,14 @@ final class Report extends Base
             $index = array_search($item, $this->applicable_filters_ids);
             unset($this->applicable_filters_ids[$index]);
         }
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
     }
 
     /**
@@ -368,6 +366,14 @@ final class Report extends Base
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -568,10 +574,10 @@ final class Report extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.financial.html.report';
     }
 }

@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Line extends Base
 {
-    public const ODOO_MODEL_NAME = 'account_followup.followup.line';
-
     /**
      * Follow-Up Action
      * Searchable : yes
@@ -114,7 +112,7 @@ final class Line extends Base
 
     /**
      * Manual Action
-     * When processing, it will set the manual action to be taken for that customer.
+     * When processing, it will set the manual action to be taken for that customer. 
      * Searchable : yes
      * Sortable : yes
      *
@@ -225,19 +223,11 @@ final class Line extends Base
     }
 
     /**
-     * @return bool|null
+     * @param bool|null $send_letter
      */
-    public function isSendLetter(): ?bool
+    public function setSendLetter(?bool $send_letter): void
     {
-        return $this->send_letter;
-    }
-
-    /**
-     * @param string|null $manual_action_note
-     */
-    public function setManualActionNote(?string $manual_action_note): void
-    {
-        $this->manual_action_note = $manual_action_note;
+        $this->send_letter = $send_letter;
     }
 
     /**
@@ -289,19 +279,11 @@ final class Line extends Base
     }
 
     /**
-     * @param bool|null $send_letter
+     * @return bool|null
      */
-    public function setSendLetter(?bool $send_letter): void
+    public function isSendLetter(): ?bool
     {
-        $this->send_letter = $send_letter;
-    }
-
-    /**
-     * @param bool|null $manual_action
-     */
-    public function setManualAction(?bool $manual_action): void
-    {
-        $this->manual_action = $manual_action;
+        return $this->send_letter;
     }
 
     /**
@@ -310,6 +292,14 @@ final class Line extends Base
     public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getManualActionNote(): ?string
+    {
+        return $this->manual_action_note;
     }
 
     /**
@@ -361,19 +351,27 @@ final class Line extends Base
     }
 
     /**
-     * @return string|null
+     * @param DateTimeInterface|null $write_date
      */
-    public function getManualActionNote(): ?string
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->manual_action_note;
+        $this->write_date = $write_date;
     }
 
     /**
-     * @return bool|null
+     * @param string|null $manual_action_note
      */
-    public function isManualAction(): ?bool
+    public function setManualActionNote(?string $manual_action_note): void
     {
-        return $this->manual_action;
+        $this->manual_action_note = $manual_action_note;
+    }
+
+    /**
+     * @param bool|null $manual_action
+     */
+    public function setManualAction(?bool $manual_action): void
+    {
+        $this->manual_action = $manual_action;
     }
 
     /**
@@ -457,11 +455,11 @@ final class Line extends Base
     }
 
     /**
-     * @param bool|null $join_invoices
+     * @return bool|null
      */
-    public function setJoinInvoices(?bool $join_invoices): void
+    public function isManualAction(): ?bool
     {
-        $this->join_invoices = $join_invoices;
+        return $this->manual_action;
     }
 
     /**
@@ -521,10 +519,18 @@ final class Line extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @param bool|null $join_invoices
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function setJoinInvoices(?bool $join_invoices): void
     {
-        $this->write_date = $write_date;
+        $this->join_invoices = $join_invoices;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'account_followup.followup.line';
     }
 }

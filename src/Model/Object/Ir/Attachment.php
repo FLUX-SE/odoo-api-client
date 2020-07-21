@@ -27,8 +27,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Attachment extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.attachment';
-
     /**
      * Name
      * Searchable : yes
@@ -281,7 +279,7 @@ final class Attachment extends Base
      *        Selection : (default value, usually null)
      *            -> url (URL)
      *            -> binary (File)
-     *
+     *       
      */
     public function __construct(string $name, string $type)
     {
@@ -290,19 +288,11 @@ final class Attachment extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $image_src
      */
-    public function getImageSrc(): ?string
+    public function setImageSrc(?string $image_src): void
     {
-        return $this->image_src;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getFileSize(): ?int
-    {
-        return $this->file_size;
+        $this->image_src = $image_src;
     }
 
     /**
@@ -378,19 +368,11 @@ final class Attachment extends Base
     }
 
     /**
-     * @param string|null $image_src
-     */
-    public function setImageSrc(?string $image_src): void
-    {
-        $this->image_src = $image_src;
-    }
-
-    /**
      * @return string|null
      */
-    public function getStoreFname(): ?string
+    public function getImageSrc(): ?string
     {
-        return $this->store_fname;
+        return $this->image_src;
     }
 
     /**
@@ -399,6 +381,14 @@ final class Attachment extends Base
     public function getImageWidth(): ?int
     {
         return $this->image_width;
+    }
+
+    /**
+     * @param string|null $store_fname
+     */
+    public function setStoreFname(?string $store_fname): void
+    {
+        $this->store_fname = $store_fname;
     }
 
     /**
@@ -482,19 +472,27 @@ final class Attachment extends Base
     }
 
     /**
-     * @param string|null $store_fname
+     * @param DateTimeInterface|null $write_date
      */
-    public function setStoreFname(?string $store_fname): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->store_fname = $store_fname;
+        $this->write_date = $write_date;
     }
 
     /**
-     * @param int|null $db_datas
+     * @return int|null
      */
-    public function setDbDatas(?int $db_datas): void
+    public function getFileSize(): ?int
     {
-        $this->db_datas = $db_datas;
+        return $this->file_size;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getStoreFname(): ?string
+    {
+        return $this->store_fname;
     }
 
     /**
@@ -506,11 +504,11 @@ final class Attachment extends Base
     }
 
     /**
-     * @param int|null $res_id
+     * @return OdooRelation|null
      */
-    public function setResId(?int $res_id): void
+    public function getCompanyId(): ?OdooRelation
     {
-        $this->res_id = $res_id;
+        return $this->company_id;
     }
 
     /**
@@ -594,19 +592,11 @@ final class Attachment extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param int|null $res_id
      */
-    public function getCompanyId(): ?OdooRelation
+    public function setResId(?int $res_id): void
     {
-        return $this->company_id;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getDbDatas(): ?int
-    {
-        return $this->db_datas;
+        $this->res_id = $res_id;
     }
 
     /**
@@ -615,6 +605,14 @@ final class Attachment extends Base
     public function setCompanyId(?OdooRelation $company_id): void
     {
         $this->company_id = $company_id;
+    }
+
+    /**
+     * @param int|null $db_datas
+     */
+    public function setDbDatas(?int $db_datas): void
+    {
+        $this->db_datas = $db_datas;
     }
 
     /**
@@ -698,10 +696,18 @@ final class Attachment extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return int|null
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function getDbDatas(): ?int
     {
-        $this->write_date = $write_date;
+        return $this->db_datas;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'ir.attachment';
     }
 }

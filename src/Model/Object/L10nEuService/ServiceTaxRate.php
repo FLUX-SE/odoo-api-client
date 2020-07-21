@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class ServiceTaxRate extends Base
 {
-    public const ODOO_MODEL_NAME = 'l10n_eu_service.service_tax_rate';
-
     /**
      * Country
      * Searchable : yes
@@ -174,5 +172,13 @@ final class ServiceTaxRate extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'l10n_eu_service.service_tax_rate';
     }
 }

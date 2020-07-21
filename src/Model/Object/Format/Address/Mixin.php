@@ -14,5 +14,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Mixin extends Base
 {
-    public const ODOO_MODEL_NAME = 'format.address.mixin';
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'format.address.mixin';
+    }
 }

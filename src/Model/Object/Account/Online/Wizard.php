@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Wizard extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.online.wizard';
-
     /**
      * Number Added
      * Searchable : yes
@@ -152,16 +150,26 @@ final class Wizard extends Base
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasAccountIds(OdooRelation $item): bool
+    public function addAccountIds(OdooRelation $item): void
     {
-        if (null === $this->account_ids) {
-            return false;
+        if ($this->hasAccountIds($item)) {
+            return;
         }
 
-        return in_array($item, $this->account_ids);
+        if (null === $this->account_ids) {
+            $this->account_ids = [];
+        }
+
+        $this->account_ids[] = $item;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -253,26 +261,16 @@ final class Wizard extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function addAccountIds(OdooRelation $item): void
+    public function hasAccountIds(OdooRelation $item): bool
     {
-        if ($this->hasAccountIds($item)) {
-            return;
-        }
-
         if (null === $this->account_ids) {
-            $this->account_ids = [];
+            return false;
         }
 
-        $this->account_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation[]|null $account_ids
-     */
-    public function setAccountIds(?array $account_ids): void
-    {
-        $this->account_ids = $account_ids;
+        return in_array($item, $this->account_ids);
     }
 
     /**
@@ -281,6 +279,14 @@ final class Wizard extends Base
     public function setNumberAdded(?int $number_added): void
     {
         $this->number_added = $number_added;
+    }
+
+    /**
+     * @param OdooRelation[]|null $account_ids
+     */
+    public function setAccountIds(?array $account_ids): void
+    {
+        $this->account_ids = $account_ids;
     }
 
     /**
@@ -372,10 +378,10 @@ final class Wizard extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.online.wizard';
     }
 }

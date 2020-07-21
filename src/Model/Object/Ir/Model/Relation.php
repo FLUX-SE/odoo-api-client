@@ -17,8 +17,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Relation extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.model.relation';
-
     /**
      * Relation Name
      * PostgreSQL table name implementing a many2many relation.
@@ -212,5 +210,13 @@ final class Relation extends Base
     public function setWriteUid(?OdooRelation $write_uid): void
     {
         $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'ir.model.relation';
     }
 }

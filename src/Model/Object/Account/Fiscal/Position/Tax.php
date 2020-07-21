@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Tax extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.fiscal.position.tax';
-
     /**
      * Fiscal Position
      * Searchable : yes
@@ -213,5 +211,13 @@ final class Tax extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'account.fiscal.position.tax';
     }
 }

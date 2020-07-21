@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Rounding extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.cash.rounding';
-
     /**
      * Name
      * Searchable : yes
@@ -140,7 +138,7 @@ final class Rounding extends Base
      *        Selection : (default value, usually null)
      *            -> biggest_tax (Modify tax amount)
      *            -> add_invoice_line (Add a rounding line)
-     *
+     *       
      * @param string $rounding_method Rounding Method
      *        The tie-breaking rule used for float rounding operations
      *        Searchable : yes
@@ -149,7 +147,7 @@ final class Rounding extends Base
      *            -> UP (UP)
      *            -> DOWN (DOWN)
      *            -> HALF-UP (HALF-UP)
-     *
+     *       
      */
     public function __construct(string $name, float $rounding, string $strategy, string $rounding_method)
     {
@@ -160,11 +158,19 @@ final class Rounding extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $company_id
      */
-    public function getCompanyId(): ?OdooRelation
+    public function setCompanyId(?OdooRelation $company_id): void
     {
-        return $this->company_id;
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -224,19 +230,11 @@ final class Rounding extends Base
     }
 
     /**
-     * @param OdooRelation|null $company_id
+     * @return OdooRelation|null
      */
-    public function setCompanyId(?OdooRelation $company_id): void
+    public function getCompanyId(): ?OdooRelation
     {
-        $this->company_id = $company_id;
-    }
-
-    /**
-     * @param string $rounding_method
-     */
-    public function setRoundingMethod(string $rounding_method): void
-    {
-        $this->rounding_method = $rounding_method;
+        return $this->company_id;
     }
 
     /**
@@ -245,6 +243,14 @@ final class Rounding extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @param string $rounding_method
+     */
+    public function setRoundingMethod(string $rounding_method): void
+    {
+        $this->rounding_method = $rounding_method;
     }
 
     /**
@@ -312,10 +318,10 @@ final class Rounding extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.cash.rounding';
     }
 }

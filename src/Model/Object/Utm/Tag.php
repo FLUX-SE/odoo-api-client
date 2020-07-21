@@ -16,8 +16,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Tag extends Base
 {
-    public const ODOO_MODEL_NAME = 'utm.tag';
-
     /**
      * Name
      * Searchable : yes
@@ -176,5 +174,13 @@ final class Tag extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'utm.tag';
     }
 }

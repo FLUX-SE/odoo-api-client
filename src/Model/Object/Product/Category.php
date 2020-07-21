@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Category extends Base
 {
-    public const ODOO_MODEL_NAME = 'product.category';
-
     /**
      * Name
      * Searchable : yes
@@ -155,6 +153,14 @@ final class Category extends Base
     public function setProductCount(?int $product_count): void
     {
         $this->product_count = $product_count;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -379,10 +385,10 @@ final class Category extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'product.category';
     }
 }

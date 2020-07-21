@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Op extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.financial.year.op';
-
     /**
      * Company
      * Searchable : yes
@@ -182,7 +180,7 @@ final class Op extends Base
      *            -> 10 (October)
      *            -> 11 (November)
      *            -> 12 (December)
-     *
+     *       
      * @param string $account_tax_periodicity Periodicity
      *        Periodicity
      *        Searchable : yes
@@ -190,7 +188,7 @@ final class Op extends Base
      *        Selection : (default value, usually null)
      *            -> trimester (trimester)
      *            -> monthly (monthly)
-     *
+     *       
      * @param int $account_tax_periodicity_reminder_day Reminder
      *        Searchable : yes
      *        Sortable : no
@@ -212,11 +210,19 @@ final class Op extends Base
     }
 
     /**
-     * @return int
+     * @param int $account_tax_periodicity_reminder_day
      */
-    public function getAccountTaxPeriodicityReminderDay(): int
+    public function setAccountTaxPeriodicityReminderDay(int $account_tax_periodicity_reminder_day): void
     {
-        return $this->account_tax_periodicity_reminder_day;
+        $this->account_tax_periodicity_reminder_day = $account_tax_periodicity_reminder_day;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -293,19 +299,11 @@ final class Op extends Base
     }
 
     /**
-     * @param int $account_tax_periodicity_reminder_day
+     * @return int
      */
-    public function setAccountTaxPeriodicityReminderDay(int $account_tax_periodicity_reminder_day): void
+    public function getAccountTaxPeriodicityReminderDay(): int
     {
-        $this->account_tax_periodicity_reminder_day = $account_tax_periodicity_reminder_day;
-    }
-
-    /**
-     * @param string $account_tax_periodicity
-     */
-    public function setAccountTaxPeriodicity(string $account_tax_periodicity): void
-    {
-        $this->account_tax_periodicity = $account_tax_periodicity;
+        return $this->account_tax_periodicity_reminder_day;
     }
 
     /**
@@ -314,6 +312,14 @@ final class Op extends Base
     public function getCompanyId(): OdooRelation
     {
         return $this->company_id;
+    }
+
+    /**
+     * @param string $account_tax_periodicity
+     */
+    public function setAccountTaxPeriodicity(string $account_tax_periodicity): void
+    {
+        $this->account_tax_periodicity = $account_tax_periodicity;
     }
 
     /**
@@ -397,10 +403,10 @@ final class Op extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.financial.year.op';
     }
 }

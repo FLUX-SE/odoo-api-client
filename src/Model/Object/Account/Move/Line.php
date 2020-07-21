@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Line extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.move.line';
-
     /**
      * Journal Entry
      * The move of this entry line.
@@ -714,27 +712,11 @@ final class Line extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $analytic_account_id
      */
-    public function getAnalyticAccountId(): ?OdooRelation
+    public function setAnalyticAccountId(?OdooRelation $analytic_account_id): void
     {
-        return $this->analytic_account_id;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addMatchedCreditIds(OdooRelation $item): void
-    {
-        if ($this->hasMatchedCreditIds($item)) {
-            return;
-        }
-
-        if (null === $this->matched_credit_ids) {
-            $this->matched_credit_ids = [];
-        }
-
-        $this->matched_credit_ids[] = $item;
+        $this->analytic_account_id = $analytic_account_id;
     }
 
     /**
@@ -814,19 +796,11 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation|null $analytic_account_id
+     * @return OdooRelation|null
      */
-    public function setAnalyticAccountId(?OdooRelation $analytic_account_id): void
+    public function getAnalyticAccountId(): ?OdooRelation
     {
-        $this->analytic_account_id = $analytic_account_id;
-    }
-
-    /**
-     * @param OdooRelation[]|null $matched_credit_ids
-     */
-    public function setMatchedCreditIds(?array $matched_credit_ids): void
-    {
-        $this->matched_credit_ids = $matched_credit_ids;
+        return $this->analytic_account_id;
     }
 
     /**
@@ -835,6 +809,20 @@ final class Line extends Base
     public function getAnalyticTagIds(): ?array
     {
         return $this->analytic_tag_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMatchedCreditIds(OdooRelation $item): bool
+    {
+        if (null === $this->matched_credit_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->matched_credit_ids);
     }
 
     /**
@@ -907,49 +895,51 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @return string|null
      */
-    public function hasMatchedCreditIds(OdooRelation $item): bool
+    public function getDisplayType(): ?string
     {
-        if (null === $this->matched_credit_ids) {
-            return false;
+        return $this->display_type;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMatchedCreditIds(OdooRelation $item): void
+    {
+        if ($this->hasMatchedCreditIds($item)) {
+            return;
         }
 
-        return in_array($item, $this->matched_credit_ids);
+        if (null === $this->matched_credit_ids) {
+            $this->matched_credit_ids = [];
+        }
+
+        $this->matched_credit_ids[] = $item;
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @param OdooRelation[]|null $matched_credit_ids
      */
-    public function getMatchedCreditIds(): ?array
+    public function setMatchedCreditIds(?array $matched_credit_ids): void
     {
-        return $this->matched_credit_ids;
+        $this->matched_credit_ids = $matched_credit_ids;
     }
 
     /**
-     * @param string|null $display_type
+     * @return bool|null
      */
-    public function setDisplayType(?string $display_type): void
+    public function isIsRoundingLine(): ?bool
     {
-        $this->display_type = $display_type;
+        return $this->is_rounding_line;
     }
 
     /**
-     * @return float|null
+     * @param float|null $amount_residual
      */
-    public function getAmountResidual(): ?float
+    public function setAmountResidual(?float $amount_residual): void
     {
-        return $this->amount_residual;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getTagIds(): ?array
-    {
-        return $this->tag_ids;
+        $this->amount_residual = $amount_residual;
     }
 
     /**
@@ -1022,26 +1012,11 @@ final class Line extends Base
     }
 
     /**
-     * @param float|null $amount_residual
+     * @return float|null
      */
-    public function setAmountResidual(?float $amount_residual): void
+    public function getAmountResidual(): ?float
     {
-        $this->amount_residual = $amount_residual;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMatchedDebitIds(OdooRelation $item): void
-    {
-        if (null === $this->matched_debit_ids) {
-            $this->matched_debit_ids = [];
-        }
-
-        if ($this->hasMatchedDebitIds($item)) {
-            $index = array_search($item, $this->matched_debit_ids);
-            unset($this->matched_debit_ids[$index]);
-        }
+        return $this->amount_residual;
     }
 
     /**
@@ -1050,6 +1025,14 @@ final class Line extends Base
     public function getAmountResidualCurrency(): ?float
     {
         return $this->amount_residual_currency;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getMatchedCreditIds(): ?array
+    {
+        return $this->matched_credit_ids;
     }
 
     /**
@@ -1123,49 +1106,50 @@ final class Line extends Base
     }
 
     /**
-     * @return string|null
-     */
-    public function getDisplayType(): ?string
-    {
-        return $this->display_type;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isIsRoundingLine(): ?bool
-    {
-        return $this->is_rounding_line;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getTaxRepartitionLineId(): ?OdooRelation
-    {
-        return $this->tax_repartition_line_id;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getFollowupDate(): ?DateTimeInterface
-    {
-        return $this->followup_date;
-    }
-
-    /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasSaleLineIds(OdooRelation $item): bool
+    public function removeMatchedDebitIds(OdooRelation $item): void
     {
-        if (null === $this->sale_line_ids) {
-            return false;
+        if (null === $this->matched_debit_ids) {
+            $this->matched_debit_ids = [];
         }
 
-        return in_array($item, $this->sale_line_ids);
+        if ($this->hasMatchedDebitIds($item)) {
+            $index = array_search($item, $this->matched_debit_ids);
+            unset($this->matched_debit_ids[$index]);
+        }
+    }
+
+    /**
+     * @param string|null $display_type
+     */
+    public function setDisplayType(?string $display_type): void
+    {
+        $this->display_type = $display_type;
+    }
+
+    /**
+     * @param bool|null $is_rounding_line
+     */
+    public function setIsRoundingLine(?bool $is_rounding_line): void
+    {
+        $this->is_rounding_line = $is_rounding_line;
+    }
+
+    /**
+     * @param OdooRelation|null $tax_repartition_line_id
+     */
+    public function setTaxRepartitionLineId(?OdooRelation $tax_repartition_line_id): void
+    {
+        $this->tax_repartition_line_id = $tax_repartition_line_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $followup_date
+     */
+    public function setFollowupDate(?DateTimeInterface $followup_date): void
+    {
+        $this->followup_date = $followup_date;
     }
 
     /**
@@ -1232,19 +1216,11 @@ final class Line extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $followup_date
+     * @return DateTimeInterface|null
      */
-    public function setFollowupDate(?DateTimeInterface $followup_date): void
+    public function getFollowupDate(): ?DateTimeInterface
     {
-        $this->followup_date = $followup_date;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getSaleLineIds(): ?array
-    {
-        return $this->sale_line_ids;
+        return $this->followup_date;
     }
 
     /**
@@ -1253,6 +1229,14 @@ final class Line extends Base
     public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation[]|null $sale_line_ids
+     */
+    public function setSaleLineIds(?array $sale_line_ids): void
+    {
+        $this->sale_line_ids = $sale_line_ids;
     }
 
     /**
@@ -1304,43 +1288,33 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $sale_line_ids
+     * @param DateTimeInterface|null $write_date
      */
-    public function setSaleLineIds(?array $sale_line_ids): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->sale_line_ids = $sale_line_ids;
-    }
-
-    /**
-     * @param DateTimeInterface|null $next_action_date
-     */
-    public function setNextActionDate(?DateTimeInterface $next_action_date): void
-    {
-        $this->next_action_date = $next_action_date;
-    }
-
-    /**
-     * @param bool|null $is_rounding_line
-     */
-    public function setIsRoundingLine(?bool $is_rounding_line): void
-    {
-        $this->is_rounding_line = $is_rounding_line;
+        $this->write_date = $write_date;
     }
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function addMoveAttachmentIds(OdooRelation $item): void
+    public function hasSaleLineIds(OdooRelation $item): bool
     {
-        if ($this->hasMoveAttachmentIds($item)) {
-            return;
+        if (null === $this->sale_line_ids) {
+            return false;
         }
 
-        if (null === $this->move_attachment_ids) {
-            $this->move_attachment_ids = [];
-        }
+        return in_array($item, $this->sale_line_ids);
+    }
 
-        $this->move_attachment_ids[] = $item;
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getSaleLineIds(): ?array
+    {
+        return $this->sale_line_ids;
     }
 
     /**
@@ -1349,6 +1323,21 @@ final class Line extends Base
     public function isExcludeFromInvoiceTab(): ?bool
     {
         return $this->exclude_from_invoice_tab;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMoveAttachmentIds(OdooRelation $item): void
+    {
+        if (null === $this->move_attachment_ids) {
+            $this->move_attachment_ids = [];
+        }
+
+        if ($this->hasMoveAttachmentIds($item)) {
+            $index = array_search($item, $this->move_attachment_ids);
+            unset($this->move_attachment_ids[$index]);
+        }
     }
 
     /**
@@ -1408,24 +1397,17 @@ final class Line extends Base
     /**
      * @param OdooRelation $item
      */
-    public function removeMoveAttachmentIds(OdooRelation $item): void
+    public function addMoveAttachmentIds(OdooRelation $item): void
     {
+        if ($this->hasMoveAttachmentIds($item)) {
+            return;
+        }
+
         if (null === $this->move_attachment_ids) {
             $this->move_attachment_ids = [];
         }
 
-        if ($this->hasMoveAttachmentIds($item)) {
-            $index = array_search($item, $this->move_attachment_ids);
-            unset($this->move_attachment_ids[$index]);
-        }
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getNextActionDate(): ?DateTimeInterface
-    {
-        return $this->next_action_date;
+        $this->move_attachment_ids[] = $item;
     }
 
     /**
@@ -1434,6 +1416,14 @@ final class Line extends Base
     public function isPredictFromName(): ?bool
     {
         return $this->predict_from_name;
+    }
+
+    /**
+     * @param DateTimeInterface|null $next_action_date
+     */
+    public function setNextActionDate(?DateTimeInterface $next_action_date): void
+    {
+        $this->next_action_date = $next_action_date;
     }
 
     /**
@@ -1493,19 +1483,27 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation|null $tax_repartition_line_id
+     * @return DateTimeInterface|null
      */
-    public function setTaxRepartitionLineId(?OdooRelation $tax_repartition_line_id): void
+    public function getNextActionDate(): ?DateTimeInterface
     {
-        $this->tax_repartition_line_id = $tax_repartition_line_id;
+        return $this->next_action_date;
     }
 
     /**
-     * @param bool|null $tax_exigible
+     * @return OdooRelation[]|null
      */
-    public function setTaxExigible(?bool $tax_exigible): void
+    public function getTagIds(): ?array
     {
-        $this->tax_exigible = $tax_exigible;
+        return $this->tag_ids;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getTaxRepartitionLineId(): ?OdooRelation
+    {
+        return $this->tax_repartition_line_id;
     }
 
     /**
@@ -1837,11 +1835,11 @@ final class Line extends Base
     }
 
     /**
-     * @return bool|null
+     * @param bool|null $tax_exigible
      */
-    public function isTaxExigible(): ?bool
+    public function setTaxExigible(?bool $tax_exigible): void
     {
-        return $this->tax_exigible;
+        $this->tax_exigible = $tax_exigible;
     }
 
     /**
@@ -1999,6 +1997,14 @@ final class Line extends Base
     public function setTaxBaseAmount(?float $tax_base_amount): void
     {
         $this->tax_base_amount = $tax_base_amount;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isTaxExigible(): ?bool
+    {
+        return $this->tax_exigible;
     }
 
     /**
@@ -2170,10 +2176,10 @@ final class Line extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.move.line';
     }
 }

@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Send extends Base
 {
-    public const ODOO_MODEL_NAME = 'followup.send';
-
     /**
      * Stamp(s)
      * Searchable : no
@@ -124,6 +122,14 @@ final class Send extends Base
         }
 
         return in_array($item, $this->invalid_partner_ids);
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -331,10 +337,10 @@ final class Send extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'followup.send';
     }
 }

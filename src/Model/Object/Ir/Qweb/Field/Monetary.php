@@ -25,5 +25,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Monetary extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.qweb.field.monetary';
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'ir.qweb.field.monetary';
+    }
 }

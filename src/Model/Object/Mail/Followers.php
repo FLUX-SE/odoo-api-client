@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Followers extends Base
 {
-    public const ODOO_MODEL_NAME = 'mail.followers';
-
     /**
      * Related Document Model Name
      * Searchable : yes
@@ -203,5 +201,13 @@ final class Followers extends Base
             $index = array_search($item, $this->subtype_ids);
             unset($this->subtype_ids[$index]);
         }
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'mail.followers';
     }
 }

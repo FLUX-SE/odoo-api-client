@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Fields extends Base
 {
-    public const ODOO_MODEL_NAME = 'snailmail.letter.missing.required.fields';
-
     /**
      * Partner
      * Searchable : yes
@@ -145,6 +143,14 @@ final class Fields extends Base
     public function setStateId(?OdooRelation $state_id): void
     {
         $this->state_id = $state_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -316,10 +322,10 @@ final class Fields extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'snailmail.letter.missing.required.fields';
     }
 }

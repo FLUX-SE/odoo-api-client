@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Token extends Base
 {
-    public const ODOO_MODEL_NAME = 'payment.token';
-
     /**
      * Name
      * Name of the payment token
@@ -168,6 +166,14 @@ final class Token extends Base
     public function setPaymentIds(?array $payment_ids): void
     {
         $this->payment_ids = $payment_ids;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -408,10 +414,10 @@ final class Token extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'payment.token';
     }
 }

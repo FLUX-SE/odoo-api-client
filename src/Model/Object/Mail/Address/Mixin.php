@@ -26,8 +26,6 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Mixin extends Base
 {
-    public const ODOO_MODEL_NAME = 'mail.address.mixin';
-
     /**
      * Normalized Email
      * This field is used to search on email address as the primary email field can contain more than strictly an
@@ -53,5 +51,13 @@ final class Mixin extends Base
     public function setEmailNormalized(?string $email_normalized): void
     {
         $this->email_normalized = $email_normalized;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'mail.address.mixin';
     }
 }

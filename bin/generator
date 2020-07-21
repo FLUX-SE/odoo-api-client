@@ -9,12 +9,11 @@ use Flux\OdooApiClient\Builder\OdooApiClientBuilder;
 use Flux\OdooApiClient\Command\GeneratorCommand;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\InspectionOperations;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
-use Flux\OdooApiClient\PhpGenerator\ModelFixer\ResUsersModelFixer;
 use Flux\OdooApiClient\PhpGenerator\OdooModelsStructureConverter;
 use Flux\OdooApiClient\PhpGenerator\OdooPhpClassesGenerator;
 use Prometee\PhpClassGenerator\Builder\ClassBuilder;
-use Prometee\PhpClassGenerator\Builder\ModelFactoryBuilder;
-use Prometee\PhpClassGenerator\Builder\ViewFactoryBuilder;
+use Prometee\PhpClassGenerator\Builder\Model\ModelFactoryBuilder;
+use Prometee\PhpClassGenerator\Builder\View\ViewFactoryBuilder;
 use Prometee\PhpClassGenerator\Helper\PhpReservedWordsHelper;
 use Symfony\Component\Console\Application;
 
@@ -49,10 +48,7 @@ $phpReservedWordsHelper = new PhpReservedWordsHelper();
 $odooModelsStructureConverter = new OdooModelsStructureConverter(
     $recordListOperations,
     $inspectionOperations,
-    $phpReservedWordsHelper,
-    [
-        new ResUsersModelFixer(),
-    ]
+    $phpReservedWordsHelper
 );
 
 $application = new Application('odoo-api-client-generator', '1.0.0');

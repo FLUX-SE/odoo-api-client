@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 class Bank extends Base
 {
-    public const ODOO_MODEL_NAME = 'res.partner.bank';
-
     /**
      * Type
      * Bank account type: Normal or IBAN. Inferred from the bank account number.
@@ -204,17 +202,16 @@ class Bank extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addJournalId(OdooRelation $item): void
+    public function removeJournalId(OdooRelation $item): void
     {
-        if ($this->hasJournalId($item)) {
-            return;
-        }
-
         if (null === $this->journal_id) {
             $this->journal_id = [];
         }
 
-        $this->journal_id[] = $item;
+        if ($this->hasJournalId($item)) {
+            $index = array_search($item, $this->journal_id);
+            unset($this->journal_id[$index]);
+        }
     }
 
     /**
@@ -274,24 +271,17 @@ class Bank extends Base
     /**
      * @param OdooRelation $item
      */
-    public function removeJournalId(OdooRelation $item): void
+    public function addJournalId(OdooRelation $item): void
     {
+        if ($this->hasJournalId($item)) {
+            return;
+        }
+
         if (null === $this->journal_id) {
             $this->journal_id = [];
         }
 
-        if ($this->hasJournalId($item)) {
-            $index = array_search($item, $this->journal_id);
-            unset($this->journal_id[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation|null $currency_id
-     */
-    public function setCurrencyId(?OdooRelation $currency_id): void
-    {
-        $this->currency_id = $currency_id;
+        $this->journal_id[] = $item;
     }
 
     /**
@@ -300,6 +290,14 @@ class Bank extends Base
     public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $currency_id
+     */
+    public function setCurrencyId(?OdooRelation $currency_id): void
+    {
+        $this->currency_id = $currency_id;
     }
 
     /**
@@ -348,6 +346,14 @@ class Bank extends Base
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -511,10 +517,10 @@ class Bank extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'res.partner.bank';
     }
 }

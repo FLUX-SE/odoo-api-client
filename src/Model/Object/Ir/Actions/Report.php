@@ -20,8 +20,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Report extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.actions.report';
-
     /**
      * Name
      * Searchable : yes
@@ -258,7 +256,7 @@ final class Report extends Base
      *        Selection : (default value, usually null)
      *            -> action (Action)
      *            -> report (Report)
-     *
+     *       
      * @param string $model Model Name
      *        Searchable : yes
      *        Sortable : yes
@@ -272,7 +270,7 @@ final class Report extends Base
      *            -> qweb-html (HTML)
      *            -> qweb-pdf (PDF)
      *            -> qweb-text (Text)
-     *
+     *       
      * @param string $report_name Template Name
      *        For QWeb reports, name of the template used in the rendering. The method 'render_html' of the model
      *        'report.template_name' will be called (if any) to give the html. For RML reports, this is the LocalService
@@ -462,6 +460,14 @@ final class Report extends Base
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -686,10 +692,10 @@ final class Report extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'ir.actions.report';
     }
 }

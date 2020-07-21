@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Fec extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.fr.fec';
-
     /**
      * Start Date
      * Searchable : yes
@@ -121,7 +119,7 @@ final class Fec extends Base
      *        Selection : (default value, usually null)
      *            -> official (Official FEC report (posted entries only))
      *            -> nonofficial (Non-official FEC report (posted and unposted entries))
-     *
+     *       
      */
     public function __construct(
         DateTimeInterface $date_from,
@@ -134,11 +132,19 @@ final class Fec extends Base
     }
 
     /**
-     * @param string $export_type
+     * @return OdooRelation|null
      */
-    public function setExportType(string $export_type): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->export_type = $export_type;
+        return $this->create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -190,19 +196,11 @@ final class Fec extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param string $export_type
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setExportType(string $export_type): void
     {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return string
-     */
-    public function getExportType(): string
-    {
-        return $this->export_type;
+        $this->export_type = $export_type;
     }
 
     /**
@@ -211,6 +209,14 @@ final class Fec extends Base
     public function getDateFrom(): DateTimeInterface
     {
         return $this->date_from;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExportType(): string
+    {
+        return $this->export_type;
     }
 
     /**
@@ -270,10 +276,10 @@ final class Fec extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.fr.fec';
     }
 }

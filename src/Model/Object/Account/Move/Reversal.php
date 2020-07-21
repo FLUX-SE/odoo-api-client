@@ -16,8 +16,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Reversal extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.move.reversal';
-
     /**
      * Journal Entry
      * Searchable : yes
@@ -147,7 +145,7 @@ final class Reversal extends Base
      *            -> refund (Partial Refund)
      *            -> cancel (Full Refund)
      *            -> modify (Full refund and new draft invoice)
-     *
+     *       
      */
     public function __construct(DateTimeInterface $date, string $refund_method)
     {
@@ -156,11 +154,19 @@ final class Reversal extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $currency_id
      */
-    public function getCurrencyId(): ?OdooRelation
+    public function setCurrencyId(?OdooRelation $currency_id): void
     {
-        return $this->currency_id;
+        $this->currency_id = $currency_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -236,19 +242,11 @@ final class Reversal extends Base
     }
 
     /**
-     * @param OdooRelation|null $currency_id
+     * @return OdooRelation|null
      */
-    public function setCurrencyId(?OdooRelation $currency_id): void
+    public function getCurrencyId(): ?OdooRelation
     {
-        $this->currency_id = $currency_id;
-    }
-
-    /**
-     * @param float|null $residual
-     */
-    public function setResidual(?float $residual): void
-    {
-        $this->residual = $residual;
+        return $this->currency_id;
     }
 
     /**
@@ -257,6 +255,14 @@ final class Reversal extends Base
     public function getMoveId(): ?OdooRelation
     {
         return $this->move_id;
+    }
+
+    /**
+     * @param float|null $residual
+     */
+    public function setResidual(?float $residual): void
+    {
+        $this->residual = $residual;
     }
 
     /**
@@ -340,10 +346,10 @@ final class Reversal extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.move.reversal';
     }
 }

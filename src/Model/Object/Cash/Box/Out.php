@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Out extends Base
 {
-    public const ODOO_MODEL_NAME = 'cash.box.out';
-
     /**
      * Reason
      * Searchable : yes
@@ -185,5 +183,13 @@ final class Out extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'cash.box.out';
     }
 }

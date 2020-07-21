@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Tax extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.tax';
-
     /**
      * Tax Name
      * Searchable : yes
@@ -62,7 +60,7 @@ final class Tax extends Base
      *         - Percentage of Price Tax Included: The tax amount is a division of the price:
      *                 e.g 180 / (1 - 10%) = 200 (not price included)
      *                 e.g 200 * (1 - 10%) = 180 (price included)
-     *
+     *                 
      * Searchable : yes
      * Sortable : yes
      * Selection : (default value, usually null)
@@ -298,9 +296,9 @@ final class Tax extends Base
      *            -> sale (Sales)
      *            -> purchase (Purchases)
      *            -> none (None)
-     *
+     *       
      * @param string $amount_type Tax Computation
-     *
+     *       
      *                - Group of Taxes: The tax is a set of sub taxes.
      *                - Fixed: The tax amount stays the same whatever the price.
      *                - Percentage of Price: The tax amount is a % of the price:
@@ -309,7 +307,7 @@ final class Tax extends Base
      *                - Percentage of Price Tax Included: The tax amount is a division of the price:
      *                        e.g 180 / (1 - 10%) = 200 (not price included)
      *                        e.g 200 * (1 - 10%) = 180 (price included)
-     *
+     *                        
      *        Searchable : yes
      *        Sortable : yes
      *        Selection : (default value, usually null)
@@ -317,7 +315,7 @@ final class Tax extends Base
      *            -> fixed (Fixed)
      *            -> percent (Percentage of Price)
      *            -> division (Percentage of Price Tax Included)
-     *
+     *       
      * @param OdooRelation $company_id Company
      *        Searchable : yes
      *        Sortable : yes
@@ -351,11 +349,11 @@ final class Tax extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @param OdooRelation[]|null $refund_repartition_line_ids
      */
-    public function getRefundRepartitionLineIds(): ?array
+    public function setRefundRepartitionLineIds(?array $refund_repartition_line_ids): void
     {
-        return $this->refund_repartition_line_ids;
+        $this->refund_repartition_line_ids = $refund_repartition_line_ids;
     }
 
     /**
@@ -468,19 +466,11 @@ final class Tax extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $refund_repartition_line_ids
+     * @return OdooRelation[]|null
      */
-    public function setRefundRepartitionLineIds(?array $refund_repartition_line_ids): void
+    public function getRefundRepartitionLineIds(): ?array
     {
-        $this->refund_repartition_line_ids = $refund_repartition_line_ids;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isHideTaxExigibility(): ?bool
-    {
-        return $this->hide_tax_exigibility;
+        return $this->refund_repartition_line_ids;
     }
 
     /**
@@ -495,6 +485,14 @@ final class Tax extends Base
         }
 
         return in_array($item, $this->refund_repartition_line_ids);
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isHideTaxExigibility(): ?bool
+    {
+        return $this->hide_tax_exigibility;
     }
 
     /**
@@ -598,6 +596,14 @@ final class Tax extends Base
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -862,10 +868,10 @@ final class Tax extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.tax';
     }
 }

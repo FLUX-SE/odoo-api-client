@@ -37,8 +37,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Mixin extends Base
 {
-    public const ODOO_MODEL_NAME = 'mail.activity.mixin';
-
     /**
      * Activities
      * Searchable : yes
@@ -135,11 +133,19 @@ final class Mixin extends Base
     }
 
     /**
-     * @param OdooRelation|null $activity_type_id
+     * @return DateTimeInterface|null
      */
-    public function setActivityTypeId(?OdooRelation $activity_type_id): void
+    public function getActivityDateDeadline(): ?DateTimeInterface
     {
-        $this->activity_type_id = $activity_type_id;
+        return $this->activity_date_deadline;
+    }
+
+    /**
+     * @param string|null $activity_exception_icon
+     */
+    public function setActivityExceptionIcon(?string $activity_exception_icon): void
+    {
+        $this->activity_exception_icon = $activity_exception_icon;
     }
 
     /**
@@ -191,19 +197,11 @@ final class Mixin extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
+     * @param OdooRelation|null $activity_type_id
      */
-    public function getActivityDateDeadline(): ?DateTimeInterface
+    public function setActivityTypeId(?OdooRelation $activity_type_id): void
     {
-        return $this->activity_date_deadline;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getActivityTypeId(): ?OdooRelation
-    {
-        return $this->activity_type_id;
+        $this->activity_type_id = $activity_type_id;
     }
 
     /**
@@ -212,6 +210,14 @@ final class Mixin extends Base
     public function setActivityIds(?array $activity_ids): void
     {
         $this->activity_ids = $activity_ids;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getActivityTypeId(): ?OdooRelation
+    {
+        return $this->activity_type_id;
     }
 
     /**
@@ -292,10 +298,10 @@ final class Mixin extends Base
     }
 
     /**
-     * @param string|null $activity_exception_icon
+     * @return string
      */
-    public function setActivityExceptionIcon(?string $activity_exception_icon): void
+    public static function getOdooModelName(): string
     {
-        $this->activity_exception_icon = $activity_exception_icon;
+        return 'mail.activity.mixin';
     }
 }

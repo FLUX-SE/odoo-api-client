@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Line extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.bank.statement.line';
-
     /**
      * Label
      * Searchable : yes
@@ -326,11 +324,11 @@ final class Line extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $unique_import_id
      */
-    public function getUniqueImportId(): ?string
+    public function setUniqueImportId(?string $unique_import_id): void
     {
-        return $this->unique_import_id;
+        $this->unique_import_id = $unique_import_id;
     }
 
     /**
@@ -451,19 +449,11 @@ final class Line extends Base
     }
 
     /**
-     * @param string|null $unique_import_id
+     * @return string|null
      */
-    public function setUniqueImportId(?string $unique_import_id): void
+    public function getUniqueImportId(): ?string
     {
-        $this->unique_import_id = $unique_import_id;
-    }
-
-    /**
-     * @param OdooRelation|null $company_id
-     */
-    public function setCompanyId(?OdooRelation $company_id): void
-    {
-        $this->company_id = $company_id;
+        return $this->unique_import_id;
     }
 
     /**
@@ -472,6 +462,14 @@ final class Line extends Base
     public function getOnlineIdentifier(): ?string
     {
         return $this->online_identifier;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
     }
 
     /**
@@ -568,6 +566,14 @@ final class Line extends Base
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -827,10 +833,10 @@ final class Line extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.bank.statement.line';
     }
 }

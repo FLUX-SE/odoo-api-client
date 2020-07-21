@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Notification extends Base
 {
-    public const ODOO_MODEL_NAME = 'mail.notification';
-
     /**
      * Message
      * Searchable : yes
@@ -158,7 +156,7 @@ final class Notification extends Base
      *            -> inbox (Inbox)
      *            -> email (Email)
      *            -> sms (SMS)
-     *
+     *       
      */
     public function __construct(OdooRelation $mail_message_id, string $notification_type)
     {
@@ -167,11 +165,19 @@ final class Notification extends Base
     }
 
     /**
-     * @param string|null $failure_reason
+     * @return DateTimeInterface|null
      */
-    public function setFailureReason(?string $failure_reason): void
+    public function getReadDate(): ?DateTimeInterface
     {
-        $this->failure_reason = $failure_reason;
+        return $this->read_date;
+    }
+
+    /**
+     * @param string|null $failure_type
+     */
+    public function setFailureType(?string $failure_type): void
+    {
+        $this->failure_type = $failure_type;
     }
 
     /**
@@ -239,19 +245,11 @@ final class Notification extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
+     * @param string|null $failure_reason
      */
-    public function getReadDate(): ?DateTimeInterface
+    public function setFailureReason(?string $failure_reason): void
     {
-        return $this->read_date;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getFailureReason(): ?string
-    {
-        return $this->failure_reason;
+        $this->failure_reason = $failure_reason;
     }
 
     /**
@@ -260,6 +258,14 @@ final class Notification extends Base
     public function getMailMessageId(): OdooRelation
     {
         return $this->mail_message_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFailureReason(): ?string
+    {
+        return $this->failure_reason;
     }
 
     /**
@@ -335,10 +341,10 @@ final class Notification extends Base
     }
 
     /**
-     * @param string|null $failure_type
+     * @return string
      */
-    public function setFailureType(?string $failure_type): void
+    public static function getOdooModelName(): string
     {
-        $this->failure_type = $failure_type;
+        return 'mail.notification';
     }
 }

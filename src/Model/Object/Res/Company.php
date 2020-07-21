@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Company extends Base
 {
-    public const ODOO_MODEL_NAME = 'res.company';
-
     /**
      * Company Name
      * Searchable : yes
@@ -652,9 +650,9 @@ final class Company extends Base
     /**
      * Bank Reconciliation Threshold
      * The bank reconciliation widget won't ask to reconcile payments older than this date.
-     *
+     *                                                                                                               
      * This is useful if you install accounting after having used invoicing for some time and
-     *
+     *                                                                                                               
      * don't want to reconcile all the past payments with bank statements.
      * Searchable : yes
      * Sortable : yes
@@ -1297,7 +1295,7 @@ final class Company extends Base
      *            -> 10 (October)
      *            -> 11 (November)
      *            -> 12 (December)
-     *
+     *       
      * @param string $extract_show_ocr_option_selection Send mode on invoices attachments
      *        Searchable : yes
      *        Sortable : yes
@@ -1305,7 +1303,7 @@ final class Company extends Base
      *            -> no_send (Do not digitalize bills)
      *            -> manual_send (Digitalize bills on demand only)
      *            -> auto_send (Digitalize all bills automatically)
-     *
+     *       
      * @param bool $extract_single_line_per_tax OCR Single Invoice Line Per Tax
      *        Searchable : yes
      *        Sortable : yes
@@ -1869,19 +1867,12 @@ final class Company extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $sale_onboarding_sample_quotation_state
      */
-    public function getSaleOnboardingSampleQuotationState(): ?string
-    {
-        return $this->sale_onboarding_sample_quotation_state;
-    }
-
-    /**
-     * @param string|null $siret
-     */
-    public function setSiret(?string $siret): void
-    {
-        $this->siret = $siret;
+    public function setSaleOnboardingSampleQuotationState(
+        ?string $sale_onboarding_sample_quotation_state
+    ): void {
+        $this->sale_onboarding_sample_quotation_state = $sale_onboarding_sample_quotation_state;
     }
 
     /**
@@ -1982,20 +1973,11 @@ final class Company extends Base
     }
 
     /**
-     * @param string|null $sale_onboarding_sample_quotation_state
+     * @return string|null
      */
-    public function setSaleOnboardingSampleQuotationState(
-        ?string $sale_onboarding_sample_quotation_state
-    ): void {
-        $this->sale_onboarding_sample_quotation_state = $sale_onboarding_sample_quotation_state;
-    }
-
-    /**
-     * @param OdooRelation|null $l10n_fr_closing_sequence_id
-     */
-    public function setL10nFrClosingSequenceId(?OdooRelation $l10n_fr_closing_sequence_id): void
+    public function getSaleOnboardingSampleQuotationState(): ?string
     {
-        $this->l10n_fr_closing_sequence_id = $l10n_fr_closing_sequence_id;
+        return $this->sale_onboarding_sample_quotation_state;
     }
 
     /**
@@ -2004,6 +1986,14 @@ final class Company extends Base
     public function getSaleOnboardingPaymentMethod(): ?string
     {
         return $this->sale_onboarding_payment_method;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSiret(): ?string
+    {
+        return $this->siret;
     }
 
     /**
@@ -2103,19 +2093,27 @@ final class Company extends Base
     }
 
     /**
-     * @return string|null
+     * @param DateTimeInterface|null $write_date
      */
-    public function getSiret(): ?string
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->siret;
+        $this->write_date = $write_date;
     }
 
     /**
-     * @return OdooRelation|null
+     * @param string|null $siret
      */
-    public function getL10nFrClosingSequenceId(): ?OdooRelation
+    public function setSiret(?string $siret): void
     {
-        return $this->l10n_fr_closing_sequence_id;
+        $this->siret = $siret;
+    }
+
+    /**
+     * @param OdooRelation|null $l10n_fr_closing_sequence_id
+     */
+    public function setL10nFrClosingSequenceId(?OdooRelation $l10n_fr_closing_sequence_id): void
+    {
+        $this->l10n_fr_closing_sequence_id = $l10n_fr_closing_sequence_id;
     }
 
     /**
@@ -2247,11 +2245,11 @@ final class Company extends Base
     }
 
     /**
-     * @param string|null $yodlee_user_access_token
+     * @return OdooRelation|null
      */
-    public function setYodleeUserAccessToken(?string $yodlee_user_access_token): void
+    public function getL10nFrClosingSequenceId(): ?OdooRelation
     {
-        $this->yodlee_user_access_token = $yodlee_user_access_token;
+        return $this->l10n_fr_closing_sequence_id;
     }
 
     /**
@@ -2358,6 +2356,14 @@ final class Company extends Base
     public function getYodleeUserAccessToken(): ?string
     {
         return $this->yodlee_user_access_token;
+    }
+
+    /**
+     * @param string|null $yodlee_user_access_token
+     */
+    public function setYodleeUserAccessToken(?string $yodlee_user_access_token): void
+    {
+        $this->yodlee_user_access_token = $yodlee_user_access_token;
     }
 
     /**
@@ -3481,10 +3487,10 @@ final class Company extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'res.company';
     }
 }

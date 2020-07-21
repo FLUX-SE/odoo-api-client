@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Letter extends Base
 {
-    public const ODOO_MODEL_NAME = 'snailmail.letter';
-
     /**
      * Sent by
      * Searchable : yes
@@ -310,7 +308,7 @@ final class Letter extends Base
      *            -> sent (Sent)
      *            -> error (Error)
      *            -> canceled (Canceled)
-     *
+     *       
      */
     public function __construct(
         string $model,
@@ -327,19 +325,11 @@ final class Letter extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $city
      */
-    public function getCity(): ?string
+    public function setCity(?string $city): void
     {
-        return $this->city;
-    }
-
-    /**
-     * @param string|null $info_msg
-     */
-    public function setInfoMsg(?string $info_msg): void
-    {
-        $this->info_msg = $info_msg;
+        $this->city = $city;
     }
 
     /**
@@ -423,19 +413,11 @@ final class Letter extends Base
     }
 
     /**
-     * @param string|null $city
+     * @return string|null
      */
-    public function setCity(?string $city): void
+    public function getCity(): ?string
     {
-        $this->city = $city;
-    }
-
-    /**
-     * @param string|null $error_code
-     */
-    public function setErrorCode(?string $error_code): void
-    {
-        $this->error_code = $error_code;
+        return $this->city;
     }
 
     /**
@@ -444,6 +426,14 @@ final class Letter extends Base
     public function getStateId(): ?OdooRelation
     {
         return $this->state_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getInfoMsg(): ?string
+    {
+        return $this->info_msg;
     }
 
     /**
@@ -527,19 +517,27 @@ final class Letter extends Base
     }
 
     /**
-     * @return string|null
+     * @param DateTimeInterface|null $write_date
      */
-    public function getInfoMsg(): ?string
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->info_msg;
+        $this->write_date = $write_date;
     }
 
     /**
-     * @return string|null
+     * @param string|null $info_msg
      */
-    public function getErrorCode(): ?string
+    public function setInfoMsg(?string $info_msg): void
     {
-        return $this->error_code;
+        $this->info_msg = $info_msg;
+    }
+
+    /**
+     * @param string|null $error_code
+     */
+    public function setErrorCode(?string $error_code): void
+    {
+        $this->error_code = $error_code;
     }
 
     /**
@@ -655,11 +653,11 @@ final class Letter extends Base
     }
 
     /**
-     * @param string $state
+     * @return string|null
      */
-    public function setState(string $state): void
+    public function getErrorCode(): ?string
     {
-        $this->state = $state;
+        return $this->error_code;
     }
 
     /**
@@ -751,10 +749,18 @@ final class Letter extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @param string $state
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function setState(string $state): void
     {
-        $this->write_date = $write_date;
+        $this->state = $state;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'snailmail.letter';
     }
 }

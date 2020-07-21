@@ -20,8 +20,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class ActWindow extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.actions.act_window';
-
     /**
      * Action Name
      * Searchable : yes
@@ -304,7 +302,7 @@ final class ActWindow extends Base
      *        Selection : (default value, usually null)
      *            -> action (Action)
      *            -> report (Report)
-     *
+     *       
      */
     public function __construct(
         string $name,
@@ -323,25 +321,11 @@ final class ActWindow extends Base
     }
 
     /**
-     * @param string|null $help
+     * @return OdooRelation|null
      */
-    public function setHelp(?string $help): void
+    public function getBindingModelId(): ?OdooRelation
     {
-        $this->help = $help;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasGroupsId(OdooRelation $item): bool
-    {
-        if (null === $this->groups_id) {
-            return false;
-        }
-
-        return in_array($item, $this->groups_id);
+        return $this->binding_model_id;
     }
 
     /**
@@ -448,19 +432,11 @@ final class ActWindow extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param string|null $help
      */
-    public function getBindingModelId(): ?OdooRelation
+    public function setHelp(?string $help): void
     {
-        return $this->binding_model_id;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getGroupsId(): ?array
-    {
-        return $this->groups_id;
+        $this->help = $help;
     }
 
     /**
@@ -469,6 +445,14 @@ final class ActWindow extends Base
     public function setBindingModelId(?OdooRelation $binding_model_id): void
     {
         $this->binding_model_id = $binding_model_id;
+    }
+
+    /**
+     * @param OdooRelation[]|null $groups_id
+     */
+    public function setGroupsId(?array $groups_id): void
+    {
+        $this->groups_id = $groups_id;
     }
 
     /**
@@ -560,19 +544,33 @@ final class ActWindow extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $groups_id
+     * @param DateTimeInterface|null $write_date
      */
-    public function setGroupsId(?array $groups_id): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->groups_id = $groups_id;
+        $this->write_date = $write_date;
     }
 
     /**
-     * @param int|null $limit
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setLimit(?int $limit): void
+    public function hasGroupsId(OdooRelation $item): bool
     {
-        $this->limit = $limit;
+        if (null === $this->groups_id) {
+            return false;
+        }
+
+        return in_array($item, $this->groups_id);
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getGroupsId(): ?array
+    {
+        return $this->groups_id;
     }
 
     /**
@@ -696,11 +694,11 @@ final class ActWindow extends Base
     }
 
     /**
-     * @return int|null
+     * @param int|null $limit
      */
-    public function getLimit(): ?int
+    public function setLimit(?int $limit): void
     {
-        return $this->limit;
+        $this->limit = $limit;
     }
 
     /**
@@ -821,10 +819,18 @@ final class ActWindow extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return int|null
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function getLimit(): ?int
     {
-        $this->write_date = $write_date;
+        return $this->limit;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'ir.actions.act_window';
     }
 }

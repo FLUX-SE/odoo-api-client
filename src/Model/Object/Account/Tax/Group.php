@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Group extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.tax.group';
-
     /**
      * Name
      * Searchable : yes
@@ -118,12 +116,19 @@ final class Group extends Base
     }
 
     /**
-     * @param OdooRelation|null $property_advance_tax_payment_account_id
+     * @return OdooRelation|null
      */
-    public function setPropertyAdvanceTaxPaymentAccountId(
-        ?OdooRelation $property_advance_tax_payment_account_id
-    ): void {
-        $this->property_advance_tax_payment_account_id = $property_advance_tax_payment_account_id;
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -175,19 +180,12 @@ final class Group extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $property_advance_tax_payment_account_id
      */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getPropertyAdvanceTaxPaymentAccountId(): ?OdooRelation
-    {
-        return $this->property_advance_tax_payment_account_id;
+    public function setPropertyAdvanceTaxPaymentAccountId(
+        ?OdooRelation $property_advance_tax_payment_account_id
+    ): void {
+        $this->property_advance_tax_payment_account_id = $property_advance_tax_payment_account_id;
     }
 
     /**
@@ -196,6 +194,14 @@ final class Group extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPropertyAdvanceTaxPaymentAccountId(): ?OdooRelation
+    {
+        return $this->property_advance_tax_payment_account_id;
     }
 
     /**
@@ -256,10 +262,10 @@ final class Group extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.tax.group';
     }
 }

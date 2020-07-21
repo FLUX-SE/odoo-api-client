@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Wizard extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.accrual.accounting.wizard';
-
     /**
      * Date
      * Searchable : yes
@@ -181,6 +179,14 @@ final class Wizard extends Base
     public function setRevenueAccrualAccount(?OdooRelation $revenue_accrual_account): void
     {
         $this->revenue_accrual_account = $revenue_accrual_account;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -437,10 +443,10 @@ final class Wizard extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.accrual.accounting.wizard';
     }
 }

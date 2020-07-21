@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Recipient extends Base
 {
-    public const ODOO_MODEL_NAME = 'sms.resend.recipient';
-
     /**
      * Sms Resend
      * Searchable : yes
@@ -147,11 +145,19 @@ final class Recipient extends Base
     }
 
     /**
-     * @param string|null $partner_name
+     * @return string|null
      */
-    public function setPartnerName(?string $partner_name): void
+    public function getSmsNumber(): ?string
     {
-        $this->partner_name = $partner_name;
+        return $this->sms_number;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -219,19 +225,11 @@ final class Recipient extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $partner_name
      */
-    public function getSmsNumber(): ?string
+    public function setPartnerName(?string $partner_name): void
     {
-        return $this->sms_number;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getPartnerName(): ?string
-    {
-        return $this->partner_name;
+        $this->partner_name = $partner_name;
     }
 
     /**
@@ -240,6 +238,14 @@ final class Recipient extends Base
     public function getSmsResendId(): OdooRelation
     {
         return $this->sms_resend_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPartnerName(): ?string
+    {
+        return $this->partner_name;
     }
 
     /**
@@ -315,10 +321,10 @@ final class Recipient extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'sms.resend.recipient';
     }
 }

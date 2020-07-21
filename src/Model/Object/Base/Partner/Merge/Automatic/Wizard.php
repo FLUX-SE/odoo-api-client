@@ -18,8 +18,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Wizard extends Base
 {
-    public const ODOO_MODEL_NAME = 'base.partner.merge.automatic.wizard';
-
     /**
      * Email
      * Searchable : yes
@@ -195,7 +193,7 @@ final class Wizard extends Base
      *            -> option (Option)
      *            -> selection (Selection)
      *            -> finished (Finished)
-     *
+     *       
      */
     public function __construct(string $state)
     {
@@ -203,25 +201,11 @@ final class Wizard extends Base
     }
 
     /**
-     * @param bool|null $exclude_journal_item
+     * @return int|null
      */
-    public function setExcludeJournalItem(?bool $exclude_journal_item): void
+    public function getMaximumGroup(): ?int
     {
-        $this->exclude_journal_item = $exclude_journal_item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasPartnerIds(OdooRelation $item): bool
-    {
-        if (null === $this->partner_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->partner_ids);
+        return $this->maximum_group;
     }
 
     /**
@@ -296,19 +280,11 @@ final class Wizard extends Base
     }
 
     /**
-     * @return int|null
+     * @param bool|null $exclude_journal_item
      */
-    public function getMaximumGroup(): ?int
+    public function setExcludeJournalItem(?bool $exclude_journal_item): void
     {
-        return $this->maximum_group;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getPartnerIds(): ?array
-    {
-        return $this->partner_ids;
+        $this->exclude_journal_item = $exclude_journal_item;
     }
 
     /**
@@ -317,6 +293,14 @@ final class Wizard extends Base
     public function setMaximumGroup(?int $maximum_group): void
     {
         $this->maximum_group = $maximum_group;
+    }
+
+    /**
+     * @param OdooRelation[]|null $partner_ids
+     */
+    public function setPartnerIds(?array $partner_ids): void
+    {
+        $this->partner_ids = $partner_ids;
     }
 
     /**
@@ -376,26 +360,33 @@ final class Wizard extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $partner_ids
+     * @param DateTimeInterface|null $write_date
      */
-    public function setPartnerIds(?array $partner_ids): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->partner_ids = $partner_ids;
+        $this->write_date = $write_date;
     }
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removeLineIds(OdooRelation $item): void
+    public function hasPartnerIds(OdooRelation $item): bool
     {
-        if (null === $this->line_ids) {
-            $this->line_ids = [];
+        if (null === $this->partner_ids) {
+            return false;
         }
 
-        if ($this->hasLineIds($item)) {
-            $index = array_search($item, $this->line_ids);
-            unset($this->line_ids[$index]);
-        }
+        return in_array($item, $this->partner_ids);
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getPartnerIds(): ?array
+    {
+        return $this->partner_ids;
     }
 
     /**
@@ -489,17 +480,16 @@ final class Wizard extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addLineIds(OdooRelation $item): void
+    public function removeLineIds(OdooRelation $item): void
     {
-        if ($this->hasLineIds($item)) {
-            return;
-        }
-
         if (null === $this->line_ids) {
             $this->line_ids = [];
         }
 
-        $this->line_ids[] = $item;
+        if ($this->hasLineIds($item)) {
+            $index = array_search($item, $this->line_ids);
+            unset($this->line_ids[$index]);
+        }
     }
 
     /**
@@ -573,10 +563,26 @@ final class Wizard extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @param OdooRelation $item
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function addLineIds(OdooRelation $item): void
     {
-        $this->write_date = $write_date;
+        if ($this->hasLineIds($item)) {
+            return;
+        }
+
+        if (null === $this->line_ids) {
+            $this->line_ids = [];
+        }
+
+        $this->line_ids[] = $item;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'base.partner.merge.automatic.wizard';
     }
 }

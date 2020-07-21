@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Type extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.account.type';
-
     /**
      * Account Type
      * Searchable : yes
@@ -141,7 +139,7 @@ final class Type extends Base
      *            -> receivable (Receivable)
      *            -> payable (Payable)
      *            -> liquidity (Liquidity)
-     *
+     *       
      * @param string $internal_group Internal Group
      *        The 'Internal Group' is used to filter accounts based on the internal group set on the account type.
      *        Searchable : yes
@@ -153,7 +151,7 @@ final class Type extends Base
      *            -> income (Income)
      *            -> expense (Expense)
      *            -> off_balance (Off Balance)
-     *
+     *       
      */
     public function __construct(string $name, string $type, string $internal_group)
     {
@@ -163,11 +161,19 @@ final class Type extends Base
     }
 
     /**
-     * @param string|null $note
+     * @return OdooRelation|null
      */
-    public function setNote(?string $note): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->note = $note;
+        return $this->create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -219,19 +225,11 @@ final class Type extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param string|null $note
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setNote(?string $note): void
     {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getNote(): ?string
-    {
-        return $this->note;
+        $this->note = $note;
     }
 
     /**
@@ -240,6 +238,14 @@ final class Type extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNote(): ?string
+    {
+        return $this->note;
     }
 
     /**
@@ -299,10 +305,10 @@ final class Type extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.account.type';
     }
 }

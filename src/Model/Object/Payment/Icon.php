@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Icon extends Base
 {
-    public const ODOO_MODEL_NAME = 'payment.icon';
-
     /**
      * Name
      * Searchable : yes
@@ -109,11 +107,19 @@ final class Icon extends Base
     }
 
     /**
-     * @param int|null $image_payment_form
+     * @return OdooRelation|null
      */
-    public function setImagePaymentForm(?int $image_payment_form): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->image_payment_form = $image_payment_form;
+        return $this->create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -165,19 +171,11 @@ final class Icon extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param int|null $image_payment_form
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setImagePaymentForm(?int $image_payment_form): void
     {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getImagePaymentForm(): ?int
-    {
-        return $this->image_payment_form;
+        $this->image_payment_form = $image_payment_form;
     }
 
     /**
@@ -186,6 +184,14 @@ final class Icon extends Base
     public function setName(?string $name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getImagePaymentForm(): ?int
+    {
+        return $this->image_payment_form;
     }
 
     /**
@@ -266,10 +272,10 @@ final class Icon extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'payment.icon';
     }
 }

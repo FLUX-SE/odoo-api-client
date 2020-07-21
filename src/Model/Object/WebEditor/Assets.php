@@ -14,5 +14,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Assets extends Base
 {
-    public const ODOO_MODEL_NAME = 'web_editor.assets';
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'web_editor.assets';
+    }
 }

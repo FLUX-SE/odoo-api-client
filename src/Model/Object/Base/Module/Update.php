@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Update extends Base
 {
-    public const ODOO_MODEL_NAME = 'base.module.update';
-
     /**
      * Number of modules updated
      * Searchable : yes
@@ -200,5 +198,13 @@ final class Update extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'base.module.update';
     }
 }

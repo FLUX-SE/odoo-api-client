@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Bus extends Base
 {
-    public const ODOO_MODEL_NAME = 'bus.bus';
-
     /**
      * Channel
      * Searchable : yes
@@ -174,5 +172,13 @@ final class Bus extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'bus.bus';
     }
 }

@@ -16,8 +16,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class MailServer extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.mail_server';
-
     /**
      * Description
      * Searchable : yes
@@ -175,7 +173,7 @@ final class MailServer extends Base
      *            -> none (None)
      *            -> starttls (TLS (STARTTLS))
      *            -> ssl (SSL/TLS)
-     *
+     *       
      */
     public function __construct(string $name, string $smtp_host, int $smtp_port, string $smtp_encryption)
     {
@@ -186,11 +184,19 @@ final class MailServer extends Base
     }
 
     /**
-     * @param bool|null $smtp_debug
+     * @return int|null
      */
-    public function setSmtpDebug(?bool $smtp_debug): void
+    public function getSequence(): ?int
     {
-        $this->smtp_debug = $smtp_debug;
+        return $this->sequence;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -274,19 +280,11 @@ final class MailServer extends Base
     }
 
     /**
-     * @return int|null
+     * @param bool|null $smtp_debug
      */
-    public function getSequence(): ?int
+    public function setSmtpDebug(?bool $smtp_debug): void
     {
-        return $this->sequence;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isSmtpDebug(): ?bool
-    {
-        return $this->smtp_debug;
+        $this->smtp_debug = $smtp_debug;
     }
 
     /**
@@ -295,6 +293,14 @@ final class MailServer extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isSmtpDebug(): ?bool
+    {
+        return $this->smtp_debug;
     }
 
     /**
@@ -386,10 +392,10 @@ final class MailServer extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'ir.mail_server';
     }
 }

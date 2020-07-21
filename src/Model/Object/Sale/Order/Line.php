@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Line extends Base
 {
-    public const ODOO_MODEL_NAME = 'sale.order.line';
-
     /**
      * Order Reference
      * Searchable : yes
@@ -743,11 +741,19 @@ final class Line extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @param OdooRelation[]|null $sale_order_option_ids
      */
-    public function getSaleOrderOptionIds(): ?array
+    public function setSaleOrderOptionIds(?array $sale_order_option_ids): void
     {
-        return $this->sale_order_option_ids;
+        $this->sale_order_option_ids = $sale_order_option_ids;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -852,19 +858,11 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $sale_order_option_ids
+     * @return OdooRelation[]|null
      */
-    public function setSaleOrderOptionIds(?array $sale_order_option_ids): void
+    public function getSaleOrderOptionIds(): ?array
     {
-        $this->sale_order_option_ids = $sale_order_option_ids;
-    }
-
-    /**
-     * @param string|null $display_type
-     */
-    public function setDisplayType(?string $display_type): void
-    {
-        $this->display_type = $display_type;
+        return $this->sale_order_option_ids;
     }
 
     /**
@@ -879,6 +877,14 @@ final class Line extends Base
         }
 
         return in_array($item, $this->analytic_line_ids);
+    }
+
+    /**
+     * @param string|null $display_type
+     */
+    public function setDisplayType(?string $display_type): void
+    {
+        $this->display_type = $display_type;
     }
 
     /**
@@ -1526,10 +1532,10 @@ final class Line extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'sale.order.line';
     }
 }

@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Line extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.financial.html.report.line';
-
     /**
      * Section Name
      * Searchable : yes
@@ -259,7 +257,7 @@ final class Line extends Base
      *            -> float (Float)
      *            -> percents (Percents)
      *            -> no_unit (No Unit)
-     *
+     *       
      * @param int $level Level
      *        Searchable : yes
      *        Sortable : yes
@@ -271,11 +269,11 @@ final class Line extends Base
     }
 
     /**
-     * @param bool|null $hide_if_zero
+     * @return bool|null
      */
-    public function setHideIfZero(?bool $hide_if_zero): void
+    public function isHideIfEmpty(): ?bool
     {
-        $this->hide_if_zero = $hide_if_zero;
+        return $this->hide_if_empty;
     }
 
     /**
@@ -351,19 +349,11 @@ final class Line extends Base
     }
 
     /**
-     * @return bool|null
+     * @param bool|null $hide_if_zero
      */
-    public function isHideIfEmpty(): ?bool
+    public function setHideIfZero(?bool $hide_if_zero): void
     {
-        return $this->hide_if_empty;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isPrintOnNewPage(): ?bool
-    {
-        return $this->print_on_new_page;
+        $this->hide_if_zero = $hide_if_zero;
     }
 
     /**
@@ -372,6 +362,14 @@ final class Line extends Base
     public function setHideIfEmpty(?bool $hide_if_empty): void
     {
         $this->hide_if_empty = $hide_if_empty;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isPrintOnNewPage(): ?bool
+    {
+        return $this->print_on_new_page;
     }
 
     /**
@@ -444,6 +442,14 @@ final class Line extends Base
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -676,10 +682,10 @@ final class Line extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.financial.html.report.line';
     }
 }

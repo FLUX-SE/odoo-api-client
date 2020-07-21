@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Line extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.payment.term.line';
-
     /**
      * Type
      * Select here the kind of valuation related to this payment terms line.
@@ -150,7 +148,7 @@ final class Line extends Base
      *            -> balance (Balance)
      *            -> percent (Percent)
      *            -> fixed (Fixed Amount)
-     *
+     *       
      * @param int $days Number of Days
      *        Searchable : yes
      *        Sortable : yes
@@ -161,7 +159,7 @@ final class Line extends Base
      *            -> day_after_invoice_date (days after the invoice date)
      *            -> day_following_month (of the following month)
      *            -> day_current_month (of the current month)
-     *
+     *       
      * @param OdooRelation $payment_id Payment Terms
      *        Searchable : yes
      *        Sortable : yes
@@ -175,11 +173,19 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation $payment_id
+     * @return int|null
      */
-    public function setPaymentId(OdooRelation $payment_id): void
+    public function getSequence(): ?int
     {
-        $this->payment_id = $payment_id;
+        return $this->sequence;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -247,19 +253,11 @@ final class Line extends Base
     }
 
     /**
-     * @return int|null
+     * @param OdooRelation $payment_id
      */
-    public function getSequence(): ?int
+    public function setPaymentId(OdooRelation $payment_id): void
     {
-        return $this->sequence;
-    }
-
-    /**
-     * @return OdooRelation
-     */
-    public function getPaymentId(): OdooRelation
-    {
-        return $this->payment_id;
+        $this->payment_id = $payment_id;
     }
 
     /**
@@ -268,6 +266,14 @@ final class Line extends Base
     public function getValue(): string
     {
         return $this->value;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getPaymentId(): OdooRelation
+    {
+        return $this->payment_id;
     }
 
     /**
@@ -343,10 +349,10 @@ final class Line extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.payment.term.line';
     }
 }

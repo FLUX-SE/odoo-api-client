@@ -21,5 +21,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Html extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.qweb.field.html';
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'ir.qweb.field.html';
+    }
 }

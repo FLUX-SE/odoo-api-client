@@ -20,8 +20,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Paperformat extends Base
 {
-    public const ODOO_MODEL_NAME = 'report.paperformat';
-
     /**
      * Name
      * Searchable : yes
@@ -429,6 +427,14 @@ final class Paperformat extends Base
     }
 
     /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
+    }
+
+    /**
      * @param int|null $header_spacing
      */
     public function setHeaderSpacing(?int $header_spacing): void
@@ -613,10 +619,10 @@ final class Paperformat extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'report.paperformat';
     }
 }

@@ -14,5 +14,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Converter extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.fields.converter';
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'ir.fields.converter';
+    }
 }

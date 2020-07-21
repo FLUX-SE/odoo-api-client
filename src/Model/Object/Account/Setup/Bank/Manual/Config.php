@@ -20,8 +20,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Config extends Bank
 {
-    public const ODOO_MODEL_NAME = 'account.setup.bank.manual.config';
-
     /**
      * Res Partner Bank
      * Searchable : yes
@@ -206,5 +204,13 @@ final class Config extends Bank
     public function setRelatedAccType(?string $related_acc_type): void
     {
         $this->related_acc_type = $related_acc_type;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'account.setup.bank.manual.config';
     }
 }

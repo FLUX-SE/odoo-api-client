@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Value extends Base
 {
-    public const ODOO_MODEL_NAME = 'mail.tracking.value';
-
     /**
      * Changed Field
      * Searchable : yes
@@ -243,19 +241,11 @@ final class Value extends Base
     }
 
     /**
-     * @return OdooRelation
+     * @param OdooRelation $mail_message_id
      */
-    public function getMailMessageId(): OdooRelation
+    public function setMailMessageId(OdooRelation $mail_message_id): void
     {
-        return $this->mail_message_id;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getNewValueMonetary(): ?float
-    {
-        return $this->new_value_monetary;
+        $this->mail_message_id = $mail_message_id;
     }
 
     /**
@@ -315,19 +305,11 @@ final class Value extends Base
     }
 
     /**
-     * @param OdooRelation $mail_message_id
+     * @return OdooRelation
      */
-    public function setMailMessageId(OdooRelation $mail_message_id): void
+    public function getMailMessageId(): OdooRelation
     {
-        $this->mail_message_id = $mail_message_id;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getNewValueFloat(): ?float
-    {
-        return $this->new_value_float;
+        return $this->mail_message_id;
     }
 
     /**
@@ -336,6 +318,14 @@ final class Value extends Base
     public function getTrackingSequence(): ?int
     {
         return $this->tracking_sequence;
+    }
+
+    /**
+     * @param float|null $new_value_float
+     */
+    public function setNewValueFloat(?float $new_value_float): void
+    {
+        $this->new_value_float = $new_value_float;
     }
 
     /**
@@ -403,19 +393,27 @@ final class Value extends Base
     }
 
     /**
-     * @param float|null $new_value_float
+     * @param DateTimeInterface|null $write_date
      */
-    public function setNewValueFloat(?float $new_value_float): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->new_value_float = $new_value_float;
+        $this->write_date = $write_date;
     }
 
     /**
-     * @param int|null $new_value_integer
+     * @return float|null
      */
-    public function setNewValueInteger(?int $new_value_integer): void
+    public function getNewValueMonetary(): ?float
     {
-        $this->new_value_integer = $new_value_integer;
+        return $this->new_value_monetary;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getNewValueFloat(): ?float
+    {
+        return $this->new_value_float;
     }
 
     /**
@@ -427,11 +425,11 @@ final class Value extends Base
     }
 
     /**
-     * @param int|null $old_value_integer
+     * @return float|null
      */
-    public function setOldValueInteger(?int $old_value_integer): void
+    public function getOldValueFloat(): ?float
     {
-        $this->old_value_integer = $old_value_integer;
+        return $this->old_value_float;
     }
 
     /**
@@ -499,19 +497,11 @@ final class Value extends Base
     }
 
     /**
-     * @return float|null
+     * @param int|null $old_value_integer
      */
-    public function getOldValueFloat(): ?float
+    public function setOldValueInteger(?int $old_value_integer): void
     {
-        return $this->old_value_float;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getNewValueInteger(): ?int
-    {
-        return $this->new_value_integer;
+        $this->old_value_integer = $old_value_integer;
     }
 
     /**
@@ -520,6 +510,14 @@ final class Value extends Base
     public function setOldValueFloat(?float $old_value_float): void
     {
         $this->old_value_float = $old_value_float;
+    }
+
+    /**
+     * @param int|null $new_value_integer
+     */
+    public function setNewValueInteger(?int $new_value_integer): void
+    {
+        $this->new_value_integer = $new_value_integer;
     }
 
     /**
@@ -587,10 +585,18 @@ final class Value extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return int|null
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function getNewValueInteger(): ?int
     {
-        $this->write_date = $write_date;
+        return $this->new_value_integer;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'mail.tracking.value';
     }
 }

@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Pricelist extends Base
 {
-    public const ODOO_MODEL_NAME = 'product.pricelist';
-
     /**
      * Pricelist Name
      * Searchable : yes
@@ -154,11 +152,19 @@ final class Pricelist extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @param OdooRelation[]|null $country_group_ids
      */
-    public function getCountryGroupIds(): ?array
+    public function setCountryGroupIds(?array $country_group_ids): void
     {
-        return $this->country_group_ids;
+        $this->country_group_ids = $country_group_ids;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -279,19 +285,11 @@ final class Pricelist extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $country_group_ids
+     * @return OdooRelation[]|null
      */
-    public function setCountryGroupIds(?array $country_group_ids): void
+    public function getCountryGroupIds(): ?array
     {
-        $this->country_group_ids = $country_group_ids;
-    }
-
-    /**
-     * @param int|null $sequence
-     */
-    public function setSequence(?int $sequence): void
-    {
-        $this->sequence = $sequence;
+        return $this->country_group_ids;
     }
 
     /**
@@ -300,6 +298,14 @@ final class Pricelist extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @param int|null $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
     }
 
     /**
@@ -428,10 +434,10 @@ final class Pricelist extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'product.pricelist';
     }
 }

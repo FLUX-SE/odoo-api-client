@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Moderation extends Base
 {
-    public const ODOO_MODEL_NAME = 'mail.moderation';
-
     /**
      * Email
      * Searchable : yes
@@ -103,7 +101,7 @@ final class Moderation extends Base
      *        Selection : (default value, usually null)
      *            -> allow (Always Allow)
      *            -> ban (Permanent Ban)
-     *
+     *       
      * @param OdooRelation $channel_id Channel
      *        Searchable : yes
      *        Sortable : yes
@@ -225,5 +223,13 @@ final class Moderation extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'mail.moderation';
     }
 }

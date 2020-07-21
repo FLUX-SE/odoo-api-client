@@ -14,5 +14,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Ledger extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.general.ledger';
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'account.general.ledger';
+    }
 }

@@ -17,8 +17,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Value extends Base
 {
-    public const ODOO_MODEL_NAME = 'product.template.attribute.value';
-
     /**
      * Active
      * Searchable : yes
@@ -190,25 +188,11 @@ final class Value extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $display_type
      */
-    public function getDisplayType(): ?string
+    public function setDisplayType(?string $display_type): void
     {
-        return $this->display_type;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasPtavProductVariantIds(OdooRelation $item): bool
-    {
-        if (null === $this->ptav_product_variant_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->ptav_product_variant_ids);
+        $this->display_type = $display_type;
     }
 
     /**
@@ -275,19 +259,11 @@ final class Value extends Base
     }
 
     /**
-     * @param string|null $display_type
+     * @return string|null
      */
-    public function setDisplayType(?string $display_type): void
+    public function getDisplayType(): ?string
     {
-        $this->display_type = $display_type;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getPtavProductVariantIds(): ?array
-    {
-        return $this->ptav_product_variant_ids;
+        return $this->display_type;
     }
 
     /**
@@ -296,6 +272,14 @@ final class Value extends Base
     public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation[]|null $ptav_product_variant_ids
+     */
+    public function setPtavProductVariantIds(?array $ptav_product_variant_ids): void
+    {
+        $this->ptav_product_variant_ids = $ptav_product_variant_ids;
     }
 
     /**
@@ -347,19 +331,33 @@ final class Value extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $ptav_product_variant_ids
+     * @param DateTimeInterface|null $write_date
      */
-    public function setPtavProductVariantIds(?array $ptav_product_variant_ids): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->ptav_product_variant_ids = $ptav_product_variant_ids;
+        $this->write_date = $write_date;
     }
 
     /**
-     * @param OdooRelation|null $attribute_id
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setAttributeId(?OdooRelation $attribute_id): void
+    public function hasPtavProductVariantIds(OdooRelation $item): bool
     {
-        $this->attribute_id = $attribute_id;
+        if (null === $this->ptav_product_variant_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->ptav_product_variant_ids);
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getPtavProductVariantIds(): ?array
+    {
+        return $this->ptav_product_variant_ids;
     }
 
     /**
@@ -443,11 +441,11 @@ final class Value extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $attribute_id
      */
-    public function getAttributeId(): ?OdooRelation
+    public function setAttributeId(?OdooRelation $attribute_id): void
     {
-        return $this->attribute_id;
+        $this->attribute_id = $attribute_id;
     }
 
     /**
@@ -528,10 +526,18 @@ final class Value extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return OdooRelation|null
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function getAttributeId(): ?OdooRelation
     {
-        $this->write_date = $write_date;
+        return $this->attribute_id;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'product.template.attribute.value';
     }
 }

@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Complex extends Base
 {
-    public const ODOO_MODEL_NAME = 'base_import.tests.models.complex';
-
     /**
      * F
      * Searchable : yes
@@ -130,6 +128,14 @@ final class Complex extends Base
     public function setDt(?DateTimeInterface $dt): void
     {
         $this->dt = $dt;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -269,10 +275,10 @@ final class Complex extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'base_import.tests.models.complex';
     }
 }

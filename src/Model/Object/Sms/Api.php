@@ -14,5 +14,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Api extends Base
 {
-    public const ODOO_MODEL_NAME = 'sms.api';
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'sms.api';
+    }
 }

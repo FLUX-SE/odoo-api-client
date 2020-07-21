@@ -16,8 +16,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Cashbox extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.bank.statement.cashbox';
-
     /**
      * Cashbox Lines
      * Searchable : yes
@@ -108,18 +106,19 @@ final class Cashbox extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return float|null
      */
-    public function removeEndBankStmtIds(OdooRelation $item): void
+    public function getTotal(): ?float
     {
-        if (null === $this->end_bank_stmt_ids) {
-            $this->end_bank_stmt_ids = [];
-        }
+        return $this->total;
+    }
 
-        if ($this->hasEndBankStmtIds($item)) {
-            $index = array_search($item, $this->end_bank_stmt_ids);
-            unset($this->end_bank_stmt_ids[$index]);
-        }
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -203,11 +202,26 @@ final class Cashbox extends Base
     }
 
     /**
-     * @return float|null
+     * @param OdooRelation $item
      */
-    public function getTotal(): ?float
+    public function removeEndBankStmtIds(OdooRelation $item): void
     {
-        return $this->total;
+        if (null === $this->end_bank_stmt_ids) {
+            $this->end_bank_stmt_ids = [];
+        }
+
+        if ($this->hasEndBankStmtIds($item)) {
+            $index = array_search($item, $this->end_bank_stmt_ids);
+            unset($this->end_bank_stmt_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation[]|null $cashbox_lines_ids
+     */
+    public function setCashboxLinesIds(?array $cashbox_lines_ids): void
+    {
+        $this->cashbox_lines_ids = $cashbox_lines_ids;
     }
 
     /**
@@ -224,14 +238,6 @@ final class Cashbox extends Base
         }
 
         $this->end_bank_stmt_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation[]|null $cashbox_lines_ids
-     */
-    public function setCashboxLinesIds(?array $cashbox_lines_ids): void
-    {
-        $this->cashbox_lines_ids = $cashbox_lines_ids;
     }
 
     /**
@@ -371,10 +377,10 @@ final class Cashbox extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.bank.statement.cashbox';
     }
 }

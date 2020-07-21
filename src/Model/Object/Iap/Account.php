@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Account extends Base
 {
-    public const ODOO_MODEL_NAME = 'iap.account';
-
     /**
      * Service Name
      * Searchable : yes
@@ -98,11 +96,19 @@ final class Account extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->create_uid;
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -146,11 +152,19 @@ final class Account extends Base
     }
 
     /**
-     * @param OdooRelation|null $create_uid
+     * @return OdooRelation|null
      */
-    public function setCreateUid(?OdooRelation $create_uid): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->create_uid = $create_uid;
+        return $this->create_uid;
+    }
+
+    /**
+     * @param string|null $service_name
+     */
+    public function setServiceName(?string $service_name): void
+    {
+        $this->service_name = $service_name;
     }
 
     /**
@@ -166,14 +180,6 @@ final class Account extends Base
             $index = array_search($item, $this->company_ids);
             unset($this->company_ids[$index]);
         }
-    }
-
-    /**
-     * @param string|null $service_name
-     */
-    public function setServiceName(?string $service_name): void
-    {
-        $this->service_name = $service_name;
     }
 
     /**
@@ -239,10 +245,10 @@ final class Account extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'iap.account';
     }
 }

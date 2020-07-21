@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Uom extends Base
 {
-    public const ODOO_MODEL_NAME = 'uom.uom';
-
     /**
      * Unit of Measure
      * Searchable : yes
@@ -186,7 +184,7 @@ final class Uom extends Base
      *            -> bigger (Bigger than the reference Unit of Measure)
      *            -> reference (Reference Unit of Measure for this category)
      *            -> smaller (Smaller than the reference Unit of Measure)
-     *
+     *       
      */
     public function __construct(
         string $name,
@@ -205,11 +203,19 @@ final class Uom extends Base
     }
 
     /**
-     * @return string
+     * @param string $uom_type
      */
-    public function getUomType(): string
+    public function setUomType(string $uom_type): void
     {
-        return $this->uom_type;
+        $this->uom_type = $uom_type;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -285,19 +291,11 @@ final class Uom extends Base
     }
 
     /**
-     * @param string $uom_type
+     * @return string
      */
-    public function setUomType(string $uom_type): void
+    public function getUomType(): string
     {
-        $this->uom_type = $uom_type;
-    }
-
-    /**
-     * @param bool|null $active
-     */
-    public function setActive(?bool $active): void
-    {
-        $this->active = $active;
+        return $this->uom_type;
     }
 
     /**
@@ -306,6 +304,14 @@ final class Uom extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @param bool|null $active
+     */
+    public function setActive(?bool $active): void
+    {
+        $this->active = $active;
     }
 
     /**
@@ -389,10 +395,10 @@ final class Uom extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'uom.uom';
     }
 }

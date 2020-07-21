@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Test extends Base
 {
-    public const ODOO_MODEL_NAME = 'web_editor.converter.test';
-
     /**
      * Char
      * Searchable : yes
@@ -182,6 +180,14 @@ final class Test extends Base
     public function getSelectionStr(): ?string
     {
         return $this->selection_str;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -401,10 +407,10 @@ final class Test extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'web_editor.converter.test';
     }
 }

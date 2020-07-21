@@ -14,5 +14,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Partner extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.aged.partner';
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'account.aged.partner';
+    }
 }

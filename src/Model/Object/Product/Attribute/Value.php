@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Value extends Base
 {
-    public const ODOO_MODEL_NAME = 'product.attribute.value';
-
     /**
      * Value
      * Searchable : yes
@@ -166,6 +164,14 @@ final class Value extends Base
     public function setIsCustom(?bool $is_custom): void
     {
         $this->is_custom = $is_custom;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -390,10 +396,10 @@ final class Value extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'product.attribute.value';
     }
 }

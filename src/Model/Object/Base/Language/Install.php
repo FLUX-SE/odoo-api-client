@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Install extends Base
 {
-    public const ODOO_MODEL_NAME = 'base.language.install';
-
     /**
      * Language
      * Searchable : yes
@@ -268,7 +266,7 @@ final class Install extends Base
      *            -> tr_TR (Turkish / Türkçe)
      *            -> uk_UA (Ukrainian / українська)
      *            -> vi_VN (Vietnamese / Tiếng Việt)
-     *
+     *       
      */
     public function __construct(string $lang)
     {
@@ -385,5 +383,13 @@ final class Install extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'base.language.install';
     }
 }

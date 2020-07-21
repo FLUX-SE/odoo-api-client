@@ -20,8 +20,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Model extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.model';
-
     /**
      * Model Description
      * Searchable : yes
@@ -453,6 +451,14 @@ final class Model extends Base
     }
 
     /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
+    }
+
+    /**
      * @param bool|null $transient
      */
     public function setTransient(?bool $transient): void
@@ -757,10 +763,10 @@ final class Model extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'ir.model';
     }
 }

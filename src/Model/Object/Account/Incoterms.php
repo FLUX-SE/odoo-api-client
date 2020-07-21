@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Incoterms extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.incoterms';
-
     /**
      * Name
      * Incoterms are series of sales terms. They are used to divide transaction costs and responsibilities between
@@ -220,5 +218,13 @@ final class Incoterms extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'account.incoterms';
     }
 }

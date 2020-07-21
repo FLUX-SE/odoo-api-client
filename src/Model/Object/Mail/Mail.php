@@ -15,8 +15,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Mail extends Message
 {
-    public const ODOO_MODEL_NAME = 'mail.mail';
-
     /**
      * Message
      * Searchable : yes
@@ -167,7 +165,7 @@ final class Mail extends Message
      *            -> user_notification (User Specific Notification)
      *            -> snailmail (Snailmail)
      *            -> sms (SMS)
-     *
+     *       
      */
     public function __construct(OdooRelation $mail_message_id, string $message_type)
     {
@@ -181,6 +179,14 @@ final class Mail extends Message
     public function setRecipientIds(?array $recipient_ids): void
     {
         $this->recipient_ids = $recipient_ids;
+    }
+
+    /**
+     * @param OdooRelation|null $fetchmail_server_id
+     */
+    public function setFetchmailServerId(?OdooRelation $fetchmail_server_id): void
+    {
+        $this->fetchmail_server_id = $fetchmail_server_id;
     }
 
     /**
@@ -421,10 +427,10 @@ final class Mail extends Message
     }
 
     /**
-     * @param OdooRelation|null $fetchmail_server_id
+     * @return string
      */
-    public function setFetchmailServerId(?OdooRelation $fetchmail_server_id): void
+    public static function getOdooModelName(): string
     {
-        $this->fetchmail_server_id = $fetchmail_server_id;
+        return 'mail.mail';
     }
 }

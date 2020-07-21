@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Data extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.model.data';
-
     /**
      * External Identifier
      * External Key/Identifier that can be used for data integration with third-party systems
@@ -165,11 +163,19 @@ final class Data extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $date_update
+     * @return DateTimeInterface|null
      */
-    public function setDateUpdate(?DateTimeInterface $date_update): void
+    public function getDateInit(): ?DateTimeInterface
     {
-        $this->date_update = $date_update;
+        return $this->date_init;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -253,19 +259,11 @@ final class Data extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
+     * @param DateTimeInterface|null $date_update
      */
-    public function getDateInit(): ?DateTimeInterface
+    public function setDateUpdate(?DateTimeInterface $date_update): void
     {
-        return $this->date_init;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getDateUpdate(): ?DateTimeInterface
-    {
-        return $this->date_update;
+        $this->date_update = $date_update;
     }
 
     /**
@@ -274,6 +272,14 @@ final class Data extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getDateUpdate(): ?DateTimeInterface
+    {
+        return $this->date_update;
     }
 
     /**
@@ -365,10 +371,10 @@ final class Data extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'ir.model.data';
     }
 }

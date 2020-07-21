@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class PriceList2 extends Base
 {
-    public const ODOO_MODEL_NAME = 'product.price_list';
-
     /**
      * PriceList
      * Searchable : yes
@@ -124,11 +122,19 @@ final class PriceList2 extends Base
     }
 
     /**
-     * @return int|null
+     * @param int|null $qty5
      */
-    public function getQty5(): ?int
+    public function setQty5(?int $qty5): void
     {
-        return $this->qty5;
+        $this->qty5 = $qty5;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -188,19 +194,11 @@ final class PriceList2 extends Base
     }
 
     /**
-     * @param int|null $qty5
+     * @return int|null
      */
-    public function setQty5(?int $qty5): void
+    public function getQty5(): ?int
     {
-        $this->qty5 = $qty5;
-    }
-
-    /**
-     * @param int|null $qty4
-     */
-    public function setQty4(?int $qty4): void
-    {
-        $this->qty4 = $qty4;
+        return $this->qty5;
     }
 
     /**
@@ -209,6 +207,14 @@ final class PriceList2 extends Base
     public function getPriceList(): OdooRelation
     {
         return $this->price_list;
+    }
+
+    /**
+     * @param int|null $qty4
+     */
+    public function setQty4(?int $qty4): void
+    {
+        $this->qty4 = $qty4;
     }
 
     /**
@@ -276,10 +282,10 @@ final class PriceList2 extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'product.price_list';
     }
 }

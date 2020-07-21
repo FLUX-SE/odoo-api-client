@@ -20,8 +20,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Menu extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.ui.menu';
-
     /**
      * Menu
      * Searchable : yes
@@ -170,19 +168,11 @@ final class Menu extends Base
     }
 
     /**
-     * @return int|null
+     * @param int|null $web_icon_data
      */
-    public function getWebIconData(): ?int
+    public function setWebIconData(?int $web_icon_data): void
     {
-        return $this->web_icon_data;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getCompleteName(): ?string
-    {
-        return $this->complete_name;
+        $this->web_icon_data = $web_icon_data;
     }
 
     /**
@@ -226,27 +216,11 @@ final class Menu extends Base
     }
 
     /**
-     * @param int|null $web_icon_data
+     * @return int|null
      */
-    public function setWebIconData(?int $web_icon_data): void
+    public function getWebIconData(): ?int
     {
-        $this->web_icon_data = $web_icon_data;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addGroupsId(OdooRelation $item): void
-    {
-        if ($this->hasGroupsId($item)) {
-            return;
-        }
-
-        if (null === $this->groups_id) {
-            $this->groups_id = [];
-        }
-
-        $this->groups_id[] = $item;
+        return $this->web_icon_data;
     }
 
     /**
@@ -255,6 +229,21 @@ final class Menu extends Base
     public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeGroupsId(OdooRelation $item): void
+    {
+        if (null === $this->groups_id) {
+            $this->groups_id = [];
+        }
+
+        if ($this->hasGroupsId($item)) {
+            $index = array_search($item, $this->groups_id);
+            unset($this->groups_id[$index]);
+        }
     }
 
     /**
@@ -306,32 +295,35 @@ final class Menu extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @param DateTimeInterface|null $write_date
      */
-    public function removeGroupsId(OdooRelation $item): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        if (null === $this->groups_id) {
-            $this->groups_id = [];
-        }
+        $this->write_date = $write_date;
+    }
 
-        if ($this->hasGroupsId($item)) {
-            $index = array_search($item, $this->groups_id);
-            unset($this->groups_id[$index]);
-        }
+    /**
+     * @return string|null
+     */
+    public function getCompleteName(): ?string
+    {
+        return $this->complete_name;
     }
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasGroupsId(OdooRelation $item): bool
+    public function addGroupsId(OdooRelation $item): void
     {
-        if (null === $this->groups_id) {
-            return false;
+        if ($this->hasGroupsId($item)) {
+            return;
         }
 
-        return in_array($item, $this->groups_id);
+        if (null === $this->groups_id) {
+            $this->groups_id = [];
+        }
+
+        $this->groups_id[] = $item;
     }
 
     /**
@@ -343,11 +335,17 @@ final class Menu extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $child_id
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setChildId(?array $child_id): void
+    public function hasChildId(OdooRelation $item): bool
     {
-        $this->child_id = $child_id;
+        if (null === $this->child_id) {
+            return false;
+        }
+
+        return in_array($item, $this->child_id);
     }
 
     /**
@@ -399,25 +397,11 @@ final class Menu extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param OdooRelation[]|null $child_id
      */
-    public function hasChildId(OdooRelation $item): bool
+    public function setChildId(?array $child_id): void
     {
-        if (null === $this->child_id) {
-            return false;
-        }
-
-        return in_array($item, $this->child_id);
-    }
-
-    /**
-     * @param OdooRelation[]|null $groups_id
-     */
-    public function setGroupsId(?array $groups_id): void
-    {
-        $this->groups_id = $groups_id;
+        $this->child_id = $child_id;
     }
 
     /**
@@ -434,6 +418,20 @@ final class Menu extends Base
         }
 
         $this->child_id[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasGroupsId(OdooRelation $item): bool
+    {
+        if (null === $this->groups_id) {
+            return false;
+        }
+
+        return in_array($item, $this->groups_id);
     }
 
     /**
@@ -492,10 +490,18 @@ final class Menu extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @param OdooRelation[]|null $groups_id
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function setGroupsId(?array $groups_id): void
     {
-        $this->write_date = $write_date;
+        $this->groups_id = $groups_id;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'ir.ui.menu';
     }
 }

@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Wizard extends Base
 {
-    public const ODOO_MODEL_NAME = 'tax.adjustments.wizard';
-
     /**
      * Justification
      * Searchable : yes
@@ -179,7 +177,7 @@ final class Wizard extends Base
      *        Selection : (default value, usually null)
      *            -> debit (Applied on debit journal item)
      *            -> credit (Applied on credit journal item)
-     *
+     *       
      * @param OdooRelation $tax_report_line_id Report Line
      *        The report line to make an adjustment for.
      *        Searchable : yes
@@ -206,11 +204,19 @@ final class Wizard extends Base
     }
 
     /**
-     * @return OdooRelation
+     * @param OdooRelation $tax_report_line_id
      */
-    public function getTaxReportLineId(): OdooRelation
+    public function setTaxReportLineId(OdooRelation $tax_report_line_id): void
     {
-        return $this->tax_report_line_id;
+        $this->tax_report_line_id = $tax_report_line_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -302,19 +308,11 @@ final class Wizard extends Base
     }
 
     /**
-     * @param OdooRelation $tax_report_line_id
+     * @return OdooRelation
      */
-    public function setTaxReportLineId(OdooRelation $tax_report_line_id): void
+    public function getTaxReportLineId(): OdooRelation
     {
-        $this->tax_report_line_id = $tax_report_line_id;
-    }
-
-    /**
-     * @param string $adjustment_type
-     */
-    public function setAdjustmentType(string $adjustment_type): void
-    {
-        $this->adjustment_type = $adjustment_type;
+        return $this->tax_report_line_id;
     }
 
     /**
@@ -323,6 +321,14 @@ final class Wizard extends Base
     public function getReason(): string
     {
         return $this->reason;
+    }
+
+    /**
+     * @param string $adjustment_type
+     */
+    public function setAdjustmentType(string $adjustment_type): void
+    {
+        $this->adjustment_type = $adjustment_type;
     }
 
     /**
@@ -422,10 +428,10 @@ final class Wizard extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'tax.adjustments.wizard';
     }
 }

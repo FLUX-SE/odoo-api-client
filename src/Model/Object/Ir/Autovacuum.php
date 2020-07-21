@@ -14,5 +14,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Autovacuum extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.autovacuum';
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'ir.autovacuum';
+    }
 }

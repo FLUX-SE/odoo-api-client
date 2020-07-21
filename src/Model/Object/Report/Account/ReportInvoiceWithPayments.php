@@ -14,5 +14,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class ReportInvoiceWithPayments extends Base
 {
-    public const ODOO_MODEL_NAME = 'report.account.report_invoice_with_payments';
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'report.account.report_invoice_with_payments';
+    }
 }

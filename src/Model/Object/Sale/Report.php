@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Report extends Base
 {
-    public const ODOO_MODEL_NAME = 'sale.report';
-
     /**
      * Order Reference
      * Searchable : yes
@@ -363,51 +361,75 @@ final class Report extends Base
     }
 
     /**
+     * @param OdooRelation|null $industry_id
+     */
+    public function setIndustryId(?OdooRelation $industry_id): void
+    {
+        $this->industry_id = $industry_id;
+    }
+
+    /**
+     * @param float|null $weight
+     */
+    public function setWeight(?float $weight): void
+    {
+        $this->weight = $weight;
+    }
+
+    /**
      * @return float|null
      */
-    public function getVolume(): ?float
+    public function getWeight(): ?float
     {
-        return $this->volume;
+        return $this->weight;
+    }
+
+    /**
+     * @param string|null $state
+     */
+    public function setState(?string $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param OdooRelation|null $commercial_partner_id
+     */
+    public function setCommercialPartnerId(?OdooRelation $commercial_partner_id): void
+    {
+        $this->commercial_partner_id = $commercial_partner_id;
     }
 
     /**
      * @return OdooRelation|null
      */
-    public function getAnalyticAccountId(): ?OdooRelation
+    public function getCommercialPartnerId(): ?OdooRelation
     {
-        return $this->analytic_account_id;
-    }
-
-    /**
-     * @param OdooRelation|null $analytic_account_id
-     */
-    public function setAnalyticAccountId(?OdooRelation $analytic_account_id): void
-    {
-        $this->analytic_account_id = $analytic_account_id;
+        return $this->commercial_partner_id;
     }
 
     /**
      * @return OdooRelation|null
      */
-    public function getTeamId(): ?OdooRelation
+    public function getIndustryId(): ?OdooRelation
     {
-        return $this->team_id;
+        return $this->industry_id;
     }
 
     /**
-     * @param OdooRelation|null $team_id
+     * @param float|null $volume
      */
-    public function setTeamId(?OdooRelation $team_id): void
+    public function setVolume(?float $volume): void
     {
-        $this->team_id = $team_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getCountryId(): ?OdooRelation
-    {
-        return $this->country_id;
+        $this->volume = $volume;
     }
 
     /**
@@ -421,73 +443,57 @@ final class Report extends Base
     /**
      * @return OdooRelation|null
      */
-    public function getIndustryId(): ?OdooRelation
+    public function getCountryId(): ?OdooRelation
     {
-        return $this->industry_id;
+        return $this->country_id;
     }
 
     /**
-     * @param OdooRelation|null $industry_id
+     * @param OdooRelation|null $team_id
      */
-    public function setIndustryId(?OdooRelation $industry_id): void
+    public function setTeamId(?OdooRelation $team_id): void
     {
-        $this->industry_id = $industry_id;
+        $this->team_id = $team_id;
     }
 
     /**
      * @return OdooRelation|null
      */
-    public function getCommercialPartnerId(): ?OdooRelation
+    public function getTeamId(): ?OdooRelation
     {
-        return $this->commercial_partner_id;
+        return $this->team_id;
     }
 
     /**
-     * @param OdooRelation|null $commercial_partner_id
+     * @param OdooRelation|null $analytic_account_id
      */
-    public function setCommercialPartnerId(?OdooRelation $commercial_partner_id): void
+    public function setAnalyticAccountId(?OdooRelation $analytic_account_id): void
     {
-        $this->commercial_partner_id = $commercial_partner_id;
+        $this->analytic_account_id = $analytic_account_id;
     }
 
     /**
-     * @return string|null
+     * @return OdooRelation|null
      */
-    public function getState(): ?string
+    public function getAnalyticAccountId(): ?OdooRelation
     {
-        return $this->state;
-    }
-
-    /**
-     * @param string|null $state
-     */
-    public function setState(?string $state): void
-    {
-        $this->state = $state;
+        return $this->analytic_account_id;
     }
 
     /**
      * @return float|null
      */
-    public function getWeight(): ?float
+    public function getVolume(): ?float
     {
-        return $this->weight;
+        return $this->volume;
     }
 
     /**
-     * @param float|null $weight
+     * @return float|null
      */
-    public function setWeight(?float $weight): void
+    public function getDiscount(): ?float
     {
-        $this->weight = $weight;
-    }
-
-    /**
-     * @param float|null $volume
-     */
-    public function setVolume(?float $volume): void
-    {
-        $this->volume = $volume;
+        return $this->discount;
     }
 
     /**
@@ -499,11 +505,19 @@ final class Report extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $source_id
      */
-    public function getSourceId(): ?OdooRelation
+    public function setSourceId(?OdooRelation $source_id): void
     {
-        return $this->source_id;
+        $this->source_id = $source_id;
+    }
+
+    /**
+     * @param string|null $invoice_status
+     */
+    public function setInvoiceStatus(?string $invoice_status): void
+    {
+        $this->invoice_status = $invoice_status;
     }
 
     /**
@@ -547,11 +561,19 @@ final class Report extends Base
     }
 
     /**
-     * @param OdooRelation|null $source_id
+     * @return OdooRelation|null
      */
-    public function setSourceId(?OdooRelation $source_id): void
+    public function getSourceId(): ?OdooRelation
     {
-        $this->source_id = $source_id;
+        return $this->source_id;
+    }
+
+    /**
+     * @param float|null $discount
+     */
+    public function setDiscount(?float $discount): void
+    {
+        $this->discount = $discount;
     }
 
     /**
@@ -560,14 +582,6 @@ final class Report extends Base
     public function setMediumId(?OdooRelation $medium_id): void
     {
         $this->medium_id = $medium_id;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getDiscount(): ?float
-    {
-        return $this->discount;
     }
 
     /**
@@ -608,14 +622,6 @@ final class Report extends Base
     public function getDiscountAmount(): ?float
     {
         return $this->discount_amount;
-    }
-
-    /**
-     * @param float|null $discount
-     */
-    public function setDiscount(?float $discount): void
-    {
-        $this->discount = $discount;
     }
 
     /**
@@ -907,10 +913,10 @@ final class Report extends Base
     }
 
     /**
-     * @param string|null $invoice_status
+     * @return string
      */
-    public function setInvoiceStatus(?string $invoice_status): void
+    public static function getOdooModelName(): string
     {
-        $this->invoice_status = $invoice_status;
+        return 'sale.report';
     }
 }

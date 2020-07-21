@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Partner extends Base
 {
-    public const ODOO_MODEL_NAME = 'mail.resend.partner';
-
     /**
      * Partner
      * Searchable : yes
@@ -124,11 +122,19 @@ final class Partner extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $message
      */
-    public function getMessage(): ?string
+    public function setMessage(?string $message): void
     {
-        return $this->message;
+        $this->message = $message;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -188,19 +194,11 @@ final class Partner extends Base
     }
 
     /**
-     * @param string|null $message
+     * @return string|null
      */
-    public function setMessage(?string $message): void
+    public function getMessage(): ?string
     {
-        $this->message = $message;
-    }
-
-    /**
-     * @param OdooRelation|null $resend_wizard_id
-     */
-    public function setResendWizardId(?OdooRelation $resend_wizard_id): void
-    {
-        $this->resend_wizard_id = $resend_wizard_id;
+        return $this->message;
     }
 
     /**
@@ -209,6 +207,14 @@ final class Partner extends Base
     public function getPartnerId(): OdooRelation
     {
         return $this->partner_id;
+    }
+
+    /**
+     * @param OdooRelation|null $resend_wizard_id
+     */
+    public function setResendWizardId(?OdooRelation $resend_wizard_id): void
+    {
+        $this->resend_wizard_id = $resend_wizard_id;
     }
 
     /**
@@ -276,10 +282,10 @@ final class Partner extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'mail.resend.partner';
     }
 }

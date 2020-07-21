@@ -20,8 +20,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Activity extends Base
 {
-    public const ODOO_MODEL_NAME = 'mail.activity';
-
     /**
      * Document Model
      * Searchable : yes
@@ -492,6 +490,14 @@ final class Activity extends Base
     }
 
     /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
+    }
+
+    /**
      * @param string|null $state
      */
     public function setState(?string $state): void
@@ -708,10 +714,10 @@ final class Activity extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'mail.activity';
     }
 }

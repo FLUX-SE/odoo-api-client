@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Sms extends Base
 {
-    public const ODOO_MODEL_NAME = 'sms.sms';
-
     /**
      * Number
      * Searchable : yes
@@ -139,7 +137,7 @@ final class Sms extends Base
      *            -> sent (Sent)
      *            -> error (Error)
      *            -> canceled (Canceled)
-     *
+     *       
      */
     public function __construct(string $state)
     {
@@ -147,11 +145,19 @@ final class Sms extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $error_code
      */
-    public function getErrorCode(): ?string
+    public function setErrorCode(?string $error_code): void
     {
-        return $this->error_code;
+        $this->error_code = $error_code;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -211,19 +217,11 @@ final class Sms extends Base
     }
 
     /**
-     * @param string|null $error_code
+     * @return string|null
      */
-    public function setErrorCode(?string $error_code): void
+    public function getErrorCode(): ?string
     {
-        $this->error_code = $error_code;
-    }
-
-    /**
-     * @param string $state
-     */
-    public function setState(string $state): void
-    {
-        $this->state = $state;
+        return $this->error_code;
     }
 
     /**
@@ -232,6 +230,14 @@ final class Sms extends Base
     public function getNumber(): ?string
     {
         return $this->number;
+    }
+
+    /**
+     * @param string $state
+     */
+    public function setState(string $state): void
+    {
+        $this->state = $state;
     }
 
     /**
@@ -299,10 +305,10 @@ final class Sms extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'sms.sms';
     }
 }

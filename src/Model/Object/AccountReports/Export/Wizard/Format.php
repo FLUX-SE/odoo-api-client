@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Format extends Base
 {
-    public const ODOO_MODEL_NAME = 'account_reports.export.wizard.format';
-
     /**
      * Name
      * Searchable : yes
@@ -214,5 +212,13 @@ final class Format extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'account_reports.export.wizard.format';
     }
 }

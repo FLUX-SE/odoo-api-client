@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Reconcile extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.full.reconcile';
-
     /**
      * Number
      * Searchable : yes
@@ -109,18 +107,19 @@ final class Reconcile extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return OdooRelation|null
      */
-    public function removeReconciledLineIds(OdooRelation $item): void
+    public function getExchangeMoveId(): ?OdooRelation
     {
-        if (null === $this->reconciled_line_ids) {
-            $this->reconciled_line_ids = [];
-        }
+        return $this->exchange_move_id;
+    }
 
-        if ($this->hasReconciledLineIds($item)) {
-            $index = array_search($item, $this->reconciled_line_ids);
-            unset($this->reconciled_line_ids[$index]);
-        }
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -188,11 +187,26 @@ final class Reconcile extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation $item
      */
-    public function getExchangeMoveId(): ?OdooRelation
+    public function removeReconciledLineIds(OdooRelation $item): void
     {
-        return $this->exchange_move_id;
+        if (null === $this->reconciled_line_ids) {
+            $this->reconciled_line_ids = [];
+        }
+
+        if ($this->hasReconciledLineIds($item)) {
+            $index = array_search($item, $this->reconciled_line_ids);
+            unset($this->reconciled_line_ids[$index]);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     /**
@@ -209,14 +223,6 @@ final class Reconcile extends Base
         }
 
         $this->reconciled_line_ids[] = $item;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
     }
 
     /**
@@ -319,10 +325,10 @@ final class Reconcile extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.full.reconcile';
     }
 }

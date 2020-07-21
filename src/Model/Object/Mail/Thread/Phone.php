@@ -29,8 +29,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Phone extends Base
 {
-    public const ODOO_MODEL_NAME = 'mail.thread.phone';
-
     /**
      * Sanitized Number
      * Field used to store sanitized phone number. Helps speeding up searches and comparisons.
@@ -203,19 +201,11 @@ final class Phone extends Base
     }
 
     /**
-     * @return int|null
+     * @param int|null $message_has_error_counter
      */
-    public function getMessageHasErrorCounter(): ?int
+    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
     {
-        return $this->message_has_error_counter;
-    }
-
-    /**
-     * @param bool|null $message_unread
-     */
-    public function setMessageUnread(?bool $message_unread): void
-    {
-        $this->message_unread = $message_unread;
+        $this->message_has_error_counter = $message_has_error_counter;
     }
 
     /**
@@ -283,26 +273,11 @@ final class Phone extends Base
     }
 
     /**
-     * @param int|null $message_has_error_counter
+     * @return int|null
      */
-    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
+    public function getMessageHasErrorCounter(): ?int
     {
-        $this->message_has_error_counter = $message_has_error_counter;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMessageIds(OdooRelation $item): void
-    {
-        if (null === $this->message_ids) {
-            $this->message_ids = [];
-        }
-
-        if ($this->hasMessageIds($item)) {
-            $index = array_search($item, $this->message_ids);
-            unset($this->message_ids[$index]);
-        }
+        return $this->message_has_error_counter;
     }
 
     /**
@@ -311,6 +286,14 @@ final class Phone extends Base
     public function getMessageAttachmentCount(): ?int
     {
         return $this->message_attachment_count;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isMessageUnread(): ?bool
+    {
+        return $this->message_unread;
     }
 
     /**
@@ -407,27 +390,34 @@ final class Phone extends Base
     }
 
     /**
-     * @return bool|null
+     * @param bool|null $message_has_sms_error
      */
-    public function isMessageUnread(): ?bool
+    public function setMessageHasSmsError(?bool $message_has_sms_error): void
     {
-        return $this->message_unread;
+        $this->message_has_sms_error = $message_has_sms_error;
+    }
+
+    /**
+     * @param bool|null $message_unread
+     */
+    public function setMessageUnread(?bool $message_unread): void
+    {
+        $this->message_unread = $message_unread;
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function addMessageIds(OdooRelation $item): void
+    public function removeMessageIds(OdooRelation $item): void
     {
-        if ($this->hasMessageIds($item)) {
-            return;
-        }
-
         if (null === $this->message_ids) {
             $this->message_ids = [];
         }
 
-        $this->message_ids[] = $item;
+        if ($this->hasMessageIds($item)) {
+            $index = array_search($item, $this->message_ids);
+            unset($this->message_ids[$index]);
+        }
     }
 
     /**
@@ -439,11 +429,11 @@ final class Phone extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @param OdooRelation[]|null $message_partner_ids
      */
-    public function getMessagePartnerIds(): ?array
+    public function setMessagePartnerIds(?array $message_partner_ids): void
     {
-        return $this->message_partner_ids;
+        $this->message_partner_ids = $message_partner_ids;
     }
 
     /**
@@ -540,25 +530,11 @@ final class Phone extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $message_partner_ids
+     * @return OdooRelation[]|null
      */
-    public function setMessagePartnerIds(?array $message_partner_ids): void
+    public function getMessagePartnerIds(): ?array
     {
-        $this->message_partner_ids = $message_partner_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasMessageIds(OdooRelation $item): bool
-    {
-        if (null === $this->message_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_ids);
+        return $this->message_partner_ids;
     }
 
     /**
@@ -573,6 +549,22 @@ final class Phone extends Base
         }
 
         return in_array($item, $this->message_partner_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMessageIds(OdooRelation $item): void
+    {
+        if ($this->hasMessageIds($item)) {
+            return;
+        }
+
+        if (null === $this->message_ids) {
+            $this->message_ids = [];
+        }
+
+        $this->message_ids[] = $item;
     }
 
     /**
@@ -684,10 +676,24 @@ final class Phone extends Base
     }
 
     /**
-     * @param bool|null $message_has_sms_error
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setMessageHasSmsError(?bool $message_has_sms_error): void
+    public function hasMessageIds(OdooRelation $item): bool
     {
-        $this->message_has_sms_error = $message_has_sms_error;
+        if (null === $this->message_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_ids);
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'mail.thread.phone';
     }
 }

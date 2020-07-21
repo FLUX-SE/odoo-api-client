@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Uninstall extends Base
 {
-    public const ODOO_MODEL_NAME = 'base.module.uninstall';
-
     /**
      * Show All
      * Searchable : yes
@@ -107,16 +105,26 @@ final class Uninstall extends Base
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasModelIds(OdooRelation $item): bool
+    public function addModelIds(OdooRelation $item): void
     {
-        if (null === $this->model_ids) {
-            return false;
+        if ($this->hasModelIds($item)) {
+            return;
         }
 
-        return in_array($item, $this->model_ids);
+        if (null === $this->model_ids) {
+            $this->model_ids = [];
+        }
+
+        $this->model_ids[] = $item;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -192,26 +200,16 @@ final class Uninstall extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function addModelIds(OdooRelation $item): void
+    public function hasModelIds(OdooRelation $item): bool
     {
-        if ($this->hasModelIds($item)) {
-            return;
-        }
-
         if (null === $this->model_ids) {
-            $this->model_ids = [];
+            return false;
         }
 
-        $this->model_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation[]|null $model_ids
-     */
-    public function setModelIds(?array $model_ids): void
-    {
-        $this->model_ids = $model_ids;
+        return in_array($item, $this->model_ids);
     }
 
     /**
@@ -220,6 +218,14 @@ final class Uninstall extends Base
     public function isShowAll(): ?bool
     {
         return $this->show_all;
+    }
+
+    /**
+     * @param OdooRelation[]|null $model_ids
+     */
+    public function setModelIds(?array $model_ids): void
+    {
+        $this->model_ids = $model_ids;
     }
 
     /**
@@ -316,10 +322,10 @@ final class Uninstall extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'base.module.uninstall';
     }
 }

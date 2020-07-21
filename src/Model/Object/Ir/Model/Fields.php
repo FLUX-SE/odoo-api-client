@@ -20,8 +20,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Fields extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.model.fields';
-
     /**
      * Field Name
      * Searchable : yes
@@ -444,14 +442,14 @@ final class Fields extends Base
      *            -> reference (reference)
      *            -> selection (selection)
      *            -> text (text)
-     *
+     *       
      * @param string $state Type
      *        Searchable : yes
      *        Sortable : yes
      *        Selection : (default value, usually null)
      *            -> manual (Custom Field)
      *            -> base (Base Field)
-     *
+     *       
      */
     public function __construct(
         string $name,
@@ -470,11 +468,25 @@ final class Fields extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $groups
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setGroups(?array $groups): void
+    public function hasGroups(OdooRelation $item): bool
     {
-        $this->groups = $groups;
+        if (null === $this->groups) {
+            return false;
+        }
+
+        return in_array($item, $this->groups);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRelationTable(): ?string
+    {
+        return $this->relation_table;
     }
 
     /**
@@ -541,17 +553,19 @@ final class Fields extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param OdooRelation[]|null $groups
      */
-    public function hasGroups(OdooRelation $item): bool
+    public function setGroups(?array $groups): void
     {
-        if (null === $this->groups) {
-            return false;
-        }
+        $this->groups = $groups;
+    }
 
-        return in_array($item, $this->groups);
+    /**
+     * @return string|null
+     */
+    public function getColumn1(): ?string
+    {
+        return $this->column1;
     }
 
     /**
@@ -560,14 +574,6 @@ final class Fields extends Base
     public function getGroups(): ?array
     {
         return $this->groups;
-    }
-
-    /**
-     * @param string|null $relation_table
-     */
-    public function setRelationTable(?string $relation_table): void
-    {
-        $this->relation_table = $relation_table;
     }
 
     /**
@@ -619,43 +625,43 @@ final class Fields extends Base
     }
 
     /**
-     * @param int|null $size
+     * @param string|null $relation_table
      */
-    public function setSize(?int $size): void
+    public function setRelationTable(?string $relation_table): void
     {
-        $this->size = $size;
+        $this->relation_table = $relation_table;
     }
 
     /**
-     * @return string|null
+     * @param string|null $column1
      */
-    public function getRelationTable(): ?string
+    public function setColumn1(?string $column1): void
     {
-        return $this->relation_table;
+        $this->column1 = $column1;
     }
 
     /**
-     * @return string|null
+     * @return int|null
      */
-    public function getColumn1(): ?string
+    public function getSize(): ?int
     {
-        return $this->column1;
+        return $this->size;
     }
 
     /**
-     * @param bool|null $translate
+     * @return OdooRelation|null
      */
-    public function setTranslate(?bool $translate): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->translate = $translate;
+        return $this->create_uid;
     }
 
     /**
-     * @param int|null $tracking
+     * @param DateTimeInterface|null $write_date
      */
-    public function setTracking(?int $tracking): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->tracking = $tracking;
+        $this->write_date = $write_date;
     }
 
     /**
@@ -707,11 +713,19 @@ final class Fields extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param int|null $tracking
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setTracking(?int $tracking): void
     {
-        return $this->create_uid;
+        $this->tracking = $tracking;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getColumn2(): ?string
+    {
+        return $this->column2;
     }
 
     /**
@@ -720,14 +734,6 @@ final class Fields extends Base
     public function getTracking(): ?int
     {
         return $this->tracking;
-    }
-
-    /**
-     * @param string|null $column1
-     */
-    public function setColumn1(?string $column1): void
-    {
-        $this->column1 = $column1;
     }
 
     /**
@@ -787,27 +793,19 @@ final class Fields extends Base
     }
 
     /**
-     * @return string|null
+     * @param int|null $size
      */
-    public function getColumn2(): ?string
+    public function setSize(?int $size): void
     {
-        return $this->column2;
+        $this->size = $size;
     }
 
     /**
-     * @return int|null
+     * @param bool|null $translate
      */
-    public function getSize(): ?int
+    public function setTranslate(?bool $translate): void
     {
-        return $this->size;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isTranslate(): ?bool
-    {
-        return $this->translate;
+        $this->translate = $translate;
     }
 
     /**
@@ -819,11 +817,19 @@ final class Fields extends Base
     }
 
     /**
-     * @param string|null $relation_field
+     * @return OdooRelation|null
      */
-    public function setRelationField(?string $relation_field): void
+    public function getRelationFieldId(): ?OdooRelation
     {
-        $this->relation_field = $relation_field;
+        return $this->relation_field_id;
+    }
+
+    /**
+     * @param string|null $help
+     */
+    public function setHelp(?string $help): void
+    {
+        $this->help = $help;
     }
 
     /**
@@ -875,11 +881,19 @@ final class Fields extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param string|null $relation_field
      */
-    public function getRelationFieldId(): ?OdooRelation
+    public function setRelationField(?string $relation_field): void
     {
-        return $this->relation_field_id;
+        $this->relation_field = $relation_field;
+    }
+
+    /**
+     * @param string $ttype
+     */
+    public function setTtype(string $ttype): void
+    {
+        $this->ttype = $ttype;
     }
 
     /**
@@ -888,14 +902,6 @@ final class Fields extends Base
     public function getRelationField(): ?string
     {
         return $this->relation_field;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTtype(): string
-    {
-        return $this->ttype;
     }
 
     /**
@@ -955,19 +961,35 @@ final class Fields extends Base
     }
 
     /**
-     * @param string|null $help
+     * @return string
      */
-    public function setHelp(?string $help): void
+    public function getTtype(): string
     {
-        $this->help = $help;
+        return $this->ttype;
     }
 
     /**
-     * @param string $ttype
+     * @return string|null
      */
-    public function setTtype(string $ttype): void
+    public function getSelection(): ?string
     {
-        $this->ttype = $ttype;
+        return $this->selection;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isTranslate(): ?bool
+    {
+        return $this->translate;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getRelatedFieldId(): ?OdooRelation
+    {
+        return $this->related_field_id;
     }
 
     /**
@@ -976,14 +998,6 @@ final class Fields extends Base
     public function setIndex(?bool $index): void
     {
         $this->index = $index;
-    }
-
-    /**
-     * @param string|null $related
-     */
-    public function setRelated(?string $related): void
-    {
-        $this->related = $related;
     }
 
     /**
@@ -1035,11 +1049,19 @@ final class Fields extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param string|null $related
      */
-    public function getRelatedFieldId(): ?OdooRelation
+    public function setRelated(?string $related): void
     {
-        return $this->related_field_id;
+        $this->related = $related;
+    }
+
+    /**
+     * @param string|null $selection
+     */
+    public function setSelection(?string $selection): void
+    {
+        $this->selection = $selection;
     }
 
     /**
@@ -1048,14 +1070,6 @@ final class Fields extends Base
     public function getRelated(): ?string
     {
         return $this->related;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSelection(): ?string
-    {
-        return $this->selection;
     }
 
     /**
@@ -1136,18 +1150,10 @@ final class Fields extends Base
     }
 
     /**
-     * @param string|null $selection
+     * @return string
      */
-    public function setSelection(?string $selection): void
+    public static function getOdooModelName(): string
     {
-        $this->selection = $selection;
-    }
-
-    /**
-     * @param DateTimeInterface|null $write_date
-     */
-    public function setWriteDate(?DateTimeInterface $write_date): void
-    {
-        $this->write_date = $write_date;
+        return 'ir.model.fields';
     }
 }

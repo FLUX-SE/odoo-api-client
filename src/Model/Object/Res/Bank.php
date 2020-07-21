@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Bank extends Base
 {
-    public const ODOO_MODEL_NAME = 'res.bank';
-
     /**
      * Name
      * Searchable : yes
@@ -173,11 +171,19 @@ final class Bank extends Base
     }
 
     /**
-     * @param string|null $email
+     * @return string|null
      */
-    public function setEmail(?string $email): void
+    public function getPhone(): ?string
     {
-        $this->email = $email;
+        return $this->phone;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -277,19 +283,11 @@ final class Bank extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $email
      */
-    public function getPhone(): ?string
+    public function setEmail(?string $email): void
     {
-        return $this->phone;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getEmail(): ?string
-    {
-        return $this->email;
+        $this->email = $email;
     }
 
     /**
@@ -298,6 +296,14 @@ final class Bank extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getEmail(): ?string
+    {
+        return $this->email;
     }
 
     /**
@@ -405,10 +411,10 @@ final class Bank extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'res.bank';
     }
 }

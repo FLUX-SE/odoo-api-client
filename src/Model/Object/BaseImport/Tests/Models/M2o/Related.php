@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Related extends Base
 {
-    public const ODOO_MODEL_NAME = 'base_import.tests.models.m2o.related';
-
     /**
      * Value
      * Searchable : yes
@@ -149,5 +147,13 @@ final class Related extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'base_import.tests.models.m2o.related';
     }
 }

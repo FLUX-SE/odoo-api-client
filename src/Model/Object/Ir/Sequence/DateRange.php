@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class DateRange extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.sequence.date_range';
-
     /**
      * From
      * Searchable : yes
@@ -138,11 +136,19 @@ final class DateRange extends Base
     }
 
     /**
-     * @param int|null $number_next_actual
+     * @return OdooRelation|null
      */
-    public function setNumberNextActual(?int $number_next_actual): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->number_next_actual = $number_next_actual;
+        return $this->create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -194,19 +200,11 @@ final class DateRange extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param int|null $number_next_actual
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setNumberNextActual(?int $number_next_actual): void
     {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getNumberNextActual(): ?int
-    {
-        return $this->number_next_actual;
+        $this->number_next_actual = $number_next_actual;
     }
 
     /**
@@ -215,6 +213,14 @@ final class DateRange extends Base
     public function getDateFrom(): DateTimeInterface
     {
         return $this->date_from;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getNumberNextActual(): ?int
+    {
+        return $this->number_next_actual;
     }
 
     /**
@@ -274,10 +280,10 @@ final class DateRange extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'ir.sequence.date_range';
     }
 }

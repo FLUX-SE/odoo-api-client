@@ -26,8 +26,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 class Alias extends Base
 {
-    public const ODOO_MODEL_NAME = 'mail.alias';
-
     /**
      * Alias Name
      * The name of the email alias, e.g. 'jobs' if you want to catch emails for <jobs@example.odoo.com>
@@ -182,14 +180,14 @@ class Alias extends Base
      *        - everyone: everyone can post
      *        - partners: only authenticated partners
      *        - followers: only followers of the related document or members of following channels
-     *
+     *       
      *        Searchable : yes
      *        Sortable : yes
      *        Selection : (default value, usually null)
      *            -> everyone (Everyone)
      *            -> partners (Authenticated Partners)
      *            -> followers (Followers only)
-     *
+     *       
      */
     public function __construct(OdooRelation $alias_model_id, string $alias_defaults, string $alias_contact)
     {
@@ -199,11 +197,19 @@ class Alias extends Base
     }
 
     /**
-     * @param OdooRelation|null $alias_parent_model_id
+     * @return int|null
      */
-    public function setAliasParentModelId(?OdooRelation $alias_parent_model_id): void
+    public function getAliasParentThreadId(): ?int
     {
-        $this->alias_parent_model_id = $alias_parent_model_id;
+        return $this->alias_parent_thread_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -287,19 +293,11 @@ class Alias extends Base
     }
 
     /**
-     * @return int|null
+     * @param OdooRelation|null $alias_parent_model_id
      */
-    public function getAliasParentThreadId(): ?int
+    public function setAliasParentModelId(?OdooRelation $alias_parent_model_id): void
     {
-        return $this->alias_parent_thread_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getAliasParentModelId(): ?OdooRelation
-    {
-        return $this->alias_parent_model_id;
+        $this->alias_parent_model_id = $alias_parent_model_id;
     }
 
     /**
@@ -308,6 +306,14 @@ class Alias extends Base
     public function getAliasName(): ?string
     {
         return $this->alias_name;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getAliasParentModelId(): ?OdooRelation
+    {
+        return $this->alias_parent_model_id;
     }
 
     /**
@@ -399,10 +405,10 @@ class Alias extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'mail.alias';
     }
 }

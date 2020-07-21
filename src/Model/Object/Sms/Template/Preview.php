@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Preview extends Base
 {
-    public const ODOO_MODEL_NAME = 'sms.template.preview';
-
     /**
      * Sms Template
      * Searchable : yes
@@ -215,19 +213,11 @@ final class Preview extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $copyvalue
      */
-    public function getCopyvalue(): ?string
+    public function setCopyvalue(?string $copyvalue): void
     {
-        return $this->copyvalue;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getSubObject(): ?OdooRelation
-    {
-        return $this->sub_object;
+        $this->copyvalue = $copyvalue;
     }
 
     /**
@@ -271,19 +261,11 @@ final class Preview extends Base
     }
 
     /**
-     * @param string|null $copyvalue
+     * @return string|null
      */
-    public function setCopyvalue(?string $copyvalue): void
+    public function getCopyvalue(): ?string
     {
-        $this->copyvalue = $copyvalue;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getModelObjectField(): ?OdooRelation
-    {
-        return $this->model_object_field;
+        return $this->copyvalue;
     }
 
     /**
@@ -292,6 +274,14 @@ final class Preview extends Base
     public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $model_object_field
+     */
+    public function setModelObjectField(?OdooRelation $model_object_field): void
+    {
+        $this->model_object_field = $model_object_field;
     }
 
     /**
@@ -343,19 +333,27 @@ final class Preview extends Base
     }
 
     /**
-     * @param OdooRelation|null $model_object_field
+     * @param DateTimeInterface|null $write_date
      */
-    public function setModelObjectField(?OdooRelation $model_object_field): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->model_object_field = $model_object_field;
+        $this->write_date = $write_date;
     }
 
     /**
-     * @param OdooRelation|null $sidebar_action_id
+     * @return OdooRelation|null
      */
-    public function setSidebarActionId(?OdooRelation $sidebar_action_id): void
+    public function getSubObject(): ?OdooRelation
     {
-        $this->sidebar_action_id = $sidebar_action_id;
+        return $this->sub_object;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getModelObjectField(): ?OdooRelation
+    {
+        return $this->model_object_field;
     }
 
     /**
@@ -367,11 +365,11 @@ final class Preview extends Base
     }
 
     /**
-     * @param int|null $res_id
+     * @return mixed|null
      */
-    public function setResId(?int $res_id): void
+    public function getResourceRef()
     {
-        $this->res_id = $res_id;
+        return $this->resource_ref;
     }
 
     /**
@@ -423,19 +421,11 @@ final class Preview extends Base
     }
 
     /**
-     * @return mixed|null
+     * @param int|null $res_id
      */
-    public function getResourceRef()
+    public function setResId(?int $res_id): void
     {
-        return $this->resource_ref;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getSidebarActionId(): ?OdooRelation
-    {
-        return $this->sidebar_action_id;
+        $this->res_id = $res_id;
     }
 
     /**
@@ -444,6 +434,14 @@ final class Preview extends Base
     public function setResourceRef($resource_ref): void
     {
         $this->resource_ref = $resource_ref;
+    }
+
+    /**
+     * @param OdooRelation|null $sidebar_action_id
+     */
+    public function setSidebarActionId(?OdooRelation $sidebar_action_id): void
+    {
+        $this->sidebar_action_id = $sidebar_action_id;
     }
 
     /**
@@ -495,10 +493,18 @@ final class Preview extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return OdooRelation|null
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function getSidebarActionId(): ?OdooRelation
     {
-        $this->write_date = $write_date;
+        return $this->sidebar_action_id;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'sms.template.preview';
     }
 }

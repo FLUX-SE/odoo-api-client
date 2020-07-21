@@ -20,8 +20,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Template extends Base
 {
-    public const ODOO_MODEL_NAME = 'mail.template';
-
     /**
      * Name
      * Searchable : yes
@@ -324,19 +322,11 @@ final class Template extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $sub_model_object_field
      */
-    public function getSubModelObjectField(): ?OdooRelation
+    public function setSubModelObjectField(?OdooRelation $sub_model_object_field): void
     {
-        return $this->sub_model_object_field;
-    }
-
-    /**
-     * @param OdooRelation|null $ref_ir_act_window
-     */
-    public function setRefIrActWindow(?OdooRelation $ref_ir_act_window): void
-    {
-        $this->ref_ir_act_window = $ref_ir_act_window;
+        $this->sub_model_object_field = $sub_model_object_field;
     }
 
     /**
@@ -449,19 +439,11 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation|null $sub_model_object_field
+     * @return OdooRelation|null
      */
-    public function setSubModelObjectField(?OdooRelation $sub_model_object_field): void
+    public function getSubModelObjectField(): ?OdooRelation
     {
-        $this->sub_model_object_field = $sub_model_object_field;
-    }
-
-    /**
-     * @param OdooRelation|null $report_template
-     */
-    public function setReportTemplate(?OdooRelation $report_template): void
-    {
-        $this->report_template = $report_template;
+        return $this->sub_model_object_field;
     }
 
     /**
@@ -470,6 +452,14 @@ final class Template extends Base
     public function getNullValue(): ?string
     {
         return $this->null_value;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getRefIrActWindow(): ?OdooRelation
+    {
+        return $this->ref_ir_act_window;
     }
 
     /**
@@ -569,19 +559,27 @@ final class Template extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param DateTimeInterface|null $write_date
      */
-    public function getRefIrActWindow(): ?OdooRelation
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->ref_ir_act_window;
+        $this->write_date = $write_date;
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $ref_ir_act_window
      */
-    public function getReportTemplate(): ?OdooRelation
+    public function setRefIrActWindow(?OdooRelation $ref_ir_act_window): void
     {
-        return $this->report_template;
+        $this->ref_ir_act_window = $ref_ir_act_window;
+    }
+
+    /**
+     * @param OdooRelation|null $report_template
+     */
+    public function setReportTemplate(?OdooRelation $report_template): void
+    {
+        $this->report_template = $report_template;
     }
 
     /**
@@ -593,11 +591,11 @@ final class Template extends Base
     }
 
     /**
-     * @return bool|null
+     * @param bool|null $use_default_to
      */
-    public function isUseDefaultTo(): ?bool
+    public function setUseDefaultTo(?bool $use_default_to): void
     {
-        return $this->use_default_to;
+        $this->use_default_to = $use_default_to;
     }
 
     /**
@@ -697,19 +695,11 @@ final class Template extends Base
     }
 
     /**
-     * @param bool|null $use_default_to
+     * @return bool|null
      */
-    public function setUseDefaultTo(?bool $use_default_to): void
+    public function isUseDefaultTo(): ?bool
     {
-        $this->use_default_to = $use_default_to;
-    }
-
-    /**
-     * @param string|null $report_name
-     */
-    public function setReportName(?string $report_name): void
-    {
-        $this->report_name = $report_name;
+        return $this->use_default_to;
     }
 
     /**
@@ -718,6 +708,14 @@ final class Template extends Base
     public function getEmailTo(): ?string
     {
         return $this->email_to;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getReportTemplate(): ?OdooRelation
+    {
+        return $this->report_template;
     }
 
     /**
@@ -817,10 +815,18 @@ final class Template extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @param string|null $report_name
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function setReportName(?string $report_name): void
     {
-        $this->write_date = $write_date;
+        $this->report_name = $report_name;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'mail.template';
     }
 }

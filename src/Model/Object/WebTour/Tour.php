@@ -23,8 +23,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Tour extends Base
 {
-    public const ODOO_MODEL_NAME = 'web_tour.tour';
-
     /**
      * Tour name
      * Searchable : yes
@@ -83,5 +81,13 @@ final class Tour extends Base
     public function setUserId(?OdooRelation $user_id): void
     {
         $this->user_id = $user_id;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'web_tour.tour';
     }
 }

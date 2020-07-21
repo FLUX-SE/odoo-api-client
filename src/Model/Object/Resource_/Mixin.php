@@ -15,8 +15,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Mixin extends Base
 {
-    public const ODOO_MODEL_NAME = 'resource.mixin';
-
     /**
      * Resource
      * Searchable : yes
@@ -722,5 +720,13 @@ final class Mixin extends Base
     public function setTz(?string $tz): void
     {
         $this->tz = $tz;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'resource.mixin';
     }
 }

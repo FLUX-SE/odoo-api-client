@@ -16,8 +16,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Template extends Base
 {
-    public const ODOO_MODEL_NAME = 'sms.template';
-
     /**
      * Name
      * Searchable : yes
@@ -182,11 +180,19 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation|null $sub_object
+     * @return OdooRelation|null
      */
-    public function setSubObject(?OdooRelation $sub_object): void
+    public function getSubModelObjectField(): ?OdooRelation
     {
-        $this->sub_object = $sub_object;
+        return $this->sub_model_object_field;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -286,19 +292,11 @@ final class Template extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $sub_object
      */
-    public function getSubModelObjectField(): ?OdooRelation
+    public function setSubObject(?OdooRelation $sub_object): void
     {
-        return $this->sub_model_object_field;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getSubObject(): ?OdooRelation
-    {
-        return $this->sub_object;
+        $this->sub_object = $sub_object;
     }
 
     /**
@@ -307,6 +305,14 @@ final class Template extends Base
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getSubObject(): ?OdooRelation
+    {
+        return $this->sub_object;
     }
 
     /**
@@ -414,10 +420,10 @@ final class Template extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'sms.template';
     }
 }

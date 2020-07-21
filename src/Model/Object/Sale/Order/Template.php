@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Template extends Base
 {
-    public const ODOO_MODEL_NAME = 'sale.order.template';
-
     /**
      * Quotation Template
      * Searchable : yes
@@ -168,19 +166,11 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation|null $company_id
+     * @return OdooRelation|null
      */
-    public function setCompanyId(?OdooRelation $company_id): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->company_id = $company_id;
-    }
-
-    /**
-     * @param bool|null $require_payment
-     */
-    public function setRequirePayment(?bool $require_payment): void
-    {
-        $this->require_payment = $require_payment;
+        return $this->create_uid;
     }
 
     /**
@@ -224,19 +214,11 @@ final class Template extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $company_id
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setCompanyId(?OdooRelation $company_id): void
     {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param bool|null $require_signature
-     */
-    public function setRequireSignature(?bool $require_signature): void
-    {
-        $this->require_signature = $require_signature;
+        $this->company_id = $company_id;
     }
 
     /**
@@ -245,6 +227,14 @@ final class Template extends Base
     public function setCreateUid(?OdooRelation $create_uid): void
     {
         $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isRequirePayment(): ?bool
+    {
+        return $this->require_payment;
     }
 
     /**
@@ -288,19 +278,27 @@ final class Template extends Base
     }
 
     /**
-     * @return bool|null
+     * @param DateTimeInterface|null $write_date
      */
-    public function isRequirePayment(): ?bool
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->require_payment;
+        $this->write_date = $write_date;
     }
 
     /**
-     * @return bool|null
+     * @param bool|null $require_payment
      */
-    public function isRequireSignature(): ?bool
+    public function setRequirePayment(?bool $require_payment): void
     {
-        return $this->require_signature;
+        $this->require_payment = $require_payment;
+    }
+
+    /**
+     * @param bool|null $require_signature
+     */
+    public function setRequireSignature(?bool $require_signature): void
+    {
+        $this->require_signature = $require_signature;
     }
 
     /**
@@ -397,11 +395,11 @@ final class Template extends Base
     }
 
     /**
-     * @param int|null $number_of_days
+     * @return bool|null
      */
-    public function setNumberOfDays(?int $number_of_days): void
+    public function isRequireSignature(): ?bool
     {
-        $this->number_of_days = $number_of_days;
+        return $this->require_signature;
     }
 
     /**
@@ -474,10 +472,18 @@ final class Template extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @param int|null $number_of_days
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function setNumberOfDays(?int $number_of_days): void
     {
-        $this->write_date = $write_date;
+        $this->number_of_days = $number_of_days;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'sale.order.template';
     }
 }

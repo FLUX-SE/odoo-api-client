@@ -20,8 +20,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class View extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.ui.view';
-
     /**
      * View Name
      * Searchable : yes
@@ -93,7 +91,7 @@ final class View extends Base
     /**
      * Arch Filename
      * File from where the view originates.
-     *
+     *                                                                                                               
      * Useful to (hard) reset broken views or to read arch from file in dev-xml mode.
      * Searchable : yes
      * Sortable : yes
@@ -114,7 +112,7 @@ final class View extends Base
     /**
      * Previous View Architecture
      * This field will save the current `arch_db` before writing on it.
-     *
+     *                                                                                                               
      * Useful to (soft) reset a broken view.
      * Searchable : yes
      * Sortable : yes
@@ -217,7 +215,7 @@ final class View extends Base
      * If this view is inherited,
      * * if True, the view always extends its parent
      * * if False, the view currently does not extend its parent but can be enabled
-     *
+     *                   
      * Searchable : yes
      * Sortable : yes
      *
@@ -296,7 +294,7 @@ final class View extends Base
      *        Sortable : yes
      * @param string $mode View inheritance mode
      *        Only applies if this view inherits from an other one (inherit_id is not False/Null).
-     *
+     *       
      *        * if extension (default), if this view is requested the closest primary view
      *        is looked up (via inherit_id), then all views inheriting from it with this
      *        view's model are applied
@@ -304,13 +302,13 @@ final class View extends Base
      *        different model than this one), then this view's inheritance specs
      *        (<xpath/>) are applied, and the result is used as if it were this view's
      *        actual arch.
-     *
+     *       
      *        Searchable : yes
      *        Sortable : yes
      *        Selection : (default value, usually null)
      *            -> primary (Base view)
      *            -> extension (Extension View)
-     *
+     *       
      */
     public function __construct(string $name, int $priority, string $mode)
     {
@@ -320,18 +318,11 @@ final class View extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return string
      */
-    public function removeModelIds(OdooRelation $item): void
+    public function getMode(): string
     {
-        if (null === $this->model_ids) {
-            $this->model_ids = [];
-        }
-
-        if ($this->hasModelIds($item)) {
-            $index = array_search($item, $this->model_ids);
-            unset($this->model_ids[$index]);
-        }
+        return $this->mode;
     }
 
     /**
@@ -458,19 +449,18 @@ final class View extends Base
     }
 
     /**
-     * @return string
+     * @param OdooRelation $item
      */
-    public function getMode(): string
+    public function removeModelIds(OdooRelation $item): void
     {
-        return $this->mode;
-    }
+        if (null === $this->model_ids) {
+            $this->model_ids = [];
+        }
 
-    /**
-     * @return OdooRelation|null
-     */
-    public function getModelDataId(): ?OdooRelation
-    {
-        return $this->model_data_id;
+        if ($this->hasModelIds($item)) {
+            $index = array_search($item, $this->model_ids);
+            unset($this->model_ids[$index]);
+        }
     }
 
     /**
@@ -479,6 +469,14 @@ final class View extends Base
     public function setMode(string $mode): void
     {
         $this->mode = $mode;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getModelDataId(): ?OdooRelation
+    {
+        return $this->model_data_id;
     }
 
     /**
@@ -567,6 +565,14 @@ final class View extends Base
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -831,10 +837,10 @@ final class View extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'ir.ui.view';
     }
 }

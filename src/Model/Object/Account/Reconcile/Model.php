@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Model extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.reconcile.model';
-
     /**
      * Name
      * Searchable : yes
@@ -592,7 +590,7 @@ final class Model extends Base
      *            -> writeoff_button (Manually create a write-off on clicked button.)
      *            -> writeoff_suggestion (Suggest counterpart values.)
      *            -> invoice_matching (Match existing invoices/bills.)
-     *
+     *       
      * @param string $match_nature Amount Nature
      *        The reconciliation model will only be applied to the selected transaction type:
      *                        * Amount Received: Only applied when receiving an amount.
@@ -604,7 +602,7 @@ final class Model extends Base
      *            -> amount_received (Amount Received)
      *            -> amount_paid (Amount Paid)
      *            -> both (Amount Paid/Received)
-     *
+     *       
      * @param string $amount_type Amount Type
      *        Searchable : yes
      *        Sortable : yes
@@ -612,7 +610,7 @@ final class Model extends Base
      *            -> fixed (Fixed)
      *            -> percentage (Percentage of balance)
      *            -> regex (From label)
-     *
+     *       
      * @param float $amount Write-off Amount
      *        Fixed amount will count as a debit if it is negative, as a credit if it is positive.
      *        Searchable : yes
@@ -624,7 +622,7 @@ final class Model extends Base
      *            -> fixed (Fixed)
      *            -> percentage (Percentage of balance)
      *            -> regex (From label)
-     *
+     *       
      * @param float $second_amount Second Write-off Amount
      *        Fixed amount will count as a debit if it is negative, as a credit if it is positive.
      *        Searchable : yes
@@ -658,6 +656,14 @@ final class Model extends Base
     public function setAnalyticAccountId(?OdooRelation $analytic_account_id): void
     {
         $this->analytic_account_id = $analytic_account_id;
+    }
+
+    /**
+     * @param string|null $second_label
+     */
+    public function setSecondLabel(?string $second_label): void
+    {
+        $this->second_label = $second_label;
     }
 
     /**
@@ -786,11 +792,11 @@ final class Model extends Base
     }
 
     /**
-     * @return string
+     * @param string $second_amount_type
      */
-    public function getSecondAmountType(): string
+    public function setSecondAmountType(string $second_amount_type): void
     {
-        return $this->second_amount_type;
+        $this->second_amount_type = $second_amount_type;
     }
 
     /**
@@ -919,19 +925,19 @@ final class Model extends Base
     }
 
     /**
-     * @param string|null $second_label
+     * @return string
      */
-    public function setSecondLabel(?string $second_label): void
+    public function getSecondAmountType(): string
     {
-        $this->second_label = $second_label;
+        return $this->second_amount_type;
     }
 
     /**
-     * @param string $second_amount_type
+     * @return bool|null
      */
-    public function setSecondAmountType(string $second_amount_type): void
+    public function isShowSecondForceTaxIncluded(): ?bool
     {
-        $this->second_amount_type = $second_amount_type;
+        return $this->show_second_force_tax_included;
     }
 
     /**
@@ -943,11 +949,19 @@ final class Model extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @param OdooRelation[]|null $second_analytic_tag_ids
      */
-    public function getSecondAnalyticTagIds(): ?array
+    public function setSecondAnalyticTagIds(?array $second_analytic_tag_ids): void
     {
-        return $this->second_analytic_tag_ids;
+        $this->second_analytic_tag_ids = $second_analytic_tag_ids;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -1068,11 +1082,19 @@ final class Model extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $second_analytic_tag_ids
+     * @return OdooRelation[]|null
      */
-    public function setSecondAnalyticTagIds(?array $second_analytic_tag_ids): void
+    public function getSecondAnalyticTagIds(): ?array
     {
-        $this->second_analytic_tag_ids = $second_analytic_tag_ids;
+        return $this->second_analytic_tag_ids;
+    }
+
+    /**
+     * @param bool|null $show_second_force_tax_included
+     */
+    public function setShowSecondForceTaxIncluded(?bool $show_second_force_tax_included): void
+    {
+        $this->show_second_force_tax_included = $show_second_force_tax_included;
     }
 
     /**
@@ -1081,14 +1103,6 @@ final class Model extends Base
     public function setSecondAnalyticAccountId(?OdooRelation $second_analytic_account_id): void
     {
         $this->second_analytic_account_id = $second_analytic_account_id;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isShowSecondForceTaxIncluded(): ?bool
-    {
-        return $this->show_second_force_tax_included;
     }
 
     /**
@@ -1206,14 +1220,6 @@ final class Model extends Base
     public function isForceSecondTaxIncluded(): ?bool
     {
         return $this->force_second_tax_included;
-    }
-
-    /**
-     * @param bool|null $show_second_force_tax_included
-     */
-    public function setShowSecondForceTaxIncluded(?bool $show_second_force_tax_included): void
-    {
-        $this->show_second_force_tax_included = $show_second_force_tax_included;
     }
 
     /**
@@ -1792,10 +1798,10 @@ final class Model extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.reconcile.model';
     }
 }

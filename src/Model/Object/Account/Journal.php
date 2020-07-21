@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 class Journal extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.journal';
-
     /**
      * Journal Name
      * Searchable : yes
@@ -803,7 +801,7 @@ class Journal extends Base
      *            -> cash (Cash)
      *            -> bank (Bank)
      *            -> general (Miscellaneous)
-     *
+     *       
      * @param OdooRelation $sequence_id Entry Sequence
      *        This field contains the information related to the numbering of the journal entries of this journal.
      *        Searchable : yes
@@ -817,7 +815,7 @@ class Journal extends Base
      *            -> none (Free)
      *            -> partner (Based on Customer)
      *            -> invoice (Based on Invoice)
-     *
+     *       
      * @param string $invoice_reference_model Communication Standard
      *        You can choose different models for each type of reference. The default one is the Odoo reference.
      *        Searchable : yes
@@ -825,7 +823,7 @@ class Journal extends Base
      *        Selection : (default value, usually null)
      *            -> odoo (Odoo)
      *            -> euro (European)
-     *
+     *       
      * @param OdooRelation $company_id Company
      *        Company related to this journal
      *        Searchable : yes
@@ -1428,6 +1426,14 @@ class Journal extends Base
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -2505,10 +2511,10 @@ class Journal extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.journal';
     }
 }

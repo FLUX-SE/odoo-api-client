@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Line extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.tax.report.line';
-
     /**
      * Name
      * Complete name for this report line, to be used in report.
@@ -198,19 +196,11 @@ final class Line extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $formula
      */
-    public function getFormula(): ?string
+    public function setFormula(?string $formula): void
     {
-        return $this->formula;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getParentPath(): ?string
-    {
-        return $this->parent_path;
+        $this->formula = $formula;
     }
 
     /**
@@ -254,19 +244,11 @@ final class Line extends Base
     }
 
     /**
-     * @param string|null $formula
+     * @return string|null
      */
-    public function setFormula(?string $formula): void
+    public function getFormula(): ?string
     {
-        $this->formula = $formula;
-    }
-
-    /**
-     * @return int
-     */
-    public function getSequence(): int
-    {
-        return $this->sequence;
+        return $this->formula;
     }
 
     /**
@@ -275,6 +257,14 @@ final class Line extends Base
     public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
+    }
+
+    /**
+     * @param int $sequence
+     */
+    public function setSequence(int $sequence): void
+    {
+        $this->sequence = $sequence;
     }
 
     /**
@@ -326,19 +316,27 @@ final class Line extends Base
     }
 
     /**
-     * @param int $sequence
+     * @param DateTimeInterface|null $write_date
      */
-    public function setSequence(int $sequence): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->sequence = $sequence;
+        $this->write_date = $write_date;
     }
 
     /**
-     * @param OdooRelation|null $parent_id
+     * @return string|null
      */
-    public function setParentId(?OdooRelation $parent_id): void
+    public function getParentPath(): ?string
     {
-        $this->parent_id = $parent_id;
+        return $this->parent_path;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSequence(): int
+    {
+        return $this->sequence;
     }
 
     /**
@@ -350,11 +348,11 @@ final class Line extends Base
     }
 
     /**
-     * @return OdooRelation
+     * @param OdooRelation $country_id
      */
-    public function getCountryId(): OdooRelation
+    public function setCountryId(OdooRelation $country_id): void
     {
-        return $this->country_id;
+        $this->country_id = $country_id;
     }
 
     /**
@@ -427,19 +425,11 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation $country_id
+     * @return OdooRelation
      */
-    public function setCountryId(OdooRelation $country_id): void
+    public function getCountryId(): OdooRelation
     {
-        $this->country_id = $country_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getParentId(): ?OdooRelation
-    {
-        return $this->parent_id;
+        return $this->country_id;
     }
 
     /**
@@ -448,6 +438,14 @@ final class Line extends Base
     public function getReportActionId(): ?OdooRelation
     {
         return $this->report_action_id;
+    }
+
+    /**
+     * @param OdooRelation|null $parent_id
+     */
+    public function setParentId(?OdooRelation $parent_id): void
+    {
+        $this->parent_id = $parent_id;
     }
 
     /**
@@ -520,10 +518,18 @@ final class Line extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return OdooRelation|null
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function getParentId(): ?OdooRelation
     {
-        $this->write_date = $write_date;
+        return $this->parent_id;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'account.tax.report.line';
     }
 }

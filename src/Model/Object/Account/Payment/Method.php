@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Method extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.payment.method';
-
     /**
      * Name
      * Searchable : yes
@@ -106,7 +104,7 @@ final class Method extends Base
      *        Selection : (default value, usually null)
      *            -> inbound (Inbound)
      *            -> outbound (Outbound)
-     *
+     *       
      */
     public function __construct(string $name, string $code, string $payment_type)
     {
@@ -225,5 +223,13 @@ final class Method extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'account.payment.method';
     }
 }

@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Reconcile extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.partial.reconcile';
-
     /**
      * Debit Move
      * Searchable : yes
@@ -163,11 +161,19 @@ final class Reconcile extends Base
     }
 
     /**
-     * @param OdooRelation|null $company_id
+     * @return OdooRelation|null
      */
-    public function setCompanyId(?OdooRelation $company_id): void
+    public function getFullReconcileId(): ?OdooRelation
     {
-        $this->company_id = $company_id;
+        return $this->full_reconcile_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -251,19 +257,11 @@ final class Reconcile extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $company_id
      */
-    public function getFullReconcileId(): ?OdooRelation
+    public function setCompanyId(?OdooRelation $company_id): void
     {
-        return $this->full_reconcile_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getCompanyId(): ?OdooRelation
-    {
-        return $this->company_id;
+        $this->company_id = $company_id;
     }
 
     /**
@@ -272,6 +270,14 @@ final class Reconcile extends Base
     public function getDebitMoveId(): OdooRelation
     {
         return $this->debit_move_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
     }
 
     /**
@@ -363,10 +369,10 @@ final class Reconcile extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.partial.reconcile';
     }
 }

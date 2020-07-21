@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Manager extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.report.manager';
-
     /**
      * Report Name
      * name of the model of the report
@@ -134,6 +132,14 @@ final class Manager extends Base
     public function setFinancialReportId(?OdooRelation $financial_report_id): void
     {
         $this->financial_report_id = $financial_report_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -326,10 +332,10 @@ final class Manager extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.report.manager';
     }
 }

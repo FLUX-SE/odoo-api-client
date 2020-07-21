@@ -13,5 +13,11 @@ namespace Flux\OdooApiClient\Model\Object;
  */
 final class Unknown extends Base
 {
-    public const ODOO_MODEL_NAME = '_unknown';
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return '_unknown';
+    }
 }

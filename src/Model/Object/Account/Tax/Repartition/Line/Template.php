@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Template extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.tax.repartition.line.template';
-
     /**
      * %
      * Factor to apply on the account move lines generated from this repartition line, in percents
@@ -158,74 +156,12 @@ final class Template extends Base
      *        Selection : (default value, usually null)
      *            -> base (Base)
      *            -> tax (of tax)
-     *
+     *       
      */
     public function __construct(float $factor_percent, string $repartition_type)
     {
         $this->factor_percent = $factor_percent;
         $this->repartition_type = $repartition_type;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasPlusReportLineIds(OdooRelation $item): bool
-    {
-        if (null === $this->plus_report_line_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->plus_report_line_ids);
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @param OdooRelation|null $create_uid
-     */
-    public function setCreateUid(?OdooRelation $create_uid): void
-    {
-        $this->create_uid = $create_uid;
     }
 
     /**
@@ -239,16 +175,46 @@ final class Template extends Base
     /**
      * @param OdooRelation $item
      */
-    public function removeMinusReportLineIds(OdooRelation $item): void
+    public function removePlusReportLineIds(OdooRelation $item): void
     {
-        if (null === $this->minus_report_line_ids) {
-            $this->minus_report_line_ids = [];
+        if (null === $this->plus_report_line_ids) {
+            $this->plus_report_line_ids = [];
         }
 
-        if ($this->hasMinusReportLineIds($item)) {
-            $index = array_search($item, $this->minus_report_line_ids);
-            unset($this->minus_report_line_ids[$index]);
+        if ($this->hasPlusReportLineIds($item)) {
+            $index = array_search($item, $this->plus_report_line_ids);
+            unset($this->plus_report_line_ids[$index]);
         }
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getMinusReportLineIds(): ?array
+    {
+        return $this->minus_report_line_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $minus_report_line_ids
+     */
+    public function setMinusReportLineIds(?array $minus_report_line_ids): void
+    {
+        $this->minus_report_line_ids = $minus_report_line_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMinusReportLineIds(OdooRelation $item): bool
+    {
+        if (null === $this->minus_report_line_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->minus_report_line_ids);
     }
 
     /**
@@ -269,47 +235,87 @@ final class Template extends Base
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasMinusReportLineIds(OdooRelation $item): bool
+    public function removeMinusReportLineIds(OdooRelation $item): void
     {
         if (null === $this->minus_report_line_ids) {
-            return false;
+            $this->minus_report_line_ids = [];
         }
 
-        return in_array($item, $this->minus_report_line_ids);
+        if ($this->hasMinusReportLineIds($item)) {
+            $index = array_search($item, $this->minus_report_line_ids);
+            unset($this->minus_report_line_ids[$index]);
+        }
     }
 
     /**
-     * @param OdooRelation[]|null $minus_report_line_ids
+     * @param OdooRelation|null $create_uid
      */
-    public function setMinusReportLineIds(?array $minus_report_line_ids): void
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        $this->minus_report_line_ids = $minus_report_line_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getMinusReportLineIds(): ?array
-    {
-        return $this->minus_report_line_ids;
+        $this->create_uid = $create_uid;
     }
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removePlusReportLineIds(OdooRelation $item): void
+    public function hasPlusReportLineIds(OdooRelation $item): bool
     {
         if (null === $this->plus_report_line_ids) {
-            $this->plus_report_line_ids = [];
+            return false;
         }
 
-        if ($this->hasPlusReportLineIds($item)) {
-            $index = array_search($item, $this->plus_report_line_ids);
-            unset($this->plus_report_line_ids[$index]);
-        }
+        return in_array($item, $this->plus_report_line_ids);
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -486,10 +492,10 @@ final class Template extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.tax.repartition.line.template';
     }
 }

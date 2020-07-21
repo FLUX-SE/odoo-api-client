@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Test extends Base
 {
-    public const ODOO_MODEL_NAME = 'base.automation.lead.test';
-
     /**
      * Subject
      * Searchable : yes
@@ -179,6 +177,70 @@ final class Test extends Base
     }
 
     /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isPriority(): ?bool
+    {
+        return $this->priority;
+    }
+
+    /**
+     * @param bool|null $priority
+     */
+    public function setPriority(?bool $priority): void
+    {
+        $this->priority = $priority;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isDeadline(): ?bool
+    {
+        return $this->deadline;
+    }
+
+    /**
+     * @param bool|null $deadline
+     */
+    public function setDeadline(?bool $deadline): void
+    {
+        $this->deadline = $deadline;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsAssignedToAdmin(): ?bool
+    {
+        return $this->is_assigned_to_admin;
+    }
+
+    /**
+     * @param bool|null $is_assigned_to_admin
+     */
+    public function setIsAssignedToAdmin(?bool $is_assigned_to_admin): void
+    {
+        $this->is_assigned_to_admin = $is_assigned_to_admin;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
      * @param OdooRelation $item
      */
     public function addLineIds(OdooRelation $item): void
@@ -197,25 +259,9 @@ final class Test extends Base
     /**
      * @return DateTimeInterface|null
      */
-    public function getWriteDate(): ?DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
-        return $this->write_date;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
+        return $this->create_date;
     }
 
     /**
@@ -227,75 +273,35 @@ final class Test extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @param OdooRelation|null $create_uid
-     */
-    public function setCreateUid(?OdooRelation $create_uid): void
-    {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
      * @return OdooRelation|null
      */
-    public function getCreateUid(): ?OdooRelation
+    public function getWriteUid(): ?OdooRelation
     {
-        return $this->create_uid;
+        return $this->write_uid;
     }
 
     /**
-     * @param bool|null $is_assigned_to_admin
+     * @param OdooRelation|null $write_uid
      */
-    public function setIsAssignedToAdmin(?bool $is_assigned_to_admin): void
+    public function setWriteUid(?OdooRelation $write_uid): void
     {
-        $this->is_assigned_to_admin = $is_assigned_to_admin;
+        $this->write_uid = $write_uid;
     }
 
     /**
-     * @return bool|null
+     * @return DateTimeInterface|null
      */
-    public function isIsAssignedToAdmin(): ?bool
+    public function getWriteDate(): ?DateTimeInterface
     {
-        return $this->is_assigned_to_admin;
+        return $this->write_date;
     }
 
     /**
-     * @param bool|null $deadline
+     * @param DateTimeInterface|null $write_date
      */
-    public function setDeadline(?bool $deadline): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->deadline = $deadline;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isDeadline(): ?bool
-    {
-        return $this->deadline;
-    }
-
-    /**
-     * @param bool|null $priority
-     */
-    public function setPriority(?bool $priority): void
-    {
-        $this->priority = $priority;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isPriority(): ?bool
-    {
-        return $this->priority;
+        $this->write_date = $write_date;
     }
 
     /**
@@ -456,10 +462,10 @@ final class Test extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'base.automation.lead.test';
     }
 }

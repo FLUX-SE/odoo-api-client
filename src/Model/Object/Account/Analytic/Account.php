@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Account extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.analytic.account';
-
     /**
      * Analytic Account
      * Searchable : yes
@@ -316,11 +314,19 @@ final class Account extends Base
     }
 
     /**
+     * @param int|null $message_unread_counter
+     */
+    public function setMessageUnreadCounter(?int $message_unread_counter): void
+    {
+        $this->message_unread_counter = $message_unread_counter;
+    }
+
+    /**
      * @return int|null
      */
-    public function getMessageUnreadCounter(): ?int
+    public function getMessageHasErrorCounter(): ?int
     {
-        return $this->message_unread_counter;
+        return $this->message_has_error_counter;
     }
 
     /**
@@ -372,11 +378,19 @@ final class Account extends Base
     }
 
     /**
-     * @param int|null $message_unread_counter
+     * @return int|null
      */
-    public function setMessageUnreadCounter(?int $message_unread_counter): void
+    public function getMessageUnreadCounter(): ?int
     {
-        $this->message_unread_counter = $message_unread_counter;
+        return $this->message_unread_counter;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getMessageAttachmentCount(): ?int
+    {
+        return $this->message_attachment_count;
     }
 
     /**
@@ -385,14 +399,6 @@ final class Account extends Base
     public function setMessageUnread(?bool $message_unread): void
     {
         $this->message_unread = $message_unread;
-    }
-
-    /**
-     * @param int|null $message_has_error_counter
-     */
-    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
-    {
-        $this->message_has_error_counter = $message_has_error_counter;
     }
 
     /**
@@ -465,56 +471,51 @@ final class Account extends Base
     }
 
     /**
+     * @param int|null $message_has_error_counter
+     */
+    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
+    {
+        $this->message_has_error_counter = $message_has_error_counter;
+    }
+
+    /**
+     * @param int|null $message_attachment_count
+     */
+    public function setMessageAttachmentCount(?int $message_attachment_count): void
+    {
+        $this->message_attachment_count = $message_attachment_count;
+    }
+
+    /**
      * @param OdooRelation $item
      */
-    public function removeMessageChannelIds(OdooRelation $item): void
+    public function addMessageChannelIds(OdooRelation $item): void
     {
+        if ($this->hasMessageChannelIds($item)) {
+            return;
+        }
+
         if (null === $this->message_channel_ids) {
             $this->message_channel_ids = [];
         }
 
-        if ($this->hasMessageChannelIds($item)) {
-            $index = array_search($item, $this->message_channel_ids);
-            unset($this->message_channel_ids[$index]);
-        }
+        $this->message_channel_ids[] = $item;
     }
 
     /**
-     * @return int|null
+     * @return OdooRelation|null
      */
-    public function getMessageHasErrorCounter(): ?int
+    public function getCreateUid(): ?OdooRelation
     {
-        return $this->message_has_error_counter;
+        return $this->create_uid;
     }
 
     /**
-     * @return int|null
+     * @param DateTimeInterface|null $write_date
      */
-    public function getMessageAttachmentCount(): ?int
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->message_attachment_count;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasMessageChannelIds(OdooRelation $item): bool
-    {
-        if (null === $this->message_channel_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_channel_ids);
-    }
-
-    /**
-     * @param bool|null $message_has_sms_error
-     */
-    public function setMessageHasSmsError(?bool $message_has_sms_error): void
-    {
-        $this->message_has_sms_error = $message_has_sms_error;
+        $this->write_date = $write_date;
     }
 
     /**
@@ -566,11 +567,19 @@ final class Account extends Base
     }
 
     /**
+     * @param bool|null $message_has_sms_error
+     */
+    public function setMessageHasSmsError(?bool $message_has_sms_error): void
+    {
+        $this->message_has_sms_error = $message_has_sms_error;
+    }
+
+    /**
      * @return OdooRelation|null
      */
-    public function getCreateUid(): ?OdooRelation
+    public function getMessageMainAttachmentId(): ?OdooRelation
     {
-        return $this->create_uid;
+        return $this->message_main_attachment_id;
     }
 
     /**
@@ -579,14 +588,6 @@ final class Account extends Base
     public function isMessageHasSmsError(): ?bool
     {
         return $this->message_has_sms_error;
-    }
-
-    /**
-     * @param int|null $message_attachment_count
-     */
-    public function setMessageAttachmentCount(?int $message_attachment_count): void
-    {
-        $this->message_attachment_count = $message_attachment_count;
     }
 
     /**
@@ -659,35 +660,32 @@ final class Account extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     */
-    public function getMessageMainAttachmentId(): ?OdooRelation
-    {
-        return $this->message_main_attachment_id;
-    }
-
-    /**
      * @param OdooRelation $item
      */
-    public function addMessageChannelIds(OdooRelation $item): void
+    public function removeMessageChannelIds(OdooRelation $item): void
     {
-        if ($this->hasMessageChannelIds($item)) {
-            return;
-        }
-
         if (null === $this->message_channel_ids) {
             $this->message_channel_ids = [];
         }
 
-        $this->message_channel_ids[] = $item;
+        if ($this->hasMessageChannelIds($item)) {
+            $index = array_search($item, $this->message_channel_ids);
+            unset($this->message_channel_ids[$index]);
+        }
     }
 
     /**
-     * @param OdooRelation[]|null $message_channel_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setMessageChannelIds(?array $message_channel_ids): void
+    public function hasMessageChannelIds(OdooRelation $item): bool
     {
-        $this->message_channel_ids = $message_channel_ids;
+        if (null === $this->message_channel_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_channel_ids);
     }
 
     /**
@@ -872,25 +870,35 @@ final class Account extends Base
     }
 
     /**
+     * @param OdooRelation[]|null $message_channel_ids
+     */
+    public function setMessageChannelIds(?array $message_channel_ids): void
+    {
+        $this->message_channel_ids = $message_channel_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMessageFollowerIds(OdooRelation $item): void
+    {
+        if ($this->hasMessageFollowerIds($item)) {
+            return;
+        }
+
+        if (null === $this->message_follower_ids) {
+            $this->message_follower_ids = [];
+        }
+
+        $this->message_follower_ids[] = $item;
+    }
+
+    /**
      * @return OdooRelation[]|null
      */
     public function getMessageChannelIds(): ?array
     {
         return $this->message_channel_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasMessageFollowerIds(OdooRelation $item): bool
-    {
-        if (null === $this->message_follower_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_follower_ids);
     }
 
     /**
@@ -971,26 +979,16 @@ final class Account extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function addMessageFollowerIds(OdooRelation $item): void
+    public function hasMessageFollowerIds(OdooRelation $item): bool
     {
-        if ($this->hasMessageFollowerIds($item)) {
-            return;
-        }
-
         if (null === $this->message_follower_ids) {
-            $this->message_follower_ids = [];
+            return false;
         }
 
-        $this->message_follower_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation[]|null $message_follower_ids
-     */
-    public function setMessageFollowerIds(?array $message_follower_ids): void
-    {
-        $this->message_follower_ids = $message_follower_ids;
+        return in_array($item, $this->message_follower_ids);
     }
 
     /**
@@ -999,6 +997,14 @@ final class Account extends Base
     public function setDebit(?float $debit): void
     {
         $this->debit = $debit;
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_follower_ids
+     */
+    public function setMessageFollowerIds(?array $message_follower_ids): void
+    {
+        $this->message_follower_ids = $message_follower_ids;
     }
 
     /**
@@ -1058,10 +1064,10 @@ final class Account extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.analytic.account';
     }
 }

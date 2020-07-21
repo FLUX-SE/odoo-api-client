@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Team extends Base
 {
-    public const ODOO_MODEL_NAME = 'crm.team';
-
     /**
      * Sales Team
      * Searchable : yes
@@ -648,18 +646,19 @@ final class Team extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return bool|null
      */
-    public function removeWebsiteMessageIds(OdooRelation $item): void
+    public function isMessageHasSmsError(): ?bool
     {
-        if (null === $this->website_message_ids) {
-            $this->website_message_ids = [];
-        }
+        return $this->message_has_sms_error;
+    }
 
-        if ($this->hasWebsiteMessageIds($item)) {
-            $index = array_search($item, $this->website_message_ids);
-            unset($this->website_message_ids[$index]);
-        }
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -727,11 +726,26 @@ final class Team extends Base
     }
 
     /**
-     * @return bool|null
+     * @param OdooRelation $item
      */
-    public function isMessageHasSmsError(): ?bool
+    public function removeWebsiteMessageIds(OdooRelation $item): void
     {
-        return $this->message_has_sms_error;
+        if (null === $this->website_message_ids) {
+            $this->website_message_ids = [];
+        }
+
+        if ($this->hasWebsiteMessageIds($item)) {
+            $index = array_search($item, $this->website_message_ids);
+            unset($this->website_message_ids[$index]);
+        }
+    }
+
+    /**
+     * @param bool|null $message_has_error
+     */
+    public function setMessageHasError(?bool $message_has_error): void
+    {
+        $this->message_has_error = $message_has_error;
     }
 
     /**
@@ -748,14 +762,6 @@ final class Team extends Base
         }
 
         $this->website_message_ids[] = $item;
-    }
-
-    /**
-     * @param bool|null $message_has_error
-     */
-    public function setMessageHasError(?bool $message_has_error): void
-    {
-        $this->message_has_error = $message_has_error;
     }
 
     /**
@@ -1285,10 +1291,10 @@ final class Team extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'crm.team';
     }
 }

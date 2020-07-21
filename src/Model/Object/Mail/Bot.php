@@ -14,5 +14,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Bot extends Base
 {
-    public const ODOO_MODEL_NAME = 'mail.bot';
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'mail.bot';
+    }
 }

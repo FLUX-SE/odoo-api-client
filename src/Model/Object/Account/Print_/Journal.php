@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Journal extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.print.journal';
-
     /**
      * Entries Sorted by
      * Searchable : yes
@@ -138,7 +136,7 @@ final class Journal extends Base
      *        Selection : (default value, usually null)
      *            -> date (Date)
      *            -> move_name (Journal Entry Number)
-     *
+     *       
      * @param OdooRelation[] $journal_ids Journals
      *        Searchable : yes
      *        Sortable : no
@@ -151,7 +149,7 @@ final class Journal extends Base
      *        Selection : (default value, usually null)
      *            -> posted (All Posted Entries)
      *            -> all (All Entries)
-     *
+     *       
      */
     public function __construct(
         string $sort_selection,
@@ -171,6 +169,14 @@ final class Journal extends Base
     public function getDateTo(): ?DateTimeInterface
     {
         return $this->date_to;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -367,10 +373,10 @@ final class Journal extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.print.journal';
     }
 }

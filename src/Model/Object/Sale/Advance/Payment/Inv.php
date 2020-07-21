@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Inv extends Base
 {
-    public const ODOO_MODEL_NAME = 'sale.advance.payment.inv';
-
     /**
      * Create Invoice
      * A standard invoice is issued with all the order lines ready for invoicing,         according to their
@@ -170,7 +168,7 @@ final class Inv extends Base
      *            -> delivered (Regular invoice)
      *            -> percentage (Down payment (percentage))
      *            -> fixed (Down payment (fixed amount))
-     *
+     *       
      */
     public function __construct(string $advance_payment_method)
     {
@@ -183,6 +181,14 @@ final class Inv extends Base
     public function getDepositAccountId(): ?OdooRelation
     {
         return $this->deposit_account_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -439,10 +445,10 @@ final class Inv extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'sale.advance.payment.inv';
     }
 }

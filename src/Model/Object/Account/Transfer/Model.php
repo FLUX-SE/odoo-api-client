@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Model extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.transfer.model';
-
     /**
      * Name
      * Searchable : yes
@@ -197,14 +195,14 @@ final class Model extends Base
      *            -> month (Monthly)
      *            -> quarter (Quarterly)
      *            -> year (Yearly)
-     *
+     *       
      * @param string $state State
      *        Searchable : yes
      *        Sortable : yes
      *        Selection : (default value, usually null)
      *            -> disabled (Disabled)
      *            -> in_progress (Running)
-     *
+     *       
      */
     public function __construct(
         string $name,
@@ -221,11 +219,11 @@ final class Model extends Base
     }
 
     /**
-     * @param float|null $total_percent
+     * @return string
      */
-    public function setTotalPercent(?float $total_percent): void
+    public function getState(): string
     {
-        $this->total_percent = $total_percent;
+        return $this->state;
     }
 
     /**
@@ -306,11 +304,19 @@ final class Model extends Base
     }
 
     /**
-     * @return string
+     * @param float|null $total_percent
      */
-    public function getState(): string
+    public function setTotalPercent(?float $total_percent): void
     {
-        return $this->state;
+        $this->total_percent = $total_percent;
+    }
+
+    /**
+     * @param string $state
+     */
+    public function setState(string $state): void
+    {
+        $this->state = $state;
     }
 
     /**
@@ -326,14 +332,6 @@ final class Model extends Base
             $index = array_search($item, $this->line_ids);
             unset($this->line_ids[$index]);
         }
-    }
-
-    /**
-     * @param string $state
-     */
-    public function setState(string $state): void
-    {
-        $this->state = $state;
     }
 
     /**
@@ -390,6 +388,14 @@ final class Model extends Base
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -604,10 +610,10 @@ final class Model extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.transfer.model';
     }
 }

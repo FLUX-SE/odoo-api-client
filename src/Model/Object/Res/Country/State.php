@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class State extends Base
 {
-    public const ODOO_MODEL_NAME = 'res.country.state';
-
     /**
      * Country
      * Searchable : yes
@@ -221,5 +219,13 @@ final class State extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'res.country.state';
     }
 }

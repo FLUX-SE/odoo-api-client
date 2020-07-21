@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Shortcode extends Base
 {
-    public const ODOO_MODEL_NAME = 'mail.shortcode';
-
     /**
      * Shortcut
      * The shortcut which must be replaced in the Chat Messages
@@ -114,11 +112,19 @@ final class Shortcode extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->create_uid;
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -162,19 +168,11 @@ final class Shortcode extends Base
     }
 
     /**
-     * @param OdooRelation|null $create_uid
+     * @return OdooRelation|null
      */
-    public function setCreateUid(?OdooRelation $create_uid): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $message_ids
-     */
-    public function setMessageIds(?OdooRelation $message_ids): void
-    {
-        $this->message_ids = $message_ids;
+        return $this->create_uid;
     }
 
     /**
@@ -183,6 +181,14 @@ final class Shortcode extends Base
     public function getSource(): string
     {
         return $this->source;
+    }
+
+    /**
+     * @param OdooRelation|null $message_ids
+     */
+    public function setMessageIds(?OdooRelation $message_ids): void
+    {
+        $this->message_ids = $message_ids;
     }
 
     /**
@@ -234,10 +240,10 @@ final class Shortcode extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'mail.shortcode';
     }
 }

@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Wizard extends Base
 {
-    public const ODOO_MODEL_NAME = 'payment.link.wizard';
-
     /**
      * Related Document Model
      * Searchable : yes
@@ -177,11 +175,19 @@ final class Wizard extends Base
     }
 
     /**
-     * @param string|null $link
+     * @return string|null
      */
-    public function setLink(?string $link): void
+    public function getDescription(): ?string
     {
-        $this->link = $link;
+        return $this->description;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -281,19 +287,11 @@ final class Wizard extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $link
      */
-    public function getDescription(): ?string
+    public function setLink(?string $link): void
     {
-        return $this->description;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getLink(): ?string
-    {
-        return $this->link;
+        $this->link = $link;
     }
 
     /**
@@ -302,6 +300,14 @@ final class Wizard extends Base
     public function getResModel(): string
     {
         return $this->res_model;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLink(): ?string
+    {
+        return $this->link;
     }
 
     /**
@@ -409,10 +415,10 @@ final class Wizard extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'payment.link.wizard';
     }
 }

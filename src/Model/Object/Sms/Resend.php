@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Resend extends Base
 {
-    public const ODOO_MODEL_NAME = 'sms.resend';
-
     /**
      * Message
      * Searchable : yes
@@ -111,6 +109,14 @@ final class Resend extends Base
     public function setHasInsufficientCredit(?bool $has_insufficient_credit): void
     {
         $this->has_insufficient_credit = $has_insufficient_credit;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -271,10 +277,10 @@ final class Resend extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'sms.resend';
     }
 }

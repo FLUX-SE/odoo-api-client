@@ -17,8 +17,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Mixin extends Alias
 {
-    public const ODOO_MODEL_NAME = 'mail.alias.mixin';
-
     /**
      * Alias
      * Searchable : yes
@@ -46,14 +44,14 @@ final class Mixin extends Alias
      *        - everyone: everyone can post
      *        - partners: only authenticated partners
      *        - followers: only followers of the related document or members of following channels
-     *
+     *       
      *        Searchable : yes
      *        Sortable : yes
      *        Selection : (default value, usually null)
      *            -> everyone (Everyone)
      *            -> partners (Authenticated Partners)
      *            -> followers (Followers only)
-     *
+     *       
      */
     public function __construct(
         OdooRelation $alias_id,
@@ -79,5 +77,13 @@ final class Mixin extends Alias
     public function setAliasId(OdooRelation $alias_id): void
     {
         $this->alias_id = $alias_id;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'mail.alias.mixin';
     }
 }

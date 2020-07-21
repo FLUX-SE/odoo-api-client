@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object;
 
 use DateTimeInterface;
+use Flux\OdooApiClient\Model\BaseInterface;
 
 /**
  * Odoo model : base
@@ -12,10 +13,8 @@ use DateTimeInterface;
  * Info :
  * The base model, which is implicitly inherited by all models.
  */
-class Base
+class Base implements BaseInterface
 {
-    public const ODOO_MODEL_NAME = 'base';
-
     /**
      * ID
      * Searchable : yes
@@ -89,5 +88,13 @@ class Base
     public function setLastUpdate(?DateTimeInterface $__last_update): void
     {
         $this->__last_update = $__last_update;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'base';
     }
 }

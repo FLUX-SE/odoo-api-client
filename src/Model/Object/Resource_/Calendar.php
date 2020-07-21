@@ -25,8 +25,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Calendar extends Base
 {
-    public const ODOO_MODEL_NAME = 'resource.calendar';
-
     /**
      * Name
      * Searchable : yes
@@ -1343,7 +1341,7 @@ final class Calendar extends Base
      *            -> Etc/UTC (Etc/UTC)
      *            -> Etc/Universal (Etc/Universal)
      *            -> Etc/Zulu (Etc/Zulu)
-     *
+     *       
      */
     public function __construct(string $name, string $tz)
     {
@@ -1476,6 +1474,14 @@ final class Calendar extends Base
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -1687,10 +1693,10 @@ final class Calendar extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'resource.calendar';
     }
 }

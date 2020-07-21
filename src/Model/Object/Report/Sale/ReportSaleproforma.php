@@ -14,5 +14,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class ReportSaleproforma extends Base
 {
-    public const ODOO_MODEL_NAME = 'report.sale.report_saleproforma';
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'report.sale.report_saleproforma';
+    }
 }

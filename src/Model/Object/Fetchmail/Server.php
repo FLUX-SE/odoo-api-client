@@ -16,8 +16,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Server extends Base
 {
-    public const ODOO_MODEL_NAME = 'fetchmail.server';
-
     /**
      * Name
      * Searchable : yes
@@ -236,7 +234,7 @@ final class Server extends Base
      *            -> pop (POP Server)
      *            -> imap (IMAP Server)
      *            -> local (Local Server)
-     *
+     *       
      */
     public function __construct(string $name, string $server_type)
     {
@@ -245,11 +243,11 @@ final class Server extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $configuration
      */
-    public function getConfiguration(): ?string
+    public function setConfiguration(?string $configuration): void
     {
-        return $this->configuration;
+        $this->configuration = $configuration;
     }
 
     /**
@@ -338,19 +336,11 @@ final class Server extends Base
     }
 
     /**
-     * @param string|null $configuration
+     * @return string|null
      */
-    public function setConfiguration(?string $configuration): void
+    public function getConfiguration(): ?string
     {
-        $this->configuration = $configuration;
-    }
-
-    /**
-     * @param string|null $password
-     */
-    public function setPassword(?string $password): void
-    {
-        $this->password = $password;
+        return $this->configuration;
     }
 
     /**
@@ -359,6 +349,14 @@ final class Server extends Base
     public function getScript(): ?string
     {
         return $this->script;
+    }
+
+    /**
+     * @param string|null $password
+     */
+    public function setPassword(?string $password): void
+    {
+        $this->password = $password;
     }
 
     /**
@@ -423,6 +421,14 @@ final class Server extends Base
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -618,10 +624,10 @@ final class Server extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'fetchmail.server';
     }
 }

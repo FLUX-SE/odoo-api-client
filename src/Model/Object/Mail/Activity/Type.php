@@ -19,8 +19,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Type extends Base
 {
-    public const ODOO_MODEL_NAME = 'mail.activity.type';
-
     /**
      * Name
      * Searchable : yes
@@ -278,7 +276,7 @@ final class Type extends Base
      *            -> days (days)
      *            -> weeks (weeks)
      *            -> months (months)
-     *
+     *       
      * @param string $delay_from Delay Type
      *        Type of delay
      *        Searchable : yes
@@ -286,7 +284,7 @@ final class Type extends Base
      *        Selection : (default value, usually null)
      *            -> current_date (after validation date)
      *            -> previous_activity (after previous activity deadline)
-     *
+     *       
      */
     public function __construct(string $name, string $delay_unit, string $delay_from)
     {
@@ -296,11 +294,11 @@ final class Type extends Base
     }
 
     /**
-     * @param OdooRelation|null $default_user_id
+     * @return string|null
      */
-    public function setDefaultUserId(?OdooRelation $default_user_id): void
+    public function getDefaultDescription(): ?string
     {
-        $this->default_user_id = $default_user_id;
+        return $this->default_description;
     }
 
     /**
@@ -434,11 +432,19 @@ final class Type extends Base
     }
 
     /**
-     * @return string|null
+     * @param OdooRelation|null $default_user_id
      */
-    public function getDefaultDescription(): ?string
+    public function setDefaultUserId(?OdooRelation $default_user_id): void
     {
-        return $this->default_description;
+        $this->default_user_id = $default_user_id;
+    }
+
+    /**
+     * @param string|null $default_description
+     */
+    public function setDefaultDescription(?string $default_description): void
+    {
+        $this->default_description = $default_description;
     }
 
     /**
@@ -455,14 +461,6 @@ final class Type extends Base
         }
 
         $this->next_type_ids[] = $item;
-    }
-
-    /**
-     * @param string|null $default_description
-     */
-    public function setDefaultDescription(?string $default_description): void
-    {
-        $this->default_description = $default_description;
     }
 
     /**
@@ -551,6 +549,14 @@ final class Type extends Base
     public function getWriteDate(): ?DateTimeInterface
     {
         return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -807,10 +813,10 @@ final class Type extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'mail.activity.type';
     }
 }

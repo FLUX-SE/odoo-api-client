@@ -24,8 +24,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Line extends Base
 {
-    public const ODOO_MODEL_NAME = 'sale.order.template.line';
-
     /**
      * Sequence
      * Gives the sequence order when displaying a list of sale quote lines.
@@ -196,11 +194,19 @@ final class Line extends Base
     }
 
     /**
-     * @param float $product_uom_qty
+     * @return OdooRelation|null
      */
-    public function setProductUomQty(float $product_uom_qty): void
+    public function getProductUomId(): ?OdooRelation
     {
-        $this->product_uom_qty = $product_uom_qty;
+        return $this->product_uom_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -300,19 +306,11 @@ final class Line extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param float $product_uom_qty
      */
-    public function getProductUomId(): ?OdooRelation
+    public function setProductUomQty(float $product_uom_qty): void
     {
-        return $this->product_uom_id;
-    }
-
-    /**
-     * @return float
-     */
-    public function getProductUomQty(): float
-    {
-        return $this->product_uom_qty;
+        $this->product_uom_qty = $product_uom_qty;
     }
 
     /**
@@ -321,6 +319,14 @@ final class Line extends Base
     public function getSequence(): ?int
     {
         return $this->sequence;
+    }
+
+    /**
+     * @return float
+     */
+    public function getProductUomQty(): float
+    {
+        return $this->product_uom_qty;
     }
 
     /**
@@ -428,10 +434,10 @@ final class Line extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'sale.order.template.line';
     }
 }

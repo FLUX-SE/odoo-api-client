@@ -21,8 +21,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 final class Sell extends Base
 {
-    public const ODOO_MODEL_NAME = 'account.asset.sell';
-
     /**
      * Asset
      * Searchable : yes
@@ -164,7 +162,7 @@ final class Sell extends Base
      *        Selection : (default value, usually null)
      *            -> sell (Sell)
      *            -> dispose (Dispose)
-     *
+     *       
      */
     public function __construct(OdooRelation $asset_id, string $action)
     {
@@ -173,11 +171,19 @@ final class Sell extends Base
     }
 
     /**
-     * @param OdooRelation|null $gain_account_id
+     * @return OdooRelation|null
      */
-    public function setGainAccountId(?OdooRelation $gain_account_id): void
+    public function getLossAccountId(): ?OdooRelation
     {
-        $this->gain_account_id = $gain_account_id;
+        return $this->loss_account_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -261,19 +267,11 @@ final class Sell extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $gain_account_id
      */
-    public function getLossAccountId(): ?OdooRelation
+    public function setGainAccountId(?OdooRelation $gain_account_id): void
     {
-        return $this->loss_account_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getGainAccountId(): ?OdooRelation
-    {
-        return $this->gain_account_id;
+        $this->gain_account_id = $gain_account_id;
     }
 
     /**
@@ -282,6 +280,14 @@ final class Sell extends Base
     public function getAssetId(): OdooRelation
     {
         return $this->asset_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getGainAccountId(): ?OdooRelation
+    {
+        return $this->gain_account_id;
     }
 
     /**
@@ -373,10 +379,10 @@ final class Sell extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'account.asset.sell';
     }
 }

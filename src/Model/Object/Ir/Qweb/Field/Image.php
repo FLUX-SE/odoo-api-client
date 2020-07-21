@@ -17,5 +17,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class Image extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.qweb.field.image';
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return 'ir.qweb.field.image';
+    }
 }

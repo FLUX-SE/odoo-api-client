@@ -20,8 +20,6 @@ use Flux\OdooApiClient\Model\OdooRelation;
  */
 class Server extends Base
 {
-    public const ODOO_MODEL_NAME = 'ir.actions.server';
-
     /**
      * Action Name
      * Searchable : yes
@@ -415,7 +413,7 @@ class Server extends Base
      *        Selection : (default value, usually null)
      *            -> specific (Specific User)
      *            -> generic (Generic User From Record)
-     *
+     *       
      * @param string $usage Usage
      *        Searchable : yes
      *        Sortable : yes
@@ -423,7 +421,7 @@ class Server extends Base
      *            -> ir_actions_server (Server Action)
      *            -> ir_cron (Scheduled Action)
      *            -> base_automation (Automated Action)
-     *
+     *       
      * @param string $state Action To Do
      *        Type of server action. The following values are available:
      *        - 'Execute Python Code': a block of python code that will be executed
@@ -444,14 +442,14 @@ class Server extends Base
      *            -> followers (Add Followers)
      *            -> next_activity (Create Next Activity)
      *            -> sms (Send SMS Text Message)
-     *
+     *       
      * @param string $binding_type Binding Type
      *        Searchable : yes
      *        Sortable : yes
      *        Selection : (default value, usually null)
      *            -> action (Action)
      *            -> report (Report)
-     *
+     *       
      */
     public function __construct(
         string $name,
@@ -648,11 +646,19 @@ class Server extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $binding_view_types
      */
-    public function getBindingViewTypes(): ?string
+    public function setBindingViewTypes(?string $binding_view_types): void
     {
-        return $this->binding_view_types;
+        $this->binding_view_types = $binding_view_types;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -712,19 +718,11 @@ class Server extends Base
     }
 
     /**
-     * @param string|null $binding_view_types
+     * @return string|null
      */
-    public function setBindingViewTypes(?string $binding_view_types): void
+    public function getBindingViewTypes(): ?string
     {
-        $this->binding_view_types = $binding_view_types;
-    }
-
-    /**
-     * @param string $binding_type
-     */
-    public function setBindingType(string $binding_type): void
-    {
-        $this->binding_type = $binding_type;
+        return $this->binding_view_types;
     }
 
     /**
@@ -733,6 +731,14 @@ class Server extends Base
     public function isSmsMassKeepLog(): ?bool
     {
         return $this->sms_mass_keep_log;
+    }
+
+    /**
+     * @param string $binding_type
+     */
+    public function setBindingType(string $binding_type): void
+    {
+        $this->binding_type = $binding_type;
     }
 
     /**
@@ -1265,10 +1271,10 @@ class Server extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @return string
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public static function getOdooModelName(): string
     {
-        $this->write_date = $write_date;
+        return 'ir.actions.server';
     }
 }
