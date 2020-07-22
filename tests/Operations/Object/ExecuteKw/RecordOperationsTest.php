@@ -15,6 +15,8 @@ use Flux\OdooApiClient\Model\Object\Sale\Order\Line;
 use Flux\OdooApiClient\Model\OdooRelation;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordOperations;
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\SearchDomains\Criterion;
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\SearchDomains\SearchDomains;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 
@@ -50,13 +52,19 @@ class RecordOperationsTest extends TestCase
     public function testCreate(): void
     {
         // 1 - Retrieve Accounts
-        $accountPayable = $this->recordListOperations->search_read(Account::getOdooModelName(), [[
-            ['code', '=', '411100', ],
-        ]])[0];
+        $searchDomains = new SearchDomains();
+        $searchDomains->addCriterion(Criterion::equal('code', '411100'));
+        $accountPayable = $this->recordListOperations->search_read(
+            Account::getOdooModelName(),
+            $searchDomains
+        )[0];
 
-        $accountReceivable = $this->recordListOperations->search_read(Account::getOdooModelName(), [[
-            ['code', '=', '401100', ],
-        ]])[0];
+        $searchDomains = new SearchDomains();
+        $searchDomains->addCriterion(Criterion::equal('code', '401100'));
+        $accountReceivable = $this->recordListOperations->search_read(
+            Account::getOdooModelName(),
+            $searchDomains
+        )[0];
 
         // 2 - create or retrieve Partner
         $partner = [
@@ -67,9 +75,12 @@ class RecordOperationsTest extends TestCase
         $priceList = $this->recordListOperations->search_read(Pricelist::getOdooModelName())[0];
 
         // 4 - retrieve currency
-        $currency = $this->recordListOperations->search_read(Currency::getOdooModelName(), [[
-            ['name', '=', 'EUR', ],
-        ]])[0];
+        $searchDomains = new SearchDomains();
+        $searchDomains->addCriterion(Criterion::equal('name', 'EUR'));
+        $currency = $this->recordListOperations->search_read(
+            Currency::getOdooModelName(),
+            $searchDomains
+        )[0];
 
         // 5 - retrieve the company owning the sale
         $company = $this->recordListOperations->search_read(Company::getOdooModelName())[0];

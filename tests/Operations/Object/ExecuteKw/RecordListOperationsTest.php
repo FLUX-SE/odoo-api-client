@@ -46,7 +46,7 @@ class RecordListOperationsTest extends TestCase
 
         $result = $this->recordListOperations->search_read(
             'res.partner',
-            [[]],
+            null,
             $searchReadOptions
         );
 

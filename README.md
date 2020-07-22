@@ -41,7 +41,7 @@ $loader = require_once( __DIR__.'/vendor/autoload.php');
 
 use Flux\OdooApiClient\Builder\OdooApiClientBuilder;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;use Flux\OdooApiClient\Operations\Object\ExecuteKw\SearchDomains\Criterion;use Flux\OdooApiClient\Operations\Object\ExecuteKw\SearchDomains\SearchDomains;
 
 $host = 'https://myapp.odoo.com';
 $database = 'myapp';
@@ -58,13 +58,18 @@ $recordListOperations = $odooApiClientBuilder->buildExecuteKwOperations(
     $username,
     $password
 );
-// 2.1 - Helper class to set options to your request
+// 2.1 - Helper class to set parameters to your request
+$searchDomains = new SearchDomains();
+$searchDomains->addCriterion(Criterion::equal('is_company', true));
+// will be translated to : [['is_company', '=', true]]
+
+
+// 2.2 - Helper class to set options to your request
 $searchReadOptions = new SearchReadOptions();
 $searchReadOptions->setLimit(1);
 $searchReadOptions->addField('name');
 
-// @todo add helper for the 2nd argument : $criteria
-$partners = $recordListOperations->search_read('res.partner', [[]], $searchReadOptions);
+$partners = $recordListOperations->search_read('res.partner', $searchDomains, $searchReadOptions);
 
 dump($partners);
 
