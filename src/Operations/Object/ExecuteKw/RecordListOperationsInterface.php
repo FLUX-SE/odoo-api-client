@@ -28,9 +28,16 @@ interface RecordListOperationsInterface extends OperationsInterface
         ?SearchReadOptionsInterface $searchReadOptions = null
     ): array;
 
+    /**
+     * @param string $modelName
+     * @param int[] $ids
+     * @param ReadOptionsInterface|null $readOptions
+     *
+     * @return array
+     */
     public function read(
         string $modelName,
-        ?SearchDomainsInterface $searchDomains = null,
+        array $ids = [],
         ?ReadOptionsInterface $readOptions = null
     ): array;
 }

@@ -19,14 +19,14 @@ final class RecordListOperations extends AbstractOperations implements RecordLis
         ?SearchDomainsInterface $searchDomains = null,
         ?OptionsInterface $mixedOptions = null
     ): ResponseInterface {
-        $options = [];
-        if (null !== $mixedOptions) {
-            $options = $mixedOptions->toArray();
-        }
-
         $arguments = [];
         if (null !== $searchDomains) {
             $arguments = $searchDomains->toArray();
+        }
+
+        $options = [];
+        if (null !== $mixedOptions) {
+            $options = $mixedOptions->toArray();
         }
 
         return $this->getObjectOperations()->execute_kw(
@@ -65,14 +65,19 @@ final class RecordListOperations extends AbstractOperations implements RecordLis
 
     public function read(
         string $modelName,
-        ?SearchDomainsInterface $searchDomains = null,
+        array $ids = [],
         ?ReadOptionsInterface $readOptions = null
     ): array {
-        $response = $this->execute_kw(
-            __FUNCTION__,
+        $options = [];
+        if (null !== $readOptions) {
+            $options = $readOptions->toArray();
+        }
+
+        $response = $this->getObjectOperations()->execute_kw(
             $modelName,
-            $searchDomains,
-            $readOptions
+            __FUNCTION__,
+            [$ids],
+            $options
         );
         return $this->getObjectOperations()->decode($response);
     }

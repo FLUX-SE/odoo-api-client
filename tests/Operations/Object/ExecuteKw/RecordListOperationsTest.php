@@ -28,7 +28,7 @@ class RecordListOperationsTest extends TestCase
 
     public function testRead()
     {
-        $result = $this->recordListOperations->read('ir.model');
+        $result = $this->recordListOperations->read('ir.model', [1]);
         $this->assertIsArray($result);
     }
 
