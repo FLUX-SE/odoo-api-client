@@ -92,7 +92,7 @@ final class ModelListManager implements ModelListManagerInterface
         );
 
         /** @var BaseInterface[] $denormalizedModels */
-        $denormalizedModels = $this->serializer->denormalize($results[0], sprintf('%s[]', $class));
+        $denormalizedModels = $this->serializer->denormalize($results, sprintf('%s[]', $class));
 
         return $denormalizedModels;
     }
