@@ -138,7 +138,7 @@ final class Rounding extends Base
      *        Selection : (default value, usually null)
      *            -> biggest_tax (Modify tax amount)
      *            -> add_invoice_line (Add a rounding line)
-     *       
+     *
      * @param string $rounding_method Rounding Method
      *        The tie-breaking rule used for float rounding operations
      *        Searchable : yes
@@ -147,7 +147,7 @@ final class Rounding extends Base
      *            -> UP (UP)
      *            -> DOWN (DOWN)
      *            -> HALF-UP (HALF-UP)
-     *       
+     *
      */
     public function __construct(string $name, float $rounding, string $strategy, string $rounding_method)
     {

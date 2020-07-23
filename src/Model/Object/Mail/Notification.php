@@ -156,7 +156,7 @@ final class Notification extends Base
      *            -> inbox (Inbox)
      *            -> email (Email)
      *            -> sms (SMS)
-     *       
+     *
      */
     public function __construct(OdooRelation $mail_message_id, string $notification_type)
     {

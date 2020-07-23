@@ -136,7 +136,7 @@ final class Journal extends Base
      *        Selection : (default value, usually null)
      *            -> date (Date)
      *            -> move_name (Journal Entry Number)
-     *       
+     *
      * @param OdooRelation[] $journal_ids Journals
      *        Searchable : yes
      *        Sortable : no
@@ -149,7 +149,7 @@ final class Journal extends Base
      *        Selection : (default value, usually null)
      *            -> posted (All Posted Entries)
      *            -> all (All Entries)
-     *       
+     *
      */
     public function __construct(
         string $sort_selection,

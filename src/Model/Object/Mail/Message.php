@@ -437,7 +437,7 @@ class Message extends Base
      *            -> user_notification (User Specific Notification)
      *            -> snailmail (Snailmail)
      *            -> sms (SMS)
-     *       
+     *
      */
     public function __construct(string $message_type)
     {

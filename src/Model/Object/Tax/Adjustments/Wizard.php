@@ -177,7 +177,7 @@ final class Wizard extends Base
      *        Selection : (default value, usually null)
      *            -> debit (Applied on debit journal item)
      *            -> credit (Applied on credit journal item)
-     *       
+     *
      * @param OdooRelation $tax_report_line_id Report Line
      *        The report line to make an adjustment for.
      *        Searchable : yes

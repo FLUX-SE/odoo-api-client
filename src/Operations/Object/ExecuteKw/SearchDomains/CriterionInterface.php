@@ -82,37 +82,139 @@ interface CriterionInterface
 
     public function toArray(): array;
 
+    /**
+     * @param string $fieldName
+     * @param string|int|float|bool $value
+     *
+     * @return CriterionInterface
+     */
     public static function in(string $fieldName, $value): CriterionInterface;
 
+    /**
+     * @param string $fieldName
+     * @param string|int|float|bool $value
+     *
+     * @return CriterionInterface
+     */
     public static function not_like(string $fieldName, $value): CriterionInterface;
 
+    /**
+     * @param string $fieldName
+     * @param string|int|float|bool $value
+     *
+     * @return CriterionInterface
+     */
     public static function ilike(string $fieldName, $value): CriterionInterface;
 
+    /**
+     * @param string $fieldName
+     * @param string|int|float|bool $value
+     *
+     * @return CriterionInterface
+     */
     public static function less_than(string $fieldName, $value): CriterionInterface;
 
+    /**
+     * @param string $fieldName
+     * @param string|int|float|bool $value
+     *
+     * @return CriterionInterface
+     */
     public static function not_equal(string $fieldName, $value): CriterionInterface;
 
+    /**
+     * @param string $fieldName
+     * @param string|int|float|bool $value
+     *
+     * @return CriterionInterface
+     */
     public static function not_in(string $fieldName, $value): CriterionInterface;
 
+    /**
+     * @param string $fieldName
+     * @param string|int|float|bool $value
+     *
+     * @return CriterionInterface
+     */
     public static function parent_of(string $fieldName, $value): CriterionInterface;
 
+    /**
+     * @param string $fieldName
+     * @param string|int|float|bool $value
+     *
+     * @return CriterionInterface
+     */
     public static function not_ilike(string $fieldName, $value): CriterionInterface;
 
+    /**
+     * @param string $fieldName
+     * @param string|int|float|bool $value
+     *
+     * @return CriterionInterface
+     */
     public static function equal_like(string $fieldName, $value): CriterionInterface;
 
+    /**
+     * @param string $fieldName
+     * @param string|int|float|bool $value
+     *
+     * @return CriterionInterface
+     */
     public static function child_of(string $fieldName, $value): CriterionInterface;
 
+    /**
+     * @param string $fieldName
+     * @param string|int|float|bool $value
+     *
+     * @return CriterionInterface
+     */
     public static function less_than_equal(string $fieldName, $value): CriterionInterface;
 
+    /**
+     * @param string $fieldName
+     * @param string|int|float|bool $value
+     *
+     * @return CriterionInterface
+     */
     public static function equal_ilike(string $fieldName, $value): CriterionInterface;
 
+    /**
+     * @param string $fieldName
+     * @param string|int|float|bool $value
+     *
+     * @return CriterionInterface
+     */
     public static function greater_than_equal(string $fieldName, $value): CriterionInterface;
 
+    /**
+     * @param string $fieldName
+     * @param string|int|float|bool $value
+     *
+     * @return CriterionInterface
+     */
     public static function greater_than(string $fieldName, $value): CriterionInterface;
 
+    /**
+     * @param string $fieldName
+     * @param string|int|float|bool $value
+     *
+     * @return CriterionInterface
+     */
     public static function unset_equal(string $fieldName, $value): CriterionInterface;
 
+    /**
+     * @param string $fieldName
+     * @param string|int|float|bool $value
+     *
+     * @return CriterionInterface
+     */
     public static function equal(string $fieldName, $value): CriterionInterface;
 
+    /**
+     * @param string $fieldName
+     * @param string|int|float|bool $value
+     *
+     * @return CriterionInterface
+     */
     public static function like(string $fieldName, $value): CriterionInterface;
 }

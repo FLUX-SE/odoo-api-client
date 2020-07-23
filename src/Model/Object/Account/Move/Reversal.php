@@ -145,7 +145,7 @@ final class Reversal extends Base
      *            -> refund (Partial Refund)
      *            -> cancel (Full Refund)
      *            -> modify (Full refund and new draft invoice)
-     *       
+     *
      */
     public function __construct(DateTimeInterface $date, string $refund_method)
     {

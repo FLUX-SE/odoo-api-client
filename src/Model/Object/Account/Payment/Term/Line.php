@@ -148,7 +148,7 @@ final class Line extends Base
      *            -> balance (Balance)
      *            -> percent (Percent)
      *            -> fixed (Fixed Amount)
-     *       
+     *
      * @param int $days Number of Days
      *        Searchable : yes
      *        Sortable : yes
@@ -159,7 +159,7 @@ final class Line extends Base
      *            -> day_after_invoice_date (days after the invoice date)
      *            -> day_following_month (of the following month)
      *            -> day_current_month (of the current month)
-     *       
+     *
      * @param OdooRelation $payment_id Payment Terms
      *        Searchable : yes
      *        Sortable : yes

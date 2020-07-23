@@ -162,7 +162,7 @@ final class Sell extends Base
      *        Selection : (default value, usually null)
      *            -> sell (Sell)
      *            -> dispose (Dispose)
-     *       
+     *
      */
     public function __construct(OdooRelation $asset_id, string $action)
     {

@@ -190,7 +190,7 @@ final class Property extends Base
      *            -> date (Date)
      *            -> datetime (DateTime)
      *            -> selection (Selection)
-     *       
+     *
      */
     public function __construct(OdooRelation $fields_id, string $type)
     {

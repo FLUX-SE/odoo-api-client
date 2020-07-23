@@ -139,7 +139,7 @@ final class Type extends Base
      *            -> receivable (Receivable)
      *            -> payable (Payable)
      *            -> liquidity (Liquidity)
-     *       
+     *
      * @param string $internal_group Internal Group
      *        The 'Internal Group' is used to filter accounts based on the internal group set on the account type.
      *        Searchable : yes
@@ -151,7 +151,7 @@ final class Type extends Base
      *            -> income (Income)
      *            -> expense (Expense)
      *            -> off_balance (Off Balance)
-     *       
+     *
      */
     public function __construct(string $name, string $type, string $internal_group)
     {

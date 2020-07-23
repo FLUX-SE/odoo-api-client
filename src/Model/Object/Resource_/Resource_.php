@@ -748,7 +748,7 @@ final class Resource_ extends Base
      *        Selection : (default value, usually null)
      *            -> user (Human)
      *            -> material (Material)
-     *       
+     *
      * @param float $time_efficiency Efficiency Factor
      *        This field is used to calculate the the expected duration of a work order at this work center. For example, if
      *        a work order takes one hour and the efficiency factor is 100%, then the expected duration will be one hour. If
@@ -1357,7 +1357,7 @@ final class Resource_ extends Base
      *            -> Etc/UTC (Etc/UTC)
      *            -> Etc/Universal (Etc/Universal)
      *            -> Etc/Zulu (Etc/Zulu)
-     *       
+     *
      */
     public function __construct(
         string $name,

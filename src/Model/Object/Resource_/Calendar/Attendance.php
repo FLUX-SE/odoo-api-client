@@ -216,7 +216,7 @@ final class Attendance extends Base
      *            -> 4 (Friday)
      *            -> 5 (Saturday)
      *            -> 6 (Sunday)
-     *       
+     *
      * @param float $hour_from Work from
      *        Start and End time of working.
      *        A specific value of 24:00 is interpreted as 23:59:59.999999.
@@ -234,7 +234,7 @@ final class Attendance extends Base
      *        Selection : (default value, usually null)
      *            -> morning (Morning)
      *            -> afternoon (Afternoon)
-     *       
+     *
      */
     public function __construct(
         string $name,

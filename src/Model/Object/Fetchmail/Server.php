@@ -234,7 +234,7 @@ final class Server extends Base
      *            -> pop (POP Server)
      *            -> imap (IMAP Server)
      *            -> local (Local Server)
-     *       
+     *
      */
     public function __construct(string $name, string $server_type)
     {

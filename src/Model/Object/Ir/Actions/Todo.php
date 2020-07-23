@@ -102,7 +102,7 @@ final class Todo extends Base
      *        Selection : (default value, usually null)
      *            -> open (To Do)
      *            -> done (Done)
-     *       
+     *
      */
     public function __construct(OdooRelation $action_id, string $state)
     {

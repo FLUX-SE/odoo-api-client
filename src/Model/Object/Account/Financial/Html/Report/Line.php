@@ -257,7 +257,7 @@ final class Line extends Base
      *            -> float (Float)
      *            -> percents (Percents)
      *            -> no_unit (No Unit)
-     *       
+     *
      * @param int $level Level
      *        Searchable : yes
      *        Sortable : yes

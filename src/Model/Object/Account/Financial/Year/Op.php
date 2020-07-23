@@ -180,7 +180,7 @@ final class Op extends Base
      *            -> 10 (October)
      *            -> 11 (November)
      *            -> 12 (December)
-     *       
+     *
      * @param string $account_tax_periodicity Periodicity
      *        Periodicity
      *        Searchable : yes
@@ -188,7 +188,7 @@ final class Op extends Base
      *        Selection : (default value, usually null)
      *            -> trimester (trimester)
      *            -> monthly (monthly)
-     *       
+     *
      * @param int $account_tax_periodicity_reminder_day Reminder
      *        Searchable : yes
      *        Sortable : no

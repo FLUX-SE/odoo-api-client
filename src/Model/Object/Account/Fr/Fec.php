@@ -119,7 +119,7 @@ final class Fec extends Base
      *        Selection : (default value, usually null)
      *            -> official (Official FEC report (posted entries only))
      *            -> nonofficial (Non-official FEC report (posted and unposted entries))
-     *       
+     *
      */
     public function __construct(
         DateTimeInterface $date_from,

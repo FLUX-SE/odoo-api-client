@@ -185,7 +185,7 @@ final class Line extends Base
      *        Selection : (default value, usually null)
      *            -> base (Base)
      *            -> tax (of tax)
-     *       
+     *
      * @param OdooRelation $company_id Company
      *        The company this repartition line belongs to.
      *        Searchable : yes

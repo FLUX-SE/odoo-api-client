@@ -44,7 +44,7 @@ final class Lines extends Base
 
     /**
      * Value
-     * Expression containing a value specification. 
+     * Expression containing a value specification.
      * When Formula type is selected, this field may be a Python expression  that can use the same values as for the
      * code field on the server action.
      * If Value type is selected, the value will be used directly without evaluation.
@@ -119,7 +119,7 @@ final class Lines extends Base
      *        Searchable : yes
      *        Sortable : yes
      * @param string $value Value
-     *        Expression containing a value specification. 
+     *        Expression containing a value specification.
      *        When Formula type is selected, this field may be a Python expression  that can use the same values as for the
      *        code field on the server action.
      *        If Value type is selected, the value will be used directly without evaluation.
@@ -132,7 +132,7 @@ final class Lines extends Base
      *            -> value (Value)
      *            -> reference (Reference)
      *            -> equation (Python expression)
-     *       
+     *
      */
     public function __construct(OdooRelation $col1, string $value, string $evaluation_type)
     {

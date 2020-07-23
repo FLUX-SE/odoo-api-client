@@ -12,15 +12,7 @@ use Flux\OdooApiClient\Model\OdooRelation;
  * Odoo model : sale.order.line
  * Name : sale.order.line
  * Info :
- * Main super-class for regular database-persisted Odoo models.
- *
- *         Odoo models are created by inheriting from this class::
- *
- *                 class user(Model):
- *                         ...
- *
- *         The system will later instantiate the class once per database (on
- *         which the class' module is installed).
+ * Defines getters to have a common facade for order and invoice lines in TaxCloud.
  */
 final class Line extends Base
 {

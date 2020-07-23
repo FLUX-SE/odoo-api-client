@@ -270,7 +270,7 @@ final class Template extends Base
      *            -> sale (Sales)
      *            -> purchase (Purchases)
      *            -> none (None)
-     *       
+     *
      * @param string $amount_type Tax Computation
      *        Searchable : yes
      *        Sortable : yes
@@ -279,7 +279,7 @@ final class Template extends Base
      *            -> fixed (Fixed)
      *            -> percent (Percentage of Price)
      *            -> division (Percentage of Price Tax Included)
-     *       
+     *
      * @param int $sequence Sequence
      *        The sequence field is used to define order in which the tax lines are applied.
      *        Searchable : yes

@@ -163,29 +163,6 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         throw new LogicException('The model name has not been found !');
     }
 
-    private function isInheritedField(array $currentItem, string $fieldName): bool
-    {
-        $modelName = $currentItem['model'];
-        if ($modelName === self::BASE_MODEL_NAME) {
-            return false;
-        }
-
-        $inheritedModelIds = $currentItem['inherited_model_ids'];
-
-        // Add "base" model id because all models inherit from it
-        $inheritedModelIds[] = $this->getModelIdFromModelName(self::BASE_MODEL_NAME);
-
-        foreach ($inheritedModelIds as $inheritedModelId) {
-            $inheritedModel = $this->modelIdToModelName[$inheritedModelId];
-            $properties = $this->inheritedPropertiesCache[$inheritedModel];
-            if (in_array($fieldName, $properties)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     /**
      * @param string $modelName
      *
@@ -352,16 +329,46 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
                 $description = array_merge($description, $this->prettyGetSelection($fieldInfo['selection']));
             }
 
+            $inheritedFieldInfo = $this->getInheritedFieldInfo($item, $fieldName);
+            $inheritedTypes = [];
+            if (null !== $inheritedFieldInfo) {
+                $inheritedTypes = $this->transformTypes($inheritedFieldInfo, $baseModelNamespace);
+            }
+
             $properties[] = [
                 'name' => $fieldName,
                 'types' => $types,
                 'default' => null,
                 'description' => $description,
-                'inherited' => $this->isInheritedField($item, $fieldName)
+                'inherited' => null !== $inheritedFieldInfo,
+                'inherited_required' => false === in_array('null', $inheritedTypes),
             ];
         }
 
         return $properties;
+    }
+
+    private function getInheritedFieldInfo(array $currentItem, string $fieldName): ?array
+    {
+        $modelName = $currentItem['model'];
+        if ($modelName === self::BASE_MODEL_NAME) {
+            return null;
+        }
+
+        $inheritedModelIds = $currentItem['inherited_model_ids'];
+
+        // Add "base" model id because all models inherit from it
+        $inheritedModelIds[] = $this->getModelIdFromModelName(self::BASE_MODEL_NAME);
+
+        foreach ($inheritedModelIds as $inheritedModelId) {
+            $inheritedModel = $this->modelIdToModelName[$inheritedModelId];
+            $properties = $this->inheritedPropertiesCache[$inheritedModel];
+            if (in_array($fieldName, $properties)) {
+                return $this->fields_get($inheritedModel)[$fieldName];
+            }
+        }
+
+        return null;
     }
 
     private function prettyGetSelection(array $selection, int $deep = 0): array

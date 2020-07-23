@@ -590,7 +590,7 @@ final class Model extends Base
      *            -> writeoff_button (Manually create a write-off on clicked button.)
      *            -> writeoff_suggestion (Suggest counterpart values.)
      *            -> invoice_matching (Match existing invoices/bills.)
-     *       
+     *
      * @param string $match_nature Amount Nature
      *        The reconciliation model will only be applied to the selected transaction type:
      *                        * Amount Received: Only applied when receiving an amount.
@@ -602,7 +602,7 @@ final class Model extends Base
      *            -> amount_received (Amount Received)
      *            -> amount_paid (Amount Paid)
      *            -> both (Amount Paid/Received)
-     *       
+     *
      * @param string $amount_type Amount Type
      *        Searchable : yes
      *        Sortable : yes
@@ -610,7 +610,7 @@ final class Model extends Base
      *            -> fixed (Fixed)
      *            -> percentage (Percentage of balance)
      *            -> regex (From label)
-     *       
+     *
      * @param float $amount Write-off Amount
      *        Fixed amount will count as a debit if it is negative, as a credit if it is positive.
      *        Searchable : yes
@@ -622,7 +622,7 @@ final class Model extends Base
      *            -> fixed (Fixed)
      *            -> percentage (Percentage of balance)
      *            -> regex (From label)
-     *       
+     *
      * @param float $second_amount Second Write-off Amount
      *        Fixed amount will count as a debit if it is negative, as a credit if it is positive.
      *        Searchable : yes

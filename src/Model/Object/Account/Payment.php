@@ -174,7 +174,7 @@ final class Payment extends Base
      * When encoding the bank statement in Odoo, you are suggested to reconcile the transaction with the batch
      * deposit.To enable batch deposit, module account_batch_payment must be installed.
      * SEPA Credit Transfer: Pay bill from a SEPA Credit Transfer file you submit to your bank. To enable sepa credit
-     * transfer, module account_sepa must be installed 
+     * transfer, module account_sepa must be installed
      * Searchable : yes
      * Sortable : yes
      *
@@ -362,13 +362,34 @@ final class Payment extends Base
     private $attachment_ids;
 
     /**
-     * Batch Payment
+     * Amount in Words
      * Searchable : yes
      * Sortable : yes
      *
-     * @var OdooRelation|null
+     * @var string|null
      */
-    private $batch_payment_id;
+    private $check_amount_in_words;
+
+    /**
+     * Manual Numbering
+     * Check this option if your pre-printed checks are not numbered.
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $check_manual_sequencing;
+
+    /**
+     * Check Number
+     * The selected journal is configured to print check numbers. If your pre-printed check paper already has numbers
+     * or if the current numbering is wrong, you can change it in the journal configuration page.
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $check_number;
 
     /**
      * Payment Transaction
@@ -418,24 +439,6 @@ final class Payment extends Base
     private $activity_state;
 
     /**
-     * Responsible User
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation|null
-     */
-    private $activity_user_id;
-
-    /**
-     * Next Activity Type
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation|null
-     */
-    private $activity_type_id;
-
-    /**
      * Next Activity Deadline
      * Searchable : yes
      * Sortable : no
@@ -443,15 +446,6 @@ final class Payment extends Base
      * @var DateTimeInterface|null
      */
     private $activity_date_deadline;
-
-    /**
-     * Next Activity Summary
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $activity_summary;
 
     /**
      * Activity Exception Decoration
@@ -621,6 +615,42 @@ final class Payment extends Base
     private $message_has_sms_error;
 
     /**
+     * Batch Payment
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $batch_payment_id;
+
+    /**
+     * Responsible User
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $activity_user_id;
+
+    /**
+     * Next Activity Type
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $activity_type_id;
+
+    /**
+     * Next Activity Summary
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $activity_summary;
+
+    /**
      * Created by
      * Searchable : yes
      * Sortable : yes
@@ -664,7 +694,7 @@ final class Payment extends Base
      *            -> outbound (Send Money)
      *            -> inbound (Receive Money)
      *            -> transfer (Internal Transfer)
-     *       
+     *
      * @param OdooRelation $payment_method_id Payment Method
      *        Manual: Get paid by cash, check or any other method outside of Odoo.
      *        Electronic: Get paid automatically through a payment acquirer by requesting a transaction on a card saved by
@@ -674,7 +704,7 @@ final class Payment extends Base
      *        When encoding the bank statement in Odoo, you are suggested to reconcile the transaction with the batch
      *        deposit.To enable batch deposit, module account_batch_payment must be installed.
      *        SEPA Credit Transfer: Pay bill from a SEPA Credit Transfer file you submit to your bank. To enable sepa credit
-     *        transfer, module account_sepa must be installed 
+     *        transfer, module account_sepa must be installed
      *        Searchable : yes
      *        Sortable : yes
      * @param float $amount Amount
@@ -709,57 +739,16 @@ final class Payment extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addMessageFollowerIds(OdooRelation $item): void
+    public function removeMessagePartnerIds(OdooRelation $item): void
     {
-        if ($this->hasMessageFollowerIds($item)) {
-            return;
+        if (null === $this->message_partner_ids) {
+            $this->message_partner_ids = [];
         }
 
-        if (null === $this->message_follower_ids) {
-            $this->message_follower_ids = [];
+        if ($this->hasMessagePartnerIds($item)) {
+            $index = array_search($item, $this->message_partner_ids);
+            unset($this->message_partner_ids[$index]);
         }
-
-        $this->message_follower_ids[] = $item;
-    }
-
-    /**
-     * @param string|null $activity_exception_icon
-     */
-    public function setActivityExceptionIcon(?string $activity_exception_icon): void
-    {
-        $this->activity_exception_icon = $activity_exception_icon;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isMessageIsFollower(): ?bool
-    {
-        return $this->message_is_follower;
-    }
-
-    /**
-     * @param bool|null $message_is_follower
-     */
-    public function setMessageIsFollower(?bool $message_is_follower): void
-    {
-        $this->message_is_follower = $message_is_follower;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getMessageFollowerIds(): ?array
-    {
-        return $this->message_follower_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $message_follower_ids
-     */
-    public function setMessageFollowerIds(?array $message_follower_ids): void
-    {
-        $this->message_follower_ids = $message_follower_ids;
     }
 
     /**
@@ -779,6 +768,22 @@ final class Payment extends Base
     /**
      * @param OdooRelation $item
      */
+    public function addMessageFollowerIds(OdooRelation $item): void
+    {
+        if ($this->hasMessageFollowerIds($item)) {
+            return;
+        }
+
+        if (null === $this->message_follower_ids) {
+            $this->message_follower_ids = [];
+        }
+
+        $this->message_follower_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
     public function removeMessageFollowerIds(OdooRelation $item): void
     {
         if (null === $this->message_follower_ids) {
@@ -789,14 +794,6 @@ final class Payment extends Base
             $index = array_search($item, $this->message_follower_ids);
             unset($this->message_follower_ids[$index]);
         }
-    }
-
-    /**
-     * @param string|null $activity_exception_decoration
-     */
-    public function setActivityExceptionDecoration(?string $activity_exception_decoration): void
-    {
-        $this->activity_exception_decoration = $activity_exception_decoration;
     }
 
     /**
@@ -846,26 +843,19 @@ final class Payment extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     */
-    public function removeMessagePartnerIds(OdooRelation $item): void
-    {
-        if (null === $this->message_partner_ids) {
-            $this->message_partner_ids = [];
-        }
-
-        if ($this->hasMessagePartnerIds($item)) {
-            $index = array_search($item, $this->message_partner_ids);
-            unset($this->message_partner_ids[$index]);
-        }
-    }
-
-    /**
      * @return OdooRelation[]|null
      */
     public function getMessageChannelIds(): ?array
     {
         return $this->message_channel_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getMessageFollowerIds(): ?array
+    {
+        return $this->message_follower_ids;
     }
 
     /**
@@ -877,19 +867,17 @@ final class Payment extends Base
     }
 
     /**
-     * @return string|null
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function getActivityExceptionIcon(): ?string
+    public function hasMessageChannelIds(OdooRelation $item): bool
     {
-        return $this->activity_exception_icon;
-    }
+        if (null === $this->message_channel_ids) {
+            return false;
+        }
 
-    /**
-     * @return string|null
-     */
-    public function getActivityExceptionDecoration(): ?string
-    {
-        return $this->activity_exception_decoration;
+        return in_array($item, $this->message_channel_ids);
     }
 
     /**
@@ -909,11 +897,102 @@ final class Payment extends Base
     }
 
     /**
-     * @return string|null
+     * @param OdooRelation $item
      */
-    public function getActivityState(): ?string
+    public function removeMessageChannelIds(OdooRelation $item): void
     {
-        return $this->activity_state;
+        if (null === $this->message_channel_ids) {
+            $this->message_channel_ids = [];
+        }
+
+        if ($this->hasMessageChannelIds($item)) {
+            $index = array_search($item, $this->message_channel_ids);
+            unset($this->message_channel_ids[$index]);
+        }
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getMessageIds(): ?array
+    {
+        return $this->message_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_ids
+     */
+    public function setMessageIds(?array $message_ids): void
+    {
+        $this->message_ids = $message_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMessageIds(OdooRelation $item): bool
+    {
+        if (null === $this->message_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_follower_ids
+     */
+    public function setMessageFollowerIds(?array $message_follower_ids): void
+    {
+        $this->message_follower_ids = $message_follower_ids;
+    }
+
+    /**
+     * @param bool|null $message_is_follower
+     */
+    public function setMessageIsFollower(?bool $message_is_follower): void
+    {
+        $this->message_is_follower = $message_is_follower;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMessageIds(OdooRelation $item): void
+    {
+        if (null === $this->message_ids) {
+            $this->message_ids = [];
+        }
+
+        if ($this->hasMessageIds($item)) {
+            $index = array_search($item, $this->message_ids);
+            unset($this->message_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeActivityIds(OdooRelation $item): void
+    {
+        if (null === $this->activity_ids) {
+            $this->activity_ids = [];
+        }
+
+        if ($this->hasActivityIds($item)) {
+            $index = array_search($item, $this->activity_ids);
+            unset($this->activity_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation|null $payment_transaction_id
+     */
+    public function setPaymentTransactionId(?OdooRelation $payment_transaction_id): void
+    {
+        $this->payment_transaction_id = $payment_transaction_id;
     }
 
     /**
@@ -979,18 +1058,19 @@ final class Payment extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return string|null
      */
-    public function removeActivityIds(OdooRelation $item): void
+    public function getActivityState(): ?string
     {
-        if (null === $this->activity_ids) {
-            $this->activity_ids = [];
-        }
+        return $this->activity_state;
+    }
 
-        if ($this->hasActivityIds($item)) {
-            $index = array_search($item, $this->activity_ids);
-            unset($this->activity_ids[$index]);
-        }
+    /**
+     * @return bool|null
+     */
+    public function isMessageIsFollower(): ?bool
+    {
+        return $this->message_is_follower;
     }
 
     /**
@@ -1002,11 +1082,107 @@ final class Payment extends Base
     }
 
     /**
+     * @return DateTimeInterface|null
+     */
+    public function getActivityDateDeadline(): ?DateTimeInterface
+    {
+        return $this->activity_date_deadline;
+    }
+
+    /**
+     * @param DateTimeInterface|null $activity_date_deadline
+     */
+    public function setActivityDateDeadline(?DateTimeInterface $activity_date_deadline): void
+    {
+        $this->activity_date_deadline = $activity_date_deadline;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getActivityExceptionDecoration(): ?string
+    {
+        return $this->activity_exception_decoration;
+    }
+
+    /**
+     * @param string|null $activity_exception_decoration
+     */
+    public function setActivityExceptionDecoration(?string $activity_exception_decoration): void
+    {
+        $this->activity_exception_decoration = $activity_exception_decoration;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getActivityExceptionIcon(): ?string
+    {
+        return $this->activity_exception_icon;
+    }
+
+    /**
+     * @param string|null $activity_exception_icon
+     */
+    public function setActivityExceptionIcon(?string $activity_exception_icon): void
+    {
+        $this->activity_exception_icon = $activity_exception_icon;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMessageIds(OdooRelation $item): void
+    {
+        if ($this->hasMessageIds($item)) {
+            return;
+        }
+
+        if (null === $this->message_ids) {
+            $this->message_ids = [];
+        }
+
+        $this->message_ids[] = $item;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isMessageUnread(): ?bool
+    {
+        return $this->message_unread;
+    }
+
+    /**
+     * @param string|null $check_number
+     */
+    public function setCheckNumber(?string $check_number): void
+    {
+        $this->check_number = $check_number;
+    }
+
+    /**
      * @param string|null $activity_summary
      */
     public function setActivitySummary(?string $activity_summary): void
     {
         $this->activity_summary = $activity_summary;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getBatchPaymentId(): ?OdooRelation
+    {
+        return $this->batch_payment_id;
+    }
+
+    /**
+     * @param OdooRelation|null $batch_payment_id
+     */
+    public function setBatchPaymentId(?OdooRelation $batch_payment_id): void
+    {
+        $this->batch_payment_id = $batch_payment_id;
     }
 
     /**
@@ -1042,141 +1218,11 @@ final class Payment extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
-     */
-    public function getActivityDateDeadline(): ?DateTimeInterface
-    {
-        return $this->activity_date_deadline;
-    }
-
-    /**
-     * @param DateTimeInterface|null $activity_date_deadline
-     */
-    public function setActivityDateDeadline(?DateTimeInterface $activity_date_deadline): void
-    {
-        $this->activity_date_deadline = $activity_date_deadline;
-    }
-
-    /**
      * @return string|null
      */
     public function getActivitySummary(): ?string
     {
         return $this->activity_summary;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasMessageChannelIds(OdooRelation $item): bool
-    {
-        if (null === $this->message_channel_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_channel_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMessageChannelIds(OdooRelation $item): void
-    {
-        if (null === $this->message_channel_ids) {
-            $this->message_channel_ids = [];
-        }
-
-        if ($this->hasMessageChannelIds($item)) {
-            $index = array_search($item, $this->message_channel_ids);
-            unset($this->message_channel_ids[$index]);
-        }
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getPaymentTransactionId(): ?OdooRelation
-    {
-        return $this->payment_transaction_id;
-    }
-
-    /**
-     * @param bool|null $message_has_sms_error
-     */
-    public function setMessageHasSmsError(?bool $message_has_sms_error): void
-    {
-        $this->message_has_sms_error = $message_has_sms_error;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getWebsiteMessageIds(): ?array
-    {
-        return $this->website_message_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $website_message_ids
-     */
-    public function setWebsiteMessageIds(?array $website_message_ids): void
-    {
-        $this->website_message_ids = $website_message_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasWebsiteMessageIds(OdooRelation $item): bool
-    {
-        if (null === $this->website_message_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->website_message_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addWebsiteMessageIds(OdooRelation $item): void
-    {
-        if ($this->hasWebsiteMessageIds($item)) {
-            return;
-        }
-
-        if (null === $this->website_message_ids) {
-            $this->website_message_ids = [];
-        }
-
-        $this->website_message_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeWebsiteMessageIds(OdooRelation $item): void
-    {
-        if (null === $this->website_message_ids) {
-            $this->website_message_ids = [];
-        }
-
-        if ($this->hasWebsiteMessageIds($item)) {
-            $index = array_search($item, $this->website_message_ids);
-            unset($this->website_message_ids[$index]);
-        }
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isMessageHasSmsError(): ?bool
-    {
-        return $this->message_has_sms_error;
     }
 
     /**
@@ -1188,11 +1234,11 @@ final class Payment extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @return bool|null
      */
-    public function getMessageMainAttachmentId(): ?OdooRelation
+    public function isMessageHasSmsError(): ?bool
     {
-        return $this->message_main_attachment_id;
+        return $this->message_has_sms_error;
     }
 
     /**
@@ -1252,96 +1298,26 @@ final class Payment extends Base
     }
 
     /**
-     * @param OdooRelation|null $message_main_attachment_id
+     * @param bool|null $message_has_sms_error
      */
-    public function setMessageMainAttachmentId(?OdooRelation $message_main_attachment_id): void
+    public function setMessageHasSmsError(?bool $message_has_sms_error): void
     {
-        $this->message_main_attachment_id = $message_main_attachment_id;
-    }
-
-    /**
-     * @param int|null $message_attachment_count
-     */
-    public function setMessageAttachmentCount(?int $message_attachment_count): void
-    {
-        $this->message_attachment_count = $message_attachment_count;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getMessageIds(): ?array
-    {
-        return $this->message_ids;
-    }
-
-    /**
-     * @param int|null $message_unread_counter
-     */
-    public function setMessageUnreadCounter(?int $message_unread_counter): void
-    {
-        $this->message_unread_counter = $message_unread_counter;
-    }
-
-    /**
-     * @param OdooRelation[]|null $message_ids
-     */
-    public function setMessageIds(?array $message_ids): void
-    {
-        $this->message_ids = $message_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasMessageIds(OdooRelation $item): bool
-    {
-        if (null === $this->message_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_ids);
+        $this->message_has_sms_error = $message_has_sms_error;
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function addMessageIds(OdooRelation $item): void
+    public function removeWebsiteMessageIds(OdooRelation $item): void
     {
-        if ($this->hasMessageIds($item)) {
-            return;
+        if (null === $this->website_message_ids) {
+            $this->website_message_ids = [];
         }
 
-        if (null === $this->message_ids) {
-            $this->message_ids = [];
+        if ($this->hasWebsiteMessageIds($item)) {
+            $index = array_search($item, $this->website_message_ids);
+            unset($this->website_message_ids[$index]);
         }
-
-        $this->message_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMessageIds(OdooRelation $item): void
-    {
-        if (null === $this->message_ids) {
-            $this->message_ids = [];
-        }
-
-        if ($this->hasMessageIds($item)) {
-            $index = array_search($item, $this->message_ids);
-            unset($this->message_ids[$index]);
-        }
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isMessageUnread(): ?bool
-    {
-        return $this->message_unread;
     }
 
     /**
@@ -1353,6 +1329,14 @@ final class Payment extends Base
     }
 
     /**
+     * @param bool|null $message_has_error
+     */
+    public function setMessageHasError(?bool $message_has_error): void
+    {
+        $this->message_has_error = $message_has_error;
+    }
+
+    /**
      * @return int|null
      */
     public function getMessageUnreadCounter(): ?int
@@ -1361,19 +1345,19 @@ final class Payment extends Base
     }
 
     /**
+     * @param int|null $message_unread_counter
+     */
+    public function setMessageUnreadCounter(?int $message_unread_counter): void
+    {
+        $this->message_unread_counter = $message_unread_counter;
+    }
+
+    /**
      * @return bool|null
      */
     public function isMessageNeedaction(): ?bool
     {
         return $this->message_needaction;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getMessageAttachmentCount(): ?int
-    {
-        return $this->message_attachment_count;
     }
 
     /**
@@ -1409,19 +1393,27 @@ final class Payment extends Base
     }
 
     /**
-     * @param bool|null $message_has_error
-     */
-    public function setMessageHasError(?bool $message_has_error): void
-    {
-        $this->message_has_error = $message_has_error;
-    }
-
-    /**
      * @return int|null
      */
     public function getMessageHasErrorCounter(): ?int
     {
         return $this->message_has_error_counter;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addWebsiteMessageIds(OdooRelation $item): void
+    {
+        if ($this->hasWebsiteMessageIds($item)) {
+            return;
+        }
+
+        if (null === $this->website_message_ids) {
+            $this->website_message_ids = [];
+        }
+
+        $this->website_message_ids[] = $item;
     }
 
     /**
@@ -1433,19 +1425,81 @@ final class Payment extends Base
     }
 
     /**
-     * @param OdooRelation|null $payment_transaction_id
+     * @return int|null
      */
-    public function setPaymentTransactionId(?OdooRelation $payment_transaction_id): void
+    public function getMessageAttachmentCount(): ?int
     {
-        $this->payment_transaction_id = $payment_transaction_id;
+        return $this->message_attachment_count;
     }
 
     /**
-     * @param OdooRelation|null $batch_payment_id
+     * @param int|null $message_attachment_count
      */
-    public function setBatchPaymentId(?OdooRelation $batch_payment_id): void
+    public function setMessageAttachmentCount(?int $message_attachment_count): void
     {
-        $this->batch_payment_id = $batch_payment_id;
+        $this->message_attachment_count = $message_attachment_count;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getMessageMainAttachmentId(): ?OdooRelation
+    {
+        return $this->message_main_attachment_id;
+    }
+
+    /**
+     * @param OdooRelation|null $message_main_attachment_id
+     */
+    public function setMessageMainAttachmentId(?OdooRelation $message_main_attachment_id): void
+    {
+        $this->message_main_attachment_id = $message_main_attachment_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getWebsiteMessageIds(): ?array
+    {
+        return $this->website_message_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $website_message_ids
+     */
+    public function setWebsiteMessageIds(?array $website_message_ids): void
+    {
+        $this->website_message_ids = $website_message_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasWebsiteMessageIds(OdooRelation $item): bool
+    {
+        if (null === $this->website_message_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->website_message_ids);
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPaymentTransactionId(): ?OdooRelation
+    {
+        return $this->payment_transaction_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCheckNumber(): ?string
+    {
+        return $this->check_number;
     }
 
     /**
@@ -1457,27 +1511,11 @@ final class Payment extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return bool|null
      */
-    public function addMoveLineIds(OdooRelation $item): void
+    public function isMoveReconciled(): ?bool
     {
-        if ($this->hasMoveLineIds($item)) {
-            return;
-        }
-
-        if (null === $this->move_line_ids) {
-            $this->move_line_ids = [];
-        }
-
-        $this->move_line_ids[] = $item;
-    }
-
-    /**
-     * @param bool|null $has_invoices
-     */
-    public function setHasInvoices(?bool $has_invoices): void
-    {
-        $this->has_invoices = $has_invoices;
+        return $this->move_reconciled;
     }
 
     /**
@@ -1529,6 +1567,22 @@ final class Payment extends Base
     /**
      * @param OdooRelation $item
      */
+    public function addMoveLineIds(OdooRelation $item): void
+    {
+        if ($this->hasMoveLineIds($item)) {
+            return;
+        }
+
+        if (null === $this->move_line_ids) {
+            $this->move_line_ids = [];
+        }
+
+        $this->move_line_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
     public function removeMoveLineIds(OdooRelation $item): void
     {
         if (null === $this->move_line_ids) {
@@ -1542,34 +1596,19 @@ final class Payment extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     */
-    public function removeReconciledInvoiceIds(OdooRelation $item): void
-    {
-        if (null === $this->reconciled_invoice_ids) {
-            $this->reconciled_invoice_ids = [];
-        }
-
-        if ($this->hasReconciledInvoiceIds($item)) {
-            $index = array_search($item, $this->reconciled_invoice_ids);
-            unset($this->reconciled_invoice_ids[$index]);
-        }
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isMoveReconciled(): ?bool
-    {
-        return $this->move_reconciled;
-    }
-
-    /**
      * @param bool|null $move_reconciled
      */
     public function setMoveReconciled(?bool $move_reconciled): void
     {
         $this->move_reconciled = $move_reconciled;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isHasInvoices(): ?bool
+    {
+        return $this->has_invoices;
     }
 
     /**
@@ -1613,27 +1652,11 @@ final class Payment extends Base
     }
 
     /**
-     * @return bool|null
+     * @param OdooRelation $payment_method_id
      */
-    public function isHasInvoices(): ?bool
+    public function setPaymentMethodId(OdooRelation $payment_method_id): void
     {
-        return $this->has_invoices;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addReconciledInvoiceIds(OdooRelation $item): void
-    {
-        if ($this->hasReconciledInvoiceIds($item)) {
-            return;
-        }
-
-        if (null === $this->reconciled_invoice_ids) {
-            $this->reconciled_invoice_ids = [];
-        }
-
-        $this->reconciled_invoice_ids[] = $item;
+        $this->payment_method_id = $payment_method_id;
     }
 
     /**
@@ -1642,6 +1665,37 @@ final class Payment extends Base
     public function getPaymentMethodCode(): ?string
     {
         return $this->payment_method_code;
+    }
+
+    /**
+     * @param bool|null $has_invoices
+     */
+    public function setHasInvoices(?bool $has_invoices): void
+    {
+        $this->has_invoices = $has_invoices;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeReconciledInvoiceIds(OdooRelation $item): void
+    {
+        if (null === $this->reconciled_invoice_ids) {
+            $this->reconciled_invoice_ids = [];
+        }
+
+        if ($this->hasReconciledInvoiceIds($item)) {
+            $index = array_search($item, $this->reconciled_invoice_ids);
+            unset($this->reconciled_invoice_ids[$index]);
+        }
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPartnerType(): ?string
+    {
+        return $this->partner_type;
     }
 
     /**
@@ -1718,16 +1772,18 @@ final class Payment extends Base
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasReconciledInvoiceIds(OdooRelation $item): bool
+    public function addReconciledInvoiceIds(OdooRelation $item): void
     {
-        if (null === $this->reconciled_invoice_ids) {
-            return false;
+        if ($this->hasReconciledInvoiceIds($item)) {
+            return;
         }
 
-        return in_array($item, $this->reconciled_invoice_ids);
+        if (null === $this->reconciled_invoice_ids) {
+            $this->reconciled_invoice_ids = [];
+        }
+
+        $this->reconciled_invoice_ids[] = $item;
     }
 
     /**
@@ -1808,11 +1864,17 @@ final class Payment extends Base
     }
 
     /**
-     * @param OdooRelation $payment_method_id
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setPaymentMethodId(OdooRelation $payment_method_id): void
+    public function hasReconciledInvoiceIds(OdooRelation $item): bool
     {
-        $this->payment_method_id = $payment_method_id;
+        if (null === $this->reconciled_invoice_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->reconciled_invoice_ids);
     }
 
     /**
@@ -1824,43 +1886,27 @@ final class Payment extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param string|null $partner_type
      */
-    public function getBatchPaymentId(): ?OdooRelation
+    public function setPartnerType(?string $partner_type): void
     {
-        return $this->batch_payment_id;
+        $this->partner_type = $partner_type;
     }
 
     /**
-     * @return bool|null
+     * @param bool|null $check_manual_sequencing
      */
-    public function isShowPartnerBankAccount(): ?bool
+    public function setCheckManualSequencing(?bool $check_manual_sequencing): void
     {
-        return $this->show_partner_bank_account;
+        $this->check_manual_sequencing = $check_manual_sequencing;
     }
 
     /**
-     * @param string|null $payment_difference_handling
+     * @param bool|null $require_partner_bank_account
      */
-    public function setPaymentDifferenceHandling(?string $payment_difference_handling): void
+    public function setRequirePartnerBankAccount(?bool $require_partner_bank_account): void
     {
-        $this->payment_difference_handling = $payment_difference_handling;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getWriteoffAccountId(): ?OdooRelation
-    {
-        return $this->writeoff_account_id;
-    }
-
-    /**
-     * @param OdooRelation|null $writeoff_account_id
-     */
-    public function setWriteoffAccountId(?OdooRelation $writeoff_account_id): void
-    {
-        $this->writeoff_account_id = $writeoff_account_id;
+        $this->require_partner_bank_account = $require_partner_bank_account;
     }
 
     /**
@@ -1896,19 +1942,19 @@ final class Payment extends Base
     }
 
     /**
+     * @return bool|null
+     */
+    public function isShowPartnerBankAccount(): ?bool
+    {
+        return $this->show_partner_bank_account;
+    }
+
+    /**
      * @param bool|null $show_partner_bank_account
      */
     public function setShowPartnerBankAccount(?bool $show_partner_bank_account): void
     {
         $this->show_partner_bank_account = $show_partner_bank_account;
-    }
-
-    /**
-     * @param float|null $payment_difference
-     */
-    public function setPaymentDifference(?float $payment_difference): void
-    {
-        $this->payment_difference = $payment_difference;
     }
 
     /**
@@ -1920,19 +1966,19 @@ final class Payment extends Base
     }
 
     /**
-     * @param bool|null $require_partner_bank_account
-     */
-    public function setRequirePartnerBankAccount(?bool $require_partner_bank_account): void
-    {
-        $this->require_partner_bank_account = $require_partner_bank_account;
-    }
-
-    /**
      * @return OdooRelation[]|null
      */
     public function getAttachmentIds(): ?array
     {
         return $this->attachment_ids;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteoffAccountId(): ?OdooRelation
+    {
+        return $this->writeoff_account_id;
     }
 
     /**
@@ -1991,41 +2037,41 @@ final class Payment extends Base
     /**
      * @return string|null
      */
-    public function getPaymentDifferenceHandling(): ?string
+    public function getCheckAmountInWords(): ?string
     {
-        return $this->payment_difference_handling;
+        return $this->check_amount_in_words;
     }
 
     /**
-     * @return float|null
+     * @param string|null $check_amount_in_words
      */
-    public function getPaymentDifference(): ?float
+    public function setCheckAmountInWords(?string $check_amount_in_words): void
     {
-        return $this->payment_difference;
+        $this->check_amount_in_words = $check_amount_in_words;
     }
 
     /**
-     * @return string|null
+     * @return bool|null
      */
-    public function getPartnerType(): ?string
+    public function isCheckManualSequencing(): ?bool
     {
-        return $this->partner_type;
+        return $this->check_manual_sequencing;
     }
 
     /**
-     * @return DateTimeInterface
+     * @param OdooRelation|null $writeoff_account_id
      */
-    public function getPaymentDate(): DateTimeInterface
+    public function setWriteoffAccountId(?OdooRelation $writeoff_account_id): void
     {
-        return $this->payment_date;
+        $this->writeoff_account_id = $writeoff_account_id;
     }
 
     /**
-     * @param string|null $partner_type
+     * @param string|null $payment_difference_handling
      */
-    public function setPartnerType(?string $partner_type): void
+    public function setPaymentDifferenceHandling(?string $payment_difference_handling): void
     {
-        $this->partner_type = $partner_type;
+        $this->payment_difference_handling = $payment_difference_handling;
     }
 
     /**
@@ -2034,6 +2080,14 @@ final class Payment extends Base
     public function getPartnerId(): ?OdooRelation
     {
         return $this->partner_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCommunication(): ?string
+    {
+        return $this->communication;
     }
 
     /**
@@ -2077,6 +2131,14 @@ final class Payment extends Base
     }
 
     /**
+     * @return DateTimeInterface
+     */
+    public function getPaymentDate(): DateTimeInterface
+    {
+        return $this->payment_date;
+    }
+
+    /**
      * @param DateTimeInterface $payment_date
      */
     public function setPaymentDate(DateTimeInterface $payment_date): void
@@ -2085,27 +2147,19 @@ final class Payment extends Base
     }
 
     /**
-     * @param bool|null $hide_payment_method
-     */
-    public function setHidePaymentMethod(?bool $hide_payment_method): void
-    {
-        $this->hide_payment_method = $hide_payment_method;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getCommunication(): ?string
-    {
-        return $this->communication;
-    }
-
-    /**
      * @param string|null $communication
      */
     public function setCommunication(?string $communication): void
     {
         $this->communication = $communication;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPaymentDifferenceHandling(): ?string
+    {
+        return $this->payment_difference_handling;
     }
 
     /**
@@ -2146,6 +2200,30 @@ final class Payment extends Base
     public function isHidePaymentMethod(): ?bool
     {
         return $this->hide_payment_method;
+    }
+
+    /**
+     * @param bool|null $hide_payment_method
+     */
+    public function setHidePaymentMethod(?bool $hide_payment_method): void
+    {
+        $this->hide_payment_method = $hide_payment_method;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getPaymentDifference(): ?float
+    {
+        return $this->payment_difference;
+    }
+
+    /**
+     * @param float|null $payment_difference
+     */
+    public function setPaymentDifference(?float $payment_difference): void
+    {
+        $this->payment_difference = $payment_difference;
     }
 
     /**

@@ -42,8 +42,6 @@ class RecordOperationsTest extends TestCase
             $this->recordOperations->getObjectOperations()->getXmlRpcSerializerHelper()->getSerializer(),
             $this->recordOperations
         );
-
-
     }
 
     /**

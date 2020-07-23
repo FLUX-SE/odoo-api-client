@@ -150,6 +150,16 @@ class Bank extends Base
     protected $journal_id;
 
     /**
+     * ABA/Routing
+     * American Bankers Association Routing Number
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    protected $aba_routing;
+
+    /**
      * Created by
      * Searchable : yes
      * Sortable : yes
@@ -200,26 +210,11 @@ class Bank extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return string|null
      */
-    public function removeJournalId(OdooRelation $item): void
+    public function getAbaRouting(): ?string
     {
-        if (null === $this->journal_id) {
-            $this->journal_id = [];
-        }
-
-        if ($this->hasJournalId($item)) {
-            $index = array_search($item, $this->journal_id);
-            unset($this->journal_id[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation|null $company_id
-     */
-    public function setCompanyId(?OdooRelation $company_id): void
-    {
-        $this->company_id = $company_id;
+        return $this->aba_routing;
     }
 
     /**
@@ -285,19 +280,42 @@ class Bank extends Base
     }
 
     /**
+     * @param OdooRelation $item
+     */
+    public function removeJournalId(OdooRelation $item): void
+    {
+        if (null === $this->journal_id) {
+            $this->journal_id = [];
+        }
+
+        if ($this->hasJournalId($item)) {
+            $index = array_search($item, $this->journal_id);
+            unset($this->journal_id[$index]);
+        }
+    }
+
+    /**
+     * @param string|null $aba_routing
+     */
+    public function setAbaRouting(?string $aba_routing): void
+    {
+        $this->aba_routing = $aba_routing;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
      * @return OdooRelation|null
      */
     public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $currency_id
-     */
-    public function setCurrencyId(?OdooRelation $currency_id): void
-    {
-        $this->currency_id = $currency_id;
     }
 
     /**
@@ -357,19 +375,19 @@ class Bank extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $company_id
      */
-    public function getCompanyId(): ?OdooRelation
+    public function setCompanyId(?OdooRelation $company_id): void
     {
-        return $this->company_id;
+        $this->company_id = $company_id;
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $currency_id
      */
-    public function getCurrencyId(): ?OdooRelation
+    public function setCurrencyId(?OdooRelation $currency_id): void
     {
-        return $this->currency_id;
+        $this->currency_id = $currency_id;
     }
 
     /**
@@ -453,11 +471,11 @@ class Bank extends Base
     }
 
     /**
-     * @param int|null $sequence
+     * @return OdooRelation|null
      */
-    public function setSequence(?int $sequence): void
+    public function getCurrencyId(): ?OdooRelation
     {
-        $this->sequence = $sequence;
+        return $this->currency_id;
     }
 
     /**
@@ -514,6 +532,14 @@ class Bank extends Base
     public function getSequence(): ?int
     {
         return $this->sequence;
+    }
+
+    /**
+     * @param int|null $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
     }
 
     /**

@@ -12,11 +12,15 @@ use Flux\OdooApiClient\Model\OdooRelation;
  * Odoo model : ir.filters
  * Name : ir.filters
  * Info :
- * Mixin that overrides the create and write methods to properly generate
- *                 ir.model.data entries flagged with Studio for the corresponding resources.
- *                 Doesn't create an ir.model.data if the record is part of a module being
- *                 currently installed as the ir.model.data will be created automatically
- *                 afterwards.
+ * Main super-class for regular database-persisted Odoo models.
+ *
+ *         Odoo models are created by inheriting from this class::
+ *
+ *                 class user(Model):
+ *                         ...
+ *
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Filters extends Base
 {
@@ -123,9 +127,6 @@ final class Filters extends Base
      *     -> web_editor.assets (Assets Utils)
      *     -> ir.attachment (Attachment)
      *     -> product.attribute.value (Attribute Value)
-     *     -> base.automation (Automated Action)
-     *     -> base.automation.line.test (Automated Rule Line Test)
-     *     -> base.automation.lead.test (Automated Rule Test)
      *     -> ir.autovacuum (Automatic Vacuum)
      *     -> res.bank (Bank)
      *     -> res.partner.bank (Bank Accounts)
@@ -149,6 +150,7 @@ final class Filters extends Base
      *     -> change.password.wizard (Change Password Wizard)
      *     -> mail.moderation (Channel black/white list)
      *     -> account.coa.report (Chart of Account Report)
+     *     -> l10n_us_reports.check.register (Check Register Report)
      *     -> ir.actions.client (Client Action)
      *     -> account.common.journal.report (Common Journal Report)
      *     -> bus.bus (Communication Bus)
@@ -166,7 +168,6 @@ final class Filters extends Base
      *     -> res.country.state (Country state)
      *     -> wizard.ir.model.menu.create (Create Menu Wizard)
      *     -> account.accrual.accounting.wizard (Create accrual entry.)
-     *     -> l10n_eu_service.wizard (Create fiscal positions for EU Service VAT)
      *     -> res.currency (Currency)
      *     -> res.currency.rate (Currency Rate)
      *     -> ir.ui.view.custom (Custom View)
@@ -178,11 +179,10 @@ final class Filters extends Base
      *     -> digest.digest (Digest)
      *     -> digest.tip (Digest Tips)
      *     -> mail.channel (Discussion Channel)
-     *     -> sms.cancel (Dismiss notification for resend by model)
      *     -> snailmail.letter.cancel (Dismiss notification for resend by model)
      *     -> mail.resend.cancel (Dismiss notification for resend by model)
+     *     -> sms.cancel (Dismiss notification for resend by model)
      *     -> mail.followers (Document Followers)
-     *     -> l10n_eu_service.service_tax_rate (EU Service Tax Rate)
      *     -> mail.address.mixin (Email Address Mixin)
      *     -> mail.alias (Email Aliases)
      *     -> mail.alias.mixin (Email Aliases Mixin)
@@ -217,7 +217,6 @@ final class Filters extends Base
      *     -> iap.account (IAP Account)
      *     -> image.mixin (Image Mixin)
      *     -> account.bank.statement.import (Import Bank Statement)
-     *     -> base.import.module (Import Module)
      *     -> fetchmail.server (Incoming Mail Server)
      *     -> account.incoterms (Incoterms)
      *     -> res.partner.industry (Industry)
@@ -237,7 +236,6 @@ final class Filters extends Base
      *     -> ir.logging (Logging)
      *     -> mail.blacklist (Mail Blacklist)
      *     -> mail.thread.blacklist (Mail Blacklist mixin)
-     *     -> mail.bot (Mail Bot)
      *     -> ir.mail_server (Mail Server)
      *     -> mail.tracking.value (Mail Tracking Value)
      *     -> account.report.manager (Manage Summary and Footnotes of Reports)
@@ -286,6 +284,7 @@ final class Filters extends Base
      *     -> account.reconcile.model (Preset to create journal entries during a invoices and payments matching)
      *     -> product.pricelist (Pricelist)
      *     -> product.pricelist.item (Pricelist Rule)
+     *     -> print.prenumbered.checks (Print Pre-numbered Checks)
      *     -> product.product (Product)
      *     -> product.attribute (Product Attribute)
      *     -> product.attribute.custom.value (Product Attribute Custom Value)
@@ -293,6 +292,7 @@ final class Filters extends Base
      *     -> product.packaging (Product Packaging)
      *     -> report.product.report_pricelist (Product Price List Report)
      *     -> product.price_list (Product Price per Unit Based on Pricelist Version)
+     *     -> product.tic.category (Product TIC Category)
      *     -> product.template (Product Template)
      *     -> product.template.attribute.exclusion (Product Template Attribute Exclusion)
      *     -> product.template.attribute.line (Product Template Attribute Line)
@@ -325,6 +325,7 @@ final class Filters extends Base
      *     -> ir.qweb.field.qweb (Qweb Field qweb)
      *     -> ir.qweb.field.many2many (Qweb field many2many)
      *     -> account.reconcile.model.template (Reconcile Model Template)
+     *     -> ir.rule (Record Rule)
      *     -> account.payment.register (Register Payment)
      *     -> ir.model.relation (Relation Model)
      *     -> ir.actions.report (Report Action)
@@ -335,7 +336,6 @@ final class Filters extends Base
      *     -> resource.calendar.leaves (Resource Time Off Detail)
      *     -> resource.calendar (Resource Working Time)
      *     -> resource.resource (Resources)
-     *     -> ir.rule (Rule)
      *     -> sms.api (SMS API)
      *     -> sms.resend (SMS Resend)
      *     -> sms.template.preview (SMS Template Preview)
@@ -546,9 +546,6 @@ final class Filters extends Base
      *            -> web_editor.assets (Assets Utils)
      *            -> ir.attachment (Attachment)
      *            -> product.attribute.value (Attribute Value)
-     *            -> base.automation (Automated Action)
-     *            -> base.automation.line.test (Automated Rule Line Test)
-     *            -> base.automation.lead.test (Automated Rule Test)
      *            -> ir.autovacuum (Automatic Vacuum)
      *            -> res.bank (Bank)
      *            -> res.partner.bank (Bank Accounts)
@@ -572,6 +569,7 @@ final class Filters extends Base
      *            -> change.password.wizard (Change Password Wizard)
      *            -> mail.moderation (Channel black/white list)
      *            -> account.coa.report (Chart of Account Report)
+     *            -> l10n_us_reports.check.register (Check Register Report)
      *            -> ir.actions.client (Client Action)
      *            -> account.common.journal.report (Common Journal Report)
      *            -> bus.bus (Communication Bus)
@@ -589,7 +587,6 @@ final class Filters extends Base
      *            -> res.country.state (Country state)
      *            -> wizard.ir.model.menu.create (Create Menu Wizard)
      *            -> account.accrual.accounting.wizard (Create accrual entry.)
-     *            -> l10n_eu_service.wizard (Create fiscal positions for EU Service VAT)
      *            -> res.currency (Currency)
      *            -> res.currency.rate (Currency Rate)
      *            -> ir.ui.view.custom (Custom View)
@@ -601,11 +598,10 @@ final class Filters extends Base
      *            -> digest.digest (Digest)
      *            -> digest.tip (Digest Tips)
      *            -> mail.channel (Discussion Channel)
-     *            -> sms.cancel (Dismiss notification for resend by model)
      *            -> snailmail.letter.cancel (Dismiss notification for resend by model)
      *            -> mail.resend.cancel (Dismiss notification for resend by model)
+     *            -> sms.cancel (Dismiss notification for resend by model)
      *            -> mail.followers (Document Followers)
-     *            -> l10n_eu_service.service_tax_rate (EU Service Tax Rate)
      *            -> mail.address.mixin (Email Address Mixin)
      *            -> mail.alias (Email Aliases)
      *            -> mail.alias.mixin (Email Aliases Mixin)
@@ -640,7 +636,6 @@ final class Filters extends Base
      *            -> iap.account (IAP Account)
      *            -> image.mixin (Image Mixin)
      *            -> account.bank.statement.import (Import Bank Statement)
-     *            -> base.import.module (Import Module)
      *            -> fetchmail.server (Incoming Mail Server)
      *            -> account.incoterms (Incoterms)
      *            -> res.partner.industry (Industry)
@@ -660,7 +655,6 @@ final class Filters extends Base
      *            -> ir.logging (Logging)
      *            -> mail.blacklist (Mail Blacklist)
      *            -> mail.thread.blacklist (Mail Blacklist mixin)
-     *            -> mail.bot (Mail Bot)
      *            -> ir.mail_server (Mail Server)
      *            -> mail.tracking.value (Mail Tracking Value)
      *            -> account.report.manager (Manage Summary and Footnotes of Reports)
@@ -709,6 +703,7 @@ final class Filters extends Base
      *            -> account.reconcile.model (Preset to create journal entries during a invoices and payments matching)
      *            -> product.pricelist (Pricelist)
      *            -> product.pricelist.item (Pricelist Rule)
+     *            -> print.prenumbered.checks (Print Pre-numbered Checks)
      *            -> product.product (Product)
      *            -> product.attribute (Product Attribute)
      *            -> product.attribute.custom.value (Product Attribute Custom Value)
@@ -716,6 +711,7 @@ final class Filters extends Base
      *            -> product.packaging (Product Packaging)
      *            -> report.product.report_pricelist (Product Price List Report)
      *            -> product.price_list (Product Price per Unit Based on Pricelist Version)
+     *            -> product.tic.category (Product TIC Category)
      *            -> product.template (Product Template)
      *            -> product.template.attribute.exclusion (Product Template Attribute Exclusion)
      *            -> product.template.attribute.line (Product Template Attribute Line)
@@ -748,6 +744,7 @@ final class Filters extends Base
      *            -> ir.qweb.field.qweb (Qweb Field qweb)
      *            -> ir.qweb.field.many2many (Qweb field many2many)
      *            -> account.reconcile.model.template (Reconcile Model Template)
+     *            -> ir.rule (Record Rule)
      *            -> account.payment.register (Register Payment)
      *            -> ir.model.relation (Relation Model)
      *            -> ir.actions.report (Report Action)
@@ -758,7 +755,6 @@ final class Filters extends Base
      *            -> resource.calendar.leaves (Resource Time Off Detail)
      *            -> resource.calendar (Resource Working Time)
      *            -> resource.resource (Resources)
-     *            -> ir.rule (Rule)
      *            -> sms.api (SMS API)
      *            -> sms.resend (SMS Resend)
      *            -> sms.template.preview (SMS Template Preview)
@@ -830,7 +826,7 @@ final class Filters extends Base
      *            -> web_editor.converter.test (Web Editor Converter Test)
      *            -> account.online.wizard (Wizard to link synchronized accounts to journal)
      *            -> resource.calendar.attendance (Work Detail)
-     *       
+     *
      */
     public function __construct(
         string $name,

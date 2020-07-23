@@ -19,6 +19,13 @@ final class Criterion implements CriterionInterface
         return $this->criterion;
     }
 
+    /**
+     * @param string $fieldName
+     * @param string $operator
+     * @param string|int|float|bool $value
+     *
+     * @return self
+     */
     private static function build(string $fieldName, string $operator, $value): self
     {
         return new self([

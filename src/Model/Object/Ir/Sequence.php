@@ -202,7 +202,7 @@ final class Sequence extends Base
      *        Selection : (default value, usually null)
      *            -> standard (Standard)
      *            -> no_gap (No gap)
-     *       
+     *
      * @param int $number_next Next Number
      *        Next number of this sequence
      *        Searchable : yes

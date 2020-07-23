@@ -12,11 +12,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
  * Odoo model : res.groups
  * Name : res.groups
  * Info :
- * Mixin that overrides the create and write methods to properly generate
- *                 ir.model.data entries flagged with Studio for the corresponding resources.
- *                 Doesn't create an ir.model.data if the record is part of a module being
- *                 currently installed as the ir.model.data will be created automatically
- *                 afterwards.
+ * Update of res.groups class
+ *                 - if adding users from a group, check mail.channels linked to this user
+ *                     group and subscribe them. This is done by overriding the write method.
  */
 final class Groups extends Base
 {

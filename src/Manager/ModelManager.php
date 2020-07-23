@@ -64,6 +64,8 @@ final class ModelManager implements ModelManagerInterface
             $model->getId(),
             [$normalizedModel]
         );
-        return $this->serializer->denormalize($savedNormalizedModel, get_class($model));
+        /** @var BaseInterface $denormalizeModel */
+        $denormalizeModel = $this->serializer->denormalize($savedNormalizedModel, get_class($model));
+        return $denormalizeModel;
     }
 }

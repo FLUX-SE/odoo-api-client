@@ -101,7 +101,7 @@ final class Moderation extends Base
      *        Selection : (default value, usually null)
      *            -> allow (Always Allow)
      *            -> ban (Permanent Ban)
-     *       
+     *
      * @param OdooRelation $channel_id Channel
      *        Searchable : yes
      *        Sortable : yes

@@ -166,6 +166,25 @@ final class Position extends Base
     private $states_count;
 
     /**
+     * Is Taxcloud Configured
+     * Used to determine whether or not to warn the user to configure TaxCloud.
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $is_taxcloud_configured;
+
+    /**
+     * Use TaxCloud API
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $is_taxcloud;
+
+    /**
      * Created by
      * Searchable : yes
      * Sortable : yes
@@ -216,27 +235,11 @@ final class Position extends Base
     }
 
     /**
-     * @return string|null
+     * @param int|null $states_count
      */
-    public function getZipTo(): ?string
+    public function setStatesCount(?int $states_count): void
     {
-        return $this->zip_to;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getCountryGroupId(): ?OdooRelation
-    {
-        return $this->country_group_id;
-    }
-
-    /**
-     * @param OdooRelation|null $country_group_id
-     */
-    public function setCountryGroupId(?OdooRelation $country_group_id): void
-    {
-        $this->country_group_id = $country_group_id;
+        $this->states_count = $states_count;
     }
 
     /**
@@ -317,19 +320,19 @@ final class Position extends Base
     }
 
     /**
+     * @return string|null
+     */
+    public function getZipTo(): ?string
+    {
+        return $this->zip_to;
+    }
+
+    /**
      * @param string|null $zip_to
      */
     public function setZipTo(?string $zip_to): void
     {
         $this->zip_to = $zip_to;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getCountryId(): ?OdooRelation
-    {
-        return $this->country_id;
     }
 
     /**
@@ -341,11 +344,43 @@ final class Position extends Base
     }
 
     /**
-     * @param int|null $states_count
+     * @return bool|null
      */
-    public function setStatesCount(?int $states_count): void
+    public function isIsTaxcloudConfigured(): ?bool
     {
-        $this->states_count = $states_count;
+        return $this->is_taxcloud_configured;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCountryGroupId(): ?OdooRelation
+    {
+        return $this->country_group_id;
+    }
+
+    /**
+     * @param bool|null $is_taxcloud_configured
+     */
+    public function setIsTaxcloudConfigured(?bool $is_taxcloud_configured): void
+    {
+        $this->is_taxcloud_configured = $is_taxcloud_configured;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsTaxcloud(): ?bool
+    {
+        return $this->is_taxcloud;
+    }
+
+    /**
+     * @param bool|null $is_taxcloud
+     */
+    public function setIsTaxcloud(?bool $is_taxcloud): void
+    {
+        $this->is_taxcloud = $is_taxcloud;
     }
 
     /**
@@ -413,19 +448,19 @@ final class Position extends Base
     }
 
     /**
+     * @param OdooRelation|null $country_group_id
+     */
+    public function setCountryGroupId(?OdooRelation $country_group_id): void
+    {
+        $this->country_group_id = $country_group_id;
+    }
+
+    /**
      * @param OdooRelation|null $country_id
      */
     public function setCountryId(?OdooRelation $country_id): void
     {
         $this->country_id = $country_id;
-    }
-
-    /**
-     * @param bool|null $vat_required
-     */
-    public function setVatRequired(?bool $vat_required): void
-    {
-        $this->vat_required = $vat_required;
     }
 
     /**
@@ -438,16 +473,18 @@ final class Position extends Base
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasAccountIds(OdooRelation $item): bool
+    public function addAccountIds(OdooRelation $item): void
     {
-        if (null === $this->account_ids) {
-            return false;
+        if ($this->hasAccountIds($item)) {
+            return;
         }
 
-        return in_array($item, $this->account_ids);
+        if (null === $this->account_ids) {
+            $this->account_ids = [];
+        }
+
+        $this->account_ids[] = $item;
     }
 
     /**
@@ -524,26 +561,16 @@ final class Position extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function addAccountIds(OdooRelation $item): void
+    public function hasAccountIds(OdooRelation $item): bool
     {
-        if ($this->hasAccountIds($item)) {
-            return;
-        }
-
         if (null === $this->account_ids) {
-            $this->account_ids = [];
+            return false;
         }
 
-        $this->account_ids[] = $item;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isVatRequired(): ?bool
-    {
-        return $this->vat_required;
+        return in_array($item, $this->account_ids);
     }
 
     /**
@@ -559,6 +586,14 @@ final class Position extends Base
             $index = array_search($item, $this->account_ids);
             unset($this->account_ids[$index]);
         }
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCountryId(): ?OdooRelation
+    {
+        return $this->country_id;
     }
 
     /**
@@ -652,6 +687,22 @@ final class Position extends Base
     public function setAutoApply(?bool $auto_apply): void
     {
         $this->auto_apply = $auto_apply;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isVatRequired(): ?bool
+    {
+        return $this->vat_required;
+    }
+
+    /**
+     * @param bool|null $vat_required
+     */
+    public function setVatRequired(?bool $vat_required): void
+    {
+        $this->vat_required = $vat_required;
     }
 
     /**

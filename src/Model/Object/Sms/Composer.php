@@ -252,7 +252,7 @@ final class Composer extends Base
      *            -> numbers (Send to numbers)
      *            -> comment (Post on a document)
      *            -> mass (Send SMS in batch)
-     *       
+     *
      * @param string $body Message
      *        Searchable : yes
      *        Sortable : yes

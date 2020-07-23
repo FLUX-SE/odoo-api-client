@@ -399,7 +399,7 @@ final class Transaction extends Base
      *            -> server2server (Server To Server)
      *            -> form (Form)
      *            -> form_save (Form with tokenization)
-     *       
+     *
      * @param string $state Status
      *        Searchable : yes
      *        Sortable : yes
@@ -410,7 +410,7 @@ final class Transaction extends Base
      *            -> done (Done)
      *            -> cancel (Canceled)
      *            -> error (Error)
-     *       
+     *
      * @param float $amount Amount
      *        Searchable : yes
      *        Sortable : yes

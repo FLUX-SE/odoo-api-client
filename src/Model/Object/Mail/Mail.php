@@ -165,7 +165,7 @@ final class Mail extends Message
      *            -> user_notification (User Specific Notification)
      *            -> snailmail (Snailmail)
      *            -> sms (SMS)
-     *       
+     *
      */
     public function __construct(OdooRelation $mail_message_id, string $message_type)
     {

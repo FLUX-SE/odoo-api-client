@@ -317,7 +317,7 @@ final class Account extends Base
      *            -> no (No)
      *            -> draft (Create in draft)
      *            -> validate (Create and validate)
-     *       
+     *
      */
     public function __construct(
         string $name,

@@ -142,7 +142,7 @@ final class ActWindowClose extends Base
      *        Selection : (default value, usually null)
      *            -> action (Action)
      *            -> report (Report)
-     *       
+     *
      */
     public function __construct(string $type, string $name, string $binding_type)
     {

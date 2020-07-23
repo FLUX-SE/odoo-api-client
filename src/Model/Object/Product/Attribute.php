@@ -167,7 +167,7 @@ final class Attribute extends Base
      *            -> always (Instantly)
      *            -> dynamic (Dynamically)
      *            -> no_variant (Never)
-     *       
+     *
      * @param string $display_type Display Type
      *        The display type used in the Product Configurator.
      *        Searchable : yes
@@ -176,7 +176,7 @@ final class Attribute extends Base
      *            -> radio (Radio)
      *            -> select (Select)
      *            -> color (Color)
-     *       
+     *
      */
     public function __construct(string $name, string $create_variant, string $display_type)
     {

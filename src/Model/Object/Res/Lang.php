@@ -205,7 +205,7 @@ final class Lang extends Base
      *        Selection : (default value, usually null)
      *            -> ltr (Left-to-Right)
      *            -> rtl (Right-to-Left)
-     *       
+     *
      * @param string $date_format Date Format
      *        Searchable : yes
      *        Sortable : yes
@@ -223,7 +223,7 @@ final class Lang extends Base
      *            -> 5 (Friday)
      *            -> 6 (Saturday)
      *            -> 7 (Sunday)
-     *       
+     *
      * @param string $grouping Separator Format
      *        The Separator Format should be like [,n] where 0 < n :starting from Unit digit. -1 will end the separation.
      *        e.g. [3,2,-1] will represent 106500 to be 1,06,500; [1,2,-1] will represent it to be 106,50,0;[3] will

@@ -104,7 +104,7 @@ final class Method extends Base
      *        Selection : (default value, usually null)
      *            -> inbound (Inbound)
      *            -> outbound (Outbound)
-     *       
+     *
      */
     public function __construct(string $name, string $code, string $payment_type)
     {

@@ -2,54 +2,33 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Model\Object\Base\Automation\Line;
+namespace Flux\OdooApiClient\Model\Object\Print_\Prenumbered;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
- * Odoo model : base.automation.line.test
- * Name : base.automation.line.test
+ * Odoo model : print.prenumbered.checks
+ * Name : print.prenumbered.checks
  * Info :
- * Main super-class for regular database-persisted Odoo models.
+ * Model super-class for transient records, meant to be temporarily
+ *         persistent, and regularly vacuum-cleaned.
  *
- *         Odoo models are created by inheriting from this class::
- *
- *                 class user(Model):
- *                         ...
- *
- *         The system will later instantiate the class once per database (on
- *         which the class' module is installed).
+ *         A TransientModel has a simplified access rights management, all users can
+ *         create new records, and may only access the records they created. The
+ *         superuser has unrestricted access to all TransientModel records.
  */
-final class Test extends Base
+final class Checks extends Base
 {
     /**
-     * Name
+     * Next Check Number
      * Searchable : yes
      * Sortable : yes
      *
-     * @var string|null
+     * @var string
      */
-    private $name;
-
-    /**
-     * Lead
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $lead_id;
-
-    /**
-     * User
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $user_id;
+    private $next_check_number;
 
     /**
      * Created by
@@ -88,51 +67,29 @@ final class Test extends Base
     private $write_date;
 
     /**
-     * @return string|null
+     * @param string $next_check_number Next Check Number
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function getName(): ?string
+    public function __construct(string $next_check_number)
     {
-        return $this->name;
+        $this->next_check_number = $next_check_number;
     }
 
     /**
-     * @param string|null $name
+     * @return string
      */
-    public function setName(?string $name): void
+    public function getNextCheckNumber(): string
     {
-        $this->name = $name;
+        return $this->next_check_number;
     }
 
     /**
-     * @return OdooRelation|null
+     * @param string $next_check_number
      */
-    public function getLeadId(): ?OdooRelation
+    public function setNextCheckNumber(string $next_check_number): void
     {
-        return $this->lead_id;
-    }
-
-    /**
-     * @param OdooRelation|null $lead_id
-     */
-    public function setLeadId(?OdooRelation $lead_id): void
-    {
-        $this->lead_id = $lead_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getUserId(): ?OdooRelation
-    {
-        return $this->user_id;
-    }
-
-    /**
-     * @param OdooRelation|null $user_id
-     */
-    public function setUserId(?OdooRelation $user_id): void
-    {
-        $this->user_id = $user_id;
+        $this->next_check_number = $next_check_number;
     }
 
     /**
@@ -204,6 +161,6 @@ final class Test extends Base
      */
     public static function getOdooModelName(): string
     {
-        return 'base.automation.line.test';
+        return 'print.prenumbered.checks';
     }
 }

@@ -173,7 +173,7 @@ final class MailServer extends Base
      *            -> none (None)
      *            -> starttls (TLS (STARTTLS))
      *            -> ssl (SSL/TLS)
-     *       
+     *
      */
     public function __construct(string $name, string $smtp_host, int $smtp_port, string $smtp_encryption)
     {

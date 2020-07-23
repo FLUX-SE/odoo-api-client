@@ -131,7 +131,7 @@ final class Export extends Base
      *        Selection : (default value, usually null)
      *            -> __new__ (New Language (Empty translation template))
      *            -> en_US (English (US))
-     *       
+     *
      * @param string $format File Format
      *        Searchable : yes
      *        Sortable : yes
@@ -139,7 +139,7 @@ final class Export extends Base
      *            -> csv (CSV File)
      *            -> po (PO File)
      *            -> tgz (TGZ Archive)
-     *       
+     *
      */
     public function __construct(string $lang, string $format)
     {

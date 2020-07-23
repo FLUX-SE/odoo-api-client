@@ -451,7 +451,7 @@ final class Statement extends Base
      *        Selection : (default value, usually null)
      *            -> open (New)
      *            -> confirm (Validated)
-     *       
+     *
      * @param OdooRelation $journal_id Journal
      *        Searchable : yes
      *        Sortable : yes

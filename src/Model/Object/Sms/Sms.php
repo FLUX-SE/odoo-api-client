@@ -137,7 +137,7 @@ final class Sms extends Base
      *            -> sent (Sent)
      *            -> error (Error)
      *            -> canceled (Canceled)
-     *       
+     *
      */
     public function __construct(string $state)
     {

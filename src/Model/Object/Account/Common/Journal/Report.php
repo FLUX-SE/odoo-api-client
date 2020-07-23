@@ -129,7 +129,7 @@ final class Report extends Base
      *        Selection : (default value, usually null)
      *            -> posted (All Posted Entries)
      *            -> all (All Entries)
-     *       
+     *
      */
     public function __construct(OdooRelation $company_id, array $journal_ids, string $target_move)
     {

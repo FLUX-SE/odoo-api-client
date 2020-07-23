@@ -10,9 +10,7 @@ use Flux\OdooApiClient\Model\Object\Base;
  * Odoo model : ir.qweb
  * Name : ir.qweb
  * Info :
- * allows to render reports with full branding on every node, including the context available
- *         to evaluate every node. The context is composed of all the variables available at this point
- *         in the report, and their type.
+ * QWeb object for rendering editor stuff
  */
 final class Qweb extends Base
 {

@@ -228,7 +228,7 @@ final class Payment extends Base
      *        Selection : (default value, usually null)
      *            -> inbound (Inbound)
      *            -> outbound (Outbound)
-     *       
+     *
      * @param OdooRelation $payment_method_id Payment Method
      *        The payment method used by the payments in this batch.
      *        Searchable : yes

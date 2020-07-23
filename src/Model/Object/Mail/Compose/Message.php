@@ -324,7 +324,7 @@ class Message extends Base
      *        Selection : (default value, usually null)
      *            -> comment (Comment)
      *            -> notification (System notification)
-     *       
+     *
      */
     public function __construct(string $message_type)
     {

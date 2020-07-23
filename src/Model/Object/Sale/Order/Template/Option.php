@@ -79,7 +79,7 @@ final class Option extends Base
     private $discount;
 
     /**
-     * Unit of Measure 
+     * Unit of Measure
      * Searchable : yes
      * Sortable : yes
      *
@@ -156,7 +156,7 @@ final class Option extends Base
      * @param float $price_unit Unit Price
      *        Searchable : yes
      *        Sortable : yes
-     * @param OdooRelation $uom_id Unit of Measure 
+     * @param OdooRelation $uom_id Unit of Measure
      *        Searchable : yes
      *        Sortable : yes
      * @param float $quantity Quantity

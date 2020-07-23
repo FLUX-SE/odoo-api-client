@@ -500,7 +500,7 @@ final class Acquirer extends Base
      *            -> disabled (Disabled)
      *            -> enabled (Enabled)
      *            -> test (Test Mode)
-     *       
+     *
      * @param string $payment_flow Payment Flow
      *        Note: Subscriptions does not take this field in account, it uses server to server by default.
      *        Searchable : yes
@@ -508,14 +508,14 @@ final class Acquirer extends Base
      *        Selection : (default value, usually null)
      *            -> form (Redirection to the acquirer website)
      *            -> s2s (Payment from Odoo)
-     *       
+     *
      * @param string $provider Provider
      *        Searchable : yes
      *        Sortable : yes
      *        Selection : (default value, usually null)
      *            -> manual (Custom Payment Form)
      *            -> transfer (Manual Payment)
-     *       
+     *
      */
     public function __construct(
         string $name,

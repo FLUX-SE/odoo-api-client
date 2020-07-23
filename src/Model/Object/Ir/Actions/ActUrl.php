@@ -167,14 +167,14 @@ final class ActUrl extends Base
      *        Selection : (default value, usually null)
      *            -> new (New Window)
      *            -> self (This Window)
-     *       
+     *
      * @param string $binding_type Binding Type
      *        Searchable : yes
      *        Sortable : yes
      *        Selection : (default value, usually null)
      *            -> action (Action)
      *            -> report (Report)
-     *       
+     *
      */
     public function __construct(
         string $name,

@@ -145,7 +145,7 @@ final class Logging extends Base
      *        Selection : (default value, usually null)
      *            -> client (Client)
      *            -> server (Server)
-     *       
+     *
      * @param string $message Message
      *        Searchable : yes
      *        Sortable : yes

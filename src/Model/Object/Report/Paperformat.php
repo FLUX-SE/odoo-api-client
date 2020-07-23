@@ -12,11 +12,15 @@ use Flux\OdooApiClient\Model\OdooRelation;
  * Odoo model : report.paperformat
  * Name : report.paperformat
  * Info :
- * Mixin that overrides the create and write methods to properly generate
- *                 ir.model.data entries flagged with Studio for the corresponding resources.
- *                 Doesn't create an ir.model.data if the record is part of a module being
- *                 currently installed as the ir.model.data will be created automatically
- *                 afterwards.
+ * Main super-class for regular database-persisted Odoo models.
+ *
+ *         Odoo models are created by inheriting from this class::
+ *
+ *                 class user(Model):
+ *                         ...
+ *
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Paperformat extends Base
 {

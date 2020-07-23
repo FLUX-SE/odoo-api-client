@@ -95,6 +95,7 @@ final class OdooPhpClassesGenerator implements OdooPhpClassesGeneratorInterface
                 $property->setReadable($propertyConfig['readable'] ?? true);
                 $property->setWriteable($propertyConfig['writable'] ?? true);
                 $property->setInherited($propertyConfig['inherited'] ?? false);
+                $property->setInheritedRequired($propertyConfig['inherited_required'] ?? false);
 
                 $this->classBuilder->addProperty($property);
             }

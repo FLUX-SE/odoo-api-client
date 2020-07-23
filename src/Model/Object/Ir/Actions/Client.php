@@ -216,7 +216,7 @@ final class Client extends Base
      *        Selection : (default value, usually null)
      *            -> action (Action)
      *            -> report (Report)
-     *       
+     *
      */
     public function __construct(
         string $name,

@@ -260,7 +260,7 @@ final class Digest extends Base
      *            -> weekly (Weekly)
      *            -> monthly (Monthly)
      *            -> quarterly (Quarterly)
-     *       
+     *
      * @param OdooRelation $template_id Email Template
      *        Searchable : yes
      *        Sortable : yes

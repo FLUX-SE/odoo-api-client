@@ -62,6 +62,8 @@ final class OdooApiErrorPlugin implements Plugin
             return $response;
         }
 
+        $ddd = '';
+
         throw new ClientErrorException(
             sprintf("%s\n\n%s", $this->fault->getFaultCode(), $this->fault->getFaultString()),
             $request,

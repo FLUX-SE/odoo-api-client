@@ -180,14 +180,14 @@ class Alias extends Base
      *        - everyone: everyone can post
      *        - partners: only authenticated partners
      *        - followers: only followers of the related document or members of following channels
-     *       
+     *
      *        Searchable : yes
      *        Sortable : yes
      *        Selection : (default value, usually null)
      *            -> everyone (Everyone)
      *            -> partners (Authenticated Partners)
      *            -> followers (Followers only)
-     *       
+     *
      */
     public function __construct(OdooRelation $alias_model_id, string $alias_defaults, string $alias_contact)
     {

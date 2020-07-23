@@ -132,7 +132,7 @@ final class Send extends Message
      *        Selection : (default value, usually null)
      *            -> comment (Comment)
      *            -> notification (System notification)
-     *       
+     *
      */
     public function __construct(OdooRelation $composer_id, string $message_type)
     {

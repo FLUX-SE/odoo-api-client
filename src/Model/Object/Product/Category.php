@@ -102,6 +102,18 @@ final class Category extends Base
     private $property_account_expense_categ_id;
 
     /**
+     * TIC Code
+     * This refers to TIC (Taxability Information Codes), these are used by TaxCloud to compute specific tax rates
+     * for each product type. This value is used when no TIC is set on the product. If no value is set here, the
+     * default value set in Invoicing settings is used.
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $tic_category_id;
+
+    /**
      * Created by
      * Searchable : yes
      * Sortable : yes
@@ -148,11 +160,11 @@ final class Category extends Base
     }
 
     /**
-     * @param int|null $product_count
+     * @return OdooRelation|null
      */
-    public function setProductCount(?int $product_count): void
+    public function getPropertyAccountIncomeCategId(): ?OdooRelation
     {
-        $this->product_count = $product_count;
+        return $this->property_account_income_categ_id;
     }
 
     /**
@@ -220,6 +232,22 @@ final class Category extends Base
     }
 
     /**
+     * @param OdooRelation|null $tic_category_id
+     */
+    public function setTicCategoryId(?OdooRelation $tic_category_id): void
+    {
+        $this->tic_category_id = $tic_category_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getTicCategoryId(): ?OdooRelation
+    {
+        return $this->tic_category_id;
+    }
+
+    /**
      * @param OdooRelation|null $property_account_expense_categ_id
      */
     public function setPropertyAccountExpenseCategId(?OdooRelation $property_account_expense_categ_id): void
@@ -244,19 +272,11 @@ final class Category extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param int|null $product_count
      */
-    public function getPropertyAccountIncomeCategId(): ?OdooRelation
+    public function setProductCount(?int $product_count): void
     {
-        return $this->property_account_income_categ_id;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getProductCount(): ?int
-    {
-        return $this->product_count;
+        $this->product_count = $product_count;
     }
 
     /**
@@ -265,6 +285,14 @@ final class Category extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getProductCount(): ?int
+    {
+        return $this->product_count;
     }
 
     /**

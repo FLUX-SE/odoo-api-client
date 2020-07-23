@@ -146,6 +146,15 @@ final class Template extends Base
     private $zip_to;
 
     /**
+     * Use TaxCloud API
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $is_taxcloud;
+
+    /**
      * Created by
      * Searchable : yes
      * Sortable : yes
@@ -196,19 +205,11 @@ final class Template extends Base
     }
 
     /**
-     * @param string|null $zip_from
+     * @param string|null $zip_to
      */
-    public function setZipFrom(?string $zip_from): void
+    public function setZipTo(?string $zip_to): void
     {
-        $this->zip_from = $zip_from;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getCountryGroupId(): ?OdooRelation
-    {
-        return $this->country_group_id;
+        $this->zip_to = $zip_to;
     }
 
     /**
@@ -289,6 +290,14 @@ final class Template extends Base
     }
 
     /**
+     * @param string|null $zip_from
+     */
+    public function setZipFrom(?string $zip_from): void
+    {
+        $this->zip_from = $zip_from;
+    }
+
+    /**
      * @return string|null
      */
     public function getZipTo(): ?string
@@ -297,19 +306,27 @@ final class Template extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @return bool|null
      */
-    public function getCountryId(): ?OdooRelation
+    public function isIsTaxcloud(): ?bool
     {
-        return $this->country_id;
+        return $this->is_taxcloud;
     }
 
     /**
-     * @param string|null $zip_to
+     * @param OdooRelation|null $country_id
      */
-    public function setZipTo(?string $zip_to): void
+    public function setCountryId(?OdooRelation $country_id): void
     {
-        $this->zip_to = $zip_to;
+        $this->country_id = $country_id;
+    }
+
+    /**
+     * @param bool|null $is_taxcloud
+     */
+    public function setIsTaxcloud(?bool $is_taxcloud): void
+    {
+        $this->is_taxcloud = $is_taxcloud;
     }
 
     /**
@@ -377,19 +394,19 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation|null $country_id
+     * @return OdooRelation|null
      */
-    public function setCountryId(?OdooRelation $country_id): void
+    public function getCountryGroupId(): ?OdooRelation
     {
-        $this->country_id = $country_id;
+        return $this->country_group_id;
     }
 
     /**
-     * @param bool|null $vat_required
+     * @return OdooRelation|null
      */
-    public function setVatRequired(?bool $vat_required): void
+    public function getCountryId(): ?OdooRelation
     {
-        $this->vat_required = $vat_required;
+        return $this->country_id;
     }
 
     /**
@@ -403,17 +420,16 @@ final class Template extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addAccountIds(OdooRelation $item): void
+    public function removeAccountIds(OdooRelation $item): void
     {
-        if ($this->hasAccountIds($item)) {
-            return;
-        }
-
         if (null === $this->account_ids) {
             $this->account_ids = [];
         }
 
-        $this->account_ids[] = $item;
+        if ($this->hasAccountIds($item)) {
+            $index = array_search($item, $this->account_ids);
+            unset($this->account_ids[$index]);
+        }
     }
 
     /**
@@ -489,24 +505,17 @@ final class Template extends Base
     /**
      * @param OdooRelation $item
      */
-    public function removeAccountIds(OdooRelation $item): void
+    public function addAccountIds(OdooRelation $item): void
     {
+        if ($this->hasAccountIds($item)) {
+            return;
+        }
+
         if (null === $this->account_ids) {
             $this->account_ids = [];
         }
 
-        if ($this->hasAccountIds($item)) {
-            $index = array_search($item, $this->account_ids);
-            unset($this->account_ids[$index]);
-        }
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isVatRequired(): ?bool
-    {
-        return $this->vat_required;
+        $this->account_ids[] = $item;
     }
 
     /**
@@ -515,6 +524,14 @@ final class Template extends Base
     public function getTaxIds(): ?array
     {
         return $this->tax_ids;
+    }
+
+    /**
+     * @param bool|null $vat_required
+     */
+    public function setVatRequired(?bool $vat_required): void
+    {
+        $this->vat_required = $vat_required;
     }
 
     /**
@@ -600,6 +617,14 @@ final class Template extends Base
     public function setAutoApply(?bool $auto_apply): void
     {
         $this->auto_apply = $auto_apply;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isVatRequired(): ?bool
+    {
+        return $this->vat_required;
     }
 
     /**

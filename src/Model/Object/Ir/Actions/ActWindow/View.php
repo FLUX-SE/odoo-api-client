@@ -12,11 +12,15 @@ use Flux\OdooApiClient\Model\OdooRelation;
  * Odoo model : ir.actions.act_window.view
  * Name : ir.actions.act_window.view
  * Info :
- * Mixin that overrides the create and write methods to properly generate
- *                 ir.model.data entries flagged with Studio for the corresponding resources.
- *                 Doesn't create an ir.model.data if the record is part of a module being
- *                 currently installed as the ir.model.data will be created automatically
- *                 afterwards.
+ * Main super-class for regular database-persisted Odoo models.
+ *
+ *         Odoo models are created by inheriting from this class::
+ *
+ *                 class user(Model):
+ *                         ...
+ *
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class View extends Base
 {
@@ -37,25 +41,6 @@ final class View extends Base
      * @var OdooRelation|null
      */
     private $view_id;
-
-    /**
-     * Action
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $act_window_id;
-
-    /**
-     * On Multiple Doc.
-     * If set to true, the action will not be displayed on the right toolbar of a form view.
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $multi;
 
     /**
      * View Type
@@ -80,6 +65,25 @@ final class View extends Base
      * @var string
      */
     private $view_mode;
+
+    /**
+     * Action
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $act_window_id;
+
+    /**
+     * On Multiple Doc.
+     * If set to true, the action will not be displayed on the right toolbar of a form view.
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $multi;
 
     /**
      * Created by
@@ -135,7 +139,7 @@ final class View extends Base
      *            -> grid (Grid)
      *            -> activity (Activity)
      *            -> map (Map)
-     *       
+     *
      */
     public function __construct(string $view_mode)
     {
@@ -207,11 +211,11 @@ final class View extends Base
     }
 
     /**
-     * @param string $view_mode
+     * @param bool|null $multi
      */
-    public function setViewMode(string $view_mode): void
+    public function setMulti(?bool $multi): void
     {
-        $this->view_mode = $view_mode;
+        $this->multi = $multi;
     }
 
     /**
@@ -220,22 +224,6 @@ final class View extends Base
     public function getSequence(): ?int
     {
         return $this->sequence;
-    }
-
-    /**
-     * @return string
-     */
-    public function getViewMode(): string
-    {
-        return $this->view_mode;
-    }
-
-    /**
-     * @param bool|null $multi
-     */
-    public function setMulti(?bool $multi): void
-    {
-        $this->multi = $multi;
     }
 
     /**
@@ -260,6 +248,22 @@ final class View extends Base
     public function getActWindowId(): ?OdooRelation
     {
         return $this->act_window_id;
+    }
+
+    /**
+     * @param string $view_mode
+     */
+    public function setViewMode(string $view_mode): void
+    {
+        $this->view_mode = $view_mode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getViewMode(): string
+    {
+        return $this->view_mode;
     }
 
     /**

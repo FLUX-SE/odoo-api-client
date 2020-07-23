@@ -44,14 +44,14 @@ final class Mixin extends Alias
      *        - everyone: everyone can post
      *        - partners: only authenticated partners
      *        - followers: only followers of the related document or members of following channels
-     *       
+     *
      *        Searchable : yes
      *        Sortable : yes
      *        Selection : (default value, usually null)
      *            -> everyone (Everyone)
      *            -> partners (Authenticated Partners)
      *            -> followers (Followers only)
-     *       
+     *
      */
     public function __construct(
         OdooRelation $alias_id,

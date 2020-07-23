@@ -12,12 +12,14 @@ use Flux\OdooApiClient\Model\OdooRelation;
  * Odoo model : sale.advance.payment.inv
  * Name : sale.advance.payment.inv
  * Info :
- * Model super-class for transient records, meant to be temporarily
- *         persistent, and regularly vacuum-cleaned.
+ * Downpayment should have no taxes set on them.
+ *               To that effect, we should get the category 'Gift card' (10005) on the
+ *               deposit product. If this category cannot be found, either the user
+ *               messed up with TaxCloud categories or did not configure them properly yet;
+ *               in this case, the user is also responsible for configuring this properly.
  *
- *         A TransientModel has a simplified access rights management, all users can
- *         create new records, and may only access the records they created. The
- *         superuser has unrestricted access to all TransientModel records.
+ *               Otherwise, taxes are applied on downpayments, but not subtracted from the
+ *               regular invoice, since we ignore negative lines, so get counted twice.
  */
 final class Inv extends Base
 {
@@ -168,7 +170,7 @@ final class Inv extends Base
      *            -> delivered (Regular invoice)
      *            -> percentage (Down payment (percentage))
      *            -> fixed (Down payment (fixed amount))
-     *       
+     *
      */
     public function __construct(string $advance_payment_method)
     {

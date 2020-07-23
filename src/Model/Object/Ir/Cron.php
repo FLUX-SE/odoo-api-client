@@ -146,27 +146,13 @@ final class Cron extends Server
      * @param string $type Action Type
      *        Searchable : yes
      *        Sortable : yes
-     * @param OdooRelation $model_id Model
-     *        Model on which the server action runs.
-     *        Searchable : yes
-     *        Sortable : yes
-     * @param string $activity_user_type Activity User Type
-     *        Use 'Specific User' to always assign the same user on the next activity. Use 'Generic User From Record' to
-     *        specify the field name of the user to choose on the record.
-     *        Searchable : yes
-     *        Sortable : yes
-     *        Selection : (default value, usually null)
-     *            -> specific (Specific User)
-     *            -> generic (Generic User From Record)
-     *       
      * @param string $usage Usage
      *        Searchable : yes
      *        Sortable : yes
      *        Selection : (default value, usually null)
      *            -> ir_actions_server (Server Action)
      *            -> ir_cron (Scheduled Action)
-     *            -> base_automation (Automated Action)
-     *       
+     *
      * @param string $state Action To Do
      *        Type of server action. The following values are available:
      *        - 'Execute Python Code': a block of python code that will be executed
@@ -187,14 +173,27 @@ final class Cron extends Server
      *            -> followers (Add Followers)
      *            -> next_activity (Create Next Activity)
      *            -> sms (Send SMS Text Message)
-     *       
+     *
+     * @param OdooRelation $model_id Model
+     *        Model on which the server action runs.
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $binding_type Binding Type
      *        Searchable : yes
      *        Sortable : yes
      *        Selection : (default value, usually null)
      *            -> action (Action)
      *            -> report (Report)
-     *       
+     *
+     * @param string $activity_user_type Activity User Type
+     *        Use 'Specific User' to always assign the same user on the next activity. Use 'Generic User From Record' to
+     *        specify the field name of the user to choose on the record.
+     *        Searchable : yes
+     *        Sortable : yes
+     *        Selection : (default value, usually null)
+     *            -> specific (Specific User)
+     *            -> generic (Generic User From Record)
+     *
      */
     public function __construct(
         OdooRelation $ir_actions_server_id,
@@ -202,23 +201,23 @@ final class Cron extends Server
         DateTimeInterface $nextcall,
         string $name,
         string $type,
-        OdooRelation $model_id,
-        string $activity_user_type,
         string $usage,
         string $state,
-        string $binding_type
+        OdooRelation $model_id,
+        string $binding_type,
+        string $activity_user_type
     ) {
         $this->ir_actions_server_id = $ir_actions_server_id;
         $this->user_id = $user_id;
         $this->nextcall = $nextcall;
         parent::__construct(
-            $name, 
-            $type, 
-            $model_id, 
-            $activity_user_type, 
-            $usage, 
-            $state, 
-            $binding_type
+            $name,
+            $type,
+            $usage,
+            $state,
+            $model_id,
+            $binding_type,
+            $activity_user_type
         );
     }
 

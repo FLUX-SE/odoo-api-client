@@ -12,15 +12,7 @@ use Flux\OdooApiClient\Model\OdooRelation;
  * Odoo model : account.move.line
  * Name : account.move.line
  * Info :
- * Main super-class for regular database-persisted Odoo models.
- *
- *         Odoo models are created by inheriting from this class::
- *
- *                 class user(Model):
- *                         ...
- *
- *         The system will later instantiate the class once per database (on
- *         which the class' module is installed).
+ * Defines getters to have a common facade for order and move lines in TaxCloud.
  */
 final class Line extends Base
 {
@@ -628,15 +620,6 @@ final class Line extends Base
     private $next_action_date;
 
     /**
-     * Sales Order Lines
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $sale_line_ids;
-
-    /**
      * Asset Linked
      * Asset created from this Journal Item
      * Searchable : yes
@@ -663,6 +646,15 @@ final class Line extends Base
      * @var DateTimeInterface|null
      */
     private $followup_date;
+
+    /**
+     * Sales Order Lines
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $sale_line_ids;
 
     /**
      * Created by
@@ -1145,30 +1137,6 @@ final class Line extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $followup_date
-     */
-    public function setFollowupDate(?DateTimeInterface $followup_date): void
-    {
-        $this->followup_date = $followup_date;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addSaleLineIds(OdooRelation $item): void
-    {
-        if ($this->hasSaleLineIds($item)) {
-            return;
-        }
-
-        if (null === $this->sale_line_ids) {
-            $this->sale_line_ids = [];
-        }
-
-        $this->sale_line_ids[] = $item;
-    }
-
-    /**
      * @param OdooRelation $item
      */
     public function removeSaleLineIds(OdooRelation $item): void
@@ -1181,30 +1149,6 @@ final class Line extends Base
             $index = array_search($item, $this->sale_line_ids);
             unset($this->sale_line_ids[$index]);
         }
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getAssetId(): ?OdooRelation
-    {
-        return $this->asset_id;
-    }
-
-    /**
-     * @param OdooRelation|null $asset_id
-     */
-    public function setAssetId(?OdooRelation $asset_id): void
-    {
-        $this->asset_id = $asset_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getFollowupLineId(): ?OdooRelation
-    {
-        return $this->followup_line_id;
     }
 
     /**
@@ -1224,11 +1168,19 @@ final class Line extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param DateTimeInterface|null $followup_date
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setFollowupDate(?DateTimeInterface $followup_date): void
     {
-        return $this->create_uid;
+        $this->followup_date = $followup_date;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getSaleLineIds(): ?array
+    {
+        return $this->sale_line_ids;
     }
 
     /**
@@ -1237,6 +1189,52 @@ final class Line extends Base
     public function setSaleLineIds(?array $sale_line_ids): void
     {
         $this->sale_line_ids = $sale_line_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasSaleLineIds(OdooRelation $item): bool
+    {
+        if (null === $this->sale_line_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->sale_line_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addSaleLineIds(OdooRelation $item): void
+    {
+        if ($this->hasSaleLineIds($item)) {
+            return;
+        }
+
+        if (null === $this->sale_line_ids) {
+            $this->sale_line_ids = [];
+        }
+
+        $this->sale_line_ids[] = $item;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $asset_id
+     */
+    public function setAssetId(?OdooRelation $asset_id): void
+    {
+        $this->asset_id = $asset_id;
     }
 
     /**
@@ -1296,25 +1294,19 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @return OdooRelation|null
      */
-    public function hasSaleLineIds(OdooRelation $item): bool
+    public function getFollowupLineId(): ?OdooRelation
     {
-        if (null === $this->sale_line_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->sale_line_ids);
+        return $this->followup_line_id;
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @return OdooRelation|null
      */
-    public function getSaleLineIds(): ?array
+    public function getAssetId(): ?OdooRelation
     {
-        return $this->sale_line_ids;
+        return $this->asset_id;
     }
 
     /**

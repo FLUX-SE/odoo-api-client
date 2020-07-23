@@ -12,11 +12,15 @@ use Flux\OdooApiClient\Model\OdooRelation;
  * Odoo model : ir.model.fields
  * Name : ir.model.fields
  * Info :
- * Mixin that overrides the create and write methods to properly generate
- *                 ir.model.data entries flagged with Studio for the corresponding resources.
- *                 Doesn't create an ir.model.data if the record is part of a module being
- *                 currently installed as the ir.model.data will be created automatically
- *                 afterwards.
+ * Main super-class for regular database-persisted Odoo models.
+ *
+ *         Odoo models are created by inheriting from this class::
+ *
+ *                 class user(Model):
+ *                         ...
+ *
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Fields extends Base
 {
@@ -361,17 +365,6 @@ final class Fields extends Base
     private $store;
 
     /**
-     * Enable Ordered Tracking
-     * If set every modification done to this field is tracked in the chatter. Value is used to order tracking
-     * values.
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var int|null
-     */
-    private $tracking;
-
-    /**
      * Created by
      * Searchable : yes
      * Sortable : yes
@@ -408,6 +401,17 @@ final class Fields extends Base
     private $write_date;
 
     /**
+     * Enable Ordered Tracking
+     * If set every modification done to this field is tracked in the chatter. Value is used to order tracking
+     * values.
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var int|null
+     */
+    private $tracking;
+
+    /**
      * @param string $name Field Name
      *        Searchable : yes
      *        Sortable : yes
@@ -442,14 +446,14 @@ final class Fields extends Base
      *            -> reference (reference)
      *            -> selection (selection)
      *            -> text (text)
-     *       
+     *
      * @param string $state Type
      *        Searchable : yes
      *        Sortable : yes
      *        Selection : (default value, usually null)
      *            -> manual (Custom Field)
      *            -> base (Base Field)
-     *       
+     *
      */
     public function __construct(
         string $name,
@@ -649,11 +653,27 @@ final class Fields extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @return DateTimeInterface|null
      */
-    public function getCreateUid(): ?OdooRelation
+    public function getCreateDate(): ?DateTimeInterface
     {
-        return $this->create_uid;
+        return $this->create_date;
+    }
+
+    /**
+     * @param int|null $tracking
+     */
+    public function setTracking(?int $tracking): void
+    {
+        $this->tracking = $tracking;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getTracking(): ?int
+    {
+        return $this->tracking;
     }
 
     /**
@@ -697,27 +717,11 @@ final class Fields extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
      * @param OdooRelation|null $create_uid
      */
     public function setCreateUid(?OdooRelation $create_uid): void
     {
         $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @param int|null $tracking
-     */
-    public function setTracking(?int $tracking): void
-    {
-        $this->tracking = $tracking;
     }
 
     /**
@@ -729,11 +733,11 @@ final class Fields extends Base
     }
 
     /**
-     * @return int|null
+     * @return OdooRelation|null
      */
-    public function getTracking(): ?int
+    public function getCreateUid(): ?OdooRelation
     {
-        return $this->tracking;
+        return $this->create_uid;
     }
 
     /**

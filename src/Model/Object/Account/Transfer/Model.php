@@ -195,14 +195,14 @@ final class Model extends Base
      *            -> month (Monthly)
      *            -> quarter (Quarterly)
      *            -> year (Yearly)
-     *       
+     *
      * @param string $state State
      *        Searchable : yes
      *        Sortable : yes
      *        Selection : (default value, usually null)
      *            -> disabled (Disabled)
      *            -> in_progress (Running)
-     *       
+     *
      */
     public function __construct(
         string $name,

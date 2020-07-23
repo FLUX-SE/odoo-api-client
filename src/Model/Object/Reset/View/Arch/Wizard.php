@@ -101,7 +101,7 @@ final class Wizard extends Base
      *        Selection : (default value, usually null)
      *            -> soft (Restore previous version (soft reset).)
      *            -> hard (Reset to file version (hard reset).)
-     *       
+     *
      */
     public function __construct(string $reset_mode)
     {

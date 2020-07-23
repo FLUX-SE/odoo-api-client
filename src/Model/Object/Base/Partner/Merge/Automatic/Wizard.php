@@ -193,7 +193,7 @@ final class Wizard extends Base
      *            -> option (Option)
      *            -> selection (Selection)
      *            -> finished (Finished)
-     *       
+     *
      */
     public function __construct(string $state)
     {

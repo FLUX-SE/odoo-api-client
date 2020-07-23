@@ -410,7 +410,7 @@ final class Channel extends Alias
      *            -> public (Everyone)
      *            -> private (Invited people only)
      *            -> groups (Selected group of users)
-     *       
+     *
      * @param OdooRelation $alias_id Alias
      *        Searchable : yes
      *        Sortable : yes
@@ -428,14 +428,14 @@ final class Channel extends Alias
      *        - everyone: everyone can post
      *        - partners: only authenticated partners
      *        - followers: only followers of the related document or members of following channels
-     *       
+     *
      *        Searchable : yes
      *        Sortable : yes
      *        Selection : (default value, usually null)
      *            -> everyone (Everyone)
      *            -> partners (Authenticated Partners)
      *            -> followers (Followers only)
-     *       
+     *
      */
     public function __construct(
         string $name,

@@ -184,7 +184,7 @@ final class Uom extends Base
      *            -> bigger (Bigger than the reference Unit of Measure)
      *            -> reference (Reference Unit of Measure for this category)
      *            -> smaller (Smaller than the reference Unit of Measure)
-     *       
+     *
      */
     public function __construct(
         string $name,

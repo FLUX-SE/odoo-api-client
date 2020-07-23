@@ -142,7 +142,7 @@ final class Actions extends Base
      *        Selection : (default value, usually null)
      *            -> action (Action)
      *            -> report (Report)
-     *       
+     *
      */
     public function __construct(string $name, string $type, string $binding_type)
     {

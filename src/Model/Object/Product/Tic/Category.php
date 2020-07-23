@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Model\Object\L10nEuService;
+namespace Flux\OdooApiClient\Model\Object\Product\Tic;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
- * Odoo model : l10n_eu_service.service_tax_rate
- * Name : l10n_eu_service.service_tax_rate
+ * Odoo model : product.tic.category
+ * Name : product.tic.category
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
@@ -22,25 +22,25 @@ use Flux\OdooApiClient\Model\OdooRelation;
  *         The system will later instantiate the class once per database (on
  *         which the class' module is installed).
  */
-final class ServiceTaxRate extends Base
+final class Category extends Base
 {
     /**
-     * Country
+     * TIC Category Code
      * Searchable : yes
      * Sortable : yes
      *
-     * @var OdooRelation|null
+     * @var int
      */
-    private $country_id;
+    private $code;
 
     /**
-     * VAT Rate
+     * TIC Description
      * Searchable : yes
      * Sortable : yes
      *
-     * @var float|null
+     * @var string
      */
-    private $rate;
+    private $description;
 
     /**
      * Created by
@@ -79,35 +79,49 @@ final class ServiceTaxRate extends Base
     private $write_date;
 
     /**
-     * @return OdooRelation|null
+     * @param int $code TIC Category Code
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $description TIC Description
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function getCountryId(): ?OdooRelation
+    public function __construct(int $code, string $description)
     {
-        return $this->country_id;
+        $this->code = $code;
+        $this->description = $description;
     }
 
     /**
-     * @param OdooRelation|null $country_id
+     * @return int
      */
-    public function setCountryId(?OdooRelation $country_id): void
+    public function getCode(): int
     {
-        $this->country_id = $country_id;
+        return $this->code;
     }
 
     /**
-     * @return float|null
+     * @param int $code
      */
-    public function getRate(): ?float
+    public function setCode(int $code): void
     {
-        return $this->rate;
+        $this->code = $code;
     }
 
     /**
-     * @param float|null $rate
+     * @return string
      */
-    public function setRate(?float $rate): void
+    public function getDescription(): string
     {
-        $this->rate = $rate;
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
     }
 
     /**
@@ -179,6 +193,6 @@ final class ServiceTaxRate extends Base
      */
     public static function getOdooModelName(): string
     {
-        return 'l10n_eu_service.service_tax_rate';
+        return 'product.tic.category';
     }
 }

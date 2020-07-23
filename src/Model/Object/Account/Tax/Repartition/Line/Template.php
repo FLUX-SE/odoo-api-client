@@ -156,7 +156,7 @@ final class Template extends Base
      *        Selection : (default value, usually null)
      *            -> base (Base)
      *            -> tax (of tax)
-     *       
+     *
      */
     public function __construct(float $factor_percent, string $repartition_type)
     {

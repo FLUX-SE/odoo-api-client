@@ -316,7 +316,7 @@ final class Item extends Base
      *            -> 2_product_category (Product Category)
      *            -> 1_product (Product)
      *            -> 0_product_variant (Product Variant)
-     *       
+     *
      * @param string $base Based on
      *        Base price for computation.
      *        Sales Price: The base price will be the Sales Price.
@@ -328,7 +328,7 @@ final class Item extends Base
      *            -> list_price (Sales Price)
      *            -> standard_price (Cost)
      *            -> pricelist (Other Pricelist)
-     *       
+     *
      * @param OdooRelation $pricelist_id Pricelist
      *        Searchable : yes
      *        Sortable : yes
@@ -339,7 +339,7 @@ final class Item extends Base
      *            -> fixed (Fixed Price)
      *            -> percentage (Percentage (discount))
      *            -> formula (Formula)
-     *       
+     *
      */
     public function __construct(
         string $applied_on,

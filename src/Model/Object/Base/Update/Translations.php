@@ -75,7 +75,7 @@ final class Translations extends Base
      *        Sortable : yes
      *        Selection : (default value, usually null)
      *            -> en_US (English (US))
-     *       
+     *
      */
     public function __construct(string $lang)
     {

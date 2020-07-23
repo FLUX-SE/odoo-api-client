@@ -276,7 +276,7 @@ final class Type extends Base
      *            -> days (days)
      *            -> weeks (weeks)
      *            -> months (months)
-     *       
+     *
      * @param string $delay_from Delay Type
      *        Type of delay
      *        Searchable : yes
@@ -284,7 +284,7 @@ final class Type extends Base
      *        Selection : (default value, usually null)
      *            -> current_date (after validation date)
      *            -> previous_activity (after previous activity deadline)
-     *       
+     *
      */
     public function __construct(string $name, string $delay_unit, string $delay_from)
     {

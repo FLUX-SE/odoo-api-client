@@ -266,7 +266,7 @@ final class Install extends Base
      *            -> tr_TR (Turkish / Türkçe)
      *            -> uk_UA (Ukrainian / українська)
      *            -> vi_VN (Vietnamese / Tiếng Việt)
-     *       
+     *
      */
     public function __construct(string $lang)
     {

@@ -1341,7 +1341,7 @@ final class Calendar extends Base
      *            -> Etc/UTC (Etc/UTC)
      *            -> Etc/Universal (Etc/Universal)
      *            -> Etc/Zulu (Etc/Zulu)
-     *       
+     *
      */
     public function __construct(string $name, string $tz)
     {

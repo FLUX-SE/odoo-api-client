@@ -142,7 +142,7 @@ final class Tag extends Base
      *        Selection : (default value, usually null)
      *            -> accounts (Accounts)
      *            -> taxes (Taxes)
-     *       
+     *
      */
     public function __construct(string $name, string $applicability)
     {
