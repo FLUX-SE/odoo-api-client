@@ -53,13 +53,13 @@ final class ModelListManager implements ModelListManagerInterface
 
     /**
      * @param string $class
-     * @param SearchDomainsInterface $searchDomains
+     * @param SearchDomainsInterface|null $searchDomains
      *
      * @return BaseInterface|null
      *
      * @throws ExceptionInterface
      */
-    public function findOneBy(string $class, SearchDomainsInterface $searchDomains): ?BaseInterface
+    public function findOneBy(string $class, ?SearchDomainsInterface $searchDomains = null): ?BaseInterface
     {
         $searchReadOptions = new SearchReadOptions();
         $searchReadOptions->setLimit(1);
@@ -80,8 +80,8 @@ final class ModelListManager implements ModelListManagerInterface
      */
     public function findBy(
         string $class,
-        SearchDomainsInterface $searchDomains,
-        SearchReadOptionsInterface $searchReadOptions
+        ?SearchDomainsInterface $searchDomains = null,
+        ?SearchReadOptionsInterface $searchReadOptions = null
     ): array {
         $modelName = $this->getModelNameFromClass($class);
 
@@ -99,15 +99,14 @@ final class ModelListManager implements ModelListManagerInterface
 
     private function getModelNameFromClass(string $class): string
     {
-        $modelName = constant(sprintf('%s::getOdooModelName', $class));
-
-        if (null === $modelName) {
+        $callable = [$class, 'getOdooModelName'];
+        if (false === is_callable($callable)) {
             throw new LogicException(sprintf(
-                'The provided class should be an instance of "%s"',
+                'The provided class should be a class implementing "%s"',
                 BaseInterface::class
             ));
         }
 
-        return $modelName;
+        return call_user_func($callable);
     }
 }
