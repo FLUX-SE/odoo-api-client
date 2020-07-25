@@ -6,3 +6,4 @@ parameters:
 
     ignoreErrors:
         - '#Property Flux\\OdooApiClient\\Command\\GeneratorCommand::\$(baseUrl|database|username|password|basePath|baseNamespace) \(string\) does not accept .*#'
+        - '#Method Flux\\OdooApiClient\\Serializer\\OdooRelationNormalizer::denormalize\(\) should return array\|object but returns null.#'
