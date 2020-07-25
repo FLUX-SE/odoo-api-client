@@ -85,8 +85,11 @@ final class SerializerFactory implements SerializerFactoryInterface
             null,
             null,
             [
+                // => array to model
                 ObjectNormalizer::DISABLE_TYPE_ENFORCEMENT => true,
+                // => model to array
                 ObjectNormalizer::SKIP_NULL_VALUES => true,
+                // => model to array
                 ObjectNormalizer::IGNORED_ATTRIBUTES => [
                     'id',
                     'displayName',
