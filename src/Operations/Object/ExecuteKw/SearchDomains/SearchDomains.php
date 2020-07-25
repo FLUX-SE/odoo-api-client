@@ -11,10 +11,6 @@ final class SearchDomains implements SearchDomainsInterface
 
     public function toArray(): array
     {
-        if (empty($this->criteria)) {
-            return [[]];
-        }
-
         return $this->criteria;
     }
 
