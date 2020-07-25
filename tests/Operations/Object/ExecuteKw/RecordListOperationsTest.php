@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Flux\OdooApiClient\Operations\Object\ExecuteKw;
 
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;

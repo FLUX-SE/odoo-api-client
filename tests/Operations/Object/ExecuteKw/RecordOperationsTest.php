@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Flux\OdooApiClient\Operations\Object\ExecuteKw;
 
 use DateTime;
@@ -13,6 +15,7 @@ use Flux\OdooApiClient\Model\Object\Res\Currency;
 use Flux\OdooApiClient\Model\Object\Sale\Order;
 use Flux\OdooApiClient\Model\Object\Sale\Order\Line;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordOperations;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\SearchDomains\Criterion;
@@ -49,19 +52,24 @@ class RecordOperationsTest extends TestCase
      */
     public function testCreate(): void
     {
+        $searchReadOptions = new SearchReadOptions();
+        $searchReadOptions->setLimit(1);
+
         // 1 - Retrieve Accounts
         $searchDomains = new SearchDomains();
         $searchDomains->addCriterion(Criterion::equal('code', '411100'));
         $accountPayable = $this->recordListOperations->search_read(
             Account::getOdooModelName(),
-            $searchDomains
+            $searchDomains,
+            $searchReadOptions
         )[0];
 
         $searchDomains = new SearchDomains();
         $searchDomains->addCriterion(Criterion::equal('code', '401100'));
         $accountReceivable = $this->recordListOperations->search_read(
             Account::getOdooModelName(),
-            $searchDomains
+            $searchDomains,
+            $searchReadOptions
         )[0];
 
         // 2 - create or retrieve Partner
@@ -70,21 +78,31 @@ class RecordOperationsTest extends TestCase
         ];
 
         // 3 - retrieve the PriceList
-        $priceList = $this->recordListOperations->search_read(Pricelist::getOdooModelName())[0];
+        $priceList = $this->recordListOperations->search_read(
+            Pricelist::getOdooModelName(),
+            null,
+            $searchReadOptions
+        )[0];
 
         // 4 - retrieve currency
         $searchDomains = new SearchDomains();
         $searchDomains->addCriterion(Criterion::equal('name', 'EUR'));
         $currency = $this->recordListOperations->search_read(
             Currency::getOdooModelName(),
-            $searchDomains
+            $searchDomains,
+            $searchReadOptions
         )[0];
 
         // 5 - retrieve the company owning the sale
-        $company = $this->recordListOperations->search_read(Company::getOdooModelName())[0];
+        $company = $this->recordListOperations->read(Company::getOdooModelName(), [1])[0];
 
         // 6 - retrieve the product
-        $product = $this->recordListOperations->search_read(Product::getOdooModelName())[0];
+        $products = $this->recordListOperations->search_read(
+            Product::getOdooModelName(),
+            null,
+            $searchReadOptions
+        );
+        $product = count($products) === 0 ? null : $products[0];
 
         $partner = new OdooRelation($partner['id']);
         $saleOrder = new Order(
@@ -108,7 +126,13 @@ class RecordOperationsTest extends TestCase
             1.0,
             0
         );
-        $line->setProductId(new OdooRelation($product['id']));
+
+        if (null !== $product) {
+            $line->setProductId(new OdooRelation($product['id']));
+        } else {
+            $line->setDisplayType('line_note');
+        }
+
         $lineId = $this->modelManager->persist($line);
         $this->assertIsInt($lineId);
     }

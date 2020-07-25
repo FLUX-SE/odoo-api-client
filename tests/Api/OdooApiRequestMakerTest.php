@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Flux\OdooApiClient\Api;
 
 use Flux\OdooApiClient\Api\OdooApiRequestMaker;
