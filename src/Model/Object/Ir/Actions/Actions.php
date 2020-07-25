@@ -26,6 +26,7 @@ final class Actions extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Actions extends Base
 
     /**
      * Action Type
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +46,7 @@ final class Actions extends Base
 
     /**
      * External ID
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -53,7 +56,9 @@ final class Actions extends Base
 
     /**
      * Action Description
+     * ---
      * Optional help text for the users with a description of the target view, such as its usage and purpose.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,7 +68,12 @@ final class Actions extends Base
 
     /**
      * Binding Model
+     * ---
      * Setting a value makes this action available in the sidebar for the given model.
+     * ---
+     * Relation : many2one (ir.model)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -73,12 +83,13 @@ final class Actions extends Base
 
     /**
      * Binding Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> action (Action)
      *     -> report (Report)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -86,6 +97,7 @@ final class Actions extends Base
 
     /**
      * Binding View Types
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -95,6 +107,10 @@ final class Actions extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -104,6 +120,7 @@ final class Actions extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -113,6 +130,10 @@ final class Actions extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -122,6 +143,7 @@ final class Actions extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -131,18 +153,21 @@ final class Actions extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $type Action Type
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $binding_type Binding Type
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> action (Action)
      *            -> report (Report)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $name, string $type, string $binding_type)
     {

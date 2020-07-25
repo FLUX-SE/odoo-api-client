@@ -26,6 +26,7 @@ final class Line extends Base
 {
     /**
      * Follow-Up Action
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,8 +36,10 @@ final class Line extends Base
 
     /**
      * Due Days
+     * ---
      * The number of days after the due date of the invoice to wait before sending the reminder.  Could be negative
      * if you want to send a polite alert beforehand.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -46,6 +49,10 @@ final class Line extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -55,6 +62,7 @@ final class Line extends Base
 
     /**
      * SMS Text Message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -64,6 +72,7 @@ final class Line extends Base
 
     /**
      * Printed Message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -73,7 +82,9 @@ final class Line extends Base
 
     /**
      * Send an Email
+     * ---
      * When processing, it will send an email
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -83,7 +94,9 @@ final class Line extends Base
 
     /**
      * Print a Letter
+     * ---
      * When processing, it will print a PDF
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -93,7 +106,9 @@ final class Line extends Base
 
     /**
      * Send an SMS Message
+     * ---
      * When processing, it will send an sms text message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -103,6 +118,7 @@ final class Line extends Base
 
     /**
      * Join open Invoices
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -112,7 +128,9 @@ final class Line extends Base
 
     /**
      * Manual Action
+     * ---
      * When processing, it will set the manual action to be taken for that customer.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -122,6 +140,7 @@ final class Line extends Base
 
     /**
      * Action To Do
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -131,6 +150,10 @@ final class Line extends Base
 
     /**
      * Manual Action Type
+     * ---
+     * Relation : many2one (mail.activity.type)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity\Type
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -140,6 +163,10 @@ final class Line extends Base
 
     /**
      * Assign a Responsible
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -149,6 +176,7 @@ final class Line extends Base
 
     /**
      * Auto Execute
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -158,7 +186,9 @@ final class Line extends Base
 
     /**
      * Send a Letter
+     * ---
      * When processing, it will send a letter by Post
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -168,6 +198,10 @@ final class Line extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -177,6 +211,7 @@ final class Line extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -186,6 +221,10 @@ final class Line extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -195,6 +234,7 @@ final class Line extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -204,14 +244,21 @@ final class Line extends Base
 
     /**
      * @param string $name Follow-Up Action
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param int $delay Due Days
+     *        ---
      *        The number of days after the due date of the invoice to wait before sending the reminder.  Could be negative
      *        if you want to send a polite alert beforehand.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $company_id Company
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

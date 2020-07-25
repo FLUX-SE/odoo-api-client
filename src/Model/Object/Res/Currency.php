@@ -26,7 +26,9 @@ final class Currency extends Base
 {
     /**
      * Currency
+     * ---
      * Currency Code (ISO 4217)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,7 +38,9 @@ final class Currency extends Base
 
     /**
      * Symbol
+     * ---
      * Currency sign, to be used when printing amounts.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -46,7 +50,9 @@ final class Currency extends Base
 
     /**
      * Current Rate
+     * ---
      * The rate of the currency to the currency of rate 1.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -56,6 +62,10 @@ final class Currency extends Base
 
     /**
      * Rates
+     * ---
+     * Relation : one2many (res.currency.rate -> currency_id)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency\Rate
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -65,6 +75,7 @@ final class Currency extends Base
 
     /**
      * Rounding Factor
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -74,6 +85,7 @@ final class Currency extends Base
 
     /**
      * Decimal Places
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -83,6 +95,7 @@ final class Currency extends Base
 
     /**
      * Active
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -92,13 +105,15 @@ final class Currency extends Base
 
     /**
      * Symbol Position
+     * ---
      * Determines where the currency symbol should be placed after or before the amount.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> after (After Amount)
      *     -> before (Before Amount)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -106,6 +121,7 @@ final class Currency extends Base
 
     /**
      * Date
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -115,7 +131,9 @@ final class Currency extends Base
 
     /**
      * Currency Unit
+     * ---
      * Currency Unit Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -125,7 +143,9 @@ final class Currency extends Base
 
     /**
      * Currency Subunit
+     * ---
      * Currency Subunit Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -135,6 +155,10 @@ final class Currency extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -144,6 +168,7 @@ final class Currency extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -153,6 +178,10 @@ final class Currency extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -162,6 +191,7 @@ final class Currency extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -171,11 +201,15 @@ final class Currency extends Base
 
     /**
      * @param string $name Currency
+     *        ---
      *        Currency Code (ISO 4217)
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $symbol Symbol
+     *        ---
      *        Currency sign, to be used when printing amounts.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

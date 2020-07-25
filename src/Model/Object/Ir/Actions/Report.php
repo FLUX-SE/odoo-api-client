@@ -26,6 +26,7 @@ final class Report extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Report extends Base
 
     /**
      * Action Type
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,12 +46,13 @@ final class Report extends Base
 
     /**
      * Binding Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> action (Action)
      *     -> report (Report)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -57,6 +60,7 @@ final class Report extends Base
 
     /**
      * Model Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -66,6 +70,10 @@ final class Report extends Base
 
     /**
      * Model
+     * ---
+     * Relation : many2one (ir.model)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -75,16 +83,18 @@ final class Report extends Base
 
     /**
      * Report Type
+     * ---
      * The type of the report that will be rendered, each one having its own rendering method. HTML means the report
      * will be opened directly in your browser PDF means the report will be rendered using Wkhtmltopdf and downloaded
      * by the user.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> qweb-html (HTML)
      *     -> qweb-pdf (PDF)
      *     -> qweb-text (Text)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -92,9 +102,11 @@ final class Report extends Base
 
     /**
      * Template Name
+     * ---
      * For QWeb reports, name of the template used in the rendering. The method 'render_html' of the model
      * 'report.template_name' will be called (if any) to give the html. For RML reports, this is the LocalService
      * name.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -104,7 +116,9 @@ final class Report extends Base
 
     /**
      * Report File
+     * ---
      * The path to the main report file (depending on Report Type) or empty if the content is in another field
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -114,6 +128,10 @@ final class Report extends Base
 
     /**
      * Groups
+     * ---
+     * Relation : many2many (res.groups)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Groups
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -123,7 +141,9 @@ final class Report extends Base
 
     /**
      * On Multiple Doc.
+     * ---
      * If set to true, the action will not be displayed on the right toolbar of a form view.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -133,6 +153,10 @@ final class Report extends Base
 
     /**
      * Paper Format
+     * ---
+     * Relation : many2one (report.paperformat)
+     * @see \Flux\OdooApiClient\Model\Object\Report\Paperformat
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -142,8 +166,10 @@ final class Report extends Base
 
     /**
      * Printed Report Name
+     * ---
      * This is the filename of the report going to download. Keep empty to not change the report filename. You can
      * use a python expression with the 'object' and 'time' variables.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -153,8 +179,10 @@ final class Report extends Base
 
     /**
      * Reload from Attachment
+     * ---
      * If you check this, then the second time the user prints with same attachment name, it returns the previous
      * report.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -164,8 +192,10 @@ final class Report extends Base
 
     /**
      * Save as Attachment Prefix
+     * ---
      * This is the filename of the attachment used to store the printing result. Keep empty to not save the printed
      * reports. You can use a python expression with the object and time variables.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -175,6 +205,7 @@ final class Report extends Base
 
     /**
      * External ID
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -184,7 +215,9 @@ final class Report extends Base
 
     /**
      * Action Description
+     * ---
      * Optional help text for the users with a description of the target view, such as its usage and purpose.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -194,7 +227,12 @@ final class Report extends Base
 
     /**
      * Binding Model
+     * ---
      * Setting a value makes this action available in the sidebar for the given model.
+     * ---
+     * Relation : many2one (ir.model)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -204,6 +242,7 @@ final class Report extends Base
 
     /**
      * Binding View Types
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -213,6 +252,10 @@ final class Report extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -222,6 +265,7 @@ final class Report extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -231,6 +275,10 @@ final class Report extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -240,6 +288,7 @@ final class Report extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -249,36 +298,44 @@ final class Report extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $type Action Type
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $binding_type Binding Type
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> action (Action)
      *            -> report (Report)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $model Model Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $report_type Report Type
+     *        ---
      *        The type of the report that will be rendered, each one having its own rendering method. HTML means the report
      *        will be opened directly in your browser PDF means the report will be rendered using Wkhtmltopdf and downloaded
      *        by the user.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> qweb-html (HTML)
      *            -> qweb-pdf (PDF)
      *            -> qweb-text (Text)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $report_name Template Name
+     *        ---
      *        For QWeb reports, name of the template used in the rendering. The method 'render_html' of the model
      *        'report.template_name' will be called (if any) to give the html. For RML reports, this is the LocalService
      *        name.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

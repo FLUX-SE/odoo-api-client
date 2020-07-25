@@ -26,6 +26,7 @@ final class Group extends Base
 {
     /**
      * Journal Group
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,10 @@ final class Group extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +49,10 @@ final class Group extends Base
 
     /**
      * Excluded Journals
+     * ---
+     * Relation : many2many (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -53,6 +62,7 @@ final class Group extends Base
 
     /**
      * Sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +72,10 @@ final class Group extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +85,7 @@ final class Group extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,6 +95,10 @@ final class Group extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,6 +108,7 @@ final class Group extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -98,9 +118,14 @@ final class Group extends Base
 
     /**
      * @param string $name Journal Group
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $company_id Company
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

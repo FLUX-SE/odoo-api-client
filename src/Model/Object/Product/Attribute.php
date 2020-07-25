@@ -26,6 +26,7 @@ final class Attribute extends Base
 {
     /**
      * Attribute
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,10 @@ final class Attribute extends Base
 
     /**
      * Values
+     * ---
+     * Relation : one2many (product.attribute.value -> attribute_id)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Attribute\Value
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -44,7 +49,9 @@ final class Attribute extends Base
 
     /**
      * Sequence
+     * ---
      * Determine the display order
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,6 +61,10 @@ final class Attribute extends Base
 
     /**
      * Lines
+     * ---
+     * Relation : one2many (product.template.attribute.line -> attribute_id)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Template\Attribute\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -63,19 +74,21 @@ final class Attribute extends Base
 
     /**
      * Variants Creation Mode
+     * ---
      * - Instantly: All possible variants are created as soon as the attribute and its values are added to a product.
      *                 - Dynamically: Each variant is created only when its corresponding attributes and values are
      * added to a sales order.
      *                 - Never: Variants are never created for the attribute.
      *                 Note: the variants creation mode cannot be changed once the attribute is used on at least one
      * product.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> always (Instantly)
      *     -> dynamic (Dynamically)
      *     -> no_variant (Never)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -83,6 +96,7 @@ final class Attribute extends Base
 
     /**
      * Used on Products
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -92,6 +106,10 @@ final class Attribute extends Base
 
     /**
      * Related Products
+     * ---
+     * Relation : many2many (product.template)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Template
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -101,14 +119,16 @@ final class Attribute extends Base
 
     /**
      * Display Type
+     * ---
      * The display type used in the Product Configurator.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> radio (Radio)
      *     -> select (Select)
      *     -> color (Color)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -116,6 +136,10 @@ final class Attribute extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -125,6 +149,7 @@ final class Attribute extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -134,6 +159,10 @@ final class Attribute extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -143,6 +172,7 @@ final class Attribute extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -152,31 +182,36 @@ final class Attribute extends Base
 
     /**
      * @param string $name Attribute
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $create_variant Variants Creation Mode
+     *        ---
      *        - Instantly: All possible variants are created as soon as the attribute and its values are added to a product.
      *                        - Dynamically: Each variant is created only when its corresponding attributes and values are
      *        added to a sales order.
      *                        - Never: Variants are never created for the attribute.
      *                        Note: the variants creation mode cannot be changed once the attribute is used on at least one
      *        product.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> always (Instantly)
      *            -> dynamic (Dynamically)
      *            -> no_variant (Never)
-     *
-     * @param string $display_type Display Type
-     *        The display type used in the Product Configurator.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $display_type Display Type
+     *        ---
+     *        The display type used in the Product Configurator.
+     *        ---
      *        Selection : (default value, usually null)
      *            -> radio (Radio)
      *            -> select (Select)
      *            -> color (Color)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $name, string $create_variant, string $display_type)
     {

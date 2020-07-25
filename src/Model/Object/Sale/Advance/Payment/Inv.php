@@ -25,15 +25,17 @@ final class Inv extends Base
 {
     /**
      * Create Invoice
+     * ---
      * A standard invoice is issued with all the order lines ready for invoicing,         according to their
      * invoicing policy (based on ordered or delivered quantity).
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> delivered (Regular invoice)
      *     -> percentage (Down payment (percentage))
      *     -> fixed (Down payment (fixed amount))
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -41,6 +43,7 @@ final class Inv extends Base
 
     /**
      * Deduct down payments
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -50,6 +53,7 @@ final class Inv extends Base
 
     /**
      * Has down payments
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -59,6 +63,10 @@ final class Inv extends Base
 
     /**
      * Down Payment Product
+     * ---
+     * Relation : many2one (product.product)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Product
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -68,6 +76,7 @@ final class Inv extends Base
 
     /**
      * Order Count
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -77,7 +86,9 @@ final class Inv extends Base
 
     /**
      * Down Payment Amount
+     * ---
      * The percentage of amount to be invoiced in advance, taxes excluded.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -87,6 +98,10 @@ final class Inv extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -96,7 +111,9 @@ final class Inv extends Base
 
     /**
      * Down Payment Amount(Fixed)
+     * ---
      * The fixed amount to be invoiced in advance, taxes excluded.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -106,7 +123,12 @@ final class Inv extends Base
 
     /**
      * Income Account
+     * ---
      * Account used for deposits
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -116,7 +138,12 @@ final class Inv extends Base
 
     /**
      * Customer Taxes
+     * ---
      * Taxes used for deposits
+     * ---
+     * Relation : many2many (account.tax)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -126,6 +153,10 @@ final class Inv extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -135,6 +166,7 @@ final class Inv extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -144,6 +176,10 @@ final class Inv extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -153,6 +189,7 @@ final class Inv extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -162,15 +199,17 @@ final class Inv extends Base
 
     /**
      * @param string $advance_payment_method Create Invoice
+     *        ---
      *        A standard invoice is issued with all the order lines ready for invoicing,         according to their
      *        invoicing policy (based on ordered or delivered quantity).
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> delivered (Regular invoice)
      *            -> percentage (Down payment (percentage))
      *            -> fixed (Down payment (fixed amount))
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $advance_payment_method)
     {

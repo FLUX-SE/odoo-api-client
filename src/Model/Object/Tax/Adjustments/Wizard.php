@@ -23,6 +23,7 @@ final class Wizard extends Base
 {
     /**
      * Justification
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +33,10 @@ final class Wizard extends Base
 
     /**
      * Journal
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -41,6 +46,7 @@ final class Wizard extends Base
 
     /**
      * Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -50,6 +56,10 @@ final class Wizard extends Base
 
     /**
      * Debit account
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -59,6 +69,10 @@ final class Wizard extends Base
 
     /**
      * Credit account
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -68,6 +82,7 @@ final class Wizard extends Base
 
     /**
      * Amount
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -77,12 +92,13 @@ final class Wizard extends Base
 
     /**
      * Adjustment Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> debit (Applied on debit journal item)
      *     -> credit (Applied on credit journal item)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -90,7 +106,12 @@ final class Wizard extends Base
 
     /**
      * Report Line
+     * ---
      * The report line to make an adjustment for.
+     * ---
+     * Relation : many2one (account.tax.report.line)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax\Report\Line
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -100,6 +121,10 @@ final class Wizard extends Base
 
     /**
      * Company Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -109,6 +134,10 @@ final class Wizard extends Base
 
     /**
      * Country
+     * ---
+     * Relation : many2one (res.country)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -118,6 +147,10 @@ final class Wizard extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -127,6 +160,7 @@ final class Wizard extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -136,6 +170,10 @@ final class Wizard extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -145,6 +183,7 @@ final class Wizard extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -154,32 +193,53 @@ final class Wizard extends Base
 
     /**
      * @param string $reason Justification
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $journal_id Journal
+     *        ---
+     *        Relation : many2one (account.journal)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param DateTimeInterface $date Date
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $debit_account_id Debit account
+     *        ---
+     *        Relation : many2one (account.account)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Account
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $credit_account_id Credit account
+     *        ---
+     *        Relation : many2one (account.account)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Account
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param float $amount Amount
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $adjustment_type Adjustment Type
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> debit (Applied on debit journal item)
      *            -> credit (Applied on credit journal item)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param OdooRelation $tax_report_line_id Report Line
+     *        ---
      *        The report line to make an adjustment for.
+     *        ---
+     *        Relation : many2one (account.tax.report.line)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Tax\Report\Line
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

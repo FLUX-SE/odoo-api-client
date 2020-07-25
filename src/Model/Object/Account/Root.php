@@ -25,6 +25,7 @@ final class Root extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -34,6 +35,10 @@ final class Root extends Base
 
     /**
      * Parent
+     * ---
+     * Relation : many2one (account.root)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Root
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -43,6 +48,10 @@ final class Root extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

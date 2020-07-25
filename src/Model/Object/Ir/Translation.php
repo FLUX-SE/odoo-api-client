@@ -24,6 +24,7 @@ final class Translation extends Base
 {
     /**
      * Translated field
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -33,6 +34,7 @@ final class Translation extends Base
 
     /**
      * Record ID
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -42,11 +44,12 @@ final class Translation extends Base
 
     /**
      * Language
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> en_US (English (US))
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -54,13 +57,14 @@ final class Translation extends Base
 
     /**
      * Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> model (Model Field)
      *     -> model_terms (Structured Model Field)
      *     -> code (Code)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -68,6 +72,7 @@ final class Translation extends Base
 
     /**
      * Internal Source
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -77,6 +82,7 @@ final class Translation extends Base
 
     /**
      * Translation Value
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -86,7 +92,9 @@ final class Translation extends Base
 
     /**
      * Module
+     * ---
      * Module this term belongs to
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -96,14 +104,16 @@ final class Translation extends Base
 
     /**
      * Status
+     * ---
      * Automatically set to let administators find new terms that might need to be translated
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> to_translate (To Translate)
      *     -> inprogress (Translation in Progress)
      *     -> translated (Translated)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -111,6 +121,7 @@ final class Translation extends Base
 
     /**
      * Translation comments
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -120,6 +131,7 @@ final class Translation extends Base
 
     /**
      * @param string $name Translated field
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

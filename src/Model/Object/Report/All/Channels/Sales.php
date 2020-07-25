@@ -26,6 +26,7 @@ final class Sales extends Base
 {
     /**
      * Order Reference
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,10 @@ final class Sales extends Base
 
     /**
      * Partner
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +49,10 @@ final class Sales extends Base
 
     /**
      * Product
+     * ---
+     * Relation : many2one (product.product)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Product
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +62,10 @@ final class Sales extends Base
 
     /**
      * Product Template
+     * ---
+     * Relation : many2one (product.template)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +75,7 @@ final class Sales extends Base
 
     /**
      * Date Order
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +85,10 @@ final class Sales extends Base
 
     /**
      * Salesperson
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,6 +98,10 @@ final class Sales extends Base
 
     /**
      * Product Category
+     * ---
+     * Relation : many2one (product.category)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Category
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,6 +111,10 @@ final class Sales extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -98,6 +124,7 @@ final class Sales extends Base
 
     /**
      * Total
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -107,6 +134,10 @@ final class Sales extends Base
 
     /**
      * Pricelist
+     * ---
+     * Relation : many2one (product.pricelist)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Pricelist
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -116,6 +147,10 @@ final class Sales extends Base
 
     /**
      * Partner Country
+     * ---
+     * Relation : many2one (res.country)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -125,6 +160,7 @@ final class Sales extends Base
 
     /**
      * Price Subtotal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -134,6 +170,7 @@ final class Sales extends Base
 
     /**
      * Product Quantity
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -143,6 +180,10 @@ final class Sales extends Base
 
     /**
      * Analytic Account
+     * ---
+     * Relation : many2one (account.analytic.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -152,6 +193,10 @@ final class Sales extends Base
 
     /**
      * Sales Team
+     * ---
+     * Relation : many2one (crm.team)
+     * @see \Flux\OdooApiClient\Model\Object\Crm\Team
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

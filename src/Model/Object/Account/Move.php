@@ -26,6 +26,7 @@ final class Move extends Base
 {
     /**
      * Number
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Move extends Base
 
     /**
      * Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +46,7 @@ final class Move extends Base
 
     /**
      * Reference
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +56,7 @@ final class Move extends Base
 
     /**
      * Terms and Conditions
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,13 +66,14 @@ final class Move extends Base
 
     /**
      * Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> draft (Draft)
      *     -> posted (Posted)
      *     -> cancel (Cancelled)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -76,8 +81,7 @@ final class Move extends Base
 
     /**
      * Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> entry (Journal Entry)
      *     -> out_invoice (Customer Invoice)
@@ -86,7 +90,9 @@ final class Move extends Base
      *     -> in_refund (Vendor Credit Note)
      *     -> out_receipt (Sales Receipt)
      *     -> in_receipt (Purchase Receipt)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -94,6 +100,7 @@ final class Move extends Base
 
     /**
      * Type Name
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -103,8 +110,10 @@ final class Move extends Base
 
     /**
      * To Check
+     * ---
      * If this checkbox is ticked, it means that the user was not sure of all the related informations at the time of
      * the creation of the move and that the move needs to be checked again.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -114,6 +123,10 @@ final class Move extends Base
 
     /**
      * Journal
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -123,7 +136,12 @@ final class Move extends Base
 
     /**
      * Company
+     * ---
      * Company related to this journal
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -133,6 +151,10 @@ final class Move extends Base
 
     /**
      * Company Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -142,6 +164,10 @@ final class Move extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -151,6 +177,10 @@ final class Move extends Base
 
     /**
      * Journal Items
+     * ---
+     * Relation : one2many (account.move.line -> move_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -160,6 +190,10 @@ final class Move extends Base
 
     /**
      * Partner
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -169,6 +203,10 @@ final class Move extends Base
 
     /**
      * Commercial Entity
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -178,6 +216,7 @@ final class Move extends Base
 
     /**
      * Untaxed Amount
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -187,6 +226,7 @@ final class Move extends Base
 
     /**
      * Tax
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -196,6 +236,7 @@ final class Move extends Base
 
     /**
      * Total
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -205,6 +246,7 @@ final class Move extends Base
 
     /**
      * Amount Due
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -214,6 +256,7 @@ final class Move extends Base
 
     /**
      * Untaxed Amount Signed
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -223,6 +266,7 @@ final class Move extends Base
 
     /**
      * Tax Signed
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -232,6 +276,7 @@ final class Move extends Base
 
     /**
      * Total Signed
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -241,6 +286,7 @@ final class Move extends Base
 
     /**
      * Amount Due Signed
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -250,17 +296,23 @@ final class Move extends Base
 
     /**
      * Tax amount by group
+     * ---
      * Searchable : no
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $amount_by_group;
 
     /**
      * Tax Cash Basis Entry of
+     * ---
      * Technical field used to keep track of the tax cash basis reconciliation. This is needed when cancelling the
      * source: it will post the inverse journal entry to cancel that part too.
+     * ---
+     * Relation : many2one (account.partial.reconcile)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Partial\Reconcile
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -270,7 +322,9 @@ final class Move extends Base
 
     /**
      * Post Automatically
+     * ---
      * If this checkbox is ticked, this entry will be automatically posted at its date.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -280,6 +334,10 @@ final class Move extends Base
 
     /**
      * Reversal of
+     * ---
+     * Relation : many2one (account.move)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -289,8 +347,13 @@ final class Move extends Base
 
     /**
      * Fiscal Position
+     * ---
      * Fiscal positions are used to adapt taxes and accounts for particular customers or sales orders/invoices. The
      * default value comes from the customer.
+     * ---
+     * Relation : many2one (account.fiscal.position)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Fiscal\Position
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -300,6 +363,10 @@ final class Move extends Base
 
     /**
      * Salesperson
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -309,7 +376,12 @@ final class Move extends Base
 
     /**
      * User
+     * ---
      * Technical field used to fit the generic behavior in mail templates.
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -319,13 +391,14 @@ final class Move extends Base
 
     /**
      * Payment
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> not_paid (Not Paid)
      *     -> in_payment (In Payment)
      *     -> paid (Paid)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -333,6 +406,7 @@ final class Move extends Base
 
     /**
      * Invoice/Bill Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -342,6 +416,7 @@ final class Move extends Base
 
     /**
      * Due Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -351,7 +426,9 @@ final class Move extends Base
 
     /**
      * Payment Reference
+     * ---
      * The payment reference to set on journal items.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -361,7 +438,9 @@ final class Move extends Base
 
     /**
      * Invoice Sent
+     * ---
      * It indicates that the invoice has been sent.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -371,7 +450,9 @@ final class Move extends Base
 
     /**
      * Origin
+     * ---
      * The document(s) that generated the invoice.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -381,6 +462,10 @@ final class Move extends Base
 
     /**
      * Payment Terms
+     * ---
+     * Relation : many2one (account.payment.term)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Payment\Term
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -390,6 +475,10 @@ final class Move extends Base
 
     /**
      * Invoice lines
+     * ---
+     * Relation : one2many (account.move.line -> move_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -399,8 +488,13 @@ final class Move extends Base
 
     /**
      * Bank Account
+     * ---
      * Bank Account Number to which the invoice will be paid. A Company bank account if this is a Customer Invoice or
      * Vendor Credit Note, otherwise a Partner bank account number.
+     * ---
+     * Relation : many2one (res.partner.bank)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner\Bank
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -410,7 +504,12 @@ final class Move extends Base
 
     /**
      * Incoterm
+     * ---
      * International Commercial Terms are a series of predefined commercial terms used in international transactions.
+     * ---
+     * Relation : many2one (account.incoterms)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Incoterms
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -420,6 +519,7 @@ final class Move extends Base
 
     /**
      * Invoice Outstanding Credits Debits Widget
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -429,6 +529,7 @@ final class Move extends Base
 
     /**
      * Invoice Payments Widget
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -438,6 +539,7 @@ final class Move extends Base
 
     /**
      * Invoice Has Outstanding
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -447,7 +549,12 @@ final class Move extends Base
 
     /**
      * Vendor Bill
+     * ---
      * Auto-complete from a past bill.
+     * ---
+     * Relation : many2one (account.move)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -457,6 +564,7 @@ final class Move extends Base
 
     /**
      * Source Email
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -466,6 +574,7 @@ final class Move extends Base
 
     /**
      * Invoice Partner Display Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -475,6 +584,7 @@ final class Move extends Base
 
     /**
      * Invoice Partner Icon
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -484,7 +594,12 @@ final class Move extends Base
 
     /**
      * Cash Rounding Method
+     * ---
      * Defines the smallest coinage of the currency that can be used to pay by cash.
+     * ---
+     * Relation : many2one (account.cash.rounding)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Cash\Rounding
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -494,6 +609,7 @@ final class Move extends Base
 
     /**
      * Next Number
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -503,6 +619,7 @@ final class Move extends Base
 
     /**
      * Next Number Prefix
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -512,7 +629,9 @@ final class Move extends Base
 
     /**
      * Invoice Filter Type Domain
+     * ---
      * Technical field used to have a dynamic domain on journal / taxes in the form view.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -522,7 +641,12 @@ final class Move extends Base
 
     /**
      * Bank Partner
+     * ---
      * Technical field to get the domain on the bank
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -532,8 +656,10 @@ final class Move extends Base
 
     /**
      * Invoice Has Matching Suspense Amount
+     * ---
      * Technical field used to display an alert on invoices if there is at least a matching amount in any supsense
      * account.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -543,7 +669,9 @@ final class Move extends Base
 
     /**
      * Tax Lock Date Message
+     * ---
      * Technical field used to display a message when the invoice's accounting date is prior of the tax lock date.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -553,6 +681,7 @@ final class Move extends Base
 
     /**
      * Has Reconciled Entries
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -562,8 +691,10 @@ final class Move extends Base
 
     /**
      * Lock Posted Entries with Hash
+     * ---
      * If ticked, the accounting entry or invoice receives a hash as soon as it is posted and cannot be modified
      * anymore.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -573,6 +704,7 @@ final class Move extends Base
 
     /**
      * Inalteralbility No Gap Sequence #
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -582,6 +714,7 @@ final class Move extends Base
 
     /**
      * Inalterability Hash
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -591,6 +724,7 @@ final class Move extends Base
 
     /**
      * String To Hash
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -600,6 +734,10 @@ final class Move extends Base
 
     /**
      * Attachments
+     * ---
+     * Relation : one2many (ir.attachment -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -609,6 +747,7 @@ final class Move extends Base
 
     /**
      * Duplicated vendor reference
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -618,8 +757,7 @@ final class Move extends Base
 
     /**
      * Extract state
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> no_extract_requested (No extract requested)
      *     -> not_enough_credit (Not enough credit)
@@ -628,7 +766,9 @@ final class Move extends Base
      *     -> extract_not_ready (waiting extraction, but it is not ready)
      *     -> waiting_validation (Waiting validation)
      *     -> done (Completed flow)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -636,6 +776,7 @@ final class Move extends Base
 
     /**
      * Status code
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -645,6 +786,7 @@ final class Move extends Base
 
     /**
      * Error message
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -654,7 +796,9 @@ final class Move extends Base
 
     /**
      * Id of the request to IAP-OCR
+     * ---
      * Invoice extract id
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -664,6 +808,10 @@ final class Move extends Base
 
     /**
      * Extract Word
+     * ---
+     * Relation : one2many (account.invoice_extract.words -> invoice_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\InvoiceExtract\Words
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -673,6 +821,7 @@ final class Move extends Base
 
     /**
      * Can show the ocr resend button
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -682,6 +831,7 @@ final class Move extends Base
 
     /**
      * Can show the ocr send button
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -691,6 +841,10 @@ final class Move extends Base
 
     /**
      * Transactions
+     * ---
+     * Relation : many2many (payment.transaction)
+     * @see \Flux\OdooApiClient\Model\Object\Payment\Transaction
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -700,6 +854,10 @@ final class Move extends Base
 
     /**
      * Authorized Transactions
+     * ---
+     * Relation : many2many (payment.transaction)
+     * @see \Flux\OdooApiClient\Model\Object\Payment\Transaction
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -709,6 +867,10 @@ final class Move extends Base
 
     /**
      * Originating Model
+     * ---
+     * Relation : many2one (account.transfer.model)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Transfer\Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -718,7 +880,9 @@ final class Move extends Base
 
     /**
      * Is Tax Closing
+     * ---
      * technical field used to know if this move is the vat closing move
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -728,7 +892,9 @@ final class Move extends Base
 
     /**
      * Tax Report Control Error
+     * ---
      * technical field used to know if there was a failed control check
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -737,143 +903,11 @@ final class Move extends Base
     private $tax_report_control_error;
 
     /**
-     * Asset
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $asset_id;
-
-    /**
-     * Asset Type
-     * Searchable : yes
-     * Sortable : no
-     * Selection : (default value, usually null)
-     *     -> sale (Sale: Revenue Recognition)
-     *     -> purchase (Purchase: Asset)
-     *     -> expense (Deferred Expense)
-     *
-     *
-     * @var string|null
-     */
-    private $asset_asset_type;
-
-    /**
-     * Depreciable Value
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var float|null
-     */
-    private $asset_remaining_value;
-
-    /**
-     * Cumulative Depreciation
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var float|null
-     */
-    private $asset_depreciated_value;
-
-    /**
-     * Asset Manually Modified
-     * This is a technical field stating that a depreciation line has been manually modified. It is used to recompute
-     * the depreciation table of an asset/deferred revenue.
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $asset_manually_modified;
-
-    /**
-     * Asset Value Change
-     * This is a technical field set to true when this move is the result of the changing of value of an asset
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $asset_value_change;
-
-    /**
-     * Assets
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $asset_ids;
-
-    /**
-     * Asset Ids Display Name
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $asset_ids_display_name;
-
-    /**
-     * Asset Id Display Name
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $asset_id_display_name;
-
-    /**
-     * Number Asset
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var int|null
-     */
-    private $number_asset_ids;
-
-    /**
-     * Draft Asset
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $draft_asset_ids;
-
-    /**
-     * Reversal Move
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $reversal_move_id;
-
-    /**
-     * Is Taxcloud Configured
-     * Used to determine whether or not to warn the user to configure TaxCloud.
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $is_taxcloud_configured;
-
-    /**
-     * Use TaxCloud API
-     * Technical field to determine whether to hide taxes in views or not.
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $is_taxcloud;
-
-    /**
      * Sales Team
+     * ---
+     * Relation : many2one (crm.team)
+     * @see \Flux\OdooApiClient\Model\Object\Crm\Team
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -883,7 +917,12 @@ final class Move extends Base
 
     /**
      * Delivery Address
+     * ---
      * Delivery address for current invoice.
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -892,9 +931,177 @@ final class Move extends Base
     private $partner_shipping_id;
 
     /**
+     * Asset
+     * ---
+     * Relation : many2one (account.asset)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Asset
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $asset_id;
+
+    /**
+     * Asset Type
+     * ---
+     * Selection : (default value, usually null)
+     *     -> sale (Sale: Revenue Recognition)
+     *     -> purchase (Purchase: Asset)
+     *     -> expense (Deferred Expense)
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $asset_asset_type;
+
+    /**
+     * Depreciable Value
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var float|null
+     */
+    private $asset_remaining_value;
+
+    /**
+     * Cumulative Depreciation
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var float|null
+     */
+    private $asset_depreciated_value;
+
+    /**
+     * Asset Manually Modified
+     * ---
+     * This is a technical field stating that a depreciation line has been manually modified. It is used to recompute
+     * the depreciation table of an asset/deferred revenue.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $asset_manually_modified;
+
+    /**
+     * Asset Value Change
+     * ---
+     * This is a technical field set to true when this move is the result of the changing of value of an asset
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $asset_value_change;
+
+    /**
+     * Assets
+     * ---
+     * Relation : one2many (account.asset)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Asset
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $asset_ids;
+
+    /**
+     * Asset Ids Display Name
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $asset_ids_display_name;
+
+    /**
+     * Asset Id Display Name
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $asset_id_display_name;
+
+    /**
+     * Number Asset
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    private $number_asset_ids;
+
+    /**
+     * Draft Asset
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $draft_asset_ids;
+
+    /**
+     * Reversal Move
+     * ---
+     * Relation : one2many (account.move -> reversed_entry_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $reversal_move_id;
+
+    /**
+     * Is Taxcloud Configured
+     * ---
+     * Used to determine whether or not to warn the user to configure TaxCloud.
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $is_taxcloud_configured;
+
+    /**
+     * Use TaxCloud API
+     * ---
+     * Technical field to determine whether to hide taxes in views or not.
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $is_taxcloud;
+
+    /**
      * Campaign
+     * ---
      * This is a name that helps you keep track of your different campaign efforts, e.g. Fall_Drive,
      * Christmas_Special
+     * ---
+     * Relation : many2one (utm.campaign)
+     * @see \Flux\OdooApiClient\Model\Object\Utm\Campaign
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -904,7 +1111,12 @@ final class Move extends Base
 
     /**
      * Source
+     * ---
      * This is the source of the link, e.g. Search Engine, another domain, or name of email list
+     * ---
+     * Relation : many2one (utm.source)
+     * @see \Flux\OdooApiClient\Model\Object\Utm\Source
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -914,7 +1126,12 @@ final class Move extends Base
 
     /**
      * Medium
+     * ---
      * This is the method of delivery, e.g. Postcard, Email, or Banner Ad
+     * ---
+     * Relation : many2one (utm.medium)
+     * @see \Flux\OdooApiClient\Model\Object\Utm\Medium
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -924,6 +1141,10 @@ final class Move extends Base
 
     /**
      * Activities
+     * ---
+     * Relation : one2many (mail.activity -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -933,17 +1154,19 @@ final class Move extends Base
 
     /**
      * Activity State
+     * ---
      * Status based on activities
      * Overdue: Due date is already passed
      * Today: Activity date is today
      * Planned: Future activities.
-     * Searchable : no
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> overdue (Overdue)
      *     -> today (Today)
      *     -> planned (Planned)
-     *
+     * ---
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
@@ -951,6 +1174,10 @@ final class Move extends Base
 
     /**
      * Responsible User
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -960,6 +1187,10 @@ final class Move extends Base
 
     /**
      * Next Activity Type
+     * ---
+     * Relation : many2one (mail.activity.type)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity\Type
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -969,6 +1200,7 @@ final class Move extends Base
 
     /**
      * Next Activity Deadline
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -978,6 +1210,7 @@ final class Move extends Base
 
     /**
      * Next Activity Summary
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -987,13 +1220,15 @@ final class Move extends Base
 
     /**
      * Activity Exception Decoration
+     * ---
      * Type of the exception activity on record.
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> warning (Alert)
      *     -> danger (Error)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -1001,7 +1236,9 @@ final class Move extends Base
 
     /**
      * Icon
+     * ---
      * Icon to indicate an exception activity.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1011,6 +1248,7 @@ final class Move extends Base
 
     /**
      * Is Follower
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1020,6 +1258,10 @@ final class Move extends Base
 
     /**
      * Followers
+     * ---
+     * Relation : one2many (mail.followers -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Followers
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1029,6 +1271,10 @@ final class Move extends Base
 
     /**
      * Followers (Partners)
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1038,6 +1284,10 @@ final class Move extends Base
 
     /**
      * Followers (Channels)
+     * ---
+     * Relation : many2many (mail.channel)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Channel
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1047,6 +1297,10 @@ final class Move extends Base
 
     /**
      * Messages
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1056,7 +1310,9 @@ final class Move extends Base
 
     /**
      * Unread Messages
+     * ---
      * If checked, new messages require your attention.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1066,7 +1322,9 @@ final class Move extends Base
 
     /**
      * Unread Messages Counter
+     * ---
      * Number of unread messages
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1076,7 +1334,9 @@ final class Move extends Base
 
     /**
      * Action Needed
+     * ---
      * If checked, new messages require your attention.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1086,7 +1346,9 @@ final class Move extends Base
 
     /**
      * Number of Actions
+     * ---
      * Number of messages which requires an action
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1096,7 +1358,9 @@ final class Move extends Base
 
     /**
      * Message Delivery error
+     * ---
      * If checked, some messages have a delivery error.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1106,7 +1370,9 @@ final class Move extends Base
 
     /**
      * Number of errors
+     * ---
      * Number of messages with delivery error
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1116,6 +1382,7 @@ final class Move extends Base
 
     /**
      * Attachment Count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1125,6 +1392,10 @@ final class Move extends Base
 
     /**
      * Main Attachment
+     * ---
+     * Relation : many2one (ir.attachment)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1134,7 +1405,12 @@ final class Move extends Base
 
     /**
      * Website Messages
+     * ---
      * Website communication history
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1144,7 +1420,9 @@ final class Move extends Base
 
     /**
      * SMS Delivery error
+     * ---
      * If checked, some messages have a delivery error.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1154,7 +1432,9 @@ final class Move extends Base
 
     /**
      * Portal Access URL
+     * ---
      * Customer Portal URL
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1164,6 +1444,7 @@ final class Move extends Base
 
     /**
      * Security Token
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1173,6 +1454,7 @@ final class Move extends Base
 
     /**
      * Access warning
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1182,6 +1464,10 @@ final class Move extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1191,6 +1477,7 @@ final class Move extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1200,6 +1487,10 @@ final class Move extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1209,6 +1500,7 @@ final class Move extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1218,22 +1510,24 @@ final class Move extends Base
 
     /**
      * @param string $name Number
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param DateTimeInterface $date Date
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $state Status
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> draft (Draft)
      *            -> posted (Posted)
      *            -> cancel (Cancelled)
-     *
-     * @param string $type Type
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $type Type
+     *        ---
      *        Selection : (default value, usually null)
      *            -> entry (Journal Entry)
      *            -> out_invoice (Customer Invoice)
@@ -1242,16 +1536,25 @@ final class Move extends Base
      *            -> in_refund (Vendor Credit Note)
      *            -> out_receipt (Sales Receipt)
      *            -> in_receipt (Purchase Receipt)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param OdooRelation $journal_id Journal
+     *        ---
+     *        Relation : many2one (account.journal)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $currency_id Currency
+     *        ---
+     *        Relation : many2one (res.currency)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $extract_state Extract state
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> no_extract_requested (No extract requested)
      *            -> not_enough_credit (Not enough credit)
@@ -1260,7 +1563,9 @@ final class Move extends Base
      *            -> extract_not_ready (waiting extraction, but it is not ready)
      *            -> waiting_validation (Waiting validation)
      *            -> done (Completed flow)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         string $name,
@@ -1281,58 +1586,11 @@ final class Move extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @return int|null
      */
-    public function getReversalMoveId(): ?array
+    public function getNumberAssetIds(): ?int
     {
-        return $this->reversal_move_id;
-    }
-
-    /**
-     * @param bool|null $is_taxcloud_configured
-     */
-    public function setIsTaxcloudConfigured(?bool $is_taxcloud_configured): void
-    {
-        $this->is_taxcloud_configured = $is_taxcloud_configured;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isIsTaxcloudConfigured(): ?bool
-    {
-        return $this->is_taxcloud_configured;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeReversalMoveId(OdooRelation $item): void
-    {
-        if (null === $this->reversal_move_id) {
-            $this->reversal_move_id = [];
-        }
-
-        if ($this->hasReversalMoveId($item)) {
-            $index = array_search($item, $this->reversal_move_id);
-            unset($this->reversal_move_id[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addReversalMoveId(OdooRelation $item): void
-    {
-        if ($this->hasReversalMoveId($item)) {
-            return;
-        }
-
-        if (null === $this->reversal_move_id) {
-            $this->reversal_move_id = [];
-        }
-
-        $this->reversal_move_id[] = $item;
+        return $this->number_asset_ids;
     }
 
     /**
@@ -1358,19 +1616,19 @@ final class Move extends Base
     }
 
     /**
+     * @return OdooRelation[]|null
+     */
+    public function getReversalMoveId(): ?array
+    {
+        return $this->reversal_move_id;
+    }
+
+    /**
      * @param bool|null $draft_asset_ids
      */
     public function setDraftAssetIds(?bool $draft_asset_ids): void
     {
         $this->draft_asset_ids = $draft_asset_ids;
-    }
-
-    /**
-     * @param bool|null $is_taxcloud
-     */
-    public function setIsTaxcloud(?bool $is_taxcloud): void
-    {
-        $this->is_taxcloud = $is_taxcloud;
     }
 
     /**
@@ -1390,19 +1648,26 @@ final class Move extends Base
     }
 
     /**
-     * @return int|null
-     */
-    public function getNumberAssetIds(): ?int
-    {
-        return $this->number_asset_ids;
-    }
-
-    /**
      * @param string|null $asset_id_display_name
      */
     public function setAssetIdDisplayName(?string $asset_id_display_name): void
     {
         $this->asset_id_display_name = $asset_id_display_name;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeReversalMoveId(OdooRelation $item): void
+    {
+        if (null === $this->reversal_move_id) {
+            $this->reversal_move_id = [];
+        }
+
+        if ($this->hasReversalMoveId($item)) {
+            $index = array_search($item, $this->reversal_move_id);
+            unset($this->reversal_move_id[$index]);
+        }
     }
 
     /**
@@ -1422,19 +1687,11 @@ final class Move extends Base
     }
 
     /**
-     * @return bool|null
+     * @return string|null
      */
-    public function isIsTaxcloud(): ?bool
+    public function getAssetIdsDisplayName(): ?string
     {
-        return $this->is_taxcloud;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getTeamId(): ?OdooRelation
-    {
-        return $this->team_id;
+        return $this->asset_ids_display_name;
     }
 
     /**
@@ -1450,6 +1707,68 @@ final class Move extends Base
             $index = array_search($item, $this->asset_ids);
             unset($this->asset_ids[$index]);
         }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addAssetIds(OdooRelation $item): void
+    {
+        if ($this->hasAssetIds($item)) {
+            return;
+        }
+
+        if (null === $this->asset_ids) {
+            $this->asset_ids = [];
+        }
+
+        $this->asset_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasAssetIds(OdooRelation $item): bool
+    {
+        if (null === $this->asset_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->asset_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addReversalMoveId(OdooRelation $item): void
+    {
+        if ($this->hasReversalMoveId($item)) {
+            return;
+        }
+
+        if (null === $this->reversal_move_id) {
+            $this->reversal_move_id = [];
+        }
+
+        $this->reversal_move_id[] = $item;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsTaxcloudConfigured(): ?bool
+    {
+        return $this->is_taxcloud_configured;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getAssetIds(): ?array
+    {
+        return $this->asset_ids;
     }
 
     /**
@@ -1538,11 +1857,11 @@ final class Move extends Base
     }
 
     /**
-     * @param OdooRelation|null $team_id
+     * @param bool|null $is_taxcloud_configured
      */
-    public function setTeamId(?OdooRelation $team_id): void
+    public function setIsTaxcloudConfigured(?bool $is_taxcloud_configured): void
     {
-        $this->team_id = $team_id;
+        $this->is_taxcloud_configured = $is_taxcloud_configured;
     }
 
     /**
@@ -1578,43 +1897,35 @@ final class Move extends Base
     }
 
     /**
-     * @param OdooRelation|null $partner_shipping_id
+     * @param bool|null $is_taxcloud
      */
-    public function setPartnerShippingId(?OdooRelation $partner_shipping_id): void
+    public function setIsTaxcloud(?bool $is_taxcloud): void
     {
-        $this->partner_shipping_id = $partner_shipping_id;
+        $this->is_taxcloud = $is_taxcloud;
     }
 
     /**
-     * @return OdooRelation|null
+     * @return bool|null
      */
-    public function getPartnerShippingId(): ?OdooRelation
+    public function isIsTaxcloud(): ?bool
     {
-        return $this->partner_shipping_id;
+        return $this->is_taxcloud;
     }
 
     /**
-     * @return string|null
+     * @param OdooRelation[]|null $asset_ids
      */
-    public function getAssetIdsDisplayName(): ?string
+    public function setAssetIds(?array $asset_ids): void
     {
-        return $this->asset_ids_display_name;
+        $this->asset_ids = $asset_ids;
     }
 
     /**
-     * @param OdooRelation $item
+     * @param bool|null $asset_value_change
      */
-    public function addAssetIds(OdooRelation $item): void
+    public function setAssetValueChange(?bool $asset_value_change): void
     {
-        if ($this->hasAssetIds($item)) {
-            return;
-        }
-
-        if (null === $this->asset_ids) {
-            $this->asset_ids = [];
-        }
-
-        $this->asset_ids[] = $item;
+        $this->asset_value_change = $asset_value_change;
     }
 
     /**
@@ -1804,57 +2115,19 @@ final class Move extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasAssetIds(OdooRelation $item): bool
-    {
-        if (null === $this->asset_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->asset_ids);
-    }
-
-    /**
-     * @param float|null $asset_depreciated_value
-     */
-    public function setAssetDepreciatedValue(?float $asset_depreciated_value): void
-    {
-        $this->asset_depreciated_value = $asset_depreciated_value;
-    }
-
-    /**
-     * @param OdooRelation[]|null $asset_ids
-     */
-    public function setAssetIds(?array $asset_ids): void
-    {
-        $this->asset_ids = $asset_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getAssetIds(): ?array
-    {
-        return $this->asset_ids;
-    }
-
-    /**
-     * @param bool|null $asset_value_change
-     */
-    public function setAssetValueChange(?bool $asset_value_change): void
-    {
-        $this->asset_value_change = $asset_value_change;
-    }
-
-    /**
      * @return bool|null
      */
     public function isAssetValueChange(): ?bool
     {
         return $this->asset_value_change;
+    }
+
+    /**
+     * @param string|null $asset_asset_type
+     */
+    public function setAssetAssetType(?string $asset_asset_type): void
+    {
+        $this->asset_asset_type = $asset_asset_type;
     }
 
     /**
@@ -1874,19 +2147,19 @@ final class Move extends Base
     }
 
     /**
+     * @param float|null $asset_depreciated_value
+     */
+    public function setAssetDepreciatedValue(?float $asset_depreciated_value): void
+    {
+        $this->asset_depreciated_value = $asset_depreciated_value;
+    }
+
+    /**
      * @return float|null
      */
     public function getAssetDepreciatedValue(): ?float
     {
         return $this->asset_depreciated_value;
-    }
-
-    /**
-     * @param bool|null $tax_report_control_error
-     */
-    public function setTaxReportControlError(?bool $tax_report_control_error): void
-    {
-        $this->tax_report_control_error = $tax_report_control_error;
     }
 
     /**
@@ -1906,19 +2179,19 @@ final class Move extends Base
     }
 
     /**
-     * @param string|null $asset_asset_type
-     */
-    public function setAssetAssetType(?string $asset_asset_type): void
-    {
-        $this->asset_asset_type = $asset_asset_type;
-    }
-
-    /**
      * @return string|null
      */
     public function getAssetAssetType(): ?string
     {
         return $this->asset_asset_type;
+    }
+
+    /**
+     * @param bool|null $tax_report_control_error
+     */
+    public function setTaxReportControlError(?bool $tax_report_control_error): void
+    {
+        $this->tax_report_control_error = $tax_report_control_error;
     }
 
     /**
@@ -1935,6 +2208,38 @@ final class Move extends Base
     public function getAssetId(): ?OdooRelation
     {
         return $this->asset_id;
+    }
+
+    /**
+     * @param OdooRelation|null $partner_shipping_id
+     */
+    public function setPartnerShippingId(?OdooRelation $partner_shipping_id): void
+    {
+        $this->partner_shipping_id = $partner_shipping_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPartnerShippingId(): ?OdooRelation
+    {
+        return $this->partner_shipping_id;
+    }
+
+    /**
+     * @param OdooRelation|null $team_id
+     */
+    public function setTeamId(?OdooRelation $team_id): void
+    {
+        $this->team_id = $team_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getTeamId(): ?OdooRelation
+    {
+        return $this->team_id;
     }
 
     /**
@@ -2658,17 +2963,17 @@ final class Move extends Base
     }
 
     /**
-     * @param int|null $amount_by_group
+     * @param string|null $amount_by_group
      */
-    public function setAmountByGroup(?int $amount_by_group): void
+    public function setAmountByGroup(?string $amount_by_group): void
     {
         $this->amount_by_group = $amount_by_group;
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getAmountByGroup(): ?int
+    public function getAmountByGroup(): ?string
     {
         return $this->amount_by_group;
     }

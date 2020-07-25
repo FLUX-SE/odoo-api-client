@@ -25,6 +25,7 @@ final class Logging extends Base
 {
     /**
      * Created by
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -34,6 +35,7 @@ final class Logging extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -43,6 +45,7 @@ final class Logging extends Base
 
     /**
      * Last Updated by
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -52,6 +55,7 @@ final class Logging extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -61,6 +65,7 @@ final class Logging extends Base
 
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -70,12 +75,13 @@ final class Logging extends Base
 
     /**
      * Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> client (Client)
      *     -> server (Server)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -83,6 +89,7 @@ final class Logging extends Base
 
     /**
      * Database Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -92,6 +99,7 @@ final class Logging extends Base
 
     /**
      * Level
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -101,6 +109,7 @@ final class Logging extends Base
 
     /**
      * Message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -110,6 +119,7 @@ final class Logging extends Base
 
     /**
      * Path
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -119,6 +129,7 @@ final class Logging extends Base
 
     /**
      * Function
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -128,6 +139,7 @@ final class Logging extends Base
 
     /**
      * Line
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -137,25 +149,31 @@ final class Logging extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $type Type
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> client (Client)
      *            -> server (Server)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $message Message
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $path Path
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $func Function
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $line Line
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

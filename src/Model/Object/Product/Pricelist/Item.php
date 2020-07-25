@@ -26,7 +26,12 @@ final class Item extends Base
 {
     /**
      * Product
+     * ---
      * Specify a template if this rule only applies to one product template. Keep empty otherwise.
+     * ---
+     * Relation : many2one (product.template)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,7 +41,12 @@ final class Item extends Base
 
     /**
      * Product Variant
+     * ---
      * Specify a product if this rule only applies to one product. Keep empty otherwise.
+     * ---
+     * Relation : many2one (product.product)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Product
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -46,8 +56,13 @@ final class Item extends Base
 
     /**
      * Product Category
+     * ---
      * Specify a product category if this rule only applies to products belonging to this category or its children
      * categories. Keep empty otherwise.
+     * ---
+     * Relation : many2one (product.category)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Category
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -57,9 +72,11 @@ final class Item extends Base
 
     /**
      * Min. Quantity
+     * ---
      * For the rule to apply, bought/sold quantity must be greater than or equal to the minimum quantity specified in
      * this field.
      * Expressed in the default unit of measure of the product.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -69,15 +86,17 @@ final class Item extends Base
 
     /**
      * Apply On
+     * ---
      * Pricelist Item applicable on selected option
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> 3_global (All Products)
      *     -> 2_product_category (Product Category)
      *     -> 1_product (Product)
      *     -> 0_product_variant (Product Variant)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -85,17 +104,19 @@ final class Item extends Base
 
     /**
      * Based on
+     * ---
      * Base price for computation.
      * Sales Price: The base price will be the Sales Price.
      * Cost Price : The base price will be the cost price.
      * Other Pricelist : Computation of the base price based on another Pricelist.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> list_price (Sales Price)
      *     -> standard_price (Cost)
      *     -> pricelist (Other Pricelist)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -103,6 +124,10 @@ final class Item extends Base
 
     /**
      * Other Pricelist
+     * ---
+     * Relation : many2one (product.pricelist)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Pricelist
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -112,6 +137,10 @@ final class Item extends Base
 
     /**
      * Pricelist
+     * ---
+     * Relation : many2one (product.pricelist)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Pricelist
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -121,7 +150,9 @@ final class Item extends Base
 
     /**
      * Price Surcharge
+     * ---
      * Specify the fixed amount to add or substract(if negative) to the amount calculated with the discount.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -131,6 +162,7 @@ final class Item extends Base
 
     /**
      * Price Discount
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -140,9 +172,11 @@ final class Item extends Base
 
     /**
      * Price Rounding
+     * ---
      * Sets the price so that it is a multiple of this value.
      * Rounding is applied after the discount and before the surcharge.
      * To have prices that end in 9.99, set rounding 10, surcharge -0.01
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -152,7 +186,9 @@ final class Item extends Base
 
     /**
      * Min. Price Margin
+     * ---
      * Specify the minimum amount of margin over the base price.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -162,7 +198,9 @@ final class Item extends Base
 
     /**
      * Max. Price Margin
+     * ---
      * Specify the maximum amount of margin over the base price.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -172,6 +210,10 @@ final class Item extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -181,6 +223,10 @@ final class Item extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -190,7 +236,9 @@ final class Item extends Base
 
     /**
      * Active
+     * ---
      * If unchecked, it will allow you to hide the pricelist without removing it.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -200,7 +248,9 @@ final class Item extends Base
 
     /**
      * Start Date
+     * ---
      * Starting date for the pricelist item validation
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -210,7 +260,9 @@ final class Item extends Base
 
     /**
      * End Date
+     * ---
      * Ending valid for the pricelist item validation
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -220,13 +272,14 @@ final class Item extends Base
 
     /**
      * Compute Price
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> fixed (Fixed Price)
      *     -> percentage (Percentage (discount))
      *     -> formula (Formula)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -234,6 +287,7 @@ final class Item extends Base
 
     /**
      * Fixed Price
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -243,6 +297,7 @@ final class Item extends Base
 
     /**
      * Percentage Price
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -252,7 +307,9 @@ final class Item extends Base
 
     /**
      * Name
+     * ---
      * Explicit rule name for this pricelist line.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -262,7 +319,9 @@ final class Item extends Base
 
     /**
      * Price
+     * ---
      * Explicit rule name for this pricelist line.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -272,6 +331,10 @@ final class Item extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -281,6 +344,7 @@ final class Item extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -290,6 +354,10 @@ final class Item extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -299,6 +367,7 @@ final class Item extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -308,38 +377,47 @@ final class Item extends Base
 
     /**
      * @param string $applied_on Apply On
+     *        ---
      *        Pricelist Item applicable on selected option
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> 3_global (All Products)
      *            -> 2_product_category (Product Category)
      *            -> 1_product (Product)
      *            -> 0_product_variant (Product Variant)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $base Based on
+     *        ---
      *        Base price for computation.
      *        Sales Price: The base price will be the Sales Price.
      *        Cost Price : The base price will be the cost price.
      *        Other Pricelist : Computation of the base price based on another Pricelist.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> list_price (Sales Price)
      *            -> standard_price (Cost)
      *            -> pricelist (Other Pricelist)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param OdooRelation $pricelist_id Pricelist
+     *        ---
+     *        Relation : many2one (product.pricelist)
+     *        @see \Flux\OdooApiClient\Model\Object\Product\Pricelist
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $compute_price Compute Price
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> fixed (Fixed Price)
      *            -> percentage (Percentage (discount))
      *            -> formula (Formula)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         string $applied_on,

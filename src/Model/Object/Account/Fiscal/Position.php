@@ -26,6 +26,7 @@ final class Position extends Base
 {
     /**
      * Sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Position extends Base
 
     /**
      * Fiscal Position
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,7 +46,9 @@ final class Position extends Base
 
     /**
      * Active
+     * ---
      * By unchecking the active field, you may hide a fiscal position without deleting it.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,6 +58,10 @@ final class Position extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,6 +71,10 @@ final class Position extends Base
 
     /**
      * Account Mapping
+     * ---
+     * Relation : one2many (account.fiscal.position.account -> position_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Fiscal\Position\Account
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -72,6 +84,10 @@ final class Position extends Base
 
     /**
      * Tax Mapping
+     * ---
+     * Relation : one2many (account.fiscal.position.tax -> position_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Fiscal\Position\Tax
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -81,7 +97,9 @@ final class Position extends Base
 
     /**
      * Notes
+     * ---
      * Legal mentions that have to be printed on the invoices.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -91,7 +109,9 @@ final class Position extends Base
 
     /**
      * Detect Automatically
+     * ---
      * Apply automatically this fiscal position.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -101,7 +121,9 @@ final class Position extends Base
 
     /**
      * VAT required
+     * ---
      * Apply only if partner has a VAT number.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -111,7 +133,12 @@ final class Position extends Base
 
     /**
      * Country
+     * ---
      * Apply only if delivery or invoicing country match.
+     * ---
+     * Relation : many2one (res.country)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -121,7 +148,12 @@ final class Position extends Base
 
     /**
      * Country Group
+     * ---
      * Apply only if delivery or invoicing country match the group.
+     * ---
+     * Relation : many2one (res.country.group)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country\Group
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -131,6 +163,10 @@ final class Position extends Base
 
     /**
      * Federal States
+     * ---
+     * Relation : many2many (res.country.state)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country\State
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -140,6 +176,7 @@ final class Position extends Base
 
     /**
      * Zip Range From
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -149,6 +186,7 @@ final class Position extends Base
 
     /**
      * Zip Range To
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -158,6 +196,7 @@ final class Position extends Base
 
     /**
      * States Count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -167,7 +206,9 @@ final class Position extends Base
 
     /**
      * Is Taxcloud Configured
+     * ---
      * Used to determine whether or not to warn the user to configure TaxCloud.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -177,6 +218,7 @@ final class Position extends Base
 
     /**
      * Use TaxCloud API
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -186,6 +228,10 @@ final class Position extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -195,6 +241,7 @@ final class Position extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -204,6 +251,10 @@ final class Position extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -213,6 +264,7 @@ final class Position extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -222,9 +274,14 @@ final class Position extends Base
 
     /**
      * @param string $name Fiscal Position
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $company_id Company
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

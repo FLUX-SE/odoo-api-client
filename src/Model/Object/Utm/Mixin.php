@@ -17,8 +17,13 @@ final class Mixin extends Base
 {
     /**
      * Campaign
+     * ---
      * This is a name that helps you keep track of your different campaign efforts, e.g. Fall_Drive,
      * Christmas_Special
+     * ---
+     * Relation : many2one (utm.campaign)
+     * @see \Flux\OdooApiClient\Model\Object\Utm\Campaign
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -28,7 +33,12 @@ final class Mixin extends Base
 
     /**
      * Source
+     * ---
      * This is the source of the link, e.g. Search Engine, another domain, or name of email list
+     * ---
+     * Relation : many2one (utm.source)
+     * @see \Flux\OdooApiClient\Model\Object\Utm\Source
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -38,7 +48,12 @@ final class Mixin extends Base
 
     /**
      * Medium
+     * ---
      * This is the method of delivery, e.g. Postcard, Email, or Banner Ad
+     * ---
+     * Relation : many2one (utm.medium)
+     * @see \Flux\OdooApiClient\Model\Object\Utm\Medium
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

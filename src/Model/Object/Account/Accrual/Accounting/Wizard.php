@@ -23,6 +23,7 @@ final class Wizard extends Base
 {
     /**
      * Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +33,10 @@ final class Wizard extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -41,12 +46,13 @@ final class Wizard extends Base
 
     /**
      * Account Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> income (Revenue)
      *     -> expense (Expense)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -54,6 +60,10 @@ final class Wizard extends Base
 
     /**
      * Active Move Line
+     * ---
+     * Relation : many2many (account.move.line)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -63,7 +73,12 @@ final class Wizard extends Base
 
     /**
      * Accrual Default Journal
+     * ---
      * Journal used by default for moving the period of an entry
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -73,7 +88,12 @@ final class Wizard extends Base
 
     /**
      * Expense Accrual Account
+     * ---
      * Account used to move the period of an expense
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -83,7 +103,12 @@ final class Wizard extends Base
 
     /**
      * Revenue Accrual Account
+     * ---
      * Account used to move the period of a revenue
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -93,6 +118,7 @@ final class Wizard extends Base
 
     /**
      * Percentage
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -102,6 +128,7 @@ final class Wizard extends Base
 
     /**
      * Total Amount
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -111,6 +138,10 @@ final class Wizard extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -120,6 +151,10 @@ final class Wizard extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -129,6 +164,7 @@ final class Wizard extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -138,6 +174,10 @@ final class Wizard extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -147,6 +187,7 @@ final class Wizard extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -156,13 +197,23 @@ final class Wizard extends Base
 
     /**
      * @param DateTimeInterface $date Date
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $company_id Company
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $journal_id Accrual Default Journal
+     *        ---
      *        Journal used by default for moving the period of an entry
+     *        ---
+     *        Relation : many2one (account.journal)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     *        ---
      *        Searchable : yes
      *        Sortable : no
      */

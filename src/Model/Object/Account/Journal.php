@@ -26,6 +26,7 @@ class Journal extends Base
 {
     /**
      * Journal Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,7 +36,9 @@ class Journal extends Base
 
     /**
      * Short Code
+     * ---
      * The journal entries of this journal will be named using this prefix.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,7 +48,9 @@ class Journal extends Base
 
     /**
      * Active
+     * ---
      * Set active to false to hide the Journal without removing it.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -55,19 +60,21 @@ class Journal extends Base
 
     /**
      * Type
+     * ---
      * Select 'Sale' for customer invoices journals.
      * Select 'Purchase' for vendor bills journals.
      * Select 'Cash' or 'Bank' for journals that are used in customer or vendor payments.
      * Select 'General' for miscellaneous operations journals.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> sale (Sales)
      *     -> purchase (Purchase)
      *     -> cash (Cash)
      *     -> bank (Bank)
      *     -> general (Miscellaneous)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -75,6 +82,10 @@ class Journal extends Base
 
     /**
      * Account Types Allowed
+     * ---
+     * Relation : many2many (account.account.type)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Type
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -84,6 +95,10 @@ class Journal extends Base
 
     /**
      * Accounts Allowed
+     * ---
+     * Relation : many2many (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -93,7 +108,12 @@ class Journal extends Base
 
     /**
      * Default Credit Account
+     * ---
      * It acts as a default account for credit amount
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -103,7 +123,12 @@ class Journal extends Base
 
     /**
      * Default Debit Account
+     * ---
      * It acts as a default account for debit amount
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -113,8 +138,10 @@ class Journal extends Base
 
     /**
      * Lock Posted Entries with Hash
+     * ---
      * If ticked, the accounting entry or invoice receives a hash as soon as it is posted and cannot be modified
      * anymore.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -124,7 +151,12 @@ class Journal extends Base
 
     /**
      * Entry Sequence
+     * ---
      * This field contains the information related to the numbering of the journal entries of this journal.
+     * ---
+     * Relation : many2one (ir.sequence)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -134,7 +166,12 @@ class Journal extends Base
 
     /**
      * Credit Note Entry Sequence
+     * ---
      * This field contains the information related to the numbering of the credit note entries of this journal.
+     * ---
+     * Relation : many2one (ir.sequence)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -144,7 +181,9 @@ class Journal extends Base
 
     /**
      * Sequence
+     * ---
      * Used to order Journals in the dashboard view
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -154,7 +193,9 @@ class Journal extends Base
 
     /**
      * Next Number
+     * ---
      * The next sequence number will be used for the next invoice.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -164,7 +205,9 @@ class Journal extends Base
 
     /**
      * Credit Notes Next Number
+     * ---
      * The next sequence number will be used for the next credit note.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -174,15 +217,17 @@ class Journal extends Base
 
     /**
      * Communication Type
+     * ---
      * You can set here the default communication that will appear on customer invoices, once validated, to help the
      * customer to refer to that particular invoice when making the payment.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> none (Free)
      *     -> partner (Based on Customer)
      *     -> invoice (Based on Invoice)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -190,13 +235,15 @@ class Journal extends Base
 
     /**
      * Communication Standard
+     * ---
      * You can choose different models for each type of reference. The default one is the Odoo reference.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> odoo (Odoo)
      *     -> euro (European)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -204,7 +251,12 @@ class Journal extends Base
 
     /**
      * Currency
+     * ---
      * The currency used to enter statement
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -214,7 +266,12 @@ class Journal extends Base
 
     /**
      * Company
+     * ---
      * Company related to this journal
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -224,8 +281,10 @@ class Journal extends Base
 
     /**
      * Dedicated Credit Note Sequence
+     * ---
      * Check this box if you don't want to share the same sequence for invoices and credit notes made from this
      * journal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -235,12 +294,17 @@ class Journal extends Base
 
     /**
      * For Incoming Payments
+     * ---
      * Manual: Get paid by cash, check or any other method outside of Odoo.
      * Electronic: Get paid automatically through a payment acquirer by requesting a transaction on a card saved by
      * the customer when buying or subscribing online (payment token).
      * Batch Deposit: Encase several customer checks at once by generating a batch deposit to submit to your bank.
      * When encoding the bank statement in Odoo,you are suggested to reconcile the transaction with the batch
      * deposit. Enable this option from the settings.
+     * ---
+     * Relation : many2many (account.payment.method)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Payment\Method
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -250,10 +314,15 @@ class Journal extends Base
 
     /**
      * For Outgoing Payments
+     * ---
      * Manual:Pay bill by cash or any other method outside of Odoo.
      * Check:Pay bill by check and print it from Odoo.
      * SEPA Credit Transfer: Pay bill from a SEPA Credit Transfer file you submit to your bank. Enable this option
      * from the settings.
+     * ---
+     * Relation : many2many (account.payment.method)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Payment\Method
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -263,6 +332,7 @@ class Journal extends Base
 
     /**
      * At Least One Inbound
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -272,6 +342,7 @@ class Journal extends Base
 
     /**
      * At Least One Outbound
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -281,7 +352,12 @@ class Journal extends Base
 
     /**
      * Profit Account
+     * ---
      * Used to register a profit when the ending balance of a cash register differs from what the system computes
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -291,7 +367,12 @@ class Journal extends Base
 
     /**
      * Loss Account
+     * ---
      * Used to register a loss when the ending balance of a cash register differs from what the system computes
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -301,6 +382,10 @@ class Journal extends Base
 
     /**
      * Account Holder
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -310,6 +395,10 @@ class Journal extends Base
 
     /**
      * Bank Account
+     * ---
+     * Relation : many2one (res.partner.bank)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner\Bank
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -319,14 +408,16 @@ class Journal extends Base
 
     /**
      * Bank Feeds
+     * ---
      * Defines how the bank statements will be registered
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> undefined (Undefined Yet)
      *     -> file_import (Import(CAMT, CSV, OFX))
      *     -> online_sync (Automated Bank Synchronization)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -334,6 +425,7 @@ class Journal extends Base
 
     /**
      * Account Number
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -343,6 +435,10 @@ class Journal extends Base
 
     /**
      * Bank
+     * ---
+     * Relation : many2one (res.bank)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Bank
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -352,12 +448,13 @@ class Journal extends Base
 
     /**
      * Post At
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> pay_val (Payment Validation)
      *     -> bank_rec (Bank Reconciliation)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -365,6 +462,10 @@ class Journal extends Base
 
     /**
      * Alias
+     * ---
+     * Relation : many2one (mail.alias)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Alias
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -374,6 +475,7 @@ class Journal extends Base
 
     /**
      * Alias domain
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -383,7 +485,9 @@ class Journal extends Base
 
     /**
      * Alias Name
+     * ---
      * It creates draft invoices and bills by sending an email.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -393,6 +497,10 @@ class Journal extends Base
 
     /**
      * Journal Groups
+     * ---
+     * Relation : many2many (account.journal.group)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal\Group
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -402,7 +510,12 @@ class Journal extends Base
 
     /**
      * Secure Sequence
+     * ---
      * Sequence to use to ensure the securisation of data
+     * ---
+     * Relation : many2one (ir.sequence)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -412,6 +525,7 @@ class Journal extends Base
 
     /**
      * Kanban Dashboard
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -421,6 +535,7 @@ class Journal extends Base
 
     /**
      * Kanban Dashboard Graph
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -430,6 +545,7 @@ class Journal extends Base
 
     /**
      * Json Activity Data
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -439,7 +555,9 @@ class Journal extends Base
 
     /**
      * Show journal on dashboard
+     * ---
      * Whether this journal should be displayed on the dashboard or not
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -449,6 +567,7 @@ class Journal extends Base
 
     /**
      * Color Index
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -458,7 +577,9 @@ class Journal extends Base
 
     /**
      * Manual Numbering
+     * ---
      * Check this option if your pre-printed checks are not numbered.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -468,7 +589,12 @@ class Journal extends Base
 
     /**
      * Check Sequence
+     * ---
      * Checks numbering sequence.
+     * ---
+     * Relation : many2one (ir.sequence)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -478,7 +604,9 @@ class Journal extends Base
 
     /**
      * Next Check Number
+     * ---
      * Sequence number of the next printed check.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -488,7 +616,9 @@ class Journal extends Base
 
     /**
      * Check Printing Payment Method Selected
+     * ---
      * Technical feature used to know whether check printing was enabled as payment method.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -498,6 +628,7 @@ class Journal extends Base
 
     /**
      * Next synchronization
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -507,6 +638,10 @@ class Journal extends Base
 
     /**
      * Account Online Journal
+     * ---
+     * Relation : many2one (account.online.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Online\Journal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -516,6 +651,10 @@ class Journal extends Base
 
     /**
      * Account Online Provider
+     * ---
+     * Relation : many2one (account.online.provider)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Online\Provider
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -525,7 +664,9 @@ class Journal extends Base
 
     /**
      * Synchronization status
+     * ---
      * Update status of provider account
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -535,20 +676,22 @@ class Journal extends Base
 
     /**
      * Creation of Bank Statements
+     * ---
      * Defines when a new bank statement
      *                                                                                               will be created
      * when fetching new transactions
      *                                                                                               from your bank
      * account.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> none (Create one statement per synchronization)
      *     -> day (Create daily statements)
      *     -> week (Create weekly statements)
      *     -> bimonthly (Create bi-monthly statements)
      *     -> month (Create monthly statements)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -556,6 +699,10 @@ class Journal extends Base
 
     /**
      * Activities
+     * ---
+     * Relation : one2many (mail.activity -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -565,200 +712,30 @@ class Journal extends Base
 
     /**
      * Activity State
+     * ---
      * Status based on activities
      * Overdue: Due date is already passed
      * Today: Activity date is today
      * Planned: Future activities.
-     * Searchable : no
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> overdue (Overdue)
      *     -> today (Today)
      *     -> planned (Planned)
-     *
+     * ---
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
     protected $activity_state;
 
     /**
-     * Next Activity Deadline
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var DateTimeInterface|null
-     */
-    protected $activity_date_deadline;
-
-    /**
-     * Activity Exception Decoration
-     * Type of the exception activity on record.
-     * Searchable : yes
-     * Sortable : no
-     * Selection : (default value, usually null)
-     *     -> warning (Alert)
-     *     -> danger (Error)
-     *
-     *
-     * @var string|null
-     */
-    protected $activity_exception_decoration;
-
-    /**
-     * Icon
-     * Icon to indicate an exception activity.
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    protected $activity_exception_icon;
-
-    /**
-     * Is Follower
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    protected $message_is_follower;
-
-    /**
-     * Followers
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    protected $message_follower_ids;
-
-    /**
-     * Followers (Partners)
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    protected $message_partner_ids;
-
-    /**
-     * Followers (Channels)
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    protected $message_channel_ids;
-
-    /**
-     * Messages
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    protected $message_ids;
-
-    /**
-     * Unread Messages
-     * If checked, new messages require your attention.
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    protected $message_unread;
-
-    /**
-     * Unread Messages Counter
-     * Number of unread messages
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var int|null
-     */
-    protected $message_unread_counter;
-
-    /**
-     * Action Needed
-     * If checked, new messages require your attention.
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    protected $message_needaction;
-
-    /**
-     * Number of Actions
-     * Number of messages which requires an action
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var int|null
-     */
-    protected $message_needaction_counter;
-
-    /**
-     * Message Delivery error
-     * If checked, some messages have a delivery error.
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    protected $message_has_error;
-
-    /**
-     * Number of errors
-     * Number of messages with delivery error
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var int|null
-     */
-    protected $message_has_error_counter;
-
-    /**
-     * Attachment Count
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var int|null
-     */
-    protected $message_attachment_count;
-
-    /**
-     * Main Attachment
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    protected $message_main_attachment_id;
-
-    /**
-     * Website Messages
-     * Website communication history
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    protected $website_message_ids;
-
-    /**
-     * SMS Delivery error
-     * If checked, some messages have a delivery error.
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    protected $message_has_sms_error;
-
-    /**
      * Responsible User
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -768,6 +745,10 @@ class Journal extends Base
 
     /**
      * Next Activity Type
+     * ---
+     * Relation : many2one (mail.activity.type)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity\Type
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -776,7 +757,18 @@ class Journal extends Base
     protected $activity_type_id;
 
     /**
+     * Next Activity Deadline
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var DateTimeInterface|null
+     */
+    protected $activity_date_deadline;
+
+    /**
      * Next Activity Summary
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -785,7 +777,223 @@ class Journal extends Base
     protected $activity_summary;
 
     /**
+     * Activity Exception Decoration
+     * ---
+     * Type of the exception activity on record.
+     * ---
+     * Selection : (default value, usually null)
+     *     -> warning (Alert)
+     *     -> danger (Error)
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    protected $activity_exception_decoration;
+
+    /**
+     * Icon
+     * ---
+     * Icon to indicate an exception activity.
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    protected $activity_exception_icon;
+
+    /**
+     * Is Follower
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    protected $message_is_follower;
+
+    /**
+     * Followers
+     * ---
+     * Relation : one2many (mail.followers -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Followers
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    protected $message_follower_ids;
+
+    /**
+     * Followers (Partners)
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    protected $message_partner_ids;
+
+    /**
+     * Followers (Channels)
+     * ---
+     * Relation : many2many (mail.channel)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Channel
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    protected $message_channel_ids;
+
+    /**
+     * Messages
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    protected $message_ids;
+
+    /**
+     * Unread Messages
+     * ---
+     * If checked, new messages require your attention.
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    protected $message_unread;
+
+    /**
+     * Unread Messages Counter
+     * ---
+     * Number of unread messages
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    protected $message_unread_counter;
+
+    /**
+     * Action Needed
+     * ---
+     * If checked, new messages require your attention.
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    protected $message_needaction;
+
+    /**
+     * Number of Actions
+     * ---
+     * Number of messages which requires an action
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    protected $message_needaction_counter;
+
+    /**
+     * Message Delivery error
+     * ---
+     * If checked, some messages have a delivery error.
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    protected $message_has_error;
+
+    /**
+     * Number of errors
+     * ---
+     * Number of messages with delivery error
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    protected $message_has_error_counter;
+
+    /**
+     * Attachment Count
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    protected $message_attachment_count;
+
+    /**
+     * Main Attachment
+     * ---
+     * Relation : many2one (ir.attachment)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    protected $message_main_attachment_id;
+
+    /**
+     * Website Messages
+     * ---
+     * Website communication history
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    protected $website_message_ids;
+
+    /**
+     * SMS Delivery error
+     * ---
+     * If checked, some messages have a delivery error.
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    protected $message_has_sms_error;
+
+    /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -795,6 +1003,7 @@ class Journal extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -804,6 +1013,10 @@ class Journal extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -813,6 +1026,7 @@ class Journal extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -822,50 +1036,69 @@ class Journal extends Base
 
     /**
      * @param string $name Journal Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $code Short Code
+     *        ---
      *        The journal entries of this journal will be named using this prefix.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $type Type
+     *        ---
      *        Select 'Sale' for customer invoices journals.
      *        Select 'Purchase' for vendor bills journals.
      *        Select 'Cash' or 'Bank' for journals that are used in customer or vendor payments.
      *        Select 'General' for miscellaneous operations journals.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> sale (Sales)
      *            -> purchase (Purchase)
      *            -> cash (Cash)
      *            -> bank (Bank)
      *            -> general (Miscellaneous)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param OdooRelation $sequence_id Entry Sequence
+     *        ---
      *        This field contains the information related to the numbering of the journal entries of this journal.
+     *        ---
+     *        Relation : many2one (ir.sequence)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Sequence
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $invoice_reference_type Communication Type
+     *        ---
      *        You can set here the default communication that will appear on customer invoices, once validated, to help the
      *        customer to refer to that particular invoice when making the payment.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> none (Free)
      *            -> partner (Based on Customer)
      *            -> invoice (Based on Invoice)
-     *
-     * @param string $invoice_reference_model Communication Standard
-     *        You can choose different models for each type of reference. The default one is the Odoo reference.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $invoice_reference_model Communication Standard
+     *        ---
+     *        You can choose different models for each type of reference. The default one is the Odoo reference.
+     *        ---
      *        Selection : (default value, usually null)
      *            -> odoo (Odoo)
      *            -> euro (European)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param OdooRelation $company_id Company
+     *        ---
      *        Company related to this journal
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */
@@ -888,11 +1121,11 @@ class Journal extends Base
     }
 
     /**
-     * @return bool|null
+     * @return string|null
      */
-    public function isMessageIsFollower(): ?bool
+    public function getActivitySummary(): ?string
     {
-        return $this->message_is_follower;
+        return $this->activity_summary;
     }
 
     /**
@@ -912,6 +1145,38 @@ class Journal extends Base
     }
 
     /**
+     * @return OdooRelation|null
+     */
+    public function getActivityUserId(): ?OdooRelation
+    {
+        return $this->activity_user_id;
+    }
+
+    /**
+     * @param OdooRelation|null $activity_user_id
+     */
+    public function setActivityUserId(?OdooRelation $activity_user_id): void
+    {
+        $this->activity_user_id = $activity_user_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getActivityTypeId(): ?OdooRelation
+    {
+        return $this->activity_type_id;
+    }
+
+    /**
+     * @param OdooRelation|null $activity_type_id
+     */
+    public function setActivityTypeId(?OdooRelation $activity_type_id): void
+    {
+        $this->activity_type_id = $activity_type_id;
+    }
+
+    /**
      * @return DateTimeInterface|null
      */
     public function getActivityDateDeadline(): ?DateTimeInterface
@@ -925,6 +1190,30 @@ class Journal extends Base
     public function setActivityDateDeadline(?DateTimeInterface $activity_date_deadline): void
     {
         $this->activity_date_deadline = $activity_date_deadline;
+    }
+
+    /**
+     * @param string|null $activity_summary
+     */
+    public function setActivitySummary(?string $activity_summary): void
+    {
+        $this->activity_summary = $activity_summary;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addActivityIds(OdooRelation $item): void
+    {
+        if ($this->hasActivityIds($item)) {
+            return;
+        }
+
+        if (null === $this->activity_ids) {
+            $this->activity_ids = [];
+        }
+
+        $this->activity_ids[] = $item;
     }
 
     /**
@@ -960,27 +1249,19 @@ class Journal extends Base
     }
 
     /**
+     * @return bool|null
+     */
+    public function isMessageIsFollower(): ?bool
+    {
+        return $this->message_is_follower;
+    }
+
+    /**
      * @param bool|null $message_is_follower
      */
     public function setMessageIsFollower(?bool $message_is_follower): void
     {
         $this->message_is_follower = $message_is_follower;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addActivityIds(OdooRelation $item): void
-    {
-        if ($this->hasActivityIds($item)) {
-            return;
-        }
-
-        if (null === $this->activity_ids) {
-            $this->activity_ids = [];
-        }
-
-        $this->activity_ids[] = $item;
     }
 
     /**
@@ -1016,83 +1297,6 @@ class Journal extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addMessageFollowerIds(OdooRelation $item): void
-    {
-        if ($this->hasMessageFollowerIds($item)) {
-            return;
-        }
-
-        if (null === $this->message_follower_ids) {
-            $this->message_follower_ids = [];
-        }
-
-        $this->message_follower_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMessageFollowerIds(OdooRelation $item): void
-    {
-        if (null === $this->message_follower_ids) {
-            $this->message_follower_ids = [];
-        }
-
-        if ($this->hasMessageFollowerIds($item)) {
-            $index = array_search($item, $this->message_follower_ids);
-            unset($this->message_follower_ids[$index]);
-        }
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getMessagePartnerIds(): ?array
-    {
-        return $this->message_partner_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $message_partner_ids
-     */
-    public function setMessagePartnerIds(?array $message_partner_ids): void
-    {
-        $this->message_partner_ids = $message_partner_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasMessagePartnerIds(OdooRelation $item): bool
-    {
-        if (null === $this->message_partner_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_partner_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addMessagePartnerIds(OdooRelation $item): void
-    {
-        if ($this->hasMessagePartnerIds($item)) {
-            return;
-        }
-
-        if (null === $this->message_partner_ids) {
-            $this->message_partner_ids = [];
-        }
-
-        $this->message_partner_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
     public function removeActivityIds(OdooRelation $item): void
     {
         if (null === $this->activity_ids) {
@@ -1120,11 +1324,18 @@ class Journal extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @param OdooRelation $item
      */
-    public function getMessageChannelIds(): ?array
+    public function removeMessageFollowerIds(OdooRelation $item): void
     {
-        return $this->message_channel_ids;
+        if (null === $this->message_follower_ids) {
+            $this->message_follower_ids = [];
+        }
+
+        if ($this->hasMessageFollowerIds($item)) {
+            $index = array_search($item, $this->message_follower_ids);
+            unset($this->message_follower_ids[$index]);
+        }
     }
 
     /**
@@ -1299,24 +1510,25 @@ class Journal extends Base
     /**
      * @param OdooRelation $item
      */
-    public function removeMessagePartnerIds(OdooRelation $item): void
+    public function addMessageFollowerIds(OdooRelation $item): void
     {
-        if (null === $this->message_partner_ids) {
-            $this->message_partner_ids = [];
+        if ($this->hasMessageFollowerIds($item)) {
+            return;
         }
 
-        if ($this->hasMessagePartnerIds($item)) {
-            $index = array_search($item, $this->message_partner_ids);
-            unset($this->message_partner_ids[$index]);
+        if (null === $this->message_follower_ids) {
+            $this->message_follower_ids = [];
         }
+
+        $this->message_follower_ids[] = $item;
     }
 
     /**
-     * @param OdooRelation[]|null $message_channel_ids
+     * @return OdooRelation[]|null
      */
-    public function setMessageChannelIds(?array $message_channel_ids): void
+    public function getMessagePartnerIds(): ?array
     {
-        $this->message_channel_ids = $message_channel_ids;
+        return $this->message_partner_ids;
     }
 
     /**
@@ -1328,11 +1540,66 @@ class Journal extends Base
     }
 
     /**
-     * @param OdooRelation|null $activity_type_id
+     * @param OdooRelation $item
      */
-    public function setActivityTypeId(?OdooRelation $activity_type_id): void
+    public function removeWebsiteMessageIds(OdooRelation $item): void
     {
-        $this->activity_type_id = $activity_type_id;
+        if (null === $this->website_message_ids) {
+            $this->website_message_ids = [];
+        }
+
+        if ($this->hasWebsiteMessageIds($item)) {
+            $index = array_search($item, $this->website_message_ids);
+            unset($this->website_message_ids[$index]);
+        }
+    }
+
+    /**
+     * @param int|null $message_has_error_counter
+     */
+    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
+    {
+        $this->message_has_error_counter = $message_has_error_counter;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getMessageAttachmentCount(): ?int
+    {
+        return $this->message_attachment_count;
+    }
+
+    /**
+     * @param int|null $message_attachment_count
+     */
+    public function setMessageAttachmentCount(?int $message_attachment_count): void
+    {
+        $this->message_attachment_count = $message_attachment_count;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getMessageMainAttachmentId(): ?OdooRelation
+    {
+        return $this->message_main_attachment_id;
+    }
+
+    /**
+     * @param OdooRelation|null $message_main_attachment_id
+     */
+    public function setMessageMainAttachmentId(?OdooRelation $message_main_attachment_id): void
+    {
+        $this->message_main_attachment_id = $message_main_attachment_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getWebsiteMessageIds(): ?array
+    {
+        return $this->website_message_ids;
     }
 
     /**
@@ -1374,21 +1641,6 @@ class Journal extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     */
-    public function removeWebsiteMessageIds(OdooRelation $item): void
-    {
-        if (null === $this->website_message_ids) {
-            $this->website_message_ids = [];
-        }
-
-        if ($this->hasWebsiteMessageIds($item)) {
-            $index = array_search($item, $this->website_message_ids);
-            unset($this->website_message_ids[$index]);
-        }
-    }
-
-    /**
      * @return bool|null
      */
     public function isMessageHasSmsError(): ?bool
@@ -1397,59 +1649,19 @@ class Journal extends Base
     }
 
     /**
+     * @param bool|null $message_has_error
+     */
+    public function setMessageHasError(?bool $message_has_error): void
+    {
+        $this->message_has_error = $message_has_error;
+    }
+
+    /**
      * @param bool|null $message_has_sms_error
      */
     public function setMessageHasSmsError(?bool $message_has_sms_error): void
     {
         $this->message_has_sms_error = $message_has_sms_error;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getActivityUserId(): ?OdooRelation
-    {
-        return $this->activity_user_id;
-    }
-
-    /**
-     * @param OdooRelation|null $activity_user_id
-     */
-    public function setActivityUserId(?OdooRelation $activity_user_id): void
-    {
-        $this->activity_user_id = $activity_user_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getActivityTypeId(): ?OdooRelation
-    {
-        return $this->activity_type_id;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getActivitySummary(): ?string
-    {
-        return $this->activity_summary;
-    }
-
-    /**
-     * @param OdooRelation|null $message_main_attachment_id
-     */
-    public function setMessageMainAttachmentId(?OdooRelation $message_main_attachment_id): void
-    {
-        $this->message_main_attachment_id = $message_main_attachment_id;
-    }
-
-    /**
-     * @param string|null $activity_summary
-     */
-    public function setActivitySummary(?string $activity_summary): void
-    {
-        $this->activity_summary = $activity_summary;
     }
 
     /**
@@ -1517,19 +1729,96 @@ class Journal extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @return int|null
      */
-    public function getWebsiteMessageIds(): ?array
+    public function getMessageHasErrorCounter(): ?int
     {
-        return $this->website_message_ids;
+        return $this->message_has_error_counter;
     }
 
     /**
-     * @return OdooRelation|null
+     * @return bool|null
      */
-    public function getMessageMainAttachmentId(): ?OdooRelation
+    public function isMessageHasError(): ?bool
     {
-        return $this->message_main_attachment_id;
+        return $this->message_has_error;
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_partner_ids
+     */
+    public function setMessagePartnerIds(?array $message_partner_ids): void
+    {
+        $this->message_partner_ids = $message_partner_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_ids
+     */
+    public function setMessageIds(?array $message_ids): void
+    {
+        $this->message_ids = $message_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMessagePartnerIds(OdooRelation $item): bool
+    {
+        if (null === $this->message_partner_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_partner_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMessagePartnerIds(OdooRelation $item): void
+    {
+        if ($this->hasMessagePartnerIds($item)) {
+            return;
+        }
+
+        if (null === $this->message_partner_ids) {
+            $this->message_partner_ids = [];
+        }
+
+        $this->message_partner_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMessagePartnerIds(OdooRelation $item): void
+    {
+        if (null === $this->message_partner_ids) {
+            $this->message_partner_ids = [];
+        }
+
+        if ($this->hasMessagePartnerIds($item)) {
+            $index = array_search($item, $this->message_partner_ids);
+            unset($this->message_partner_ids[$index]);
+        }
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getMessageChannelIds(): ?array
+    {
+        return $this->message_channel_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_channel_ids
+     */
+    public function setMessageChannelIds(?array $message_channel_ids): void
+    {
+        $this->message_channel_ids = $message_channel_ids;
     }
 
     /**
@@ -1544,14 +1833,6 @@ class Journal extends Base
         }
 
         return in_array($item, $this->message_channel_ids);
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getMessageUnreadCounter(): ?int
-    {
-        return $this->message_unread_counter;
     }
 
     /**
@@ -1594,14 +1875,6 @@ class Journal extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $message_ids
-     */
-    public function setMessageIds(?array $message_ids): void
-    {
-        $this->message_ids = $message_ids;
-    }
-
-    /**
      * @param OdooRelation $item
      *
      * @return bool
@@ -1613,6 +1886,14 @@ class Journal extends Base
         }
 
         return in_array($item, $this->message_ids);
+    }
+
+    /**
+     * @param int|null $message_needaction_counter
+     */
+    public function setMessageNeedactionCounter(?int $message_needaction_counter): void
+    {
+        $this->message_needaction_counter = $message_needaction_counter;
     }
 
     /**
@@ -1663,19 +1944,19 @@ class Journal extends Base
     }
 
     /**
+     * @return int|null
+     */
+    public function getMessageUnreadCounter(): ?int
+    {
+        return $this->message_unread_counter;
+    }
+
+    /**
      * @param int|null $message_unread_counter
      */
     public function setMessageUnreadCounter(?int $message_unread_counter): void
     {
         $this->message_unread_counter = $message_unread_counter;
-    }
-
-    /**
-     * @param int|null $message_attachment_count
-     */
-    public function setMessageAttachmentCount(?int $message_attachment_count): void
-    {
-        $this->message_attachment_count = $message_attachment_count;
     }
 
     /**
@@ -1700,54 +1981,6 @@ class Journal extends Base
     public function getMessageNeedactionCounter(): ?int
     {
         return $this->message_needaction_counter;
-    }
-
-    /**
-     * @param int|null $message_needaction_counter
-     */
-    public function setMessageNeedactionCounter(?int $message_needaction_counter): void
-    {
-        $this->message_needaction_counter = $message_needaction_counter;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isMessageHasError(): ?bool
-    {
-        return $this->message_has_error;
-    }
-
-    /**
-     * @param bool|null $message_has_error
-     */
-    public function setMessageHasError(?bool $message_has_error): void
-    {
-        $this->message_has_error = $message_has_error;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getMessageHasErrorCounter(): ?int
-    {
-        return $this->message_has_error_counter;
-    }
-
-    /**
-     * @param int|null $message_has_error_counter
-     */
-    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
-    {
-        $this->message_has_error_counter = $message_has_error_counter;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getMessageAttachmentCount(): ?int
-    {
-        return $this->message_attachment_count;
     }
 
     /**

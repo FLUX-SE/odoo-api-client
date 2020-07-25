@@ -23,6 +23,10 @@ final class Message extends Base
 {
     /**
      * Message
+     * ---
+     * Relation : many2one (mail.message)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +36,10 @@ final class Message extends Base
 
     /**
      * Recipients
+     * ---
+     * Relation : one2many (mail.resend.partner -> resend_wizard_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Resend\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -41,6 +49,10 @@ final class Message extends Base
 
     /**
      * Notifications
+     * ---
+     * Relation : many2many (mail.notification)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Notification
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -50,6 +62,7 @@ final class Message extends Base
 
     /**
      * Has Cancel
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -59,6 +72,7 @@ final class Message extends Base
 
     /**
      * Partner Readonly
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -68,6 +82,10 @@ final class Message extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -77,6 +95,7 @@ final class Message extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -86,6 +105,10 @@ final class Message extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -95,6 +118,7 @@ final class Message extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

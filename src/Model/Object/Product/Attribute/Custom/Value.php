@@ -26,6 +26,7 @@ final class Value extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -35,6 +36,10 @@ final class Value extends Base
 
     /**
      * Attribute Value
+     * ---
+     * Relation : many2one (product.template.attribute.value)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Template\Attribute\Value
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +49,10 @@ final class Value extends Base
 
     /**
      * Sales Order Line
+     * ---
+     * Relation : many2one (sale.order.line)
+     * @see \Flux\OdooApiClient\Model\Object\Sale\Order\Line
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +62,7 @@ final class Value extends Base
 
     /**
      * Custom Value
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +72,10 @@ final class Value extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +85,7 @@ final class Value extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,6 +95,10 @@ final class Value extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,6 +108,7 @@ final class Value extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -98,9 +118,17 @@ final class Value extends Base
 
     /**
      * @param OdooRelation $custom_product_template_attribute_value_id Attribute Value
+     *        ---
+     *        Relation : many2one (product.template.attribute.value)
+     *        @see \Flux\OdooApiClient\Model\Object\Product\Template\Attribute\Value
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $sale_order_line_id Sales Order Line
+     *        ---
+     *        Relation : many2one (sale.order.line)
+     *        @see \Flux\OdooApiClient\Model\Object\Sale\Order\Line
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

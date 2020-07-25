@@ -19,6 +19,7 @@ class Partner extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -28,6 +29,7 @@ class Partner extends Base
 
     /**
      * Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -37,6 +39,10 @@ class Partner extends Base
 
     /**
      * Title
+     * ---
+     * Relation : many2one (res.partner.title)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner\Title
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -46,6 +52,10 @@ class Partner extends Base
 
     /**
      * Related Company
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -55,6 +65,7 @@ class Partner extends Base
 
     /**
      * Parent name
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -64,6 +75,10 @@ class Partner extends Base
 
     /**
      * Contact
+     * ---
+     * Relation : one2many (res.partner -> parent_id)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -73,6 +88,7 @@ class Partner extends Base
 
     /**
      * Reference
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -82,12 +98,14 @@ class Partner extends Base
 
     /**
      * Language
+     * ---
      * All the emails and documents sent to this contact will be translated in this language.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> en_US (English (US))
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -95,6 +113,7 @@ class Partner extends Base
 
     /**
      * Active Lang Count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -104,11 +123,11 @@ class Partner extends Base
 
     /**
      * Timezone
+     * ---
      * When printing documents and exporting/importing data, time values are computed according to this timezone.
      * If the timezone is not set, UTC (Coordinated Universal Time) is used.
      * Anywhere else, time values are computed according to the time offset of your web client.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> Africa/Abidjan (Africa/Abidjan)
      *     -> Africa/Accra (Africa/Accra)
@@ -703,7 +722,9 @@ class Partner extends Base
      *     -> Etc/UTC (Etc/UTC)
      *     -> Etc/Universal (Etc/Universal)
      *     -> Etc/Zulu (Etc/Zulu)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -711,6 +732,7 @@ class Partner extends Base
 
     /**
      * Timezone offset
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -720,8 +742,10 @@ class Partner extends Base
 
     /**
      * Tax ID
+     * ---
      * The Tax Identification Number. Complete it if the contact is subjected to government taxes. Used in some legal
      * statements.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -731,6 +755,10 @@ class Partner extends Base
 
     /**
      * Partner with same Tax ID
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -740,6 +768,10 @@ class Partner extends Base
 
     /**
      * Banks
+     * ---
+     * Relation : one2many (res.partner.bank -> partner_id)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner\Bank
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -749,6 +781,7 @@ class Partner extends Base
 
     /**
      * Website Link
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -758,6 +791,7 @@ class Partner extends Base
 
     /**
      * Notes
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -767,6 +801,10 @@ class Partner extends Base
 
     /**
      * Tags
+     * ---
+     * Relation : many2many (res.partner.category)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner\Category
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -776,6 +814,7 @@ class Partner extends Base
 
     /**
      * Credit Limit
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -785,6 +824,7 @@ class Partner extends Base
 
     /**
      * Active
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -794,7 +834,9 @@ class Partner extends Base
 
     /**
      * Employee
+     * ---
      * Check this box if this contact is an Employee.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -804,6 +846,7 @@ class Partner extends Base
 
     /**
      * Job Position
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -813,16 +856,18 @@ class Partner extends Base
 
     /**
      * Address Type
+     * ---
      * Invoice & Delivery addresses are used in sales orders. Private addresses are only visible by authorized users.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> contact (Contact)
      *     -> invoice (Invoice Address)
      *     -> delivery (Delivery Address)
      *     -> other (Other Address)
      *     -> private (Private Address)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -830,6 +875,7 @@ class Partner extends Base
 
     /**
      * Street
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -839,6 +885,7 @@ class Partner extends Base
 
     /**
      * Street2
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -848,6 +895,7 @@ class Partner extends Base
 
     /**
      * Zip
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -857,6 +905,7 @@ class Partner extends Base
 
     /**
      * City
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -866,6 +915,10 @@ class Partner extends Base
 
     /**
      * State
+     * ---
+     * Relation : many2one (res.country.state)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country\State
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -875,6 +928,10 @@ class Partner extends Base
 
     /**
      * Country
+     * ---
+     * Relation : many2one (res.country)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -884,6 +941,7 @@ class Partner extends Base
 
     /**
      * Geo Latitude
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -893,6 +951,7 @@ class Partner extends Base
 
     /**
      * Geo Longitude
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -902,6 +961,7 @@ class Partner extends Base
 
     /**
      * Email
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -911,7 +971,9 @@ class Partner extends Base
 
     /**
      * Formatted Email
+     * ---
      * Format email address "Name <email@domain>"
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -921,6 +983,7 @@ class Partner extends Base
 
     /**
      * Phone
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -930,6 +993,7 @@ class Partner extends Base
 
     /**
      * Mobile
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -939,7 +1003,9 @@ class Partner extends Base
 
     /**
      * Is a Company
+     * ---
      * Check if the contact is a company, otherwise it is a person
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -949,6 +1015,10 @@ class Partner extends Base
 
     /**
      * Industry
+     * ---
+     * Relation : many2one (res.partner.industry)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner\Industry
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -958,12 +1028,13 @@ class Partner extends Base
 
     /**
      * Company Type
-     * Searchable : no
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> person (Individual)
      *     -> company (Company)
-     *
+     * ---
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
@@ -971,6 +1042,10 @@ class Partner extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -980,6 +1055,7 @@ class Partner extends Base
 
     /**
      * Color Index
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -989,6 +1065,10 @@ class Partner extends Base
 
     /**
      * Users
+     * ---
+     * Relation : one2many (res.users -> partner_id)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -998,8 +1078,10 @@ class Partner extends Base
 
     /**
      * Share Partner
+     * ---
      * Either customer (not a user), either shared user. Indicated the current partner is a customer without access
      * or with a limited access created for sharing data.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1009,6 +1091,7 @@ class Partner extends Base
 
     /**
      * Complete Address
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1018,6 +1101,10 @@ class Partner extends Base
 
     /**
      * Commercial Entity
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1027,6 +1114,7 @@ class Partner extends Base
 
     /**
      * Company Name Entity
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1036,6 +1124,7 @@ class Partner extends Base
 
     /**
      * Company Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1045,6 +1134,10 @@ class Partner extends Base
 
     /**
      * Self
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1054,6 +1147,7 @@ class Partner extends Base
 
     /**
      * IM Status
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1063,6 +1157,10 @@ class Partner extends Base
 
     /**
      * Activities
+     * ---
+     * Relation : one2many (mail.activity -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1072,17 +1170,19 @@ class Partner extends Base
 
     /**
      * Activity State
+     * ---
      * Status based on activities
      * Overdue: Due date is already passed
      * Today: Activity date is today
      * Planned: Future activities.
-     * Searchable : no
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> overdue (Overdue)
      *     -> today (Today)
      *     -> planned (Planned)
-     *
+     * ---
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
@@ -1090,6 +1190,10 @@ class Partner extends Base
 
     /**
      * Responsible User
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1099,6 +1203,10 @@ class Partner extends Base
 
     /**
      * Next Activity Type
+     * ---
+     * Relation : many2one (mail.activity.type)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity\Type
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1108,6 +1216,7 @@ class Partner extends Base
 
     /**
      * Next Activity Deadline
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1117,6 +1226,7 @@ class Partner extends Base
 
     /**
      * Next Activity Summary
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1126,13 +1236,15 @@ class Partner extends Base
 
     /**
      * Activity Exception Decoration
+     * ---
      * Type of the exception activity on record.
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> warning (Alert)
      *     -> danger (Error)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -1140,7 +1252,9 @@ class Partner extends Base
 
     /**
      * Icon
+     * ---
      * Icon to indicate an exception activity.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1150,6 +1264,7 @@ class Partner extends Base
 
     /**
      * Is Follower
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1159,6 +1274,10 @@ class Partner extends Base
 
     /**
      * Followers
+     * ---
+     * Relation : one2many (mail.followers -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Followers
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1168,6 +1287,10 @@ class Partner extends Base
 
     /**
      * Followers (Partners)
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1177,6 +1300,10 @@ class Partner extends Base
 
     /**
      * Followers (Channels)
+     * ---
+     * Relation : many2many (mail.channel)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Channel
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1186,6 +1313,10 @@ class Partner extends Base
 
     /**
      * Messages
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1195,7 +1326,9 @@ class Partner extends Base
 
     /**
      * Unread Messages
+     * ---
      * If checked, new messages require your attention.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1205,7 +1338,9 @@ class Partner extends Base
 
     /**
      * Unread Messages Counter
+     * ---
      * Number of unread messages
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1215,7 +1350,9 @@ class Partner extends Base
 
     /**
      * Action Needed
+     * ---
      * If checked, new messages require your attention.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1225,7 +1362,9 @@ class Partner extends Base
 
     /**
      * Number of Actions
+     * ---
      * Number of messages which requires an action
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1235,7 +1374,9 @@ class Partner extends Base
 
     /**
      * Message Delivery error
+     * ---
      * If checked, some messages have a delivery error.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1245,7 +1386,9 @@ class Partner extends Base
 
     /**
      * Number of errors
+     * ---
      * Number of messages with delivery error
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1255,6 +1398,7 @@ class Partner extends Base
 
     /**
      * Attachment Count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1264,6 +1408,10 @@ class Partner extends Base
 
     /**
      * Main Attachment
+     * ---
+     * Relation : many2one (ir.attachment)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1273,8 +1421,10 @@ class Partner extends Base
 
     /**
      * Normalized Email
+     * ---
      * This field is used to search on email address as the primary email field can contain more than strictly an
      * email address.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1284,7 +1434,9 @@ class Partner extends Base
 
     /**
      * Blacklist
+     * ---
      * If the email address is on the blacklist, the contact won't receive mass mailing anymore, from any list
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1294,7 +1446,9 @@ class Partner extends Base
 
     /**
      * Bounce
+     * ---
      * Counter of the number of bounced emails for this contact
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1304,6 +1458,10 @@ class Partner extends Base
 
     /**
      * Channels
+     * ---
+     * Relation : many2many (mail.channel)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Channel
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1313,7 +1471,12 @@ class Partner extends Base
 
     /**
      * Salesperson
+     * ---
      * The internal user in charge of this contact.
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1323,6 +1486,7 @@ class Partner extends Base
 
     /**
      * Contact Address Complete
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1332,15 +1496,17 @@ class Partner extends Base
 
     /**
      * Medium-sized image
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     protected $image_medium;
 
     /**
      * Signup Token
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1350,6 +1516,7 @@ class Partner extends Base
 
     /**
      * Signup Token Type
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1359,6 +1526,7 @@ class Partner extends Base
 
     /**
      * Signup Expiration
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1368,6 +1536,7 @@ class Partner extends Base
 
     /**
      * Signup Token is Valid
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1377,6 +1546,7 @@ class Partner extends Base
 
     /**
      * Signup URL
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1386,6 +1556,7 @@ class Partner extends Base
 
     /**
      * Company database ID
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1395,6 +1566,7 @@ class Partner extends Base
 
     /**
      * Additional info
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1404,7 +1576,9 @@ class Partner extends Base
 
     /**
      * Sanitized Number
+     * ---
      * Field used to store sanitized phone number. Helps speeding up searches and comparisons.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1414,7 +1588,9 @@ class Partner extends Base
 
     /**
      * Phone Blacklisted
+     * ---
      * If the email address is on the blacklist, the contact won't receive mass mailing anymore, from any list
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1424,7 +1600,12 @@ class Partner extends Base
 
     /**
      * Pricelist
+     * ---
      * This pricelist will be used, instead of the default one, for sales to the current partner
+     * ---
+     * Relation : many2one (product.pricelist)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Pricelist
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1433,8 +1614,28 @@ class Partner extends Base
     protected $property_product_pricelist;
 
     /**
+     * Sales Team
+     * ---
+     * If set, this Sales Team will be used for sales and assignations related to this partner
+     * ---
+     * Relation : many2one (crm.team)
+     * @see \Flux\OdooApiClient\Model\Object\Crm\Team
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    protected $team_id;
+
+    /**
      * Website Messages
+     * ---
      * Website communication history
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1444,7 +1645,9 @@ class Partner extends Base
 
     /**
      * SMS Delivery error
+     * ---
      * If checked, some messages have a delivery error.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1454,7 +1657,9 @@ class Partner extends Base
 
     /**
      * Total Receivable
+     * ---
      * Total amount this customer owes you.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1464,7 +1669,9 @@ class Partner extends Base
 
     /**
      * Total Payable
+     * ---
      * Total amount you have to pay to this vendor.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1474,6 +1681,7 @@ class Partner extends Base
 
     /**
      * Payable Limit
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1483,6 +1691,7 @@ class Partner extends Base
 
     /**
      * Total Invoiced
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1492,7 +1701,12 @@ class Partner extends Base
 
     /**
      * Currency
+     * ---
      * Utility field to express amount currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1502,6 +1716,7 @@ class Partner extends Base
 
     /**
      * Journal Items
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1511,7 +1726,12 @@ class Partner extends Base
 
     /**
      * Account Payable
+     * ---
      * This account will be used instead of the default one as the payable account for the current partner
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1521,7 +1741,12 @@ class Partner extends Base
 
     /**
      * Account Receivable
+     * ---
      * This account will be used instead of the default one as the receivable account for the current partner
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1531,7 +1756,12 @@ class Partner extends Base
 
     /**
      * Fiscal Position
+     * ---
      * The fiscal position determines the taxes/accounts used for this contact.
+     * ---
+     * Relation : many2one (account.fiscal.position)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Fiscal\Position
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1541,7 +1771,12 @@ class Partner extends Base
 
     /**
      * Customer Payment Terms
+     * ---
      * This payment term will be used instead of the default one for sales orders and customer invoices
+     * ---
+     * Relation : many2one (account.payment.term)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Payment\Term
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1551,7 +1786,12 @@ class Partner extends Base
 
     /**
      * Vendor Payment Terms
+     * ---
      * This payment term will be used instead of the default one for purchase orders and vendor bills
+     * ---
+     * Relation : many2one (account.payment.term)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Payment\Term
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1561,6 +1801,10 @@ class Partner extends Base
 
     /**
      * Companies that refers to partner
+     * ---
+     * Relation : one2many (res.company -> partner_id)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1570,8 +1814,10 @@ class Partner extends Base
 
     /**
      * Has Unreconciled Entries
+     * ---
      * The partner has at least one unreconciled debit and credit since last time the invoices & payments matching
      * was performed.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1581,8 +1827,10 @@ class Partner extends Base
 
     /**
      * Latest Invoices & Payments Matching Date
+     * ---
      * Last time the invoices & payments matching was performed for this partner. It is set either if there's not at
      * least an unreconciled debit and an unreconciled credit or if you click the "Done" button.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1592,6 +1840,10 @@ class Partner extends Base
 
     /**
      * Invoices
+     * ---
+     * Relation : one2many (account.move -> partner_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1601,6 +1853,10 @@ class Partner extends Base
 
     /**
      * Partner Contracts
+     * ---
+     * Relation : one2many (account.analytic.account -> partner_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Account
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1610,6 +1866,7 @@ class Partner extends Base
 
     /**
      * Bank
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1619,13 +1876,14 @@ class Partner extends Base
 
     /**
      * Degree of trust you have in this debtor
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> good (Good Debtor)
      *     -> normal (Normal Debtor)
      *     -> bad (Bad Debtor)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -1633,15 +1891,17 @@ class Partner extends Base
 
     /**
      * Invoice
+     * ---
      * Selecting the "Warning" option will notify user with the message, Selecting "Blocking Message" will throw an
      * exception with the message and block the flow. The Message has to be written in the next field.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> no-message (No Message)
      *     -> warning (Warning)
      *     -> block (Blocking Message)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -1649,6 +1909,7 @@ class Partner extends Base
 
     /**
      * Message for Invoice
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1658,6 +1919,7 @@ class Partner extends Base
 
     /**
      * Supplier Rank
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1667,6 +1929,7 @@ class Partner extends Base
 
     /**
      * Customer Rank
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1676,7 +1939,9 @@ class Partner extends Base
 
     /**
      * Online Partner Vendor Name
+     * ---
      * Technical field used to store information from plaid/yodlee to match partner (used when a purchase is made)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1686,7 +1951,9 @@ class Partner extends Base
 
     /**
      * Online Partner Bank Account
+     * ---
      * Technical field used to store information from plaid/yodlee to match partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1696,6 +1963,10 @@ class Partner extends Base
 
     /**
      * Payment Tokens
+     * ---
+     * Relation : one2many (payment.token -> partner_id)
+     * @see \Flux\OdooApiClient\Model\Object\Payment\Token
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1705,6 +1976,7 @@ class Partner extends Base
 
     /**
      * Count Payment Token
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1713,96 +1985,18 @@ class Partner extends Base
     protected $payment_token_count;
 
     /**
-     * Next Action Date
-     * The date before which no action should be taken.
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var DateTimeInterface|null
-     */
-    protected $payment_next_action_date;
-
-    /**
-     * Unreconciled Aml
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    protected $unreconciled_aml_ids;
-
-    /**
-     * Unpaid Invoices
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    protected $unpaid_invoices;
-
-    /**
-     * Total Due
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var float|null
-     */
-    protected $total_due;
-
-    /**
-     * Total Overdue
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var float|null
-     */
-    protected $total_overdue;
-
-    /**
-     * Follow-up Status
-     * Searchable : yes
-     * Sortable : no
-     * Selection : (default value, usually null)
-     *     -> in_need_of_action (In need of action)
-     *     -> with_overdue_invoices (With overdue invoices)
-     *     -> no_action_needed (No action needed)
-     *
-     *
-     * @var string|null
-     */
-    protected $followup_status;
-
-    /**
-     * Follow-up Level
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var OdooRelation|null
-     */
-    protected $followup_level;
-
-    /**
-     * Follow-up Responsible
-     * Optionally you can assign a user to this field, which will make him responsible for the action.
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation|null
-     */
-    protected $payment_responsible_id;
-
-    /**
-     * Sales Team
-     * If set, this Sales Team will be used for sales and assignations related to this partner
+     * SIRET
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
-     * @var OdooRelation|null
+     * @var string|null
      */
-    protected $team_id;
+    protected $siret;
 
     /**
      * Sale Order Count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -1812,6 +2006,10 @@ class Partner extends Base
 
     /**
      * Sales Order
+     * ---
+     * Relation : one2many (sale.order -> partner_id)
+     * @see \Flux\OdooApiClient\Model\Object\Sale\Order
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1821,15 +2019,17 @@ class Partner extends Base
 
     /**
      * Sales Warnings
+     * ---
      * Selecting the "Warning" option will notify user with the message, Selecting "Blocking Message" will throw an
      * exception with the message and block the flow. The Message has to be written in the next field.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> no-message (No Message)
      *     -> warning (Warning)
      *     -> block (Blocking Message)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -1837,6 +2037,7 @@ class Partner extends Base
 
     /**
      * Message for Sales Order
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1845,61 +2046,162 @@ class Partner extends Base
     protected $sale_warn_msg;
 
     /**
-     * Image
+     * Next Action Date
+     * ---
+     * The date before which no action should be taken.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var DateTimeInterface|null
+     */
+    protected $payment_next_action_date;
+
+    /**
+     * Unreconciled Aml
+     * ---
+     * Relation : one2many (account.move.line -> partner_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move\Line
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    protected $unreconciled_aml_ids;
+
+    /**
+     * Unpaid Invoices
+     * ---
+     * Relation : one2many (account.move)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    protected $unpaid_invoices;
+
+    /**
+     * Total Due
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var float|null
+     */
+    protected $total_due;
+
+    /**
+     * Total Overdue
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var float|null
+     */
+    protected $total_overdue;
+
+    /**
+     * Follow-up Status
+     * ---
+     * Selection : (default value, usually null)
+     *     -> in_need_of_action (In need of action)
+     *     -> with_overdue_invoices (With overdue invoices)
+     *     -> no_action_needed (No action needed)
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    protected $followup_status;
+
+    /**
+     * Follow-up Level
+     * ---
+     * Relation : many2one (account_followup.followup.line)
+     * @see \Flux\OdooApiClient\Model\Object\AccountFollowup\Followup\Line
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    protected $followup_level;
+
+    /**
+     * Follow-up Responsible
+     * ---
+     * Optionally you can assign a user to this field, which will make him responsible for the action.
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    protected $payment_responsible_id;
+
+    /**
+     * Image
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
      */
     protected $image_1920;
 
     /**
-     * SIRET
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    protected $siret;
-
-    /**
      * Image 1024
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     protected $image_1024;
 
     /**
      * Image 512
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     protected $image_512;
 
     /**
      * Image 256
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     protected $image_256;
 
     /**
      * Image 128
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     protected $image_128;
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1909,6 +2211,7 @@ class Partner extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1918,6 +2221,10 @@ class Partner extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1927,6 +2234,7 @@ class Partner extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1936,11 +2244,21 @@ class Partner extends Base
 
     /**
      * @param OdooRelation $property_account_payable_id Account Payable
+     *        ---
      *        This account will be used instead of the default one as the payable account for the current partner
+     *        ---
+     *        Relation : many2one (account.account)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Account
+     *        ---
      *        Searchable : yes
      *        Sortable : no
      * @param OdooRelation $property_account_receivable_id Account Receivable
+     *        ---
      *        This account will be used instead of the default one as the receivable account for the current partner
+     *        ---
+     *        Relation : many2one (account.account)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Account
+     *        ---
      *        Searchable : yes
      *        Sortable : no
      */
@@ -1953,27 +2271,11 @@ class Partner extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @return float|null
      */
-    public function getCurrencyId(): ?OdooRelation
+    public function getTotalInvoiced(): ?float
     {
-        return $this->currency_id;
-    }
-
-    /**
-     * @param OdooRelation $property_account_receivable_id
-     */
-    public function setPropertyAccountReceivableId(OdooRelation $property_account_receivable_id): void
-    {
-        $this->property_account_receivable_id = $property_account_receivable_id;
-    }
-
-    /**
-     * @return OdooRelation
-     */
-    public function getPropertyAccountReceivableId(): OdooRelation
-    {
-        return $this->property_account_receivable_id;
+        return $this->total_invoiced;
     }
 
     /**
@@ -2017,6 +2319,14 @@ class Partner extends Base
     }
 
     /**
+     * @return OdooRelation|null
+     */
+    public function getCurrencyId(): ?OdooRelation
+    {
+        return $this->currency_id;
+    }
+
+    /**
      * @param float|null $total_invoiced
      */
     public function setTotalInvoiced(?float $total_invoiced): void
@@ -2025,27 +2335,19 @@ class Partner extends Base
     }
 
     /**
-     * @param OdooRelation|null $property_account_position_id
-     */
-    public function setPropertyAccountPositionId(?OdooRelation $property_account_position_id): void
-    {
-        $this->property_account_position_id = $property_account_position_id;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getTotalInvoiced(): ?float
-    {
-        return $this->total_invoiced;
-    }
-
-    /**
      * @param float|null $debit_limit
      */
     public function setDebitLimit(?float $debit_limit): void
     {
         $this->debit_limit = $debit_limit;
+    }
+
+    /**
+     * @param OdooRelation $property_account_receivable_id
+     */
+    public function setPropertyAccountReceivableId(OdooRelation $property_account_receivable_id): void
+    {
+        $this->property_account_receivable_id = $property_account_receivable_id;
     }
 
     /**
@@ -2089,19 +2391,11 @@ class Partner extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param bool|null $message_has_sms_error
      */
-    public function getPropertyAccountPositionId(): ?OdooRelation
+    public function setMessageHasSmsError(?bool $message_has_sms_error): void
     {
-        return $this->property_account_position_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getPropertyPaymentTermId(): ?OdooRelation
-    {
-        return $this->property_payment_term_id;
+        $this->message_has_sms_error = $message_has_sms_error;
     }
 
     /**
@@ -2113,34 +2407,43 @@ class Partner extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
+     * @return OdooRelation
      */
-    public function getLastTimeEntriesChecked(): ?DateTimeInterface
+    public function getPropertyAccountReceivableId(): OdooRelation
     {
-        return $this->last_time_entries_checked;
+        return $this->property_account_receivable_id;
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @return OdooRelation|null
      */
-    public function getContractIds(): ?array
+    public function getPropertyAccountPositionId(): ?OdooRelation
     {
-        return $this->contract_ids;
+        return $this->property_account_position_id;
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function removeInvoiceIds(OdooRelation $item): void
+    public function addWebsiteMessageIds(OdooRelation $item): void
     {
-        if (null === $this->invoice_ids) {
-            $this->invoice_ids = [];
+        if ($this->hasWebsiteMessageIds($item)) {
+            return;
         }
 
-        if ($this->hasInvoiceIds($item)) {
-            $index = array_search($item, $this->invoice_ids);
-            unset($this->invoice_ids[$index]);
+        if (null === $this->website_message_ids) {
+            $this->website_message_ids = [];
         }
+
+        $this->website_message_ids[] = $item;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isHasUnreconciledEntries(): ?bool
+    {
+        return $this->has_unreconciled_entries;
     }
 
     /**
@@ -2198,27 +2501,19 @@ class Partner extends Base
     }
 
     /**
+     * @return DateTimeInterface|null
+     */
+    public function getLastTimeEntriesChecked(): ?DateTimeInterface
+    {
+        return $this->last_time_entries_checked;
+    }
+
+    /**
      * @param bool|null $has_unreconciled_entries
      */
     public function setHasUnreconciledEntries(?bool $has_unreconciled_entries): void
     {
         $this->has_unreconciled_entries = $has_unreconciled_entries;
-    }
-
-    /**
-     * @param OdooRelation|null $property_payment_term_id
-     */
-    public function setPropertyPaymentTermId(?OdooRelation $property_payment_term_id): void
-    {
-        $this->property_payment_term_id = $property_payment_term_id;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isHasUnreconciledEntries(): ?bool
-    {
-        return $this->has_unreconciled_entries;
     }
 
     /**
@@ -2234,6 +2529,14 @@ class Partner extends Base
             $index = array_search($item, $this->ref_company_ids);
             unset($this->ref_company_ids[$index]);
         }
+    }
+
+    /**
+     * @param OdooRelation|null $property_account_position_id
+     */
+    public function setPropertyAccountPositionId(?OdooRelation $property_account_position_id): void
+    {
+        $this->property_account_position_id = $property_account_position_id;
     }
 
     /**
@@ -2299,11 +2602,19 @@ class Partner extends Base
     }
 
     /**
-     * @param bool|null $message_has_sms_error
+     * @param OdooRelation|null $property_payment_term_id
      */
-    public function setMessageHasSmsError(?bool $message_has_sms_error): void
+    public function setPropertyPaymentTermId(?OdooRelation $property_payment_term_id): void
     {
-        $this->message_has_sms_error = $message_has_sms_error;
+        $this->property_payment_term_id = $property_payment_term_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPropertyPaymentTermId(): ?OdooRelation
+    {
+        return $this->property_payment_term_id;
     }
 
     /**
@@ -2326,13 +2637,21 @@ class Partner extends Base
      *
      * @return bool
      */
-    public function hasContractIds(OdooRelation $item): bool
+    public function hasWebsiteMessageIds(OdooRelation $item): bool
     {
-        if (null === $this->contract_ids) {
+        if (null === $this->website_message_ids) {
             return false;
         }
 
-        return in_array($item, $this->contract_ids);
+        return in_array($item, $this->website_message_ids);
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getContractIds(): ?array
+    {
+        return $this->contract_ids;
     }
 
     /**
@@ -2360,17 +2679,17 @@ class Partner extends Base
     }
 
     /**
-     * @param int|null $image_medium
+     * @param string|null $image_medium
      */
-    public function setImageMedium(?int $image_medium): void
+    public function setImageMedium(?string $image_medium): void
     {
         $this->image_medium = $image_medium;
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getImageMedium(): ?int
+    public function getImageMedium(): ?string
     {
         return $this->image_medium;
     }
@@ -2509,19 +2828,11 @@ class Partner extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @param OdooRelation[]|null $website_message_ids
      */
-    public function addWebsiteMessageIds(OdooRelation $item): void
+    public function setWebsiteMessageIds(?array $website_message_ids): void
     {
-        if ($this->hasWebsiteMessageIds($item)) {
-            return;
-        }
-
-        if (null === $this->website_message_ids) {
-            $this->website_message_ids = [];
-        }
-
-        $this->website_message_ids[] = $item;
+        $this->website_message_ids = $website_message_ids;
     }
 
     /**
@@ -2533,33 +2844,27 @@ class Partner extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasWebsiteMessageIds(OdooRelation $item): bool
-    {
-        if (null === $this->website_message_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->website_message_ids);
-    }
-
-    /**
-     * @param OdooRelation[]|null $website_message_ids
-     */
-    public function setWebsiteMessageIds(?array $website_message_ids): void
-    {
-        $this->website_message_ids = $website_message_ids;
-    }
-
-    /**
      * @return OdooRelation[]|null
      */
     public function getWebsiteMessageIds(): ?array
     {
         return $this->website_message_ids;
+    }
+
+    /**
+     * @param OdooRelation|null $team_id
+     */
+    public function setTeamId(?OdooRelation $team_id): void
+    {
+        $this->team_id = $team_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getTeamId(): ?OdooRelation
+    {
+        return $this->team_id;
     }
 
     /**
@@ -2675,11 +2980,545 @@ class Partner extends Base
     }
 
     /**
+     * @param OdooRelation $item
+     */
+    public function removeInvoiceIds(OdooRelation $item): void
+    {
+        if (null === $this->invoice_ids) {
+            $this->invoice_ids = [];
+        }
+
+        if ($this->hasInvoiceIds($item)) {
+            $index = array_search($item, $this->invoice_ids);
+            unset($this->invoice_ids[$index]);
+        }
+    }
+
+    /**
      * @param OdooRelation[]|null $contract_ids
      */
     public function setContractIds(?array $contract_ids): void
     {
         $this->contract_ids = $contract_ids;
+    }
+
+    /**
+     * @param string|null $email_normalized
+     */
+    public function setEmailNormalized(?string $email_normalized): void
+    {
+        $this->email_normalized = $email_normalized;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeUnpaidInvoices(OdooRelation $item): void
+    {
+        if (null === $this->unpaid_invoices) {
+            $this->unpaid_invoices = [];
+        }
+
+        if ($this->hasUnpaidInvoices($item)) {
+            $index = array_search($item, $this->unpaid_invoices);
+            unset($this->unpaid_invoices[$index]);
+        }
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getFollowupLevel(): ?OdooRelation
+    {
+        return $this->followup_level;
+    }
+
+    /**
+     * @param string|null $followup_status
+     */
+    public function setFollowupStatus(?string $followup_status): void
+    {
+        $this->followup_status = $followup_status;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFollowupStatus(): ?string
+    {
+        return $this->followup_status;
+    }
+
+    /**
+     * @param float|null $total_overdue
+     */
+    public function setTotalOverdue(?float $total_overdue): void
+    {
+        $this->total_overdue = $total_overdue;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getTotalOverdue(): ?float
+    {
+        return $this->total_overdue;
+    }
+
+    /**
+     * @param float|null $total_due
+     */
+    public function setTotalDue(?float $total_due): void
+    {
+        $this->total_due = $total_due;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getTotalDue(): ?float
+    {
+        return $this->total_due;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addUnpaidInvoices(OdooRelation $item): void
+    {
+        if ($this->hasUnpaidInvoices($item)) {
+            return;
+        }
+
+        if (null === $this->unpaid_invoices) {
+            $this->unpaid_invoices = [];
+        }
+
+        $this->unpaid_invoices[] = $item;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPaymentResponsibleId(): ?OdooRelation
+    {
+        return $this->payment_responsible_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasUnpaidInvoices(OdooRelation $item): bool
+    {
+        if (null === $this->unpaid_invoices) {
+            return false;
+        }
+
+        return in_array($item, $this->unpaid_invoices);
+    }
+
+    /**
+     * @param OdooRelation[]|null $unpaid_invoices
+     */
+    public function setUnpaidInvoices(?array $unpaid_invoices): void
+    {
+        $this->unpaid_invoices = $unpaid_invoices;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getUnpaidInvoices(): ?array
+    {
+        return $this->unpaid_invoices;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeUnreconciledAmlIds(OdooRelation $item): void
+    {
+        if (null === $this->unreconciled_aml_ids) {
+            $this->unreconciled_aml_ids = [];
+        }
+
+        if ($this->hasUnreconciledAmlIds($item)) {
+            $index = array_search($item, $this->unreconciled_aml_ids);
+            unset($this->unreconciled_aml_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addUnreconciledAmlIds(OdooRelation $item): void
+    {
+        if ($this->hasUnreconciledAmlIds($item)) {
+            return;
+        }
+
+        if (null === $this->unreconciled_aml_ids) {
+            $this->unreconciled_aml_ids = [];
+        }
+
+        $this->unreconciled_aml_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasUnreconciledAmlIds(OdooRelation $item): bool
+    {
+        if (null === $this->unreconciled_aml_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->unreconciled_aml_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $unreconciled_aml_ids
+     */
+    public function setUnreconciledAmlIds(?array $unreconciled_aml_ids): void
+    {
+        $this->unreconciled_aml_ids = $unreconciled_aml_ids;
+    }
+
+    /**
+     * @param OdooRelation|null $followup_level
+     */
+    public function setFollowupLevel(?OdooRelation $followup_level): void
+    {
+        $this->followup_level = $followup_level;
+    }
+
+    /**
+     * @param OdooRelation|null $payment_responsible_id
+     */
+    public function setPaymentResponsibleId(?OdooRelation $payment_responsible_id): void
+    {
+        $this->payment_responsible_id = $payment_responsible_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $payment_next_action_date
+     */
+    public function setPaymentNextActionDate(?DateTimeInterface $payment_next_action_date): void
+    {
+        $this->payment_next_action_date = $payment_next_action_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @param string|null $image_128
+     */
+    public function setImage128(?string $image_128): void
+    {
+        $this->image_128 = $image_128;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImage1920(): ?string
+    {
+        return $this->image_1920;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImage128(): ?string
+    {
+        return $this->image_128;
+    }
+
+    /**
+     * @param string|null $image_256
+     */
+    public function setImage256(?string $image_256): void
+    {
+        $this->image_256 = $image_256;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImage256(): ?string
+    {
+        return $this->image_256;
+    }
+
+    /**
+     * @param string|null $image_512
+     */
+    public function setImage512(?string $image_512): void
+    {
+        $this->image_512 = $image_512;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImage512(): ?string
+    {
+        return $this->image_512;
+    }
+
+    /**
+     * @param string|null $image_1024
+     */
+    public function setImage1024(?string $image_1024): void
+    {
+        $this->image_1024 = $image_1024;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImage1024(): ?string
+    {
+        return $this->image_1024;
+    }
+
+    /**
+     * @param string|null $image_1920
+     */
+    public function setImage1920(?string $image_1920): void
+    {
+        $this->image_1920 = $image_1920;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getUnreconciledAmlIds(): ?array
+    {
+        return $this->unreconciled_aml_ids;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getPaymentNextActionDate(): ?DateTimeInterface
+    {
+        return $this->payment_next_action_date;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasContractIds(OdooRelation $item): bool
+    {
+        if (null === $this->contract_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->contract_ids);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getInvoiceWarnMsg(): ?string
+    {
+        return $this->invoice_warn_msg;
+    }
+
+    /**
+     * @param string|null $online_partner_vendor_name
+     */
+    public function setOnlinePartnerVendorName(?string $online_partner_vendor_name): void
+    {
+        $this->online_partner_vendor_name = $online_partner_vendor_name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOnlinePartnerVendorName(): ?string
+    {
+        return $this->online_partner_vendor_name;
+    }
+
+    /**
+     * @param int|null $customer_rank
+     */
+    public function setCustomerRank(?int $customer_rank): void
+    {
+        $this->customer_rank = $customer_rank;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCustomerRank(): ?int
+    {
+        return $this->customer_rank;
+    }
+
+    /**
+     * @param int|null $supplier_rank
+     */
+    public function setSupplierRank(?int $supplier_rank): void
+    {
+        $this->supplier_rank = $supplier_rank;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSupplierRank(): ?int
+    {
+        return $this->supplier_rank;
+    }
+
+    /**
+     * @param string|null $invoice_warn_msg
+     */
+    public function setInvoiceWarnMsg(?string $invoice_warn_msg): void
+    {
+        $this->invoice_warn_msg = $invoice_warn_msg;
+    }
+
+    /**
+     * @param string|null $invoice_warn
+     */
+    public function setInvoiceWarn(?string $invoice_warn): void
+    {
+        $this->invoice_warn = $invoice_warn;
+    }
+
+    /**
+     * @param string|null $online_partner_bank_account
+     */
+    public function setOnlinePartnerBankAccount(?string $online_partner_bank_account): void
+    {
+        $this->online_partner_bank_account = $online_partner_bank_account;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getInvoiceWarn(): ?string
+    {
+        return $this->invoice_warn;
+    }
+
+    /**
+     * @param string|null $trust
+     */
+    public function setTrust(?string $trust): void
+    {
+        $this->trust = $trust;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTrust(): ?string
+    {
+        return $this->trust;
+    }
+
+    /**
+     * @param int|null $bank_account_count
+     */
+    public function setBankAccountCount(?int $bank_account_count): void
+    {
+        $this->bank_account_count = $bank_account_count;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getBankAccountCount(): ?int
+    {
+        return $this->bank_account_count;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeContractIds(OdooRelation $item): void
+    {
+        if (null === $this->contract_ids) {
+            $this->contract_ids = [];
+        }
+
+        if ($this->hasContractIds($item)) {
+            $index = array_search($item, $this->contract_ids);
+            unset($this->contract_ids[$index]);
+        }
     }
 
     /**
@@ -2699,11 +3538,27 @@ class Partner extends Base
     }
 
     /**
-     * @param string|null $email_normalized
+     * @return string|null
      */
-    public function setEmailNormalized(?string $email_normalized): void
+    public function getOnlinePartnerBankAccount(): ?string
     {
-        $this->email_normalized = $email_normalized;
+        return $this->online_partner_bank_account;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getPaymentTokenIds(): ?array
+    {
+        return $this->payment_token_ids;
+    }
+
+    /**
+     * @param string|null $sale_warn_msg
+     */
+    public function setSaleWarnMsg(?string $sale_warn_msg): void
+    {
+        $this->sale_warn_msg = $sale_warn_msg;
     }
 
     /**
@@ -2800,11 +3655,11 @@ class Partner extends Base
     }
 
     /**
-     * @return int|null
+     * @param OdooRelation[]|null $payment_token_ids
      */
-    public function getImage1920(): ?int
+    public function setPaymentTokenIds(?array $payment_token_ids): void
     {
-        return $this->image_1920;
+        $this->payment_token_ids = $payment_token_ids;
     }
 
     /**
@@ -2816,214 +3671,6 @@ class Partner extends Base
     }
 
     /**
-     * @param OdooRelation|null $team_id
-     */
-    public function setTeamId(?OdooRelation $team_id): void
-    {
-        $this->team_id = $team_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getTeamId(): ?OdooRelation
-    {
-        return $this->team_id;
-    }
-
-    /**
-     * @param OdooRelation|null $payment_responsible_id
-     */
-    public function setPaymentResponsibleId(?OdooRelation $payment_responsible_id): void
-    {
-        $this->payment_responsible_id = $payment_responsible_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getPaymentResponsibleId(): ?OdooRelation
-    {
-        return $this->payment_responsible_id;
-    }
-
-    /**
-     * @param OdooRelation|null $followup_level
-     */
-    public function setFollowupLevel(?OdooRelation $followup_level): void
-    {
-        $this->followup_level = $followup_level;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getFollowupLevel(): ?OdooRelation
-    {
-        return $this->followup_level;
-    }
-
-    /**
-     * @param string|null $sale_warn_msg
-     */
-    public function setSaleWarnMsg(?string $sale_warn_msg): void
-    {
-        $this->sale_warn_msg = $sale_warn_msg;
-    }
-
-    /**
-     * @param int|null $image_1920
-     */
-    public function setImage1920(?int $image_1920): void
-    {
-        $this->image_1920 = $image_1920;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getFollowupStatus(): ?string
-    {
-        return $this->followup_status;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param DateTimeInterface|null $write_date
-     */
-    public function setWriteDate(?DateTimeInterface $write_date): void
-    {
-        $this->write_date = $write_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @param OdooRelation|null $create_uid
-     */
-    public function setCreateUid(?OdooRelation $create_uid): void
-    {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @param int|null $image_128
-     */
-    public function setImage128(?int $image_128): void
-    {
-        $this->image_128 = $image_128;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSiret(): ?string
-    {
-        return $this->siret;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getImage128(): ?int
-    {
-        return $this->image_128;
-    }
-
-    /**
-     * @param int|null $image_256
-     */
-    public function setImage256(?int $image_256): void
-    {
-        $this->image_256 = $image_256;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getImage256(): ?int
-    {
-        return $this->image_256;
-    }
-
-    /**
-     * @param int|null $image_512
-     */
-    public function setImage512(?int $image_512): void
-    {
-        $this->image_512 = $image_512;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getImage512(): ?int
-    {
-        return $this->image_512;
-    }
-
-    /**
-     * @param int|null $image_1024
-     */
-    public function setImage1024(?int $image_1024): void
-    {
-        $this->image_1024 = $image_1024;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getImage1024(): ?int
-    {
-        return $this->image_1024;
-    }
-
-    /**
      * @param string|null $siret
      */
     public function setSiret(?string $siret): void
@@ -3032,370 +3679,11 @@ class Partner extends Base
     }
 
     /**
-     * @param string|null $followup_status
-     */
-    public function setFollowupStatus(?string $followup_status): void
-    {
-        $this->followup_status = $followup_status;
-    }
-
-    /**
-     * @param float|null $total_overdue
-     */
-    public function setTotalOverdue(?float $total_overdue): void
-    {
-        $this->total_overdue = $total_overdue;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeContractIds(OdooRelation $item): void
-    {
-        if (null === $this->contract_ids) {
-            $this->contract_ids = [];
-        }
-
-        if ($this->hasContractIds($item)) {
-            $index = array_search($item, $this->contract_ids);
-            unset($this->contract_ids[$index]);
-        }
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getSupplierRank(): ?int
-    {
-        return $this->supplier_rank;
-    }
-
-    /**
-     * @param string|null $online_partner_bank_account
-     */
-    public function setOnlinePartnerBankAccount(?string $online_partner_bank_account): void
-    {
-        $this->online_partner_bank_account = $online_partner_bank_account;
-    }
-
-    /**
      * @return string|null
      */
-    public function getOnlinePartnerBankAccount(): ?string
+    public function getSiret(): ?string
     {
-        return $this->online_partner_bank_account;
-    }
-
-    /**
-     * @param string|null $online_partner_vendor_name
-     */
-    public function setOnlinePartnerVendorName(?string $online_partner_vendor_name): void
-    {
-        $this->online_partner_vendor_name = $online_partner_vendor_name;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getOnlinePartnerVendorName(): ?string
-    {
-        return $this->online_partner_vendor_name;
-    }
-
-    /**
-     * @param int|null $customer_rank
-     */
-    public function setCustomerRank(?int $customer_rank): void
-    {
-        $this->customer_rank = $customer_rank;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getCustomerRank(): ?int
-    {
-        return $this->customer_rank;
-    }
-
-    /**
-     * @param int|null $supplier_rank
-     */
-    public function setSupplierRank(?int $supplier_rank): void
-    {
-        $this->supplier_rank = $supplier_rank;
-    }
-
-    /**
-     * @param string|null $invoice_warn_msg
-     */
-    public function setInvoiceWarnMsg(?string $invoice_warn_msg): void
-    {
-        $this->invoice_warn_msg = $invoice_warn_msg;
-    }
-
-    /**
-     * @param OdooRelation[]|null $payment_token_ids
-     */
-    public function setPaymentTokenIds(?array $payment_token_ids): void
-    {
-        $this->payment_token_ids = $payment_token_ids;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getInvoiceWarnMsg(): ?string
-    {
-        return $this->invoice_warn_msg;
-    }
-
-    /**
-     * @param string|null $invoice_warn
-     */
-    public function setInvoiceWarn(?string $invoice_warn): void
-    {
-        $this->invoice_warn = $invoice_warn;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getInvoiceWarn(): ?string
-    {
-        return $this->invoice_warn;
-    }
-
-    /**
-     * @param string|null $trust
-     */
-    public function setTrust(?string $trust): void
-    {
-        $this->trust = $trust;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getTrust(): ?string
-    {
-        return $this->trust;
-    }
-
-    /**
-     * @param int|null $bank_account_count
-     */
-    public function setBankAccountCount(?int $bank_account_count): void
-    {
-        $this->bank_account_count = $bank_account_count;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getBankAccountCount(): ?int
-    {
-        return $this->bank_account_count;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getPaymentTokenIds(): ?array
-    {
-        return $this->payment_token_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasPaymentTokenIds(OdooRelation $item): bool
-    {
-        if (null === $this->payment_token_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->payment_token_ids);
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getTotalOverdue(): ?float
-    {
-        return $this->total_overdue;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeUnreconciledAmlIds(OdooRelation $item): void
-    {
-        if (null === $this->unreconciled_aml_ids) {
-            $this->unreconciled_aml_ids = [];
-        }
-
-        if ($this->hasUnreconciledAmlIds($item)) {
-            $index = array_search($item, $this->unreconciled_aml_ids);
-            unset($this->unreconciled_aml_ids[$index]);
-        }
-    }
-
-    /**
-     * @param float|null $total_due
-     */
-    public function setTotalDue(?float $total_due): void
-    {
-        $this->total_due = $total_due;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getTotalDue(): ?float
-    {
-        return $this->total_due;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeUnpaidInvoices(OdooRelation $item): void
-    {
-        if (null === $this->unpaid_invoices) {
-            $this->unpaid_invoices = [];
-        }
-
-        if ($this->hasUnpaidInvoices($item)) {
-            $index = array_search($item, $this->unpaid_invoices);
-            unset($this->unpaid_invoices[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addUnpaidInvoices(OdooRelation $item): void
-    {
-        if ($this->hasUnpaidInvoices($item)) {
-            return;
-        }
-
-        if (null === $this->unpaid_invoices) {
-            $this->unpaid_invoices = [];
-        }
-
-        $this->unpaid_invoices[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasUnpaidInvoices(OdooRelation $item): bool
-    {
-        if (null === $this->unpaid_invoices) {
-            return false;
-        }
-
-        return in_array($item, $this->unpaid_invoices);
-    }
-
-    /**
-     * @param OdooRelation[]|null $unpaid_invoices
-     */
-    public function setUnpaidInvoices(?array $unpaid_invoices): void
-    {
-        $this->unpaid_invoices = $unpaid_invoices;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getUnpaidInvoices(): ?array
-    {
-        return $this->unpaid_invoices;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addUnreconciledAmlIds(OdooRelation $item): void
-    {
-        if ($this->hasUnreconciledAmlIds($item)) {
-            return;
-        }
-
-        if (null === $this->unreconciled_aml_ids) {
-            $this->unreconciled_aml_ids = [];
-        }
-
-        $this->unreconciled_aml_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addPaymentTokenIds(OdooRelation $item): void
-    {
-        if ($this->hasPaymentTokenIds($item)) {
-            return;
-        }
-
-        if (null === $this->payment_token_ids) {
-            $this->payment_token_ids = [];
-        }
-
-        $this->payment_token_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasUnreconciledAmlIds(OdooRelation $item): bool
-    {
-        if (null === $this->unreconciled_aml_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->unreconciled_aml_ids);
-    }
-
-    /**
-     * @param OdooRelation[]|null $unreconciled_aml_ids
-     */
-    public function setUnreconciledAmlIds(?array $unreconciled_aml_ids): void
-    {
-        $this->unreconciled_aml_ids = $unreconciled_aml_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getUnreconciledAmlIds(): ?array
-    {
-        return $this->unreconciled_aml_ids;
-    }
-
-    /**
-     * @param DateTimeInterface|null $payment_next_action_date
-     */
-    public function setPaymentNextActionDate(?DateTimeInterface $payment_next_action_date): void
-    {
-        $this->payment_next_action_date = $payment_next_action_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getPaymentNextActionDate(): ?DateTimeInterface
-    {
-        return $this->payment_next_action_date;
+        return $this->siret;
     }
 
     /**
@@ -3427,6 +3715,36 @@ class Partner extends Base
             $index = array_search($item, $this->payment_token_ids);
             unset($this->payment_token_ids[$index]);
         }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addPaymentTokenIds(OdooRelation $item): void
+    {
+        if ($this->hasPaymentTokenIds($item)) {
+            return;
+        }
+
+        if (null === $this->payment_token_ids) {
+            $this->payment_token_ids = [];
+        }
+
+        $this->payment_token_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasPaymentTokenIds(OdooRelation $item): bool
+    {
+        if (null === $this->payment_token_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->payment_token_ids);
     }
 
     /**

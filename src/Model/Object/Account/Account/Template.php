@@ -26,6 +26,7 @@ final class Template extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,7 +36,12 @@ final class Template extends Base
 
     /**
      * Account Currency
+     * ---
      * Forces all moves for this account to have this secondary currency.
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +51,7 @@ final class Template extends Base
 
     /**
      * Code
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,8 +61,13 @@ final class Template extends Base
 
     /**
      * Type
+     * ---
      * These types are defined according to your country. The type contains more information about the account and
      * its specificities.
+     * ---
+     * Relation : many2one (account.account.type)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Type
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -65,7 +77,9 @@ final class Template extends Base
 
     /**
      * Allow Invoices & payments Matching
+     * ---
      * Check this option if you want the user to reconcile entries in this account.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -75,6 +89,7 @@ final class Template extends Base
 
     /**
      * Note
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -84,6 +99,10 @@ final class Template extends Base
 
     /**
      * Default Taxes
+     * ---
+     * Relation : many2many (account.tax.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax\Template
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -93,7 +112,9 @@ final class Template extends Base
 
     /**
      * Optional Create
+     * ---
      * If checked, the new chart of accounts will not contain this by default.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -103,9 +124,14 @@ final class Template extends Base
 
     /**
      * Chart Template
+     * ---
      * This optional field allow you to link an account template to a specific chart template that may differ from
      * the one its root parent belongs to. This allow you to define chart templates that extend another and complete
      * it with few new accounts (You don't need to define the whole structure that is common to both several times).
+     * ---
+     * Relation : many2one (account.chart.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Chart\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -115,7 +141,12 @@ final class Template extends Base
 
     /**
      * Account tag
+     * ---
      * Optional tags you may want to assign for custom reporting
+     * ---
+     * Relation : many2many (account.account.tag)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Tag
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -125,6 +156,10 @@ final class Template extends Base
 
     /**
      * Group
+     * ---
+     * Relation : many2one (account.group)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Group
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -134,6 +169,10 @@ final class Template extends Base
 
     /**
      * Root
+     * ---
+     * Relation : many2one (account.root)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Root
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -143,6 +182,10 @@ final class Template extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -152,6 +195,7 @@ final class Template extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -161,6 +205,10 @@ final class Template extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -170,6 +218,7 @@ final class Template extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -179,14 +228,21 @@ final class Template extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $code Code
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $user_type_id Type
+     *        ---
      *        These types are defined according to your country. The type contains more information about the account and
      *        its specificities.
+     *        ---
+     *        Relation : many2one (account.account.type)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Account\Type
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

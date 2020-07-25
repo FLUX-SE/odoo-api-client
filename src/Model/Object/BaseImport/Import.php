@@ -23,6 +23,7 @@ final class Import extends Base
 {
     /**
      * Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,16 +33,19 @@ final class Import extends Base
 
     /**
      * File
+     * ---
      * File to check and/or import, raw binary (not base64)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
-     * @var int|null
+     * @var string|null
      */
     private $file;
 
     /**
      * File Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -51,6 +55,7 @@ final class Import extends Base
 
     /**
      * File Type
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -60,6 +65,10 @@ final class Import extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -69,6 +78,7 @@ final class Import extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -78,6 +88,10 @@ final class Import extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -87,6 +101,7 @@ final class Import extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -207,17 +222,17 @@ final class Import extends Base
     }
 
     /**
-     * @param int|null $file
+     * @param string|null $file
      */
-    public function setFile(?int $file): void
+    public function setFile(?string $file): void
     {
         $this->file = $file;
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getFile(): ?int
+    public function getFile(): ?string
     {
         return $this->file;
     }

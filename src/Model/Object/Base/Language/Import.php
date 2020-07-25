@@ -23,6 +23,7 @@ final class Import extends Base
 {
     /**
      * Language Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,7 +33,9 @@ final class Import extends Base
 
     /**
      * ISO Code
+     * ---
      * ISO Language and Country code, e.g. en_US
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -42,15 +45,17 @@ final class Import extends Base
 
     /**
      * File
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
-     * @var int
+     * @var string
      */
     private $data;
 
     /**
      * File Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -60,8 +65,10 @@ final class Import extends Base
 
     /**
      * Overwrite Existing Terms
+     * ---
      * If you enable this option, existing translations (including custom ones) will be overwritten and replaced by
      * those in this file
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +78,10 @@ final class Import extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,6 +91,7 @@ final class Import extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,6 +101,10 @@ final class Import extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -98,6 +114,7 @@ final class Import extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -107,20 +124,25 @@ final class Import extends Base
 
     /**
      * @param string $name Language Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $code ISO Code
+     *        ---
      *        ISO Language and Country code, e.g. en_US
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param int $data File
+     * @param string $data File
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $filename File Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */
-    public function __construct(string $name, string $code, int $data, string $filename)
+    public function __construct(string $name, string $code, string $data, string $filename)
     {
         $this->name = $name;
         $this->code = $code;
@@ -233,17 +255,17 @@ final class Import extends Base
     }
 
     /**
-     * @param int $data
+     * @param string $data
      */
-    public function setData(int $data): void
+    public function setData(string $data): void
     {
         $this->data = $data;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getData(): int
+    public function getData(): string
     {
         return $this->data;
     }

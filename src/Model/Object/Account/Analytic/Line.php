@@ -26,6 +26,7 @@ final class Line extends Base
 {
     /**
      * Description
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Line extends Base
 
     /**
      * Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +46,7 @@ final class Line extends Base
 
     /**
      * Amount
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +56,7 @@ final class Line extends Base
 
     /**
      * Quantity
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +66,10 @@ final class Line extends Base
 
     /**
      * Unit of Measure
+     * ---
+     * Relation : many2one (uom.uom)
+     * @see \Flux\OdooApiClient\Model\Object\Uom\Uom
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,8 +79,13 @@ final class Line extends Base
 
     /**
      * Category
+     * ---
      * Conversion between Units of Measure can only occur if they belong to the same category. The conversion will be
      * made based on the ratios.
+     * ---
+     * Relation : many2one (uom.category)
+     * @see \Flux\OdooApiClient\Model\Object\Uom\Category
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -82,6 +95,10 @@ final class Line extends Base
 
     /**
      * Analytic Account
+     * ---
+     * Relation : many2one (account.analytic.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -91,6 +108,10 @@ final class Line extends Base
 
     /**
      * Partner
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -100,6 +121,10 @@ final class Line extends Base
 
     /**
      * User
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -109,6 +134,10 @@ final class Line extends Base
 
     /**
      * Tags
+     * ---
+     * Relation : many2many (account.analytic.tag)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Tag
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -118,6 +147,10 @@ final class Line extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -127,6 +160,10 @@ final class Line extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -136,6 +173,10 @@ final class Line extends Base
 
     /**
      * Group
+     * ---
+     * Relation : many2one (account.analytic.group)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Group
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -145,6 +186,10 @@ final class Line extends Base
 
     /**
      * Product
+     * ---
+     * Relation : many2one (product.product)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Product
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -154,6 +199,10 @@ final class Line extends Base
 
     /**
      * Financial Account
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -163,6 +212,10 @@ final class Line extends Base
 
     /**
      * Journal Item
+     * ---
+     * Relation : many2one (account.move.line)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move\Line
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -172,6 +225,7 @@ final class Line extends Base
 
     /**
      * Code
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -181,6 +235,7 @@ final class Line extends Base
 
     /**
      * Ref.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -190,6 +245,10 @@ final class Line extends Base
 
     /**
      * Sales Order Item
+     * ---
+     * Relation : many2one (sale.order.line)
+     * @see \Flux\OdooApiClient\Model\Object\Sale\Order\Line
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -199,6 +258,10 @@ final class Line extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -208,6 +271,7 @@ final class Line extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -217,6 +281,10 @@ final class Line extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -226,6 +294,7 @@ final class Line extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -235,18 +304,29 @@ final class Line extends Base
 
     /**
      * @param string $name Description
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param DateTimeInterface $date Date
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param float $amount Amount
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $account_id Analytic Account
+     *        ---
+     *        Relation : many2one (account.analytic.account)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Account
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $company_id Company
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

@@ -26,6 +26,7 @@ final class Partner extends Base
 {
     /**
      * Custom channel name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,10 @@ final class Partner extends Base
 
     /**
      * Recipient
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +49,7 @@ final class Partner extends Base
 
     /**
      * Email
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -53,6 +59,10 @@ final class Partner extends Base
 
     /**
      * Channel
+     * ---
+     * Relation : many2one (mail.channel)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Channel
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +72,10 @@ final class Partner extends Base
 
     /**
      * Last Fetched
+     * ---
+     * Relation : many2one (mail.message)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +85,10 @@ final class Partner extends Base
 
     /**
      * Last Seen
+     * ---
+     * Relation : many2one (mail.message)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,13 +98,14 @@ final class Partner extends Base
 
     /**
      * Conversation Fold State
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> open (Open)
      *     -> folded (Folded)
      *     -> closed (Closed)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -94,6 +113,7 @@ final class Partner extends Base
 
     /**
      * Conversation is minimized
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -103,6 +123,7 @@ final class Partner extends Base
 
     /**
      * Is pinned on the interface
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -112,6 +133,10 @@ final class Partner extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -121,6 +146,7 @@ final class Partner extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -130,6 +156,10 @@ final class Partner extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -139,6 +169,7 @@ final class Partner extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

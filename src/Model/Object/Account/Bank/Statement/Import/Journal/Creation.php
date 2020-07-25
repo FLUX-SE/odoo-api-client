@@ -22,6 +22,10 @@ final class Creation extends Journal
 {
     /**
      * Journal
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -31,53 +35,76 @@ final class Creation extends Journal
 
     /**
      * @param OdooRelation $journal_id Journal
+     *        ---
+     *        Relation : many2one (account.journal)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $name Journal Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $code Short Code
+     *        ---
      *        The journal entries of this journal will be named using this prefix.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $type Type
+     *        ---
      *        Select 'Sale' for customer invoices journals.
      *        Select 'Purchase' for vendor bills journals.
      *        Select 'Cash' or 'Bank' for journals that are used in customer or vendor payments.
      *        Select 'General' for miscellaneous operations journals.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> sale (Sales)
      *            -> purchase (Purchase)
      *            -> cash (Cash)
      *            -> bank (Bank)
      *            -> general (Miscellaneous)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param OdooRelation $sequence_id Entry Sequence
+     *        ---
      *        This field contains the information related to the numbering of the journal entries of this journal.
+     *        ---
+     *        Relation : many2one (ir.sequence)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Sequence
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $invoice_reference_type Communication Type
+     *        ---
      *        You can set here the default communication that will appear on customer invoices, once validated, to help the
      *        customer to refer to that particular invoice when making the payment.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> none (Free)
      *            -> partner (Based on Customer)
      *            -> invoice (Based on Invoice)
-     *
-     * @param string $invoice_reference_model Communication Standard
-     *        You can choose different models for each type of reference. The default one is the Odoo reference.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $invoice_reference_model Communication Standard
+     *        ---
+     *        You can choose different models for each type of reference. The default one is the Odoo reference.
+     *        ---
      *        Selection : (default value, usually null)
      *            -> odoo (Odoo)
      *            -> euro (European)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param OdooRelation $company_id Company
+     *        ---
      *        Company related to this journal
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

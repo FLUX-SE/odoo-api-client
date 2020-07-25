@@ -23,6 +23,7 @@ final class Update extends Base
 {
     /**
      * Number of modules updated
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +33,7 @@ final class Update extends Base
 
     /**
      * Number of modules added
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -41,12 +43,13 @@ final class Update extends Base
 
     /**
      * Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> init (init)
      *     -> done (done)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -54,6 +57,10 @@ final class Update extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,6 +70,7 @@ final class Update extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,6 +80,10 @@ final class Update extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -81,6 +93,7 @@ final class Update extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

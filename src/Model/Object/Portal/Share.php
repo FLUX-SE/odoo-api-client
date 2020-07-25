@@ -23,6 +23,7 @@ final class Share extends Base
 {
     /**
      * Related Document Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +33,7 @@ final class Share extends Base
 
     /**
      * Related Document ID
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -41,6 +43,10 @@ final class Share extends Base
 
     /**
      * Recipients
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -50,7 +56,9 @@ final class Share extends Base
 
     /**
      * Note
+     * ---
      * Add extra content to display in the email
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -60,6 +68,7 @@ final class Share extends Base
 
     /**
      * Link
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -69,6 +78,7 @@ final class Share extends Base
 
     /**
      * Access warning
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -78,6 +88,10 @@ final class Share extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -87,6 +101,7 @@ final class Share extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -96,6 +111,10 @@ final class Share extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -105,6 +124,7 @@ final class Share extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -114,12 +134,18 @@ final class Share extends Base
 
     /**
      * @param string $res_model Related Document Model
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param int $res_id Related Document ID
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation[] $partner_ids Recipients
+     *        ---
+     *        Relation : many2many (res.partner)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     *        ---
      *        Searchable : yes
      *        Sortable : no
      */

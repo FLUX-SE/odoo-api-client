@@ -20,9 +20,11 @@ final class Subtype extends Base
 {
     /**
      * Message Type
+     * ---
      * Message subtype gives a more precise type on the message, especially for system notifications. For example, it
      * can be a notification related to a new record (New), or to a stage change in a process (Stage change). Message
      * subtypes allow to precisely tune the notifications the user want to receive on its wall.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,8 +34,10 @@ final class Subtype extends Base
 
     /**
      * Description
+     * ---
      * Description that will be added in the message posted for this subtype. If void, the name will be added
      * instead.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -43,7 +47,9 @@ final class Subtype extends Base
 
     /**
      * Internal Only
+     * ---
      * Messages with internal subtypes will be visible only by employees, aka members of base_user group
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,8 +59,13 @@ final class Subtype extends Base
 
     /**
      * Parent
+     * ---
      * Parent subtype, used for automatic subscription. This field is not correctly named. For example on a project,
      * the parent_id of project subtypes refers to task-related subtypes.
+     * ---
+     * Relation : many2one (mail.message.subtype)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message\Subtype
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -64,8 +75,10 @@ final class Subtype extends Base
 
     /**
      * Relation field
+     * ---
      * Field used to link the related model to the subtype model when using automatic subscription on a related
      * document. The field is used to compute getattr(related_document.relation_field).
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -75,7 +88,9 @@ final class Subtype extends Base
 
     /**
      * Model
+     * ---
      * Model the subtype applies to. If False, this subtype applies to all models.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -85,7 +100,9 @@ final class Subtype extends Base
 
     /**
      * Default
+     * ---
      * Activated by default when subscribing.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -95,7 +112,9 @@ final class Subtype extends Base
 
     /**
      * Sequence
+     * ---
      * Used to order subtypes.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -105,7 +124,9 @@ final class Subtype extends Base
 
     /**
      * Hidden
+     * ---
      * Hide the subtype in the follower options
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -115,6 +136,10 @@ final class Subtype extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -124,6 +149,7 @@ final class Subtype extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -133,6 +159,10 @@ final class Subtype extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -142,6 +172,7 @@ final class Subtype extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -151,9 +182,11 @@ final class Subtype extends Base
 
     /**
      * @param string $name Message Type
+     *        ---
      *        Message subtype gives a more precise type on the message, especially for system notifications. For example, it
      *        can be a notification related to a new record (New), or to a stage change in a process (Stage change). Message
      *        subtypes allow to precisely tune the notifications the user want to receive on its wall.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

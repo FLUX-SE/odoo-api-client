@@ -26,6 +26,7 @@ final class Reconcile extends Base
 {
     /**
      * Number
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,10 @@ final class Reconcile extends Base
 
     /**
      * Reconciliation Parts
+     * ---
+     * Relation : one2many (account.partial.reconcile -> full_reconcile_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Partial\Reconcile
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -44,6 +49,10 @@ final class Reconcile extends Base
 
     /**
      * Matched Journal Items
+     * ---
+     * Relation : one2many (account.move.line -> full_reconcile_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -53,6 +62,10 @@ final class Reconcile extends Base
 
     /**
      * Exchange Move
+     * ---
+     * Relation : many2one (account.move)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +75,10 @@ final class Reconcile extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +88,7 @@ final class Reconcile extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,6 +98,10 @@ final class Reconcile extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,6 +111,7 @@ final class Reconcile extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -98,6 +121,7 @@ final class Reconcile extends Base
 
     /**
      * @param string $name Number
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

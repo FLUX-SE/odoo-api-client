@@ -17,6 +17,7 @@ final class Channel extends Alias
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -26,12 +27,13 @@ final class Channel extends Alias
 
     /**
      * Channel Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> chat (Chat Discussion)
      *     -> channel (Channel)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -39,6 +41,7 @@ final class Channel extends Alias
 
     /**
      * Is a chat
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -48,6 +51,7 @@ final class Channel extends Alias
 
     /**
      * Description
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -57,6 +61,7 @@ final class Channel extends Alias
 
     /**
      * UUID
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -66,6 +71,7 @@ final class Channel extends Alias
 
     /**
      * Send messages by email
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -75,6 +81,10 @@ final class Channel extends Alias
 
     /**
      * Last Seen
+     * ---
+     * Relation : one2many (mail.channel.partner -> channel_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Channel\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -84,6 +94,10 @@ final class Channel extends Alias
 
     /**
      * Listeners
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -93,6 +107,10 @@ final class Channel extends Alias
 
     /**
      * Channel Message
+     * ---
+     * Relation : many2many (mail.message)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -102,6 +120,7 @@ final class Channel extends Alias
 
     /**
      * Is a member
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -111,14 +130,16 @@ final class Channel extends Alias
 
     /**
      * Privacy
+     * ---
      * This group is visible by non members. Invisible groups can add members through the invite button.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> public (Everyone)
      *     -> private (Invited people only)
      *     -> groups (Selected group of users)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -126,6 +147,10 @@ final class Channel extends Alias
 
     /**
      * Authorized Group
+     * ---
+     * Relation : many2one (res.groups)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Groups
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -135,8 +160,13 @@ final class Channel extends Alias
 
     /**
      * Auto Subscription
+     * ---
      * Members of those groups will automatically added as followers. Note that they will be able to manage their
      * subscription manually if necessary.
+     * ---
+     * Relation : many2many (res.groups)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Groups
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -146,15 +176,17 @@ final class Channel extends Alias
 
     /**
      * Image
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $image_128;
 
     /**
      * Is Subscribed
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -164,6 +196,7 @@ final class Channel extends Alias
 
     /**
      * Moderate this channel
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -173,6 +206,10 @@ final class Channel extends Alias
 
     /**
      * Moderators
+     * ---
+     * Relation : many2many (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -182,7 +219,9 @@ final class Channel extends Alias
 
     /**
      * Moderator
+     * ---
      * Current user is a moderator of the channel
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -192,6 +231,10 @@ final class Channel extends Alias
 
     /**
      * Moderated Emails
+     * ---
+     * Relation : one2many (mail.moderation -> channel_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Moderation
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -201,6 +244,7 @@ final class Channel extends Alias
 
     /**
      * Moderated emails count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -210,7 +254,9 @@ final class Channel extends Alias
 
     /**
      * Automatic notification
+     * ---
      * People receive an automatic notification about their message being waiting for moderation.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -220,6 +266,7 @@ final class Channel extends Alias
 
     /**
      * Notification message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -229,7 +276,9 @@ final class Channel extends Alias
 
     /**
      * Send guidelines to new subscribers
+     * ---
      * Newcomers on this moderated channel will automatically receive the guidelines.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -239,6 +288,7 @@ final class Channel extends Alias
 
     /**
      * Guidelines
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -248,6 +298,10 @@ final class Channel extends Alias
 
     /**
      * Alias
+     * ---
+     * Relation : many2one (mail.alias)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Alias
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -257,6 +311,7 @@ final class Channel extends Alias
 
     /**
      * Is Follower
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -266,6 +321,10 @@ final class Channel extends Alias
 
     /**
      * Followers
+     * ---
+     * Relation : one2many (mail.followers -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Followers
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -275,6 +334,10 @@ final class Channel extends Alias
 
     /**
      * Followers (Partners)
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -284,6 +347,10 @@ final class Channel extends Alias
 
     /**
      * Followers (Channels)
+     * ---
+     * Relation : many2many (mail.channel)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Channel
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -293,6 +360,10 @@ final class Channel extends Alias
 
     /**
      * Messages
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -302,7 +373,9 @@ final class Channel extends Alias
 
     /**
      * Unread Messages
+     * ---
      * If checked, new messages require your attention.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -312,7 +385,9 @@ final class Channel extends Alias
 
     /**
      * Unread Messages Counter
+     * ---
      * Number of unread messages
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -322,7 +397,9 @@ final class Channel extends Alias
 
     /**
      * Action Needed
+     * ---
      * If checked, new messages require your attention.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -332,7 +409,9 @@ final class Channel extends Alias
 
     /**
      * Number of Actions
+     * ---
      * Number of messages which requires an action
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -342,7 +421,9 @@ final class Channel extends Alias
 
     /**
      * Message Delivery error
+     * ---
      * If checked, some messages have a delivery error.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -352,7 +433,9 @@ final class Channel extends Alias
 
     /**
      * Number of errors
+     * ---
      * Number of messages with delivery error
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -362,6 +445,7 @@ final class Channel extends Alias
 
     /**
      * Attachment Count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -371,6 +455,10 @@ final class Channel extends Alias
 
     /**
      * Main Attachment
+     * ---
+     * Relation : many2one (ir.attachment)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -380,7 +468,12 @@ final class Channel extends Alias
 
     /**
      * Website Messages
+     * ---
      * Website communication history
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -390,7 +483,9 @@ final class Channel extends Alias
 
     /**
      * SMS Delivery error
+     * ---
      * If checked, some messages have a delivery error.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -400,42 +495,58 @@ final class Channel extends Alias
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $public Privacy
+     *        ---
      *        This group is visible by non members. Invisible groups can add members through the invite button.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> public (Everyone)
      *            -> private (Invited people only)
      *            -> groups (Selected group of users)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param OdooRelation $alias_id Alias
+     *        ---
+     *        Relation : many2one (mail.alias)
+     *        @see \Flux\OdooApiClient\Model\Object\Mail\Alias
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $alias_model_id Aliased Model
+     *        ---
      *        The model (Odoo Document Kind) to which this alias corresponds. Any incoming email that does not reply to an
      *        existing record will cause the creation of a new record of this model (e.g. a Project Task)
+     *        ---
+     *        Relation : many2one (ir.model)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $alias_defaults Default Values
+     *        ---
      *        A Python dictionary that will be evaluated to provide default values when creating new records for this alias.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $alias_contact Alias Contact Security
+     *        ---
      *        Policy to post a message on the document using the mailgateway.
      *        - everyone: everyone can post
      *        - partners: only authenticated partners
      *        - followers: only followers of the related document or members of following channels
      *
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> everyone (Everyone)
      *            -> partners (Authenticated Partners)
      *            -> followers (Followers only)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         string $name,
@@ -1486,17 +1597,17 @@ final class Channel extends Alias
     }
 
     /**
-     * @param int|null $image_128
+     * @param string|null $image_128
      */
-    public function setImage128(?int $image_128): void
+    public function setImage128(?string $image_128): void
     {
         $this->image_128 = $image_128;
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getImage128(): ?int
+    public function getImage128(): ?string
     {
         return $this->image_128;
     }

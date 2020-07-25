@@ -26,6 +26,7 @@ final class O2m extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,10 @@ final class O2m extends Base
 
     /**
      * Value
+     * ---
+     * Relation : one2many (base_import.tests.models.o2m.child -> parent_id)
+     * @see \Flux\OdooApiClient\Model\Object\BaseImport\Tests\Models\O2m\Child
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -44,6 +49,10 @@ final class O2m extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +62,7 @@ final class O2m extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +72,10 @@ final class O2m extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +85,7 @@ final class O2m extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

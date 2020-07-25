@@ -23,13 +23,14 @@ final class Composer extends Base
 {
     /**
      * Composition Mode
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> numbers (Send to numbers)
      *     -> comment (Post on a document)
      *     -> mass (Send SMS in batch)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -37,6 +38,7 @@ final class Composer extends Base
 
     /**
      * Document Model Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -46,6 +48,7 @@ final class Composer extends Base
 
     /**
      * Document ID
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -55,6 +58,7 @@ final class Composer extends Base
 
     /**
      * Document IDs
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -64,7 +68,9 @@ final class Composer extends Base
 
     /**
      * Visible records count
+     * ---
      * UX field computing the number of recipients in mass mode without active domain
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -74,6 +80,7 @@ final class Composer extends Base
 
     /**
      * Use active domain
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -83,6 +90,7 @@ final class Composer extends Base
 
     /**
      * Active domain
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -92,7 +100,9 @@ final class Composer extends Base
 
     /**
      * Active records count
+     * ---
      * UX field computing the number of recipients in mass mode based on given active domain
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -102,6 +112,7 @@ final class Composer extends Base
 
     /**
      * Keep a note on document
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -111,6 +122,7 @@ final class Composer extends Base
 
     /**
      * Send directly
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -120,6 +132,7 @@ final class Composer extends Base
 
     /**
      * Use blacklist
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -129,6 +142,7 @@ final class Composer extends Base
 
     /**
      * Recipients (Partners)
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -138,6 +152,7 @@ final class Composer extends Base
 
     /**
      * # Valid recipients
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -147,6 +162,7 @@ final class Composer extends Base
 
     /**
      * # Invalid recipients
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -156,6 +172,7 @@ final class Composer extends Base
 
     /**
      * Field holding number
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -165,6 +182,10 @@ final class Composer extends Base
 
     /**
      * Partner
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -174,6 +195,7 @@ final class Composer extends Base
 
     /**
      * Recipients (Numbers)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -183,6 +205,7 @@ final class Composer extends Base
 
     /**
      * Sanitized Number
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -192,6 +215,10 @@ final class Composer extends Base
 
     /**
      * Use Template
+     * ---
+     * Relation : many2one (sms.template)
+     * @see \Flux\OdooApiClient\Model\Object\Sms\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -201,6 +228,7 @@ final class Composer extends Base
 
     /**
      * Message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -210,6 +238,10 @@ final class Composer extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -219,6 +251,7 @@ final class Composer extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -228,6 +261,10 @@ final class Composer extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -237,6 +274,7 @@ final class Composer extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -246,14 +284,16 @@ final class Composer extends Base
 
     /**
      * @param string $composition_mode Composition Mode
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> numbers (Send to numbers)
      *            -> comment (Post on a document)
      *            -> mass (Send SMS in batch)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $body Message
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

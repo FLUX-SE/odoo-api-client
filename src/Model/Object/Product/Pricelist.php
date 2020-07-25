@@ -26,6 +26,7 @@ final class Pricelist extends Base
 {
     /**
      * Pricelist Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,7 +36,9 @@ final class Pricelist extends Base
 
     /**
      * Active
+     * ---
      * If unchecked, it will allow you to hide the pricelist without removing it.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +48,10 @@ final class Pricelist extends Base
 
     /**
      * Pricelist Items
+     * ---
+     * Relation : one2many (product.pricelist.item -> pricelist_id)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Pricelist\Item
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -54,6 +61,10 @@ final class Pricelist extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,6 +74,10 @@ final class Pricelist extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,6 +87,7 @@ final class Pricelist extends Base
 
     /**
      * Sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -81,6 +97,10 @@ final class Pricelist extends Base
 
     /**
      * Country Groups
+     * ---
+     * Relation : many2many (res.country.group)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country\Group
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -90,12 +110,13 @@ final class Pricelist extends Base
 
     /**
      * Discount Policy
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> with_discount (Discount included in the price)
      *     -> without_discount (Show public price & discount to the customer)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -103,6 +124,10 @@ final class Pricelist extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -112,6 +137,7 @@ final class Pricelist extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -121,6 +147,10 @@ final class Pricelist extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -130,6 +160,7 @@ final class Pricelist extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -139,9 +170,14 @@ final class Pricelist extends Base
 
     /**
      * @param string $name Pricelist Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $currency_id Currency
+     *        ---
+     *        Relation : many2one (res.currency)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

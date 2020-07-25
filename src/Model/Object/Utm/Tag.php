@@ -18,6 +18,7 @@ final class Tag extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -27,6 +28,7 @@ final class Tag extends Base
 
     /**
      * Color Index
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,6 +38,10 @@ final class Tag extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +51,7 @@ final class Tag extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,6 +61,10 @@ final class Tag extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,6 +74,7 @@ final class Tag extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,6 +84,7 @@ final class Tag extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

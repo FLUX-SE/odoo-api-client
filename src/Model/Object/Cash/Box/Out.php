@@ -23,6 +23,7 @@ final class Out extends Base
 {
     /**
      * Reason
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +33,7 @@ final class Out extends Base
 
     /**
      * Amount
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -41,6 +43,10 @@ final class Out extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -50,6 +56,7 @@ final class Out extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -59,6 +66,10 @@ final class Out extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -68,6 +79,7 @@ final class Out extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -77,9 +89,11 @@ final class Out extends Base
 
     /**
      * @param string $name Reason
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param float $amount Amount
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

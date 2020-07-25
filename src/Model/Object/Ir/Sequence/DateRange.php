@@ -26,6 +26,7 @@ final class DateRange extends Base
 {
     /**
      * From
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class DateRange extends Base
 
     /**
      * To
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +46,10 @@ final class DateRange extends Base
 
     /**
      * Main Sequence
+     * ---
+     * Relation : many2one (ir.sequence)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,7 +59,9 @@ final class DateRange extends Base
 
     /**
      * Next Number
+     * ---
      * Next number of this sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,8 +71,10 @@ final class DateRange extends Base
 
     /**
      * Actual Next Number
+     * ---
      * Next number that will be used. This number can be incremented frequently so the displayed value might already
      * be obsolete
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -74,6 +84,10 @@ final class DateRange extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -83,6 +97,7 @@ final class DateRange extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -92,6 +107,10 @@ final class DateRange extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -101,6 +120,7 @@ final class DateRange extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -110,16 +130,24 @@ final class DateRange extends Base
 
     /**
      * @param DateTimeInterface $date_from From
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param DateTimeInterface $date_to To
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $sequence_id Main Sequence
+     *        ---
+     *        Relation : many2one (ir.sequence)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Sequence
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param int $number_next Next Number
+     *        ---
      *        Next number of this sequence
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

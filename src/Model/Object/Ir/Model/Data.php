@@ -26,7 +26,9 @@ final class Data extends Base
 {
     /**
      * External Identifier
+     * ---
      * External Key/Identifier that can be used for data integration with third-party systems
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,6 +38,7 @@ final class Data extends Base
 
     /**
      * Complete ID
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -45,6 +48,7 @@ final class Data extends Base
 
     /**
      * Model Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,6 +58,7 @@ final class Data extends Base
 
     /**
      * Module
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,7 +68,9 @@ final class Data extends Base
 
     /**
      * Record ID
+     * ---
      * ID of the target record in the database
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -73,6 +80,7 @@ final class Data extends Base
 
     /**
      * Non Updatable
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -82,6 +90,7 @@ final class Data extends Base
 
     /**
      * Update Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -91,6 +100,7 @@ final class Data extends Base
 
     /**
      * Init Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -100,6 +110,7 @@ final class Data extends Base
 
     /**
      * Reference
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -109,6 +120,10 @@ final class Data extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -118,6 +133,7 @@ final class Data extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -127,6 +143,10 @@ final class Data extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -136,6 +156,7 @@ final class Data extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -145,13 +166,17 @@ final class Data extends Base
 
     /**
      * @param string $name External Identifier
+     *        ---
      *        External Key/Identifier that can be used for data integration with third-party systems
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $model Model Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $module Module
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

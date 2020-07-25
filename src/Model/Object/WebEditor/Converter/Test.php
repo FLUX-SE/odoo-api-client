@@ -26,6 +26,7 @@ final class Test extends Base
 {
     /**
      * Char
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Test extends Base
 
     /**
      * Integer
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +46,7 @@ final class Test extends Base
 
     /**
      * Float
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +56,7 @@ final class Test extends Base
 
     /**
      * Numeric
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +66,10 @@ final class Test extends Base
 
     /**
      * Many2One
+     * ---
+     * Relation : many2one (web_editor.converter.test.sub)
+     * @see \Flux\OdooApiClient\Model\Object\WebEditor\Converter\Test\Sub
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,15 +79,17 @@ final class Test extends Base
 
     /**
      * Binary
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
-     * @var int|null
+     * @var string|null
      */
     private $binary;
 
     /**
      * Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,6 +99,7 @@ final class Test extends Base
 
     /**
      * Datetime
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -99,14 +110,15 @@ final class Test extends Base
     /**
      * Lorsqu'un pancake prend l'avion à destination de Toronto et qu'il fait une escale technique à St Claude, on
      * dit:
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> A (Qu'il n'est pas arrivé à Toronto)
      *     -> B (Qu'il était supposé arriver à Toronto)
      *     -> C (Qu'est-ce qu'il fout ce maudit pancake, tabernacle ?)
      *     -> D (La réponse D)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -114,6 +126,7 @@ final class Test extends Base
 
     /**
      * Html
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -123,6 +136,7 @@ final class Test extends Base
 
     /**
      * Text
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -132,6 +146,10 @@ final class Test extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -141,6 +159,7 @@ final class Test extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -150,6 +169,10 @@ final class Test extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -159,6 +182,7 @@ final class Test extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -327,17 +351,17 @@ final class Test extends Base
     }
 
     /**
-     * @param int|null $binary
+     * @param string|null $binary
      */
-    public function setBinary(?int $binary): void
+    public function setBinary(?string $binary): void
     {
         $this->binary = $binary;
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getBinary(): ?int
+    public function getBinary(): ?string
     {
         return $this->binary;
     }

@@ -26,6 +26,7 @@ final class Exports extends Base
 {
     /**
      * Export Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Exports extends Base
 
     /**
      * Resource
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +46,10 @@ final class Exports extends Base
 
     /**
      * Export ID
+     * ---
+     * Relation : one2many (ir.exports.line -> export_id)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Exports\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -53,6 +59,10 @@ final class Exports extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +72,7 @@ final class Exports extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +82,10 @@ final class Exports extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,6 +95,7 @@ final class Exports extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

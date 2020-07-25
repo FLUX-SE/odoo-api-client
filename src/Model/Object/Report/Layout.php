@@ -26,6 +26,10 @@ final class Layout extends Base
 {
     /**
      * Document Template
+     * ---
+     * Relation : many2one (ir.ui.view)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Ui\View
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +39,7 @@ final class Layout extends Base
 
     /**
      * Preview image src
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +49,7 @@ final class Layout extends Base
 
     /**
      * Preview pdf src
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +59,7 @@ final class Layout extends Base
 
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +69,10 @@ final class Layout extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +82,7 @@ final class Layout extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,6 +92,10 @@ final class Layout extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,6 +105,7 @@ final class Layout extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -98,6 +115,10 @@ final class Layout extends Base
 
     /**
      * @param OdooRelation $view_id Document Template
+     *        ---
+     *        Relation : many2one (ir.ui.view)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Ui\View
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

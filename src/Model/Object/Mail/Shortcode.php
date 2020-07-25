@@ -23,7 +23,9 @@ final class Shortcode extends Base
 {
     /**
      * Shortcut
+     * ---
      * The shortcut which must be replaced in the Chat Messages
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -33,7 +35,9 @@ final class Shortcode extends Base
 
     /**
      * Substitution
+     * ---
      * The escaped html code replacing the shortcut
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -43,6 +47,7 @@ final class Shortcode extends Base
 
     /**
      * Description
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -52,6 +57,10 @@ final class Shortcode extends Base
 
     /**
      * Messages
+     * ---
+     * Relation : many2one (mail.message)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -61,6 +70,10 @@ final class Shortcode extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -70,6 +83,7 @@ final class Shortcode extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -79,6 +93,10 @@ final class Shortcode extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -88,6 +106,7 @@ final class Shortcode extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -97,11 +116,15 @@ final class Shortcode extends Base
 
     /**
      * @param string $source Shortcut
+     *        ---
      *        The shortcut which must be replaced in the Chat Messages
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $substitution Substitution
+     *        ---
      *        The escaped html code replacing the shortcut
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

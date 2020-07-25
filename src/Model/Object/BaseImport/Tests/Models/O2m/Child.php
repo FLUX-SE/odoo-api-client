@@ -26,6 +26,10 @@ final class Child extends Base
 {
     /**
      * Parent
+     * ---
+     * Relation : many2one (base_import.tests.models.o2m)
+     * @see \Flux\OdooApiClient\Model\Object\BaseImport\Tests\Models\O2m
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +39,7 @@ final class Child extends Base
 
     /**
      * Value
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +49,10 @@ final class Child extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +62,7 @@ final class Child extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +72,10 @@ final class Child extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +85,7 @@ final class Child extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

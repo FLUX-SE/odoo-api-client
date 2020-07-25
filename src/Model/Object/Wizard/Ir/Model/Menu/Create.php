@@ -23,6 +23,10 @@ final class Create extends Base
 {
     /**
      * Parent Menu
+     * ---
+     * Relation : many2one (ir.ui.menu)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Ui\Menu
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +36,7 @@ final class Create extends Base
 
     /**
      * Menu Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -41,6 +46,10 @@ final class Create extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -50,6 +59,7 @@ final class Create extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -59,6 +69,10 @@ final class Create extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -68,6 +82,7 @@ final class Create extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -77,9 +92,14 @@ final class Create extends Base
 
     /**
      * @param OdooRelation $menu_id Parent Menu
+     *        ---
+     *        Relation : many2one (ir.ui.menu)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Ui\Menu
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $name Menu Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

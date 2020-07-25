@@ -26,6 +26,7 @@ final class Account extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,7 +36,12 @@ final class Account extends Base
 
     /**
      * Account Currency
+     * ---
      * Forces all moves for this account to have this account currency.
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +51,7 @@ final class Account extends Base
 
     /**
      * Code
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,6 +61,7 @@ final class Account extends Base
 
     /**
      * Deprecated
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,6 +71,7 @@ final class Account extends Base
 
     /**
      * Used
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -72,8 +81,13 @@ final class Account extends Base
 
     /**
      * Type
+     * ---
      * Account Type is used for information purpose, to generate country-specific legal reports, and set the rules to
      * close a fiscal year and generate opening entries.
+     * ---
+     * Relation : many2one (account.account.type)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Type
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -83,16 +97,18 @@ final class Account extends Base
 
     /**
      * Internal Type
+     * ---
      * The 'Internal Type' is used for features available on different types of accounts: liquidity type is for cash
      * or bank accounts, payable/receivable is for vendor/customer accounts.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> other (Regular)
      *     -> receivable (Receivable)
      *     -> payable (Payable)
      *     -> liquidity (Liquidity)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -100,9 +116,9 @@ final class Account extends Base
 
     /**
      * Internal Group
+     * ---
      * The 'Internal Group' is used to filter accounts based on the internal group set on the account type.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> equity (Equity)
      *     -> asset (Asset)
@@ -110,7 +126,9 @@ final class Account extends Base
      *     -> income (Income)
      *     -> expense (Expense)
      *     -> off_balance (Off Balance)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -118,7 +136,9 @@ final class Account extends Base
 
     /**
      * Allow Reconciliation
+     * ---
      * Check this box if this account allows invoices & payments matching of journal items.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -128,6 +148,10 @@ final class Account extends Base
 
     /**
      * Default Taxes
+     * ---
+     * Relation : many2many (account.tax)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -137,6 +161,7 @@ final class Account extends Base
 
     /**
      * Internal Notes
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -146,6 +171,10 @@ final class Account extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -155,7 +184,12 @@ final class Account extends Base
 
     /**
      * Tags
+     * ---
      * Optional tags you may want to assign for custom reporting
+     * ---
+     * Relation : many2many (account.account.tag)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Tag
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -165,6 +199,10 @@ final class Account extends Base
 
     /**
      * Group
+     * ---
+     * Relation : many2one (account.group)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Group
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -174,6 +212,10 @@ final class Account extends Base
 
     /**
      * Root
+     * ---
+     * Relation : many2one (account.root)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Root
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -183,7 +225,9 @@ final class Account extends Base
 
     /**
      * Opening debit
+     * ---
      * Opening debit value for this account.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -193,7 +237,9 @@ final class Account extends Base
 
     /**
      * Opening credit
+     * ---
      * Opening credit value for this account.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -203,7 +249,12 @@ final class Account extends Base
 
     /**
      * Asset Model
+     * ---
      * If this is selected, an asset will be created automatically when Journal Items on this account are posted.
+     * ---
+     * Relation : many2one (account.asset)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Asset
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -213,13 +264,14 @@ final class Account extends Base
 
     /**
      * Create Asset
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> no (No)
      *     -> draft (Create in draft)
      *     -> validate (Create and validate)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -227,8 +279,10 @@ final class Account extends Base
 
     /**
      * Can Create Asset
+     * ---
      * Technical field specifying if the account can generate asset depending on it's type. It is used in the account
      * form view.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -238,6 +292,7 @@ final class Account extends Base
 
     /**
      * Form View Ref
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -247,13 +302,14 @@ final class Account extends Base
 
     /**
      * Asset Type
-     * Searchable : no
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> sale (Deferred Revenue)
      *     -> expense (Deferred Expense)
      *     -> purchase (Asset)
-     *
+     * ---
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
@@ -261,6 +317,10 @@ final class Account extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -270,6 +330,7 @@ final class Account extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -279,6 +340,10 @@ final class Account extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -288,6 +353,7 @@ final class Account extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -297,27 +363,39 @@ final class Account extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $code Code
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $user_type_id Type
+     *        ---
      *        Account Type is used for information purpose, to generate country-specific legal reports, and set the rules to
      *        close a fiscal year and generate opening entries.
+     *        ---
+     *        Relation : many2one (account.account.type)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Account\Type
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $company_id Company
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $create_asset Create Asset
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> no (No)
      *            -> draft (Create in draft)
      *            -> validate (Create and validate)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         string $name,

@@ -39,6 +39,10 @@ final class Mixin extends Base
 {
     /**
      * Activities
+     * ---
+     * Relation : one2many (mail.activity -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -48,17 +52,19 @@ final class Mixin extends Base
 
     /**
      * Activity State
+     * ---
      * Status based on activities
      * Overdue: Due date is already passed
      * Today: Activity date is today
      * Planned: Future activities.
-     * Searchable : no
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> overdue (Overdue)
      *     -> today (Today)
      *     -> planned (Planned)
-     *
+     * ---
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
@@ -66,6 +72,10 @@ final class Mixin extends Base
 
     /**
      * Responsible User
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -75,6 +85,10 @@ final class Mixin extends Base
 
     /**
      * Next Activity Type
+     * ---
+     * Relation : many2one (mail.activity.type)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity\Type
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -84,6 +98,7 @@ final class Mixin extends Base
 
     /**
      * Next Activity Deadline
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -93,6 +108,7 @@ final class Mixin extends Base
 
     /**
      * Next Activity Summary
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -102,13 +118,15 @@ final class Mixin extends Base
 
     /**
      * Activity Exception Decoration
+     * ---
      * Type of the exception activity on record.
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> warning (Alert)
      *     -> danger (Error)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -116,7 +134,9 @@ final class Mixin extends Base
 
     /**
      * Icon
+     * ---
      * Icon to indicate an exception activity.
+     * ---
      * Searchable : no
      * Sortable : no
      *

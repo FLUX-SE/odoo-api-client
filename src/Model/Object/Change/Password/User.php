@@ -18,6 +18,10 @@ final class User extends Base
 {
     /**
      * Wizard
+     * ---
+     * Relation : many2one (change.password.wizard)
+     * @see \Flux\OdooApiClient\Model\Object\Change\Password\Wizard
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -27,6 +31,10 @@ final class User extends Base
 
     /**
      * User
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,6 +44,7 @@ final class User extends Base
 
     /**
      * User Login
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +54,7 @@ final class User extends Base
 
     /**
      * New Password
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,6 +64,10 @@ final class User extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,6 +77,7 @@ final class User extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,6 +87,10 @@ final class User extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -81,6 +100,7 @@ final class User extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -90,9 +110,17 @@ final class User extends Base
 
     /**
      * @param OdooRelation $wizard_id Wizard
+     *        ---
+     *        Relation : many2one (change.password.wizard)
+     *        @see \Flux\OdooApiClient\Model\Object\Change\Password\Wizard
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $user_id User
+     *        ---
+     *        Relation : many2one (res.users)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Users
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

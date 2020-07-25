@@ -26,6 +26,7 @@ final class Digest extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,10 @@ final class Digest extends Base
 
     /**
      * Recipients
+     * ---
+     * Relation : many2many (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -44,13 +49,14 @@ final class Digest extends Base
 
     /**
      * Periodicity
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> weekly (Weekly)
      *     -> monthly (Monthly)
      *     -> quarterly (Quarterly)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -58,6 +64,7 @@ final class Digest extends Base
 
     /**
      * Next Send Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -67,6 +74,10 @@ final class Digest extends Base
 
     /**
      * Email Template
+     * ---
+     * Relation : many2one (mail.template)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -76,6 +87,10 @@ final class Digest extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -85,6 +100,10 @@ final class Digest extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -94,6 +113,7 @@ final class Digest extends Base
 
     /**
      * Available Fields
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -103,6 +123,7 @@ final class Digest extends Base
 
     /**
      * Is user subscribed
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -112,12 +133,13 @@ final class Digest extends Base
 
     /**
      * Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> activated (Activated)
      *     -> deactivated (Deactivated)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -125,6 +147,7 @@ final class Digest extends Base
 
     /**
      * Connected Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -134,6 +157,7 @@ final class Digest extends Base
 
     /**
      * Kpi Res Users Connected Value
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -143,6 +167,7 @@ final class Digest extends Base
 
     /**
      * Messages
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -152,6 +177,7 @@ final class Digest extends Base
 
     /**
      * Kpi Mail Message Total Value
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -161,6 +187,7 @@ final class Digest extends Base
 
     /**
      * Revenue
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -170,6 +197,7 @@ final class Digest extends Base
 
     /**
      * Kpi Account Total Revenue Value
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -179,6 +207,7 @@ final class Digest extends Base
 
     /**
      * Bank & Cash Moves
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -188,6 +217,7 @@ final class Digest extends Base
 
     /**
      * Kpi Account Bank Cash Value
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -197,6 +227,7 @@ final class Digest extends Base
 
     /**
      * All Sales
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -206,6 +237,7 @@ final class Digest extends Base
 
     /**
      * Kpi All Sale Total Value
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -215,6 +247,10 @@ final class Digest extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -224,6 +260,7 @@ final class Digest extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -233,6 +270,10 @@ final class Digest extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -242,6 +283,7 @@ final class Digest extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -251,17 +293,23 @@ final class Digest extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $periodicity Periodicity
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> weekly (Weekly)
      *            -> monthly (Monthly)
      *            -> quarterly (Quarterly)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param OdooRelation $template_id Email Template
+     *        ---
+     *        Relation : many2one (mail.template)
+     *        @see \Flux\OdooApiClient\Model\Object\Mail\Template
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

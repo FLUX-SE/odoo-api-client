@@ -16,7 +16,9 @@ final class Mixin extends Base
 {
     /**
      * Portal Access URL
+     * ---
      * Customer Portal URL
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -26,6 +28,7 @@ final class Mixin extends Base
 
     /**
      * Security Token
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +38,7 @@ final class Mixin extends Base
 
     /**
      * Access warning
+     * ---
      * Searchable : no
      * Sortable : no
      *

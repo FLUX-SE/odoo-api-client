@@ -26,6 +26,7 @@ final class Resource_ extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,7 +36,9 @@ final class Resource_ extends Base
 
     /**
      * Active
+     * ---
      * If the active field is set to False, it will allow you to hide the resource record without removing it.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +48,10 @@ final class Resource_ extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,12 +61,13 @@ final class Resource_ extends Base
 
     /**
      * Resource Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> user (Human)
      *     -> material (Material)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -67,7 +75,12 @@ final class Resource_ extends Base
 
     /**
      * User
+     * ---
      * Related user name for the resource to manage its access.
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -77,9 +90,11 @@ final class Resource_ extends Base
 
     /**
      * Efficiency Factor
+     * ---
      * This field is used to calculate the the expected duration of a work order at this work center. For example, if
      * a work order takes one hour and the efficiency factor is 100%, then the expected duration will be one hour. If
      * the efficiency factor is 200%, however the expected duration will be 30 minutes.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,7 +104,12 @@ final class Resource_ extends Base
 
     /**
      * Working Time
+     * ---
      * Define the schedule of resource
+     * ---
+     * Relation : many2one (resource.calendar)
+     * @see \Flux\OdooApiClient\Model\Object\Resource_\Calendar
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -99,9 +119,9 @@ final class Resource_ extends Base
 
     /**
      * Timezone
+     * ---
      * This field is used in order to define in which timezone the resources will work.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> Africa/Abidjan (Africa/Abidjan)
      *     -> Africa/Accra (Africa/Accra)
@@ -696,7 +716,9 @@ final class Resource_ extends Base
      *     -> Etc/UTC (Etc/UTC)
      *     -> Etc/Universal (Etc/Universal)
      *     -> Etc/Zulu (Etc/Zulu)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -704,6 +726,10 @@ final class Resource_ extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -713,6 +739,7 @@ final class Resource_ extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -722,6 +749,10 @@ final class Resource_ extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -731,6 +762,7 @@ final class Resource_ extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -740,29 +772,38 @@ final class Resource_ extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $resource_type Resource Type
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> user (Human)
      *            -> material (Material)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param float $time_efficiency Efficiency Factor
+     *        ---
      *        This field is used to calculate the the expected duration of a work order at this work center. For example, if
      *        a work order takes one hour and the efficiency factor is 100%, then the expected duration will be one hour. If
      *        the efficiency factor is 200%, however the expected duration will be 30 minutes.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $calendar_id Working Time
+     *        ---
      *        Define the schedule of resource
+     *        ---
+     *        Relation : many2one (resource.calendar)
+     *        @see \Flux\OdooApiClient\Model\Object\Resource_\Calendar
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $tz Timezone
+     *        ---
      *        This field is used in order to define in which timezone the resources will work.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> Africa/Abidjan (Africa/Abidjan)
      *            -> Africa/Accra (Africa/Accra)
@@ -1357,7 +1398,9 @@ final class Resource_ extends Base
      *            -> Etc/UTC (Etc/UTC)
      *            -> Etc/Universal (Etc/Universal)
      *            -> Etc/Zulu (Etc/Zulu)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         string $name,

@@ -29,6 +29,7 @@ final class Attachment extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -38,6 +39,7 @@ final class Attachment extends Base
 
     /**
      * Description
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -47,6 +49,7 @@ final class Attachment extends Base
 
     /**
      * Resource Name
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -56,7 +59,9 @@ final class Attachment extends Base
 
     /**
      * Resource Model
+     * ---
      * The database object this attachment will be attached to.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -66,6 +71,7 @@ final class Attachment extends Base
 
     /**
      * Resource Field
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -75,7 +81,9 @@ final class Attachment extends Base
 
     /**
      * Resource ID
+     * ---
      * The record id this is attached to.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -85,6 +93,10 @@ final class Attachment extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -94,13 +106,15 @@ final class Attachment extends Base
 
     /**
      * Type
+     * ---
      * You can either upload a file from your computer or copy/paste an internet link to your file.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> url (URL)
      *     -> binary (File)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -108,6 +122,7 @@ final class Attachment extends Base
 
     /**
      * Url
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -117,6 +132,7 @@ final class Attachment extends Base
 
     /**
      * Is public document
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -126,6 +142,7 @@ final class Attachment extends Base
 
     /**
      * Access Token
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -135,24 +152,27 @@ final class Attachment extends Base
 
     /**
      * File Content
+     * ---
      * Searchable : no
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $datas;
 
     /**
      * Database Data
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
-     * @var int|null
+     * @var string|null
      */
     private $db_datas;
 
     /**
      * Stored Filename
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -162,6 +182,7 @@ final class Attachment extends Base
 
     /**
      * File Size
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -171,6 +192,7 @@ final class Attachment extends Base
 
     /**
      * Checksum/SHA1
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -180,6 +202,7 @@ final class Attachment extends Base
 
     /**
      * Mime Type
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -189,6 +212,7 @@ final class Attachment extends Base
 
     /**
      * Indexed Content
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -197,43 +221,8 @@ final class Attachment extends Base
     private $index_content;
 
     /**
-     * Created by
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $create_uid;
-
-    /**
-     * Created on
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var DateTimeInterface|null
-     */
-    private $create_date;
-
-    /**
-     * Last Updated by
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $write_uid;
-
-    /**
-     * Last Updated on
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var DateTimeInterface|null
-     */
-    private $write_date;
-
-    /**
      * Attachment URL
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -243,6 +232,7 @@ final class Attachment extends Base
 
     /**
      * Image Src
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -252,6 +242,7 @@ final class Attachment extends Base
 
     /**
      * Image Width
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -261,6 +252,7 @@ final class Attachment extends Base
 
     /**
      * Image Height
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -269,17 +261,66 @@ final class Attachment extends Base
     private $image_height;
 
     /**
+     * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $create_uid;
+
+    /**
+     * Created on
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var DateTimeInterface|null
+     */
+    private $create_date;
+
+    /**
+     * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $write_uid;
+
+    /**
+     * Last Updated on
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var DateTimeInterface|null
+     */
+    private $write_date;
+
+    /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $type Type
+     *        ---
      *        You can either upload a file from your computer or copy/paste an internet link to your file.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> url (URL)
      *            -> binary (File)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $name, string $type)
     {
@@ -288,11 +329,11 @@ final class Attachment extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $create_date
+     * @param string|null $image_src
      */
-    public function setCreateDate(?DateTimeInterface $create_date): void
+    public function setImageSrc(?string $image_src): void
     {
-        $this->create_date = $create_date;
+        $this->image_src = $image_src;
     }
 
     /**
@@ -352,70 +393,6 @@ final class Attachment extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $create_uid
-     */
-    public function setCreateUid(?OdooRelation $create_uid): void
-    {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param string|null $store_fname
-     */
-    public function setStoreFname(?string $store_fname): void
-    {
-        $this->store_fname = $store_fname;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $write_date
-     */
-    public function setWriteDate(?DateTimeInterface $write_date): void
-    {
-        $this->write_date = $write_date;
-    }
-
-    /**
      * @return string|null
      */
     public function getLocalUrl(): ?string
@@ -440,19 +417,19 @@ final class Attachment extends Base
     }
 
     /**
-     * @param string|null $image_src
-     */
-    public function setImageSrc(?string $image_src): void
-    {
-        $this->image_src = $image_src;
-    }
-
-    /**
      * @return int|null
      */
     public function getImageWidth(): ?int
     {
         return $this->image_width;
+    }
+
+    /**
+     * @param string|null $store_fname
+     */
+    public function setStoreFname(?string $store_fname): void
+    {
+        $this->store_fname = $store_fname;
     }
 
     /**
@@ -477,6 +454,70 @@ final class Attachment extends Base
     public function setImageHeight(?int $image_height): void
     {
         $this->image_height = $image_height;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -608,9 +649,9 @@ final class Attachment extends Base
     }
 
     /**
-     * @param int|null $db_datas
+     * @param string|null $db_datas
      */
-    public function setDbDatas(?int $db_datas): void
+    public function setDbDatas(?string $db_datas): void
     {
         $this->db_datas = $db_datas;
     }
@@ -680,25 +721,25 @@ final class Attachment extends Base
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getDatas(): ?int
+    public function getDatas(): ?string
     {
         return $this->datas;
     }
 
     /**
-     * @param int|null $datas
+     * @param string|null $datas
      */
-    public function setDatas(?int $datas): void
+    public function setDatas(?string $datas): void
     {
         $this->datas = $datas;
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getDbDatas(): ?int
+    public function getDbDatas(): ?string
     {
         return $this->db_datas;
     }

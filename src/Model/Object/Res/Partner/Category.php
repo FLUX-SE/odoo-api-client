@@ -26,6 +26,7 @@ final class Category extends Base
 {
     /**
      * Tag Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Category extends Base
 
     /**
      * Color Index
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +46,10 @@ final class Category extends Base
 
     /**
      * Parent Category
+     * ---
+     * Relation : many2one (res.partner.category)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner\Category
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +59,10 @@ final class Category extends Base
 
     /**
      * Child Tags
+     * ---
+     * Relation : one2many (res.partner.category -> parent_id)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner\Category
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -62,7 +72,9 @@ final class Category extends Base
 
     /**
      * Active
+     * ---
      * The active field allows you to hide the category without removing it.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,6 +84,7 @@ final class Category extends Base
 
     /**
      * Parent Path
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -81,6 +94,10 @@ final class Category extends Base
 
     /**
      * Partners
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -90,6 +107,10 @@ final class Category extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -99,6 +120,7 @@ final class Category extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -108,6 +130,10 @@ final class Category extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -117,6 +143,7 @@ final class Category extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -126,6 +153,7 @@ final class Category extends Base
 
     /**
      * @param string $name Tag Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

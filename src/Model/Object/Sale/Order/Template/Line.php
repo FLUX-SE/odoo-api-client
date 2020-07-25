@@ -26,7 +26,9 @@ final class Line extends Base
 {
     /**
      * Sequence
+     * ---
      * Gives the sequence order when displaying a list of sale quote lines.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,6 +38,10 @@ final class Line extends Base
 
     /**
      * Quotation Template Reference
+     * ---
+     * Relation : many2one (sale.order.template)
+     * @see \Flux\OdooApiClient\Model\Object\Sale\Order\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +51,10 @@ final class Line extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,6 +64,7 @@ final class Line extends Base
 
     /**
      * Description
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,6 +74,10 @@ final class Line extends Base
 
     /**
      * Product
+     * ---
+     * Relation : many2one (product.product)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Product
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,6 +87,7 @@ final class Line extends Base
 
     /**
      * Unit Price
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -81,6 +97,7 @@ final class Line extends Base
 
     /**
      * Discount (%)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -90,6 +107,7 @@ final class Line extends Base
 
     /**
      * Quantity
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -99,6 +117,10 @@ final class Line extends Base
 
     /**
      * Unit of Measure
+     * ---
+     * Relation : many2one (uom.uom)
+     * @see \Flux\OdooApiClient\Model\Object\Uom\Uom
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -108,8 +130,13 @@ final class Line extends Base
 
     /**
      * Category
+     * ---
      * Conversion between Units of Measure can only occur if they belong to the same category. The conversion will be
      * made based on the ratios.
+     * ---
+     * Relation : many2one (uom.category)
+     * @see \Flux\OdooApiClient\Model\Object\Uom\Category
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -119,13 +146,15 @@ final class Line extends Base
 
     /**
      * Display Type
+     * ---
      * Technical field for UX purpose.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> line_section (Section)
      *     -> line_note (Note)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -133,6 +162,10 @@ final class Line extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -142,6 +175,7 @@ final class Line extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -151,6 +185,10 @@ final class Line extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -160,6 +198,7 @@ final class Line extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -169,15 +208,22 @@ final class Line extends Base
 
     /**
      * @param OdooRelation $sale_order_template_id Quotation Template Reference
+     *        ---
+     *        Relation : many2one (sale.order.template)
+     *        @see \Flux\OdooApiClient\Model\Object\Sale\Order\Template
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $name Description
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param float $price_unit Unit Price
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param float $product_uom_qty Quantity
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

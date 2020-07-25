@@ -26,6 +26,10 @@ final class State extends Base
 {
     /**
      * Country
+     * ---
+     * Relation : many2one (res.country)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,7 +39,9 @@ final class State extends Base
 
     /**
      * State Name
+     * ---
      * Administrative divisions of a country. E.g. Fed. State, Departement, Canton
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,7 +51,9 @@ final class State extends Base
 
     /**
      * State Code
+     * ---
      * The state code.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -55,6 +63,10 @@ final class State extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -64,6 +76,7 @@ final class State extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -73,6 +86,10 @@ final class State extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -82,6 +99,7 @@ final class State extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -91,14 +109,22 @@ final class State extends Base
 
     /**
      * @param OdooRelation $country_id Country
+     *        ---
+     *        Relation : many2one (res.country)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Country
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $name State Name
+     *        ---
      *        Administrative divisions of a country. E.g. Fed. State, Departement, Canton
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $code State Code
+     *        ---
      *        The state code.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

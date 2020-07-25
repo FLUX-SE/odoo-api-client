@@ -23,6 +23,7 @@ final class Send extends Base
 {
     /**
      * Stamp(s)
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -32,6 +33,7 @@ final class Send extends Base
 
     /**
      * Number of letters
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -41,6 +43,10 @@ final class Send extends Base
 
     /**
      * Recipients
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -50,6 +56,7 @@ final class Send extends Base
 
     /**
      * Invalid Addresses Count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -59,6 +66,10 @@ final class Send extends Base
 
     /**
      * Invalid Addresses
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -68,6 +79,10 @@ final class Send extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -77,6 +92,7 @@ final class Send extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -86,6 +102,10 @@ final class Send extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -95,6 +115,7 @@ final class Send extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

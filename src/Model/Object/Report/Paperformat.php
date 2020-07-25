@@ -26,6 +26,7 @@ final class Paperformat extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Paperformat extends Base
 
     /**
      * Default paper format ?
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,9 +46,9 @@ final class Paperformat extends Base
 
     /**
      * Paper size
+     * ---
      * Select Proper Paper size
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> A0 (A0  5   841 x 1189 mm)
      *     -> A1 (A1  6   594 x 841 mm)
@@ -79,7 +81,9 @@ final class Paperformat extends Base
      *     -> Letter (Letter 2 8.5 x 11 inches, 215.9 x 279.4 mm)
      *     -> Tabloid (Tabloid 29 279.4 x 431.8 mm)
      *     -> custom (Custom)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -87,6 +91,7 @@ final class Paperformat extends Base
 
     /**
      * Top Margin (mm)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -96,6 +101,7 @@ final class Paperformat extends Base
 
     /**
      * Bottom Margin (mm)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -105,6 +111,7 @@ final class Paperformat extends Base
 
     /**
      * Left Margin (mm)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -114,6 +121,7 @@ final class Paperformat extends Base
 
     /**
      * Right Margin (mm)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -123,6 +131,7 @@ final class Paperformat extends Base
 
     /**
      * Page height (mm)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -132,6 +141,7 @@ final class Paperformat extends Base
 
     /**
      * Page width (mm)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -141,12 +151,13 @@ final class Paperformat extends Base
 
     /**
      * Orientation
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> Landscape (Landscape)
      *     -> Portrait (Portrait)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -154,6 +165,7 @@ final class Paperformat extends Base
 
     /**
      * Display a header line
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -163,6 +175,7 @@ final class Paperformat extends Base
 
     /**
      * Header spacing
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -172,6 +185,7 @@ final class Paperformat extends Base
 
     /**
      * Output DPI
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -181,7 +195,12 @@ final class Paperformat extends Base
 
     /**
      * Associated reports
+     * ---
      * Explicitly associated reports
+     * ---
+     * Relation : one2many (ir.actions.report -> paperformat_id)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Actions\Report
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -191,6 +210,7 @@ final class Paperformat extends Base
 
     /**
      * Print page width (mm)
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -200,6 +220,7 @@ final class Paperformat extends Base
 
     /**
      * Print page height (mm)
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -209,6 +230,10 @@ final class Paperformat extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -218,6 +243,7 @@ final class Paperformat extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -227,6 +253,10 @@ final class Paperformat extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -236,6 +266,7 @@ final class Paperformat extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -245,9 +276,11 @@ final class Paperformat extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param int $dpi Output DPI
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

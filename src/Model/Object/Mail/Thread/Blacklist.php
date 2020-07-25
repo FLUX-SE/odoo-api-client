@@ -20,7 +20,9 @@ final class Blacklist extends Base
 {
     /**
      * Blacklist
+     * ---
      * If the email address is on the blacklist, the contact won't receive mass mailing anymore, from any list
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -30,7 +32,9 @@ final class Blacklist extends Base
 
     /**
      * Bounce
+     * ---
      * Counter of the number of bounced emails for this contact
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -40,6 +44,7 @@ final class Blacklist extends Base
 
     /**
      * Is Follower
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -49,6 +54,10 @@ final class Blacklist extends Base
 
     /**
      * Followers
+     * ---
+     * Relation : one2many (mail.followers -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Followers
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -58,6 +67,10 @@ final class Blacklist extends Base
 
     /**
      * Followers (Partners)
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -67,6 +80,10 @@ final class Blacklist extends Base
 
     /**
      * Followers (Channels)
+     * ---
+     * Relation : many2many (mail.channel)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Channel
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -76,6 +93,10 @@ final class Blacklist extends Base
 
     /**
      * Messages
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -85,7 +106,9 @@ final class Blacklist extends Base
 
     /**
      * Unread Messages
+     * ---
      * If checked, new messages require your attention.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -95,7 +118,9 @@ final class Blacklist extends Base
 
     /**
      * Unread Messages Counter
+     * ---
      * Number of unread messages
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -105,7 +130,9 @@ final class Blacklist extends Base
 
     /**
      * Action Needed
+     * ---
      * If checked, new messages require your attention.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -115,7 +142,9 @@ final class Blacklist extends Base
 
     /**
      * Number of Actions
+     * ---
      * Number of messages which requires an action
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -125,7 +154,9 @@ final class Blacklist extends Base
 
     /**
      * Message Delivery error
+     * ---
      * If checked, some messages have a delivery error.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -135,7 +166,9 @@ final class Blacklist extends Base
 
     /**
      * Number of errors
+     * ---
      * Number of messages with delivery error
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -145,6 +178,7 @@ final class Blacklist extends Base
 
     /**
      * Attachment Count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -154,6 +188,10 @@ final class Blacklist extends Base
 
     /**
      * Main Attachment
+     * ---
+     * Relation : many2one (ir.attachment)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -163,7 +201,12 @@ final class Blacklist extends Base
 
     /**
      * Website Messages
+     * ---
      * Website communication history
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -173,7 +216,9 @@ final class Blacklist extends Base
 
     /**
      * SMS Delivery error
+     * ---
      * If checked, some messages have a delivery error.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -183,8 +228,10 @@ final class Blacklist extends Base
 
     /**
      * Normalized Email
+     * ---
      * This field is used to search on email address as the primary email field can contain more than strictly an
      * email address.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

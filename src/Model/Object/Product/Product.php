@@ -24,7 +24,9 @@ final class Product extends Template
 {
     /**
      * Variant Price Extra
+     * ---
      * This is the sum of the extra price of all attributes
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -34,6 +36,7 @@ final class Product extends Template
 
     /**
      * Reference
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -43,6 +46,7 @@ final class Product extends Template
 
     /**
      * Customer Ref
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -52,6 +56,10 @@ final class Product extends Template
 
     /**
      * Product Template
+     * ---
+     * Relation : many2one (product.template)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -61,6 +69,10 @@ final class Product extends Template
 
     /**
      * Attribute Values
+     * ---
+     * Relation : many2many (product.template.attribute.value)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Template\Attribute\Value
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -70,6 +82,7 @@ final class Product extends Template
 
     /**
      * Combination Indices
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -79,51 +92,57 @@ final class Product extends Template
 
     /**
      * Variant Image
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $image_variant_1920;
 
     /**
      * Variant Image 1024
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $image_variant_1024;
 
     /**
      * Variant Image 512
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $image_variant_512;
 
     /**
      * Variant Image 256
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $image_variant_256;
 
     /**
      * Variant Image 128
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $image_variant_128;
 
     /**
      * Can Variant Image 1024 be zoomed
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -133,47 +152,75 @@ final class Product extends Template
 
     /**
      * @param OdooRelation $product_tmpl_id Product Template
+     *        ---
+     *        Relation : many2one (product.template)
+     *        @see \Flux\OdooApiClient\Model\Object\Product\Template
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $type Product Type
+     *        ---
      *        A storable product is a product for which you manage stock. The Inventory app has to be installed.
      *        A consumable product is a product for which stock is not managed.
      *        A service is a non-material product you provide.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> consu (Consumable)
      *            -> service (Service)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param OdooRelation $categ_id Product Category
+     *        ---
      *        Select category for the current product
+     *        ---
+     *        Relation : many2one (product.category)
+     *        @see \Flux\OdooApiClient\Model\Object\Product\Category
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $uom_id Unit of Measure
+     *        ---
      *        Default unit of measure used for all stock operations.
+     *        ---
+     *        Relation : many2one (uom.uom)
+     *        @see \Flux\OdooApiClient\Model\Object\Uom\Uom
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $uom_po_id Purchase Unit of Measure
+     *        ---
      *        Default unit of measure used for purchase orders. It must be in the same category as the default unit of
      *        measure.
+     *        ---
+     *        Relation : many2one (uom.uom)
+     *        @see \Flux\OdooApiClient\Model\Object\Uom\Uom
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation[] $product_variant_ids Products
+     *        ---
+     *        Relation : one2many (product.product)
+     *        @see \Flux\OdooApiClient\Model\Object\Product\Product
+     *        ---
      *        Searchable : yes
      *        Sortable : no
      * @param string $sale_line_warn Sales Order Line
+     *        ---
      *        Selecting the "Warning" option will notify user with the message, Selecting "Blocking Message" will throw an
      *        exception with the message and block the flow. The Message has to be written in the next field.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> no-message (No Message)
      *            -> warning (Warning)
      *            -> block (Blocking Message)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         OdooRelation $product_tmpl_id,
@@ -222,81 +269,81 @@ final class Product extends Template
     }
 
     /**
-     * @param int|null $image_variant_128
+     * @param string|null $image_variant_128
      */
-    public function setImageVariant128(?int $image_variant_128): void
+    public function setImageVariant128(?string $image_variant_128): void
     {
         $this->image_variant_128 = $image_variant_128;
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getImageVariant128(): ?int
+    public function getImageVariant128(): ?string
     {
         return $this->image_variant_128;
     }
 
     /**
-     * @param int|null $image_variant_256
+     * @param string|null $image_variant_256
      */
-    public function setImageVariant256(?int $image_variant_256): void
+    public function setImageVariant256(?string $image_variant_256): void
     {
         $this->image_variant_256 = $image_variant_256;
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getImageVariant256(): ?int
+    public function getImageVariant256(): ?string
     {
         return $this->image_variant_256;
     }
 
     /**
-     * @param int|null $image_variant_512
+     * @param string|null $image_variant_512
      */
-    public function setImageVariant512(?int $image_variant_512): void
+    public function setImageVariant512(?string $image_variant_512): void
     {
         $this->image_variant_512 = $image_variant_512;
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getImageVariant512(): ?int
+    public function getImageVariant512(): ?string
     {
         return $this->image_variant_512;
     }
 
     /**
-     * @param int|null $image_variant_1024
+     * @param string|null $image_variant_1024
      */
-    public function setImageVariant1024(?int $image_variant_1024): void
+    public function setImageVariant1024(?string $image_variant_1024): void
     {
         $this->image_variant_1024 = $image_variant_1024;
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getImageVariant1024(): ?int
+    public function getImageVariant1024(): ?string
     {
         return $this->image_variant_1024;
     }
 
     /**
-     * @param int|null $image_variant_1920
+     * @param string|null $image_variant_1920
      */
-    public function setImageVariant1920(?int $image_variant_1920): void
+    public function setImageVariant1920(?string $image_variant_1920): void
     {
         $this->image_variant_1920 = $image_variant_1920;
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getImageVariant1920(): ?int
+    public function getImageVariant1920(): ?string
     {
         return $this->image_variant_1920;
     }

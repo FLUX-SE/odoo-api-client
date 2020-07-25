@@ -26,6 +26,7 @@ final class Year extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,7 +36,9 @@ final class Year extends Base
 
     /**
      * Start Date
+     * ---
      * Start Date, included in the fiscal year.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,7 +48,9 @@ final class Year extends Base
 
     /**
      * End Date
+     * ---
      * Ending Date, included in the fiscal year.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -55,6 +60,10 @@ final class Year extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -64,6 +73,10 @@ final class Year extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -73,6 +86,7 @@ final class Year extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -82,6 +96,10 @@ final class Year extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -91,6 +109,7 @@ final class Year extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -100,17 +119,26 @@ final class Year extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param DateTimeInterface $date_from Start Date
+     *        ---
      *        Start Date, included in the fiscal year.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param DateTimeInterface $date_to End Date
+     *        ---
      *        Ending Date, included in the fiscal year.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $company_id Company
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

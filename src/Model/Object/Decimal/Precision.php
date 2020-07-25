@@ -26,6 +26,7 @@ final class Precision extends Base
 {
     /**
      * Usage
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Precision extends Base
 
     /**
      * Digits
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +46,10 @@ final class Precision extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +59,7 @@ final class Precision extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +69,10 @@ final class Precision extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +82,7 @@ final class Precision extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,9 +92,11 @@ final class Precision extends Base
 
     /**
      * @param string $name Usage
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param int $digits Digits
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

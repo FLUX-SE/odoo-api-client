@@ -26,6 +26,7 @@ final class Rule extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,8 +36,10 @@ final class Rule extends Base
 
     /**
      * Active
+     * ---
      * If you uncheck the active field, it will disable the record rule without deleting it (if you delete a native
      * record rule, it may be re-created when you reload the module).
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -46,6 +49,10 @@ final class Rule extends Base
 
     /**
      * Object
+     * ---
+     * Relation : many2one (ir.model)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -55,6 +62,10 @@ final class Rule extends Base
 
     /**
      * Groups
+     * ---
+     * Relation : many2many (res.groups)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Groups
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -64,6 +75,7 @@ final class Rule extends Base
 
     /**
      * Domain
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -73,6 +85,7 @@ final class Rule extends Base
 
     /**
      * Apply for Read
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -82,6 +95,7 @@ final class Rule extends Base
 
     /**
      * Apply for Write
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -91,6 +105,7 @@ final class Rule extends Base
 
     /**
      * Apply for Create
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -100,6 +115,7 @@ final class Rule extends Base
 
     /**
      * Apply for Delete
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -109,7 +125,9 @@ final class Rule extends Base
 
     /**
      * Global
+     * ---
      * If no group is specified the rule is global and applied to everyone
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -119,6 +137,10 @@ final class Rule extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -128,6 +150,7 @@ final class Rule extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -137,6 +160,10 @@ final class Rule extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -146,6 +173,7 @@ final class Rule extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -155,6 +183,10 @@ final class Rule extends Base
 
     /**
      * @param OdooRelation $model_id Object
+     *        ---
+     *        Relation : many2one (ir.model)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

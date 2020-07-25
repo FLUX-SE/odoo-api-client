@@ -18,7 +18,9 @@ final class Invite extends Base
 {
     /**
      * Related Document Model
+     * ---
      * Model of the followed resource
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -28,7 +30,9 @@ final class Invite extends Base
 
     /**
      * Related Document ID
+     * ---
      * Id of the followed resource
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -38,7 +42,12 @@ final class Invite extends Base
 
     /**
      * Recipients
+     * ---
      * List of partners that will be added as follower of the current document.
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -48,7 +57,12 @@ final class Invite extends Base
 
     /**
      * Channels
+     * ---
      * List of channels that will be added as listeners of the current document.
+     * ---
+     * Relation : many2many (mail.channel)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Channel
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -58,6 +72,7 @@ final class Invite extends Base
 
     /**
      * Message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -67,7 +82,9 @@ final class Invite extends Base
 
     /**
      * Send Email
+     * ---
      * If checked, the partners will receive an email warning they have been added in the document's followers.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -77,6 +94,10 @@ final class Invite extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -86,6 +107,7 @@ final class Invite extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -95,6 +117,10 @@ final class Invite extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -104,6 +130,7 @@ final class Invite extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -113,7 +140,9 @@ final class Invite extends Base
 
     /**
      * @param string $res_model Related Document Model
+     *        ---
      *        Model of the followed resource
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

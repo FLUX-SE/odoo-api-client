@@ -18,6 +18,7 @@ final class Template extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -27,7 +28,12 @@ final class Template extends Base
 
     /**
      * Applies to
+     * ---
      * The type of document this template can be used with
+     * ---
+     * Relation : many2one (ir.model)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -37,6 +43,7 @@ final class Template extends Base
 
     /**
      * Related Document Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -46,6 +53,7 @@ final class Template extends Base
 
     /**
      * Body
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -55,8 +63,10 @@ final class Template extends Base
 
     /**
      * Language
+     * ---
      * Use this field to either force a specific language (ISO code) or dynamically detect the language of your
      * recipient by a placeholder expression (e.g. ${object.partner_id.lang})
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -66,7 +76,12 @@ final class Template extends Base
 
     /**
      * Sidebar action
+     * ---
      * Sidebar action to make this template available on records of the related document model
+     * ---
+     * Relation : many2one (ir.actions.act_window)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Actions\ActWindow
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -76,9 +91,14 @@ final class Template extends Base
 
     /**
      * Field
+     * ---
      * Select target field from the related document model.
      * If it is a relationship field you will be able to select a target field at the destination of the
      * relationship.
+     * ---
+     * Relation : many2one (ir.model.fields)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model\Fields
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -88,8 +108,13 @@ final class Template extends Base
 
     /**
      * Sub-model
+     * ---
      * When a relationship field is selected as first field, this field shows the document model the relationship
      * goes to.
+     * ---
+     * Relation : many2one (ir.model)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -99,8 +124,13 @@ final class Template extends Base
 
     /**
      * Sub-field
+     * ---
      * When a relationship field is selected as first field, this field lets you select the target field within the
      * destination document model (sub-model).
+     * ---
+     * Relation : many2one (ir.model.fields)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model\Fields
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -110,7 +140,9 @@ final class Template extends Base
 
     /**
      * Default Value
+     * ---
      * Optional value to use if the target field is empty
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -120,7 +152,9 @@ final class Template extends Base
 
     /**
      * Placeholder Expression
+     * ---
      * Final placeholder expression, to be copy-pasted in the desired template field.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -130,6 +164,10 @@ final class Template extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -139,6 +177,7 @@ final class Template extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -148,6 +187,10 @@ final class Template extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -157,6 +200,7 @@ final class Template extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -166,10 +210,16 @@ final class Template extends Base
 
     /**
      * @param OdooRelation $model_id Applies to
+     *        ---
      *        The type of document this template can be used with
+     *        ---
+     *        Relation : many2one (ir.model)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $body Body
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

@@ -18,6 +18,7 @@ final class Line extends Base
 {
     /**
      * Coin/Bill Value
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -27,7 +28,9 @@ final class Line extends Base
 
     /**
      * #Coins/Bills
+     * ---
      * Opening Unit Numbers
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -37,6 +40,7 @@ final class Line extends Base
 
     /**
      * Subtotal
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -46,6 +50,10 @@ final class Line extends Base
 
     /**
      * Cashbox
+     * ---
+     * Relation : many2one (account.bank.statement.cashbox)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Bank\Statement\Cashbox
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -55,6 +63,10 @@ final class Line extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -64,6 +76,10 @@ final class Line extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -73,6 +89,7 @@ final class Line extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -82,6 +99,10 @@ final class Line extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -91,6 +112,7 @@ final class Line extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -100,6 +122,7 @@ final class Line extends Base
 
     /**
      * @param float $coin_value Coin/Bill Value
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

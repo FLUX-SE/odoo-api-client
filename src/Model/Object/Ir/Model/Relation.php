@@ -19,7 +19,9 @@ final class Relation extends Base
 {
     /**
      * Relation Name
+     * ---
      * PostgreSQL table name implementing a many2many relation.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -29,6 +31,10 @@ final class Relation extends Base
 
     /**
      * Model
+     * ---
+     * Relation : many2one (ir.model)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -38,6 +44,10 @@ final class Relation extends Base
 
     /**
      * Module
+     * ---
+     * Relation : many2one (ir.module.module)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Module\Module
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -47,6 +57,7 @@ final class Relation extends Base
 
     /**
      * Write Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -56,6 +67,7 @@ final class Relation extends Base
 
     /**
      * Create Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -65,6 +77,10 @@ final class Relation extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -74,6 +90,10 @@ final class Relation extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -83,13 +103,23 @@ final class Relation extends Base
 
     /**
      * @param string $name Relation Name
+     *        ---
      *        PostgreSQL table name implementing a many2many relation.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $model Model
+     *        ---
+     *        Relation : many2one (ir.model)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $module Module
+     *        ---
+     *        Relation : many2one (ir.module.module)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Module\Module
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

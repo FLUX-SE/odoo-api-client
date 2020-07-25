@@ -42,6 +42,7 @@ final class Acquirer extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -51,6 +52,7 @@ final class Acquirer extends Base
 
     /**
      * Color
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -60,7 +62,9 @@ final class Acquirer extends Base
 
     /**
      * Displayed as
+     * ---
      * How the acquirer is displayed to the customers.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -70,6 +74,7 @@ final class Acquirer extends Base
 
     /**
      * Description
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -79,7 +84,9 @@ final class Acquirer extends Base
 
     /**
      * Sequence
+     * ---
      * Determine the display order
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,6 +96,10 @@ final class Acquirer extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -98,6 +109,7 @@ final class Acquirer extends Base
 
     /**
      * Form Button Template
+     * ---
      * This template renders the acquirer button with all necessary values.
      * It is rendered with qWeb with the following evaluation context:
      * tx_url: transaction URL to post the form
@@ -110,6 +122,10 @@ final class Acquirer extends Base
      * partner_values: specific values about the buyer, for example coming from a shipping form
      * tx_values: transaction values
      * context: the current context dictionary
+     * ---
+     * Relation : many2one (ir.ui.view)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Ui\View
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -119,7 +135,12 @@ final class Acquirer extends Base
 
     /**
      * S2S Form Template
+     * ---
      * Template for method registration
+     * ---
+     * Relation : many2one (ir.ui.view)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Ui\View
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -129,17 +150,19 @@ final class Acquirer extends Base
 
     /**
      * State
+     * ---
      * In test mode, a fake payment is processed through a test
      *                           payment interface. This mode is advised when setting up the
      *                           acquirer. Watch out, test and production modes require
      *                           different credentials.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> disabled (Disabled)
      *     -> enabled (Enabled)
      *     -> test (Test Mode)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -147,7 +170,9 @@ final class Acquirer extends Base
 
     /**
      * Capture Amount Manually
+     * ---
      * Capture the amount from Odoo, when the delivery is completed.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -157,7 +182,12 @@ final class Acquirer extends Base
 
     /**
      * Payment Journal
+     * ---
      * Journal where the successful transactions will be posted
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -167,9 +197,11 @@ final class Acquirer extends Base
 
     /**
      * Verify Card Validity
+     * ---
      * Trigger a transaction of 1 currency unit and its refund to check the validity of new credit cards entered in
      * the customer portal.
      *                 Without this check, the validity will be verified at the very first transaction.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -179,8 +211,13 @@ final class Acquirer extends Base
 
     /**
      * Countries
+     * ---
      * This payment gateway is available for selected countries. If none is selected it is available for all
      * countries.
+     * ---
+     * Relation : many2many (res.country)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -190,7 +227,9 @@ final class Acquirer extends Base
 
     /**
      * Help Message
+     * ---
      * Message displayed to explain and help the payment process.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -200,7 +239,9 @@ final class Acquirer extends Base
 
     /**
      * Authorize Message
+     * ---
      * Message displayed if payment is authorized.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -210,7 +251,9 @@ final class Acquirer extends Base
 
     /**
      * Pending Message
+     * ---
      * Message displayed, if order is in pending state after having done the payment process.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -220,7 +263,9 @@ final class Acquirer extends Base
 
     /**
      * Done Message
+     * ---
      * Message displayed, if order is done successfully after having done the payment process.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -230,7 +275,9 @@ final class Acquirer extends Base
 
     /**
      * Cancel Message
+     * ---
      * Message displayed, if order is cancel during the payment process.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -240,16 +287,18 @@ final class Acquirer extends Base
 
     /**
      * Save Cards
+     * ---
      * This option allows customers to save their credit card as a payment token and to reuse it for a later
      * purchase. If you manage subscriptions (recurring invoicing), you need it to automatically charge the customer
      * when you issue an invoice.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> none (Never)
      *     -> ask (Let the customer decide)
      *     -> always (Always)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -257,6 +306,7 @@ final class Acquirer extends Base
 
     /**
      * Saving Card Data supported
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -266,6 +316,7 @@ final class Acquirer extends Base
 
     /**
      * Authorize Mechanism Supported
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -275,6 +326,7 @@ final class Acquirer extends Base
 
     /**
      * Fees Computation Supported
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -284,6 +336,7 @@ final class Acquirer extends Base
 
     /**
      * Add Extra Fees
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -293,6 +346,7 @@ final class Acquirer extends Base
 
     /**
      * Fixed domestic fees
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -302,6 +356,7 @@ final class Acquirer extends Base
 
     /**
      * Variable domestic fees (in percents)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -311,6 +366,7 @@ final class Acquirer extends Base
 
     /**
      * Fixed international fees
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -320,6 +376,7 @@ final class Acquirer extends Base
 
     /**
      * Variable international fees (in percents)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -329,6 +386,7 @@ final class Acquirer extends Base
 
     /**
      * Use SEPA QR Code
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -338,6 +396,10 @@ final class Acquirer extends Base
 
     /**
      * Corresponding Module
+     * ---
+     * Relation : many2one (ir.module.module)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Module\Module
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -347,8 +409,7 @@ final class Acquirer extends Base
 
     /**
      * Installation State
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> uninstallable (Uninstallable)
      *     -> uninstalled (Not Installed)
@@ -356,7 +417,9 @@ final class Acquirer extends Base
      *     -> to upgrade (To be upgraded)
      *     -> to remove (To be removed)
      *     -> to install (To be installed)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -364,6 +427,7 @@ final class Acquirer extends Base
 
     /**
      * Odoo Enterprise Module
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -373,15 +437,20 @@ final class Acquirer extends Base
 
     /**
      * Image
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $image_128;
 
     /**
      * Supported Payment Icons
+     * ---
+     * Relation : many2many (payment.icon)
+     * @see \Flux\OdooApiClient\Model\Object\Payment\Icon
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -391,13 +460,15 @@ final class Acquirer extends Base
 
     /**
      * Payment Flow
+     * ---
      * Note: Subscriptions does not take this field in account, it uses server to server by default.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> form (Redirection to the acquirer website)
      *     -> s2s (Payment from Odoo)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -405,12 +476,17 @@ final class Acquirer extends Base
 
     /**
      * For Incoming Payments
+     * ---
      * Manual: Get paid by cash, check or any other method outside of Odoo.
      * Electronic: Get paid automatically through a payment acquirer by requesting a transaction on a card saved by
      * the customer when buying or subscribing online (payment token).
      * Batch Deposit: Encase several customer checks at once by generating a batch deposit to submit to your bank.
      * When encoding the bank statement in Odoo,you are suggested to reconcile the transaction with the batch
      * deposit. Enable this option from the settings.
+     * ---
+     * Relation : many2many (account.payment.method)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Payment\Method
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -420,12 +496,13 @@ final class Acquirer extends Base
 
     /**
      * Provider
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> manual (Custom Payment Form)
      *     -> transfer (Manual Payment)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -433,14 +510,16 @@ final class Acquirer extends Base
 
     /**
      * Communication
+     * ---
      * You can set here the communication type that will appear on sales orders.The communication will be given to
      * the customer when they choose the payment method.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> so_name (Based on Document Reference)
      *     -> partner (Based on Customer ID)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -448,6 +527,10 @@ final class Acquirer extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -457,6 +540,7 @@ final class Acquirer extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -466,6 +550,10 @@ final class Acquirer extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -475,6 +563,7 @@ final class Acquirer extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -484,38 +573,48 @@ final class Acquirer extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $company_id Company
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $state State
+     *        ---
      *        In test mode, a fake payment is processed through a test
      *                                  payment interface. This mode is advised when setting up the
      *                                  acquirer. Watch out, test and production modes require
      *                                  different credentials.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> disabled (Disabled)
      *            -> enabled (Enabled)
      *            -> test (Test Mode)
-     *
-     * @param string $payment_flow Payment Flow
-     *        Note: Subscriptions does not take this field in account, it uses server to server by default.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $payment_flow Payment Flow
+     *        ---
+     *        Note: Subscriptions does not take this field in account, it uses server to server by default.
+     *        ---
      *        Selection : (default value, usually null)
      *            -> form (Redirection to the acquirer website)
      *            -> s2s (Payment from Odoo)
-     *
-     * @param string $provider Provider
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $provider Provider
+     *        ---
      *        Selection : (default value, usually null)
      *            -> manual (Custom Payment Form)
      *            -> transfer (Manual Payment)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         string $name,
@@ -540,17 +639,17 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param int|null $image_128
+     * @param string|null $image_128
      */
-    public function setImage128(?int $image_128): void
+    public function setImage128(?string $image_128): void
     {
         $this->image_128 = $image_128;
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getImage128(): ?int
+    public function getImage128(): ?string
     {
         return $this->image_128;
     }

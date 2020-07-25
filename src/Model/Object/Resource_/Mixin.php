@@ -17,6 +17,10 @@ final class Mixin extends Base
 {
     /**
      * Resource
+     * ---
+     * Relation : many2one (resource.resource)
+     * @see \Flux\OdooApiClient\Model\Object\Resource_\Resource_
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -26,6 +30,10 @@ final class Mixin extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,7 +43,12 @@ final class Mixin extends Base
 
     /**
      * Working Hours
+     * ---
      * Define the schedule of resource
+     * ---
+     * Relation : many2one (resource.calendar)
+     * @see \Flux\OdooApiClient\Model\Object\Resource_\Calendar
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,9 +58,9 @@ final class Mixin extends Base
 
     /**
      * Timezone
+     * ---
      * This field is used in order to define in which timezone the resources will work.
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> Africa/Abidjan (Africa/Abidjan)
      *     -> Africa/Accra (Africa/Accra)
@@ -642,7 +655,9 @@ final class Mixin extends Base
      *     -> Etc/UTC (Etc/UTC)
      *     -> Etc/Universal (Etc/Universal)
      *     -> Etc/Zulu (Etc/Zulu)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -650,6 +665,10 @@ final class Mixin extends Base
 
     /**
      * @param OdooRelation $resource_id Resource
+     *        ---
+     *        Relation : many2one (resource.resource)
+     *        @see \Flux\OdooApiClient\Model\Object\Resource_\Resource_
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

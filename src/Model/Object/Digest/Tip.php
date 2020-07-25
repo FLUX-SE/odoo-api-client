@@ -26,7 +26,9 @@ final class Tip extends Base
 {
     /**
      * Sequence
+     * ---
      * Used to display digest tip in email template base on order
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,7 +38,12 @@ final class Tip extends Base
 
     /**
      * Recipients
+     * ---
      * Users having already received this tip
+     * ---
+     * Relation : many2many (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -46,6 +53,7 @@ final class Tip extends Base
 
     /**
      * Tip description
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -55,6 +63,10 @@ final class Tip extends Base
 
     /**
      * Authorized Group
+     * ---
+     * Relation : many2one (res.groups)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Groups
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -64,6 +76,10 @@ final class Tip extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -73,6 +89,7 @@ final class Tip extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -82,6 +99,10 @@ final class Tip extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -91,6 +112,7 @@ final class Tip extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

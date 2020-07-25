@@ -18,8 +18,10 @@ final class Date extends Base
 {
     /**
      * Lock Date for Non-Advisers
+     * ---
      * Only users with the Adviser role can edit accounts prior to and inclusive of this date. Use it for period
      * locking inside an open fiscal year, for example.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -29,8 +31,10 @@ final class Date extends Base
 
     /**
      * Lock Date for All Users
+     * ---
      * No users, including Advisers, can edit accounts prior to and inclusive of this date. Use it for fiscal year
      * locking for example.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -40,7 +44,9 @@ final class Date extends Base
 
     /**
      * Tax Lock Date
+     * ---
      * No users can edit journal entries related to a tax prior and inclusive of this date.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -50,6 +56,10 @@ final class Date extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -59,6 +69,7 @@ final class Date extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -68,6 +79,10 @@ final class Date extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -77,6 +92,7 @@ final class Date extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

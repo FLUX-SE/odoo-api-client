@@ -26,6 +26,7 @@ final class Required extends Base
 {
     /**
      * Value
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,10 @@ final class Required extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +49,7 @@ final class Required extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +59,10 @@ final class Required extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +72,7 @@ final class Required extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +82,7 @@ final class Required extends Base
 
     /**
      * @param string $value Value
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

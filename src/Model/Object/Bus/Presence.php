@@ -23,6 +23,10 @@ final class Presence extends Base
 {
     /**
      * Users
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +36,7 @@ final class Presence extends Base
 
     /**
      * Last Poll
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -41,6 +46,7 @@ final class Presence extends Base
 
     /**
      * Last Presence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -50,13 +56,14 @@ final class Presence extends Base
 
     /**
      * IM Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> online (Online)
      *     -> away (Away)
      *     -> offline (Offline)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -64,6 +71,10 @@ final class Presence extends Base
 
     /**
      * @param OdooRelation $user_id Users
+     *        ---
+     *        Relation : many2one (res.users)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Users
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

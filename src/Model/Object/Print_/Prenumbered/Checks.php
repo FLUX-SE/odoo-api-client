@@ -23,6 +23,7 @@ final class Checks extends Base
 {
     /**
      * Next Check Number
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +33,10 @@ final class Checks extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -41,6 +46,7 @@ final class Checks extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -50,6 +56,10 @@ final class Checks extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -59,6 +69,7 @@ final class Checks extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -68,6 +79,7 @@ final class Checks extends Base
 
     /**
      * @param string $next_check_number Next Check Number
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

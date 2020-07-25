@@ -26,6 +26,7 @@ final class Term extends Base
 {
     /**
      * Payment Terms
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,7 +36,9 @@ final class Term extends Base
 
     /**
      * Active
+     * ---
      * If the active field is set to False, it will allow you to hide the payment terms without removing it.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +48,7 @@ final class Term extends Base
 
     /**
      * Description on the Invoice
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,6 +58,10 @@ final class Term extends Base
 
     /**
      * Terms
+     * ---
+     * Relation : one2many (account.payment.term.line -> payment_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Payment\Term\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -63,6 +71,10 @@ final class Term extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,6 +84,7 @@ final class Term extends Base
 
     /**
      * Sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -81,6 +94,10 @@ final class Term extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -90,6 +107,7 @@ final class Term extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -99,6 +117,10 @@ final class Term extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -108,6 +130,7 @@ final class Term extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -117,9 +140,11 @@ final class Term extends Base
 
     /**
      * @param string $name Payment Terms
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param int $sequence Sequence
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

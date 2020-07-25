@@ -23,6 +23,7 @@ final class Uninstall extends Base
 {
     /**
      * Show All
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +33,10 @@ final class Uninstall extends Base
 
     /**
      * Module
+     * ---
+     * Relation : many2one (ir.module.module)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Module\Module
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -41,6 +46,10 @@ final class Uninstall extends Base
 
     /**
      * Impacted modules
+     * ---
+     * Relation : many2many (ir.module.module)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Module\Module
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -50,6 +59,10 @@ final class Uninstall extends Base
 
     /**
      * Impacted data models
+     * ---
+     * Relation : many2many (ir.model)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -59,6 +72,10 @@ final class Uninstall extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -68,6 +85,7 @@ final class Uninstall extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -77,6 +95,10 @@ final class Uninstall extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -86,6 +108,7 @@ final class Uninstall extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -95,6 +118,10 @@ final class Uninstall extends Base
 
     /**
      * @param OdooRelation $module_id Module
+     *        ---
+     *        Relation : many2one (ir.module.module)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Module\Module
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

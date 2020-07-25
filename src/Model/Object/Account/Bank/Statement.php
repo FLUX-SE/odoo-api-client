@@ -26,6 +26,7 @@ final class Statement extends Base
 {
     /**
      * Reference
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,8 +36,10 @@ final class Statement extends Base
 
     /**
      * External Reference
+     * ---
      * Used to hold the reference of the external mean that created this statement (name of imported file, reference
      * of online synchronization...)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -46,6 +49,7 @@ final class Statement extends Base
 
     /**
      * Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -55,6 +59,7 @@ final class Statement extends Base
 
     /**
      * Closed On
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -64,6 +69,7 @@ final class Statement extends Base
 
     /**
      * Starting Balance
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -73,6 +79,7 @@ final class Statement extends Base
 
     /**
      * Ending Balance
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -82,9 +89,11 @@ final class Statement extends Base
 
     /**
      * Accounting Date
+     * ---
      * If set, the accounting entries created during the bank statement reconciliation process will be created at
      * this date.
      * This is useful if the accounting period in which the entries should normally be booked is already closed.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -94,12 +103,13 @@ final class Statement extends Base
 
     /**
      * Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> open (New)
      *     -> confirm (Validated)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -107,6 +117,10 @@ final class Statement extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -116,6 +130,10 @@ final class Statement extends Base
 
     /**
      * Journal
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -125,16 +143,18 @@ final class Statement extends Base
 
     /**
      * Type
+     * ---
      * Technical field used for usability purposes
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> sale (Sales)
      *     -> purchase (Purchase)
      *     -> cash (Cash)
      *     -> bank (Bank)
      *     -> general (Miscellaneous)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -142,7 +162,12 @@ final class Statement extends Base
 
     /**
      * Company
+     * ---
      * Company related to this journal
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -152,7 +177,9 @@ final class Statement extends Base
 
     /**
      * Transactions Subtotal
+     * ---
      * Total of transaction lines.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -162,7 +189,9 @@ final class Statement extends Base
 
     /**
      * Computed Balance
+     * ---
      * Balance as calculated based on Opening Balance and transaction lines
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -172,7 +201,9 @@ final class Statement extends Base
 
     /**
      * Difference
+     * ---
      * Difference between the computed ending balance and the specified ending balance.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -182,6 +213,10 @@ final class Statement extends Base
 
     /**
      * Statement lines
+     * ---
+     * Relation : one2many (account.bank.statement.line -> statement_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Bank\Statement\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -191,6 +226,10 @@ final class Statement extends Base
 
     /**
      * Entry lines
+     * ---
+     * Relation : one2many (account.move.line -> statement_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -200,6 +239,7 @@ final class Statement extends Base
 
     /**
      * Move Line Count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -209,6 +249,7 @@ final class Statement extends Base
 
     /**
      * All Lines Reconciled
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -218,6 +259,10 @@ final class Statement extends Base
 
     /**
      * Responsible
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -227,6 +272,10 @@ final class Statement extends Base
 
     /**
      * Starting Cashbox
+     * ---
+     * Relation : many2one (account.bank.statement.cashbox)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Bank\Statement\Cashbox
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -236,6 +285,10 @@ final class Statement extends Base
 
     /**
      * Ending Cashbox
+     * ---
+     * Relation : many2one (account.bank.statement.cashbox)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Bank\Statement\Cashbox
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -245,7 +298,9 @@ final class Statement extends Base
 
     /**
      * Is zero
+     * ---
      * Check if difference is zero.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -255,6 +310,10 @@ final class Statement extends Base
 
     /**
      * Attachments
+     * ---
+     * Relation : one2many (ir.attachment -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -264,6 +323,7 @@ final class Statement extends Base
 
     /**
      * Is Follower
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -273,6 +333,10 @@ final class Statement extends Base
 
     /**
      * Followers
+     * ---
+     * Relation : one2many (mail.followers -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Followers
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -282,6 +346,10 @@ final class Statement extends Base
 
     /**
      * Followers (Partners)
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -291,6 +359,10 @@ final class Statement extends Base
 
     /**
      * Followers (Channels)
+     * ---
+     * Relation : many2many (mail.channel)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Channel
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -300,6 +372,10 @@ final class Statement extends Base
 
     /**
      * Messages
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -309,7 +385,9 @@ final class Statement extends Base
 
     /**
      * Unread Messages
+     * ---
      * If checked, new messages require your attention.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -319,7 +397,9 @@ final class Statement extends Base
 
     /**
      * Unread Messages Counter
+     * ---
      * Number of unread messages
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -329,7 +409,9 @@ final class Statement extends Base
 
     /**
      * Action Needed
+     * ---
      * If checked, new messages require your attention.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -339,7 +421,9 @@ final class Statement extends Base
 
     /**
      * Number of Actions
+     * ---
      * Number of messages which requires an action
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -349,7 +433,9 @@ final class Statement extends Base
 
     /**
      * Message Delivery error
+     * ---
      * If checked, some messages have a delivery error.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -359,7 +445,9 @@ final class Statement extends Base
 
     /**
      * Number of errors
+     * ---
      * Number of messages with delivery error
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -369,6 +457,7 @@ final class Statement extends Base
 
     /**
      * Attachment Count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -378,6 +467,10 @@ final class Statement extends Base
 
     /**
      * Main Attachment
+     * ---
+     * Relation : many2one (ir.attachment)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -387,7 +480,12 @@ final class Statement extends Base
 
     /**
      * Website Messages
+     * ---
      * Website communication history
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -397,7 +495,9 @@ final class Statement extends Base
 
     /**
      * SMS Delivery error
+     * ---
      * If checked, some messages have a delivery error.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -407,6 +507,10 @@ final class Statement extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -416,6 +520,7 @@ final class Statement extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -425,6 +530,10 @@ final class Statement extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -434,6 +543,7 @@ final class Statement extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -443,16 +553,22 @@ final class Statement extends Base
 
     /**
      * @param DateTimeInterface $date Date
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $state Status
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> open (New)
      *            -> confirm (Validated)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param OdooRelation $journal_id Journal
+     *        ---
+     *        Relation : many2one (account.journal)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

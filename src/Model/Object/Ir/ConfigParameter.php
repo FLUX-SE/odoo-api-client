@@ -18,6 +18,7 @@ final class ConfigParameter extends Base
 {
     /**
      * Key
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -27,6 +28,7 @@ final class ConfigParameter extends Base
 
     /**
      * Value
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,6 +38,10 @@ final class ConfigParameter extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +51,7 @@ final class ConfigParameter extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,6 +61,10 @@ final class ConfigParameter extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,6 +74,7 @@ final class ConfigParameter extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,9 +84,11 @@ final class ConfigParameter extends Base
 
     /**
      * @param string $key Key
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $value Value
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

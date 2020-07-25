@@ -26,6 +26,7 @@ final class Leaves extends Base
 {
     /**
      * Reason
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,10 @@ final class Leaves extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +49,10 @@ final class Leaves extends Base
 
     /**
      * Working Hours
+     * ---
+     * Relation : many2one (resource.calendar)
+     * @see \Flux\OdooApiClient\Model\Object\Resource_\Calendar
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +62,7 @@ final class Leaves extends Base
 
     /**
      * Start Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +72,7 @@ final class Leaves extends Base
 
     /**
      * End Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,8 +82,13 @@ final class Leaves extends Base
 
     /**
      * Resource
+     * ---
      * If empty, this is a generic time off for the company. If a resource is set, the time off is only for this
      * resource
+     * ---
+     * Relation : many2one (resource.resource)
+     * @see \Flux\OdooApiClient\Model\Object\Resource_\Resource_
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -82,13 +98,15 @@ final class Leaves extends Base
 
     /**
      * Time Type
+     * ---
      * Whether this should be computed as a time off or as work time (eg: formation)
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> leave (Time Off)
      *     -> other (Other)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -96,6 +114,10 @@ final class Leaves extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -105,6 +127,7 @@ final class Leaves extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -114,6 +137,10 @@ final class Leaves extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -123,6 +150,7 @@ final class Leaves extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -132,9 +160,11 @@ final class Leaves extends Base
 
     /**
      * @param DateTimeInterface $date_from Start Date
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param DateTimeInterface $date_to End Date
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

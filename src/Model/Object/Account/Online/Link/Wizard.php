@@ -23,6 +23,10 @@ final class Wizard extends Base
 {
     /**
      * Journal
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +36,10 @@ final class Wizard extends Base
 
     /**
      * Online Account
+     * ---
+     * Relation : many2one (account.online.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Online\Journal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -41,13 +49,14 @@ final class Wizard extends Base
 
     /**
      * Action
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> create (Create new journal)
      *     -> link (Link to existing journal)
      *     -> drop (Do not link)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -55,6 +64,7 @@ final class Wizard extends Base
 
     /**
      * Account name
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -64,7 +74,9 @@ final class Wizard extends Base
 
     /**
      * Balance
+     * ---
      * balance of the account sent by the third party provider
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -74,6 +86,10 @@ final class Wizard extends Base
 
     /**
      * Account Online Wizard
+     * ---
+     * Relation : many2one (account.online.wizard)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Online\Wizard
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -83,6 +99,7 @@ final class Wizard extends Base
 
     /**
      * Account Number
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -92,15 +109,16 @@ final class Wizard extends Base
 
     /**
      * Synchronization frequency
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> none (Create one statement per synchronization)
      *     -> day (Create daily statements)
      *     -> week (Create weekly statements)
      *     -> bimonthly (Create bi-monthly statements)
      *     -> month (Create monthly statements)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -108,6 +126,10 @@ final class Wizard extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -117,6 +139,7 @@ final class Wizard extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -126,6 +149,10 @@ final class Wizard extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -135,6 +162,7 @@ final class Wizard extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

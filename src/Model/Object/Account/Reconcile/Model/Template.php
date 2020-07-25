@@ -26,6 +26,10 @@ final class Template extends Base
 {
     /**
      * Chart Template
+     * ---
+     * Relation : many2one (account.chart.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Chart\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +39,7 @@ final class Template extends Base
 
     /**
      * Button Label
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +49,7 @@ final class Template extends Base
 
     /**
      * Sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,13 +59,14 @@ final class Template extends Base
 
     /**
      * Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> writeoff_button (Manually create a write-off on clicked button.)
      *     -> writeoff_suggestion (Suggest a write-off.)
      *     -> invoice_matching (Match existing invoices/bills.)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -67,7 +74,9 @@ final class Template extends Base
 
     /**
      * Auto-validate
+     * ---
      * Validate the statement line automatically (reconciliation based on your rule).
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -77,7 +86,9 @@ final class Template extends Base
 
     /**
      * To Check
+     * ---
      * This matching rule is used when the user is not certain of all the informations of the counterpart.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -87,7 +98,12 @@ final class Template extends Base
 
     /**
      * Journals
+     * ---
      * The reconciliation model will only be available from the selected journals.
+     * ---
+     * Relation : many2many (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -97,17 +113,19 @@ final class Template extends Base
 
     /**
      * Amount Nature
+     * ---
      * The reconciliation model will only be applied to the selected transaction type:
      *                 * Amount Received: Only applied when receiving an amount.
      *                 * Amount Paid: Only applied when paying an amount.
      *                 * Amount Paid/Received: Applied in both cases.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> amount_received (Amount Received)
      *     -> amount_paid (Amount Paid)
      *     -> both (Amount Paid/Received)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -115,15 +133,17 @@ final class Template extends Base
 
     /**
      * Amount
+     * ---
      * The reconciliation model will only be applied when the amount being lower than, greater than or between
      * specified amount(s).
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> lower (Is Lower Than)
      *     -> greater (Is Greater Than)
      *     -> between (Is Between)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -131,6 +151,7 @@ final class Template extends Base
 
     /**
      * Amount Min Parameter
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -140,6 +161,7 @@ final class Template extends Base
 
     /**
      * Amount Max Parameter
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -149,17 +171,19 @@ final class Template extends Base
 
     /**
      * Label
+     * ---
      * The reconciliation model will only be applied when the label:
      *                 * Contains: The proposition label must contains this string (case insensitive).
      *                 * Not Contains: Negation of "Contains".
      *                 * Match Regex: Define your own regular expression.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> contains (Contains)
      *     -> not_contains (Not Contains)
      *     -> match_regex (Match Regex)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -167,6 +191,7 @@ final class Template extends Base
 
     /**
      * Label Parameter
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -176,17 +201,19 @@ final class Template extends Base
 
     /**
      * Note
+     * ---
      * The reconciliation model will only be applied when the note:
      *                 * Contains: The proposition note must contains this string (case insensitive).
      *                 * Not Contains: Negation of "Contains".
      *                 * Match Regex: Define your own regular expression.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> contains (Contains)
      *     -> not_contains (Not Contains)
      *     -> match_regex (Match Regex)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -194,6 +221,7 @@ final class Template extends Base
 
     /**
      * Note Parameter
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -203,17 +231,19 @@ final class Template extends Base
 
     /**
      * Transaction Type
+     * ---
      * The reconciliation model will only be applied when the transaction type:
      *                 * Contains: The proposition transaction type must contains this string (case insensitive).
      *                 * Not Contains: Negation of "Contains".
      *                 * Match Regex: Define your own regular expression.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> contains (Contains)
      *     -> not_contains (Not Contains)
      *     -> match_regex (Match Regex)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -221,6 +251,7 @@ final class Template extends Base
 
     /**
      * Transaction Type Parameter
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -230,7 +261,9 @@ final class Template extends Base
 
     /**
      * Same Currency Matching
+     * ---
      * Restrict to propositions having the same currency as the statement line.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -240,7 +273,9 @@ final class Template extends Base
 
     /**
      * Amount Matching
+     * ---
      * The sum of total residual amount propositions matches the statement line amount.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -250,7 +285,9 @@ final class Template extends Base
 
     /**
      * Amount Matching %
+     * ---
      * The sum of total residual amount propositions matches the statement line amount under this percentage.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -260,7 +297,9 @@ final class Template extends Base
 
     /**
      * Partner Is Set
+     * ---
      * The reconciliation model will only be applied when a customer/vendor is set.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -270,7 +309,12 @@ final class Template extends Base
 
     /**
      * Restrict Partners to
+     * ---
      * The reconciliation model will only be applied to the selected customers/vendors.
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -280,7 +324,12 @@ final class Template extends Base
 
     /**
      * Restrict Partner Categories to
+     * ---
      * The reconciliation model will only be applied to the selected customer/vendor categories.
+     * ---
+     * Relation : many2many (res.partner.category)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner\Category
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -290,6 +339,10 @@ final class Template extends Base
 
     /**
      * Account
+     * ---
+     * Relation : many2one (account.account.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -299,6 +352,7 @@ final class Template extends Base
 
     /**
      * Journal Item Label
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -308,13 +362,14 @@ final class Template extends Base
 
     /**
      * Amount Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> fixed (Fixed)
      *     -> percentage (Percentage of balance)
      *     -> regex (From label)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -322,7 +377,9 @@ final class Template extends Base
 
     /**
      * Write-off Amount
+     * ---
      * Fixed amount will count as a debit if it is negative, as a credit if it is positive.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -332,6 +389,7 @@ final class Template extends Base
 
     /**
      * Amount from Label (regex)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -341,7 +399,9 @@ final class Template extends Base
 
     /**
      * Decimal Separator
+     * ---
      * Every character that is nor a digit nor this separator will be removed from the matching string
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -351,7 +411,9 @@ final class Template extends Base
 
     /**
      * Tax Included in Price
+     * ---
      * Force the tax to be managed as a price included tax.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -361,6 +423,7 @@ final class Template extends Base
 
     /**
      * Add a second line
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -370,6 +433,10 @@ final class Template extends Base
 
     /**
      * Taxes
+     * ---
+     * Relation : many2many (account.tax.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax\Template
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -379,6 +446,10 @@ final class Template extends Base
 
     /**
      * Second Account
+     * ---
+     * Relation : many2one (account.account.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -388,6 +459,7 @@ final class Template extends Base
 
     /**
      * Second Journal Item Label
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -397,13 +469,14 @@ final class Template extends Base
 
     /**
      * Second Amount type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> fixed (Fixed)
      *     -> percentage (Percentage of amount)
      *     -> regex (From label)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -411,7 +484,9 @@ final class Template extends Base
 
     /**
      * Second Write-off Amount
+     * ---
      * Fixed amount will count as a debit if it is negative, as a credit if it is positive.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -421,6 +496,7 @@ final class Template extends Base
 
     /**
      * Second Amount from Label (regex)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -430,7 +506,9 @@ final class Template extends Base
 
     /**
      * Second Tax Included in Price
+     * ---
      * Force the second tax to be managed as a price included tax.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -440,6 +518,10 @@ final class Template extends Base
 
     /**
      * Second Taxes
+     * ---
+     * Relation : many2many (account.tax.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax\Template
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -449,6 +531,10 @@ final class Template extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -458,6 +544,7 @@ final class Template extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -467,6 +554,10 @@ final class Template extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -476,6 +567,7 @@ final class Template extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -485,56 +577,71 @@ final class Template extends Base
 
     /**
      * @param OdooRelation $chart_template_id Chart Template
+     *        ---
+     *        Relation : many2one (account.chart.template)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Chart\Template
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $name Button Label
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param int $sequence Sequence
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $rule_type Type
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> writeoff_button (Manually create a write-off on clicked button.)
      *            -> writeoff_suggestion (Suggest a write-off.)
      *            -> invoice_matching (Match existing invoices/bills.)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $match_nature Amount Nature
+     *        ---
      *        The reconciliation model will only be applied to the selected transaction type:
      *                        * Amount Received: Only applied when receiving an amount.
      *                        * Amount Paid: Only applied when paying an amount.
      *                        * Amount Paid/Received: Applied in both cases.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> amount_received (Amount Received)
      *            -> amount_paid (Amount Paid)
      *            -> both (Amount Paid/Received)
-     *
-     * @param string $amount_type Amount Type
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $amount_type Amount Type
+     *        ---
      *        Selection : (default value, usually null)
      *            -> fixed (Fixed)
      *            -> percentage (Percentage of balance)
      *            -> regex (From label)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param float $amount Write-off Amount
+     *        ---
      *        Fixed amount will count as a debit if it is negative, as a credit if it is positive.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $second_amount_type Second Amount type
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> fixed (Fixed)
      *            -> percentage (Percentage of amount)
      *            -> regex (From label)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param float $second_amount Second Write-off Amount
+     *        ---
      *        Fixed amount will count as a debit if it is negative, as a credit if it is positive.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

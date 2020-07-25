@@ -26,6 +26,7 @@ final class View extends Base
 {
     /**
      * Sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,10 @@ final class View extends Base
 
     /**
      * View
+     * ---
+     * Relation : many2one (ir.ui.view)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Ui\View
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -43,9 +48,33 @@ final class View extends Base
     private $view_id;
 
     /**
-     * View Type
+     * Action
+     * ---
+     * Relation : many2one (ir.actions.act_window)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Actions\ActWindow
+     * ---
      * Searchable : yes
      * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $act_window_id;
+
+    /**
+     * On Multiple Doc.
+     * ---
+     * If set to true, the action will not be displayed on the right toolbar of a form view.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $multi;
+
+    /**
+     * View Type
+     * ---
      * Selection : (default value, usually null)
      *     -> tree (Tree)
      *     -> form (Form)
@@ -60,33 +89,20 @@ final class View extends Base
      *     -> grid (Grid)
      *     -> activity (Activity)
      *     -> map (Map)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
     private $view_mode;
 
     /**
-     * Action
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $act_window_id;
-
-    /**
-     * On Multiple Doc.
-     * If set to true, the action will not be displayed on the right toolbar of a form view.
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $multi;
-
-    /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -96,6 +112,7 @@ final class View extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -105,6 +122,10 @@ final class View extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -114,6 +135,7 @@ final class View extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -123,8 +145,7 @@ final class View extends Base
 
     /**
      * @param string $view_mode View Type
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> tree (Tree)
      *            -> form (Form)
@@ -139,7 +160,9 @@ final class View extends Base
      *            -> grid (Grid)
      *            -> activity (Activity)
      *            -> map (Map)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $view_mode)
     {
@@ -211,11 +234,11 @@ final class View extends Base
     }
 
     /**
-     * @param bool|null $multi
+     * @param string $view_mode
      */
-    public function setMulti(?bool $multi): void
+    public function setViewMode(string $view_mode): void
     {
-        $this->multi = $multi;
+        $this->view_mode = $view_mode;
     }
 
     /**
@@ -224,6 +247,22 @@ final class View extends Base
     public function getSequence(): ?int
     {
         return $this->sequence;
+    }
+
+    /**
+     * @return string
+     */
+    public function getViewMode(): string
+    {
+        return $this->view_mode;
+    }
+
+    /**
+     * @param bool|null $multi
+     */
+    public function setMulti(?bool $multi): void
+    {
+        $this->multi = $multi;
     }
 
     /**
@@ -248,22 +287,6 @@ final class View extends Base
     public function getActWindowId(): ?OdooRelation
     {
         return $this->act_window_id;
-    }
-
-    /**
-     * @param string $view_mode
-     */
-    public function setViewMode(string $view_mode): void
-    {
-        $this->view_mode = $view_mode;
-    }
-
-    /**
-     * @return string
-     */
-    public function getViewMode(): string
-    {
-        return $this->view_mode;
     }
 
     /**

@@ -26,6 +26,7 @@ final class Value extends Base
 {
     /**
      * Changed Field
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Value extends Base
 
     /**
      * Field Description
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +46,7 @@ final class Value extends Base
 
     /**
      * Field Type
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +56,7 @@ final class Value extends Base
 
     /**
      * Field Groups
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -62,6 +66,7 @@ final class Value extends Base
 
     /**
      * Old Value Integer
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +76,7 @@ final class Value extends Base
 
     /**
      * Old Value Float
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,6 +86,7 @@ final class Value extends Base
 
     /**
      * Old Value Monetary
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,6 +96,7 @@ final class Value extends Base
 
     /**
      * Old Value Char
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -98,6 +106,7 @@ final class Value extends Base
 
     /**
      * Old Value Text
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -107,6 +116,7 @@ final class Value extends Base
 
     /**
      * Old Value DateTime
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -116,6 +126,7 @@ final class Value extends Base
 
     /**
      * New Value Integer
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -125,6 +136,7 @@ final class Value extends Base
 
     /**
      * New Value Float
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -134,6 +146,7 @@ final class Value extends Base
 
     /**
      * New Value Monetary
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -143,6 +156,7 @@ final class Value extends Base
 
     /**
      * New Value Char
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -152,6 +166,7 @@ final class Value extends Base
 
     /**
      * New Value Text
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -161,6 +176,7 @@ final class Value extends Base
 
     /**
      * New Value Datetime
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -170,6 +186,10 @@ final class Value extends Base
 
     /**
      * Message ID
+     * ---
+     * Relation : many2one (mail.message)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -179,6 +199,7 @@ final class Value extends Base
 
     /**
      * Tracking field sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -188,6 +209,10 @@ final class Value extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -197,6 +222,7 @@ final class Value extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -206,6 +232,10 @@ final class Value extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -215,6 +245,7 @@ final class Value extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -224,12 +255,18 @@ final class Value extends Base
 
     /**
      * @param string $field Changed Field
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $field_desc Field Description
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $mail_message_id Message ID
+     *        ---
+     *        Relation : many2one (mail.message)
+     *        @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

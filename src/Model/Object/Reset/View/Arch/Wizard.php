@@ -18,6 +18,10 @@ final class Wizard extends Base
 {
     /**
      * View
+     * ---
+     * Relation : many2one (ir.ui.view)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Ui\View
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -27,6 +31,7 @@ final class Wizard extends Base
 
     /**
      * View Name
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -36,6 +41,7 @@ final class Wizard extends Base
 
     /**
      * Architecture Diff
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -45,13 +51,15 @@ final class Wizard extends Base
 
     /**
      * Reset Mode
+     * ---
      * You might want to try a soft reset first.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> soft (Restore previous version (soft reset).)
      *     -> hard (Reset to file version (hard reset).)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -59,6 +67,10 @@ final class Wizard extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -68,6 +80,7 @@ final class Wizard extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -77,6 +90,10 @@ final class Wizard extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -86,6 +103,7 @@ final class Wizard extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -95,13 +113,15 @@ final class Wizard extends Base
 
     /**
      * @param string $reset_mode Reset Mode
+     *        ---
      *        You might want to try a soft reset first.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> soft (Restore previous version (soft reset).)
      *            -> hard (Reset to file version (hard reset).)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $reset_mode)
     {

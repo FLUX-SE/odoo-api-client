@@ -18,6 +18,10 @@ final class Cashbox extends Base
 {
     /**
      * Cashbox Lines
+     * ---
+     * Relation : one2many (account.cashbox.line -> cashbox_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Cashbox\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -27,6 +31,10 @@ final class Cashbox extends Base
 
     /**
      * Start Bank Stmt
+     * ---
+     * Relation : one2many (account.bank.statement -> cashbox_start_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Bank\Statement
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -36,6 +44,10 @@ final class Cashbox extends Base
 
     /**
      * End Bank Stmt
+     * ---
+     * Relation : one2many (account.bank.statement -> cashbox_end_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Bank\Statement
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -45,6 +57,7 @@ final class Cashbox extends Base
 
     /**
      * Total
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -54,6 +67,10 @@ final class Cashbox extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -63,6 +80,10 @@ final class Cashbox extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,6 +93,7 @@ final class Cashbox extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -81,6 +103,10 @@ final class Cashbox extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -90,6 +116,7 @@ final class Cashbox extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

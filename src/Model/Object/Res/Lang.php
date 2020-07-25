@@ -26,6 +26,7 @@ final class Lang extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,7 +36,9 @@ final class Lang extends Base
 
     /**
      * Locale Code
+     * ---
      * This field is used to set/get locales for user
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,7 +48,9 @@ final class Lang extends Base
 
     /**
      * ISO code
+     * ---
      * This ISO code is the name of po files to use for translations
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -55,7 +60,9 @@ final class Lang extends Base
 
     /**
      * URL Code
+     * ---
      * The Lang Code displayed in the URL
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -65,6 +72,7 @@ final class Lang extends Base
 
     /**
      * Active
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -74,12 +82,13 @@ final class Lang extends Base
 
     /**
      * Direction
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> ltr (Left-to-Right)
      *     -> rtl (Right-to-Left)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -87,6 +96,7 @@ final class Lang extends Base
 
     /**
      * Date Format
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -96,6 +106,7 @@ final class Lang extends Base
 
     /**
      * Time Format
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -105,8 +116,7 @@ final class Lang extends Base
 
     /**
      * First Day of Week
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> 1 (Monday)
      *     -> 2 (Tuesday)
@@ -115,7 +125,9 @@ final class Lang extends Base
      *     -> 5 (Friday)
      *     -> 6 (Saturday)
      *     -> 7 (Sunday)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -123,9 +135,11 @@ final class Lang extends Base
 
     /**
      * Separator Format
+     * ---
      * The Separator Format should be like [,n] where 0 < n :starting from Unit digit. -1 will end the separation.
      * e.g. [3,2,-1] will represent 106500 to be 1,06,500; [1,2,-1] will represent it to be 106,50,0;[3] will
      * represent it as 106,500. Provided ',' as the thousand separator in each case.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -135,6 +149,7 @@ final class Lang extends Base
 
     /**
      * Decimal Separator
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -144,6 +159,7 @@ final class Lang extends Base
 
     /**
      * Thousands Separator
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -153,6 +169,10 @@ final class Lang extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -162,6 +182,7 @@ final class Lang extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -171,6 +192,10 @@ final class Lang extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -180,6 +205,7 @@ final class Lang extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -189,32 +215,39 @@ final class Lang extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $code Locale Code
+     *        ---
      *        This field is used to set/get locales for user
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $url_code URL Code
+     *        ---
      *        The Lang Code displayed in the URL
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $direction Direction
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> ltr (Left-to-Right)
      *            -> rtl (Right-to-Left)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $date_format Date Format
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $time_format Time Format
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $week_start First Day of Week
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> 1 (Monday)
      *            -> 2 (Tuesday)
@@ -223,14 +256,19 @@ final class Lang extends Base
      *            -> 5 (Friday)
      *            -> 6 (Saturday)
      *            -> 7 (Sunday)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $grouping Separator Format
+     *        ---
      *        The Separator Format should be like [,n] where 0 < n :starting from Unit digit. -1 will end the separation.
      *        e.g. [3,2,-1] will represent 106500 to be 1,06,500; [1,2,-1] will represent it to be 106,50,0;[3] will
      *        represent it as 106,500. Provided ',' as the thousand separator in each case.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $decimal_point Decimal Separator
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

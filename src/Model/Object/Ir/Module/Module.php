@@ -26,6 +26,7 @@ final class Module extends Base
 {
     /**
      * Technical Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,10 @@ final class Module extends Base
 
     /**
      * Category
+     * ---
+     * Relation : many2one (ir.module.category)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Module\Category
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +49,7 @@ final class Module extends Base
 
     /**
      * Module Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +59,7 @@ final class Module extends Base
 
     /**
      * Summary
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +69,7 @@ final class Module extends Base
 
     /**
      * Description
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +79,7 @@ final class Module extends Base
 
     /**
      * Description HTML
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -80,6 +89,7 @@ final class Module extends Base
 
     /**
      * Author
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,6 +99,7 @@ final class Module extends Base
 
     /**
      * Maintainer
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -98,6 +109,7 @@ final class Module extends Base
 
     /**
      * Contributors
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -107,6 +119,7 @@ final class Module extends Base
 
     /**
      * Website
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -116,6 +129,7 @@ final class Module extends Base
 
     /**
      * Latest Version
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -125,6 +139,7 @@ final class Module extends Base
 
     /**
      * Installed Version
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -134,6 +149,7 @@ final class Module extends Base
 
     /**
      * Published Version
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -143,6 +159,7 @@ final class Module extends Base
 
     /**
      * URL
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -152,6 +169,7 @@ final class Module extends Base
 
     /**
      * Sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -161,6 +179,10 @@ final class Module extends Base
 
     /**
      * Dependencies
+     * ---
+     * Relation : one2many (ir.module.module.dependency -> module_id)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Module\Module\Dependency
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -170,6 +192,10 @@ final class Module extends Base
 
     /**
      * Exclusions
+     * ---
+     * Relation : one2many (ir.module.module.exclusion -> module_id)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Module\Module\Exclusion
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -179,8 +205,10 @@ final class Module extends Base
 
     /**
      * Automatic Installation
+     * ---
      * An auto-installable module is automatically installed by the system when all its dependencies are satisfied.
      * If the module has no dependency, it is always installed.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -190,8 +218,7 @@ final class Module extends Base
 
     /**
      * Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> uninstallable (Uninstallable)
      *     -> uninstalled (Not Installed)
@@ -199,7 +226,9 @@ final class Module extends Base
      *     -> to upgrade (To be upgraded)
      *     -> to remove (To be removed)
      *     -> to install (To be installed)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -207,6 +236,7 @@ final class Module extends Base
 
     /**
      * Demo Data
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -216,8 +246,7 @@ final class Module extends Base
 
     /**
      * License
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> GPL-2 (GPL Version 2)
      *     -> GPL-2 or any later version (GPL-2 or later version)
@@ -229,7 +258,9 @@ final class Module extends Base
      *     -> OEEL-1 (Odoo Enterprise Edition License v1.0)
      *     -> OPL-1 (Odoo Proprietary License v1.0)
      *     -> Other proprietary (Other Proprietary)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -237,6 +268,7 @@ final class Module extends Base
 
     /**
      * Menus
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -246,6 +278,7 @@ final class Module extends Base
 
     /**
      * Reports
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -255,6 +288,7 @@ final class Module extends Base
 
     /**
      * Views
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -264,6 +298,7 @@ final class Module extends Base
 
     /**
      * Application
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -273,6 +308,7 @@ final class Module extends Base
 
     /**
      * Icon URL
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -282,15 +318,17 @@ final class Module extends Base
 
     /**
      * Icon
+     * ---
      * Searchable : no
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $icon_image;
 
     /**
      * Odoo Enterprise Module
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -300,6 +338,10 @@ final class Module extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -309,6 +351,7 @@ final class Module extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -318,6 +361,10 @@ final class Module extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -327,6 +374,7 @@ final class Module extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -336,6 +384,7 @@ final class Module extends Base
 
     /**
      * @param string $name Technical Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */
@@ -592,17 +641,17 @@ final class Module extends Base
     }
 
     /**
-     * @param int|null $icon_image
+     * @param string|null $icon_image
      */
-    public function setIconImage(?int $icon_image): void
+    public function setIconImage(?string $icon_image): void
     {
         $this->icon_image = $icon_image;
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getIconImage(): ?int
+    public function getIconImage(): ?string
     {
         return $this->icon_image;
     }

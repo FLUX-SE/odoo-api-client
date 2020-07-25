@@ -26,6 +26,7 @@ final class Line extends Base
 {
     /**
      * Label
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Line extends Base
 
     /**
      * Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +46,7 @@ final class Line extends Base
 
     /**
      * Amount
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,7 +56,12 @@ final class Line extends Base
 
     /**
      * Journal's Currency
+     * ---
      * Utility field to express amount currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -63,6 +71,10 @@ final class Line extends Base
 
     /**
      * Partner
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,7 +84,9 @@ final class Line extends Base
 
     /**
      * Bank Account Number
+     * ---
      * Technical field used to store the bank account number before its creation, upon the line's processing
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -82,7 +96,12 @@ final class Line extends Base
 
     /**
      * Bank Account
+     * ---
      * Bank account that was used in this transaction.
+     * ---
+     * Relation : many2one (res.partner.bank)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner\Bank
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -92,8 +111,13 @@ final class Line extends Base
 
     /**
      * Counterpart Account
+     * ---
      * This technical field can be used at the statement line creation/import time in order to avoid the
      * reconciliation process on it later on. The statement line will simply create a counterpart on this account
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -103,6 +127,10 @@ final class Line extends Base
 
     /**
      * Statement
+     * ---
+     * Relation : many2one (account.bank.statement)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Bank\Statement
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -112,6 +140,10 @@ final class Line extends Base
 
     /**
      * Journal
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -121,8 +153,10 @@ final class Line extends Base
 
     /**
      * Partner Name
+     * ---
      * This field is used to record the third party name when importing bank statement in electronic format, when the
      * partner doesn't exist yet in the database (or cannot be found).
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -132,6 +166,7 @@ final class Line extends Base
 
     /**
      * Reference
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -141,6 +176,7 @@ final class Line extends Base
 
     /**
      * Notes
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -150,6 +186,7 @@ final class Line extends Base
 
     /**
      * Transaction Type
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -159,7 +196,9 @@ final class Line extends Base
 
     /**
      * Sequence
+     * ---
      * Gives the sequence order when displaying a list of bank statement lines.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -169,7 +208,12 @@ final class Line extends Base
 
     /**
      * Company
+     * ---
      * Company related to this journal
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -179,6 +223,10 @@ final class Line extends Base
 
     /**
      * Journal Items
+     * ---
+     * Relation : one2many (account.move.line -> statement_line_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -188,7 +236,9 @@ final class Line extends Base
 
     /**
      * Amount Currency
+     * ---
      * The amount expressed in an optional other currency if it is a multi-currency entry.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -198,7 +248,12 @@ final class Line extends Base
 
     /**
      * Currency
+     * ---
      * The optional other currency if it is a multi-currency entry.
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -208,12 +263,13 @@ final class Line extends Base
 
     /**
      * Status
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> open (New)
      *     -> confirm (Validated)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -221,9 +277,11 @@ final class Line extends Base
 
     /**
      * Journal Entry Name
+     * ---
      * Technical field holding the number given to the journal entry, automatically set when the statement line is
      * reconciled then stored to set the same number again if the line is cancelled, set to draft and re-processed
      * again.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -233,6 +291,7 @@ final class Line extends Base
 
     /**
      * Import ID
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -242,6 +301,7 @@ final class Line extends Base
 
     /**
      * Online Identifier
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -251,7 +311,9 @@ final class Line extends Base
 
     /**
      * Online Partner Vendor Name
+     * ---
      * Technical field used to store information from plaid/yodlee to match partner (used when a purchase is made)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -261,7 +323,9 @@ final class Line extends Base
 
     /**
      * Online Partner Bank Account
+     * ---
      * Technical field used to store information from plaid/yodlee to match partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -271,6 +335,10 @@ final class Line extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -280,6 +348,7 @@ final class Line extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -289,6 +358,10 @@ final class Line extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -298,6 +371,7 @@ final class Line extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -307,12 +381,18 @@ final class Line extends Base
 
     /**
      * @param string $name Label
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param DateTimeInterface $date Date
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $statement_id Statement
+     *        ---
+     *        Relation : many2one (account.bank.statement)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Bank\Statement
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

@@ -26,6 +26,10 @@ final class Tax extends Base
 {
     /**
      * Fiscal Position
+     * ---
+     * Relation : many2one (account.fiscal.position)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Fiscal\Position
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +39,10 @@ final class Tax extends Base
 
     /**
      * Tax on Product
+     * ---
+     * Relation : many2one (account.tax)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +52,10 @@ final class Tax extends Base
 
     /**
      * Tax to Apply
+     * ---
+     * Relation : many2one (account.tax)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +65,10 @@ final class Tax extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +78,7 @@ final class Tax extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +88,10 @@ final class Tax extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,6 +101,7 @@ final class Tax extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,9 +111,17 @@ final class Tax extends Base
 
     /**
      * @param OdooRelation $position_id Fiscal Position
+     *        ---
+     *        Relation : many2one (account.fiscal.position)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Fiscal\Position
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $tax_src_id Tax on Product
+     *        ---
+     *        Relation : many2one (account.tax)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Tax
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

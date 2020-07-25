@@ -20,6 +20,7 @@ final class Groups extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -29,6 +30,10 @@ final class Groups extends Base
 
     /**
      * Users
+     * ---
+     * Relation : many2many (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -38,6 +43,10 @@ final class Groups extends Base
 
     /**
      * Access Controls
+     * ---
+     * Relation : one2many (ir.model.access -> group_id)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model\Access
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -47,6 +56,10 @@ final class Groups extends Base
 
     /**
      * Rules
+     * ---
+     * Relation : many2many (ir.rule)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Rule
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -56,6 +69,10 @@ final class Groups extends Base
 
     /**
      * Access Menu
+     * ---
+     * Relation : many2many (ir.ui.menu)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Ui\Menu
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -65,6 +82,10 @@ final class Groups extends Base
 
     /**
      * Views
+     * ---
+     * Relation : many2many (ir.ui.view)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Ui\View
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -74,6 +95,7 @@ final class Groups extends Base
 
     /**
      * Comment
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -83,6 +105,10 @@ final class Groups extends Base
 
     /**
      * Application
+     * ---
+     * Relation : many2one (ir.module.category)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Module\Category
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -92,6 +118,7 @@ final class Groups extends Base
 
     /**
      * Color Index
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -101,6 +128,7 @@ final class Groups extends Base
 
     /**
      * Group Name
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -110,7 +138,9 @@ final class Groups extends Base
 
     /**
      * Share Group
+     * ---
      * Group created to set access rights for sharing data with some users.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -120,7 +150,12 @@ final class Groups extends Base
 
     /**
      * Inherits
+     * ---
      * Users of this group automatically inherit those groups
+     * ---
+     * Relation : many2many (res.groups)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Groups
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -130,6 +165,10 @@ final class Groups extends Base
 
     /**
      * Transitively inherits
+     * ---
+     * Relation : many2many (res.groups)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Groups
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -139,6 +178,10 @@ final class Groups extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -148,6 +191,7 @@ final class Groups extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -157,6 +201,10 @@ final class Groups extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -166,6 +214,7 @@ final class Groups extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -175,6 +224,7 @@ final class Groups extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

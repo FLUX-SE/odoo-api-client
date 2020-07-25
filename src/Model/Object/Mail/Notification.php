@@ -26,6 +26,10 @@ final class Notification extends Base
 {
     /**
      * Message
+     * ---
+     * Relation : many2one (mail.message)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +39,10 @@ final class Notification extends Base
 
     /**
      * Needaction Recipient
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +52,7 @@ final class Notification extends Base
 
     /**
      * Is Read
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,15 +62,16 @@ final class Notification extends Base
 
     /**
      * Email Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> ready (Ready to Send)
      *     -> sent (Sent)
      *     -> bounce (Bounced)
      *     -> exception (Exception)
      *     -> canceled (Canceled)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -69,6 +79,10 @@ final class Notification extends Base
 
     /**
      * Mail
+     * ---
+     * Relation : many2one (mail.mail)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Mail
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -78,6 +92,7 @@ final class Notification extends Base
 
     /**
      * Failure reason
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -87,6 +102,7 @@ final class Notification extends Base
 
     /**
      * Read Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -96,13 +112,14 @@ final class Notification extends Base
 
     /**
      * Notification Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> inbox (Inbox)
      *     -> email (Email)
      *     -> sms (SMS)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -110,6 +127,10 @@ final class Notification extends Base
 
     /**
      * SMS
+     * ---
+     * Relation : many2one (sms.sms)
+     * @see \Flux\OdooApiClient\Model\Object\Sms\Sms
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -119,6 +140,7 @@ final class Notification extends Base
 
     /**
      * SMS Number
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -128,8 +150,7 @@ final class Notification extends Base
 
     /**
      * Failure type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> SMTP (Connection failed (outgoing mail server problem))
      *     -> RECIPIENT (Invalid email address)
@@ -139,7 +160,9 @@ final class Notification extends Base
      *     -> sms_number_format (Wrong Number Format)
      *     -> sms_credit (Insufficient Credit)
      *     -> sms_server (Server Error)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -147,16 +170,21 @@ final class Notification extends Base
 
     /**
      * @param OdooRelation $mail_message_id Message
+     *        ---
+     *        Relation : many2one (mail.message)
+     *        @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $notification_type Notification Type
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> inbox (Inbox)
      *            -> email (Email)
      *            -> sms (SMS)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(OdooRelation $mail_message_id, string $notification_type)
     {

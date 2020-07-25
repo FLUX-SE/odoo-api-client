@@ -26,6 +26,7 @@ final class Footnote extends Base
 {
     /**
      * Text
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Footnote extends Base
 
     /**
      * Line
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +46,10 @@ final class Footnote extends Base
 
     /**
      * Manager
+     * ---
+     * Relation : many2one (account.report.manager)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Report\Manager
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +59,10 @@ final class Footnote extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +72,7 @@ final class Footnote extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +82,10 @@ final class Footnote extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,6 +95,7 @@ final class Footnote extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

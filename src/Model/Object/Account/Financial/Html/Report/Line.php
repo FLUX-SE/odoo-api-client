@@ -26,6 +26,7 @@ final class Line extends Base
 {
     /**
      * Section Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Line extends Base
 
     /**
      * Code
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +46,10 @@ final class Line extends Base
 
     /**
      * Financial Report
+     * ---
+     * Relation : many2one (account.financial.html.report)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Financial\Html\Report
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +59,10 @@ final class Line extends Base
 
     /**
      * Parent
+     * ---
+     * Relation : many2one (account.financial.html.report.line)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Financial\Html\Report\Line
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +72,10 @@ final class Line extends Base
 
     /**
      * Children
+     * ---
+     * Relation : one2many (account.financial.html.report.line -> parent_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Financial\Html\Report\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -71,6 +85,7 @@ final class Line extends Base
 
     /**
      * Parent Path
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,6 +95,7 @@ final class Line extends Base
 
     /**
      * Sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,6 +105,7 @@ final class Line extends Base
 
     /**
      * Domain
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -98,6 +115,7 @@ final class Line extends Base
 
     /**
      * Formulas
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -107,6 +125,7 @@ final class Line extends Base
 
     /**
      * Group by
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -116,13 +135,14 @@ final class Line extends Base
 
     /**
      * Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> float (Float)
      *     -> percents (Percents)
      *     -> no_unit (No Unit)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -130,7 +150,9 @@ final class Line extends Base
 
     /**
      * Print On New Page
+     * ---
      * When checked this line and everything after it will be printed on a new page.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -140,6 +162,7 @@ final class Line extends Base
 
     /**
      * Is growth good when positive
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -149,6 +172,7 @@ final class Line extends Base
 
     /**
      * Level
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -158,15 +182,16 @@ final class Line extends Base
 
     /**
      * Special Date Changer
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> from_beginning (From the beginning)
      *     -> to_beginning_of_period (At the beginning of the period)
      *     -> normal (Use given dates)
      *     -> strict_range (Force given dates for all accounts and account types)
      *     -> from_fiscalyear (From the beginning of the fiscal year)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -174,13 +199,14 @@ final class Line extends Base
 
     /**
      * Show Domain
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> always (Always)
      *     -> never (Never)
      *     -> foldable (Foldable)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -188,6 +214,7 @@ final class Line extends Base
 
     /**
      * Hide If Zero
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -197,6 +224,7 @@ final class Line extends Base
 
     /**
      * Hide If Empty
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -206,6 +234,10 @@ final class Line extends Base
 
     /**
      * Action
+     * ---
+     * Relation : many2one (ir.actions.actions)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Actions\Actions
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -215,6 +247,10 @@ final class Line extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -224,6 +260,7 @@ final class Line extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -233,6 +270,10 @@ final class Line extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -242,6 +283,7 @@ final class Line extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -251,14 +293,16 @@ final class Line extends Base
 
     /**
      * @param string $figure_type Type
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> float (Float)
      *            -> percents (Percents)
      *            -> no_unit (No Unit)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param int $level Level
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

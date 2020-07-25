@@ -23,6 +23,10 @@ final class Sell extends Base
 {
     /**
      * Asset
+     * ---
+     * Relation : many2one (account.asset)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Asset
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +36,10 @@ final class Sell extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -41,12 +49,13 @@ final class Sell extends Base
 
     /**
      * Action
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> sell (Sell)
      *     -> dispose (Dispose)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -54,7 +63,12 @@ final class Sell extends Base
 
     /**
      * Customer Invoice
+     * ---
      * The disposal invoice is needed in order to generate the closing journal entry.
+     * ---
+     * Relation : many2one (account.move)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -64,7 +78,12 @@ final class Sell extends Base
 
     /**
      * Invoice Line
+     * ---
      * There are multiple lines that could be the related to this asset
+     * ---
+     * Relation : many2one (account.move.line)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move\Line
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -74,6 +93,7 @@ final class Sell extends Base
 
     /**
      * Select Invoice Line
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -83,7 +103,12 @@ final class Sell extends Base
 
     /**
      * Gain Account
+     * ---
      * Account used to write the journal item in case of gain
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -93,7 +118,12 @@ final class Sell extends Base
 
     /**
      * Loss Account
+     * ---
      * Account used to write the journal item in case of loss
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -103,14 +133,16 @@ final class Sell extends Base
 
     /**
      * Gain Or Loss
+     * ---
      * Technical field to know is there was a gain or a loss in the selling of the asset
-     * Searchable : no
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> gain (Gain)
      *     -> loss (Loss)
      *     -> no (No)
-     *
+     * ---
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
@@ -118,6 +150,10 @@ final class Sell extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -127,6 +163,7 @@ final class Sell extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -136,6 +173,10 @@ final class Sell extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -145,6 +186,7 @@ final class Sell extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -154,15 +196,20 @@ final class Sell extends Base
 
     /**
      * @param OdooRelation $asset_id Asset
+     *        ---
+     *        Relation : many2one (account.asset)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Asset
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $action Action
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> sell (Sell)
      *            -> dispose (Dispose)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(OdooRelation $asset_id, string $action)
     {

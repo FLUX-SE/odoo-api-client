@@ -26,6 +26,7 @@ final class Sms extends Base
 {
     /**
      * Number
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Sms extends Base
 
     /**
      * Body
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +46,10 @@ final class Sms extends Base
 
     /**
      * Customer
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +59,10 @@ final class Sms extends Base
 
     /**
      * Mail Message
+     * ---
+     * Relation : many2one (mail.message)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,14 +72,15 @@ final class Sms extends Base
 
     /**
      * SMS Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> outgoing (In Queue)
      *     -> sent (Sent)
      *     -> error (Error)
      *     -> canceled (Canceled)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -77,8 +88,7 @@ final class Sms extends Base
 
     /**
      * Error Code
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> sms_number_missing (Missing Number)
      *     -> sms_number_format (Wrong Number Format)
@@ -86,7 +96,9 @@ final class Sms extends Base
      *     -> sms_server (Server Error)
      *     -> sms_blacklist (Blacklisted)
      *     -> sms_duplicate (Duplicate)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -94,6 +106,10 @@ final class Sms extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -103,6 +119,7 @@ final class Sms extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -112,6 +129,10 @@ final class Sms extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -121,6 +142,7 @@ final class Sms extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -130,14 +152,15 @@ final class Sms extends Base
 
     /**
      * @param string $state SMS Status
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> outgoing (In Queue)
      *            -> sent (Sent)
      *            -> error (Error)
      *            -> canceled (Canceled)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $state)
     {

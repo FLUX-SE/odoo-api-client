@@ -19,6 +19,7 @@ final class Value extends Base
 {
     /**
      * Active
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -28,6 +29,7 @@ final class Value extends Base
 
     /**
      * Value
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -37,6 +39,10 @@ final class Value extends Base
 
     /**
      * Attribute Value
+     * ---
+     * Relation : many2one (product.attribute.value)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Attribute\Value
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -46,6 +52,10 @@ final class Value extends Base
 
     /**
      * Attribute Line
+     * ---
+     * Relation : many2one (product.template.attribute.line)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Template\Attribute\Line
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -55,7 +65,9 @@ final class Value extends Base
 
     /**
      * Value Price Extra
+     * ---
      * Extra price for the variant with this attribute value on sale price. eg. 200 price extra, 1000 + 200 = 1200.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -65,8 +77,13 @@ final class Value extends Base
 
     /**
      * Exclude for
+     * ---
      * Make this attribute value not compatible with other values of the product or some attribute values of optional
      * and accessory products.
+     * ---
+     * Relation : one2many (product.template.attribute.exclusion -> product_template_attribute_value_id)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Template\Attribute\Exclusion
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -76,6 +93,10 @@ final class Value extends Base
 
     /**
      * Product Template
+     * ---
+     * Relation : many2one (product.template)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -85,6 +106,10 @@ final class Value extends Base
 
     /**
      * Attribute
+     * ---
+     * Relation : many2one (product.attribute)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Attribute
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -94,6 +119,10 @@ final class Value extends Base
 
     /**
      * Related Variants
+     * ---
+     * Relation : many2many (product.product)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Product
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -103,8 +132,10 @@ final class Value extends Base
 
     /**
      * HTML Color Index
+     * ---
      * Here you can set a specific HTML color index (e.g. #ff0000) to display the color if the attribute type is
      * 'Color'.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -114,7 +145,9 @@ final class Value extends Base
 
     /**
      * Is custom value
+     * ---
      * Allow users to input custom values for this attribute value
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -124,14 +157,16 @@ final class Value extends Base
 
     /**
      * Display Type
+     * ---
      * The display type used in the Product Configurator.
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> radio (Radio)
      *     -> select (Select)
      *     -> color (Color)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -139,6 +174,10 @@ final class Value extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -148,6 +187,7 @@ final class Value extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -157,6 +197,10 @@ final class Value extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -166,6 +210,7 @@ final class Value extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -175,9 +220,17 @@ final class Value extends Base
 
     /**
      * @param OdooRelation $product_attribute_value_id Attribute Value
+     *        ---
+     *        Relation : many2one (product.attribute.value)
+     *        @see \Flux\OdooApiClient\Model\Object\Product\Attribute\Value
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $attribute_line_id Attribute Line
+     *        ---
+     *        Relation : many2one (product.template.attribute.line)
+     *        @see \Flux\OdooApiClient\Model\Object\Product\Template\Attribute\Line
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

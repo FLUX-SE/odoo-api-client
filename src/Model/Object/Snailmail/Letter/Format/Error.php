@@ -23,6 +23,10 @@ final class Error extends Base
 {
     /**
      * Message
+     * ---
+     * Relation : many2one (mail.message)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +36,7 @@ final class Error extends Base
 
     /**
      * Add a Cover Page
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -41,6 +46,10 @@ final class Error extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -50,6 +59,7 @@ final class Error extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -59,6 +69,10 @@ final class Error extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -68,6 +82,7 @@ final class Error extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

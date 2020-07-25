@@ -23,7 +23,12 @@ final class Wizard extends Base
 {
     /**
      * Batch Payment
+     * ---
      * Batch payment from which the file has been generated.
+     * ---
+     * Relation : many2one (account.batch.payment)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Batch\Payment
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -33,17 +38,21 @@ final class Wizard extends Base
 
     /**
      * File
+     * ---
      * Generated XML file
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $export_file;
 
     /**
      * File name
+     * ---
      * Name of the generated XML file
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -53,7 +62,9 @@ final class Wizard extends Base
 
     /**
      * Warning
+     * ---
      * Warning message to display about the content of the downloadable file.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,6 +74,10 @@ final class Wizard extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,6 +87,7 @@ final class Wizard extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -81,6 +97,10 @@ final class Wizard extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -90,6 +110,7 @@ final class Wizard extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -99,7 +120,12 @@ final class Wizard extends Base
 
     /**
      * @param OdooRelation $batch_payment_id Batch Payment
+     *        ---
      *        Batch payment from which the file has been generated.
+     *        ---
+     *        Relation : many2one (account.batch.payment)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Batch\Payment
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */
@@ -213,17 +239,17 @@ final class Wizard extends Base
     }
 
     /**
-     * @param int|null $export_file
+     * @param string|null $export_file
      */
-    public function setExportFile(?int $export_file): void
+    public function setExportFile(?string $export_file): void
     {
         $this->export_file = $export_file;
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getExportFile(): ?int
+    public function getExportFile(): ?string
     {
         return $this->export_file;
     }

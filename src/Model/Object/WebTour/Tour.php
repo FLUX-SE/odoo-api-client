@@ -25,6 +25,7 @@ final class Tour extends Base
 {
     /**
      * Tour name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -34,6 +35,10 @@ final class Tour extends Base
 
     /**
      * Consumed by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -43,6 +48,7 @@ final class Tour extends Base
 
     /**
      * @param string $name Tour name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

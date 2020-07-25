@@ -17,6 +17,10 @@ final class Mail extends Message
 {
     /**
      * Message
+     * ---
+     * Relation : many2one (mail.message)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -26,7 +30,9 @@ final class Mail extends Message
 
     /**
      * Rich-text Contents
+     * ---
      * Rich-text/HTML message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,7 +42,9 @@ final class Mail extends Message
 
     /**
      * References
+     * ---
      * Message references, such as identifiers of previous messages
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -46,6 +54,7 @@ final class Mail extends Message
 
     /**
      * Headers
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -55,7 +64,9 @@ final class Mail extends Message
 
     /**
      * Is Notification
+     * ---
      * Mail has been created to notify people of an existing mail.message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -65,7 +76,9 @@ final class Mail extends Message
 
     /**
      * To
+     * ---
      * Message recipients (emails)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -75,7 +88,9 @@ final class Mail extends Message
 
     /**
      * Cc
+     * ---
      * Carbon copy message recipients
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -85,6 +100,10 @@ final class Mail extends Message
 
     /**
      * To (Partners)
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -94,15 +113,16 @@ final class Mail extends Message
 
     /**
      * Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> outgoing (Outgoing)
      *     -> sent (Sent)
      *     -> received (Received)
      *     -> exception (Delivery Failed)
      *     -> cancel (Cancelled)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -110,7 +130,9 @@ final class Mail extends Message
 
     /**
      * Auto Delete
+     * ---
      * Permanently delete this email after sending it, to save space
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -120,8 +142,10 @@ final class Mail extends Message
 
     /**
      * Failure Reason
+     * ---
      * Failure reason. This is usually the exception thrown by the email server, stored to ease the debugging of
      * mailing issues.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -131,8 +155,10 @@ final class Mail extends Message
 
     /**
      * Scheduled Send Date
+     * ---
      * If set, the queue manager will send the email after the date. If not set, the email will be send as soon as
      * possible.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -142,6 +168,10 @@ final class Mail extends Message
 
     /**
      * Inbound Mail Server
+     * ---
+     * Relation : many2one (fetchmail.server)
+     * @see \Flux\OdooApiClient\Model\Object\Fetchmail\Server
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -151,13 +181,17 @@ final class Mail extends Message
 
     /**
      * @param OdooRelation $mail_message_id Message
+     *        ---
+     *        Relation : many2one (mail.message)
+     *        @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $message_type Type
+     *        ---
      *        Message type: email for email message, notification for system message, comment for other messages such as
      *        user replies
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> email (Email)
      *            -> comment (Comment)
@@ -165,7 +199,9 @@ final class Mail extends Message
      *            -> user_notification (User Specific Notification)
      *            -> snailmail (Snailmail)
      *            -> sms (SMS)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(OdooRelation $mail_message_id, string $message_type)
     {

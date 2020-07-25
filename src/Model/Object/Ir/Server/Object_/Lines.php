@@ -26,6 +26,10 @@ final class Lines extends Base
 {
     /**
      * Related Server Action
+     * ---
+     * Relation : many2one (ir.actions.server)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Actions\Server
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +39,10 @@ final class Lines extends Base
 
     /**
      * Field
+     * ---
+     * Relation : many2one (ir.model.fields)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model\Fields
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,10 +52,12 @@ final class Lines extends Base
 
     /**
      * Value
+     * ---
      * Expression containing a value specification.
      * When Formula type is selected, this field may be a Python expression  that can use the same values as for the
      * code field on the server action.
      * If Value type is selected, the value will be used directly without evaluation.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -57,13 +67,14 @@ final class Lines extends Base
 
     /**
      * Evaluation Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> value (Value)
      *     -> reference (Reference)
      *     -> equation (Python expression)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -71,6 +82,7 @@ final class Lines extends Base
 
     /**
      * Record
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -80,6 +92,10 @@ final class Lines extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,6 +105,7 @@ final class Lines extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -98,6 +115,10 @@ final class Lines extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -107,6 +128,7 @@ final class Lines extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -116,23 +138,30 @@ final class Lines extends Base
 
     /**
      * @param OdooRelation $col1 Field
+     *        ---
+     *        Relation : many2one (ir.model.fields)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Model\Fields
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $value Value
+     *        ---
      *        Expression containing a value specification.
      *        When Formula type is selected, this field may be a Python expression  that can use the same values as for the
      *        code field on the server action.
      *        If Value type is selected, the value will be used directly without evaluation.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $evaluation_type Evaluation Type
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> value (Value)
      *            -> reference (Reference)
      *            -> equation (Python expression)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(OdooRelation $col1, string $value, string $evaluation_type)
     {

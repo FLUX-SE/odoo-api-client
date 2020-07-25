@@ -18,15 +18,16 @@ final class Wizard extends Base
 {
     /**
      * Payment Method
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> digital_signature (Online signature)
      *     -> paypal (PayPal)
      *     -> stripe (Credit card (via Stripe))
      *     -> other (Other payment acquirer)
      *     -> manual (Custom payment instructions)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -34,12 +35,13 @@ final class Wizard extends Base
 
     /**
      * Paypal User Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> new_user (I don't have a Paypal account)
      *     -> existing_user (I have a Paypal account)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -47,6 +49,7 @@ final class Wizard extends Base
 
     /**
      * Email
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -56,6 +59,7 @@ final class Wizard extends Base
 
     /**
      * Merchant Account ID
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -65,6 +69,7 @@ final class Wizard extends Base
 
     /**
      * PDT Identity Token
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -74,6 +79,7 @@ final class Wizard extends Base
 
     /**
      * Stripe Secret Key
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -83,6 +89,7 @@ final class Wizard extends Base
 
     /**
      * Stripe Publishable Key
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -92,6 +99,7 @@ final class Wizard extends Base
 
     /**
      * Method
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -101,6 +109,7 @@ final class Wizard extends Base
 
     /**
      * Bank Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -110,6 +119,7 @@ final class Wizard extends Base
 
     /**
      * Account Number
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -119,6 +129,7 @@ final class Wizard extends Base
 
     /**
      * Payment Instructions
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -128,6 +139,10 @@ final class Wizard extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -137,6 +152,7 @@ final class Wizard extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -146,6 +162,10 @@ final class Wizard extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -155,6 +175,7 @@ final class Wizard extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

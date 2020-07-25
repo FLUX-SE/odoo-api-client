@@ -18,6 +18,10 @@ final class Todo extends Base
 {
     /**
      * Action
+     * ---
+     * Relation : many2one (ir.actions.actions)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Actions\Actions
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -27,6 +31,7 @@ final class Todo extends Base
 
     /**
      * Sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,12 +41,13 @@ final class Todo extends Base
 
     /**
      * Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> open (To Do)
      *     -> done (Done)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -49,6 +55,7 @@ final class Todo extends Base
 
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -58,6 +65,10 @@ final class Todo extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -67,6 +78,7 @@ final class Todo extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -76,6 +88,10 @@ final class Todo extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -85,6 +101,7 @@ final class Todo extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -94,15 +111,20 @@ final class Todo extends Base
 
     /**
      * @param OdooRelation $action_id Action
+     *        ---
+     *        Relation : many2one (ir.actions.actions)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Actions\Actions
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $state Status
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> open (To Do)
      *            -> done (Done)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(OdooRelation $action_id, string $state)
     {

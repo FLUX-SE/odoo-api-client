@@ -26,6 +26,7 @@ final class Tag extends Base
 {
     /**
      * Analytic Tag
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Tag extends Base
 
     /**
      * Color Index
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,7 +46,9 @@ final class Tag extends Base
 
     /**
      * Active
+     * ---
      * Set active to false to hide the Analytic Tag without removing it.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,6 +58,7 @@ final class Tag extends Base
 
     /**
      * Analytic Distribution
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,6 +68,10 @@ final class Tag extends Base
 
     /**
      * Analytic Accounts
+     * ---
+     * Relation : one2many (account.analytic.distribution -> tag_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Distribution
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -72,6 +81,10 @@ final class Tag extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -81,6 +94,10 @@ final class Tag extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -90,6 +107,7 @@ final class Tag extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -99,6 +117,10 @@ final class Tag extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -108,6 +130,7 @@ final class Tag extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -117,6 +140,7 @@ final class Tag extends Base
 
     /**
      * @param string $name Analytic Tag
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

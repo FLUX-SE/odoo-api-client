@@ -7,7 +7,9 @@ namespace Flux\OdooApiClient\Model;
 use Flux\OdooApiClient\Model\Object\Base;
 
 /**
- * Odoo Response wrapper to handle all Odoo Many2One, One2many or Many2many relations given by an Odoo API response
+ * Odoo Response wrapper to handle all
+ * Odoo Many2one, One2many or Many2many relations
+ * given by an Odoo API response
  */
 final class OdooRelation extends Base
 {

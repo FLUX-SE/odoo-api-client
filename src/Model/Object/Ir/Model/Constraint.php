@@ -19,7 +19,9 @@ final class Constraint extends Base
 {
     /**
      * Constraint
+     * ---
      * PostgreSQL constraint or foreign key name.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -29,7 +31,9 @@ final class Constraint extends Base
 
     /**
      * Definition
+     * ---
      * PostgreSQL constraint definition
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -39,7 +43,9 @@ final class Constraint extends Base
 
     /**
      * Message
+     * ---
      * Error message returned when the constraint is violated.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -49,6 +55,10 @@ final class Constraint extends Base
 
     /**
      * Model
+     * ---
+     * Relation : many2one (ir.model)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -58,6 +68,10 @@ final class Constraint extends Base
 
     /**
      * Module
+     * ---
+     * Relation : many2one (ir.module.module)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Module\Module
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -67,7 +81,9 @@ final class Constraint extends Base
 
     /**
      * Constraint Type
+     * ---
      * Type of the constraint: `f` for a foreign key, `u` for other constraints.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -77,6 +93,7 @@ final class Constraint extends Base
 
     /**
      * Write Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -86,6 +103,7 @@ final class Constraint extends Base
 
     /**
      * Create Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -95,6 +113,10 @@ final class Constraint extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -104,6 +126,10 @@ final class Constraint extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -113,17 +139,29 @@ final class Constraint extends Base
 
     /**
      * @param string $name Constraint
+     *        ---
      *        PostgreSQL constraint or foreign key name.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $model Model
+     *        ---
+     *        Relation : many2one (ir.model)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $module Module
+     *        ---
+     *        Relation : many2one (ir.module.module)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Module\Module
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $type Constraint Type
+     *        ---
      *        Type of the constraint: `f` for a foreign key, `u` for other constraints.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

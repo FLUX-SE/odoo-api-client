@@ -18,6 +18,10 @@ final class Layout extends Base
 {
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -27,25 +31,29 @@ final class Layout extends Base
 
     /**
      * Company Logo
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $logo;
 
     /**
      * Preview logo
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $preview_logo;
 
     /**
      * Company Tagline
+     * ---
      * Appears by default on the top right corner of your printed documents (report header).
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -55,7 +63,9 @@ final class Layout extends Base
 
     /**
      * Report Footer
+     * ---
      * Footer text displayed at the bottom of all reports.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -65,6 +75,10 @@ final class Layout extends Base
 
     /**
      * Paper format
+     * ---
+     * Relation : many2one (report.paperformat)
+     * @see \Flux\OdooApiClient\Model\Object\Report\Paperformat
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -74,6 +88,10 @@ final class Layout extends Base
 
     /**
      * Document Template
+     * ---
+     * Relation : many2one (ir.ui.view)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Ui\View
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -83,8 +101,7 @@ final class Layout extends Base
 
     /**
      * Font
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> Lato (Lato)
      *     -> Roboto (Roboto)
@@ -92,7 +109,9 @@ final class Layout extends Base
      *     -> Montserrat (Montserrat)
      *     -> Oswald (Oswald)
      *     -> Raleway (Raleway)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -100,6 +119,7 @@ final class Layout extends Base
 
     /**
      * Primary Color
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -109,6 +129,7 @@ final class Layout extends Base
 
     /**
      * Secondary Color
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -118,6 +139,7 @@ final class Layout extends Base
 
     /**
      * Custom Colors
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -127,6 +149,7 @@ final class Layout extends Base
 
     /**
      * Logo Primary Color
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -136,6 +159,7 @@ final class Layout extends Base
 
     /**
      * Logo Secondary Color
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -145,6 +169,10 @@ final class Layout extends Base
 
     /**
      * Report Layout
+     * ---
+     * Relation : many2one (report.layout)
+     * @see \Flux\OdooApiClient\Model\Object\Report\Layout
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -154,6 +182,7 @@ final class Layout extends Base
 
     /**
      * Preview
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -163,6 +192,10 @@ final class Layout extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -172,6 +205,7 @@ final class Layout extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -181,6 +215,10 @@ final class Layout extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -190,6 +228,7 @@ final class Layout extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -199,6 +238,10 @@ final class Layout extends Base
 
     /**
      * @param OdooRelation $company_id Company
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */
@@ -384,33 +427,33 @@ final class Layout extends Base
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getLogo(): ?int
+    public function getLogo(): ?string
     {
         return $this->logo;
     }
 
     /**
-     * @param int|null $logo
+     * @param string|null $logo
      */
-    public function setLogo(?int $logo): void
+    public function setLogo(?string $logo): void
     {
         $this->logo = $logo;
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getPreviewLogo(): ?int
+    public function getPreviewLogo(): ?string
     {
         return $this->preview_logo;
     }
 
     /**
-     * @param int|null $preview_logo
+     * @param string|null $preview_logo
      */
-    public function setPreviewLogo(?int $preview_logo): void
+    public function setPreviewLogo(?string $preview_logo): void
     {
         $this->preview_logo = $preview_logo;
     }

@@ -19,6 +19,7 @@ final class Line extends Base
 {
     /**
      * Active
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -28,6 +29,10 @@ final class Line extends Base
 
     /**
      * Product Template
+     * ---
+     * Relation : many2one (product.template)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -37,6 +42,10 @@ final class Line extends Base
 
     /**
      * Attribute
+     * ---
+     * Relation : many2one (product.attribute)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Attribute
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -46,6 +55,10 @@ final class Line extends Base
 
     /**
      * Values
+     * ---
+     * Relation : many2many (product.attribute.value)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Attribute\Value
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -55,6 +68,10 @@ final class Line extends Base
 
     /**
      * Product Attribute Values
+     * ---
+     * Relation : one2many (product.template.attribute.value -> attribute_line_id)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Template\Attribute\Value
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -64,6 +81,10 @@ final class Line extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -73,6 +94,7 @@ final class Line extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -82,6 +104,10 @@ final class Line extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -91,6 +117,7 @@ final class Line extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -100,9 +127,17 @@ final class Line extends Base
 
     /**
      * @param OdooRelation $product_tmpl_id Product Template
+     *        ---
+     *        Relation : many2one (product.template)
+     *        @see \Flux\OdooApiClient\Model\Object\Product\Template
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $attribute_id Attribute
+     *        ---
+     *        Relation : many2one (product.attribute)
+     *        @see \Flux\OdooApiClient\Model\Object\Product\Attribute
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

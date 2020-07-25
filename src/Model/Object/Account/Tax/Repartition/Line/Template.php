@@ -26,7 +26,9 @@ final class Template extends Base
 {
     /**
      * %
+     * ---
      * Factor to apply on the account move lines generated from this repartition line, in percents
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,13 +38,15 @@ final class Template extends Base
 
     /**
      * Based On
+     * ---
      * Base on which the factor will be applied.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> base (Base)
      *     -> tax (of tax)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -50,7 +54,12 @@ final class Template extends Base
 
     /**
      * Account
+     * ---
      * Account on which to post the tax amount
+     * ---
+     * Relation : many2one (account.account.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -60,7 +69,12 @@ final class Template extends Base
 
     /**
      * Invoice Tax
+     * ---
      * The tax set to apply this repartition on invoices. Mutually exclusive with refund_tax_id
+     * ---
+     * Relation : many2one (account.tax.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -70,7 +84,12 @@ final class Template extends Base
 
     /**
      * Refund Tax
+     * ---
      * The tax set to apply this repartition on refund invoices. Mutually exclusive with invoice_tax_id
+     * ---
+     * Relation : many2one (account.tax.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,7 +99,12 @@ final class Template extends Base
 
     /**
      * Financial Tags
+     * ---
      * Additional tags that will be assigned by this repartition line for use in financial reports
+     * ---
+     * Relation : many2many (account.account.tag)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Tag
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -90,7 +114,12 @@ final class Template extends Base
 
     /**
      * Plus Tax Report Lines
+     * ---
      * Tax report lines whose '+' tag will be assigned to move lines by this repartition line
+     * ---
+     * Relation : many2many (account.tax.report.line)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax\Report\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -100,7 +129,12 @@ final class Template extends Base
 
     /**
      * Minus Report Lines
+     * ---
      * Tax report lines whose '-' tag will be assigned to move lines by this repartition line
+     * ---
+     * Relation : many2many (account.tax.report.line)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax\Report\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -110,6 +144,10 @@ final class Template extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -119,6 +157,7 @@ final class Template extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -128,6 +167,10 @@ final class Template extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -137,6 +180,7 @@ final class Template extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -146,17 +190,21 @@ final class Template extends Base
 
     /**
      * @param float $factor_percent %
+     *        ---
      *        Factor to apply on the account move lines generated from this repartition line, in percents
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $repartition_type Based On
+     *        ---
      *        Base on which the factor will be applied.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> base (Base)
      *            -> tax (of tax)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(float $factor_percent, string $repartition_type)
     {

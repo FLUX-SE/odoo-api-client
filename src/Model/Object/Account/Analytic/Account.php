@@ -26,6 +26,7 @@ final class Account extends Base
 {
     /**
      * Analytic Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Account extends Base
 
     /**
      * Reference
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,7 +46,9 @@ final class Account extends Base
 
     /**
      * Active
+     * ---
      * If the active field is set to False, it will allow you to hide the account without removing it.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,6 +58,10 @@ final class Account extends Base
 
     /**
      * Group
+     * ---
+     * Relation : many2one (account.analytic.group)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Group
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,6 +71,10 @@ final class Account extends Base
 
     /**
      * Analytic Lines
+     * ---
+     * Relation : one2many (account.analytic.line -> account_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -72,6 +84,10 @@ final class Account extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -81,6 +97,10 @@ final class Account extends Base
 
     /**
      * Customer
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -90,6 +110,7 @@ final class Account extends Base
 
     /**
      * Balance
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -99,6 +120,7 @@ final class Account extends Base
 
     /**
      * Debit
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -108,6 +130,7 @@ final class Account extends Base
 
     /**
      * Credit
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -117,6 +140,10 @@ final class Account extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -126,6 +153,7 @@ final class Account extends Base
 
     /**
      * Is Follower
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -135,6 +163,10 @@ final class Account extends Base
 
     /**
      * Followers
+     * ---
+     * Relation : one2many (mail.followers -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Followers
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -144,6 +176,10 @@ final class Account extends Base
 
     /**
      * Followers (Partners)
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -153,6 +189,10 @@ final class Account extends Base
 
     /**
      * Followers (Channels)
+     * ---
+     * Relation : many2many (mail.channel)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Channel
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -162,6 +202,10 @@ final class Account extends Base
 
     /**
      * Messages
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -171,7 +215,9 @@ final class Account extends Base
 
     /**
      * Unread Messages
+     * ---
      * If checked, new messages require your attention.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -181,7 +227,9 @@ final class Account extends Base
 
     /**
      * Unread Messages Counter
+     * ---
      * Number of unread messages
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -191,7 +239,9 @@ final class Account extends Base
 
     /**
      * Action Needed
+     * ---
      * If checked, new messages require your attention.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -201,7 +251,9 @@ final class Account extends Base
 
     /**
      * Number of Actions
+     * ---
      * Number of messages which requires an action
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -211,7 +263,9 @@ final class Account extends Base
 
     /**
      * Message Delivery error
+     * ---
      * If checked, some messages have a delivery error.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -221,7 +275,9 @@ final class Account extends Base
 
     /**
      * Number of errors
+     * ---
      * Number of messages with delivery error
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -231,6 +287,7 @@ final class Account extends Base
 
     /**
      * Attachment Count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -240,6 +297,10 @@ final class Account extends Base
 
     /**
      * Main Attachment
+     * ---
+     * Relation : many2one (ir.attachment)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -249,7 +310,12 @@ final class Account extends Base
 
     /**
      * Website Messages
+     * ---
      * Website communication history
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -259,7 +325,9 @@ final class Account extends Base
 
     /**
      * SMS Delivery error
+     * ---
      * If checked, some messages have a delivery error.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -269,6 +337,10 @@ final class Account extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -278,6 +350,7 @@ final class Account extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -287,6 +360,10 @@ final class Account extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -296,6 +373,7 @@ final class Account extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -305,6 +383,7 @@ final class Account extends Base
 
     /**
      * @param string $name Analytic Account
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

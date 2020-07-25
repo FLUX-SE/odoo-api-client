@@ -26,6 +26,10 @@ final class Distribution extends Base
 {
     /**
      * Analytic Account
+     * ---
+     * Relation : many2one (account.analytic.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +39,7 @@ final class Distribution extends Base
 
     /**
      * Percentage
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +49,7 @@ final class Distribution extends Base
 
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -53,6 +59,10 @@ final class Distribution extends Base
 
     /**
      * Parent tag
+     * ---
+     * Relation : many2one (account.analytic.tag)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Tag
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +72,10 @@ final class Distribution extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +85,7 @@ final class Distribution extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,6 +95,10 @@ final class Distribution extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,6 +108,7 @@ final class Distribution extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -98,12 +118,21 @@ final class Distribution extends Base
 
     /**
      * @param OdooRelation $account_id Analytic Account
+     *        ---
+     *        Relation : many2one (account.analytic.account)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Account
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param float $percentage Percentage
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $tag_id Parent tag
+     *        ---
+     *        Relation : many2one (account.analytic.tag)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Tag
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

@@ -23,6 +23,7 @@ final class Wizard extends Base
 {
     /**
      * Related Document Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +33,7 @@ final class Wizard extends Base
 
     /**
      * Related Document ID
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -41,6 +43,7 @@ final class Wizard extends Base
 
     /**
      * Amount
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -50,6 +53,7 @@ final class Wizard extends Base
 
     /**
      * Amount Max
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -59,6 +63,10 @@ final class Wizard extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -68,6 +76,10 @@ final class Wizard extends Base
 
     /**
      * Partner
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -77,6 +89,7 @@ final class Wizard extends Base
 
     /**
      * Email
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -86,6 +99,7 @@ final class Wizard extends Base
 
     /**
      * Payment Link
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -95,6 +109,7 @@ final class Wizard extends Base
 
     /**
      * Payment Ref
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -104,6 +119,7 @@ final class Wizard extends Base
 
     /**
      * Access Token
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -113,6 +129,10 @@ final class Wizard extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -122,6 +142,10 @@ final class Wizard extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -131,6 +155,7 @@ final class Wizard extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -140,6 +165,10 @@ final class Wizard extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -149,6 +178,7 @@ final class Wizard extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -158,12 +188,15 @@ final class Wizard extends Base
 
     /**
      * @param string $res_model Related Document Model
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param int $res_id Related Document ID
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param float $amount Amount
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

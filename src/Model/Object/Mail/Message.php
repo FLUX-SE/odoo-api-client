@@ -20,6 +20,7 @@ class Message extends Base
 {
     /**
      * Subject
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -29,6 +30,7 @@ class Message extends Base
 
     /**
      * Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -38,6 +40,7 @@ class Message extends Base
 
     /**
      * Contents
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -47,7 +50,12 @@ class Message extends Base
 
     /**
      * Attachments
+     * ---
      * Attachments are linked to a document through model / res_id and to the message through this field.
+     * ---
+     * Relation : many2many (ir.attachment)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -57,7 +65,12 @@ class Message extends Base
 
     /**
      * Parent Message
+     * ---
      * Initial thread message.
+     * ---
+     * Relation : many2one (mail.message)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -67,6 +80,10 @@ class Message extends Base
 
     /**
      * Child Messages
+     * ---
+     * Relation : one2many (mail.message -> parent_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -76,6 +93,7 @@ class Message extends Base
 
     /**
      * Related Document Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -85,6 +103,7 @@ class Message extends Base
 
     /**
      * Related Document ID
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -94,7 +113,9 @@ class Message extends Base
 
     /**
      * Message Record Name
+     * ---
      * Name get of the related document.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -104,6 +125,10 @@ class Message extends Base
 
     /**
      * Subtype
+     * ---
+     * Relation : many2one (mail.message.subtype)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message\Subtype
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -113,6 +138,10 @@ class Message extends Base
 
     /**
      * Mail Activity Type
+     * ---
+     * Relation : many2one (mail.activity.type)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity\Type
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -122,8 +151,10 @@ class Message extends Base
 
     /**
      * From
+     * ---
      * Email address of the sender. This field is set when no matching partner is found and replaces the author_id
      * field in the chatter.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -133,7 +164,12 @@ class Message extends Base
 
     /**
      * Author
+     * ---
      * Author of the message. If not set, email_from may hold an email address that did not match any partner.
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -143,15 +179,20 @@ class Message extends Base
 
     /**
      * Author's avatar
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     protected $author_avatar;
 
     /**
      * Recipients
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -161,6 +202,10 @@ class Message extends Base
 
     /**
      * Partners with Need Action
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -170,7 +215,9 @@ class Message extends Base
 
     /**
      * Need Action
+     * ---
      * Need Action
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -180,7 +227,9 @@ class Message extends Base
 
     /**
      * Has error
+     * ---
      * Has error
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -190,6 +239,10 @@ class Message extends Base
 
     /**
      * Channels
+     * ---
+     * Relation : many2many (mail.channel)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Channel
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -199,6 +252,10 @@ class Message extends Base
 
     /**
      * Notifications
+     * ---
+     * Relation : one2many (mail.notification -> mail_message_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Notification
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -208,6 +265,10 @@ class Message extends Base
 
     /**
      * Favorited By
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -217,7 +278,9 @@ class Message extends Base
 
     /**
      * Starred
+     * ---
      * Current user has a starred notification linked to this message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -227,7 +290,9 @@ class Message extends Base
 
     /**
      * No threading for answers
+     * ---
      * Answers do not go in the original document discussion thread. This has an impact on the generated message-id.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -237,7 +302,9 @@ class Message extends Base
 
     /**
      * Message-Id
+     * ---
      * Message unique identifier
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -247,7 +314,9 @@ class Message extends Base
 
     /**
      * Reply-To
+     * ---
      * Reply email address. Setting the reply_to bypasses the automatic thread creation.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -257,6 +326,10 @@ class Message extends Base
 
     /**
      * Outgoing mail server
+     * ---
+     * Relation : many2one (ir.mail_server)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\MailServer
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -266,13 +339,14 @@ class Message extends Base
 
     /**
      * Moderation Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> pending_moderation (Pending Moderation)
      *     -> accepted (Accepted)
      *     -> rejected (Rejected)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -280,6 +354,10 @@ class Message extends Base
 
     /**
      * Moderated By
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -289,6 +367,7 @@ class Message extends Base
 
     /**
      * Need moderation
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -298,6 +377,7 @@ class Message extends Base
 
     /**
      * Layout
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -307,6 +387,7 @@ class Message extends Base
 
     /**
      * Add Sign
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -316,6 +397,10 @@ class Message extends Base
 
     /**
      * Mails
+     * ---
+     * Relation : one2many (mail.mail -> mail_message_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Mail
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -325,6 +410,10 @@ class Message extends Base
 
     /**
      * Canned Responses
+     * ---
+     * Relation : one2many (mail.shortcode -> message_ids)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Shortcode
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -334,6 +423,7 @@ class Message extends Base
 
     /**
      * Snailmail message in error
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -343,6 +433,7 @@ class Message extends Base
 
     /**
      * Snailmail Status
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -352,6 +443,10 @@ class Message extends Base
 
     /**
      * Letter
+     * ---
+     * Relation : one2many (snailmail.letter -> message_id)
+     * @see \Flux\OdooApiClient\Model\Object\Snailmail\Letter
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -361,10 +456,10 @@ class Message extends Base
 
     /**
      * Type
+     * ---
      * Message type: email for email message, notification for system message, comment for other messages such as
      * user replies
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> email (Email)
      *     -> comment (Comment)
@@ -372,7 +467,9 @@ class Message extends Base
      *     -> user_notification (User Specific Notification)
      *     -> snailmail (Snailmail)
      *     -> sms (SMS)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -380,7 +477,9 @@ class Message extends Base
 
     /**
      * Has SMS error
+     * ---
      * Has error
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -390,6 +489,10 @@ class Message extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -399,6 +502,7 @@ class Message extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -408,6 +512,10 @@ class Message extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -417,6 +525,7 @@ class Message extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -426,10 +535,10 @@ class Message extends Base
 
     /**
      * @param string $message_type Type
+     *        ---
      *        Message type: email for email message, notification for system message, comment for other messages such as
      *        user replies
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> email (Email)
      *            -> comment (Comment)
@@ -437,7 +546,9 @@ class Message extends Base
      *            -> user_notification (User Specific Notification)
      *            -> snailmail (Snailmail)
      *            -> sms (SMS)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $message_type)
     {
@@ -1535,17 +1646,17 @@ class Message extends Base
     }
 
     /**
-     * @param int|null $author_avatar
+     * @param string|null $author_avatar
      */
-    public function setAuthorAvatar(?int $author_avatar): void
+    public function setAuthorAvatar(?string $author_avatar): void
     {
         $this->author_avatar = $author_avatar;
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getAuthorAvatar(): ?int
+    public function getAuthorAvatar(): ?string
     {
         return $this->author_avatar;
     }

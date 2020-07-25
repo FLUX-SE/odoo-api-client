@@ -90,7 +90,6 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
 
         $odooType = $fieldInfo['type'] ?? null;
         switch ($odooType) {
-            case 'binary':
             case 'integer':
             case 'many2one_reference':
                 $phpTypes[] = 'int';
@@ -98,6 +97,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             case 'boolean':
                 $phpTypes[] = 'bool';
                 break;
+            case 'binary':
             case 'char':
             case 'html':
             case 'text':
@@ -313,21 +313,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         $properties = [];
         foreach ($fieldsInfos as $fieldName => $fieldInfo) {
             $types = $this->transformTypes($fieldInfo, $baseModelNamespace);
-            $description = [
-                $fieldInfo['string'],
-            ];
-            if (!empty($fieldInfo['help'] ?? '')) {
-                $description[] = $fieldInfo['help'];
-            }
-            $searchable = $fieldInfo['searchable'] ?? false;
-            $description[] = sprintf('Searchable : %s', $searchable ? 'yes' : 'no');
-            $sortable = $fieldInfo['sortable'] ?? false;
-            $description[] = sprintf('Sortable : %s', $sortable ? 'yes' : 'no');
-
-            if ($fieldInfo['type'] === 'selection') {
-                $description[] = 'Selection : (default value, usually null)';
-                $description = array_merge($description, $this->prettyGetSelection($fieldInfo['selection']));
-            }
+            $description = $this->buildModelPropertyDescription($fieldInfo, $baseModelNamespace, $types);
 
             $inheritedFieldInfo = $this->getInheritedFieldInfo($item, $fieldName);
             $inheritedTypes = [];
@@ -346,6 +332,47 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         }
 
         return $properties;
+    }
+
+    private function buildModelPropertyDescription(array $fieldInfo, string $baseModelNamespace, array $types): array
+    {
+        $description = [
+            $fieldInfo['string'],
+        ];
+        if (!empty($fieldInfo['help'] ?? '')) {
+            $description[] = '---';
+            $description[] = $fieldInfo['help'];
+        }
+
+        if ($fieldInfo['type'] === 'selection') {
+            $description[] = '---';
+            $description[] = 'Selection : (default value, usually null)';
+            $description = array_merge(
+                $description,
+                $this->prettyGetSelection($fieldInfo['selection'])
+            );
+        }
+
+        if (
+            true === in_array(OdooRelation::class, $types)
+            || true === in_array(OdooRelation::class . '[]', $types)
+        ) {
+            $description[] = '---';
+            $relationField = isset($fieldInfo['relation_field'])
+                ? sprintf(' -> %s', $fieldInfo['relation_field'])
+                : null
+            ;
+            $description[] = sprintf('Relation : %s (%s%s)', $fieldInfo['type'], $fieldInfo['relation'], $relationField);
+            $description[] = sprintf('@see \\%s\\%s', $baseModelNamespace, $this->getClassNameFormModelName($fieldInfo['relation']));
+        }
+
+        $description[] = '---';
+        $searchable = $fieldInfo['searchable'] ?? false;
+        $description[] = sprintf('Searchable : %s', $searchable ? 'yes' : 'no');
+        $sortable = $fieldInfo['sortable'] ?? false;
+        $description[] = sprintf('Sortable : %s', $sortable ? 'yes' : 'no');
+
+        return $description;
     }
 
     private function getInheritedFieldInfo(array $currentItem, string $fieldName): ?array
@@ -389,7 +416,9 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             $line = str_repeat('  ', $deep) . '-> ' . $item;
         }
 
-        $lines[] = $line;
+        if (false === empty($line)) {
+            $lines[] = $line;
+        }
 
         return $lines;
     }

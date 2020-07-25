@@ -23,6 +23,7 @@ final class Pause extends Base
 {
     /**
      * Pause date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +33,10 @@ final class Pause extends Base
 
     /**
      * Asset
+     * ---
+     * Relation : many2one (account.asset)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Asset
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -41,6 +46,10 @@ final class Pause extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -50,6 +59,7 @@ final class Pause extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -59,6 +69,10 @@ final class Pause extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -68,6 +82,7 @@ final class Pause extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -77,9 +92,14 @@ final class Pause extends Base
 
     /**
      * @param DateTimeInterface $date Pause date
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $asset_id Asset
+     *        ---
+     *        Relation : many2one (account.asset)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Asset
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

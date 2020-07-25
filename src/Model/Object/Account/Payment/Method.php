@@ -26,6 +26,7 @@ final class Method extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Method extends Base
 
     /**
      * Code
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,12 +46,13 @@ final class Method extends Base
 
     /**
      * Payment Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> inbound (Inbound)
      *     -> outbound (Outbound)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -57,6 +60,10 @@ final class Method extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -66,6 +73,7 @@ final class Method extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -75,6 +83,10 @@ final class Method extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -84,6 +96,7 @@ final class Method extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -93,18 +106,21 @@ final class Method extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $code Code
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $payment_type Payment Type
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> inbound (Inbound)
      *            -> outbound (Outbound)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $name, string $code, string $payment_type)
     {

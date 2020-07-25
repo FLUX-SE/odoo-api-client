@@ -18,6 +18,10 @@ final class DemoFailure extends Base
 {
     /**
      * Module
+     * ---
+     * Relation : many2one (ir.module.module)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Module\Module
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -27,6 +31,7 @@ final class DemoFailure extends Base
 
     /**
      * Error
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,6 +41,10 @@ final class DemoFailure extends Base
 
     /**
      * Wizard
+     * ---
+     * Relation : many2one (ir.demo_failure.wizard)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\DemoFailure\Wizard
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +54,10 @@ final class DemoFailure extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,6 +67,7 @@ final class DemoFailure extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,6 +77,10 @@ final class DemoFailure extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,6 +90,7 @@ final class DemoFailure extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -81,6 +100,10 @@ final class DemoFailure extends Base
 
     /**
      * @param OdooRelation $module_id Module
+     *        ---
+     *        Relation : many2one (ir.module.module)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Module\Module
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

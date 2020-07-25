@@ -26,7 +26,9 @@ final class Provider extends Base
 {
     /**
      * Institution
+     * ---
      * name of the banking institution
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,7 +38,9 @@ final class Provider extends Base
 
     /**
      * Provider Account Identifier
+     * ---
      * ID used to identify provider account in third party server
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -46,7 +50,9 @@ final class Provider extends Base
 
     /**
      * Provider Identifier
+     * ---
      * ID of the banking institution in third party server used for debugging purpose
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -56,7 +62,9 @@ final class Provider extends Base
 
     /**
      * Synchronization status
+     * ---
      * Update status of provider account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -66,7 +74,9 @@ final class Provider extends Base
 
     /**
      * Status Code
+     * ---
      * Code to identify problem
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -76,7 +86,9 @@ final class Provider extends Base
 
     /**
      * Message
+     * ---
      * Techhnical message from third party provider that can help debugging
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -86,7 +98,9 @@ final class Provider extends Base
 
     /**
      * Action Required
+     * ---
      * True if user needs to take action by updating account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -96,6 +110,7 @@ final class Provider extends Base
 
     /**
      * Last Refresh
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -105,6 +120,7 @@ final class Provider extends Base
 
     /**
      * Next synchronization
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -114,6 +130,10 @@ final class Provider extends Base
 
     /**
      * Account Online Journal
+     * ---
+     * Relation : one2many (account.online.journal -> account_online_provider_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Online\Journal
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -123,6 +143,10 @@ final class Provider extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -132,7 +156,9 @@ final class Provider extends Base
 
     /**
      * Plaid Error Type
+     * ---
      * Additional information on error
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -142,7 +168,9 @@ final class Provider extends Base
 
     /**
      * Plaid Item
+     * ---
      * item id in plaid database
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -152,7 +180,9 @@ final class Provider extends Base
 
     /**
      * Ponto Token
+     * ---
      * Technical field that contains the ponto token
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -162,13 +192,14 @@ final class Provider extends Base
 
     /**
      * Provider Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> plaid (Plaid)
      *     -> ponto (Ponto)
      *     -> yodlee (Yodlee)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -176,6 +207,7 @@ final class Provider extends Base
 
     /**
      * Is Follower
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -185,6 +217,10 @@ final class Provider extends Base
 
     /**
      * Followers
+     * ---
+     * Relation : one2many (mail.followers -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Followers
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -194,6 +230,10 @@ final class Provider extends Base
 
     /**
      * Followers (Partners)
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -203,6 +243,10 @@ final class Provider extends Base
 
     /**
      * Followers (Channels)
+     * ---
+     * Relation : many2many (mail.channel)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Channel
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -212,6 +256,10 @@ final class Provider extends Base
 
     /**
      * Messages
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -221,7 +269,9 @@ final class Provider extends Base
 
     /**
      * Unread Messages
+     * ---
      * If checked, new messages require your attention.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -231,7 +281,9 @@ final class Provider extends Base
 
     /**
      * Unread Messages Counter
+     * ---
      * Number of unread messages
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -241,7 +293,9 @@ final class Provider extends Base
 
     /**
      * Action Needed
+     * ---
      * If checked, new messages require your attention.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -251,7 +305,9 @@ final class Provider extends Base
 
     /**
      * Number of Actions
+     * ---
      * Number of messages which requires an action
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -261,7 +317,9 @@ final class Provider extends Base
 
     /**
      * Message Delivery error
+     * ---
      * If checked, some messages have a delivery error.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -271,7 +329,9 @@ final class Provider extends Base
 
     /**
      * Number of errors
+     * ---
      * Number of messages with delivery error
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -281,6 +341,7 @@ final class Provider extends Base
 
     /**
      * Attachment Count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -290,6 +351,10 @@ final class Provider extends Base
 
     /**
      * Main Attachment
+     * ---
+     * Relation : many2one (ir.attachment)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -299,7 +364,12 @@ final class Provider extends Base
 
     /**
      * Website Messages
+     * ---
      * Website communication history
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -309,7 +379,9 @@ final class Provider extends Base
 
     /**
      * SMS Delivery error
+     * ---
      * If checked, some messages have a delivery error.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -319,6 +391,10 @@ final class Provider extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -328,6 +404,7 @@ final class Provider extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -337,6 +414,10 @@ final class Provider extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -346,6 +427,7 @@ final class Provider extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -355,6 +437,10 @@ final class Provider extends Base
 
     /**
      * @param OdooRelation $company_id Company
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

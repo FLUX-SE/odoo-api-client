@@ -26,6 +26,7 @@ final class ActWindow extends Base
 {
     /**
      * Action Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class ActWindow extends Base
 
     /**
      * Action Type
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +46,10 @@ final class ActWindow extends Base
 
     /**
      * View Ref.
+     * ---
+     * Relation : many2one (ir.ui.view)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Ui\View
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,7 +59,9 @@ final class ActWindow extends Base
 
     /**
      * Domain Value
+     * ---
      * Optional domain filtering of the destination data, as a Python expression
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,7 +71,9 @@ final class ActWindow extends Base
 
     /**
      * Context Value
+     * ---
      * Context dictionary as Python expression, empty by default (Default: {})
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -73,7 +83,9 @@ final class ActWindow extends Base
 
     /**
      * Record ID
+     * ---
      * Database ID of record to open in form view, when ``view_mode`` is set to 'form' only
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -83,7 +95,9 @@ final class ActWindow extends Base
 
     /**
      * Destination Model
+     * ---
      * Model name of the object to open in the view window
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -93,15 +107,16 @@ final class ActWindow extends Base
 
     /**
      * Target Window
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> current (Current Window)
      *     -> new (New Window)
      *     -> inline (Inline Edit)
      *     -> fullscreen (Full Screen)
      *     -> main (Main action of Current Window)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -109,7 +124,9 @@ final class ActWindow extends Base
 
     /**
      * View Mode
+     * ---
      * Comma-separated list of allowed view modes, such as 'form', 'tree', 'calendar', etc. (Default: tree,form)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -119,7 +136,9 @@ final class ActWindow extends Base
 
     /**
      * Action Usage
+     * ---
      * Used to filter menu and home actions from the user form.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -129,6 +148,10 @@ final class ActWindow extends Base
 
     /**
      * No of Views
+     * ---
+     * Relation : one2many (ir.actions.act_window.view -> act_window_id)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Actions\ActWindow\View
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -138,19 +161,23 @@ final class ActWindow extends Base
 
     /**
      * Views
+     * ---
      * This function field computes the ordered list of views that should be enabled when displaying the result of an
      * action, federating view mode, views and reference view. The result is returned as an ordered list of pairs
      * (view_id,view_mode).
+     * ---
      * Searchable : no
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $views;
 
     /**
      * Limit
+     * ---
      * Default limit for the list view
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -160,6 +187,10 @@ final class ActWindow extends Base
 
     /**
      * Groups
+     * ---
+     * Relation : many2many (res.groups)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Groups
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -169,6 +200,10 @@ final class ActWindow extends Base
 
     /**
      * Search View Ref.
+     * ---
+     * Relation : many2one (ir.ui.view)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Ui\View
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -178,6 +213,7 @@ final class ActWindow extends Base
 
     /**
      * Filter
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -187,6 +223,7 @@ final class ActWindow extends Base
 
     /**
      * Search View
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -196,6 +233,7 @@ final class ActWindow extends Base
 
     /**
      * External ID
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -205,7 +243,9 @@ final class ActWindow extends Base
 
     /**
      * Action Description
+     * ---
      * Optional help text for the users with a description of the target view, such as its usage and purpose.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -215,7 +255,12 @@ final class ActWindow extends Base
 
     /**
      * Binding Model
+     * ---
      * Setting a value makes this action available in the sidebar for the given model.
+     * ---
+     * Relation : many2one (ir.model)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -225,12 +270,13 @@ final class ActWindow extends Base
 
     /**
      * Binding Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> action (Action)
      *     -> report (Report)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -238,6 +284,7 @@ final class ActWindow extends Base
 
     /**
      * Binding View Types
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -247,6 +294,10 @@ final class ActWindow extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -256,6 +307,7 @@ final class ActWindow extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -265,6 +317,10 @@ final class ActWindow extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -274,6 +330,7 @@ final class ActWindow extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -283,30 +340,39 @@ final class ActWindow extends Base
 
     /**
      * @param string $name Action Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $type Action Type
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $context Context Value
+     *        ---
      *        Context dictionary as Python expression, empty by default (Default: {})
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $res_model Destination Model
+     *        ---
      *        Model name of the object to open in the view window
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $view_mode View Mode
+     *        ---
      *        Comma-separated list of allowed view modes, such as 'form', 'tree', 'calendar', etc. (Default: tree,form)
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $binding_type Binding Type
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> action (Action)
      *            -> report (Report)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         string $name,
@@ -807,17 +873,17 @@ final class ActWindow extends Base
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getViews(): ?int
+    public function getViews(): ?string
     {
         return $this->views;
     }
 
     /**
-     * @param int|null $views
+     * @param string|null $views
      */
-    public function setViews(?int $views): void
+    public function setViews(?string $views): void
     {
         $this->views = $views;
     }

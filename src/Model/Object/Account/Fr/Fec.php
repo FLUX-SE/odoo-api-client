@@ -23,6 +23,7 @@ final class Fec extends Base
 {
     /**
      * Start Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +33,7 @@ final class Fec extends Base
 
     /**
      * End Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -41,15 +43,17 @@ final class Fec extends Base
 
     /**
      * FEC File
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
-     * @var int|null
+     * @var string|null
      */
     private $fec_data;
 
     /**
      * Filename
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -59,12 +63,13 @@ final class Fec extends Base
 
     /**
      * Export Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> official (Official FEC report (posted entries only))
      *     -> nonofficial (Non-official FEC report (posted and unposted entries))
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -72,6 +77,10 @@ final class Fec extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -81,6 +90,7 @@ final class Fec extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -90,6 +100,10 @@ final class Fec extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -99,6 +113,7 @@ final class Fec extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -108,18 +123,21 @@ final class Fec extends Base
 
     /**
      * @param DateTimeInterface $date_from Start Date
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param DateTimeInterface $date_to End Date
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $export_type Export Type
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> official (Official FEC report (posted entries only))
      *            -> nonofficial (Non-official FEC report (posted and unposted entries))
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         DateTimeInterface $date_from,
@@ -236,17 +254,17 @@ final class Fec extends Base
     }
 
     /**
-     * @param int|null $fec_data
+     * @param string|null $fec_data
      */
-    public function setFecData(?int $fec_data): void
+    public function setFecData(?string $fec_data): void
     {
         $this->fec_data = $fec_data;
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getFecData(): ?int
+    public function getFecData(): ?string
     {
         return $this->fec_data;
     }

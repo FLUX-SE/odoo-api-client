@@ -26,6 +26,7 @@ final class Tag extends Base
 {
     /**
      * Tag Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,12 +36,13 @@ final class Tag extends Base
 
     /**
      * Applicability
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> accounts (Accounts)
      *     -> taxes (Taxes)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -48,6 +50,7 @@ final class Tag extends Base
 
     /**
      * Color Index
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -57,7 +60,9 @@ final class Tag extends Base
 
     /**
      * Active
+     * ---
      * Set active to false to hide the Account Tag without removing it.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -67,7 +72,12 @@ final class Tag extends Base
 
     /**
      * Tax Report Lines
+     * ---
      * The tax report lines using this tag
+     * ---
+     * Relation : many2many (account.tax.report.line)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax\Report\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -77,8 +87,10 @@ final class Tag extends Base
 
     /**
      * Negate Tax Balance
+     * ---
      * Check this box to negate the absolute value of the balance of the lines associated with this tag in tax report
      * computation.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -88,7 +100,12 @@ final class Tag extends Base
 
     /**
      * Country
+     * ---
      * Country for which this tag is available, when applied on taxes.
+     * ---
+     * Relation : many2one (res.country)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -98,6 +115,10 @@ final class Tag extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -107,6 +128,7 @@ final class Tag extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -116,6 +138,10 @@ final class Tag extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -125,6 +151,7 @@ final class Tag extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -134,15 +161,17 @@ final class Tag extends Base
 
     /**
      * @param string $name Tag Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $applicability Applicability
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> accounts (Accounts)
      *            -> taxes (Taxes)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $name, string $applicability)
     {

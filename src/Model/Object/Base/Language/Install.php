@@ -23,8 +23,7 @@ final class Install extends Base
 {
     /**
      * Language
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> sq_AL (Albanian / Shqip)
      *     -> am_ET (Amharic / አምሃርኛ)
@@ -111,7 +110,9 @@ final class Install extends Base
      *     -> tr_TR (Turkish / Türkçe)
      *     -> uk_UA (Ukrainian / українська)
      *     -> vi_VN (Vietnamese / Tiếng Việt)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -119,7 +120,9 @@ final class Install extends Base
 
     /**
      * Overwrite Existing Terms
+     * ---
      * If you check this box, your customized translations will be overwritten and replaced by the official ones.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -129,12 +132,13 @@ final class Install extends Base
 
     /**
      * Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> init (init)
      *     -> done (done)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -142,6 +146,10 @@ final class Install extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -151,6 +159,7 @@ final class Install extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -160,6 +169,10 @@ final class Install extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -169,6 +182,7 @@ final class Install extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -178,8 +192,7 @@ final class Install extends Base
 
     /**
      * @param string $lang Language
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> sq_AL (Albanian / Shqip)
      *            -> am_ET (Amharic / አምሃርኛ)
@@ -266,7 +279,9 @@ final class Install extends Base
      *            -> tr_TR (Turkish / Türkçe)
      *            -> uk_UA (Ukrainian / українська)
      *            -> vi_VN (Vietnamese / Tiếng Việt)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $lang)
     {

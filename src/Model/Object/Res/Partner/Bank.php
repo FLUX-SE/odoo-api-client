@@ -26,13 +26,15 @@ class Bank extends Base
 {
     /**
      * Type
+     * ---
      * Bank account type: Normal or IBAN. Inferred from the bank account number.
-     * Searchable : no
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> bank (Normal)
      *     -> iban (IBAN)
-     *
+     * ---
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
@@ -40,6 +42,7 @@ class Bank extends Base
 
     /**
      * Account Number
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -49,6 +52,7 @@ class Bank extends Base
 
     /**
      * Sanitized Account Number
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -58,7 +62,9 @@ class Bank extends Base
 
     /**
      * Account Holder Name
+     * ---
      * Account holder name, in case it is different than the name of the Account Holder
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -68,6 +74,10 @@ class Bank extends Base
 
     /**
      * Account Holder
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -77,6 +87,10 @@ class Bank extends Base
 
     /**
      * Bank
+     * ---
+     * Relation : many2one (res.bank)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Bank
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -86,6 +100,7 @@ class Bank extends Base
 
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -95,7 +110,9 @@ class Bank extends Base
 
     /**
      * Bank Identifier Code
+     * ---
      * Sometimes called BIC or Swift.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -105,6 +122,7 @@ class Bank extends Base
 
     /**
      * Sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -114,6 +132,10 @@ class Bank extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -123,6 +145,10 @@ class Bank extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -132,6 +158,7 @@ class Bank extends Base
 
     /**
      * Has all required arguments
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -141,7 +168,12 @@ class Bank extends Base
 
     /**
      * Account Journal
+     * ---
      * The accounting journal corresponding to this bank account.
+     * ---
+     * Relation : one2many (account.journal -> bank_account_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -151,7 +183,9 @@ class Bank extends Base
 
     /**
      * ABA/Routing
+     * ---
      * American Bankers Association Routing Number
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -161,6 +195,10 @@ class Bank extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -170,6 +208,7 @@ class Bank extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -179,6 +218,10 @@ class Bank extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -188,6 +231,7 @@ class Bank extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -197,9 +241,14 @@ class Bank extends Base
 
     /**
      * @param string $acc_number Account Number
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $partner_id Account Holder
+     *        ---
+     *        Relation : many2one (res.partner)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

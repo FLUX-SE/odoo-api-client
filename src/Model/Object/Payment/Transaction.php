@@ -31,6 +31,7 @@ final class Transaction extends Base
 {
     /**
      * Validation Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -40,6 +41,10 @@ final class Transaction extends Base
 
     /**
      * Acquirer
+     * ---
+     * Relation : many2one (payment.acquirer)
+     * @see \Flux\OdooApiClient\Model\Object\Payment\Acquirer
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -49,12 +54,13 @@ final class Transaction extends Base
 
     /**
      * Provider
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> manual (Custom Payment Form)
      *     -> transfer (Manual Payment)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -62,14 +68,15 @@ final class Transaction extends Base
 
     /**
      * Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> validation (Validation of the bank card)
      *     -> server2server (Server To Server)
      *     -> form (Form)
      *     -> form_save (Form with tokenization)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -77,8 +84,7 @@ final class Transaction extends Base
 
     /**
      * Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> draft (Draft)
      *     -> pending (Pending)
@@ -86,7 +92,9 @@ final class Transaction extends Base
      *     -> done (Done)
      *     -> cancel (Canceled)
      *     -> error (Error)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -94,7 +102,9 @@ final class Transaction extends Base
 
     /**
      * Message
+     * ---
      * Field used to store error and/or validation messages for information
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -104,6 +114,7 @@ final class Transaction extends Base
 
     /**
      * Amount
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -113,7 +124,9 @@ final class Transaction extends Base
 
     /**
      * Fees
+     * ---
      * Fees amount; set by the system because depends on the acquirer
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -123,6 +136,10 @@ final class Transaction extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -132,7 +149,9 @@ final class Transaction extends Base
 
     /**
      * Reference
+     * ---
      * Internal reference of the TX
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -142,7 +161,9 @@ final class Transaction extends Base
 
     /**
      * Acquirer Reference
+     * ---
      * Reference of the TX as stored in the acquirer database
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -152,6 +173,10 @@ final class Transaction extends Base
 
     /**
      * Customer
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -161,6 +186,7 @@ final class Transaction extends Base
 
     /**
      * Partner Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -170,11 +196,12 @@ final class Transaction extends Base
 
     /**
      * Language
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> en_US (English (US))
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -182,6 +209,7 @@ final class Transaction extends Base
 
     /**
      * Email
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -191,6 +219,7 @@ final class Transaction extends Base
 
     /**
      * Zip
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -200,6 +229,7 @@ final class Transaction extends Base
 
     /**
      * Address
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -209,6 +239,7 @@ final class Transaction extends Base
 
     /**
      * City
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -218,6 +249,10 @@ final class Transaction extends Base
 
     /**
      * Country
+     * ---
+     * Relation : many2one (res.country)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -227,6 +262,7 @@ final class Transaction extends Base
 
     /**
      * Phone
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -236,6 +272,7 @@ final class Transaction extends Base
 
     /**
      * 3D Secure HTML
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -245,6 +282,10 @@ final class Transaction extends Base
 
     /**
      * Callback Document Model
+     * ---
+     * Relation : many2one (ir.model)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -254,6 +295,7 @@ final class Transaction extends Base
 
     /**
      * Callback Document ID
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -263,6 +305,7 @@ final class Transaction extends Base
 
     /**
      * Callback Method
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -272,6 +315,7 @@ final class Transaction extends Base
 
     /**
      * Callback Hash
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -281,6 +325,7 @@ final class Transaction extends Base
 
     /**
      * Return URL after payment
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -290,6 +335,7 @@ final class Transaction extends Base
 
     /**
      * Has the payment been post processed
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -299,6 +345,10 @@ final class Transaction extends Base
 
     /**
      * Payment Token
+     * ---
+     * Relation : many2one (payment.token)
+     * @see \Flux\OdooApiClient\Model\Object\Payment\Token
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -308,6 +358,10 @@ final class Transaction extends Base
 
     /**
      * Payment
+     * ---
+     * Relation : many2one (account.payment)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Payment
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -317,6 +371,10 @@ final class Transaction extends Base
 
     /**
      * Invoices
+     * ---
+     * Relation : many2many (account.move)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -326,6 +384,7 @@ final class Transaction extends Base
 
     /**
      * # of Invoices
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -335,6 +394,10 @@ final class Transaction extends Base
 
     /**
      * Sales Orders
+     * ---
+     * Relation : many2many (sale.order)
+     * @see \Flux\OdooApiClient\Model\Object\Sale\Order
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -344,6 +407,7 @@ final class Transaction extends Base
 
     /**
      * # of Sales Orders
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -353,6 +417,10 @@ final class Transaction extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -362,6 +430,7 @@ final class Transaction extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -371,6 +440,10 @@ final class Transaction extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -380,6 +453,7 @@ final class Transaction extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -389,20 +463,24 @@ final class Transaction extends Base
 
     /**
      * @param OdooRelation $acquirer_id Acquirer
+     *        ---
+     *        Relation : many2one (payment.acquirer)
+     *        @see \Flux\OdooApiClient\Model\Object\Payment\Acquirer
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $type Type
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> validation (Validation of the bank card)
      *            -> server2server (Server To Server)
      *            -> form (Form)
      *            -> form_save (Form with tokenization)
-     *
-     * @param string $state Status
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $state Status
+     *        ---
      *        Selection : (default value, usually null)
      *            -> draft (Draft)
      *            -> pending (Pending)
@@ -410,18 +488,31 @@ final class Transaction extends Base
      *            -> done (Done)
      *            -> cancel (Canceled)
      *            -> error (Error)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param float $amount Amount
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $currency_id Currency
+     *        ---
+     *        Relation : many2one (res.currency)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $reference Reference
+     *        ---
      *        Internal reference of the TX
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $partner_country_id Country
+     *        ---
+     *        Relation : many2one (res.country)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Country
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

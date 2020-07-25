@@ -26,6 +26,7 @@ final class Icon extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,7 +36,12 @@ final class Icon extends Base
 
     /**
      * Acquirers
+     * ---
      * List of Acquirers supporting this payment icon.
+     * ---
+     * Relation : many2many (payment.acquirer)
+     * @see \Flux\OdooApiClient\Model\Object\Payment\Acquirer
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -45,25 +51,32 @@ final class Icon extends Base
 
     /**
      * Image
+     * ---
      * This field holds the image used for this payment icon, limited to 1024x1024px
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $image;
 
     /**
      * Image displayed on the payment form
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $image_payment_form;
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -73,6 +86,7 @@ final class Icon extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -82,6 +96,10 @@ final class Icon extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -91,6 +109,7 @@ final class Icon extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -171,9 +190,9 @@ final class Icon extends Base
     }
 
     /**
-     * @param int|null $image_payment_form
+     * @param string|null $image_payment_form
      */
-    public function setImagePaymentForm(?int $image_payment_form): void
+    public function setImagePaymentForm(?string $image_payment_form): void
     {
         $this->image_payment_form = $image_payment_form;
     }
@@ -187,25 +206,25 @@ final class Icon extends Base
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getImagePaymentForm(): ?int
+    public function getImagePaymentForm(): ?string
     {
         return $this->image_payment_form;
     }
 
     /**
-     * @param int|null $image
+     * @param string|null $image
      */
-    public function setImage(?int $image): void
+    public function setImage(?string $image): void
     {
         $this->image = $image;
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getImage(): ?int
+    public function getImage(): ?string
     {
         return $this->image;
     }

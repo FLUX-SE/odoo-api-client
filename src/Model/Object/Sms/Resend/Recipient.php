@@ -23,6 +23,10 @@ final class Recipient extends Base
 {
     /**
      * Sms Resend
+     * ---
+     * Relation : many2one (sms.resend)
+     * @see \Flux\OdooApiClient\Model\Object\Sms\Resend
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +36,10 @@ final class Recipient extends Base
 
     /**
      * Notification
+     * ---
+     * Relation : many2one (mail.notification)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Notification
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -41,6 +49,7 @@ final class Recipient extends Base
 
     /**
      * Resend
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -50,8 +59,7 @@ final class Recipient extends Base
 
     /**
      * Failure type
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> SMTP (Connection failed (outgoing mail server problem))
      *     -> RECIPIENT (Invalid email address)
@@ -61,7 +69,9 @@ final class Recipient extends Base
      *     -> sms_number_format (Wrong Number Format)
      *     -> sms_credit (Insufficient Credit)
      *     -> sms_server (Server Error)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -69,6 +79,10 @@ final class Recipient extends Base
 
     /**
      * Partner
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -78,6 +92,7 @@ final class Recipient extends Base
 
     /**
      * Recipient
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -87,6 +102,7 @@ final class Recipient extends Base
 
     /**
      * Number
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -96,6 +112,10 @@ final class Recipient extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -105,6 +125,7 @@ final class Recipient extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -114,6 +135,10 @@ final class Recipient extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -123,6 +148,7 @@ final class Recipient extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -132,9 +158,17 @@ final class Recipient extends Base
 
     /**
      * @param OdooRelation $sms_resend_id Sms Resend
+     *        ---
+     *        Relation : many2one (sms.resend)
+     *        @see \Flux\OdooApiClient\Model\Object\Sms\Resend
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $notification_id Notification
+     *        ---
+     *        Relation : many2one (mail.notification)
+     *        @see \Flux\OdooApiClient\Model\Object\Mail\Notification
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

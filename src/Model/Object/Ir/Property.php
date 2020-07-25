@@ -26,6 +26,7 @@ final class Property extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,7 +36,9 @@ final class Property extends Base
 
     /**
      * Resource
+     * ---
      * If not set, acts as a default value for new resources
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +48,10 @@ final class Property extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,6 +61,10 @@ final class Property extends Base
 
     /**
      * Field
+     * ---
+     * Relation : many2one (ir.model.fields)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model\Fields
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,6 +74,7 @@ final class Property extends Base
 
     /**
      * Value Float
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,6 +84,7 @@ final class Property extends Base
 
     /**
      * Value Integer
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -81,6 +94,7 @@ final class Property extends Base
 
     /**
      * Value Text
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -90,15 +104,17 @@ final class Property extends Base
 
     /**
      * Value Binary
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
-     * @var int|null
+     * @var string|null
      */
     private $value_binary;
 
     /**
      * Value Reference
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -108,6 +124,7 @@ final class Property extends Base
 
     /**
      * Value Datetime
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -117,8 +134,7 @@ final class Property extends Base
 
     /**
      * Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> char (Char)
      *     -> float (Float)
@@ -130,7 +146,9 @@ final class Property extends Base
      *     -> date (Date)
      *     -> datetime (DateTime)
      *     -> selection (Selection)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -138,6 +156,10 @@ final class Property extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -147,6 +169,7 @@ final class Property extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -156,6 +179,10 @@ final class Property extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -165,6 +192,7 @@ final class Property extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -174,11 +202,14 @@ final class Property extends Base
 
     /**
      * @param OdooRelation $fields_id Field
+     *        ---
+     *        Relation : many2one (ir.model.fields)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Model\Fields
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $type Type
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> char (Char)
      *            -> float (Float)
@@ -190,7 +221,9 @@ final class Property extends Base
      *            -> date (Date)
      *            -> datetime (DateTime)
      *            -> selection (Selection)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(OdooRelation $fields_id, string $type)
     {
@@ -311,9 +344,9 @@ final class Property extends Base
     }
 
     /**
-     * @param int|null $value_binary
+     * @param string|null $value_binary
      */
-    public function setValueBinary(?int $value_binary): void
+    public function setValueBinary(?string $value_binary): void
     {
         $this->value_binary = $value_binary;
     }
@@ -327,9 +360,9 @@ final class Property extends Base
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getValueBinary(): ?int
+    public function getValueBinary(): ?string
     {
         return $this->value_binary;
     }

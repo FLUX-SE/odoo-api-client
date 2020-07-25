@@ -26,6 +26,7 @@ final class Team extends Base
 {
     /**
      * Sales Team
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Team extends Base
 
     /**
      * Sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,7 +46,9 @@ final class Team extends Base
 
     /**
      * Active
+     * ---
      * If the active field is set to false, it will allow you to hide the Sales Team without removing it.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,6 +58,10 @@ final class Team extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,6 +71,10 @@ final class Team extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -72,6 +84,10 @@ final class Team extends Base
 
     /**
      * Team Leader
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -81,7 +97,12 @@ final class Team extends Base
 
     /**
      * Channel Members
+     * ---
      * Add members to automatically assign their documents to this sales team. You can only be member of one team.
+     * ---
+     * Relation : one2many (res.users -> sale_team_id)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -91,6 +112,10 @@ final class Team extends Base
 
     /**
      * Favorite Members
+     * ---
+     * Relation : many2many (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -100,7 +125,9 @@ final class Team extends Base
 
     /**
      * Show on dashboard
+     * ---
      * Favorite teams to display them in the dashboard and access them easily.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -110,7 +137,9 @@ final class Team extends Base
 
     /**
      * Color Index
+     * ---
      * The color of the channel
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -120,6 +149,7 @@ final class Team extends Base
 
     /**
      * Dashboard Button
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -129,6 +159,7 @@ final class Team extends Base
 
     /**
      * Dashboard Graph Data
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -138,7 +169,9 @@ final class Team extends Base
 
     /**
      * Quotations
+     * ---
      * Check this box if you send quotations to your customers rather than confirming orders straight away.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -148,8 +181,10 @@ final class Team extends Base
 
     /**
      * Invoiced This Month
+     * ---
      * Invoice revenue for the current month. This is the amount the sales channel has invoiced this month. It is
      * used to compute the progression ratio of the current and target revenue on the kanban view.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -159,7 +194,9 @@ final class Team extends Base
 
     /**
      * Invoicing Target
+     * ---
      * Revenue target for the current month (untaxed total of confirmed invoices).
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -169,6 +206,7 @@ final class Team extends Base
 
     /**
      * Number of quotations to invoice
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -178,6 +216,7 @@ final class Team extends Base
 
     /**
      * Amount of quotations to invoice
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -187,6 +226,7 @@ final class Team extends Base
 
     /**
      * Number of sales to invoice
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -196,6 +236,7 @@ final class Team extends Base
 
     /**
      * Is Follower
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -205,6 +246,10 @@ final class Team extends Base
 
     /**
      * Followers
+     * ---
+     * Relation : one2many (mail.followers -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Followers
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -214,6 +259,10 @@ final class Team extends Base
 
     /**
      * Followers (Partners)
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -223,6 +272,10 @@ final class Team extends Base
 
     /**
      * Followers (Channels)
+     * ---
+     * Relation : many2many (mail.channel)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Channel
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -232,6 +285,10 @@ final class Team extends Base
 
     /**
      * Messages
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -241,7 +298,9 @@ final class Team extends Base
 
     /**
      * Unread Messages
+     * ---
      * If checked, new messages require your attention.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -251,7 +310,9 @@ final class Team extends Base
 
     /**
      * Unread Messages Counter
+     * ---
      * Number of unread messages
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -261,7 +322,9 @@ final class Team extends Base
 
     /**
      * Action Needed
+     * ---
      * If checked, new messages require your attention.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -271,7 +334,9 @@ final class Team extends Base
 
     /**
      * Number of Actions
+     * ---
      * Number of messages which requires an action
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -281,7 +346,9 @@ final class Team extends Base
 
     /**
      * Message Delivery error
+     * ---
      * If checked, some messages have a delivery error.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -291,7 +358,9 @@ final class Team extends Base
 
     /**
      * Number of errors
+     * ---
      * Number of messages with delivery error
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -301,6 +370,7 @@ final class Team extends Base
 
     /**
      * Attachment Count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -310,6 +380,10 @@ final class Team extends Base
 
     /**
      * Main Attachment
+     * ---
+     * Relation : many2one (ir.attachment)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -319,7 +393,12 @@ final class Team extends Base
 
     /**
      * Website Messages
+     * ---
      * Website communication history
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -329,7 +408,9 @@ final class Team extends Base
 
     /**
      * SMS Delivery error
+     * ---
      * If checked, some messages have a delivery error.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -339,6 +420,10 @@ final class Team extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -348,6 +433,7 @@ final class Team extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -357,6 +443,10 @@ final class Team extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -366,6 +456,7 @@ final class Team extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -375,6 +466,7 @@ final class Team extends Base
 
     /**
      * @param string $name Sales Team
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

@@ -26,6 +26,7 @@ final class Preview extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Preview extends Base
 
     /**
      * Some Value
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +46,7 @@ final class Preview extends Base
 
     /**
      * Other Variable
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +56,10 @@ final class Preview extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +69,7 @@ final class Preview extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +79,10 @@ final class Preview extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,6 +92,7 @@ final class Preview extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,6 +102,7 @@ final class Preview extends Base
 
     /**
      * @param int $somevalue Some Value
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

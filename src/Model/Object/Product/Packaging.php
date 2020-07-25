@@ -26,6 +26,7 @@ final class Packaging extends Base
 {
     /**
      * Package Type
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,7 +36,9 @@ final class Packaging extends Base
 
     /**
      * Sequence
+     * ---
      * The first in the sequence is the default one.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +48,10 @@ final class Packaging extends Base
 
     /**
      * Product
+     * ---
+     * Relation : many2one (product.product)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Product
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,7 +61,9 @@ final class Packaging extends Base
 
     /**
      * Contained Quantity
+     * ---
      * Quantity of products contained in the packaging.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -64,8 +73,10 @@ final class Packaging extends Base
 
     /**
      * Barcode
+     * ---
      * Barcode used for packaging identification. Scan this packaging barcode from a transfer in the Barcode app to
      * move all the contained units
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -75,7 +86,12 @@ final class Packaging extends Base
 
     /**
      * Unit of Measure
+     * ---
      * Default unit of measure used for all stock operations.
+     * ---
+     * Relation : many2one (uom.uom)
+     * @see \Flux\OdooApiClient\Model\Object\Uom\Uom
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -85,6 +101,10 @@ final class Packaging extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -94,6 +114,10 @@ final class Packaging extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -103,6 +127,7 @@ final class Packaging extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -112,6 +137,10 @@ final class Packaging extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -121,6 +150,7 @@ final class Packaging extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -130,6 +160,7 @@ final class Packaging extends Base
 
     /**
      * @param string $name Package Type
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

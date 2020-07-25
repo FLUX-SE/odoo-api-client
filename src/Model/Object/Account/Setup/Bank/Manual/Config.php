@@ -22,6 +22,10 @@ final class Config extends Bank
 {
     /**
      * Res Partner Bank
+     * ---
+     * Relation : many2one (res.partner.bank)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner\Bank
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -31,7 +35,9 @@ final class Config extends Bank
 
     /**
      * New Journal Name
+     * ---
      * Will be used to name the Journal related to this bank account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -41,6 +47,10 @@ final class Config extends Bank
 
     /**
      * Journal
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -50,6 +60,7 @@ final class Config extends Bank
 
     /**
      * Code
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -59,6 +70,7 @@ final class Config extends Bank
 
     /**
      * Num Journals Without Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -68,12 +80,13 @@ final class Config extends Bank
 
     /**
      * Account Type
-     * Searchable : no
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> bank (Normal)
      *     -> iban (IBAN)
-     *
+     * ---
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
@@ -81,19 +94,31 @@ final class Config extends Bank
 
     /**
      * @param OdooRelation $res_partner_bank_id Res Partner Bank
+     *        ---
+     *        Relation : many2one (res.partner.bank)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Partner\Bank
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $new_journal_name New Journal Name
+     *        ---
      *        Will be used to name the Journal related to this bank account
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $new_journal_code Code
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $acc_number Account Number
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $partner_id Account Holder
+     *        ---
+     *        Relation : many2one (res.partner)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

@@ -23,6 +23,10 @@ final class Fields extends Base
 {
     /**
      * Partner
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +36,10 @@ final class Fields extends Base
 
     /**
      * Letter
+     * ---
+     * Relation : many2one (snailmail.letter)
+     * @see \Flux\OdooApiClient\Model\Object\Snailmail\Letter
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -41,6 +49,7 @@ final class Fields extends Base
 
     /**
      * Street
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -50,6 +59,7 @@ final class Fields extends Base
 
     /**
      * Street2
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -59,6 +69,7 @@ final class Fields extends Base
 
     /**
      * Zip
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -68,6 +79,7 @@ final class Fields extends Base
 
     /**
      * City
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -77,6 +89,10 @@ final class Fields extends Base
 
     /**
      * State
+     * ---
+     * Relation : many2one (res.country.state)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country\State
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -86,6 +102,10 @@ final class Fields extends Base
 
     /**
      * Country
+     * ---
+     * Relation : many2one (res.country)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -95,6 +115,10 @@ final class Fields extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -104,6 +128,7 @@ final class Fields extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -113,6 +138,10 @@ final class Fields extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -122,6 +151,7 @@ final class Fields extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

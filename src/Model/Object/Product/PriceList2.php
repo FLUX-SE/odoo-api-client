@@ -23,6 +23,10 @@ final class PriceList2 extends Base
 {
     /**
      * PriceList
+     * ---
+     * Relation : many2one (product.pricelist)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Pricelist
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +36,7 @@ final class PriceList2 extends Base
 
     /**
      * Quantity-1
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -41,6 +46,7 @@ final class PriceList2 extends Base
 
     /**
      * Quantity-2
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -50,6 +56,7 @@ final class PriceList2 extends Base
 
     /**
      * Quantity-3
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -59,6 +66,7 @@ final class PriceList2 extends Base
 
     /**
      * Quantity-4
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -68,6 +76,7 @@ final class PriceList2 extends Base
 
     /**
      * Quantity-5
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -77,6 +86,10 @@ final class PriceList2 extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -86,6 +99,7 @@ final class PriceList2 extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -95,6 +109,10 @@ final class PriceList2 extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -104,6 +122,7 @@ final class PriceList2 extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -113,6 +132,10 @@ final class PriceList2 extends Base
 
     /**
      * @param OdooRelation $price_list PriceList
+     *        ---
+     *        Relation : many2one (product.pricelist)
+     *        @see \Flux\OdooApiClient\Model\Object\Product\Pricelist
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

@@ -26,6 +26,7 @@ final class Template extends Base
 {
     /**
      * Sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Template extends Base
 
     /**
      * Fiscal Position Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +46,10 @@ final class Template extends Base
 
     /**
      * Chart Template
+     * ---
+     * Relation : many2one (account.chart.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Chart\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +59,10 @@ final class Template extends Base
 
     /**
      * Account Mapping
+     * ---
+     * Relation : one2many (account.fiscal.position.account.template -> position_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Fiscal\Position\Account\Template
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -62,6 +72,10 @@ final class Template extends Base
 
     /**
      * Tax Mapping
+     * ---
+     * Relation : one2many (account.fiscal.position.tax.template -> position_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Fiscal\Position\Tax\Template
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -71,6 +85,7 @@ final class Template extends Base
 
     /**
      * Notes
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,7 +95,9 @@ final class Template extends Base
 
     /**
      * Detect Automatically
+     * ---
      * Apply automatically this fiscal position.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -90,7 +107,9 @@ final class Template extends Base
 
     /**
      * VAT required
+     * ---
      * Apply only if partner has a VAT number.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -100,7 +119,12 @@ final class Template extends Base
 
     /**
      * Country
+     * ---
      * Apply only if delivery or invoicing country match.
+     * ---
+     * Relation : many2one (res.country)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -110,7 +134,12 @@ final class Template extends Base
 
     /**
      * Country Group
+     * ---
      * Apply only if delivery or invoicing country match the group.
+     * ---
+     * Relation : many2one (res.country.group)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country\Group
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -120,6 +149,10 @@ final class Template extends Base
 
     /**
      * Federal States
+     * ---
+     * Relation : many2many (res.country.state)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country\State
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -129,6 +162,7 @@ final class Template extends Base
 
     /**
      * Zip Range From
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -138,6 +172,7 @@ final class Template extends Base
 
     /**
      * Zip Range To
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -147,6 +182,7 @@ final class Template extends Base
 
     /**
      * Use TaxCloud API
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -156,6 +192,10 @@ final class Template extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -165,6 +205,7 @@ final class Template extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -174,6 +215,10 @@ final class Template extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -183,6 +228,7 @@ final class Template extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -192,9 +238,14 @@ final class Template extends Base
 
     /**
      * @param string $name Fiscal Position Template
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $chart_template_id Chart Template
+     *        ---
+     *        Relation : many2one (account.chart.template)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Chart\Template
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

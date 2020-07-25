@@ -26,6 +26,7 @@ final class Bank extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Bank extends Base
 
     /**
      * Street
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +46,7 @@ final class Bank extends Base
 
     /**
      * Street2
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +56,7 @@ final class Bank extends Base
 
     /**
      * Zip
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +66,7 @@ final class Bank extends Base
 
     /**
      * City
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +76,10 @@ final class Bank extends Base
 
     /**
      * Fed. State
+     * ---
+     * Relation : many2one (res.country.state)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country\State
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,6 +89,10 @@ final class Bank extends Base
 
     /**
      * Country
+     * ---
+     * Relation : many2one (res.country)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,6 +102,7 @@ final class Bank extends Base
 
     /**
      * Email
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -98,6 +112,7 @@ final class Bank extends Base
 
     /**
      * Phone
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -107,6 +122,7 @@ final class Bank extends Base
 
     /**
      * Active
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -116,7 +132,9 @@ final class Bank extends Base
 
     /**
      * Bank Identifier Code
+     * ---
      * Sometimes called BIC or Swift.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -126,6 +144,10 @@ final class Bank extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -135,6 +157,7 @@ final class Bank extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -144,6 +167,10 @@ final class Bank extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -153,6 +180,7 @@ final class Bank extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -162,6 +190,7 @@ final class Bank extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

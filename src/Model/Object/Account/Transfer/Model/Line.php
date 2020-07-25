@@ -26,6 +26,10 @@ final class Line extends Base
 {
     /**
      * Transfer Model
+     * ---
+     * Relation : many2one (account.transfer.model)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Transfer\Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +39,10 @@ final class Line extends Base
 
     /**
      * Destination Account
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,7 +52,9 @@ final class Line extends Base
 
     /**
      * Percent
+     * ---
      * Percentage of the sum of lines from the origin accounts will be transferred to the destination account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,8 +64,13 @@ final class Line extends Base
 
     /**
      * Analytic Filter
+     * ---
      * The sum of all lines from the origin accounts having this analytic account will be automatically transferred
      * to the destination account
+     * ---
+     * Relation : many2many (account.analytic.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Account
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -65,6 +80,7 @@ final class Line extends Base
 
     /**
      * Percent Is Readonly
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -74,6 +90,10 @@ final class Line extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -83,6 +103,7 @@ final class Line extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -92,6 +113,10 @@ final class Line extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -101,6 +126,7 @@ final class Line extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -110,13 +136,23 @@ final class Line extends Base
 
     /**
      * @param OdooRelation $transfer_model_id Transfer Model
+     *        ---
+     *        Relation : many2one (account.transfer.model)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Transfer\Model
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $account_id Destination Account
+     *        ---
+     *        Relation : many2one (account.account)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Account
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param float $percent Percent
+     *        ---
      *        Percentage of the sum of lines from the origin accounts will be transferred to the destination account
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

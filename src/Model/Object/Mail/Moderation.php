@@ -26,6 +26,7 @@ final class Moderation extends Base
 {
     /**
      * Email
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,12 +36,13 @@ final class Moderation extends Base
 
     /**
      * Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> allow (Always Allow)
      *     -> ban (Permanent Ban)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -48,6 +50,10 @@ final class Moderation extends Base
 
     /**
      * Channel
+     * ---
+     * Relation : many2one (mail.channel)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Channel
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -57,6 +63,10 @@ final class Moderation extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -66,6 +76,7 @@ final class Moderation extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -75,6 +86,10 @@ final class Moderation extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -84,6 +99,7 @@ final class Moderation extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -93,16 +109,22 @@ final class Moderation extends Base
 
     /**
      * @param string $email Email
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $status Status
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> allow (Always Allow)
      *            -> ban (Permanent Ban)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param OdooRelation $channel_id Channel
+     *        ---
+     *        Relation : many2one (mail.channel)
+     *        @see \Flux\OdooApiClient\Model\Object\Mail\Channel
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

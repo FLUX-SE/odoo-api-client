@@ -26,6 +26,7 @@ final class Uom extends Base
 {
     /**
      * Unit of Measure
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,8 +36,13 @@ final class Uom extends Base
 
     /**
      * Category
+     * ---
      * Conversion between Units of Measure can only occur if they belong to the same category. The conversion will be
      * made based on the ratios.
+     * ---
+     * Relation : many2one (uom.category)
+     * @see \Flux\OdooApiClient\Model\Object\Uom\Category
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -46,8 +52,10 @@ final class Uom extends Base
 
     /**
      * Ratio
+     * ---
      * How much bigger or smaller this unit is compared to the reference Unit of Measure for this category: 1 *
      * (reference unit) = ratio * (this unit)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -57,8 +65,10 @@ final class Uom extends Base
 
     /**
      * Bigger Ratio
+     * ---
      * How many times this Unit of Measure is bigger than the reference Unit of Measure in this category: 1 * (this
      * unit) = ratio * (reference unit)
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -68,8 +78,10 @@ final class Uom extends Base
 
     /**
      * Rounding Precision
+     * ---
      * The computed quantity will be a multiple of this value. Use 1.0 for a Unit of Measure that cannot be further
      * split, such as a piece.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -79,7 +91,9 @@ final class Uom extends Base
 
     /**
      * Active
+     * ---
      * Uncheck the active field to disable a unit of measure without deleting it.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,13 +103,14 @@ final class Uom extends Base
 
     /**
      * Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> bigger (Bigger than the reference Unit of Measure)
      *     -> reference (Reference Unit of Measure for this category)
      *     -> smaller (Smaller than the reference Unit of Measure)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -103,15 +118,16 @@ final class Uom extends Base
 
     /**
      * Type of measurement category
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> unit (Default Units)
      *     -> weight (Default Weight)
      *     -> working_time (Default Working Time)
      *     -> length (Default Length)
      *     -> volume (Default Volume)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -119,6 +135,10 @@ final class Uom extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -128,6 +148,7 @@ final class Uom extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -137,6 +158,10 @@ final class Uom extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -146,6 +171,7 @@ final class Uom extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -155,36 +181,49 @@ final class Uom extends Base
 
     /**
      * @param string $name Unit of Measure
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $category_id Category
+     *        ---
      *        Conversion between Units of Measure can only occur if they belong to the same category. The conversion will be
      *        made based on the ratios.
+     *        ---
+     *        Relation : many2one (uom.category)
+     *        @see \Flux\OdooApiClient\Model\Object\Uom\Category
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param float $factor Ratio
+     *        ---
      *        How much bigger or smaller this unit is compared to the reference Unit of Measure for this category: 1 *
      *        (reference unit) = ratio * (this unit)
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param float $factor_inv Bigger Ratio
+     *        ---
      *        How many times this Unit of Measure is bigger than the reference Unit of Measure in this category: 1 * (this
      *        unit) = ratio * (reference unit)
+     *        ---
      *        Searchable : no
      *        Sortable : no
      * @param float $rounding Rounding Precision
+     *        ---
      *        The computed quantity will be a multiple of this value. Use 1.0 for a Unit of Measure that cannot be further
      *        split, such as a piece.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $uom_type Type
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> bigger (Bigger than the reference Unit of Measure)
      *            -> reference (Reference Unit of Measure for this category)
      *            -> smaller (Smaller than the reference Unit of Measure)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         string $name,

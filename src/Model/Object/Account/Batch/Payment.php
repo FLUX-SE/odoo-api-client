@@ -26,6 +26,7 @@ final class Payment extends Base
 {
     /**
      * Reference
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Payment extends Base
 
     /**
      * Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,13 +46,14 @@ final class Payment extends Base
 
     /**
      * State
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> draft (New)
      *     -> sent (Sent)
      *     -> reconciled (Reconciled)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -58,6 +61,10 @@ final class Payment extends Base
 
     /**
      * Bank
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -67,6 +74,10 @@ final class Payment extends Base
 
     /**
      * Payments
+     * ---
+     * Relation : one2many (account.payment -> batch_payment_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Payment
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -76,6 +87,7 @@ final class Payment extends Base
 
     /**
      * Amount
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -85,6 +97,10 @@ final class Payment extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -94,12 +110,13 @@ final class Payment extends Base
 
     /**
      * Batch Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> inbound (Inbound)
      *     -> outbound (Outbound)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -107,7 +124,12 @@ final class Payment extends Base
 
     /**
      * Payment Method
+     * ---
      * The payment method used by the payments in this batch.
+     * ---
+     * Relation : many2one (account.payment.method)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Payment\Method
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -117,6 +139,7 @@ final class Payment extends Base
 
     /**
      * Code
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -126,7 +149,9 @@ final class Payment extends Base
 
     /**
      * Generation Date
+     * ---
      * Creation date of the related export file.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -136,17 +161,21 @@ final class Payment extends Base
 
     /**
      * File
+     * ---
      * Export file related to this batch
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $export_file;
 
     /**
      * File Name
+     * ---
      * Name of the export file generated for this batch
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -156,6 +185,10 @@ final class Payment extends Base
 
     /**
      * Available Payment Method
+     * ---
+     * Relation : one2many (account.payment)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Payment
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -165,7 +198,9 @@ final class Payment extends Base
 
     /**
      * File Generation Enabled
+     * ---
      * Whether or not this batch payment should display the 'Generate File' button instead of 'Print' in form view.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -175,6 +210,10 @@ final class Payment extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -184,6 +223,7 @@ final class Payment extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -193,6 +233,10 @@ final class Payment extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -202,6 +246,7 @@ final class Payment extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -211,26 +256,42 @@ final class Payment extends Base
 
     /**
      * @param string $name Reference
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param DateTimeInterface $date Date
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $journal_id Bank
+     *        ---
+     *        Relation : many2one (account.journal)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation[] $payment_ids Payments
+     *        ---
+     *        Relation : one2many (account.payment -> batch_payment_id)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Payment
+     *        ---
      *        Searchable : yes
      *        Sortable : no
      * @param string $batch_type Batch Type
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> inbound (Inbound)
      *            -> outbound (Outbound)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param OdooRelation $payment_method_id Payment Method
+     *        ---
      *        The payment method used by the payments in this batch.
+     *        ---
+     *        Relation : many2one (account.payment.method)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Payment\Method
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */
@@ -266,17 +327,17 @@ final class Payment extends Base
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getExportFile(): ?int
+    public function getExportFile(): ?string
     {
         return $this->export_file;
     }
 
     /**
-     * @param int|null $export_file
+     * @param string|null $export_file
      */
-    public function setExportFile(?int $export_file): void
+    public function setExportFile(?string $export_file): void
     {
         $this->export_file = $export_file;
     }

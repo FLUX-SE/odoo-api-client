@@ -26,7 +26,12 @@ final class Words extends Base
 {
     /**
      * Invoice
+     * ---
      * Invoice id
+     * ---
+     * Relation : many2one (account.move)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,6 +41,7 @@ final class Words extends Base
 
     /**
      * Field
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,8 +51,10 @@ final class Words extends Base
 
     /**
      * Invoice extract selected status.
+     * ---
      * 0for 'not selected', 1 for 'ocr selected with no user selection' and 2 for 'ocr selected with user selection
      * (user may have selected the same box)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -56,6 +64,7 @@ final class Words extends Base
 
     /**
      * User Selected
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -65,6 +74,7 @@ final class Words extends Base
 
     /**
      * Word Text
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -74,6 +84,7 @@ final class Words extends Base
 
     /**
      * Word Page
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -83,6 +94,7 @@ final class Words extends Base
 
     /**
      * Word Box Midx
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -92,6 +104,7 @@ final class Words extends Base
 
     /**
      * Word Box Midy
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -101,6 +114,7 @@ final class Words extends Base
 
     /**
      * Word Box Width
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -110,6 +124,7 @@ final class Words extends Base
 
     /**
      * Word Box Height
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -119,6 +134,7 @@ final class Words extends Base
 
     /**
      * Word Box Angle
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -128,6 +144,10 @@ final class Words extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -137,6 +157,7 @@ final class Words extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -146,6 +167,10 @@ final class Words extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -155,6 +180,7 @@ final class Words extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

@@ -18,6 +18,10 @@ final class Wizard extends Base
 {
     /**
      * Users
+     * ---
+     * Relation : one2many (portal.wizard.user -> wizard_id)
+     * @see \Flux\OdooApiClient\Model\Object\Portal\Wizard\User
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -27,7 +31,9 @@ final class Wizard extends Base
 
     /**
      * Invitation Message
+     * ---
      * This text is included in the email sent to new users of the portal.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -37,6 +43,10 @@ final class Wizard extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -46,6 +56,7 @@ final class Wizard extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -55,6 +66,10 @@ final class Wizard extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -64,6 +79,7 @@ final class Wizard extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

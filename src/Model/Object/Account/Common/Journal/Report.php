@@ -23,7 +23,9 @@ final class Report extends Base
 {
     /**
      * With Currency
+     * ---
      * Print Report with the currency column if the currency differs from the company currency.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -33,6 +35,10 @@ final class Report extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -42,6 +48,10 @@ final class Report extends Base
 
     /**
      * Journals
+     * ---
+     * Relation : many2many (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -51,6 +61,7 @@ final class Report extends Base
 
     /**
      * Start Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -60,6 +71,7 @@ final class Report extends Base
 
     /**
      * End Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -69,12 +81,13 @@ final class Report extends Base
 
     /**
      * Target Moves
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> posted (All Posted Entries)
      *     -> all (All Entries)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -82,6 +95,10 @@ final class Report extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -91,6 +108,7 @@ final class Report extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -100,6 +118,10 @@ final class Report extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -109,6 +131,7 @@ final class Report extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -118,18 +141,27 @@ final class Report extends Base
 
     /**
      * @param OdooRelation $company_id Company
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation[] $journal_ids Journals
+     *        ---
+     *        Relation : many2many (account.journal)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     *        ---
      *        Searchable : yes
      *        Sortable : no
      * @param string $target_move Target Moves
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> posted (All Posted Entries)
      *            -> all (All Entries)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(OdooRelation $company_id, array $journal_ids, string $target_move)
     {

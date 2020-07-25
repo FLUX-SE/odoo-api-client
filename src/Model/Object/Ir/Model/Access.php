@@ -26,6 +26,7 @@ final class Access extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,8 +36,10 @@ final class Access extends Base
 
     /**
      * Active
+     * ---
      * If you uncheck the active field, it will disable the ACL without deleting it (if you delete a native ACL, it
      * will be re-created when you reload the module).
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -46,6 +49,10 @@ final class Access extends Base
 
     /**
      * Object
+     * ---
+     * Relation : many2one (ir.model)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -55,6 +62,10 @@ final class Access extends Base
 
     /**
      * Group
+     * ---
+     * Relation : many2one (res.groups)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Groups
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -64,6 +75,7 @@ final class Access extends Base
 
     /**
      * Read Access
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -73,6 +85,7 @@ final class Access extends Base
 
     /**
      * Write Access
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -82,6 +95,7 @@ final class Access extends Base
 
     /**
      * Create Access
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -91,6 +105,7 @@ final class Access extends Base
 
     /**
      * Delete Access
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -100,6 +115,10 @@ final class Access extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -109,6 +128,7 @@ final class Access extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -118,6 +138,10 @@ final class Access extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -127,6 +151,7 @@ final class Access extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -136,9 +161,14 @@ final class Access extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $model_id Object
+     *        ---
+     *        Relation : many2one (ir.model)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

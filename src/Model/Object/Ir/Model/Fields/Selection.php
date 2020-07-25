@@ -26,6 +26,10 @@ final class Selection extends Base
 {
     /**
      * Field
+     * ---
+     * Relation : many2one (ir.model.fields)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model\Fields
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +39,7 @@ final class Selection extends Base
 
     /**
      * Value
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +49,7 @@ final class Selection extends Base
 
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +59,7 @@ final class Selection extends Base
 
     /**
      * Sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +69,10 @@ final class Selection extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +82,7 @@ final class Selection extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,6 +92,10 @@ final class Selection extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,6 +105,7 @@ final class Selection extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -98,12 +115,18 @@ final class Selection extends Base
 
     /**
      * @param OdooRelation $field_id Field
+     *        ---
+     *        Relation : many2one (ir.model.fields)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Model\Fields
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $value Value
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

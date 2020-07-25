@@ -23,6 +23,7 @@ final class Wizard extends Base
 {
     /**
      * Number Added
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +33,7 @@ final class Wizard extends Base
 
     /**
      * Transactions
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -41,13 +43,14 @@ final class Wizard extends Base
 
     /**
      * Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> success (Success)
      *     -> failed (Failed)
      *     -> cancelled (Cancelled)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -55,13 +58,14 @@ final class Wizard extends Base
 
     /**
      * Method
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> add (add)
      *     -> edit (edit)
      *     -> refresh (refresh)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -69,6 +73,7 @@ final class Wizard extends Base
 
     /**
      * Message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -78,6 +83,7 @@ final class Wizard extends Base
 
     /**
      * Fetch transactions from
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -87,6 +93,10 @@ final class Wizard extends Base
 
     /**
      * Synchronized accounts
+     * ---
+     * Relation : one2many (account.online.link.wizard -> account_online_wizard_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Online\Link\Wizard
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -96,7 +106,9 @@ final class Wizard extends Base
 
     /**
      * Hide Table
+     * ---
      * Technical field to hide table in view
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -106,6 +118,10 @@ final class Wizard extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -115,6 +131,7 @@ final class Wizard extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -124,6 +141,10 @@ final class Wizard extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -133,6 +154,7 @@ final class Wizard extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

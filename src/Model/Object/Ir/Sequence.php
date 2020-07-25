@@ -22,6 +22,7 @@ final class Sequence extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -31,6 +32,7 @@ final class Sequence extends Base
 
     /**
      * Sequence Code
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -40,16 +42,18 @@ final class Sequence extends Base
 
     /**
      * Implementation
+     * ---
      * While assigning a sequence number to a record, the 'no gap' sequence implementation ensures that each previous
      * sequence number has been assigned already. While this sequence implementation will not skip any sequence
      * number upon assignation, there can still be gaps in the sequence if records are deleted. The 'no gap'
      * implementation is slower than the standard one.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> standard (Standard)
      *     -> no_gap (No gap)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -57,6 +61,7 @@ final class Sequence extends Base
 
     /**
      * Active
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -66,7 +71,9 @@ final class Sequence extends Base
 
     /**
      * Prefix
+     * ---
      * Prefix value of the record for the sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -76,7 +83,9 @@ final class Sequence extends Base
 
     /**
      * Suffix
+     * ---
      * Suffix value of the record for the sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -86,7 +95,9 @@ final class Sequence extends Base
 
     /**
      * Next Number
+     * ---
      * Next number of this sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -96,8 +107,10 @@ final class Sequence extends Base
 
     /**
      * Actual Next Number
+     * ---
      * Next number that will be used. This number can be incremented frequently so the displayed value might already
      * be obsolete
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -107,7 +120,9 @@ final class Sequence extends Base
 
     /**
      * Step
+     * ---
      * The next number of the sequence will be incremented by this number
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -117,7 +132,9 @@ final class Sequence extends Base
 
     /**
      * Sequence Size
+     * ---
      * Odoo will automatically adds some '0' on the left of the 'Next Number' to get the required padding size.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -127,6 +144,10 @@ final class Sequence extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -136,6 +157,7 @@ final class Sequence extends Base
 
     /**
      * Use subsequences per date_range
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -145,6 +167,10 @@ final class Sequence extends Base
 
     /**
      * Subsequences
+     * ---
+     * Relation : one2many (ir.sequence.date_range -> sequence_id)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Sequence\DateRange
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -154,6 +180,10 @@ final class Sequence extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -163,6 +193,7 @@ final class Sequence extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -172,6 +203,10 @@ final class Sequence extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -181,6 +216,7 @@ final class Sequence extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -190,29 +226,38 @@ final class Sequence extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $implementation Implementation
+     *        ---
      *        While assigning a sequence number to a record, the 'no gap' sequence implementation ensures that each previous
      *        sequence number has been assigned already. While this sequence implementation will not skip any sequence
      *        number upon assignation, there can still be gaps in the sequence if records are deleted. The 'no gap'
      *        implementation is slower than the standard one.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> standard (Standard)
      *            -> no_gap (No gap)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param int $number_next Next Number
+     *        ---
      *        Next number of this sequence
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param int $number_increment Step
+     *        ---
      *        The next number of the sequence will be incremented by this number
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param int $padding Sequence Size
+     *        ---
      *        Odoo will automatically adds some '0' on the left of the 'Next Number' to get the required padding size.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

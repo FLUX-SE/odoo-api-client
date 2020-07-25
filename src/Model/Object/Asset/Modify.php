@@ -23,6 +23,7 @@ final class Modify extends Base
 {
     /**
      * Reason
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,7 +33,12 @@ final class Modify extends Base
 
     /**
      * Asset
+     * ---
      * The asset to be modified by this wizard
+     * ---
+     * Relation : many2one (account.asset)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Asset
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -42,6 +48,7 @@ final class Modify extends Base
 
     /**
      * Number of Depreciations
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -51,13 +58,15 @@ final class Modify extends Base
 
     /**
      * Number of Months in a Period
+     * ---
      * The amount of time between two depreciations
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> 1 (Months)
      *     -> 12 (Years)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -65,7 +74,9 @@ final class Modify extends Base
 
     /**
      * Depreciable Amount
+     * ---
      * New residual amount for the asset
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -75,7 +86,9 @@ final class Modify extends Base
 
     /**
      * Not Depreciable Amount
+     * ---
      * New salvage amount for the asset
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -85,6 +98,10 @@ final class Modify extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -94,6 +111,7 @@ final class Modify extends Base
 
     /**
      * Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -103,6 +121,7 @@ final class Modify extends Base
 
     /**
      * Need Date
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -112,7 +131,9 @@ final class Modify extends Base
 
     /**
      * Gain Value
+     * ---
      * Technical field to know if we should display the fields for the creation of gross increase asset
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -122,6 +143,10 @@ final class Modify extends Base
 
     /**
      * Asset Gross Increase Account
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -131,6 +156,10 @@ final class Modify extends Base
 
     /**
      * Account Asset Counterpart
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -140,6 +169,10 @@ final class Modify extends Base
 
     /**
      * Account Depreciation
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -149,6 +182,10 @@ final class Modify extends Base
 
     /**
      * Account Depreciation Expense
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -158,6 +195,10 @@ final class Modify extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -167,6 +208,7 @@ final class Modify extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -176,6 +218,10 @@ final class Modify extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -185,6 +231,7 @@ final class Modify extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -194,10 +241,16 @@ final class Modify extends Base
 
     /**
      * @param OdooRelation $asset_id Asset
+     *        ---
      *        The asset to be modified by this wizard
+     *        ---
+     *        Relation : many2one (account.asset)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Asset
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param int $method_number Number of Depreciations
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

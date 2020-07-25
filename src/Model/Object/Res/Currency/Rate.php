@@ -26,6 +26,7 @@ final class Rate extends Base
 {
     /**
      * Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,7 +36,9 @@ final class Rate extends Base
 
     /**
      * Rate
+     * ---
      * The rate of the currency to the currency of rate 1
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +48,10 @@ final class Rate extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,6 +61,10 @@ final class Rate extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,6 +74,10 @@ final class Rate extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,6 +87,7 @@ final class Rate extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -81,6 +97,10 @@ final class Rate extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -90,6 +110,7 @@ final class Rate extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -99,6 +120,7 @@ final class Rate extends Base
 
     /**
      * @param DateTimeInterface $name Date
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

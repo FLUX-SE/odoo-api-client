@@ -26,6 +26,7 @@ final class Menu extends Base
 {
     /**
      * Menu
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Menu extends Base
 
     /**
      * Active
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +46,7 @@ final class Menu extends Base
 
     /**
      * Sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +56,10 @@ final class Menu extends Base
 
     /**
      * Child IDs
+     * ---
+     * Relation : one2many (ir.ui.menu -> parent_id)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Ui\Menu
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -62,6 +69,10 @@ final class Menu extends Base
 
     /**
      * Parent Menu
+     * ---
+     * Relation : many2one (ir.ui.menu)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Ui\Menu
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +82,7 @@ final class Menu extends Base
 
     /**
      * Parent Path
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,8 +92,13 @@ final class Menu extends Base
 
     /**
      * Groups
+     * ---
      * If you have groups, the visibility of this menu will be based on these groups. If this field is empty, Odoo
      * will compute visibility based on the related object's read access.
+     * ---
+     * Relation : many2many (res.groups)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Groups
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -91,6 +108,7 @@ final class Menu extends Base
 
     /**
      * Full Path
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -100,6 +118,7 @@ final class Menu extends Base
 
     /**
      * Web Icon File
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -109,6 +128,7 @@ final class Menu extends Base
 
     /**
      * Action
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -118,15 +138,20 @@ final class Menu extends Base
 
     /**
      * Web Icon Image
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $web_icon_data;
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -136,6 +161,7 @@ final class Menu extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -145,6 +171,10 @@ final class Menu extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -154,6 +184,7 @@ final class Menu extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -163,6 +194,7 @@ final class Menu extends Base
 
     /**
      * @param string $name Menu
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */
@@ -172,9 +204,9 @@ final class Menu extends Base
     }
 
     /**
-     * @param int|null $web_icon_data
+     * @param string|null $web_icon_data
      */
-    public function setWebIconData(?int $web_icon_data): void
+    public function setWebIconData(?string $web_icon_data): void
     {
         $this->web_icon_data = $web_icon_data;
     }
@@ -220,9 +252,9 @@ final class Menu extends Base
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getWebIconData(): ?int
+    public function getWebIconData(): ?string
     {
         return $this->web_icon_data;
     }

@@ -26,6 +26,7 @@ final class Fields extends Base
 {
     /**
      * Field Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Fields extends Base
 
     /**
      * Complete Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,7 +46,9 @@ final class Fields extends Base
 
     /**
      * Object Name
+     * ---
      * The technical name of the model this field belongs to
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,7 +58,9 @@ final class Fields extends Base
 
     /**
      * Object Relation
+     * ---
      * For relationship fields, the technical name of the target model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -64,7 +70,9 @@ final class Fields extends Base
 
     /**
      * Relation Field
+     * ---
      * For one2many fields, the field on the target model that implement the opposite many2one relationship
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -74,6 +82,10 @@ final class Fields extends Base
 
     /**
      * Relation field
+     * ---
+     * Relation : many2one (ir.model.fields)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model\Fields
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -83,7 +95,12 @@ final class Fields extends Base
 
     /**
      * Model
+     * ---
      * The model this field belongs to
+     * ---
+     * Relation : many2one (ir.model)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -93,6 +110,7 @@ final class Fields extends Base
 
     /**
      * Field Label
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -102,6 +120,7 @@ final class Fields extends Base
 
     /**
      * Field Help
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -111,8 +130,7 @@ final class Fields extends Base
 
     /**
      * Field Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> binary (binary)
      *     -> boolean (boolean)
@@ -130,7 +148,9 @@ final class Fields extends Base
      *     -> reference (reference)
      *     -> selection (selection)
      *     -> text (text)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -138,6 +158,7 @@ final class Fields extends Base
 
     /**
      * Selection Options (Deprecated)
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -147,6 +168,10 @@ final class Fields extends Base
 
     /**
      * Selection Options
+     * ---
+     * Relation : one2many (ir.model.fields.selection -> field_id)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model\Fields\Selection
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -156,7 +181,9 @@ final class Fields extends Base
 
     /**
      * Copied
+     * ---
      * Whether the value is copied when duplicating a record.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -166,7 +193,9 @@ final class Fields extends Base
 
     /**
      * Related Field
+     * ---
      * The corresponding related field, if any. This must be a dot-separated list of field names.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -176,6 +205,10 @@ final class Fields extends Base
 
     /**
      * Related field
+     * ---
+     * Relation : many2one (ir.model.fields)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model\Fields
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -185,6 +218,7 @@ final class Fields extends Base
 
     /**
      * Required
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -194,6 +228,7 @@ final class Fields extends Base
 
     /**
      * Readonly
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -203,6 +238,7 @@ final class Fields extends Base
 
     /**
      * Indexed
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -212,7 +248,9 @@ final class Fields extends Base
 
     /**
      * Translatable
+     * ---
      * Whether values for this field can be translated (enables the translation mechanism for that field)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -222,6 +260,7 @@ final class Fields extends Base
 
     /**
      * Size
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -231,12 +270,13 @@ final class Fields extends Base
 
     /**
      * Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> manual (Custom Field)
      *     -> base (Base Field)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -244,14 +284,16 @@ final class Fields extends Base
 
     /**
      * On Delete
+     * ---
      * On delete property for many2one fields
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> cascade (Cascade)
      *     -> set null (Set NULL)
      *     -> restrict (Restrict)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -259,8 +301,10 @@ final class Fields extends Base
 
     /**
      * Domain
+     * ---
      * The optional domain to restrict possible values for relationship fields, specified as a Python expression
      * defining a list of triplets. For example: [('color','=','red')]
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -270,6 +314,10 @@ final class Fields extends Base
 
     /**
      * Groups
+     * ---
+     * Relation : many2many (res.groups)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Groups
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -279,6 +327,7 @@ final class Fields extends Base
 
     /**
      * Selectable
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -288,7 +337,9 @@ final class Fields extends Base
 
     /**
      * In Apps
+     * ---
      * List of modules in which the field is defined
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -298,7 +349,9 @@ final class Fields extends Base
 
     /**
      * Relation Table
+     * ---
      * Used for custom many2many fields to define a custom relation table name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -308,7 +361,9 @@ final class Fields extends Base
 
     /**
      * Column 1
+     * ---
      * Column referring to the record in the model table
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -318,7 +373,9 @@ final class Fields extends Base
 
     /**
      * Column 2
+     * ---
      * Column referring to the record in the comodel table
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -328,6 +385,7 @@ final class Fields extends Base
 
     /**
      * Compute
+     * ---
      * Code to compute the value of the field.
      * Iterate on the recordset 'self' and assign the field's value:
      *
@@ -335,6 +393,7 @@ final class Fields extends Base
      *                 record['size'] = len(record.name)
      *
      * Modules time, datetime, dateutil are available.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -344,9 +403,11 @@ final class Fields extends Base
 
     /**
      * Dependencies
+     * ---
      * Dependencies of compute method; a list of comma-separated field names, like
      *
      *         name, partner_id.name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -356,7 +417,9 @@ final class Fields extends Base
 
     /**
      * Stored
+     * ---
      * Whether the value is stored in the database.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -365,7 +428,24 @@ final class Fields extends Base
     private $store;
 
     /**
+     * Enable Ordered Tracking
+     * ---
+     * If set every modification done to this field is tracked in the chatter. Value is used to order tracking
+     * values.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var int|null
+     */
+    private $tracking;
+
+    /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -375,6 +455,7 @@ final class Fields extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -384,6 +465,10 @@ final class Fields extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -393,6 +478,7 @@ final class Fields extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -401,34 +487,31 @@ final class Fields extends Base
     private $write_date;
 
     /**
-     * Enable Ordered Tracking
-     * If set every modification done to this field is tracked in the chatter. Value is used to order tracking
-     * values.
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var int|null
-     */
-    private $tracking;
-
-    /**
      * @param string $name Field Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $model Object Name
+     *        ---
      *        The technical name of the model this field belongs to
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $model_id Model
+     *        ---
      *        The model this field belongs to
+     *        ---
+     *        Relation : many2one (ir.model)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $field_description Field Label
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $ttype Field Type
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> binary (binary)
      *            -> boolean (boolean)
@@ -446,14 +529,17 @@ final class Fields extends Base
      *            -> reference (reference)
      *            -> selection (selection)
      *            -> text (text)
-     *
-     * @param string $state Type
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $state Type
+     *        ---
      *        Selection : (default value, usually null)
      *            -> manual (Custom Field)
      *            -> base (Base Field)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         string $name,
@@ -653,27 +739,11 @@ final class Fields extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
+     * @return OdooRelation|null
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function getCreateUid(): ?OdooRelation
     {
-        return $this->create_date;
-    }
-
-    /**
-     * @param int|null $tracking
-     */
-    public function setTracking(?int $tracking): void
-    {
-        $this->tracking = $tracking;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getTracking(): ?int
-    {
-        return $this->tracking;
+        return $this->create_uid;
     }
 
     /**
@@ -717,11 +787,27 @@ final class Fields extends Base
     }
 
     /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
      * @param OdooRelation|null $create_uid
      */
     public function setCreateUid(?OdooRelation $create_uid): void
     {
         $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @param int|null $tracking
+     */
+    public function setTracking(?int $tracking): void
+    {
+        $this->tracking = $tracking;
     }
 
     /**
@@ -733,11 +819,11 @@ final class Fields extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @return int|null
      */
-    public function getCreateUid(): ?OdooRelation
+    public function getTracking(): ?int
     {
-        return $this->create_uid;
+        return $this->tracking;
     }
 
     /**

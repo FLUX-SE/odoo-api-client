@@ -26,6 +26,7 @@ final class Client extends Base
 {
     /**
      * Action Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Client extends Base
 
     /**
      * Action Type
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,8 +46,10 @@ final class Client extends Base
 
     /**
      * Client action tag
+     * ---
      * An arbitrary string, interpreted by the client according to its own needs and wishes. There is no central tag
      * repository across clients.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -55,14 +59,15 @@ final class Client extends Base
 
     /**
      * Target Window
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> current (Current Window)
      *     -> new (New Window)
      *     -> fullscreen (Full Screen)
      *     -> main (Main action of Current Window)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -70,7 +75,9 @@ final class Client extends Base
 
     /**
      * Destination Model
+     * ---
      * Optional model, mostly used for needactions.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,7 +87,9 @@ final class Client extends Base
 
     /**
      * Context Value
+     * ---
      * Context dictionary as Python expression, empty by default (Default: {})
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -90,25 +99,29 @@ final class Client extends Base
 
     /**
      * Supplementary arguments
+     * ---
      * Arguments sent to the client along with the view tag
+     * ---
      * Searchable : no
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $params;
 
     /**
      * Params storage
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
-     * @var int|null
+     * @var string|null
      */
     private $params_store;
 
     /**
      * External ID
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -118,7 +131,9 @@ final class Client extends Base
 
     /**
      * Action Description
+     * ---
      * Optional help text for the users with a description of the target view, such as its usage and purpose.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -128,7 +143,12 @@ final class Client extends Base
 
     /**
      * Binding Model
+     * ---
      * Setting a value makes this action available in the sidebar for the given model.
+     * ---
+     * Relation : many2one (ir.model)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -138,12 +158,13 @@ final class Client extends Base
 
     /**
      * Binding Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> action (Action)
      *     -> report (Report)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -151,6 +172,7 @@ final class Client extends Base
 
     /**
      * Binding View Types
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -160,6 +182,10 @@ final class Client extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -169,6 +195,7 @@ final class Client extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -178,6 +205,10 @@ final class Client extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -187,6 +218,7 @@ final class Client extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -196,27 +228,34 @@ final class Client extends Base
 
     /**
      * @param string $name Action Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $type Action Type
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $tag Client action tag
+     *        ---
      *        An arbitrary string, interpreted by the client according to its own needs and wishes. There is no central tag
      *        repository across clients.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $context Context Value
+     *        ---
      *        Context dictionary as Python expression, empty by default (Default: {})
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $binding_type Binding Type
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> action (Action)
      *            -> report (Report)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         string $name,
@@ -473,33 +512,33 @@ final class Client extends Base
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getParams(): ?int
+    public function getParams(): ?string
     {
         return $this->params;
     }
 
     /**
-     * @param int|null $params
+     * @param string|null $params
      */
-    public function setParams(?int $params): void
+    public function setParams(?string $params): void
     {
         $this->params = $params;
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getParamsStore(): ?int
+    public function getParamsStore(): ?string
     {
         return $this->params_store;
     }
 
     /**
-     * @param int|null $params_store
+     * @param string|null $params_store
      */
-    public function setParamsStore(?int $params_store): void
+    public function setParamsStore(?string $params_store): void
     {
         $this->params_store = $params_store;
     }

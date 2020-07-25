@@ -26,7 +26,9 @@ final class Line extends Base
 {
     /**
      * %
+     * ---
      * Factor to apply on the account move lines generated from this repartition line, in percents
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,7 +38,9 @@ final class Line extends Base
 
     /**
      * Factor Ratio
+     * ---
      * Factor to apply on the account move lines generated from this repartition line
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -46,13 +50,15 @@ final class Line extends Base
 
     /**
      * Based On
+     * ---
      * Base on which the factor will be applied.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> base (Base)
      *     -> tax (of tax)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -60,7 +66,12 @@ final class Line extends Base
 
     /**
      * Account
+     * ---
      * Account on which to post the tax amount
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -70,6 +81,10 @@ final class Line extends Base
 
     /**
      * Tax Grids
+     * ---
+     * Relation : many2many (account.account.tag)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Tag
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -79,7 +94,12 @@ final class Line extends Base
 
     /**
      * Invoice Tax
+     * ---
      * The tax set to apply this repartition on invoices. Mutually exclusive with refund_tax_id
+     * ---
+     * Relation : many2one (account.tax)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,7 +109,12 @@ final class Line extends Base
 
     /**
      * Refund Tax
+     * ---
      * The tax set to apply this repartition on refund invoices. Mutually exclusive with invoice_tax_id
+     * ---
+     * Relation : many2one (account.tax)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -99,6 +124,10 @@ final class Line extends Base
 
     /**
      * Tax
+     * ---
+     * Relation : many2one (account.tax)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -108,7 +137,12 @@ final class Line extends Base
 
     /**
      * Country
+     * ---
      * Technical field used to restrict tags domain in form view.
+     * ---
+     * Relation : many2one (res.country)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -118,7 +152,12 @@ final class Line extends Base
 
     /**
      * Company
+     * ---
      * The company this repartition line belongs to.
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -128,8 +167,10 @@ final class Line extends Base
 
     /**
      * Sequence
+     * ---
      * The order in which display and match repartition lines. For refunds to work properly, invoice repartition
      * lines should be arranged in the same order as the credit note repartition lines they correspond to.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -139,6 +180,10 @@ final class Line extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -148,6 +193,7 @@ final class Line extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -157,6 +203,10 @@ final class Line extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -166,6 +216,7 @@ final class Line extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -175,19 +226,28 @@ final class Line extends Base
 
     /**
      * @param float $factor_percent %
+     *        ---
      *        Factor to apply on the account move lines generated from this repartition line, in percents
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $repartition_type Based On
+     *        ---
      *        Base on which the factor will be applied.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> base (Base)
      *            -> tax (of tax)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param OdooRelation $company_id Company
+     *        ---
      *        The company this repartition line belongs to.
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

@@ -18,6 +18,10 @@ final class Line extends Base
 {
     /**
      * Order Reference
+     * ---
+     * Relation : many2one (sale.order)
+     * @see \Flux\OdooApiClient\Model\Object\Sale\Order
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -27,6 +31,7 @@ final class Line extends Base
 
     /**
      * Description
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,6 +41,7 @@ final class Line extends Base
 
     /**
      * Sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +51,10 @@ final class Line extends Base
 
     /**
      * Invoice Lines
+     * ---
+     * Relation : many2many (account.move.line)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -54,14 +64,15 @@ final class Line extends Base
 
     /**
      * Invoice Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> upselling (Upselling Opportunity)
      *     -> invoiced (Fully Invoiced)
      *     -> to invoice (To Invoice)
      *     -> no (Nothing to Invoice)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -69,6 +80,7 @@ final class Line extends Base
 
     /**
      * Unit Price
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -78,6 +90,7 @@ final class Line extends Base
 
     /**
      * Subtotal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -87,6 +100,7 @@ final class Line extends Base
 
     /**
      * Total Tax
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -96,6 +110,7 @@ final class Line extends Base
 
     /**
      * Total
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -105,6 +120,7 @@ final class Line extends Base
 
     /**
      * Price Reduce
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -114,6 +130,10 @@ final class Line extends Base
 
     /**
      * Taxes
+     * ---
+     * Relation : many2many (account.tax)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -123,6 +143,7 @@ final class Line extends Base
 
     /**
      * Price Reduce Tax inc
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -132,6 +153,7 @@ final class Line extends Base
 
     /**
      * Price Reduce Tax excl
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -141,6 +163,7 @@ final class Line extends Base
 
     /**
      * Discount (%)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -150,6 +173,10 @@ final class Line extends Base
 
     /**
      * Product
+     * ---
+     * Relation : many2one (product.product)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Product
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -159,6 +186,10 @@ final class Line extends Base
 
     /**
      * Product Template
+     * ---
+     * Relation : many2one (product.template)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Template
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -168,6 +199,7 @@ final class Line extends Base
 
     /**
      * Can Edit Product
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -177,6 +209,7 @@ final class Line extends Base
 
     /**
      * Quantity
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -186,6 +219,10 @@ final class Line extends Base
 
     /**
      * Unit of Measure
+     * ---
+     * Relation : many2one (uom.uom)
+     * @see \Flux\OdooApiClient\Model\Object\Uom\Uom
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -195,8 +232,13 @@ final class Line extends Base
 
     /**
      * Category
+     * ---
      * Conversion between Units of Measure can only occur if they belong to the same category. The conversion will be
      * made based on the ratios.
+     * ---
+     * Relation : many2one (uom.category)
+     * @see \Flux\OdooApiClient\Model\Object\Uom\Category
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -206,6 +248,10 @@ final class Line extends Base
 
     /**
      * Custom Values
+     * ---
+     * Relation : one2many (product.attribute.custom.value -> sale_order_line_id)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Attribute\Custom\Value
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -215,6 +261,10 @@ final class Line extends Base
 
     /**
      * Extra Values
+     * ---
+     * Relation : many2many (product.template.attribute.value)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Template\Attribute\Value
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -224,18 +274,20 @@ final class Line extends Base
 
     /**
      * Method to update delivered qty
+     * ---
      * According to product configuration, the delivered quantity can be automatically computed by mechanism :
      *     - Manual: the quantity is set manually on the line
      *     - Analytic From expenses: the quantity is the quantity sum from posted expenses
      *     - Timesheet: the quantity is the sum of hours recorded on tasks linked to this sale line
      *     - Stock Moves: the quantity comes from confirmed pickings
      *
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> manual (Manual)
      *     -> analytic (Analytic From Expenses)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -243,6 +295,7 @@ final class Line extends Base
 
     /**
      * Delivered Quantity
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -252,6 +305,7 @@ final class Line extends Base
 
     /**
      * Delivered Manually
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -261,6 +315,7 @@ final class Line extends Base
 
     /**
      * To Invoice Quantity
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -270,6 +325,7 @@ final class Line extends Base
 
     /**
      * Invoiced Quantity
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -279,6 +335,7 @@ final class Line extends Base
 
     /**
      * Untaxed Invoiced Amount
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -288,6 +345,7 @@ final class Line extends Base
 
     /**
      * Untaxed Amount To Invoice
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -297,6 +355,10 @@ final class Line extends Base
 
     /**
      * Salesperson
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -306,6 +368,10 @@ final class Line extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -315,6 +381,10 @@ final class Line extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -324,6 +394,10 @@ final class Line extends Base
 
     /**
      * Customer
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -333,6 +407,10 @@ final class Line extends Base
 
     /**
      * Analytic Tags
+     * ---
+     * Relation : many2many (account.analytic.tag)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Tag
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -342,6 +420,10 @@ final class Line extends Base
 
     /**
      * Analytic lines
+     * ---
+     * Relation : one2many (account.analytic.line -> so_line)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -351,7 +433,9 @@ final class Line extends Base
 
     /**
      * Is expense
+     * ---
      * Is true if the sales order line comes from an expense or a vendor bills
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -361,8 +445,10 @@ final class Line extends Base
 
     /**
      * Is a down payment
+     * ---
      * Down payments are made when creating invoices from a sales order. They are not copied when duplicating a sales
      * order.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -372,15 +458,16 @@ final class Line extends Base
 
     /**
      * Order Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> draft (Quotation)
      *     -> sent (Quotation Sent)
      *     -> sale (Sales Order)
      *     -> done (Locked)
      *     -> cancel (Cancelled)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -388,7 +475,9 @@ final class Line extends Base
 
     /**
      * Lead Time
+     * ---
      * Number of days between the order confirmation and the shipping of the products to the customer
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -398,13 +487,15 @@ final class Line extends Base
 
     /**
      * Display Type
+     * ---
      * Technical field for UX purpose.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> line_section (Section)
      *     -> line_note (Note)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -412,6 +503,10 @@ final class Line extends Base
 
     /**
      * Optional Products Lines
+     * ---
+     * Relation : one2many (sale.order.option -> line_id)
+     * @see \Flux\OdooApiClient\Model\Object\Sale\Order\Option
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -421,6 +516,10 @@ final class Line extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -430,6 +529,7 @@ final class Line extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -439,6 +539,10 @@ final class Line extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -448,6 +552,7 @@ final class Line extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -457,19 +562,28 @@ final class Line extends Base
 
     /**
      * @param OdooRelation $order_id Order Reference
+     *        ---
+     *        Relation : many2one (sale.order)
+     *        @see \Flux\OdooApiClient\Model\Object\Sale\Order
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $name Description
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param float $price_unit Unit Price
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param float $product_uom_qty Quantity
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param float $customer_lead Lead Time
+     *        ---
      *        Number of days between the order confirmation and the shipping of the products to the customer
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

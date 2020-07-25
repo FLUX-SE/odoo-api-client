@@ -23,6 +23,7 @@ final class Followers extends Base
 {
     /**
      * Related Document Model Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,7 +33,9 @@ final class Followers extends Base
 
     /**
      * Related Document ID
+     * ---
      * Id of the followed resource
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -42,6 +45,10 @@ final class Followers extends Base
 
     /**
      * Related Partner
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -51,6 +58,10 @@ final class Followers extends Base
 
     /**
      * Listener
+     * ---
+     * Relation : many2one (mail.channel)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Channel
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -60,7 +71,12 @@ final class Followers extends Base
 
     /**
      * Subtype
+     * ---
      * Message subtypes followed, meaning subtypes that will be pushed onto the user's Wall.
+     * ---
+     * Relation : many2many (mail.message.subtype)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message\Subtype
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -70,6 +86,7 @@ final class Followers extends Base
 
     /**
      * @param string $res_model Related Document Model Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

@@ -23,6 +23,10 @@ final class Wizard extends Base
 {
     /**
      * Demo Installation Failures
+     * ---
+     * Relation : one2many (ir.demo_failure -> wizard_id)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\DemoFailure
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -32,6 +36,7 @@ final class Wizard extends Base
 
     /**
      * Failures Count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -41,6 +46,10 @@ final class Wizard extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -50,6 +59,7 @@ final class Wizard extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -59,6 +69,10 @@ final class Wizard extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -68,6 +82,7 @@ final class Wizard extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

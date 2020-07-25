@@ -28,7 +28,9 @@ class Alias extends Base
 {
     /**
      * Alias Name
+     * ---
      * The name of the email alias, e.g. 'jobs' if you want to catch emails for <jobs@example.odoo.com>
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -38,8 +40,13 @@ class Alias extends Base
 
     /**
      * Aliased Model
+     * ---
      * The model (Odoo Document Kind) to which this alias corresponds. Any incoming email that does not reply to an
      * existing record will cause the creation of a new record of this model (e.g. a Project Task)
+     * ---
+     * Relation : many2one (ir.model)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -49,9 +56,14 @@ class Alias extends Base
 
     /**
      * Owner
+     * ---
      * The owner of records created upon receiving emails on this alias. If this field is not set the system will
      * attempt to find the right owner based on the sender (From) address, or will use the Administrator account if
      * no system user is found for that address.
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -61,7 +73,9 @@ class Alias extends Base
 
     /**
      * Default Values
+     * ---
      * A Python dictionary that will be evaluated to provide default values when creating new records for this alias.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,8 +85,10 @@ class Alias extends Base
 
     /**
      * Record Thread ID
+     * ---
      * Optional ID of a thread (record) to which all incoming messages will be attached, even if they did not reply
      * to it. If set, this will disable the creation of new records completely.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -82,6 +98,7 @@ class Alias extends Base
 
     /**
      * Alias domain
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -91,8 +108,13 @@ class Alias extends Base
 
     /**
      * Parent Model
+     * ---
      * Parent model holding the alias. The model holding the alias reference is not necessarily the model given by
      * alias_model_id (example: project (parent_model) and task (model))
+     * ---
+     * Relation : many2one (ir.model)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -102,7 +124,9 @@ class Alias extends Base
 
     /**
      * Parent Record Thread ID
+     * ---
      * ID of the parent record holding the alias (example: project holding the task creation alias)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -112,18 +136,20 @@ class Alias extends Base
 
     /**
      * Alias Contact Security
+     * ---
      * Policy to post a message on the document using the mailgateway.
      * - everyone: everyone can post
      * - partners: only authenticated partners
      * - followers: only followers of the related document or members of following channels
      *
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> everyone (Everyone)
      *     -> partners (Authenticated Partners)
      *     -> followers (Followers only)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -131,6 +157,10 @@ class Alias extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -140,6 +170,7 @@ class Alias extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -149,6 +180,10 @@ class Alias extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -158,6 +193,7 @@ class Alias extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -167,27 +203,36 @@ class Alias extends Base
 
     /**
      * @param OdooRelation $alias_model_id Aliased Model
+     *        ---
      *        The model (Odoo Document Kind) to which this alias corresponds. Any incoming email that does not reply to an
      *        existing record will cause the creation of a new record of this model (e.g. a Project Task)
+     *        ---
+     *        Relation : many2one (ir.model)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $alias_defaults Default Values
+     *        ---
      *        A Python dictionary that will be evaluated to provide default values when creating new records for this alias.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $alias_contact Alias Contact Security
+     *        ---
      *        Policy to post a message on the document using the mailgateway.
      *        - everyone: everyone can post
      *        - partners: only authenticated partners
      *        - followers: only followers of the related document or members of following channels
      *
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> everyone (Everyone)
      *            -> partners (Authenticated Partners)
      *            -> followers (Followers only)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(OdooRelation $alias_model_id, string $alias_defaults, string $alias_contact)
     {

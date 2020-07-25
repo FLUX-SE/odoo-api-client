@@ -18,6 +18,10 @@ final class Cron extends Server
 {
     /**
      * Server action
+     * ---
+     * Relation : many2one (ir.actions.server)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Actions\Server
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -27,6 +31,7 @@ final class Cron extends Server
 
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,6 +41,10 @@ final class Cron extends Server
 
     /**
      * Scheduler User
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +54,7 @@ final class Cron extends Server
 
     /**
      * Active
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,7 +64,9 @@ final class Cron extends Server
 
     /**
      * Interval Number
+     * ---
      * Repeat every x.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -64,15 +76,16 @@ final class Cron extends Server
 
     /**
      * Interval Unit
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> minutes (Minutes)
      *     -> hours (Hours)
      *     -> days (Days)
      *     -> weeks (Weeks)
      *     -> months (Months)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -80,8 +93,10 @@ final class Cron extends Server
 
     /**
      * Number of Calls
+     * ---
      * How many times the method is called,
      * a negative number indicates no limit.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -91,7 +106,9 @@ final class Cron extends Server
 
     /**
      * Repeat Missed
+     * ---
      * Specify if missed occurrences should be executed when the server restarts.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -101,7 +118,9 @@ final class Cron extends Server
 
     /**
      * Next Execution Date
+     * ---
      * Next planned execution date for this job.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -111,7 +130,9 @@ final class Cron extends Server
 
     /**
      * Last Execution Date
+     * ---
      * Previous time the cron ran successfully, provided to the job through the context on the `lastcall` key
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -121,7 +142,9 @@ final class Cron extends Server
 
     /**
      * Priority
+     * ---
      * The priority of the job, as an integer: 0 means higher priority, 10 means lower priority.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -131,29 +154,63 @@ final class Cron extends Server
 
     /**
      * @param OdooRelation $ir_actions_server_id Server action
+     *        ---
+     *        Relation : many2one (ir.actions.server)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Actions\Server
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $user_id Scheduler User
+     *        ---
+     *        Relation : many2one (res.users)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Users
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param DateTimeInterface $nextcall Next Execution Date
+     *        ---
      *        Next planned execution date for this job.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $name Action Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $type Action Type
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $usage Usage
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> ir_actions_server (Server Action)
      *            -> ir_cron (Scheduled Action)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $model_id Model
+     *        ---
+     *        Model on which the server action runs.
+     *        ---
+     *        Relation : many2one (ir.model)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $activity_user_type Activity User Type
+     *        ---
+     *        Use 'Specific User' to always assign the same user on the next activity. Use 'Generic User From Record' to
+     *        specify the field name of the user to choose on the record.
+     *        ---
+     *        Selection : (default value, usually null)
+     *            -> specific (Specific User)
+     *            -> generic (Generic User From Record)
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $state Action To Do
+     *        ---
      *        Type of server action. The following values are available:
      *        - 'Execute Python Code': a block of python code that will be executed
      *        - 'Create': create a new record with new values
@@ -162,8 +219,7 @@ final class Cron extends Server
      *        - 'Send Email': automatically send an email (Discuss)
      *        - 'Add Followers': add followers to a record (Discuss)
      *        - 'Create Next Activity': create an activity (Discuss)
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> code (Execute Python Code)
      *            -> object_create (Create a new Record)
@@ -173,27 +229,17 @@ final class Cron extends Server
      *            -> followers (Add Followers)
      *            -> next_activity (Create Next Activity)
      *            -> sms (Send SMS Text Message)
-     *
-     * @param OdooRelation $model_id Model
-     *        Model on which the server action runs.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $binding_type Binding Type
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> action (Action)
      *            -> report (Report)
-     *
-     * @param string $activity_user_type Activity User Type
-     *        Use 'Specific User' to always assign the same user on the next activity. Use 'Generic User From Record' to
-     *        specify the field name of the user to choose on the record.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
-     *        Selection : (default value, usually null)
-     *            -> specific (Specific User)
-     *            -> generic (Generic User From Record)
-     *
      */
     public function __construct(
         OdooRelation $ir_actions_server_id,
@@ -202,10 +248,10 @@ final class Cron extends Server
         string $name,
         string $type,
         string $usage,
-        string $state,
         OdooRelation $model_id,
-        string $binding_type,
-        string $activity_user_type
+        string $activity_user_type,
+        string $state,
+        string $binding_type
     ) {
         $this->ir_actions_server_id = $ir_actions_server_id;
         $this->user_id = $user_id;
@@ -214,10 +260,10 @@ final class Cron extends Server
             $name,
             $type,
             $usage,
-            $state,
             $model_id,
-            $binding_type,
-            $activity_user_type
+            $activity_user_type,
+            $state,
+            $binding_type
         );
     }
 

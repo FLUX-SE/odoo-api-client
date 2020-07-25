@@ -26,6 +26,7 @@ final class Group extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Group extends Base
 
     /**
      * Description
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +46,10 @@ final class Group extends Base
 
     /**
      * Parent
+     * ---
+     * Relation : many2one (account.analytic.group)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Group
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +59,7 @@ final class Group extends Base
 
     /**
      * Parent Path
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +69,10 @@ final class Group extends Base
 
     /**
      * Childrens
+     * ---
+     * Relation : one2many (account.analytic.group -> parent_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Group
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -71,6 +82,7 @@ final class Group extends Base
 
     /**
      * Complete Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,6 +92,10 @@ final class Group extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,6 +105,10 @@ final class Group extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -98,6 +118,7 @@ final class Group extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -107,6 +128,10 @@ final class Group extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -116,6 +141,7 @@ final class Group extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -125,6 +151,7 @@ final class Group extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

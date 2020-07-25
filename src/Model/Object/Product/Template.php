@@ -26,6 +26,7 @@ class Template extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,7 +36,9 @@ class Template extends Base
 
     /**
      * Sequence
+     * ---
      * Gives the sequence order when displaying a product list
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +48,7 @@ class Template extends Base
 
     /**
      * Description
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,6 +58,7 @@ class Template extends Base
 
     /**
      * Purchase Description
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,8 +68,10 @@ class Template extends Base
 
     /**
      * Sales Description
+     * ---
      * A description of the Product that you want to communicate to your customers. This description will be copied
      * to every Sales Order, Delivery Order and Customer Invoice/Credit Note
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -74,15 +81,17 @@ class Template extends Base
 
     /**
      * Product Type
+     * ---
      * A storable product is a product for which you manage stock. The Inventory app has to be installed.
      * A consumable product is a product for which stock is not managed.
      * A service is a non-material product you provide.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> consu (Consumable)
      *     -> service (Service)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -90,6 +99,7 @@ class Template extends Base
 
     /**
      * Can be Rent
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -99,7 +109,12 @@ class Template extends Base
 
     /**
      * Product Category
+     * ---
      * Select category for the current product
+     * ---
+     * Relation : many2one (product.category)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Category
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -109,6 +124,10 @@ class Template extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -118,6 +137,10 @@ class Template extends Base
 
     /**
      * Cost Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -127,6 +150,7 @@ class Template extends Base
 
     /**
      * Price
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -136,7 +160,9 @@ class Template extends Base
 
     /**
      * Sales Price
+     * ---
      * Price at which the product is sold to customers.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -146,7 +172,9 @@ class Template extends Base
 
     /**
      * Public Price
+     * ---
      * Price at which the product is sold to customers.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -156,10 +184,12 @@ class Template extends Base
 
     /**
      * Cost
+     * ---
      * In Standard Price & AVCO: value of the product (automatically computed in AVCO).
      *                 In FIFO: value of the last unit that left the stock (automatically computed).
      *                 Used to value the product when the purchase cost is not known (e.g. inventory adjustment).
      *                 Used to compute margins on sale orders.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -169,6 +199,7 @@ class Template extends Base
 
     /**
      * Volume
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -178,6 +209,7 @@ class Template extends Base
 
     /**
      * Volume unit of measure label
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -187,6 +219,7 @@ class Template extends Base
 
     /**
      * Weight
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -196,6 +229,7 @@ class Template extends Base
 
     /**
      * Weight unit of measure label
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -205,6 +239,7 @@ class Template extends Base
 
     /**
      * Can be Sold
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -214,6 +249,7 @@ class Template extends Base
 
     /**
      * Can be Purchased
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -223,7 +259,12 @@ class Template extends Base
 
     /**
      * Pricelist
+     * ---
      * Technical field. Used for searching on pricelists, not stored in database.
+     * ---
+     * Relation : many2one (product.pricelist)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Pricelist
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -233,7 +274,12 @@ class Template extends Base
 
     /**
      * Unit of Measure
+     * ---
      * Default unit of measure used for all stock operations.
+     * ---
+     * Relation : many2one (uom.uom)
+     * @see \Flux\OdooApiClient\Model\Object\Uom\Uom
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -243,6 +289,7 @@ class Template extends Base
 
     /**
      * Unit of Measure Name
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -252,8 +299,13 @@ class Template extends Base
 
     /**
      * Purchase Unit of Measure
+     * ---
      * Default unit of measure used for purchase orders. It must be in the same category as the default unit of
      * measure.
+     * ---
+     * Relation : many2one (uom.uom)
+     * @see \Flux\OdooApiClient\Model\Object\Uom\Uom
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -263,6 +315,10 @@ class Template extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -272,7 +328,12 @@ class Template extends Base
 
     /**
      * Product Packages
+     * ---
      * Gives the different ways to package the same product.
+     * ---
+     * Relation : one2many (product.packaging)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Packaging
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -282,7 +343,12 @@ class Template extends Base
 
     /**
      * Vendors
+     * ---
      * Define vendor pricelists.
+     * ---
+     * Relation : one2many (product.supplierinfo -> product_tmpl_id)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Supplierinfo
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -292,6 +358,10 @@ class Template extends Base
 
     /**
      * Variant Seller
+     * ---
+     * Relation : one2many (product.supplierinfo -> product_tmpl_id)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Supplierinfo
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -301,7 +371,9 @@ class Template extends Base
 
     /**
      * Active
+     * ---
      * If unchecked, it will allow you to hide the product without removing it.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -311,6 +383,7 @@ class Template extends Base
 
     /**
      * Color Index
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -320,6 +393,7 @@ class Template extends Base
 
     /**
      * Is a product variant
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -329,6 +403,10 @@ class Template extends Base
 
     /**
      * Product Attributes
+     * ---
+     * Relation : one2many (product.template.attribute.line -> product_tmpl_id)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Template\Attribute\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -338,7 +416,12 @@ class Template extends Base
 
     /**
      * Valid Product Attribute Lines
+     * ---
      * Technical compute
+     * ---
+     * Relation : many2many (product.template.attribute.line)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Template\Attribute\Line
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -348,6 +431,10 @@ class Template extends Base
 
     /**
      * Products
+     * ---
+     * Relation : one2many (product.product -> product_tmpl_id)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Product
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -357,6 +444,10 @@ class Template extends Base
 
     /**
      * Product
+     * ---
+     * Relation : many2one (product.product)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Product
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -366,6 +457,7 @@ class Template extends Base
 
     /**
      * # Product Variants
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -375,7 +467,9 @@ class Template extends Base
 
     /**
      * Barcode
+     * ---
      * International Article Number used for product identification.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -385,6 +479,7 @@ class Template extends Base
 
     /**
      * Internal Reference
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -394,6 +489,7 @@ class Template extends Base
 
     /**
      * Number of price rules
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -403,6 +499,7 @@ class Template extends Base
 
     /**
      * Can Image 1024 be zoomed
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -412,6 +509,7 @@ class Template extends Base
 
     /**
      * Is a configurable product
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -421,7 +519,12 @@ class Template extends Base
 
     /**
      * Customer Taxes
+     * ---
      * Default taxes used when selling the product.
+     * ---
+     * Relation : many2many (account.tax)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -431,7 +534,12 @@ class Template extends Base
 
     /**
      * Vendor Taxes
+     * ---
      * Default taxes used when buying the product.
+     * ---
+     * Relation : many2many (account.tax)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -441,7 +549,12 @@ class Template extends Base
 
     /**
      * Income Account
+     * ---
      * Keep this field empty to use the default value from the product category.
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -451,8 +564,13 @@ class Template extends Base
 
     /**
      * Expense Account
+     * ---
      * Keep this field empty to use the default value from the product category. If anglo-saxon accounting with
      * automated valuation method is configured, the expense account on the product category will be used.
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -461,27 +579,18 @@ class Template extends Base
     protected $property_account_expense_id;
 
     /**
-     * TaxCloud Category
-     * This refers to TIC (Taxability Information Codes), these are used by TaxCloud to compute specific tax rates
-     * for each product type. The value set here prevails over the one set on the product category.
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    protected $tic_category_id;
-
-    /**
      * Track Service
+     * ---
      * Manually set quantities on order: Invoice based on the manually entered quantity, without creating an analytic
      * account.
      * Timesheets on contract: Invoice based on the tracked hours on the related timesheet.
      * Create a task and track hours: Create a task on the sales order validation and track the work hours.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> manual (Manually set quantities on order)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -489,15 +598,17 @@ class Template extends Base
 
     /**
      * Sales Order Line
+     * ---
      * Selecting the "Warning" option will notify user with the message, Selecting "Blocking Message" will throw an
      * exception with the message and block the flow. The Message has to be written in the next field.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> no-message (No Message)
      *     -> warning (Warning)
      *     -> block (Blocking Message)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -505,6 +616,7 @@ class Template extends Base
 
     /**
      * Message for Sales Order Line
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -514,15 +626,17 @@ class Template extends Base
 
     /**
      * Re-Invoice Expenses
+     * ---
      * Expenses and vendor bills can be re-invoiced to a customer.With this option, a validated expense can be
      * re-invoice to a customer at its cost or sales price.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> no (No)
      *     -> cost (At cost)
      *     -> sales_price (Sales price)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -530,6 +644,7 @@ class Template extends Base
 
     /**
      * Re-Invoice Policy visible
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -539,6 +654,7 @@ class Template extends Base
 
     /**
      * Sold
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -548,66 +664,93 @@ class Template extends Base
 
     /**
      * Invoicing Policy
+     * ---
      * Ordered Quantity: Invoice quantities ordered by the customer.
      * Delivered Quantity: Invoice quantities delivered to the customer.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> order (Ordered quantities)
      *     -> delivery (Delivered quantities)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
     protected $invoice_policy;
 
     /**
+     * TaxCloud Category
+     * ---
+     * This refers to TIC (Taxability Information Codes), these are used by TaxCloud to compute specific tax rates
+     * for each product type. The value set here prevails over the one set on the product category.
+     * ---
+     * Relation : many2one (product.tic.category)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Tic\Category
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    protected $tic_category_id;
+
+    /**
      * Image
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     protected $image_1920;
 
     /**
      * Image 1024
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     protected $image_1024;
 
     /**
      * Image 512
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     protected $image_512;
 
     /**
      * Image 256
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     protected $image_256;
 
     /**
      * Image 128
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     protected $image_128;
 
     /**
      * Activities
+     * ---
+     * Relation : one2many (mail.activity -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -617,17 +760,19 @@ class Template extends Base
 
     /**
      * Activity State
+     * ---
      * Status based on activities
      * Overdue: Due date is already passed
      * Today: Activity date is today
      * Planned: Future activities.
-     * Searchable : no
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> overdue (Overdue)
      *     -> today (Today)
      *     -> planned (Planned)
-     *
+     * ---
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
@@ -635,6 +780,10 @@ class Template extends Base
 
     /**
      * Responsible User
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -644,6 +793,10 @@ class Template extends Base
 
     /**
      * Next Activity Type
+     * ---
+     * Relation : many2one (mail.activity.type)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity\Type
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -653,6 +806,7 @@ class Template extends Base
 
     /**
      * Next Activity Deadline
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -662,6 +816,7 @@ class Template extends Base
 
     /**
      * Next Activity Summary
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -671,13 +826,15 @@ class Template extends Base
 
     /**
      * Activity Exception Decoration
+     * ---
      * Type of the exception activity on record.
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> warning (Alert)
      *     -> danger (Error)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -685,7 +842,9 @@ class Template extends Base
 
     /**
      * Icon
+     * ---
      * Icon to indicate an exception activity.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -695,6 +854,7 @@ class Template extends Base
 
     /**
      * Is Follower
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -704,6 +864,10 @@ class Template extends Base
 
     /**
      * Followers
+     * ---
+     * Relation : one2many (mail.followers -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Followers
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -713,6 +877,10 @@ class Template extends Base
 
     /**
      * Followers (Partners)
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -722,6 +890,10 @@ class Template extends Base
 
     /**
      * Followers (Channels)
+     * ---
+     * Relation : many2many (mail.channel)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Channel
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -731,6 +903,10 @@ class Template extends Base
 
     /**
      * Messages
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -740,7 +916,9 @@ class Template extends Base
 
     /**
      * Unread Messages
+     * ---
      * If checked, new messages require your attention.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -750,7 +928,9 @@ class Template extends Base
 
     /**
      * Unread Messages Counter
+     * ---
      * Number of unread messages
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -760,7 +940,9 @@ class Template extends Base
 
     /**
      * Action Needed
+     * ---
      * If checked, new messages require your attention.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -770,7 +952,9 @@ class Template extends Base
 
     /**
      * Number of Actions
+     * ---
      * Number of messages which requires an action
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -780,7 +964,9 @@ class Template extends Base
 
     /**
      * Message Delivery error
+     * ---
      * If checked, some messages have a delivery error.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -790,7 +976,9 @@ class Template extends Base
 
     /**
      * Number of errors
+     * ---
      * Number of messages with delivery error
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -800,6 +988,7 @@ class Template extends Base
 
     /**
      * Attachment Count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -809,6 +998,10 @@ class Template extends Base
 
     /**
      * Main Attachment
+     * ---
+     * Relation : many2one (ir.attachment)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -818,7 +1011,12 @@ class Template extends Base
 
     /**
      * Website Messages
+     * ---
      * Website communication history
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -828,7 +1026,9 @@ class Template extends Base
 
     /**
      * SMS Delivery error
+     * ---
      * If checked, some messages have a delivery error.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -838,6 +1038,10 @@ class Template extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -847,6 +1051,7 @@ class Template extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -856,6 +1061,10 @@ class Template extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -865,6 +1074,7 @@ class Template extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -874,44 +1084,68 @@ class Template extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $type Product Type
+     *        ---
      *        A storable product is a product for which you manage stock. The Inventory app has to be installed.
      *        A consumable product is a product for which stock is not managed.
      *        A service is a non-material product you provide.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> consu (Consumable)
      *            -> service (Service)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param OdooRelation $categ_id Product Category
+     *        ---
      *        Select category for the current product
+     *        ---
+     *        Relation : many2one (product.category)
+     *        @see \Flux\OdooApiClient\Model\Object\Product\Category
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $uom_id Unit of Measure
+     *        ---
      *        Default unit of measure used for all stock operations.
+     *        ---
+     *        Relation : many2one (uom.uom)
+     *        @see \Flux\OdooApiClient\Model\Object\Uom\Uom
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $uom_po_id Purchase Unit of Measure
+     *        ---
      *        Default unit of measure used for purchase orders. It must be in the same category as the default unit of
      *        measure.
+     *        ---
+     *        Relation : many2one (uom.uom)
+     *        @see \Flux\OdooApiClient\Model\Object\Uom\Uom
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation[] $product_variant_ids Products
+     *        ---
+     *        Relation : one2many (product.product -> product_tmpl_id)
+     *        @see \Flux\OdooApiClient\Model\Object\Product\Product
+     *        ---
      *        Searchable : yes
      *        Sortable : no
      * @param string $sale_line_warn Sales Order Line
+     *        ---
      *        Selecting the "Warning" option will notify user with the message, Selecting "Blocking Message" will throw an
      *        exception with the message and block the flow. The Message has to be written in the next field.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> no-message (No Message)
      *            -> warning (Warning)
      *            -> block (Blocking Message)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         string $name,
@@ -940,33 +1174,33 @@ class Template extends Base
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getImage256(): ?int
+    public function getImage256(): ?string
     {
         return $this->image_256;
     }
 
     /**
-     * @param int|null $image_256
+     * @param string|null $image_256
      */
-    public function setImage256(?int $image_256): void
+    public function setImage256(?string $image_256): void
     {
         $this->image_256 = $image_256;
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getImage128(): ?int
+    public function getImage128(): ?string
     {
         return $this->image_128;
     }
 
     /**
-     * @param int|null $image_128
+     * @param string|null $image_128
      */
-    public function setImage128(?int $image_128): void
+    public function setImage128(?string $image_128): void
     {
         $this->image_128 = $image_128;
     }
@@ -1049,9 +1283,9 @@ class Template extends Base
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getImage512(): ?int
+    public function getImage512(): ?string
     {
         return $this->image_512;
     }
@@ -1137,17 +1371,17 @@ class Template extends Base
     }
 
     /**
-     * @param int|null $image_512
+     * @param string|null $image_512
      */
-    public function setImage512(?int $image_512): void
+    public function setImage512(?string $image_512): void
     {
         $this->image_512 = $image_512;
     }
 
     /**
-     * @param int|null $image_1024
+     * @param string|null $image_1024
      */
-    public function setImage1024(?int $image_1024): void
+    public function setImage1024(?string $image_1024): void
     {
         $this->image_1024 = $image_1024;
     }
@@ -1161,11 +1395,11 @@ class Template extends Base
     }
 
     /**
-     * @param string $sale_line_warn
+     * @param string|null $sale_line_warn_msg
      */
-    public function setSaleLineWarn(string $sale_line_warn): void
+    public function setSaleLineWarnMsg(?string $sale_line_warn_msg): void
     {
-        $this->sale_line_warn = $sale_line_warn;
+        $this->sale_line_warn_msg = $sale_line_warn_msg;
     }
 
     /**
@@ -1216,22 +1450,6 @@ class Template extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     */
-    public function getTicCategoryId(): ?OdooRelation
-    {
-        return $this->tic_category_id;
-    }
-
-    /**
-     * @param OdooRelation|null $tic_category_id
-     */
-    public function setTicCategoryId(?OdooRelation $tic_category_id): void
-    {
-        $this->tic_category_id = $tic_category_id;
-    }
-
-    /**
      * @return string|null
      */
     public function getServiceType(): ?string
@@ -1256,6 +1474,14 @@ class Template extends Base
     }
 
     /**
+     * @param string $sale_line_warn
+     */
+    public function setSaleLineWarn(string $sale_line_warn): void
+    {
+        $this->sale_line_warn = $sale_line_warn;
+    }
+
+    /**
      * @return string|null
      */
     public function getSaleLineWarnMsg(): ?string
@@ -1264,27 +1490,19 @@ class Template extends Base
     }
 
     /**
-     * @return int|null
-     */
-    public function getImage1024(): ?int
-    {
-        return $this->image_1024;
-    }
-
-    /**
-     * @param string|null $sale_line_warn_msg
-     */
-    public function setSaleLineWarnMsg(?string $sale_line_warn_msg): void
-    {
-        $this->sale_line_warn_msg = $sale_line_warn_msg;
-    }
-
-    /**
      * @return string|null
      */
     public function getExpensePolicy(): ?string
     {
         return $this->expense_policy;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImage1024(): ?string
+    {
+        return $this->image_1024;
     }
 
     /**
@@ -1344,17 +1562,33 @@ class Template extends Base
     }
 
     /**
-     * @return int|null
+     * @return OdooRelation|null
      */
-    public function getImage1920(): ?int
+    public function getTicCategoryId(): ?OdooRelation
+    {
+        return $this->tic_category_id;
+    }
+
+    /**
+     * @param OdooRelation|null $tic_category_id
+     */
+    public function setTicCategoryId(?OdooRelation $tic_category_id): void
+    {
+        $this->tic_category_id = $tic_category_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImage1920(): ?string
     {
         return $this->image_1920;
     }
 
     /**
-     * @param int|null $image_1920
+     * @param string|null $image_1920
      */
-    public function setImage1920(?int $image_1920): void
+    public function setImage1920(?string $image_1920): void
     {
         $this->image_1920 = $image_1920;
     }

@@ -23,6 +23,7 @@ final class Rounding extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,7 +33,9 @@ final class Rounding extends Base
 
     /**
      * Rounding Precision
+     * ---
      * Represent the non-zero value smallest coinage (for example, 0.05).
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -42,13 +45,15 @@ final class Rounding extends Base
 
     /**
      * Rounding Strategy
+     * ---
      * Specify which way will be used to round the invoice amount to the rounding precision
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> biggest_tax (Modify tax amount)
      *     -> add_invoice_line (Add a rounding line)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -56,6 +61,10 @@ final class Rounding extends Base
 
     /**
      * Account
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -65,14 +74,16 @@ final class Rounding extends Base
 
     /**
      * Rounding Method
+     * ---
      * The tie-breaking rule used for float rounding operations
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> UP (UP)
      *     -> DOWN (DOWN)
      *     -> HALF-UP (HALF-UP)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -80,6 +91,10 @@ final class Rounding extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -89,6 +104,10 @@ final class Rounding extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -98,6 +117,7 @@ final class Rounding extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -107,6 +127,10 @@ final class Rounding extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -116,6 +140,7 @@ final class Rounding extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -125,29 +150,36 @@ final class Rounding extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param float $rounding Rounding Precision
+     *        ---
      *        Represent the non-zero value smallest coinage (for example, 0.05).
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $strategy Rounding Strategy
+     *        ---
      *        Specify which way will be used to round the invoice amount to the rounding precision
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> biggest_tax (Modify tax amount)
      *            -> add_invoice_line (Add a rounding line)
-     *
-     * @param string $rounding_method Rounding Method
-     *        The tie-breaking rule used for float rounding operations
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $rounding_method Rounding Method
+     *        ---
+     *        The tie-breaking rule used for float rounding operations
+     *        ---
      *        Selection : (default value, usually null)
      *            -> UP (UP)
      *            -> DOWN (DOWN)
      *            -> HALF-UP (HALF-UP)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $name, float $rounding, string $strategy, string $rounding_method)
     {

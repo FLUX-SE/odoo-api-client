@@ -23,6 +23,7 @@ final class Format extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +33,7 @@ final class Format extends Base
 
     /**
      * Function to Call
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -41,6 +43,10 @@ final class Format extends Base
 
     /**
      * Parent Wizard
+     * ---
+     * Relation : many2one (account_reports.export.wizard)
+     * @see \Flux\OdooApiClient\Model\Object\AccountReports\Export\Wizard
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -50,6 +56,10 @@ final class Format extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -59,6 +69,7 @@ final class Format extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -68,6 +79,10 @@ final class Format extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -77,6 +92,7 @@ final class Format extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -86,12 +102,18 @@ final class Format extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $fun_to_call Function to Call
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $export_wizard_id Parent Wizard
+     *        ---
+     *        Relation : many2one (account_reports.export.wizard)
+     *        @see \Flux\OdooApiClient\Model\Object\AccountReports\Export\Wizard
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

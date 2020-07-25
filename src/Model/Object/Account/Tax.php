@@ -26,6 +26,7 @@ final class Tax extends Base
 {
     /**
      * Tax Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,15 +36,17 @@ final class Tax extends Base
 
     /**
      * Tax Scope
+     * ---
      * Determines where the tax is selectable. Note : 'None' means a tax can't be used by itself, however it can
      * still be used in a group. 'adjustment' is used to perform tax adjustment.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> sale (Sales)
      *     -> purchase (Purchases)
      *     -> none (None)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -51,6 +54,7 @@ final class Tax extends Base
 
     /**
      * Tax Computation
+     * ---
      *
      *         - Group of Taxes: The tax is a set of sub taxes.
      *         - Fixed: The tax amount stays the same whatever the price.
@@ -61,14 +65,15 @@ final class Tax extends Base
      *                 e.g 180 / (1 - 10%) = 200 (not price included)
      *                 e.g 200 * (1 - 10%) = 180 (price included)
      *
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> group (Group of Taxes)
      *     -> fixed (Fixed)
      *     -> percent (Percentage of Price)
      *     -> division (Percentage of Price Tax Included)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -76,7 +81,9 @@ final class Tax extends Base
 
     /**
      * Active
+     * ---
      * Set active to false to hide the tax without removing it.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -86,6 +93,10 @@ final class Tax extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -95,6 +106,10 @@ final class Tax extends Base
 
     /**
      * Children Taxes
+     * ---
+     * Relation : many2many (account.tax)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -104,7 +119,9 @@ final class Tax extends Base
 
     /**
      * Sequence
+     * ---
      * The sequence field is used to define order in which the tax lines are applied.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -114,6 +131,7 @@ final class Tax extends Base
 
     /**
      * Amount
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -123,6 +141,7 @@ final class Tax extends Base
 
     /**
      * Label on Invoices
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -132,7 +151,9 @@ final class Tax extends Base
 
     /**
      * Included in Price
+     * ---
      * Check this if the price you use on the product and invoices includes this tax.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -142,7 +163,9 @@ final class Tax extends Base
 
     /**
      * Affect Base of Subsequent Taxes
+     * ---
      * If set, taxes which are computed after this one will be computed based on the price tax included.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -152,8 +175,10 @@ final class Tax extends Base
 
     /**
      * Include in Analytic Cost
+     * ---
      * If set, the amount computed by this tax will be assigned to the same analytic account as the invoice line (if
      * any)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -163,6 +188,10 @@ final class Tax extends Base
 
     /**
      * Tax Group
+     * ---
+     * Relation : many2one (account.tax.group)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax\Group
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -172,6 +201,7 @@ final class Tax extends Base
 
     /**
      * Hide Use Cash Basis Option
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -181,14 +211,16 @@ final class Tax extends Base
 
     /**
      * Tax Due
+     * ---
      * Based on Invoice: the tax is due as soon as the invoice is validated.
      * Based on Payment: the tax is due as soon as the payment of the invoice is received.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> on_invoice (Based on Invoice)
      *     -> on_payment (Based on Payment)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -196,9 +228,14 @@ final class Tax extends Base
 
     /**
      * Cash Basis Transition Account
+     * ---
      * Account used to transition the tax amount for cash basis taxes. It will contain the tax amount as long as the
      * original invoice has not been reconciled ; at reconciliation, this amount cancelled on this account and put on
      * the regular tax account.
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -208,8 +245,13 @@ final class Tax extends Base
 
     /**
      * Base Tax Received Account
+     * ---
      * Account that will be set on lines created in cash basis journal entry and used to keep track of the tax base
      * amount.
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -219,7 +261,12 @@ final class Tax extends Base
 
     /**
      * Repartition for Invoices
+     * ---
      * Repartition when the tax is used on an invoice
+     * ---
+     * Relation : one2many (account.tax.repartition.line -> invoice_tax_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax\Repartition\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -229,7 +276,12 @@ final class Tax extends Base
 
     /**
      * Repartition for Refund Invoices
+     * ---
      * Repartition when the tax is used on a refund
+     * ---
+     * Relation : one2many (account.tax.repartition.line -> refund_tax_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax\Repartition\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -239,7 +291,12 @@ final class Tax extends Base
 
     /**
      * Country
+     * ---
      * Technical field used to restrict the domain of account tags for tax repartition lines created for this tax.
+     * ---
+     * Relation : many2one (res.country)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -249,6 +306,10 @@ final class Tax extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -258,6 +319,7 @@ final class Tax extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -267,6 +329,10 @@ final class Tax extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -276,6 +342,7 @@ final class Tax extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -285,19 +352,23 @@ final class Tax extends Base
 
     /**
      * @param string $name Tax Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $type_tax_use Tax Scope
+     *        ---
      *        Determines where the tax is selectable. Note : 'None' means a tax can't be used by itself, however it can
      *        still be used in a group. 'adjustment' is used to perform tax adjustment.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> sale (Sales)
      *            -> purchase (Purchases)
      *            -> none (None)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $amount_type Tax Computation
+     *        ---
      *
      *                - Group of Taxes: The tax is a set of sub taxes.
      *                - Fixed: The tax amount stays the same whatever the price.
@@ -308,25 +379,37 @@ final class Tax extends Base
      *                        e.g 180 / (1 - 10%) = 200 (not price included)
      *                        e.g 200 * (1 - 10%) = 180 (price included)
      *
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> group (Group of Taxes)
      *            -> fixed (Fixed)
      *            -> percent (Percentage of Price)
      *            -> division (Percentage of Price Tax Included)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param OdooRelation $company_id Company
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param int $sequence Sequence
+     *        ---
      *        The sequence field is used to define order in which the tax lines are applied.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param float $amount Amount
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $tax_group_id Tax Group
+     *        ---
+     *        Relation : many2one (account.tax.group)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Tax\Group
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

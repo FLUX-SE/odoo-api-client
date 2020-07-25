@@ -26,7 +26,12 @@ final class Supplierinfo extends Base
 {
     /**
      * Vendor
+     * ---
      * Vendor of this product
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,8 +41,10 @@ final class Supplierinfo extends Base
 
     /**
      * Vendor Product Name
+     * ---
      * This vendor's product name will be used when printing a request for quotation. Keep empty to use the internal
      * one.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -47,8 +54,10 @@ final class Supplierinfo extends Base
 
     /**
      * Vendor Product Code
+     * ---
      * This vendor's product code will be used when printing a request for quotation. Keep empty to use the internal
      * one.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -58,7 +67,9 @@ final class Supplierinfo extends Base
 
     /**
      * Sequence
+     * ---
      * Assigns the priority to the list of product vendor.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -68,7 +79,12 @@ final class Supplierinfo extends Base
 
     /**
      * Unit of Measure
+     * ---
      * This comes from the product form.
+     * ---
+     * Relation : many2one (uom.uom)
+     * @see \Flux\OdooApiClient\Model\Object\Uom\Uom
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -78,8 +94,10 @@ final class Supplierinfo extends Base
 
     /**
      * Quantity
+     * ---
      * The quantity to purchase from this vendor to benefit from the price, expressed in the vendor Product Unit of
      * Measure if not any, in the default unit of measure of the product otherwise.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,7 +107,9 @@ final class Supplierinfo extends Base
 
     /**
      * Price
+     * ---
      * The price to purchase a product
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -99,6 +119,10 @@ final class Supplierinfo extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -108,6 +132,10 @@ final class Supplierinfo extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -117,7 +145,9 @@ final class Supplierinfo extends Base
 
     /**
      * Start Date
+     * ---
      * Start date for this vendor price
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -127,7 +157,9 @@ final class Supplierinfo extends Base
 
     /**
      * End Date
+     * ---
      * End date for this vendor price
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -137,7 +169,12 @@ final class Supplierinfo extends Base
 
     /**
      * Product Variant
+     * ---
      * If not set, the vendor price will apply to all variants of this product.
+     * ---
+     * Relation : many2one (product.product)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Product
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -147,6 +184,10 @@ final class Supplierinfo extends Base
 
     /**
      * Product Template
+     * ---
+     * Relation : many2one (product.template)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -156,6 +197,7 @@ final class Supplierinfo extends Base
 
     /**
      * Variant Count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -165,8 +207,10 @@ final class Supplierinfo extends Base
 
     /**
      * Delivery Lead Time
+     * ---
      * Lead time in days between the confirmation of the purchase order and the receipt of the products in your
      * warehouse. Used by the scheduler for automatic computation of the purchase order planning.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -176,6 +220,10 @@ final class Supplierinfo extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -185,6 +233,7 @@ final class Supplierinfo extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -194,6 +243,10 @@ final class Supplierinfo extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -203,6 +256,7 @@ final class Supplierinfo extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -212,24 +266,39 @@ final class Supplierinfo extends Base
 
     /**
      * @param OdooRelation $name Vendor
+     *        ---
      *        Vendor of this product
+     *        ---
+     *        Relation : many2one (res.partner)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param float $min_qty Quantity
+     *        ---
      *        The quantity to purchase from this vendor to benefit from the price, expressed in the vendor Product Unit of
      *        Measure if not any, in the default unit of measure of the product otherwise.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param float $price Price
+     *        ---
      *        The price to purchase a product
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $currency_id Currency
+     *        ---
+     *        Relation : many2one (res.currency)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param int $delay Delivery Lead Time
+     *        ---
      *        Lead time in days between the confirmation of the purchase order and the receipt of the products in your
      *        warehouse. Used by the scheduler for automatic computation of the purchase order planning.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

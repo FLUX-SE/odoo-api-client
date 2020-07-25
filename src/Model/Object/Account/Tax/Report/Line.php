@@ -26,7 +26,9 @@ final class Line extends Base
 {
     /**
      * Name
+     * ---
      * Complete name for this report line, to be used in report.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,7 +38,12 @@ final class Line extends Base
 
     /**
      * Tags
+     * ---
      * Tax tags populating this line
+     * ---
+     * Relation : many2many (account.account.tag)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Tag
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -46,7 +53,12 @@ final class Line extends Base
 
     /**
      * Country
+     * ---
      * Country for which this line is available.
+     * ---
+     * Relation : many2one (res.country)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -56,7 +68,12 @@ final class Line extends Base
 
     /**
      * Report Action
+     * ---
      * The optional action to call when clicking on this line in accounting reports.
+     * ---
+     * Relation : many2one (ir.actions.act_window)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Actions\ActWindow
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -66,7 +83,12 @@ final class Line extends Base
 
     /**
      * Children Lines
+     * ---
      * Lines that should be rendered as children of this one
+     * ---
+     * Relation : one2many (account.tax.report.line -> parent_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax\Report\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -76,6 +98,10 @@ final class Line extends Base
 
     /**
      * Parent Line
+     * ---
+     * Relation : many2one (account.tax.report.line)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax\Report\Line
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -85,8 +111,10 @@ final class Line extends Base
 
     /**
      * Sequence
+     * ---
      * Sequence determining the order of the lines in the report (smaller ones come first). This order is applied
      * locally per section (so, children of the same line are always rendered one after the other).
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -96,6 +124,7 @@ final class Line extends Base
 
     /**
      * Parent Path
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -105,8 +134,10 @@ final class Line extends Base
 
     /**
      * Tag Name
+     * ---
      * Short name for the tax grid corresponding to this report line. Leave empty if this report line should not
      * correspond to any such grid.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -116,7 +147,9 @@ final class Line extends Base
 
     /**
      * Code
+     * ---
      * Optional unique code to refer to this line in total formulas
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -126,10 +159,12 @@ final class Line extends Base
 
     /**
      * Formula
+     * ---
      * Python expression used to compute the value of a total line. This field is mutually exclusive with tag_name,
      * setting it turns the line to a total line. Tax report line codes can be used as variables in this expression
      * to refer to the balance of the corresponding lines in the report. A formula cannot refer to another line using
      * a formula.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -139,6 +174,10 @@ final class Line extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -148,6 +187,7 @@ final class Line extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -157,6 +197,10 @@ final class Line extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -166,6 +210,7 @@ final class Line extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -175,16 +220,25 @@ final class Line extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Complete name for this report line, to be used in report.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $country_id Country
+     *        ---
      *        Country for which this line is available.
+     *        ---
+     *        Relation : many2one (res.country)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Country
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param int $sequence Sequence
+     *        ---
      *        Sequence determining the order of the lines in the report (smaller ones come first). This order is applied
      *        locally per section (so, children of the same line are always rendered one after the other).
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

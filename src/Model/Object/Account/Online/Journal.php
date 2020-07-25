@@ -19,6 +19,7 @@ final class Journal extends Base
 {
     /**
      * Journal Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -28,6 +29,10 @@ final class Journal extends Base
 
     /**
      * Account Online Provider
+     * ---
+     * Relation : many2one (account.online.provider)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Online\Provider
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -37,6 +42,10 @@ final class Journal extends Base
 
     /**
      * Journal
+     * ---
+     * Relation : one2many (account.journal -> account_online_journal_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -46,6 +55,7 @@ final class Journal extends Base
 
     /**
      * Account Number
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -55,6 +65,7 @@ final class Journal extends Base
 
     /**
      * Last synchronization
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -64,7 +75,9 @@ final class Journal extends Base
 
     /**
      * Online Identifier
+     * ---
      * id use to identify account in provider system
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -74,7 +87,9 @@ final class Journal extends Base
 
     /**
      * Provider
+     * ---
      * name of the banking institution
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -84,7 +99,9 @@ final class Journal extends Base
 
     /**
      * Balance
+     * ---
      * balance of the account sent by the third party provider
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -94,7 +111,9 @@ final class Journal extends Base
 
     /**
      * Ponto Last Synchronization Identifier
+     * ---
      * id of ponto synchronization
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -104,7 +123,9 @@ final class Journal extends Base
 
     /**
      * Yodlee Account Status
+     * ---
      * Active/Inactive on Yodlee system
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -114,6 +135,7 @@ final class Journal extends Base
 
     /**
      * Yodlee Status Code
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -123,6 +145,10 @@ final class Journal extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -132,6 +158,7 @@ final class Journal extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -141,6 +168,10 @@ final class Journal extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -150,6 +181,7 @@ final class Journal extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -159,6 +191,7 @@ final class Journal extends Base
 
     /**
      * @param string $name Journal Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

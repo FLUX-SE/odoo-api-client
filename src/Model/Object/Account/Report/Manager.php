@@ -26,7 +26,9 @@ final class Manager extends Base
 {
     /**
      * Report Name
+     * ---
      * name of the model of the report
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,6 +38,7 @@ final class Manager extends Base
 
     /**
      * Summary
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +48,10 @@ final class Manager extends Base
 
     /**
      * Footnotes
+     * ---
+     * Relation : one2many (account.report.footnote -> manager_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Report\Footnote
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -54,6 +61,10 @@ final class Manager extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,6 +74,10 @@ final class Manager extends Base
 
     /**
      * Financial Report
+     * ---
+     * Relation : many2one (account.financial.html.report)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Financial\Html\Report
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,6 +87,10 @@ final class Manager extends Base
 
     /**
      * Partner
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -81,6 +100,10 @@ final class Manager extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -90,6 +113,7 @@ final class Manager extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -99,6 +123,10 @@ final class Manager extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -108,6 +136,7 @@ final class Manager extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -117,7 +146,9 @@ final class Manager extends Base
 
     /**
      * @param string $report_name Report Name
+     *        ---
      *        name of the model of the report
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

@@ -26,6 +26,7 @@ final class Template extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,10 @@ final class Template extends Base
 
     /**
      * Parent Chart Template
+     * ---
+     * Relation : many2one (account.chart.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Chart\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,7 +49,9 @@ final class Template extends Base
 
     /**
      * # of Digits
+     * ---
      * No. of Digits to use for account code
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,9 +61,11 @@ final class Template extends Base
 
     /**
      * Can be Visible?
+     * ---
      * Set this to False if you don't want this template to be used actively in the wizard that generate Chart of
      * Accounts from templates, this is useful when you want to generate accounts of this template only when loading
      * its child template.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -66,6 +75,10 @@ final class Template extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -75,6 +88,7 @@ final class Template extends Base
 
     /**
      * Use Anglo-Saxon accounting
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -84,8 +98,10 @@ final class Template extends Base
 
     /**
      * Complete Set of Taxes
+     * ---
      * This boolean helps you to choose if you want to propose to the user to encode the sale and purchase rates or
      * choose from list of taxes. This last choice assumes that the set of tax defined on this template is complete
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -95,6 +111,10 @@ final class Template extends Base
 
     /**
      * Associated Account Templates
+     * ---
+     * Relation : one2many (account.account.template -> chart_template_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -104,7 +124,12 @@ final class Template extends Base
 
     /**
      * Tax Template List
+     * ---
      * List of all the taxes that have to be installed by the wizard
+     * ---
+     * Relation : one2many (account.tax.template -> chart_template_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax\Template
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -114,6 +139,7 @@ final class Template extends Base
 
     /**
      * Prefix of the bank accounts
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -123,6 +149,7 @@ final class Template extends Base
 
     /**
      * Prefix of the main cash accounts
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -132,6 +159,7 @@ final class Template extends Base
 
     /**
      * Prefix of the main transfer accounts
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -141,6 +169,10 @@ final class Template extends Base
 
     /**
      * Gain Exchange Rate Account
+     * ---
+     * Relation : many2one (account.account.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -150,6 +182,10 @@ final class Template extends Base
 
     /**
      * Loss Exchange Rate Account
+     * ---
+     * Relation : many2one (account.account.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -159,6 +195,10 @@ final class Template extends Base
 
     /**
      * Cash Difference Income Account
+     * ---
+     * Relation : many2one (account.account.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -168,6 +208,10 @@ final class Template extends Base
 
     /**
      * Cash Difference Expense Account
+     * ---
+     * Relation : many2one (account.account.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -177,6 +221,10 @@ final class Template extends Base
 
     /**
      * PoS receivable account
+     * ---
+     * Relation : many2one (account.account.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -186,6 +234,10 @@ final class Template extends Base
 
     /**
      * Receivable Account
+     * ---
+     * Relation : many2one (account.account.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -195,6 +247,10 @@ final class Template extends Base
 
     /**
      * Payable Account
+     * ---
+     * Relation : many2one (account.account.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -204,6 +260,10 @@ final class Template extends Base
 
     /**
      * Category of Expense Account
+     * ---
+     * Relation : many2one (account.account.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -213,6 +273,10 @@ final class Template extends Base
 
     /**
      * Category of Income Account
+     * ---
+     * Relation : many2one (account.account.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -222,6 +286,10 @@ final class Template extends Base
 
     /**
      * Expense Account on Product Template
+     * ---
+     * Relation : many2one (account.account.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -231,6 +299,10 @@ final class Template extends Base
 
     /**
      * Income Account on Product Template
+     * ---
+     * Relation : many2one (account.account.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -240,6 +312,10 @@ final class Template extends Base
 
     /**
      * Input Account for Stock Valuation
+     * ---
+     * Relation : many2one (account.account.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -249,6 +325,10 @@ final class Template extends Base
 
     /**
      * Output Account for Stock Valuation
+     * ---
+     * Relation : many2one (account.account.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -258,6 +338,10 @@ final class Template extends Base
 
     /**
      * Account Template for Stock Valuation
+     * ---
+     * Relation : many2one (account.account.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -267,6 +351,10 @@ final class Template extends Base
 
     /**
      * Tax current account (payable)
+     * ---
+     * Relation : many2one (account.account.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -276,6 +364,10 @@ final class Template extends Base
 
     /**
      * Tax current account (receivable)
+     * ---
+     * Relation : many2one (account.account.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -285,6 +377,10 @@ final class Template extends Base
 
     /**
      * Advance tax payment account
+     * ---
+     * Relation : many2one (account.account.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -294,6 +390,10 @@ final class Template extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -303,6 +403,7 @@ final class Template extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -312,6 +413,10 @@ final class Template extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -321,6 +426,7 @@ final class Template extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -330,22 +436,32 @@ final class Template extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param int $code_digits # of Digits
+     *        ---
      *        No. of Digits to use for account code
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $currency_id Currency
+     *        ---
+     *        Relation : many2one (res.currency)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $bank_account_code_prefix Prefix of the bank accounts
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $cash_account_code_prefix Prefix of the main cash accounts
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $transfer_account_code_prefix Prefix of the main transfer accounts
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

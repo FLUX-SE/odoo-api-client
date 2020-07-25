@@ -18,6 +18,10 @@ final class User extends Base
 {
     /**
      * Wizard
+     * ---
+     * Relation : many2one (portal.wizard)
+     * @see \Flux\OdooApiClient\Model\Object\Portal\Wizard
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -27,6 +31,10 @@ final class User extends Base
 
     /**
      * Contact
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,6 +44,7 @@ final class User extends Base
 
     /**
      * Email
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +54,7 @@ final class User extends Base
 
     /**
      * In Portal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,6 +64,10 @@ final class User extends Base
 
     /**
      * Login User
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,6 +77,10 @@ final class User extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,6 +90,7 @@ final class User extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -81,6 +100,10 @@ final class User extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -90,6 +113,7 @@ final class User extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -99,9 +123,17 @@ final class User extends Base
 
     /**
      * @param OdooRelation $wizard_id Wizard
+     *        ---
+     *        Relation : many2one (portal.wizard)
+     *        @see \Flux\OdooApiClient\Model\Object\Portal\Wizard
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $partner_id Contact
+     *        ---
+     *        Relation : many2one (res.partner)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

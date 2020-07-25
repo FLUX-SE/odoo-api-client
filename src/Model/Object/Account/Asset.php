@@ -26,6 +26,7 @@ final class Asset extends Base
 {
     /**
      * # Posted Depreciation Entries
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -35,7 +36,9 @@ final class Asset extends Base
 
     /**
      * # Gross Increases
+     * ---
      * Number of assets made to increase the value of the asset
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -45,7 +48,9 @@ final class Asset extends Base
 
     /**
      * # Depreciation Entries
+     * ---
      * Number of depreciation entries (posted or not)
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -55,6 +60,7 @@ final class Asset extends Base
 
     /**
      * Asset Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -64,6 +70,10 @@ final class Asset extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -73,6 +83,10 @@ final class Asset extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -82,21 +96,23 @@ final class Asset extends Base
 
     /**
      * Status
+     * ---
      * When an asset is created, the status is 'Draft'.
      * If the asset is confirmed, the status goes in 'Running' and the depreciation lines can be posted in the
      * accounting.
      * The 'On Hold' status can be set manually when you want to pause the depreciation of an asset for some time.
      * You can manually close an asset when the depreciation is over. If the last line of depreciation is posted, the
      * asset automatically goes in that status.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> model (Model)
      *     -> draft (Draft)
      *     -> open (Running)
      *     -> paused (On Hold)
      *     -> close (Closed)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -104,6 +120,7 @@ final class Asset extends Base
 
     /**
      * Active
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -113,13 +130,14 @@ final class Asset extends Base
 
     /**
      * Asset Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> sale (Sale: Revenue Recognition)
      *     -> purchase (Purchase: Asset)
      *     -> expense (Deferred Expense)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -127,17 +145,19 @@ final class Asset extends Base
 
     /**
      * Method
+     * ---
      * Choose the method to use to compute the amount of depreciation lines.
      *     * Linear: Calculated on basis of: Gross Value / Number of Depreciations
      *     * Degressive: Calculated on basis of: Residual Value * Degressive Factor
      *     * Accelerated Degressive: Like Degressive but with a minimum depreciation value equal to the linear value.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> linear (Linear)
      *     -> degressive (Degressive)
      *     -> degressive_then_linear (Accelerated Degressive)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -145,7 +165,9 @@ final class Asset extends Base
 
     /**
      * Number of Depreciations
+     * ---
      * The number of depreciations needed to depreciate your asset
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -155,13 +177,15 @@ final class Asset extends Base
 
     /**
      * Number of Months in a Period
+     * ---
      * The amount of time between two depreciations
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> 1 (Months)
      *     -> 12 (Years)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -169,6 +193,7 @@ final class Asset extends Base
 
     /**
      * Degressive Factor
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -178,8 +203,10 @@ final class Asset extends Base
 
     /**
      * Prorata Temporis
+     * ---
      * Indicates that the first depreciation entry for this asset have to be done from the asset date (purchase date)
      * instead of the first January / Start date of fiscal year
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -189,6 +216,7 @@ final class Asset extends Base
 
     /**
      * Prorata Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -198,7 +226,12 @@ final class Asset extends Base
 
     /**
      * Fixed Asset Account
+     * ---
      * Account used to record the purchase of the asset at its original price.
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -208,7 +241,12 @@ final class Asset extends Base
 
     /**
      * Depreciation Account
+     * ---
      * Account used in the depreciation entries, to decrease the asset value.
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -218,7 +256,12 @@ final class Asset extends Base
 
     /**
      * Expense Account
+     * ---
      * Account used in the periodical entries, to record a part of the asset as expense.
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -228,6 +271,10 @@ final class Asset extends Base
 
     /**
      * Journal
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -237,6 +284,7 @@ final class Asset extends Base
 
     /**
      * Original Value
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -246,7 +294,9 @@ final class Asset extends Base
 
     /**
      * Book Value
+     * ---
      * Sum of the depreciable value, the salvage value and the book value of all value increase items
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -256,6 +306,7 @@ final class Asset extends Base
 
     /**
      * Depreciable Value
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -265,7 +316,9 @@ final class Asset extends Base
 
     /**
      * Not Depreciable Value
+     * ---
      * It is the amount you plan to have that you cannot depreciate.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -275,6 +328,7 @@ final class Asset extends Base
 
     /**
      * Gross Increase Value
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -284,6 +338,10 @@ final class Asset extends Base
 
     /**
      * Depreciation Lines
+     * ---
+     * Relation : one2many (account.move -> asset_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -293,6 +351,10 @@ final class Asset extends Base
 
     /**
      * Journal Items
+     * ---
+     * Relation : one2many (account.move.line -> asset_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -302,6 +364,10 @@ final class Asset extends Base
 
     /**
      * Analytic Account
+     * ---
+     * Relation : many2one (account.analytic.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -311,6 +377,10 @@ final class Asset extends Base
 
     /**
      * Analytic Tag
+     * ---
+     * Relation : many2many (account.analytic.tag)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Tag
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -320,8 +390,10 @@ final class Asset extends Base
 
     /**
      * First Depreciation Date
+     * ---
      * Note that this date does not alter the computation of the first journal entry in case of prorata temporis
      * assets. It simply changes its accounting date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -331,6 +403,7 @@ final class Asset extends Base
 
     /**
      * Acquisition Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -340,6 +413,7 @@ final class Asset extends Base
 
     /**
      * Disposal Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -349,6 +423,10 @@ final class Asset extends Base
 
     /**
      * Model
+     * ---
+     * Relation : many2one (account.asset)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Asset
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -358,8 +436,13 @@ final class Asset extends Base
 
     /**
      * Type of the account
+     * ---
      * Account Type is used for information purpose, to generate country-specific legal reports, and set the rules to
      * close a fiscal year and generate opening entries.
+     * ---
+     * Relation : many2one (account.account.type)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Type
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -369,6 +452,7 @@ final class Asset extends Base
 
     /**
      * Display Model Choice
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -378,6 +462,7 @@ final class Asset extends Base
 
     /**
      * Display Account Asset
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -387,7 +472,12 @@ final class Asset extends Base
 
     /**
      * Parent
+     * ---
      * An asset has a parent when it is the result of gaining value
+     * ---
+     * Relation : many2one (account.asset)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Asset
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -397,7 +487,12 @@ final class Asset extends Base
 
     /**
      * Children
+     * ---
      * The children are the gains in value of this asset
+     * ---
+     * Relation : one2many (account.asset -> parent_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Asset
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -407,6 +502,10 @@ final class Asset extends Base
 
     /**
      * Activities
+     * ---
+     * Relation : one2many (mail.activity -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -416,17 +515,19 @@ final class Asset extends Base
 
     /**
      * Activity State
+     * ---
      * Status based on activities
      * Overdue: Due date is already passed
      * Today: Activity date is today
      * Planned: Future activities.
-     * Searchable : no
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> overdue (Overdue)
      *     -> today (Today)
      *     -> planned (Planned)
-     *
+     * ---
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
@@ -434,6 +535,10 @@ final class Asset extends Base
 
     /**
      * Responsible User
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -443,6 +548,10 @@ final class Asset extends Base
 
     /**
      * Next Activity Type
+     * ---
+     * Relation : many2one (mail.activity.type)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity\Type
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -452,6 +561,7 @@ final class Asset extends Base
 
     /**
      * Next Activity Deadline
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -461,6 +571,7 @@ final class Asset extends Base
 
     /**
      * Next Activity Summary
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -470,13 +581,15 @@ final class Asset extends Base
 
     /**
      * Activity Exception Decoration
+     * ---
      * Type of the exception activity on record.
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> warning (Alert)
      *     -> danger (Error)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -484,7 +597,9 @@ final class Asset extends Base
 
     /**
      * Icon
+     * ---
      * Icon to indicate an exception activity.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -494,6 +609,7 @@ final class Asset extends Base
 
     /**
      * Is Follower
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -503,6 +619,10 @@ final class Asset extends Base
 
     /**
      * Followers
+     * ---
+     * Relation : one2many (mail.followers -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Followers
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -512,6 +632,10 @@ final class Asset extends Base
 
     /**
      * Followers (Partners)
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -521,6 +645,10 @@ final class Asset extends Base
 
     /**
      * Followers (Channels)
+     * ---
+     * Relation : many2many (mail.channel)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Channel
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -530,6 +658,10 @@ final class Asset extends Base
 
     /**
      * Messages
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -539,7 +671,9 @@ final class Asset extends Base
 
     /**
      * Unread Messages
+     * ---
      * If checked, new messages require your attention.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -549,7 +683,9 @@ final class Asset extends Base
 
     /**
      * Unread Messages Counter
+     * ---
      * Number of unread messages
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -559,7 +695,9 @@ final class Asset extends Base
 
     /**
      * Action Needed
+     * ---
      * If checked, new messages require your attention.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -569,7 +707,9 @@ final class Asset extends Base
 
     /**
      * Number of Actions
+     * ---
      * Number of messages which requires an action
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -579,7 +719,9 @@ final class Asset extends Base
 
     /**
      * Message Delivery error
+     * ---
      * If checked, some messages have a delivery error.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -589,7 +731,9 @@ final class Asset extends Base
 
     /**
      * Number of errors
+     * ---
      * Number of messages with delivery error
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -599,6 +743,7 @@ final class Asset extends Base
 
     /**
      * Attachment Count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -608,6 +753,10 @@ final class Asset extends Base
 
     /**
      * Main Attachment
+     * ---
+     * Relation : many2one (ir.attachment)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -617,7 +766,12 @@ final class Asset extends Base
 
     /**
      * Website Messages
+     * ---
      * Website communication history
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -627,7 +781,9 @@ final class Asset extends Base
 
     /**
      * SMS Delivery error
+     * ---
      * If checked, some messages have a delivery error.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -637,6 +793,10 @@ final class Asset extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -646,6 +806,7 @@ final class Asset extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -655,6 +816,10 @@ final class Asset extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -664,6 +829,7 @@ final class Asset extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -673,17 +839,28 @@ final class Asset extends Base
 
     /**
      * @param string $name Asset Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $currency_id Currency
+     *        ---
+     *        Relation : many2one (res.currency)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $company_id Company
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param DateTimeInterface $first_depreciation_date First Depreciation Date
+     *        ---
      *        Note that this date does not alter the computation of the first journal entry in case of prorata temporis
      *        assets. It simply changes its accounting date
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

@@ -26,7 +26,9 @@ final class Token extends Base
 {
     /**
      * Name
+     * ---
      * Name of the payment token
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,6 +38,7 @@ final class Token extends Base
 
     /**
      * Short name
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -45,6 +48,10 @@ final class Token extends Base
 
     /**
      * Partner
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,6 +61,10 @@ final class Token extends Base
 
     /**
      * Acquirer Account
+     * ---
+     * Relation : many2one (payment.acquirer)
+     * @see \Flux\OdooApiClient\Model\Object\Payment\Acquirer
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,6 +74,10 @@ final class Token extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,6 +87,7 @@ final class Token extends Base
 
     /**
      * Acquirer Ref.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -81,6 +97,7 @@ final class Token extends Base
 
     /**
      * Active
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -90,6 +107,10 @@ final class Token extends Base
 
     /**
      * Payment Transactions
+     * ---
+     * Relation : one2many (payment.transaction -> payment_token_id)
+     * @see \Flux\OdooApiClient\Model\Object\Payment\Transaction
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -99,6 +120,7 @@ final class Token extends Base
 
     /**
      * Verified
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -108,6 +130,10 @@ final class Token extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -117,6 +143,7 @@ final class Token extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -126,6 +153,10 @@ final class Token extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -135,6 +166,7 @@ final class Token extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -144,12 +176,21 @@ final class Token extends Base
 
     /**
      * @param OdooRelation $partner_id Partner
+     *        ---
+     *        Relation : many2one (res.partner)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $acquirer_id Acquirer Account
+     *        ---
+     *        Relation : many2one (payment.acquirer)
+     *        @see \Flux\OdooApiClient\Model\Object\Payment\Acquirer
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $acquirer_ref Acquirer Ref.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

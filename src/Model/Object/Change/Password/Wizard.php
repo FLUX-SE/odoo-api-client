@@ -18,6 +18,10 @@ final class Wizard extends Base
 {
     /**
      * Users
+     * ---
+     * Relation : one2many (change.password.user -> wizard_id)
+     * @see \Flux\OdooApiClient\Model\Object\Change\Password\User
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -27,6 +31,10 @@ final class Wizard extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,6 +44,7 @@ final class Wizard extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +54,10 @@ final class Wizard extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,6 +67,7 @@ final class Wizard extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

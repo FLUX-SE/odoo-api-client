@@ -26,6 +26,10 @@ final class Reconcile extends Base
 {
     /**
      * Debit Move
+     * ---
+     * Relation : many2one (account.move.line)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move\Line
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +39,10 @@ final class Reconcile extends Base
 
     /**
      * Credit Move
+     * ---
+     * Relation : many2one (account.move.line)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move\Line
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,7 +52,9 @@ final class Reconcile extends Base
 
     /**
      * Amount
+     * ---
      * Amount concerned by this matching. Assumed to be always positive
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,6 +64,7 @@ final class Reconcile extends Base
 
     /**
      * Amount in Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,6 +74,10 @@ final class Reconcile extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,7 +87,12 @@ final class Reconcile extends Base
 
     /**
      * Company Currency
+     * ---
      * Utility field to express amount currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -82,7 +102,12 @@ final class Reconcile extends Base
 
     /**
      * Company
+     * ---
      * Company related to this journal
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -92,6 +117,10 @@ final class Reconcile extends Base
 
     /**
      * Full Reconcile
+     * ---
+     * Relation : many2one (account.full.reconcile)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Full\Reconcile
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -101,8 +130,10 @@ final class Reconcile extends Base
 
     /**
      * Max Date of Matched Lines
+     * ---
      * Technical field used to determine at which date this reconciliation needs to be shown on the aged
      * receivable/payable reports.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -112,6 +143,10 @@ final class Reconcile extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -121,6 +156,7 @@ final class Reconcile extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -130,6 +166,10 @@ final class Reconcile extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -139,6 +179,7 @@ final class Reconcile extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -148,9 +189,17 @@ final class Reconcile extends Base
 
     /**
      * @param OdooRelation $debit_move_id Debit Move
+     *        ---
+     *        Relation : many2one (account.move.line)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Move\Line
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $credit_move_id Credit Move
+     *        ---
+     *        Relation : many2one (account.move.line)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Move\Line
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

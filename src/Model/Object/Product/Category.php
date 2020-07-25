@@ -26,6 +26,7 @@ final class Category extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Category extends Base
 
     /**
      * Complete Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +46,10 @@ final class Category extends Base
 
     /**
      * Parent Category
+     * ---
+     * Relation : many2one (product.category)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Category
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +59,7 @@ final class Category extends Base
 
     /**
      * Parent Path
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +69,10 @@ final class Category extends Base
 
     /**
      * Child Categories
+     * ---
+     * Relation : one2many (product.category -> parent_id)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Category
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -71,7 +82,9 @@ final class Category extends Base
 
     /**
      * # Products
+     * ---
      * The number of products under this category (Does not consider the children categories)
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -81,7 +94,12 @@ final class Category extends Base
 
     /**
      * Income Account
+     * ---
      * This account will be used when validating a customer invoice.
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -91,9 +109,14 @@ final class Category extends Base
 
     /**
      * Expense Account
+     * ---
      * The expense is accounted for when a vendor bill is validated, except in anglo-saxon accounting with perpetual
      * inventory valuation in which case the expense (Cost of Goods Sold account) is recognized at the customer
      * invoice validation.
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -103,9 +126,14 @@ final class Category extends Base
 
     /**
      * TIC Code
+     * ---
      * This refers to TIC (Taxability Information Codes), these are used by TaxCloud to compute specific tax rates
      * for each product type. This value is used when no TIC is set on the product. If no value is set here, the
      * default value set in Invoicing settings is used.
+     * ---
+     * Relation : many2one (product.tic.category)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Tic\Category
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -115,6 +143,10 @@ final class Category extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -124,6 +156,7 @@ final class Category extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -133,6 +166,10 @@ final class Category extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -142,6 +179,7 @@ final class Category extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -151,6 +189,7 @@ final class Category extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

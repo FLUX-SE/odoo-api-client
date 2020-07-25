@@ -26,6 +26,10 @@ final class Letter extends Base
 {
     /**
      * Sent by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +39,7 @@ final class Letter extends Base
 
     /**
      * Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +49,7 @@ final class Letter extends Base
 
     /**
      * Document ID
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +59,10 @@ final class Letter extends Base
 
     /**
      * Recipient
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +72,10 @@ final class Letter extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +85,10 @@ final class Letter extends Base
 
     /**
      * Optional report to print and attach
+     * ---
+     * Relation : many2one (ir.actions.report)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Actions\Report
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,6 +98,10 @@ final class Letter extends Base
 
     /**
      * Attachment
+     * ---
+     * Relation : many2one (ir.attachment)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,15 +111,17 @@ final class Letter extends Base
 
     /**
      * Document
+     * ---
      * Searchable : no
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $attachment_datas;
 
     /**
      * Attachment Filename
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -107,6 +131,7 @@ final class Letter extends Base
 
     /**
      * Color
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -116,6 +141,7 @@ final class Letter extends Base
 
     /**
      * Cover Page
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -125,6 +151,7 @@ final class Letter extends Base
 
     /**
      * Both side
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -134,17 +161,19 @@ final class Letter extends Base
 
     /**
      * Status
+     * ---
      * When a letter is created, the status is 'Pending'.
      * If the letter is correctly sent, the status goes in 'Sent',
      * If not, it will got in state 'Error' and the error message will be displayed in the field 'Error Message'.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> pending (In Queue)
      *     -> sent (Sent)
      *     -> error (Error)
      *     -> canceled (Canceled)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -152,8 +181,7 @@ final class Letter extends Base
 
     /**
      * Error
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> MISSING_REQUIRED_FIELDS (MISSING_REQUIRED_FIELDS)
      *     -> CREDIT_ERROR (CREDIT_ERROR)
@@ -161,7 +189,9 @@ final class Letter extends Base
      *     -> NO_PRICE_AVAILABLE (NO_PRICE_AVAILABLE)
      *     -> FORMAT_ERROR (FORMAT_ERROR)
      *     -> UNKNOWN_ERROR (UNKNOWN_ERROR)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -169,6 +199,7 @@ final class Letter extends Base
 
     /**
      * Information
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -178,6 +209,7 @@ final class Letter extends Base
 
     /**
      * Related Record
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -187,6 +219,10 @@ final class Letter extends Base
 
     /**
      * Snailmail Status Message
+     * ---
+     * Relation : many2one (mail.message)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -196,6 +232,7 @@ final class Letter extends Base
 
     /**
      * Street
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -205,6 +242,7 @@ final class Letter extends Base
 
     /**
      * Street2
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -214,6 +252,7 @@ final class Letter extends Base
 
     /**
      * Zip
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -223,6 +262,7 @@ final class Letter extends Base
 
     /**
      * City
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -232,6 +272,10 @@ final class Letter extends Base
 
     /**
      * State
+     * ---
+     * Relation : many2one (res.country.state)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country\State
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -241,6 +285,10 @@ final class Letter extends Base
 
     /**
      * Country
+     * ---
+     * Relation : many2one (res.country)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -250,6 +298,10 @@ final class Letter extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -259,6 +311,7 @@ final class Letter extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -268,6 +321,10 @@ final class Letter extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -277,6 +334,7 @@ final class Letter extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -286,29 +344,41 @@ final class Letter extends Base
 
     /**
      * @param string $model Model
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param int $res_id Document ID
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $partner_id Recipient
+     *        ---
+     *        Relation : many2one (res.partner)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $company_id Company
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $state Status
+     *        ---
      *        When a letter is created, the status is 'Pending'.
      *        If the letter is correctly sent, the status goes in 'Sent',
      *        If not, it will got in state 'Error' and the error message will be displayed in the field 'Error Message'.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> pending (In Queue)
      *            -> sent (Sent)
      *            -> error (Error)
      *            -> canceled (Canceled)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         string $model,
@@ -661,17 +731,17 @@ final class Letter extends Base
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getAttachmentDatas(): ?int
+    public function getAttachmentDatas(): ?string
     {
         return $this->attachment_datas;
     }
 
     /**
-     * @param int|null $attachment_datas
+     * @param string|null $attachment_datas
      */
-    public function setAttachmentDatas(?int $attachment_datas): void
+    public function setAttachmentDatas(?string $attachment_datas): void
     {
         $this->attachment_datas = $attachment_datas;
     }

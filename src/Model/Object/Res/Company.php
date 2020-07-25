@@ -26,6 +26,7 @@ final class Company extends Base
 {
     /**
      * Company Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,7 +36,9 @@ final class Company extends Base
 
     /**
      * Sequence
+     * ---
      * Used to order Companies in the company switcher
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +48,10 @@ final class Company extends Base
 
     /**
      * Parent Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,6 +61,10 @@ final class Company extends Base
 
     /**
      * Child Companies
+     * ---
+     * Relation : one2many (res.company -> parent_id)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -63,6 +74,10 @@ final class Company extends Base
 
     /**
      * Partner
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,7 +87,9 @@ final class Company extends Base
 
     /**
      * Company Tagline
+     * ---
      * Appears by default on the top right corner of your printed documents (report header).
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -82,7 +99,9 @@ final class Company extends Base
 
     /**
      * Report Footer
+     * ---
      * Footer text displayed at the bottom of all reports.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -92,24 +111,30 @@ final class Company extends Base
 
     /**
      * Company Logo
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $logo;
 
     /**
      * Logo Web
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
-     * @var int|null
+     * @var string|null
      */
     private $logo_web;
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -119,6 +144,10 @@ final class Company extends Base
 
     /**
      * Accepted Users
+     * ---
+     * Relation : many2many (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -128,6 +157,7 @@ final class Company extends Base
 
     /**
      * Account No.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -137,6 +167,7 @@ final class Company extends Base
 
     /**
      * Street
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -146,6 +177,7 @@ final class Company extends Base
 
     /**
      * Street2
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -155,6 +187,7 @@ final class Company extends Base
 
     /**
      * Zip
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -164,6 +197,7 @@ final class Company extends Base
 
     /**
      * City
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -173,6 +207,10 @@ final class Company extends Base
 
     /**
      * Fed. State
+     * ---
+     * Relation : many2one (res.country.state)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country\State
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -182,7 +220,12 @@ final class Company extends Base
 
     /**
      * Bank Accounts
+     * ---
      * Bank accounts related to this company
+     * ---
+     * Relation : one2many (res.partner.bank -> company_id)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner\Bank
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -192,6 +235,10 @@ final class Company extends Base
 
     /**
      * Country
+     * ---
+     * Relation : many2one (res.country)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -201,6 +248,7 @@ final class Company extends Base
 
     /**
      * Email
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -210,6 +258,7 @@ final class Company extends Base
 
     /**
      * Phone
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -219,6 +268,7 @@ final class Company extends Base
 
     /**
      * Website Link
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -228,8 +278,10 @@ final class Company extends Base
 
     /**
      * Tax ID
+     * ---
      * The Tax Identification Number. Complete it if the contact is subjected to government taxes. Used in some legal
      * statements.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -239,6 +291,7 @@ final class Company extends Base
 
     /**
      * Company Registry
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -248,6 +301,10 @@ final class Company extends Base
 
     /**
      * Paper format
+     * ---
+     * Relation : many2one (report.paperformat)
+     * @see \Flux\OdooApiClient\Model\Object\Report\Paperformat
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -257,6 +314,10 @@ final class Company extends Base
 
     /**
      * Document Template
+     * ---
+     * Relation : many2one (ir.ui.view)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Ui\View
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -266,13 +327,14 @@ final class Company extends Base
 
     /**
      * State of the onboarding company step
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> not_done (Not done)
      *     -> just_done (Just done)
      *     -> done (Done)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -280,18 +342,19 @@ final class Company extends Base
 
     /**
      * Company Favicon
+     * ---
      * This field holds the image used to display a favicon for a given company.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $favicon;
 
     /**
      * Font
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> Lato (Lato)
      *     -> Roboto (Roboto)
@@ -299,7 +362,9 @@ final class Company extends Base
      *     -> Montserrat (Montserrat)
      *     -> Oswald (Oswald)
      *     -> Raleway (Raleway)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -307,6 +372,7 @@ final class Company extends Base
 
     /**
      * Primary Color
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -316,6 +382,7 @@ final class Company extends Base
 
     /**
      * Secondary Color
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -325,6 +392,10 @@ final class Company extends Base
 
     /**
      * Working Hours
+     * ---
+     * Relation : one2many (resource.calendar -> company_id)
+     * @see \Flux\OdooApiClient\Model\Object\Resource_\Calendar
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -334,6 +405,10 @@ final class Company extends Base
 
     /**
      * Default Working Hours
+     * ---
+     * Relation : many2one (resource.calendar)
+     * @see \Flux\OdooApiClient\Model\Object\Resource_\Calendar
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -343,6 +418,7 @@ final class Company extends Base
 
     /**
      * Catchall Email
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -352,6 +428,7 @@ final class Company extends Base
 
     /**
      * Company database ID
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -361,6 +438,7 @@ final class Company extends Base
 
     /**
      * Color
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -370,6 +448,7 @@ final class Company extends Base
 
     /**
      * Add a Cover Page
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -379,6 +458,7 @@ final class Company extends Base
 
     /**
      * Both sides
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -388,6 +468,7 @@ final class Company extends Base
 
     /**
      * Fiscalyear Last Day
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -397,8 +478,7 @@ final class Company extends Base
 
     /**
      * Fiscalyear Last Month
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> 1 (January)
      *     -> 2 (February)
@@ -412,7 +492,9 @@ final class Company extends Base
      *     -> 10 (October)
      *     -> 11 (November)
      *     -> 12 (December)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -420,8 +502,10 @@ final class Company extends Base
 
     /**
      * Lock Date for Non-Advisers
+     * ---
      * Only users with the 'Adviser' role can edit accounts prior to and inclusive of this date. Use it for period
      * locking inside an open fiscal year, for example.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -431,8 +515,10 @@ final class Company extends Base
 
     /**
      * Lock Date
+     * ---
      * No users, including Advisers, can edit accounts prior to and inclusive of this date. Use it for fiscal year
      * locking for example.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -442,7 +528,9 @@ final class Company extends Base
 
     /**
      * Tax Lock Date
+     * ---
      * No users can edit journal entries related to a tax prior and inclusive of this date.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -452,7 +540,12 @@ final class Company extends Base
 
     /**
      * Inter-Banks Transfer Account
+     * ---
      * Intermediary account used when moving money from a liquidity account to another
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -462,6 +555,7 @@ final class Company extends Base
 
     /**
      * Expects a Chart of Accounts
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -471,7 +565,12 @@ final class Company extends Base
 
     /**
      * Chart Template
+     * ---
      * The chart template for the company (if any)
+     * ---
+     * Relation : many2one (account.chart.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Chart\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -481,6 +580,7 @@ final class Company extends Base
 
     /**
      * Prefix of the bank accounts
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -490,6 +590,7 @@ final class Company extends Base
 
     /**
      * Prefix of the cash accounts
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -499,6 +600,10 @@ final class Company extends Base
 
     /**
      * Cash Difference Income Account
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -508,6 +613,10 @@ final class Company extends Base
 
     /**
      * Cash Difference Expense Account
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -517,6 +626,7 @@ final class Company extends Base
 
     /**
      * Prefix of the transfer accounts
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -526,6 +636,10 @@ final class Company extends Base
 
     /**
      * Default Sale Tax
+     * ---
+     * Relation : many2one (account.tax)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -535,6 +649,10 @@ final class Company extends Base
 
     /**
      * Default Purchase Tax
+     * ---
+     * Relation : many2one (account.tax)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -544,6 +662,10 @@ final class Company extends Base
 
     /**
      * Cash Basis Journal
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -553,12 +675,13 @@ final class Company extends Base
 
     /**
      * Tax Calculation Rounding Method
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> round_per_line (Round per Line)
      *     -> round_globally (Round Globally)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -566,6 +689,10 @@ final class Company extends Base
 
     /**
      * Exchange Gain or Loss Journal
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -575,7 +702,12 @@ final class Company extends Base
 
     /**
      * Gain Exchange Rate Account
+     * ---
      * It acts as a default account for credit amount
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -585,7 +717,12 @@ final class Company extends Base
 
     /**
      * Loss Exchange Rate Account
+     * ---
      * It acts as a default account for debit amount
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -595,6 +732,7 @@ final class Company extends Base
 
     /**
      * Use anglo-saxon accounting
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -604,6 +742,10 @@ final class Company extends Base
 
     /**
      * Input Account for Stock Valuation
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -613,6 +755,10 @@ final class Company extends Base
 
     /**
      * Output Account for Stock Valuation
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -622,6 +768,10 @@ final class Company extends Base
 
     /**
      * Account Template for Stock Valuation
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -631,6 +781,10 @@ final class Company extends Base
 
     /**
      * Bank Journals
+     * ---
+     * Relation : one2many (account.journal -> company_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -640,6 +794,7 @@ final class Company extends Base
 
     /**
      * Use Cash Basis
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -649,11 +804,13 @@ final class Company extends Base
 
     /**
      * Bank Reconciliation Threshold
+     * ---
      * The bank reconciliation widget won't ask to reconcile payments older than this date.
      *
      * This is useful if you install accounting after having used invoicing for some time and
      *
      * don't want to reconcile all the past payments with bank statements.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -663,7 +820,12 @@ final class Company extends Base
 
     /**
      * Default incoterm
+     * ---
      * International Commercial Terms are a series of predefined commercial terms used in international transactions.
+     * ---
+     * Relation : many2one (account.incoterms)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Incoterms
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -673,6 +835,7 @@ final class Company extends Base
 
     /**
      * Display SEPA QR code
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -682,6 +845,7 @@ final class Company extends Base
 
     /**
      * Email by default
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -691,6 +855,7 @@ final class Company extends Base
 
     /**
      * Print by default
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -700,7 +865,12 @@ final class Company extends Base
 
     /**
      * Opening Journal Entry
+     * ---
      * The journal entry containing the initial balance of all this company's accounts.
+     * ---
+     * Relation : many2one (account.move)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -710,7 +880,12 @@ final class Company extends Base
 
     /**
      * Opening Journal
+     * ---
      * Journal where the opening entry of this company's accounting has been posted.
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -720,7 +895,9 @@ final class Company extends Base
 
     /**
      * Opening Date
+     * ---
      * Date at which the opening entry of this company's accounting has been posted.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -730,13 +907,14 @@ final class Company extends Base
 
     /**
      * State of the onboarding bank data step
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> not_done (Not done)
      *     -> just_done (Just done)
      *     -> done (Done)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -744,13 +922,14 @@ final class Company extends Base
 
     /**
      * State of the onboarding fiscal year step
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> not_done (Not done)
      *     -> just_done (Just done)
      *     -> done (Done)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -758,13 +937,14 @@ final class Company extends Base
 
     /**
      * State of the onboarding charts of account step
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> not_done (Not done)
      *     -> just_done (Just done)
      *     -> done (Done)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -772,13 +952,14 @@ final class Company extends Base
 
     /**
      * State of the onboarding invoice layout step
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> not_done (Not done)
      *     -> just_done (Just done)
      *     -> done (Done)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -786,13 +967,14 @@ final class Company extends Base
 
     /**
      * State of the onboarding sample invoice step
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> not_done (Not done)
      *     -> just_done (Just done)
      *     -> done (Done)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -800,13 +982,14 @@ final class Company extends Base
 
     /**
      * State of the onboarding sale tax step
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> not_done (Not done)
      *     -> just_done (Just done)
      *     -> done (Done)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -814,14 +997,15 @@ final class Company extends Base
 
     /**
      * State of the account invoice onboarding panel
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> not_done (Not done)
      *     -> just_done (Just done)
      *     -> done (Done)
      *     -> closed (Closed)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -829,14 +1013,15 @@ final class Company extends Base
 
     /**
      * State of the account dashboard onboarding panel
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> not_done (Not done)
      *     -> just_done (Just done)
      *     -> done (Done)
      *     -> closed (Closed)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -844,6 +1029,7 @@ final class Company extends Base
 
     /**
      * Default Terms and Conditions
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -853,6 +1039,10 @@ final class Company extends Base
 
     /**
      * Default PoS Receivable Account
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -862,7 +1052,12 @@ final class Company extends Base
 
     /**
      * Expense Accrual Account
+     * ---
      * Account used to move the period of an expense
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -872,7 +1067,12 @@ final class Company extends Base
 
     /**
      * Revenue Accrual Account
+     * ---
      * Account used to move the period of a revenue
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -882,7 +1082,12 @@ final class Company extends Base
 
     /**
      * Accrual Default Journal
+     * ---
      * Journal used by default for moving the period of an entry
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -892,16 +1097,18 @@ final class Company extends Base
 
     /**
      * Check Layout
+     * ---
      * Select the format corresponding to the check paper you will be printing your checks on.
      * In order to disable the printing feature, select 'None'.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> disabled (None)
      *     -> action_print_check_top (check on top)
      *     -> action_print_check_middle (check in middle)
      *     -> action_print_check_bottom (check on bottom)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -909,8 +1116,10 @@ final class Company extends Base
 
     /**
      * Print Date Label
+     * ---
      * This option allows you to print the date label on the check as per CPA. Disable this if your pre-printed check
      * includes the date label.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -920,7 +1129,9 @@ final class Company extends Base
 
     /**
      * Multi-Pages Check Stub
+     * ---
      * This option allows you to print check details (stub) on multiple pages if they don't fit on a single page.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -930,7 +1141,9 @@ final class Company extends Base
 
     /**
      * Check Top Margin
+     * ---
      * Adjust the margins of generated checks to make it fit your printer's settings.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -940,7 +1153,9 @@ final class Company extends Base
 
     /**
      * Check Left Margin
+     * ---
      * Adjust the margins of generated checks to make it fit your printer's settings.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -950,7 +1165,9 @@ final class Company extends Base
 
     /**
      * Right Margin
+     * ---
      * Adjust the margins of generated checks to make it fit your printer's settings.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -960,13 +1177,14 @@ final class Company extends Base
 
     /**
      * Send mode on invoices attachments
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> no_send (Do not digitalize bills)
      *     -> manual_send (Digitalize bills on demand only)
      *     -> auto_send (Digitalize all bills automatically)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -974,6 +1192,7 @@ final class Company extends Base
 
     /**
      * OCR Single Invoice Line Per Tax
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -982,15 +1201,26 @@ final class Company extends Base
     private $extract_single_line_per_tax;
 
     /**
-     * Interval Unit
+     * Verify VAT Numbers
+     * ---
      * Searchable : yes
      * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $vat_check_vies;
+
+    /**
+     * Interval Unit
+     * ---
      * Selection : (default value, usually null)
      *     -> manually (Manually)
      *     -> daily (Daily)
      *     -> weekly (Weekly)
      *     -> monthly (Monthly)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -998,6 +1228,7 @@ final class Company extends Base
 
     /**
      * Next Execution Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1007,15 +1238,16 @@ final class Company extends Base
 
     /**
      * Service Provider
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> ecb (European Central Bank)
      *     -> fta (Federal Tax Administration (Switzerland))
      *     -> banxico (Mexican Bank)
      *     -> boc (Bank Of Canada)
      *     -> xe_com (xe.com)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -1023,13 +1255,14 @@ final class Company extends Base
 
     /**
      * State of the onboarding payment acquirer step
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> not_done (Not done)
      *     -> just_done (Just done)
      *     -> done (Done)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -1037,14 +1270,15 @@ final class Company extends Base
 
     /**
      * Selected onboarding payment method
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> paypal (PayPal)
      *     -> stripe (Stripe)
      *     -> manual (Manual)
      *     -> other (Other)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -1052,6 +1286,7 @@ final class Company extends Base
 
     /**
      * Send by Post
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1061,7 +1296,9 @@ final class Company extends Base
 
     /**
      * Add totals below sections
+     * ---
      * When ticked, totals and subtotals appear below the sections of the report.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1071,13 +1308,15 @@ final class Company extends Base
 
     /**
      * Delay units
+     * ---
      * Periodicity
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> trimester (trimester)
      *     -> monthly (monthly)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -1085,6 +1324,7 @@ final class Company extends Base
 
     /**
      * Start from
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1094,7 +1334,9 @@ final class Company extends Base
 
     /**
      * Start from original
+     * ---
      * technical helper to prevent rewriting activity date when saving settings
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1104,6 +1346,10 @@ final class Company extends Base
 
     /**
      * Journal
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1113,6 +1359,10 @@ final class Company extends Base
 
     /**
      * Account Tax Next Activity Type
+     * ---
+     * Relation : many2one (mail.activity.type)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity\Type
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1122,6 +1372,7 @@ final class Company extends Base
 
     /**
      * access_token
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1131,6 +1382,7 @@ final class Company extends Base
 
     /**
      * Yodlee login
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1140,6 +1392,7 @@ final class Company extends Base
 
     /**
      * Yodlee password
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1149,6 +1402,7 @@ final class Company extends Base
 
     /**
      * Yodlee access token
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1157,163 +1411,11 @@ final class Company extends Base
     private $yodlee_user_access_token;
 
     /**
-     * Gain Account
-     * Account used to write the journal item in case of gain while selling an asset
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $gain_account_id;
-
-    /**
-     * Loss Account
-     * Account used to write the journal item in case of loss while selling an asset
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $loss_account_id;
-
-    /**
-     * TaxCloud API ID
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $taxcloud_api_id;
-
-    /**
-     * TaxCloud API KEY
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $taxcloud_api_key;
-
-    /**
-     * Default TIC Code
-     * TIC (Taxability Information Codes) allow to get specific tax rates for each product type. This default value
-     * applies if no product is used in the order/invoice, or if no TIC is set on the product or its product
-     * category. By default, TaxCloud relies on the TIC *[0] Uncategorized* default referring to general goods and
-     * services.
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $tic_category_id;
-
-    /**
-     * Is Taxcloud Configured
-     * Used to determine whether or not to warn the user to configure TaxCloud.
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $is_taxcloud_configured;
-
-    /**
-     * Online Signature
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $portal_confirmation_sign;
-
-    /**
-     * Online Payment
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $portal_confirmation_pay;
-
-    /**
-     * Default Quotation Validity (Days)
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var int|null
-     */
-    private $quotation_validity_days;
-
-    /**
-     * State of the sale onboarding panel
-     * Searchable : yes
-     * Sortable : yes
-     * Selection : (default value, usually null)
-     *     -> not_done (Not done)
-     *     -> just_done (Just done)
-     *     -> done (Done)
-     *     -> closed (Closed)
-     *
-     *
-     * @var string|null
-     */
-    private $sale_quotation_onboarding_state;
-
-    /**
-     * State of the onboarding confirmation order step
-     * Searchable : yes
-     * Sortable : yes
-     * Selection : (default value, usually null)
-     *     -> not_done (Not done)
-     *     -> just_done (Just done)
-     *     -> done (Done)
-     *
-     *
-     * @var string|null
-     */
-    private $sale_onboarding_order_confirmation_state;
-
-    /**
-     * State of the onboarding sample quotation step
-     * Searchable : yes
-     * Sortable : yes
-     * Selection : (default value, usually null)
-     *     -> not_done (Not done)
-     *     -> just_done (Just done)
-     *     -> done (Done)
-     *
-     *
-     * @var string|null
-     */
-    private $sale_onboarding_sample_quotation_state;
-
-    /**
-     * Sale onboarding selected payment method
-     * Searchable : yes
-     * Sortable : yes
-     * Selection : (default value, usually null)
-     *     -> digital_signature (Sign online)
-     *     -> paypal (PayPal)
-     *     -> stripe (Stripe)
-     *     -> other (Pay with another payment acquirer)
-     *     -> manual (Manual Payment)
-     *
-     *
-     * @var string|null
-     */
-    private $sale_onboarding_payment_method;
-
-    /**
-     * Verify VAT Numbers
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $vat_check_vies;
-
-    /**
      * Sequence to use to build sale closings
+     * ---
+     * Relation : many2one (ir.sequence)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1323,6 +1425,7 @@ final class Company extends Base
 
     /**
      * SIRET
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1332,6 +1435,7 @@ final class Company extends Base
 
     /**
      * APE
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1340,7 +1444,184 @@ final class Company extends Base
     private $ape;
 
     /**
+     * Online Signature
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $portal_confirmation_sign;
+
+    /**
+     * Online Payment
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $portal_confirmation_pay;
+
+    /**
+     * Default Quotation Validity (Days)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var int|null
+     */
+    private $quotation_validity_days;
+
+    /**
+     * State of the sale onboarding panel
+     * ---
+     * Selection : (default value, usually null)
+     *     -> not_done (Not done)
+     *     -> just_done (Just done)
+     *     -> done (Done)
+     *     -> closed (Closed)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $sale_quotation_onboarding_state;
+
+    /**
+     * State of the onboarding confirmation order step
+     * ---
+     * Selection : (default value, usually null)
+     *     -> not_done (Not done)
+     *     -> just_done (Just done)
+     *     -> done (Done)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $sale_onboarding_order_confirmation_state;
+
+    /**
+     * State of the onboarding sample quotation step
+     * ---
+     * Selection : (default value, usually null)
+     *     -> not_done (Not done)
+     *     -> just_done (Just done)
+     *     -> done (Done)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $sale_onboarding_sample_quotation_state;
+
+    /**
+     * Sale onboarding selected payment method
+     * ---
+     * Selection : (default value, usually null)
+     *     -> digital_signature (Sign online)
+     *     -> paypal (PayPal)
+     *     -> stripe (Stripe)
+     *     -> other (Pay with another payment acquirer)
+     *     -> manual (Manual Payment)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $sale_onboarding_payment_method;
+
+    /**
+     * Gain Account
+     * ---
+     * Account used to write the journal item in case of gain while selling an asset
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $gain_account_id;
+
+    /**
+     * Loss Account
+     * ---
+     * Account used to write the journal item in case of loss while selling an asset
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $loss_account_id;
+
+    /**
+     * TaxCloud API ID
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $taxcloud_api_id;
+
+    /**
+     * TaxCloud API KEY
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $taxcloud_api_key;
+
+    /**
+     * Default TIC Code
+     * ---
+     * TIC (Taxability Information Codes) allow to get specific tax rates for each product type. This default value
+     * applies if no product is used in the order/invoice, or if no TIC is set on the product or its product
+     * category. By default, TaxCloud relies on the TIC *[0] Uncategorized* default referring to general goods and
+     * services.
+     * ---
+     * Relation : many2one (product.tic.category)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Tic\Category
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $tic_category_id;
+
+    /**
+     * Is Taxcloud Configured
+     * ---
+     * Used to determine whether or not to warn the user to configure TaxCloud.
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $is_taxcloud_configured;
+
+    /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1350,6 +1631,7 @@ final class Company extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1359,6 +1641,10 @@ final class Company extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1368,6 +1654,7 @@ final class Company extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1377,20 +1664,29 @@ final class Company extends Base
 
     /**
      * @param string $name Company Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $partner_id Partner
+     *        ---
+     *        Relation : many2one (res.partner)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $currency_id Currency
+     *        ---
+     *        Relation : many2one (res.currency)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param int $fiscalyear_last_day Fiscalyear Last Day
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $fiscalyear_last_month Fiscalyear Last Month
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> 1 (January)
      *            -> 2 (February)
@@ -1404,27 +1700,33 @@ final class Company extends Base
      *            -> 10 (October)
      *            -> 11 (November)
      *            -> 12 (December)
-     *
-     * @param string $account_check_printing_layout Check Layout
-     *        Select the format corresponding to the check paper you will be printing your checks on.
-     *        In order to disable the printing feature, select 'None'.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $account_check_printing_layout Check Layout
+     *        ---
+     *        Select the format corresponding to the check paper you will be printing your checks on.
+     *        In order to disable the printing feature, select 'None'.
+     *        ---
      *        Selection : (default value, usually null)
      *            -> disabled (None)
      *            -> action_print_check_top (check on top)
      *            -> action_print_check_middle (check in middle)
      *            -> action_print_check_bottom (check on bottom)
-     *
-     * @param string $extract_show_ocr_option_selection Send mode on invoices attachments
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $extract_show_ocr_option_selection Send mode on invoices attachments
+     *        ---
      *        Selection : (default value, usually null)
      *            -> no_send (Do not digitalize bills)
      *            -> manual_send (Digitalize bills on demand only)
      *            -> auto_send (Digitalize all bills automatically)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param bool $extract_single_line_per_tax OCR Single Invoice Line Per Tax
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */
@@ -1666,6 +1968,22 @@ final class Company extends Base
     }
 
     /**
+     * @return bool|null
+     */
+    public function isVatCheckVies(): ?bool
+    {
+        return $this->vat_check_vies;
+    }
+
+    /**
+     * @param bool|null $vat_check_vies
+     */
+    public function setVatCheckVies(?bool $vat_check_vies): void
+    {
+        $this->vat_check_vies = $vat_check_vies;
+    }
+
+    /**
      * @return string|null
      */
     public function getCurrencyIntervalUnit(): ?string
@@ -1679,22 +1997,6 @@ final class Company extends Base
     public function setCurrencyIntervalUnit(?string $currency_interval_unit): void
     {
         $this->currency_interval_unit = $currency_interval_unit;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getCurrencyNextExecutionDate(): ?DateTimeInterface
-    {
-        return $this->currency_next_execution_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $currency_next_execution_date
-     */
-    public function setCurrencyNextExecutionDate(?DateTimeInterface $currency_next_execution_date): void
-    {
-        $this->currency_next_execution_date = $currency_next_execution_date;
     }
 
     /**
@@ -1714,11 +2016,11 @@ final class Company extends Base
     }
 
     /**
-     * @param string|null $currency_provider
+     * @param DateTimeInterface|null $currency_next_execution_date
      */
-    public function setCurrencyProvider(?string $currency_provider): void
+    public function setCurrencyNextExecutionDate(?DateTimeInterface $currency_next_execution_date): void
     {
-        $this->currency_provider = $currency_provider;
+        $this->currency_next_execution_date = $currency_next_execution_date;
     }
 
     /**
@@ -1988,19 +2290,19 @@ final class Company extends Base
     }
 
     /**
-     * @return string|null
+     * @return DateTimeInterface|null
      */
-    public function getCurrencyProvider(): ?string
+    public function getCurrencyNextExecutionDate(): ?DateTimeInterface
     {
-        return $this->currency_provider;
+        return $this->currency_next_execution_date;
     }
 
     /**
      * @return string|null
      */
-    public function getPaymentAcquirerOnboardingState(): ?string
+    public function getCurrencyProvider(): ?string
     {
-        return $this->payment_acquirer_onboarding_state;
+        return $this->currency_provider;
     }
 
     /**
@@ -2018,43 +2320,11 @@ final class Company extends Base
     }
 
     /**
-     * @param string|null $sale_onboarding_payment_method
+     * @param OdooRelation|null $loss_account_id
      */
-    public function setSaleOnboardingPaymentMethod(?string $sale_onboarding_payment_method): void
+    public function setLossAccountId(?OdooRelation $loss_account_id): void
     {
-        $this->sale_onboarding_payment_method = $sale_onboarding_payment_method;
-    }
-
-    /**
-     * @param bool|null $is_taxcloud_configured
-     */
-    public function setIsTaxcloudConfigured(?bool $is_taxcloud_configured): void
-    {
-        $this->is_taxcloud_configured = $is_taxcloud_configured;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isPortalConfirmationSign(): ?bool
-    {
-        return $this->portal_confirmation_sign;
-    }
-
-    /**
-     * @param bool|null $portal_confirmation_sign
-     */
-    public function setPortalConfirmationSign(?bool $portal_confirmation_sign): void
-    {
-        $this->portal_confirmation_sign = $portal_confirmation_sign;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isPortalConfirmationPay(): ?bool
-    {
-        return $this->portal_confirmation_pay;
+        $this->loss_account_id = $loss_account_id;
     }
 
     /**
@@ -2140,19 +2410,51 @@ final class Company extends Base
     }
 
     /**
-     * @return bool|null
+     * @param string|null $sale_onboarding_payment_method
      */
-    public function isVatCheckVies(): ?bool
+    public function setSaleOnboardingPaymentMethod(?string $sale_onboarding_payment_method): void
     {
-        return $this->vat_check_vies;
+        $this->sale_onboarding_payment_method = $sale_onboarding_payment_method;
     }
 
     /**
-     * @param OdooRelation|null $tic_category_id
+     * @return OdooRelation|null
      */
-    public function setTicCategoryId(?OdooRelation $tic_category_id): void
+    public function getGainAccountId(): ?OdooRelation
     {
-        $this->tic_category_id = $tic_category_id;
+        return $this->gain_account_id;
+    }
+
+    /**
+     * @param OdooRelation|null $gain_account_id
+     */
+    public function setGainAccountId(?OdooRelation $gain_account_id): void
+    {
+        $this->gain_account_id = $gain_account_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getLossAccountId(): ?OdooRelation
+    {
+        return $this->loss_account_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTaxcloudApiId(): ?string
+    {
+        return $this->taxcloud_api_id;
+    }
+
+    /**
+     * @param bool|null $portal_confirmation_sign
+     */
+    public function setPortalConfirmationSign(?bool $portal_confirmation_sign): void
+    {
+        $this->portal_confirmation_sign = $portal_confirmation_sign;
     }
 
     /**
@@ -2220,59 +2522,19 @@ final class Company extends Base
     }
 
     /**
-     * @param bool|null $vat_check_vies
+     * @param string|null $taxcloud_api_id
      */
-    public function setVatCheckVies(?bool $vat_check_vies): void
+    public function setTaxcloudApiId(?string $taxcloud_api_id): void
     {
-        $this->vat_check_vies = $vat_check_vies;
+        $this->taxcloud_api_id = $taxcloud_api_id;
     }
 
     /**
-     * @param string|null $ape
+     * @param bool|null $is_taxcloud_configured
      */
-    public function setApe(?string $ape): void
+    public function setIsTaxcloudConfigured(?bool $is_taxcloud_configured): void
     {
-        $this->ape = $ape;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getApe(): ?string
-    {
-        return $this->ape;
-    }
-
-    /**
-     * @param string|null $siret
-     */
-    public function setSiret(?string $siret): void
-    {
-        $this->siret = $siret;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSiret(): ?string
-    {
-        return $this->siret;
-    }
-
-    /**
-     * @param OdooRelation|null $l10n_fr_closing_sequence_id
-     */
-    public function setL10nFrClosingSequenceId(?OdooRelation $l10n_fr_closing_sequence_id): void
-    {
-        $this->l10n_fr_closing_sequence_id = $l10n_fr_closing_sequence_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getL10nFrClosingSequenceId(): ?OdooRelation
-    {
-        return $this->l10n_fr_closing_sequence_id;
+        $this->is_taxcloud_configured = $is_taxcloud_configured;
     }
 
     /**
@@ -2284,6 +2546,14 @@ final class Company extends Base
     }
 
     /**
+     * @param OdooRelation|null $tic_category_id
+     */
+    public function setTicCategoryId(?OdooRelation $tic_category_id): void
+    {
+        $this->tic_category_id = $tic_category_id;
+    }
+
+    /**
      * @return OdooRelation|null
      */
     public function getTicCategoryId(): ?OdooRelation
@@ -2292,19 +2562,67 @@ final class Company extends Base
     }
 
     /**
-     * @param string|null $payment_acquirer_onboarding_state
+     * @param string|null $taxcloud_api_key
      */
-    public function setPaymentAcquirerOnboardingState(?string $payment_acquirer_onboarding_state): void
+    public function setTaxcloudApiKey(?string $taxcloud_api_key): void
     {
-        $this->payment_acquirer_onboarding_state = $payment_acquirer_onboarding_state;
+        $this->taxcloud_api_key = $taxcloud_api_key;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTaxcloudApiKey(): ?string
+    {
+        return $this->taxcloud_api_key;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isPortalConfirmationPay(): ?bool
+    {
+        return $this->portal_confirmation_pay;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isPortalConfirmationSign(): ?bool
+    {
+        return $this->portal_confirmation_sign;
+    }
+
+    /**
+     * @param string|null $currency_provider
+     */
+    public function setCurrencyProvider(?string $currency_provider): void
+    {
+        $this->currency_provider = $currency_provider;
     }
 
     /**
      * @return OdooRelation|null
      */
-    public function getAccountTaxNextActivityType(): ?OdooRelation
+    public function getAccountTaxPeriodicityJournalId(): ?OdooRelation
     {
-        return $this->account_tax_next_activity_type;
+        return $this->account_tax_periodicity_journal_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPaymentAcquirerOnboardingState(): ?string
+    {
+        return $this->payment_acquirer_onboarding_state;
+    }
+
+    /**
+     * @param string|null $payment_acquirer_onboarding_state
+     */
+    public function setPaymentAcquirerOnboardingState(?string $payment_acquirer_onboarding_state): void
+    {
+        $this->payment_acquirer_onboarding_state = $payment_acquirer_onboarding_state;
     }
 
     /**
@@ -2405,14 +2723,6 @@ final class Company extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     */
-    public function getAccountTaxPeriodicityJournalId(): ?OdooRelation
-    {
-        return $this->account_tax_periodicity_journal_id;
-    }
-
-    /**
      * @param OdooRelation|null $account_tax_periodicity_journal_id
      */
     public function setAccountTaxPeriodicityJournalId(
@@ -2422,91 +2732,11 @@ final class Company extends Base
     }
 
     /**
-     * @param OdooRelation|null $account_tax_next_activity_type
+     * @param string|null $ape
      */
-    public function setAccountTaxNextActivityType(?OdooRelation $account_tax_next_activity_type): void
+    public function setApe(?string $ape): void
     {
-        $this->account_tax_next_activity_type = $account_tax_next_activity_type;
-    }
-
-    /**
-     * @param string|null $taxcloud_api_key
-     */
-    public function setTaxcloudApiKey(?string $taxcloud_api_key): void
-    {
-        $this->taxcloud_api_key = $taxcloud_api_key;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getGainAccountId(): ?OdooRelation
-    {
-        return $this->gain_account_id;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getTaxcloudApiKey(): ?string
-    {
-        return $this->taxcloud_api_key;
-    }
-
-    /**
-     * @param string|null $taxcloud_api_id
-     */
-    public function setTaxcloudApiId(?string $taxcloud_api_id): void
-    {
-        $this->taxcloud_api_id = $taxcloud_api_id;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getTaxcloudApiId(): ?string
-    {
-        return $this->taxcloud_api_id;
-    }
-
-    /**
-     * @param OdooRelation|null $loss_account_id
-     */
-    public function setLossAccountId(?OdooRelation $loss_account_id): void
-    {
-        $this->loss_account_id = $loss_account_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getLossAccountId(): ?OdooRelation
-    {
-        return $this->loss_account_id;
-    }
-
-    /**
-     * @param OdooRelation|null $gain_account_id
-     */
-    public function setGainAccountId(?OdooRelation $gain_account_id): void
-    {
-        $this->gain_account_id = $gain_account_id;
-    }
-
-    /**
-     * @param string|null $yodlee_user_access_token
-     */
-    public function setYodleeUserAccessToken(?string $yodlee_user_access_token): void
-    {
-        $this->yodlee_user_access_token = $yodlee_user_access_token;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getYodleeAccessToken(): ?string
-    {
-        return $this->yodlee_access_token;
+        $this->ape = $ape;
     }
 
     /**
@@ -2518,11 +2748,67 @@ final class Company extends Base
     }
 
     /**
+     * @return string|null
+     */
+    public function getApe(): ?string
+    {
+        return $this->ape;
+    }
+
+    /**
+     * @param string|null $siret
+     */
+    public function setSiret(?string $siret): void
+    {
+        $this->siret = $siret;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSiret(): ?string
+    {
+        return $this->siret;
+    }
+
+    /**
+     * @param OdooRelation|null $l10n_fr_closing_sequence_id
+     */
+    public function setL10nFrClosingSequenceId(?OdooRelation $l10n_fr_closing_sequence_id): void
+    {
+        $this->l10n_fr_closing_sequence_id = $l10n_fr_closing_sequence_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getL10nFrClosingSequenceId(): ?OdooRelation
+    {
+        return $this->l10n_fr_closing_sequence_id;
+    }
+
+    /**
+     * @param string|null $yodlee_user_access_token
+     */
+    public function setYodleeUserAccessToken(?string $yodlee_user_access_token): void
+    {
+        $this->yodlee_user_access_token = $yodlee_user_access_token;
+    }
+
+    /**
      * @param string|null $yodlee_user_password
      */
     public function setYodleeUserPassword(?string $yodlee_user_password): void
     {
         $this->yodlee_user_password = $yodlee_user_password;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getAccountTaxNextActivityType(): ?OdooRelation
+    {
+        return $this->account_tax_next_activity_type;
     }
 
     /**
@@ -2555,6 +2841,22 @@ final class Company extends Base
     public function setYodleeAccessToken(?string $yodlee_access_token): void
     {
         $this->yodlee_access_token = $yodlee_access_token;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getYodleeAccessToken(): ?string
+    {
+        return $this->yodlee_access_token;
+    }
+
+    /**
+     * @param OdooRelation|null $account_tax_next_activity_type
+     */
+    public function setAccountTaxNextActivityType(?OdooRelation $account_tax_next_activity_type): void
+    {
+        $this->account_tax_next_activity_type = $account_tax_next_activity_type;
     }
 
     /**
@@ -2835,17 +3137,17 @@ final class Company extends Base
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getFavicon(): ?int
+    public function getFavicon(): ?string
     {
         return $this->favicon;
     }
 
     /**
-     * @param int|null $favicon
+     * @param string|null $favicon
      */
-    public function setFavicon(?int $favicon): void
+    public function setFavicon(?string $favicon): void
     {
         $this->favicon = $favicon;
     }
@@ -3125,9 +3427,9 @@ final class Company extends Base
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getLogo(): ?int
+    public function getLogo(): ?string
     {
         return $this->logo;
     }
@@ -3157,25 +3459,25 @@ final class Company extends Base
     }
 
     /**
-     * @param int|null $logo_web
+     * @param string|null $logo_web
      */
-    public function setLogoWeb(?int $logo_web): void
+    public function setLogoWeb(?string $logo_web): void
     {
         $this->logo_web = $logo_web;
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getLogoWeb(): ?int
+    public function getLogoWeb(): ?string
     {
         return $this->logo_web;
     }
 
     /**
-     * @param int|null $logo
+     * @param string|null $logo
      */
-    public function setLogo(?int $logo): void
+    public function setLogo(?string $logo): void
     {
         $this->logo = $logo;
     }

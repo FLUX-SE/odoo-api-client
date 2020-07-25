@@ -27,6 +27,7 @@ final class Mapping extends Base
 {
     /**
      * Res Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,6 +37,7 @@ final class Mapping extends Base
 
     /**
      * Column Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +47,7 @@ final class Mapping extends Base
 
     /**
      * Field Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,6 +57,10 @@ final class Mapping extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,6 +70,7 @@ final class Mapping extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,6 +80,10 @@ final class Mapping extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -81,6 +93,7 @@ final class Mapping extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

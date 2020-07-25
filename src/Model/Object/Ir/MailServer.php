@@ -18,6 +18,7 @@ final class MailServer extends Base
 {
     /**
      * Description
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -27,7 +28,9 @@ final class MailServer extends Base
 
     /**
      * SMTP Server
+     * ---
      * Hostname or IP of SMTP server
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -37,7 +40,9 @@ final class MailServer extends Base
 
     /**
      * SMTP Port
+     * ---
      * SMTP Port. Usually 465 for SSL, and 25 or 587 for other cases.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -47,7 +52,9 @@ final class MailServer extends Base
 
     /**
      * Username
+     * ---
      * Optional username for SMTP authentication
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -57,7 +64,9 @@ final class MailServer extends Base
 
     /**
      * Password
+     * ---
      * Optional password for SMTP authentication
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -67,17 +76,19 @@ final class MailServer extends Base
 
     /**
      * Connection Security
+     * ---
      * Choose the connection encryption scheme:
      * - None: SMTP sessions are done in cleartext.
      * - TLS (STARTTLS): TLS encryption is requested at start of SMTP session (Recommended)
      * - SSL/TLS: SMTP sessions are encrypted with SSL/TLS through a dedicated port (default: 465)
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> none (None)
      *     -> starttls (TLS (STARTTLS))
      *     -> ssl (SSL/TLS)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -85,8 +96,10 @@ final class MailServer extends Base
 
     /**
      * Debugging
+     * ---
      * If enabled, the full output of SMTP sessions will be written to the server log at DEBUG level (this is very
      * verbose and may include confidential info!)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -96,8 +109,10 @@ final class MailServer extends Base
 
     /**
      * Priority
+     * ---
      * When no specific mail server is requested for a mail, the highest priority one is used. Default priority is 10
      * (smaller number = higher priority)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -107,6 +122,7 @@ final class MailServer extends Base
 
     /**
      * Active
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -116,6 +132,10 @@ final class MailServer extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -125,6 +145,7 @@ final class MailServer extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -134,6 +155,10 @@ final class MailServer extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -143,6 +168,7 @@ final class MailServer extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -152,28 +178,35 @@ final class MailServer extends Base
 
     /**
      * @param string $name Description
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $smtp_host SMTP Server
+     *        ---
      *        Hostname or IP of SMTP server
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param int $smtp_port SMTP Port
+     *        ---
      *        SMTP Port. Usually 465 for SSL, and 25 or 587 for other cases.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $smtp_encryption Connection Security
+     *        ---
      *        Choose the connection encryption scheme:
      *        - None: SMTP sessions are done in cleartext.
      *        - TLS (STARTTLS): TLS encryption is requested at start of SMTP session (Recommended)
      *        - SSL/TLS: SMTP sessions are encrypted with SSL/TLS through a dedicated port (default: 465)
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> none (None)
      *            -> starttls (TLS (STARTTLS))
      *            -> ssl (SSL/TLS)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $name, string $smtp_host, int $smtp_port, string $smtp_encryption)
     {

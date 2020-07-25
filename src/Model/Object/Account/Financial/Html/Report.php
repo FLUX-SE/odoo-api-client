@@ -26,6 +26,7 @@ final class Report extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Report extends Base
 
     /**
      * Show Credit and Debit Columns
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +46,10 @@ final class Report extends Base
 
     /**
      * Lines
+     * ---
+     * Relation : one2many (account.financial.html.report.line -> financial_report_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Financial\Html\Report\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -53,7 +59,9 @@ final class Report extends Base
 
     /**
      * Based on date ranges
+     * ---
      * specify if the report use date_range or single date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,7 +71,9 @@ final class Report extends Base
 
     /**
      * Allow comparison
+     * ---
      * display the comparison filter
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -73,7 +83,9 @@ final class Report extends Base
 
     /**
      * Allow analytic filters
+     * ---
      * display the analytic filters
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -83,7 +95,9 @@ final class Report extends Base
 
     /**
      * Enable the hierarchy option
+     * ---
      * Display the hierarchy choice in the report options
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -93,7 +107,9 @@ final class Report extends Base
 
     /**
      * Allow filtering by journals
+     * ---
      * display the journal filter in the report
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -103,7 +119,9 @@ final class Report extends Base
 
     /**
      * Show unfold all filter
+     * ---
      * display the unfold all options in report
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -113,6 +131,10 @@ final class Report extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -122,7 +144,12 @@ final class Report extends Base
 
     /**
      * Menu Item
+     * ---
      * The menu item generated for this report, or None if there isn't any.
+     * ---
+     * Relation : many2one (ir.ui.menu)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Ui\Menu
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -132,6 +159,10 @@ final class Report extends Base
 
     /**
      * Parent Menu
+     * ---
+     * Relation : many2one (ir.ui.menu)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Ui\Menu
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -141,7 +172,9 @@ final class Report extends Base
 
     /**
      * Tax Report
+     * ---
      * Set to True to automatically filter out journal items that have the boolean field 'tax_exigible' set to False
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -151,7 +184,12 @@ final class Report extends Base
 
     /**
      * Applicable Filters
+     * ---
      * Filters that can be used to filter and group lines in this report. This uses saved filters on journal items.
+     * ---
+     * Relation : many2many (ir.filters)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Filters
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -161,6 +199,10 @@ final class Report extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -170,6 +212,7 @@ final class Report extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -179,6 +222,10 @@ final class Report extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -188,6 +235,7 @@ final class Report extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

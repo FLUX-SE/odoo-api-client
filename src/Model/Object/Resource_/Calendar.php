@@ -27,6 +27,7 @@ final class Calendar extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,6 +37,10 @@ final class Calendar extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +50,10 @@ final class Calendar extends Base
 
     /**
      * Working Time
+     * ---
+     * Relation : one2many (resource.calendar.attendance -> calendar_id)
+     * @see \Flux\OdooApiClient\Model\Object\Resource_\Calendar\Attendance
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -54,6 +63,10 @@ final class Calendar extends Base
 
     /**
      * Time Off
+     * ---
+     * Relation : one2many (resource.calendar.leaves -> calendar_id)
+     * @see \Flux\OdooApiClient\Model\Object\Resource_\Calendar\Leaves
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -63,6 +76,10 @@ final class Calendar extends Base
 
     /**
      * Global Time Off
+     * ---
+     * Relation : one2many (resource.calendar.leaves -> calendar_id)
+     * @see \Flux\OdooApiClient\Model\Object\Resource_\Calendar\Leaves
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -72,7 +89,9 @@ final class Calendar extends Base
 
     /**
      * Average Hour per Day
+     * ---
      * Average hours per day a resource is supposed to work with this calendar.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -82,9 +101,9 @@ final class Calendar extends Base
 
     /**
      * Timezone
+     * ---
      * This field is used in order to define in which timezone the resources will work.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> Africa/Abidjan (Africa/Abidjan)
      *     -> Africa/Accra (Africa/Accra)
@@ -679,7 +698,9 @@ final class Calendar extends Base
      *     -> Etc/UTC (Etc/UTC)
      *     -> Etc/Universal (Etc/Universal)
      *     -> Etc/Zulu (Etc/Zulu)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -687,6 +708,7 @@ final class Calendar extends Base
 
     /**
      * Calendar in 2 weeks mode
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -696,6 +718,7 @@ final class Calendar extends Base
 
     /**
      * Explanation
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -705,6 +728,10 @@ final class Calendar extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -714,6 +741,7 @@ final class Calendar extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -723,6 +751,10 @@ final class Calendar extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -732,6 +764,7 @@ final class Calendar extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -741,12 +774,13 @@ final class Calendar extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $tz Timezone
+     *        ---
      *        This field is used in order to define in which timezone the resources will work.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> Africa/Abidjan (Africa/Abidjan)
      *            -> Africa/Accra (Africa/Accra)
@@ -1341,7 +1375,9 @@ final class Calendar extends Base
      *            -> Etc/UTC (Etc/UTC)
      *            -> Etc/Universal (Etc/Universal)
      *            -> Etc/Zulu (Etc/Zulu)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $name, string $tz)
     {

@@ -19,6 +19,10 @@ final class Settings extends Base
 {
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -28,6 +32,7 @@ final class Settings extends Base
 
     /**
      * Default Access Rights
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -37,6 +42,7 @@ final class Settings extends Base
 
     /**
      * External Email Servers
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -46,6 +52,7 @@ final class Settings extends Base
 
     /**
      * Allow users to import data from CSV/XLS/XLSX/ODS files
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -55,6 +62,7 @@ final class Settings extends Base
 
     /**
      * Allow the users to synchronize their calendar  with Google Calendar
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -64,6 +72,7 @@ final class Settings extends Base
 
     /**
      * Attach Google documents to any record
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -73,6 +82,7 @@ final class Settings extends Base
 
     /**
      * Google Spreadsheet
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -82,6 +92,7 @@ final class Settings extends Base
 
     /**
      * Use external authentication providers (OAuth)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -91,6 +102,7 @@ final class Settings extends Base
 
     /**
      * LDAP Authentication
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -100,6 +112,7 @@ final class Settings extends Base
 
     /**
      * Translate Your Website with Gengo
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -109,6 +122,7 @@ final class Settings extends Base
 
     /**
      * Manage Inter Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -118,6 +132,7 @@ final class Settings extends Base
 
     /**
      * Collaborative Pads
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -127,6 +142,7 @@ final class Settings extends Base
 
     /**
      * Asterisk (VoIP)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -136,6 +152,7 @@ final class Settings extends Base
 
     /**
      * Unsplash Image Library
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -145,6 +162,7 @@ final class Settings extends Base
 
     /**
      * Partner Autocomplete
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -154,6 +172,7 @@ final class Settings extends Base
 
     /**
      * GeoLocalize
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -163,7 +182,9 @@ final class Settings extends Base
 
     /**
      * Custom Report Footer
+     * ---
      * Footer text displayed at the bottom of all reports.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -173,7 +194,9 @@ final class Settings extends Base
 
     /**
      * Multi-Currencies
+     * ---
      * Allows to work in a multi currency environment
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -183,6 +206,10 @@ final class Settings extends Base
 
     /**
      * Paper format
+     * ---
+     * Relation : many2one (report.paperformat)
+     * @see \Flux\OdooApiClient\Model\Object\Report\Paperformat
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -192,6 +219,10 @@ final class Settings extends Base
 
     /**
      * Document Template
+     * ---
+     * Relation : many2one (ir.ui.view)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Ui\View
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -201,6 +232,7 @@ final class Settings extends Base
 
     /**
      * Show Effect
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -210,6 +242,7 @@ final class Settings extends Base
 
     /**
      * Number of Companies
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -219,6 +252,7 @@ final class Settings extends Base
 
     /**
      * Number of Active Users
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -228,6 +262,7 @@ final class Settings extends Base
 
     /**
      * Number of Languages
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -237,6 +272,7 @@ final class Settings extends Base
 
     /**
      * Company Name
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -246,6 +282,7 @@ final class Settings extends Base
 
     /**
      * Company Informations
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -255,6 +292,7 @@ final class Settings extends Base
 
     /**
      * Fail Mail
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -264,7 +302,9 @@ final class Settings extends Base
 
     /**
      * Alias Domain
+     * ---
      * If you have setup a catch-all email domain redirected to the Odoo server, enter the domain name here.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -274,7 +314,9 @@ final class Settings extends Base
 
     /**
      * Token Map Box
+     * ---
      * Necessary for some functionalities in the map view
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -284,6 +326,7 @@ final class Settings extends Base
 
     /**
      * Push Notifications
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -293,6 +336,7 @@ final class Settings extends Base
 
     /**
      * Access Key
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -302,6 +346,7 @@ final class Settings extends Base
 
     /**
      * Enable password reset from Login page
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -311,6 +356,10 @@ final class Settings extends Base
 
     /**
      * Template user for new users created through signup
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -320,6 +369,7 @@ final class Settings extends Base
 
     /**
      * Insufficient credit
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -329,6 +379,7 @@ final class Settings extends Base
 
     /**
      * Discounts
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -338,6 +389,7 @@ final class Settings extends Base
 
     /**
      * Units of Measure
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -347,6 +399,7 @@ final class Settings extends Base
 
     /**
      * Variants
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -356,6 +409,7 @@ final class Settings extends Base
 
     /**
      * Product Configurator
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -365,6 +419,7 @@ final class Settings extends Base
 
     /**
      * Sales Grid Entry
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -374,6 +429,7 @@ final class Settings extends Base
 
     /**
      * Product Packagings
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -383,6 +439,7 @@ final class Settings extends Base
 
     /**
      * Pricelists
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -392,8 +449,10 @@ final class Settings extends Base
 
     /**
      * Advanced Pricelists
+     * ---
      * Allows to manage different prices based on rules per category of customers.
      *                                 Example: 10% for retailers, promotion of 5 EUR on this product, etc.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -403,14 +462,16 @@ final class Settings extends Base
 
     /**
      * Pricelists Method
+     * ---
      * Multiple prices: Pricelists with fixed price rules by product,
      * Advanced rules: enables advanced price rules for pricelists.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> basic (Multiple prices per product)
      *     -> advanced (Advanced price rules (discounts, formulas))
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -418,12 +479,13 @@ final class Settings extends Base
 
     /**
      * Weight unit of measure
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> 0 (Kilogram)
      *     -> 1 (Pound)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -431,12 +493,13 @@ final class Settings extends Base
 
     /**
      * Volume unit of measure
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> 0 (Cubic Meters)
      *     -> 1 (Cubic Feet)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -444,6 +507,7 @@ final class Settings extends Base
 
     /**
      * Print In Color
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -453,6 +517,7 @@ final class Settings extends Base
 
     /**
      * Add a Cover Page
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -462,6 +527,7 @@ final class Settings extends Base
 
     /**
      * Print Both sides
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -471,6 +537,7 @@ final class Settings extends Base
 
     /**
      * Digest Emails
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -480,6 +547,10 @@ final class Settings extends Base
 
     /**
      * Digest Email
+     * ---
+     * Relation : many2one (digest.digest)
+     * @see \Flux\OdooApiClient\Model\Object\Digest\Digest
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -489,6 +560,7 @@ final class Settings extends Base
 
     /**
      * Has Accounting Entries
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -498,7 +570,12 @@ final class Settings extends Base
 
     /**
      * Currency
+     * ---
      * Main currency of the company.
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -508,7 +585,12 @@ final class Settings extends Base
 
     /**
      * Exchange Gain or Loss Journal
+     * ---
      * The accounting journal where automatic exchange differences will be registered
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -518,6 +600,7 @@ final class Settings extends Base
 
     /**
      * Company has a chart of accounts
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -527,6 +610,10 @@ final class Settings extends Base
 
     /**
      * Template
+     * ---
+     * Relation : many2one (account.chart.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Chart\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -536,6 +623,10 @@ final class Settings extends Base
 
     /**
      * Default Sale Tax
+     * ---
+     * Relation : many2one (account.tax)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -545,6 +636,10 @@ final class Settings extends Base
 
     /**
      * Default Purchase Tax
+     * ---
+     * Relation : many2one (account.tax)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -554,12 +649,13 @@ final class Settings extends Base
 
     /**
      * Tax calculation rounding method
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> round_per_line (Round per Line)
      *     -> round_globally (Round Globally)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -567,6 +663,7 @@ final class Settings extends Base
 
     /**
      * Accounting
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -576,6 +673,7 @@ final class Settings extends Base
 
     /**
      * Analytic Accounting
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -585,6 +683,7 @@ final class Settings extends Base
 
     /**
      * Analytic Tags
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -594,6 +693,7 @@ final class Settings extends Base
 
     /**
      * Warnings in Invoices
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -603,6 +703,7 @@ final class Settings extends Base
 
     /**
      * Cash Rounding
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -612,6 +713,7 @@ final class Settings extends Base
 
     /**
      * Fiscal Years
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -621,6 +723,7 @@ final class Settings extends Base
 
     /**
      * Show line subtotals without taxes (B2B)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -630,6 +733,7 @@ final class Settings extends Base
 
     /**
      * Show line subtotals with taxes (B2C)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -639,12 +743,13 @@ final class Settings extends Base
 
     /**
      * Line Subtotals Tax Display
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> tax_excluded (Tax-Excluded)
      *     -> tax_included (Tax-Included)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -652,6 +757,7 @@ final class Settings extends Base
 
     /**
      * Budget Management
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -661,6 +767,7 @@ final class Settings extends Base
 
     /**
      * Invoice Online Payment
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -670,6 +777,7 @@ final class Settings extends Base
 
     /**
      * Dynamic Reports
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -679,6 +787,7 @@ final class Settings extends Base
 
     /**
      * Allow check printing and deposits
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -688,8 +797,10 @@ final class Settings extends Base
 
     /**
      * Use batch payments
+     * ---
      * This allows you grouping payments into a single batch and eases the reconciliation process.
      * -This installs the account_batch_payment module.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -699,6 +810,7 @@ final class Settings extends Base
 
     /**
      * SEPA Credit Transfer (SCT)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -708,6 +820,7 @@ final class Settings extends Base
 
     /**
      * Use SEPA Direct Debit
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -717,6 +830,7 @@ final class Settings extends Base
 
     /**
      * Plaid Connector
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -726,6 +840,7 @@ final class Settings extends Base
 
     /**
      * Bank Interface - Sync your bank feeds automatically
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -735,6 +850,7 @@ final class Settings extends Base
 
     /**
      * Import .qif files
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -744,6 +860,7 @@ final class Settings extends Base
 
     /**
      * Import in .ofx format
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -753,6 +870,7 @@ final class Settings extends Base
 
     /**
      * Import in .csv format
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -762,6 +880,7 @@ final class Settings extends Base
 
     /**
      * Import in CAMT.053 format
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -771,6 +890,7 @@ final class Settings extends Base
 
     /**
      * Automatic Currency Rates
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -780,6 +900,7 @@ final class Settings extends Base
 
     /**
      * Intrastat
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -789,6 +910,7 @@ final class Settings extends Base
 
     /**
      * Allow Product Margin
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -798,6 +920,7 @@ final class Settings extends Base
 
     /**
      * EU Digital Goods VAT
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -807,6 +930,7 @@ final class Settings extends Base
 
     /**
      * Account TaxCloud
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -816,6 +940,7 @@ final class Settings extends Base
 
     /**
      * Bill Digitalization
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -825,6 +950,7 @@ final class Settings extends Base
 
     /**
      * Snailmail
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -834,6 +960,7 @@ final class Settings extends Base
 
     /**
      * Cash Basis
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -843,6 +970,10 @@ final class Settings extends Base
 
     /**
      * Tax Cash Basis Journal
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -852,10 +983,12 @@ final class Settings extends Base
 
     /**
      * Bank Reconciliation Threshold
+     * ---
      * The bank reconciliation widget won't ask to reconcile payments older than this date.
      *                               This is useful if you install accounting after having used invoicing for some
      * time and
      *                               don't want to reconcile all the past payments with bank statements.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -865,6 +998,7 @@ final class Settings extends Base
 
     /**
      * Display SEPA QR code
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -874,6 +1008,7 @@ final class Settings extends Base
 
     /**
      * Print
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -883,6 +1018,7 @@ final class Settings extends Base
 
     /**
      * Send Email
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -892,7 +1028,12 @@ final class Settings extends Base
 
     /**
      * Default incoterm
+     * ---
      * International Commercial Terms are a series of predefined commercial terms used in international transactions.
+     * ---
+     * Relation : many2one (account.incoterms)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Incoterms
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -902,6 +1043,7 @@ final class Settings extends Base
 
     /**
      * Terms & Conditions
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -911,6 +1053,7 @@ final class Settings extends Base
 
     /**
      * Default Terms & Conditions
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -920,6 +1063,7 @@ final class Settings extends Base
 
     /**
      * Fiscalyear Last Day
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -929,8 +1073,7 @@ final class Settings extends Base
 
     /**
      * Fiscalyear Last Month
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> 1 (January)
      *     -> 2 (February)
@@ -944,7 +1087,9 @@ final class Settings extends Base
      *     -> 10 (October)
      *     -> 11 (November)
      *     -> 12 (December)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string
      */
@@ -952,8 +1097,10 @@ final class Settings extends Base
 
     /**
      * Lock Date for Non-Advisers
+     * ---
      * Only users with the 'Adviser' role can edit accounts prior to and inclusive of this date. Use it for period
      * locking inside an open fiscal year, for example.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -963,8 +1110,10 @@ final class Settings extends Base
 
     /**
      * Lock Date for All Users
+     * ---
      * No users, including Advisers, can edit accounts prior to and inclusive of this date. Use it for fiscal year
      * locking for example.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -974,7 +1123,9 @@ final class Settings extends Base
 
     /**
      * Tax Lock Date
+     * ---
      * No users can edit journal entries related to a tax prior and inclusive of this date.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -984,6 +1135,7 @@ final class Settings extends Base
 
     /**
      * Anglo-Saxon Accounting
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -993,6 +1145,7 @@ final class Settings extends Base
 
     /**
      * Account Predictive Bills
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1002,7 +1155,12 @@ final class Settings extends Base
 
     /**
      * Transfer Account
+     * ---
      * Intermediary account used when moving money from a liquidity account to another
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1012,8 +1170,10 @@ final class Settings extends Base
 
     /**
      * Company Country code
+     * ---
      * The ISO country code in two chars.
      * You can use this field for quick search.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1023,16 +1183,18 @@ final class Settings extends Base
 
     /**
      * Check Layout
+     * ---
      * Select the format corresponding to the check paper you will be printing your checks on.
      * In order to disable the printing feature, select 'None'.
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> disabled (None)
      *     -> action_print_check_top (check on top)
      *     -> action_print_check_middle (check in middle)
      *     -> action_print_check_bottom (check on bottom)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -1040,8 +1202,10 @@ final class Settings extends Base
 
     /**
      * Print Date Label
+     * ---
      * This option allows you to print the date label on the check as per CPA. Disable this if your pre-printed check
      * includes the date label.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1051,7 +1215,9 @@ final class Settings extends Base
 
     /**
      * Multi-Pages Check Stub
+     * ---
      * This option allows you to print check details (stub) on multiple pages if they don't fit on a single page.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1061,7 +1227,9 @@ final class Settings extends Base
 
     /**
      * Check Top Margin
+     * ---
      * Adjust the margins of generated checks to make it fit your printer's settings.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1071,7 +1239,9 @@ final class Settings extends Base
 
     /**
      * Check Left Margin
+     * ---
      * Adjust the margins of generated checks to make it fit your printer's settings.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1081,7 +1251,9 @@ final class Settings extends Base
 
     /**
      * Check Right Margin
+     * ---
      * Adjust the margins of generated checks to make it fit your printer's settings.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1091,13 +1263,14 @@ final class Settings extends Base
 
     /**
      * Processing Option
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> no_send (Do not digitalize bills)
      *     -> manual_send (Digitalize bills on demand only)
      *     -> auto_send (Digitalize all bills automatically)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -1105,6 +1278,7 @@ final class Settings extends Base
 
     /**
      * OCR Single Invoice Line Per Tax
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1113,15 +1287,26 @@ final class Settings extends Base
     private $extract_single_line_per_tax;
 
     /**
-     * Interval Unit
+     * Verify VAT Numbers
+     * ---
      * Searchable : yes
      * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $vat_check_vies;
+
+    /**
+     * Interval Unit
+     * ---
      * Selection : (default value, usually null)
      *     -> manually (Manually)
      *     -> daily (Daily)
      *     -> weekly (Weekly)
      *     -> monthly (Monthly)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -1129,15 +1314,16 @@ final class Settings extends Base
 
     /**
      * Service Provider
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> ecb (European Central Bank)
      *     -> fta (Federal Tax Administration (Switzerland))
      *     -> banxico (Mexican Bank)
      *     -> boc (Bank Of Canada)
      *     -> xe_com (xe.com)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -1145,6 +1331,7 @@ final class Settings extends Base
 
     /**
      * Next Execution Date
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1154,6 +1341,7 @@ final class Settings extends Base
 
     /**
      * Send by Post
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1163,7 +1351,9 @@ final class Settings extends Base
 
     /**
      * Add totals below sections
+     * ---
      * When ticked, totals and subtotals appear below the sections of the report.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1173,13 +1363,15 @@ final class Settings extends Base
 
     /**
      * Periodicity
+     * ---
      * Periodicity
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> trimester (trimester)
      *     -> monthly (monthly)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string
      */
@@ -1187,6 +1379,7 @@ final class Settings extends Base
 
     /**
      * Reminder
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1196,6 +1389,10 @@ final class Settings extends Base
 
     /**
      * Journal
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1204,38 +1401,8 @@ final class Settings extends Base
     private $account_tax_periodicity_journal_id;
 
     /**
-     * TaxCloud API ID
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $taxcloud_api_id;
-
-    /**
-     * TaxCloud API KEY
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $taxcloud_api_key;
-
-    /**
-     * Default TIC Code
-     * TIC (Taxability Information Codes) allow to get specific tax rates for each product type. This default value
-     * applies if no product is used in the order/invoice, or if no TIC is set on the product or its product
-     * category. By default, TaxCloud relies on the TIC *[0] Uncategorized* default referring to general goods and
-     * services.
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation|null
-     */
-    private $tic_category_id;
-
-    /**
      * Lock Confirmed Sales
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1245,6 +1412,7 @@ final class Settings extends Base
 
     /**
      * Margins
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1254,6 +1422,7 @@ final class Settings extends Base
 
     /**
      * Default Quotation Validity (Days)
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1263,6 +1432,7 @@ final class Settings extends Base
 
     /**
      * Default Quotation Validity
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1272,6 +1442,7 @@ final class Settings extends Base
 
     /**
      * Sale Order Warnings
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1281,6 +1452,7 @@ final class Settings extends Base
 
     /**
      * Online Signature
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1290,6 +1462,7 @@ final class Settings extends Base
 
     /**
      * Online Payment
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -1299,6 +1472,7 @@ final class Settings extends Base
 
     /**
      * Customer Addresses
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1308,7 +1482,9 @@ final class Settings extends Base
 
     /**
      * Pro-Forma Invoice
+     * ---
      * Allows you to send pro-forma invoice.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1318,12 +1494,13 @@ final class Settings extends Base
 
     /**
      * Invoicing Policy
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> order (Invoice what is ordered)
      *     -> delivery (Invoice what is delivered)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -1331,7 +1508,12 @@ final class Settings extends Base
 
     /**
      * Deposit Product
+     * ---
      * Default product used for payment advances
+     * ---
+     * Relation : many2one (product.product)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Product
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1341,6 +1523,7 @@ final class Settings extends Base
 
     /**
      * Digital Content
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1350,12 +1533,13 @@ final class Settings extends Base
 
     /**
      * Customer Account
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> b2b (On invitation)
      *     -> b2c (Free sign up)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -1363,6 +1547,7 @@ final class Settings extends Base
 
     /**
      * Shipping Costs
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1372,6 +1557,7 @@ final class Settings extends Base
 
     /**
      * DHL Connector
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1381,6 +1567,7 @@ final class Settings extends Base
 
     /**
      * FedEx Connector
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1390,6 +1577,7 @@ final class Settings extends Base
 
     /**
      * UPS Connector
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1399,6 +1587,7 @@ final class Settings extends Base
 
     /**
      * USPS Connector
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1408,6 +1597,7 @@ final class Settings extends Base
 
     /**
      * bpost Connector
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1417,6 +1607,7 @@ final class Settings extends Base
 
     /**
      * Easypost Connector
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1426,6 +1617,7 @@ final class Settings extends Base
 
     /**
      * Specific Email
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1435,6 +1627,7 @@ final class Settings extends Base
 
     /**
      * Coupons & Promotions
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1444,6 +1637,7 @@ final class Settings extends Base
 
     /**
      * Amazon Sync
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1453,11 +1647,13 @@ final class Settings extends Base
 
     /**
      * Automatic Invoice
+     * ---
      * The invoice is generated automatically and available in the customer portal when the transaction is confirmed
      * by the payment acquirer.
      * The invoice is marked as paid and the payment is registered in the payment journal defined in the
      * configuration of the payment acquirer.
      * This mode is advised if you issue the final invoice at the order and not after the delivery.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1467,6 +1663,10 @@ final class Settings extends Base
 
     /**
      * Email Template
+     * ---
+     * Relation : many2one (mail.template)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1476,7 +1676,12 @@ final class Settings extends Base
 
     /**
      * Confirmation Email
+     * ---
      * Email sent to the customer once the order is paid.
+     * ---
+     * Relation : many2one (mail.template)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1485,7 +1690,46 @@ final class Settings extends Base
     private $confirmation_template_id;
 
     /**
+     * TaxCloud API ID
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $taxcloud_api_id;
+
+    /**
+     * TaxCloud API KEY
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $taxcloud_api_key;
+
+    /**
+     * Default TIC Code
+     * ---
+     * TIC (Taxability Information Codes) allow to get specific tax rates for each product type. This default value
+     * applies if no product is used in the order/invoice, or if no TIC is set on the product or its product
+     * category. By default, TaxCloud relies on the TIC *[0] Uncategorized* default referring to general goods and
+     * services.
+     * ---
+     * Relation : many2one (product.tic.category)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Tic\Category
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $tic_category_id;
+
+    /**
      * Quotation Templates
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1495,6 +1739,10 @@ final class Settings extends Base
 
     /**
      * Default Template
+     * ---
+     * Relation : many2one (sale.order.template)
+     * @see \Flux\OdooApiClient\Model\Object\Sale\Order\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1504,6 +1752,7 @@ final class Settings extends Base
 
     /**
      * Quotation Builder
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1512,16 +1761,11 @@ final class Settings extends Base
     private $module_sale_quotation_builder;
 
     /**
-     * Verify VAT Numbers
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $vat_check_vies;
-
-    /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1531,6 +1775,7 @@ final class Settings extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1540,6 +1785,10 @@ final class Settings extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1549,6 +1798,7 @@ final class Settings extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -1558,25 +1808,35 @@ final class Settings extends Base
 
     /**
      * @param OdooRelation $company_id Company
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $currency_id Currency
+     *        ---
      *        Main currency of the company.
+     *        ---
+     *        Relation : many2one (res.currency)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     *        ---
      *        Searchable : yes
      *        Sortable : no
      * @param string $show_line_subtotals_tax_selection Line Subtotals Tax Display
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> tax_excluded (Tax-Excluded)
      *            -> tax_included (Tax-Included)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param int $fiscalyear_last_day Fiscalyear Last Day
+     *        ---
      *        Searchable : yes
      *        Sortable : no
      * @param string $fiscalyear_last_month Fiscalyear Last Month
-     *        Searchable : yes
-     *        Sortable : no
+     *        ---
      *        Selection : (default value, usually null)
      *            -> 1 (January)
      *            -> 2 (February)
@@ -1590,16 +1850,21 @@ final class Settings extends Base
      *            -> 10 (October)
      *            -> 11 (November)
      *            -> 12 (December)
-     *
-     * @param string $account_tax_periodicity Periodicity
-     *        Periodicity
+     *        ---
      *        Searchable : yes
      *        Sortable : no
+     * @param string $account_tax_periodicity Periodicity
+     *        ---
+     *        Periodicity
+     *        ---
      *        Selection : (default value, usually null)
      *            -> trimester (trimester)
      *            -> monthly (monthly)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : no
      * @param int $account_tax_periodicity_reminder_day Reminder
+     *        ---
      *        Searchable : yes
      *        Sortable : no
      */
@@ -1776,25 +2041,9 @@ final class Settings extends Base
     /**
      * @return string|null
      */
-    public function getCurrencyProvider(): ?string
+    public function getCurrencyIntervalUnit(): ?string
     {
-        return $this->currency_provider;
-    }
-
-    /**
-     * @param bool|null $totals_below_sections
-     */
-    public function setTotalsBelowSections(?bool $totals_below_sections): void
-    {
-        $this->totals_below_sections = $totals_below_sections;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isTotalsBelowSections(): ?bool
-    {
-        return $this->totals_below_sections;
+        return $this->currency_interval_unit;
     }
 
     /**
@@ -1838,11 +2087,27 @@ final class Settings extends Base
     }
 
     /**
+     * @return string|null
+     */
+    public function getCurrencyProvider(): ?string
+    {
+        return $this->currency_provider;
+    }
+
+    /**
      * @param string|null $currency_interval_unit
      */
     public function setCurrencyIntervalUnit(?string $currency_interval_unit): void
     {
         $this->currency_interval_unit = $currency_interval_unit;
+    }
+
+    /**
+     * @param bool|null $vat_check_vies
+     */
+    public function setVatCheckVies(?bool $vat_check_vies): void
+    {
+        $this->vat_check_vies = $vat_check_vies;
     }
 
     /**
@@ -1854,11 +2119,11 @@ final class Settings extends Base
     }
 
     /**
-     * @return string|null
+     * @return bool|null
      */
-    public function getCurrencyIntervalUnit(): ?string
+    public function isVatCheckVies(): ?bool
     {
-        return $this->currency_interval_unit;
+        return $this->vat_check_vies;
     }
 
     /**
@@ -1926,11 +2191,11 @@ final class Settings extends Base
     }
 
     /**
-     * @param string $account_tax_periodicity
+     * @param bool|null $totals_below_sections
      */
-    public function setAccountTaxPeriodicity(string $account_tax_periodicity): void
+    public function setTotalsBelowSections(?bool $totals_below_sections): void
     {
-        $this->account_tax_periodicity = $account_tax_periodicity;
+        $this->totals_below_sections = $totals_below_sections;
     }
 
     /**
@@ -2231,19 +2496,19 @@ final class Settings extends Base
     }
 
     /**
+     * @return bool|null
+     */
+    public function isTotalsBelowSections(): ?bool
+    {
+        return $this->totals_below_sections;
+    }
+
+    /**
      * @return string
      */
     public function getAccountTaxPeriodicity(): string
     {
         return $this->account_tax_periodicity;
-    }
-
-    /**
-     * @return int
-     */
-    public function getAccountTaxPeriodicityReminderDay(): int
-    {
-        return $this->account_tax_periodicity_reminder_day;
     }
 
     /**
@@ -2258,9 +2523,41 @@ final class Settings extends Base
     /**
      * @return bool|null
      */
-    public function isModuleProductEmailTemplate(): ?bool
+    public function isModuleSaleAmazon(): ?bool
     {
-        return $this->module_product_email_template;
+        return $this->module_sale_amazon;
+    }
+
+    /**
+     * @param OdooRelation|null $confirmation_template_id
+     */
+    public function setConfirmationTemplateId(?OdooRelation $confirmation_template_id): void
+    {
+        $this->confirmation_template_id = $confirmation_template_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getConfirmationTemplateId(): ?OdooRelation
+    {
+        return $this->confirmation_template_id;
+    }
+
+    /**
+     * @param OdooRelation|null $template_id
+     */
+    public function setTemplateId(?OdooRelation $template_id): void
+    {
+        $this->template_id = $template_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getTemplateId(): ?OdooRelation
+    {
+        return $this->template_id;
     }
 
     /**
@@ -2288,19 +2585,19 @@ final class Settings extends Base
     }
 
     /**
-     * @return bool|null
-     */
-    public function isModuleSaleAmazon(): ?bool
-    {
-        return $this->module_sale_amazon;
-    }
-
-    /**
      * @param bool|null $module_sale_coupon
      */
     public function setModuleSaleCoupon(?bool $module_sale_coupon): void
     {
         $this->module_sale_coupon = $module_sale_coupon;
+    }
+
+    /**
+     * @param string|null $taxcloud_api_id
+     */
+    public function setTaxcloudApiId(?string $taxcloud_api_id): void
+    {
+        $this->taxcloud_api_id = $taxcloud_api_id;
     }
 
     /**
@@ -2320,19 +2617,19 @@ final class Settings extends Base
     }
 
     /**
+     * @return bool|null
+     */
+    public function isModuleProductEmailTemplate(): ?bool
+    {
+        return $this->module_product_email_template;
+    }
+
+    /**
      * @param bool|null $module_delivery_easypost
      */
     public function setModuleDeliveryEasypost(?bool $module_delivery_easypost): void
     {
         $this->module_delivery_easypost = $module_delivery_easypost;
-    }
-
-    /**
-     * @param OdooRelation|null $template_id
-     */
-    public function setTemplateId(?OdooRelation $template_id): void
-    {
-        $this->template_id = $template_id;
     }
 
     /**
@@ -2360,11 +2657,19 @@ final class Settings extends Base
     }
 
     /**
-     * @param bool|null $module_delivery_usps
+     * @return string|null
      */
-    public function setModuleDeliveryUsps(?bool $module_delivery_usps): void
+    public function getTaxcloudApiId(): ?string
     {
-        $this->module_delivery_usps = $module_delivery_usps;
+        return $this->taxcloud_api_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTaxcloudApiKey(): ?string
+    {
+        return $this->taxcloud_api_key;
     }
 
     /**
@@ -2373,46 +2678,6 @@ final class Settings extends Base
     public function isModuleDeliveryUsps(): ?bool
     {
         return $this->module_delivery_usps;
-    }
-
-    /**
-     * @param bool|null $module_delivery_ups
-     */
-    public function setModuleDeliveryUps(?bool $module_delivery_ups): void
-    {
-        $this->module_delivery_ups = $module_delivery_ups;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isModuleDeliveryUps(): ?bool
-    {
-        return $this->module_delivery_ups;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getTemplateId(): ?OdooRelation
-    {
-        return $this->template_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getConfirmationTemplateId(): ?OdooRelation
-    {
-        return $this->confirmation_template_id;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isModuleDeliveryFedex(): ?bool
-    {
-        return $this->module_delivery_fedex;
     }
 
     /**
@@ -2480,35 +2745,19 @@ final class Settings extends Base
     }
 
     /**
-     * @param bool|null $vat_check_vies
-     */
-    public function setVatCheckVies(?bool $vat_check_vies): void
-    {
-        $this->vat_check_vies = $vat_check_vies;
-    }
-
-    /**
-     * @param OdooRelation|null $confirmation_template_id
-     */
-    public function setConfirmationTemplateId(?OdooRelation $confirmation_template_id): void
-    {
-        $this->confirmation_template_id = $confirmation_template_id;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isVatCheckVies(): ?bool
-    {
-        return $this->vat_check_vies;
-    }
-
-    /**
      * @param bool|null $module_sale_quotation_builder
      */
     public function setModuleSaleQuotationBuilder(?bool $module_sale_quotation_builder): void
     {
         $this->module_sale_quotation_builder = $module_sale_quotation_builder;
+    }
+
+    /**
+     * @param string|null $taxcloud_api_key
+     */
+    public function setTaxcloudApiKey(?string $taxcloud_api_key): void
+    {
+        $this->taxcloud_api_key = $taxcloud_api_key;
     }
 
     /**
@@ -2552,35 +2801,83 @@ final class Settings extends Base
     }
 
     /**
-     * @param bool|null $module_delivery_fedex
+     * @param OdooRelation|null $tic_category_id
      */
-    public function setModuleDeliveryFedex(?bool $module_delivery_fedex): void
+    public function setTicCategoryId(?OdooRelation $tic_category_id): void
     {
-        $this->module_delivery_fedex = $module_delivery_fedex;
+        $this->tic_category_id = $tic_category_id;
     }
 
     /**
-     * @param bool|null $module_delivery_dhl
+     * @return OdooRelation|null
      */
-    public function setModuleDeliveryDhl(?bool $module_delivery_dhl): void
+    public function getTicCategoryId(): ?OdooRelation
     {
-        $this->module_delivery_dhl = $module_delivery_dhl;
+        return $this->tic_category_id;
     }
 
     /**
-     * @param int $account_tax_periodicity_reminder_day
+     * @param bool|null $module_delivery_usps
      */
-    public function setAccountTaxPeriodicityReminderDay(int $account_tax_periodicity_reminder_day): void
+    public function setModuleDeliveryUsps(?bool $module_delivery_usps): void
     {
-        $this->account_tax_periodicity_reminder_day = $account_tax_periodicity_reminder_day;
+        $this->module_delivery_usps = $module_delivery_usps;
+    }
+
+    /**
+     * @param bool|null $module_delivery_ups
+     */
+    public function setModuleDeliveryUps(?bool $module_delivery_ups): void
+    {
+        $this->module_delivery_ups = $module_delivery_ups;
+    }
+
+    /**
+     * @param string $account_tax_periodicity
+     */
+    public function setAccountTaxPeriodicity(string $account_tax_periodicity): void
+    {
+        $this->account_tax_periodicity = $account_tax_periodicity;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getQuotationValidityDays(): ?int
+    {
+        return $this->quotation_validity_days;
+    }
+
+    /**
+     * @param bool|null $portal_confirmation_sign
+     */
+    public function setPortalConfirmationSign(?bool $portal_confirmation_sign): void
+    {
+        $this->portal_confirmation_sign = $portal_confirmation_sign;
     }
 
     /**
      * @return bool|null
      */
-    public function isGroupAutoDoneSetting(): ?bool
+    public function isPortalConfirmationSign(): ?bool
     {
-        return $this->group_auto_done_setting;
+        return $this->portal_confirmation_sign;
+    }
+
+    /**
+     * @param bool|null $group_warning_sale
+     */
+    public function setGroupWarningSale(?bool $group_warning_sale): void
+    {
+        $this->group_warning_sale = $group_warning_sale;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isGroupWarningSale(): ?bool
+    {
+        return $this->group_warning_sale;
     }
 
     /**
@@ -2608,19 +2905,19 @@ final class Settings extends Base
     }
 
     /**
-     * @return int|null
-     */
-    public function getQuotationValidityDays(): ?int
-    {
-        return $this->quotation_validity_days;
-    }
-
-    /**
      * @param bool|null $module_sale_margin
      */
     public function setModuleSaleMargin(?bool $module_sale_margin): void
     {
         $this->module_sale_margin = $module_sale_margin;
+    }
+
+    /**
+     * @param bool|null $portal_confirmation_pay
+     */
+    public function setPortalConfirmationPay(?bool $portal_confirmation_pay): void
+    {
+        $this->portal_confirmation_pay = $portal_confirmation_pay;
     }
 
     /**
@@ -2640,59 +2937,11 @@ final class Settings extends Base
     }
 
     /**
-     * @param OdooRelation|null $tic_category_id
+     * @return bool|null
      */
-    public function setTicCategoryId(?OdooRelation $tic_category_id): void
+    public function isGroupAutoDoneSetting(): ?bool
     {
-        $this->tic_category_id = $tic_category_id;
-    }
-
-    /**
-     * @param bool|null $group_warning_sale
-     */
-    public function setGroupWarningSale(?bool $group_warning_sale): void
-    {
-        $this->group_warning_sale = $group_warning_sale;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getTicCategoryId(): ?OdooRelation
-    {
-        return $this->tic_category_id;
-    }
-
-    /**
-     * @param string|null $taxcloud_api_key
-     */
-    public function setTaxcloudApiKey(?string $taxcloud_api_key): void
-    {
-        $this->taxcloud_api_key = $taxcloud_api_key;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getTaxcloudApiKey(): ?string
-    {
-        return $this->taxcloud_api_key;
-    }
-
-    /**
-     * @param string|null $taxcloud_api_id
-     */
-    public function setTaxcloudApiId(?string $taxcloud_api_id): void
-    {
-        $this->taxcloud_api_id = $taxcloud_api_id;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getTaxcloudApiId(): ?string
-    {
-        return $this->taxcloud_api_id;
+        return $this->group_auto_done_setting;
     }
 
     /**
@@ -2713,19 +2962,75 @@ final class Settings extends Base
     }
 
     /**
-     * @return bool|null
+     * @param int $account_tax_periodicity_reminder_day
      */
-    public function isGroupWarningSale(): ?bool
+    public function setAccountTaxPeriodicityReminderDay(int $account_tax_periodicity_reminder_day): void
     {
-        return $this->group_warning_sale;
+        $this->account_tax_periodicity_reminder_day = $account_tax_periodicity_reminder_day;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAccountTaxPeriodicityReminderDay(): int
+    {
+        return $this->account_tax_periodicity_reminder_day;
     }
 
     /**
      * @return bool|null
      */
-    public function isPortalConfirmationSign(): ?bool
+    public function isPortalConfirmationPay(): ?bool
     {
-        return $this->portal_confirmation_sign;
+        return $this->portal_confirmation_pay;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isGroupSaleDeliveryAddress(): ?bool
+    {
+        return $this->group_sale_delivery_address;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isModuleDeliveryUps(): ?bool
+    {
+        return $this->module_delivery_ups;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAuthSignupUninvited(): ?string
+    {
+        return $this->auth_signup_uninvited;
+    }
+
+    /**
+     * @param bool|null $module_delivery_fedex
+     */
+    public function setModuleDeliveryFedex(?bool $module_delivery_fedex): void
+    {
+        $this->module_delivery_fedex = $module_delivery_fedex;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isModuleDeliveryFedex(): ?bool
+    {
+        return $this->module_delivery_fedex;
+    }
+
+    /**
+     * @param bool|null $module_delivery_dhl
+     */
+    public function setModuleDeliveryDhl(?bool $module_delivery_dhl): void
+    {
+        $this->module_delivery_dhl = $module_delivery_dhl;
     }
 
     /**
@@ -2734,14 +3039,6 @@ final class Settings extends Base
     public function isModuleDeliveryDhl(): ?bool
     {
         return $this->module_delivery_dhl;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getDepositDefaultProductId(): ?OdooRelation
-    {
-        return $this->deposit_default_product_id;
     }
 
     /**
@@ -2769,19 +3066,19 @@ final class Settings extends Base
     }
 
     /**
-     * @return string|null
-     */
-    public function getAuthSignupUninvited(): ?string
-    {
-        return $this->auth_signup_uninvited;
-    }
-
-    /**
      * @param bool|null $module_website_sale_digital
      */
     public function setModuleWebsiteSaleDigital(?bool $module_website_sale_digital): void
     {
         $this->module_website_sale_digital = $module_website_sale_digital;
+    }
+
+    /**
+     * @param bool|null $group_sale_delivery_address
+     */
+    public function setGroupSaleDeliveryAddress(?bool $group_sale_delivery_address): void
+    {
+        $this->group_sale_delivery_address = $group_sale_delivery_address;
     }
 
     /**
@@ -2801,19 +3098,19 @@ final class Settings extends Base
     }
 
     /**
+     * @return OdooRelation|null
+     */
+    public function getDepositDefaultProductId(): ?OdooRelation
+    {
+        return $this->deposit_default_product_id;
+    }
+
+    /**
      * @param string|null $default_invoice_policy
      */
     public function setDefaultInvoicePolicy(?string $default_invoice_policy): void
     {
         $this->default_invoice_policy = $default_invoice_policy;
-    }
-
-    /**
-     * @param bool|null $portal_confirmation_sign
-     */
-    public function setPortalConfirmationSign(?bool $portal_confirmation_sign): void
-    {
-        $this->portal_confirmation_sign = $portal_confirmation_sign;
     }
 
     /**
@@ -2838,38 +3135,6 @@ final class Settings extends Base
     public function isGroupProformaSales(): ?bool
     {
         return $this->group_proforma_sales;
-    }
-
-    /**
-     * @param bool|null $group_sale_delivery_address
-     */
-    public function setGroupSaleDeliveryAddress(?bool $group_sale_delivery_address): void
-    {
-        $this->group_sale_delivery_address = $group_sale_delivery_address;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isGroupSaleDeliveryAddress(): ?bool
-    {
-        return $this->group_sale_delivery_address;
-    }
-
-    /**
-     * @param bool|null $portal_confirmation_pay
-     */
-    public function setPortalConfirmationPay(?bool $portal_confirmation_pay): void
-    {
-        $this->portal_confirmation_pay = $portal_confirmation_pay;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isPortalConfirmationPay(): ?bool
-    {
-        return $this->portal_confirmation_pay;
     }
 
     /**

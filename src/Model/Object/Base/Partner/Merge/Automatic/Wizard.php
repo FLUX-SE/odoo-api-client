@@ -20,6 +20,7 @@ final class Wizard extends Base
 {
     /**
      * Email
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -29,6 +30,7 @@ final class Wizard extends Base
 
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -38,6 +40,7 @@ final class Wizard extends Base
 
     /**
      * Is Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -47,6 +50,7 @@ final class Wizard extends Base
 
     /**
      * VAT
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -56,6 +60,7 @@ final class Wizard extends Base
 
     /**
      * Parent Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -65,13 +70,14 @@ final class Wizard extends Base
 
     /**
      * State
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> option (Option)
      *     -> selection (Selection)
      *     -> finished (Finished)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -79,6 +85,7 @@ final class Wizard extends Base
 
     /**
      * Group of Contacts
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -88,6 +95,10 @@ final class Wizard extends Base
 
     /**
      * Current Line
+     * ---
+     * Relation : many2one (base.partner.merge.line)
+     * @see \Flux\OdooApiClient\Model\Object\Base\Partner\Merge\Line
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -97,6 +108,10 @@ final class Wizard extends Base
 
     /**
      * Lines
+     * ---
+     * Relation : one2many (base.partner.merge.line -> wizard_id)
+     * @see \Flux\OdooApiClient\Model\Object\Base\Partner\Merge\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -106,6 +121,10 @@ final class Wizard extends Base
 
     /**
      * Contacts
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -115,6 +134,10 @@ final class Wizard extends Base
 
     /**
      * Destination Contact
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -124,6 +147,7 @@ final class Wizard extends Base
 
     /**
      * A user associated to the contact
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -133,6 +157,7 @@ final class Wizard extends Base
 
     /**
      * Journal Items associated to the contact
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -142,6 +167,7 @@ final class Wizard extends Base
 
     /**
      * Maximum of Group of Contacts
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -151,6 +177,10 @@ final class Wizard extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -160,6 +190,7 @@ final class Wizard extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -169,6 +200,10 @@ final class Wizard extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -178,6 +213,7 @@ final class Wizard extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -187,13 +223,14 @@ final class Wizard extends Base
 
     /**
      * @param string $state State
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> option (Option)
      *            -> selection (Selection)
      *            -> finished (Finished)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $state)
     {

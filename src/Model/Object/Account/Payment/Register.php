@@ -23,6 +23,7 @@ final class Register extends Base
 {
     /**
      * Payment Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +33,10 @@ final class Register extends Base
 
     /**
      * Journal
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -41,6 +46,7 @@ final class Register extends Base
 
     /**
      * Payment Method Type
+     * ---
      * Manual: Get paid by cash, check or any other method outside of Odoo.
      * Electronic: Get paid automatically through a payment acquirer by requesting a transaction on a card saved by
      * the customer when buying or subscribing online (payment token).
@@ -50,6 +56,10 @@ final class Register extends Base
      * deposit.To enable batch deposit, module account_batch_payment must be installed.
      * SEPA Credit Transfer: Pay bill from a SEPA Credit Transfer file you submit to your bank. To enable sepa credit
      * transfer, module account_sepa must be installed
+     * ---
+     * Relation : many2one (account.payment.method)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Payment\Method
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -59,6 +69,10 @@ final class Register extends Base
 
     /**
      * Invoices
+     * ---
+     * Relation : many2many (account.move)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -68,7 +82,9 @@ final class Register extends Base
 
     /**
      * Group Payment
+     * ---
      * Only one payment will be created by partner (bank)/ currency.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -78,6 +94,10 @@ final class Register extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -87,6 +107,7 @@ final class Register extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -96,6 +117,10 @@ final class Register extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -105,6 +130,7 @@ final class Register extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -114,12 +140,18 @@ final class Register extends Base
 
     /**
      * @param DateTimeInterface $payment_date Payment Date
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $journal_id Journal
+     *        ---
+     *        Relation : many2one (account.journal)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $payment_method_id Payment Method Type
+     *        ---
      *        Manual: Get paid by cash, check or any other method outside of Odoo.
      *        Electronic: Get paid automatically through a payment acquirer by requesting a transaction on a card saved by
      *        the customer when buying or subscribing online (payment token).
@@ -129,6 +161,10 @@ final class Register extends Base
      *        deposit.To enable batch deposit, module account_batch_payment must be installed.
      *        SEPA Credit Transfer: Pay bill from a SEPA Credit Transfer file you submit to your bank. To enable sepa credit
      *        transfer, module account_sepa must be installed
+     *        ---
+     *        Relation : many2one (account.payment.method)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Payment\Method
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

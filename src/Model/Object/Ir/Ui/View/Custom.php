@@ -26,6 +26,10 @@ final class Custom extends Base
 {
     /**
      * Original View
+     * ---
+     * Relation : many2one (ir.ui.view)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Ui\View
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +39,10 @@ final class Custom extends Base
 
     /**
      * User
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +52,7 @@ final class Custom extends Base
 
     /**
      * View Architecture
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +62,10 @@ final class Custom extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +75,7 @@ final class Custom extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +85,10 @@ final class Custom extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,6 +98,7 @@ final class Custom extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,12 +108,21 @@ final class Custom extends Base
 
     /**
      * @param OdooRelation $ref_id Original View
+     *        ---
+     *        Relation : many2one (ir.ui.view)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Ui\View
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $user_id User
+     *        ---
+     *        Relation : many2one (res.users)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Users
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $arch View Architecture
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

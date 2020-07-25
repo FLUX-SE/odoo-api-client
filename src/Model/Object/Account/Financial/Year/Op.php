@@ -23,6 +23,10 @@ final class Op extends Base
 {
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +36,7 @@ final class Op extends Base
 
     /**
      * Opening Move Posted
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -41,7 +46,9 @@ final class Op extends Base
 
     /**
      * Opening Date
+     * ---
      * Date from which the accounting is managed in Odoo. It is the date of the opening entry.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -51,7 +58,9 @@ final class Op extends Base
 
     /**
      * Fiscalyear Last Day
+     * ---
      * The last day of the month will be used if the chosen day doesn't exist.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -61,9 +70,9 @@ final class Op extends Base
 
     /**
      * Fiscalyear Last Month
+     * ---
      * The last day of the month will be used if the chosen day doesn't exist.
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> 1 (January)
      *     -> 2 (February)
@@ -77,7 +86,9 @@ final class Op extends Base
      *     -> 10 (October)
      *     -> 11 (November)
      *     -> 12 (December)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string
      */
@@ -85,13 +96,15 @@ final class Op extends Base
 
     /**
      * Periodicity
+     * ---
      * Periodicity
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> trimester (trimester)
      *     -> monthly (monthly)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string
      */
@@ -99,6 +112,7 @@ final class Op extends Base
 
     /**
      * Reminder
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -108,6 +122,10 @@ final class Op extends Base
 
     /**
      * Journal
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -117,6 +135,10 @@ final class Op extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -126,6 +148,7 @@ final class Op extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -135,6 +158,10 @@ final class Op extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -144,6 +171,7 @@ final class Op extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -153,20 +181,28 @@ final class Op extends Base
 
     /**
      * @param OdooRelation $company_id Company
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param DateTimeInterface $opening_date Opening Date
+     *        ---
      *        Date from which the accounting is managed in Odoo. It is the date of the opening entry.
+     *        ---
      *        Searchable : yes
      *        Sortable : no
      * @param int $fiscalyear_last_day Fiscalyear Last Day
+     *        ---
      *        The last day of the month will be used if the chosen day doesn't exist.
+     *        ---
      *        Searchable : yes
      *        Sortable : no
      * @param string $fiscalyear_last_month Fiscalyear Last Month
+     *        ---
      *        The last day of the month will be used if the chosen day doesn't exist.
-     *        Searchable : yes
-     *        Sortable : no
+     *        ---
      *        Selection : (default value, usually null)
      *            -> 1 (January)
      *            -> 2 (February)
@@ -180,16 +216,21 @@ final class Op extends Base
      *            -> 10 (October)
      *            -> 11 (November)
      *            -> 12 (December)
-     *
-     * @param string $account_tax_periodicity Periodicity
-     *        Periodicity
+     *        ---
      *        Searchable : yes
      *        Sortable : no
+     * @param string $account_tax_periodicity Periodicity
+     *        ---
+     *        Periodicity
+     *        ---
      *        Selection : (default value, usually null)
      *            -> trimester (trimester)
      *            -> monthly (monthly)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : no
      * @param int $account_tax_periodicity_reminder_day Reminder
+     *        ---
      *        Searchable : yes
      *        Sortable : no
      */

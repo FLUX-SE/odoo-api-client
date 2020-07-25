@@ -23,6 +23,10 @@ final class Resend extends Base
 {
     /**
      * Message
+     * ---
+     * Relation : many2one (mail.message)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +36,10 @@ final class Resend extends Base
 
     /**
      * Recipients
+     * ---
+     * Relation : one2many (sms.resend.recipient -> sms_resend_id)
+     * @see \Flux\OdooApiClient\Model\Object\Sms\Resend\Recipient
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -41,6 +49,7 @@ final class Resend extends Base
 
     /**
      * Has Cancel
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -50,6 +59,7 @@ final class Resend extends Base
 
     /**
      * Has Insufficient Credit
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -59,6 +69,10 @@ final class Resend extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -68,6 +82,7 @@ final class Resend extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -77,6 +92,10 @@ final class Resend extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -86,6 +105,7 @@ final class Resend extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -95,6 +115,10 @@ final class Resend extends Base
 
     /**
      * @param OdooRelation $mail_message_id Message
+     *        ---
+     *        Relation : many2one (mail.message)
+     *        @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

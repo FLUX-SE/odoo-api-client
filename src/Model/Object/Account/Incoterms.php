@@ -26,8 +26,10 @@ final class Incoterms extends Base
 {
     /**
      * Name
+     * ---
      * Incoterms are series of sales terms. They are used to divide transaction costs and responsibilities between
      * buyer and seller and reflect state-of-the-art transportation practices.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -37,7 +39,9 @@ final class Incoterms extends Base
 
     /**
      * Code
+     * ---
      * Incoterm Standard Code
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -47,7 +51,9 @@ final class Incoterms extends Base
 
     /**
      * Active
+     * ---
      * By unchecking the active field, you may hide an INCOTERM you will not use.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -57,6 +63,10 @@ final class Incoterms extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -66,6 +76,7 @@ final class Incoterms extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -75,6 +86,10 @@ final class Incoterms extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -84,6 +99,7 @@ final class Incoterms extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -93,12 +109,16 @@ final class Incoterms extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Incoterms are series of sales terms. They are used to divide transaction costs and responsibilities between
      *        buyer and seller and reflect state-of-the-art transportation practices.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $code Code
+     *        ---
      *        Incoterm Standard Code
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

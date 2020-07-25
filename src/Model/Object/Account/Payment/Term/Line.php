@@ -26,14 +26,16 @@ final class Line extends Base
 {
     /**
      * Type
+     * ---
      * Select here the kind of valuation related to this payment terms line.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> balance (Balance)
      *     -> percent (Percent)
      *     -> fixed (Fixed Amount)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -41,7 +43,9 @@ final class Line extends Base
 
     /**
      * Value
+     * ---
      * For percent enter a ratio between 0-100.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -51,6 +55,7 @@ final class Line extends Base
 
     /**
      * Number of Days
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -60,9 +65,11 @@ final class Line extends Base
 
     /**
      * Day of the month
+     * ---
      * Day of the month on which the invoice must come to its term. If zero or negative, this value will be ignored,
      * and no specific day will be set. If greater than the last day of a month, this number will instead select the
      * last day of this month.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,13 +79,14 @@ final class Line extends Base
 
     /**
      * Options
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> day_after_invoice_date (days after the invoice date)
      *     -> day_following_month (of the following month)
      *     -> day_current_month (of the current month)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -86,6 +94,10 @@ final class Line extends Base
 
     /**
      * Payment Terms
+     * ---
+     * Relation : many2one (account.payment.term)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Payment\Term
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -95,7 +107,9 @@ final class Line extends Base
 
     /**
      * Sequence
+     * ---
      * Gives the sequence order when displaying a list of payment terms lines.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -105,6 +119,10 @@ final class Line extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -114,6 +132,7 @@ final class Line extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -123,6 +142,10 @@ final class Line extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -132,6 +155,7 @@ final class Line extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -141,26 +165,34 @@ final class Line extends Base
 
     /**
      * @param string $value Type
+     *        ---
      *        Select here the kind of valuation related to this payment terms line.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> balance (Balance)
      *            -> percent (Percent)
      *            -> fixed (Fixed Amount)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param int $days Number of Days
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $option Options
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> day_after_invoice_date (days after the invoice date)
      *            -> day_following_month (of the following month)
      *            -> day_current_month (of the current month)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param OdooRelation $payment_id Payment Terms
+     *        ---
+     *        Relation : many2one (account.payment.term)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Payment\Term
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

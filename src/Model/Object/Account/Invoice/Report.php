@@ -26,6 +26,10 @@ final class Report extends Base
 {
     /**
      * Move
+     * ---
+     * Relation : many2one (account.move)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +39,7 @@ final class Report extends Base
 
     /**
      * Invoice #
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +49,10 @@ final class Report extends Base
 
     /**
      * Journal
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +62,10 @@ final class Report extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +75,10 @@ final class Report extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +88,10 @@ final class Report extends Base
 
     /**
      * Partner
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,7 +101,12 @@ final class Report extends Base
 
     /**
      * Partner Company
+     * ---
      * Commercial Entity
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -90,6 +116,10 @@ final class Report extends Base
 
     /**
      * Country
+     * ---
+     * Relation : many2one (res.country)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -99,6 +129,10 @@ final class Report extends Base
 
     /**
      * Salesperson
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -108,14 +142,15 @@ final class Report extends Base
 
     /**
      * Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> out_invoice (Customer Invoice)
      *     -> in_invoice (Vendor Bill)
      *     -> out_refund (Customer Credit Note)
      *     -> in_refund (Vendor Credit Note)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -123,13 +158,14 @@ final class Report extends Base
 
     /**
      * Invoice Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> draft (Draft)
      *     -> posted (Open)
      *     -> cancel (Cancelled)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -137,13 +173,14 @@ final class Report extends Base
 
     /**
      * Payment Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> not_paid (Not Paid)
      *     -> in_payment (In Payment)
      *     -> paid (paid)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -151,6 +188,10 @@ final class Report extends Base
 
     /**
      * Fiscal Position
+     * ---
+     * Relation : many2one (account.fiscal.position)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Fiscal\Position
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -160,6 +201,7 @@ final class Report extends Base
 
     /**
      * Invoice Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -169,6 +211,10 @@ final class Report extends Base
 
     /**
      * Payment Terms
+     * ---
+     * Relation : many2one (account.payment.term)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Payment\Term
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -178,6 +224,10 @@ final class Report extends Base
 
     /**
      * Bank Account
+     * ---
+     * Relation : many2one (res.partner.bank)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner\Bank
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -187,6 +237,7 @@ final class Report extends Base
 
     /**
      * Line Count
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -196,6 +247,7 @@ final class Report extends Base
 
     /**
      * Due Amount
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -205,6 +257,7 @@ final class Report extends Base
 
     /**
      * Total
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -214,6 +267,7 @@ final class Report extends Base
 
     /**
      * Product Quantity
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -223,6 +277,10 @@ final class Report extends Base
 
     /**
      * Product
+     * ---
+     * Relation : many2one (product.product)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Product
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -232,6 +290,10 @@ final class Report extends Base
 
     /**
      * Unit of Measure
+     * ---
+     * Relation : many2one (uom.uom)
+     * @see \Flux\OdooApiClient\Model\Object\Uom\Uom
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -241,6 +303,10 @@ final class Report extends Base
 
     /**
      * Product Category
+     * ---
+     * Relation : many2one (product.category)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Category
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -250,6 +316,7 @@ final class Report extends Base
 
     /**
      * Due Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -259,6 +326,10 @@ final class Report extends Base
 
     /**
      * Revenue/Expense Account
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -268,6 +339,7 @@ final class Report extends Base
 
     /**
      * Untaxed Total
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -277,6 +349,7 @@ final class Report extends Base
 
     /**
      * Average Price
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -286,6 +359,10 @@ final class Report extends Base
 
     /**
      * Sales Team
+     * ---
+     * Relation : many2one (crm.team)
+     * @see \Flux\OdooApiClient\Model\Object\Crm\Team
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

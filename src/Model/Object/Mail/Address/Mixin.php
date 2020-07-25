@@ -28,8 +28,10 @@ final class Mixin extends Base
 {
     /**
      * Normalized Email
+     * ---
      * This field is used to search on email address as the primary email field can contain more than strictly an
      * email address.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

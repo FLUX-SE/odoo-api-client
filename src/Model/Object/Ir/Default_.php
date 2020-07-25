@@ -18,6 +18,10 @@ final class Default_ extends Base
 {
     /**
      * Field
+     * ---
+     * Relation : many2one (ir.model.fields)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model\Fields
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -27,7 +31,12 @@ final class Default_ extends Base
 
     /**
      * User
+     * ---
      * If set, action binding only applies for this user.
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -37,7 +46,12 @@ final class Default_ extends Base
 
     /**
      * Company
+     * ---
      * If set, action binding only applies for this company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -47,7 +61,9 @@ final class Default_ extends Base
 
     /**
      * Condition
+     * ---
      * If set, applies the default upon condition.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -57,6 +73,7 @@ final class Default_ extends Base
 
     /**
      * Default Value (JSON format)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -66,6 +83,10 @@ final class Default_ extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -75,6 +96,7 @@ final class Default_ extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -84,6 +106,10 @@ final class Default_ extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -93,6 +119,7 @@ final class Default_ extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -102,9 +129,14 @@ final class Default_ extends Base
 
     /**
      * @param OdooRelation $field_id Field
+     *        ---
+     *        Relation : many2one (ir.model.fields)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Model\Fields
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $json_value Default Value (JSON format)
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

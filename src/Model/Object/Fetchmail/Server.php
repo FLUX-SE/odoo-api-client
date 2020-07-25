@@ -18,6 +18,7 @@ final class Server extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -27,6 +28,7 @@ final class Server extends Base
 
     /**
      * Active
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,12 +38,13 @@ final class Server extends Base
 
     /**
      * Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> draft (Not Confirmed)
      *     -> done (Confirmed)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -49,7 +52,9 @@ final class Server extends Base
 
     /**
      * Server Name
+     * ---
      * Hostname or IP of the mail server
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -59,6 +64,7 @@ final class Server extends Base
 
     /**
      * Port
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -68,13 +74,14 @@ final class Server extends Base
 
     /**
      * Server Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> pop (POP Server)
      *     -> imap (IMAP Server)
      *     -> local (Local Server)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -82,7 +89,9 @@ final class Server extends Base
 
     /**
      * SSL/TLS
+     * ---
      * Connections are encrypted with SSL/TLS through a dedicated port (default: IMAPS=993, POP3S=995)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -92,8 +101,10 @@ final class Server extends Base
 
     /**
      * Keep Attachments
+     * ---
      * Whether attachments should be downloaded. If not enabled, incoming emails will be stripped of any attachments
      * before being processed
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -103,8 +114,10 @@ final class Server extends Base
 
     /**
      * Keep Original
+     * ---
      * Whether a full original copy of each email should be kept for reference and attached to each processed
      * message. This will usually double the size of your message database.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -114,6 +127,7 @@ final class Server extends Base
 
     /**
      * Last Fetch Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -123,6 +137,7 @@ final class Server extends Base
 
     /**
      * Username
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -132,6 +147,7 @@ final class Server extends Base
 
     /**
      * Password
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -141,8 +157,13 @@ final class Server extends Base
 
     /**
      * Create a New Record
+     * ---
      * Process each incoming mail as part of a conversation corresponding to this document type. This will create new
      * documents for new conversations, or attach follow-up emails to the existing conversations (documents).
+     * ---
+     * Relation : many2one (ir.model)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -152,7 +173,9 @@ final class Server extends Base
 
     /**
      * Server Priority
+     * ---
      * Defines the order of processing, lower values mean higher priority
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -162,6 +185,10 @@ final class Server extends Base
 
     /**
      * Messages
+     * ---
+     * Relation : one2many (mail.mail -> fetchmail_server_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Mail
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -171,6 +198,7 @@ final class Server extends Base
 
     /**
      * Configuration
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -180,6 +208,7 @@ final class Server extends Base
 
     /**
      * Script
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -189,6 +218,10 @@ final class Server extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -198,6 +231,7 @@ final class Server extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -207,6 +241,10 @@ final class Server extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -216,6 +254,7 @@ final class Server extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -225,16 +264,18 @@ final class Server extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $server_type Server Type
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> pop (POP Server)
      *            -> imap (IMAP Server)
      *            -> local (Local Server)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $name, string $server_type)
     {

@@ -26,6 +26,7 @@ final class Type extends Base
 {
     /**
      * Account Type
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,9 +36,11 @@ final class Type extends Base
 
     /**
      * Bring Accounts Balance Forward
+     * ---
      * Used in reports to know if we should consider journal items from the beginning of time instead of from the
      * fiscal year only. Account types that should be reset to zero at each new fiscal year (like expenses,
      * revenue..) should not have this option set.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -47,16 +50,18 @@ final class Type extends Base
 
     /**
      * Type
+     * ---
      * The 'Internal Type' is used for features available on different types of accounts: liquidity type is for cash
      * or bank accounts, payable/receivable is for vendor/customer accounts.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> other (Regular)
      *     -> receivable (Receivable)
      *     -> payable (Payable)
      *     -> liquidity (Liquidity)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -64,9 +69,9 @@ final class Type extends Base
 
     /**
      * Internal Group
+     * ---
      * The 'Internal Group' is used to filter accounts based on the internal group set on the account type.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> equity (Equity)
      *     -> asset (Asset)
@@ -74,7 +79,9 @@ final class Type extends Base
      *     -> income (Income)
      *     -> expense (Expense)
      *     -> off_balance (Off Balance)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -82,6 +89,7 @@ final class Type extends Base
 
     /**
      * Description
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -91,6 +99,10 @@ final class Type extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -100,6 +112,7 @@ final class Type extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -109,6 +122,10 @@ final class Type extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -118,6 +135,7 @@ final class Type extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -127,23 +145,26 @@ final class Type extends Base
 
     /**
      * @param string $name Account Type
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $type Type
+     *        ---
      *        The 'Internal Type' is used for features available on different types of accounts: liquidity type is for cash
      *        or bank accounts, payable/receivable is for vendor/customer accounts.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> other (Regular)
      *            -> receivable (Receivable)
      *            -> payable (Payable)
      *            -> liquidity (Liquidity)
-     *
-     * @param string $internal_group Internal Group
-     *        The 'Internal Group' is used to filter accounts based on the internal group set on the account type.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $internal_group Internal Group
+     *        ---
+     *        The 'Internal Group' is used to filter accounts based on the internal group set on the account type.
+     *        ---
      *        Selection : (default value, usually null)
      *            -> equity (Equity)
      *            -> asset (Asset)
@@ -151,7 +172,9 @@ final class Type extends Base
      *            -> income (Income)
      *            -> expense (Expense)
      *            -> off_balance (Off Balance)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $name, string $type, string $internal_group)
     {

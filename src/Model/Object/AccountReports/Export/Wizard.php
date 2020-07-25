@@ -19,6 +19,10 @@ final class Wizard extends Base
 {
     /**
      * Export to
+     * ---
+     * Relation : many2many (account_reports.export.wizard.format)
+     * @see \Flux\OdooApiClient\Model\Object\AccountReports\Export\Wizard\Format
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -28,6 +32,7 @@ final class Wizard extends Base
 
     /**
      * Report Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -37,6 +42,7 @@ final class Wizard extends Base
 
     /**
      * Parent Report Id
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -46,7 +52,9 @@ final class Wizard extends Base
 
     /**
      * Documents Name
+     * ---
      * Name to give to the generated documents.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -56,6 +64,10 @@ final class Wizard extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -65,6 +77,7 @@ final class Wizard extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -74,6 +87,10 @@ final class Wizard extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -83,6 +100,7 @@ final class Wizard extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -92,9 +110,11 @@ final class Wizard extends Base
 
     /**
      * @param string $report_model Report Model
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param int $report_id Parent Report Id
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

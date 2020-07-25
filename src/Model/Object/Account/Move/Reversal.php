@@ -18,6 +18,10 @@ final class Reversal extends Base
 {
     /**
      * Journal Entry
+     * ---
+     * Relation : many2one (account.move)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -27,6 +31,7 @@ final class Reversal extends Base
 
     /**
      * Reversal date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,6 +41,7 @@ final class Reversal extends Base
 
     /**
      * Reason
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,15 +51,17 @@ final class Reversal extends Base
 
     /**
      * Credit Method
+     * ---
      * Choose how you want to credit this invoice. You cannot "modify" nor "cancel" if the invoice is already
      * reconciled.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> refund (Partial Refund)
      *     -> cancel (Full Refund)
      *     -> modify (Full refund and new draft invoice)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -61,7 +69,12 @@ final class Reversal extends Base
 
     /**
      * Use Specific Journal
+     * ---
      * If empty, uses the journal of the journal entry to be reversed.
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +84,7 @@ final class Reversal extends Base
 
     /**
      * Residual
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -80,6 +94,10 @@ final class Reversal extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -89,6 +107,7 @@ final class Reversal extends Base
 
     /**
      * Move Type
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -98,6 +117,10 @@ final class Reversal extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -107,6 +130,7 @@ final class Reversal extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -116,6 +140,10 @@ final class Reversal extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -125,6 +153,7 @@ final class Reversal extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -134,18 +163,21 @@ final class Reversal extends Base
 
     /**
      * @param DateTimeInterface $date Reversal date
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $refund_method Credit Method
+     *        ---
      *        Choose how you want to credit this invoice. You cannot "modify" nor "cancel" if the invoice is already
      *        reconciled.
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> refund (Partial Refund)
      *            -> cancel (Full Refund)
      *            -> modify (Full refund and new draft invoice)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(DateTimeInterface $date, string $refund_method)
     {

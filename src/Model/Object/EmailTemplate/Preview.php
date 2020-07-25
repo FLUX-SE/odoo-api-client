@@ -23,10 +23,11 @@ final class Preview extends Base
 {
     /**
      * Sample Document
+     * ---
+     * Selection : (default value, usually null)
+     * ---
      * Searchable : yes
      * Sortable : yes
-     * Selection : (default value, usually null)
-     *
      *
      * @var string|null
      */
@@ -34,6 +35,10 @@ final class Preview extends Base
 
     /**
      * Recipients
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -43,7 +48,12 @@ final class Preview extends Base
 
     /**
      * Attachments
+     * ---
      * You may attach files to this template, to be added to all emails created from this template
+     * ---
+     * Relation : many2many (ir.attachment)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -53,11 +63,12 @@ final class Preview extends Base
 
     /**
      * Template Preview Language
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> en_US (English (US))
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -65,6 +76,7 @@ final class Preview extends Base
 
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -74,7 +86,12 @@ final class Preview extends Base
 
     /**
      * Applies to
+     * ---
      * The type of document this template can be used with
+     * ---
+     * Relation : many2one (ir.model)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -84,6 +101,7 @@ final class Preview extends Base
 
     /**
      * Related Document Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -93,9 +111,11 @@ final class Preview extends Base
 
     /**
      * Language
+     * ---
      * Optional translation language (ISO code) to select when sending out an email. If not set, the english version
      * will be used. This should usually be a placeholder expression that provides the appropriate language, e.g.
      * ${object.partner_id.lang}.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -105,7 +125,9 @@ final class Preview extends Base
 
     /**
      * Add Signature
+     * ---
      * If checked, the user's signature will be appended to the text version of the message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -115,7 +137,9 @@ final class Preview extends Base
 
     /**
      * Subject
+     * ---
      * Subject (placeholders may be used here)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -125,8 +149,10 @@ final class Preview extends Base
 
     /**
      * From
+     * ---
      * Sender address (placeholders may be used here). If not set, the default value will be the author's email alias
      * if configured, or email address.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -136,9 +162,11 @@ final class Preview extends Base
 
     /**
      * Default recipients
+     * ---
      * Default recipients of the record:
      * - partner (using id on a partner or the partner_id field) OR
      * - email (using email_from or email field)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -148,7 +176,9 @@ final class Preview extends Base
 
     /**
      * To (Emails)
+     * ---
      * Comma-separated recipient addresses (placeholders may be used here)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -158,7 +188,9 @@ final class Preview extends Base
 
     /**
      * To (Partners)
+     * ---
      * Comma-separated ids of recipient partners (placeholders may be used here)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -168,7 +200,9 @@ final class Preview extends Base
 
     /**
      * Cc
+     * ---
      * Carbon copy recipients (placeholders may be used here)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -178,7 +212,9 @@ final class Preview extends Base
 
     /**
      * Reply-To
+     * ---
      * Preferred response address (placeholders may be used here)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -188,7 +224,12 @@ final class Preview extends Base
 
     /**
      * Outgoing Mail Server
+     * ---
      * Optional preferred server for outgoing mails. If not set, the highest priority one will be used.
+     * ---
+     * Relation : many2one (ir.mail_server)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\MailServer
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -198,6 +239,7 @@ final class Preview extends Base
 
     /**
      * Body
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -207,8 +249,10 @@ final class Preview extends Base
 
     /**
      * Report Filename
+     * ---
      * Name to use for the generated report file (may contain placeholders)
      * The extension can be omitted and will then come from the report type.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -218,6 +262,10 @@ final class Preview extends Base
 
     /**
      * Optional report to print and attach
+     * ---
+     * Relation : many2one (ir.actions.report)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Actions\Report
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -227,7 +275,12 @@ final class Preview extends Base
 
     /**
      * Sidebar action
+     * ---
      * Sidebar action to make this template available on records of the related document model
+     * ---
+     * Relation : many2one (ir.actions.act_window)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Actions\ActWindow
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -237,7 +290,9 @@ final class Preview extends Base
 
     /**
      * Auto Delete
+     * ---
      * Permanently delete this email after sending it, to save space
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -247,9 +302,14 @@ final class Preview extends Base
 
     /**
      * Field
+     * ---
      * Select target field from the related document model.
      * If it is a relationship field you will be able to select a target field at the destination of the
      * relationship.
+     * ---
+     * Relation : many2one (ir.model.fields)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model\Fields
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -259,8 +319,13 @@ final class Preview extends Base
 
     /**
      * Sub-model
+     * ---
      * When a relationship field is selected as first field, this field shows the document model the relationship
      * goes to.
+     * ---
+     * Relation : many2one (ir.model)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -270,8 +335,13 @@ final class Preview extends Base
 
     /**
      * Sub-field
+     * ---
      * When a relationship field is selected as first field, this field lets you select the target field within the
      * destination document model (sub-model).
+     * ---
+     * Relation : many2one (ir.model.fields)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model\Fields
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -281,7 +351,9 @@ final class Preview extends Base
 
     /**
      * Default Value
+     * ---
      * Optional value to use if the target field is empty
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -291,7 +363,9 @@ final class Preview extends Base
 
     /**
      * Placeholder Expression
+     * ---
      * Final placeholder expression, to be copy-pasted in the desired template field.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -301,8 +375,10 @@ final class Preview extends Base
 
     /**
      * Scheduled Date
+     * ---
      * If set, the queue manager will send the email after the date. If not set, the email will be send as soon as
      * possible. Jinja2 placeholders may be used.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -312,6 +388,10 @@ final class Preview extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -321,6 +401,7 @@ final class Preview extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -330,6 +411,10 @@ final class Preview extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -339,6 +424,7 @@ final class Preview extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

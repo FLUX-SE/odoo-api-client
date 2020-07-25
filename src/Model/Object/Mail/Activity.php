@@ -22,6 +22,10 @@ final class Activity extends Base
 {
     /**
      * Document Model
+     * ---
+     * Relation : many2one (ir.model)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -31,6 +35,7 @@ final class Activity extends Base
 
     /**
      * Related Document Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -40,6 +45,7 @@ final class Activity extends Base
 
     /**
      * Related Document ID
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -49,7 +55,9 @@ final class Activity extends Base
 
     /**
      * Document Name
+     * ---
      * Display name of the related document.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -59,6 +67,10 @@ final class Activity extends Base
 
     /**
      * Activity Type
+     * ---
+     * Relation : many2one (mail.activity.type)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity\Type
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -68,15 +80,17 @@ final class Activity extends Base
 
     /**
      * Action to Perform
+     * ---
      * Actions may trigger specific behavior like opening calendar view or automatically mark as done when a document
      * is uploaded
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> default (None)
      *     -> upload_file (Upload Document)
      *     -> tax_report (Tax report)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -84,13 +98,15 @@ final class Activity extends Base
 
     /**
      * Decoration Type
+     * ---
      * Change the background color of the related activities of this type.
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> warning (Alert)
      *     -> danger (Error)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -98,7 +114,9 @@ final class Activity extends Base
 
     /**
      * Icon
+     * ---
      * Font awesome icon e.g. fa-tasks
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -108,6 +126,7 @@ final class Activity extends Base
 
     /**
      * Summary
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -117,6 +136,7 @@ final class Activity extends Base
 
     /**
      * Note
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -126,6 +146,7 @@ final class Activity extends Base
 
     /**
      * Due Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -135,7 +156,9 @@ final class Activity extends Base
 
     /**
      * Automated activity
+     * ---
      * Indicates this activity has been created automatically and not by any user.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -145,6 +168,10 @@ final class Activity extends Base
 
     /**
      * Assigned to
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -154,13 +181,14 @@ final class Activity extends Base
 
     /**
      * State
-     * Searchable : no
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> overdue (Overdue)
      *     -> today (Today)
      *     -> planned (Planned)
-     *
+     * ---
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
@@ -168,6 +196,10 @@ final class Activity extends Base
 
     /**
      * Recommended Activity Type
+     * ---
+     * Relation : many2one (mail.activity.type)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity\Type
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -177,6 +209,10 @@ final class Activity extends Base
 
     /**
      * Previous Activity Type
+     * ---
+     * Relation : many2one (mail.activity.type)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity\Type
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -186,7 +222,9 @@ final class Activity extends Base
 
     /**
      * Next activities available
+     * ---
      * Technical field for UX purpose
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -196,6 +234,10 @@ final class Activity extends Base
 
     /**
      * Email templates
+     * ---
+     * Relation : many2many (mail.template)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Template
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -205,6 +247,7 @@ final class Activity extends Base
 
     /**
      * Trigger Next Activity
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -214,7 +257,9 @@ final class Activity extends Base
 
     /**
      * Can Write
+     * ---
      * Technical field to hide buttons if the current user has no access.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -224,6 +269,10 @@ final class Activity extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -233,6 +282,7 @@ final class Activity extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -242,6 +292,10 @@ final class Activity extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -251,6 +305,7 @@ final class Activity extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -260,15 +315,25 @@ final class Activity extends Base
 
     /**
      * @param OdooRelation $res_model_id Document Model
+     *        ---
+     *        Relation : many2one (ir.model)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param int $res_id Related Document ID
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param DateTimeInterface $date_deadline Due Date
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $user_id Assigned to
+     *        ---
+     *        Relation : many2one (res.users)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Users
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

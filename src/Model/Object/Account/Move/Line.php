@@ -18,7 +18,12 @@ final class Line extends Base
 {
     /**
      * Journal Entry
+     * ---
      * The move of this entry line.
+     * ---
+     * Relation : many2one (account.move)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -28,6 +33,7 @@ final class Line extends Base
 
     /**
      * Number
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -37,6 +43,7 @@ final class Line extends Base
 
     /**
      * Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -46,6 +53,7 @@ final class Line extends Base
 
     /**
      * Reference
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -55,13 +63,14 @@ final class Line extends Base
 
     /**
      * Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> draft (Draft)
      *     -> posted (Posted)
      *     -> cancel (Cancelled)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -69,6 +78,10 @@ final class Line extends Base
 
     /**
      * Journal
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -78,7 +91,12 @@ final class Line extends Base
 
     /**
      * Company
+     * ---
      * Company related to this journal
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -88,7 +106,12 @@ final class Line extends Base
 
     /**
      * Company Currency
+     * ---
      * Utility field to express amount currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -98,6 +121,10 @@ final class Line extends Base
 
     /**
      * Country
+     * ---
+     * Relation : many2one (res.country)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -107,6 +134,10 @@ final class Line extends Base
 
     /**
      * Account
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -116,16 +147,18 @@ final class Line extends Base
 
     /**
      * Internal Type
+     * ---
      * The 'Internal Type' is used for features available on different types of accounts: liquidity type is for cash
      * or bank accounts, payable/receivable is for vendor/customer accounts.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> other (Regular)
      *     -> receivable (Receivable)
      *     -> payable (Payable)
      *     -> liquidity (Liquidity)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -133,6 +166,10 @@ final class Line extends Base
 
     /**
      * Account Root
+     * ---
+     * Relation : many2one (account.root)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Root
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -142,6 +179,7 @@ final class Line extends Base
 
     /**
      * Sequence
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -151,6 +189,7 @@ final class Line extends Base
 
     /**
      * Label
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -160,8 +199,10 @@ final class Line extends Base
 
     /**
      * Quantity
+     * ---
      * The optional quantity expressed by this line, eg: number of product sold. The quantity is not a legal
      * requirement but is very useful for some reports.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -171,6 +212,7 @@ final class Line extends Base
 
     /**
      * Unit Price
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -180,6 +222,7 @@ final class Line extends Base
 
     /**
      * Discount (%)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -189,6 +232,7 @@ final class Line extends Base
 
     /**
      * Debit
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -198,6 +242,7 @@ final class Line extends Base
 
     /**
      * Credit
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -207,7 +252,9 @@ final class Line extends Base
 
     /**
      * Balance
+     * ---
      * Technical field holding the debit - credit in order to open meaningful graph views from reports
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -217,7 +264,9 @@ final class Line extends Base
 
     /**
      * Amount in Currency
+     * ---
      * The amount expressed in an optional other currency if it is a multi-currency entry.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -227,6 +276,7 @@ final class Line extends Base
 
     /**
      * Subtotal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -236,6 +286,7 @@ final class Line extends Base
 
     /**
      * Total
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -245,6 +296,7 @@ final class Line extends Base
 
     /**
      * Reconciled
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -254,7 +306,9 @@ final class Line extends Base
 
     /**
      * No Follow-up
+     * ---
      * You can check this box to mark this journal item as a litigation with the associated partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -264,8 +318,10 @@ final class Line extends Base
 
     /**
      * Due Date
+     * ---
      * This field is used for payable and receivable journal entries. You can put the limit date for the payment of
      * this line.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -275,6 +331,10 @@ final class Line extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -284,6 +344,10 @@ final class Line extends Base
 
     /**
      * Partner
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -293,6 +357,10 @@ final class Line extends Base
 
     /**
      * Unit of Measure
+     * ---
+     * Relation : many2one (uom.uom)
+     * @see \Flux\OdooApiClient\Model\Object\Uom\Uom
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -302,6 +370,10 @@ final class Line extends Base
 
     /**
      * Product
+     * ---
+     * Relation : many2one (product.product)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Product
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -311,6 +383,10 @@ final class Line extends Base
 
     /**
      * Reconciliation Model
+     * ---
+     * Relation : many2one (account.reconcile.model)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Reconcile\Model
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -320,7 +396,12 @@ final class Line extends Base
 
     /**
      * Originator Payment
+     * ---
      * Payment that created this entry
+     * ---
+     * Relation : many2one (account.payment)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Payment
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -330,6 +411,10 @@ final class Line extends Base
 
     /**
      * Bank statement line reconciled with this entry
+     * ---
+     * Relation : many2one (account.bank.statement.line)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Bank\Statement\Line
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -339,7 +424,12 @@ final class Line extends Base
 
     /**
      * Statement
+     * ---
      * The bank statement used for bank reconciliation
+     * ---
+     * Relation : many2one (account.bank.statement)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Bank\Statement
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -349,7 +439,12 @@ final class Line extends Base
 
     /**
      * Taxes
+     * ---
      * Taxes that apply on the base amount
+     * ---
+     * Relation : many2many (account.tax)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -359,7 +454,12 @@ final class Line extends Base
 
     /**
      * Originator Tax
+     * ---
      * Indicates that this journal item is a tax line
+     * ---
+     * Relation : many2one (account.tax)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -369,7 +469,12 @@ final class Line extends Base
 
     /**
      * Originator tax group
+     * ---
      * technical field for widget tax-group-custom-field
+     * ---
+     * Relation : many2one (account.tax.group)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax\Group
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -379,6 +484,7 @@ final class Line extends Base
 
     /**
      * Base Amount
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -388,9 +494,11 @@ final class Line extends Base
 
     /**
      * Appears in VAT report
+     * ---
      * Technical field used to mark a tax line as exigible in the vat report or not (only exigible journal items are
      * displayed). By default all new journal items are directly exigible, but with the feature cash_basis on taxes,
      * some will become exigible only when the payment is recorded.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -400,7 +508,12 @@ final class Line extends Base
 
     /**
      * Originator Tax Repartition Line
+     * ---
      * Tax repartition line that caused the creation of this move line, if any
+     * ---
+     * Relation : many2one (account.tax.repartition.line)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax\Repartition\Line
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -410,7 +523,12 @@ final class Line extends Base
 
     /**
      * Tags
+     * ---
      * Tags assigned to this line by the tax creating it, if any. It determines its impact on financial reports.
+     * ---
+     * Relation : many2many (account.account.tag)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Tag
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -420,7 +538,9 @@ final class Line extends Base
 
     /**
      * Tax Audit String
+     * ---
      * Computed field, listing the tax grids impacted by this line, and the amount it applies to each of them.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -430,7 +550,9 @@ final class Line extends Base
 
     /**
      * Residual Amount
+     * ---
      * The residual amount on a journal item expressed in the company currency.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -440,7 +562,9 @@ final class Line extends Base
 
     /**
      * Residual Amount in Currency
+     * ---
      * The residual amount on a journal item expressed in its currency (possibly not the company currency).
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -450,6 +574,10 @@ final class Line extends Base
 
     /**
      * Matching #
+     * ---
+     * Relation : many2one (account.full.reconcile)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Full\Reconcile
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -459,7 +587,12 @@ final class Line extends Base
 
     /**
      * Matched Debits
+     * ---
      * Debit journal items that are matched with this journal item.
+     * ---
+     * Relation : one2many (account.partial.reconcile -> credit_move_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Partial\Reconcile
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -469,7 +602,12 @@ final class Line extends Base
 
     /**
      * Matched Credits
+     * ---
      * Credit journal items that are matched with this journal item.
+     * ---
+     * Relation : one2many (account.partial.reconcile -> debit_move_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Partial\Reconcile
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -479,6 +617,10 @@ final class Line extends Base
 
     /**
      * Analytic lines
+     * ---
+     * Relation : one2many (account.analytic.line -> move_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -488,6 +630,10 @@ final class Line extends Base
 
     /**
      * Analytic Account
+     * ---
+     * Relation : many2one (account.analytic.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -497,6 +643,10 @@ final class Line extends Base
 
     /**
      * Analytic Tags
+     * ---
+     * Relation : many2many (account.analytic.tag)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Tag
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -506,7 +656,9 @@ final class Line extends Base
 
     /**
      * Recompute Tax Line
+     * ---
      * Technical field used to know on which lines the taxes must be recomputed.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -516,13 +668,15 @@ final class Line extends Base
 
     /**
      * Display Type
+     * ---
      * Technical field for UX purpose.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> line_section (Section)
      *     -> line_note (Note)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -530,7 +684,9 @@ final class Line extends Base
 
     /**
      * Is Rounding Line
+     * ---
      * Technical field used to retrieve the cash rounding line.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -540,7 +696,9 @@ final class Line extends Base
 
     /**
      * Exclude From Invoice Tab
+     * ---
      * Technical field used to exclude some lines from the invoice_line_ids tab in the form view.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -550,8 +708,13 @@ final class Line extends Base
 
     /**
      * Foreign Currency
+     * ---
      * Technical field used to compute the monetary field. As currency_id is not a required field, we need to use
      * either the foreign currency, either the company one.
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -561,6 +724,10 @@ final class Line extends Base
 
     /**
      * Move Attachment
+     * ---
+     * Relation : one2many (ir.attachment)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -570,7 +737,9 @@ final class Line extends Base
 
     /**
      * Predict From Name
+     * ---
      * Technical field used to know on which lines the prediction must be done.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -580,6 +749,7 @@ final class Line extends Base
 
     /**
      * Predict Override Default Account
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -589,8 +759,10 @@ final class Line extends Base
 
     /**
      * Expected Payment Date
+     * ---
      * Expected payment date as manually set through the customer statement (e.g: if you had the customer on the
      * phone and want to remember the date he promised he would pay)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -600,7 +772,9 @@ final class Line extends Base
 
     /**
      * Internal Note
+     * ---
      * Note you can set through the customer statement about a receivable journal item
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -610,8 +784,10 @@ final class Line extends Base
 
     /**
      * Next Action Date
+     * ---
      * Date where the next action should be taken for a receivable item. Usually, automatically set when sending
      * reminders through the customer statement.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -620,8 +796,26 @@ final class Line extends Base
     private $next_action_date;
 
     /**
+     * Sales Order Lines
+     * ---
+     * Relation : many2many (sale.order.line)
+     * @see \Flux\OdooApiClient\Model\Object\Sale\Order\Line
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $sale_line_ids;
+
+    /**
      * Asset Linked
+     * ---
      * Asset created from this Journal Item
+     * ---
+     * Relation : many2one (account.asset)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Asset
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -631,6 +825,10 @@ final class Line extends Base
 
     /**
      * Follow-up Level
+     * ---
+     * Relation : many2one (account_followup.followup.line)
+     * @see \Flux\OdooApiClient\Model\Object\AccountFollowup\Followup\Line
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -640,6 +838,7 @@ final class Line extends Base
 
     /**
      * Latest Follow-up
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -648,16 +847,11 @@ final class Line extends Base
     private $followup_date;
 
     /**
-     * Sales Order Lines
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $sale_line_ids;
-
-    /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -667,6 +861,7 @@ final class Line extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -676,6 +871,10 @@ final class Line extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -685,6 +884,7 @@ final class Line extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -694,7 +894,12 @@ final class Line extends Base
 
     /**
      * @param OdooRelation $move_id Journal Entry
+     *        ---
      *        The move of this entry line.
+     *        ---
+     *        Relation : many2one (account.move)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Move
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */
@@ -1137,72 +1342,11 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     */
-    public function removeSaleLineIds(OdooRelation $item): void
-    {
-        if (null === $this->sale_line_ids) {
-            $this->sale_line_ids = [];
-        }
-
-        if ($this->hasSaleLineIds($item)) {
-            $index = array_search($item, $this->sale_line_ids);
-            unset($this->sale_line_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation|null $followup_line_id
-     */
-    public function setFollowupLineId(?OdooRelation $followup_line_id): void
-    {
-        $this->followup_line_id = $followup_line_id;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getFollowupDate(): ?DateTimeInterface
-    {
-        return $this->followup_date;
-    }
-
-    /**
      * @param DateTimeInterface|null $followup_date
      */
     public function setFollowupDate(?DateTimeInterface $followup_date): void
     {
         $this->followup_date = $followup_date;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getSaleLineIds(): ?array
-    {
-        return $this->sale_line_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $sale_line_ids
-     */
-    public function setSaleLineIds(?array $sale_line_ids): void
-    {
-        $this->sale_line_ids = $sale_line_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasSaleLineIds(OdooRelation $item): bool
-    {
-        if (null === $this->sale_line_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->sale_line_ids);
     }
 
     /**
@@ -1222,11 +1366,26 @@ final class Line extends Base
     }
 
     /**
+     * @param OdooRelation $item
+     */
+    public function removeSaleLineIds(OdooRelation $item): void
+    {
+        if (null === $this->sale_line_ids) {
+            $this->sale_line_ids = [];
+        }
+
+        if ($this->hasSaleLineIds($item)) {
+            $index = array_search($item, $this->sale_line_ids);
+            unset($this->sale_line_ids[$index]);
+        }
+    }
+
+    /**
      * @return OdooRelation|null
      */
-    public function getCreateUid(): ?OdooRelation
+    public function getAssetId(): ?OdooRelation
     {
-        return $this->create_uid;
+        return $this->asset_id;
     }
 
     /**
@@ -1235,6 +1394,46 @@ final class Line extends Base
     public function setAssetId(?OdooRelation $asset_id): void
     {
         $this->asset_id = $asset_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getFollowupLineId(): ?OdooRelation
+    {
+        return $this->followup_line_id;
+    }
+
+    /**
+     * @param OdooRelation|null $followup_line_id
+     */
+    public function setFollowupLineId(?OdooRelation $followup_line_id): void
+    {
+        $this->followup_line_id = $followup_line_id;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getFollowupDate(): ?DateTimeInterface
+    {
+        return $this->followup_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation[]|null $sale_line_ids
+     */
+    public function setSaleLineIds(?array $sale_line_ids): void
+    {
+        $this->sale_line_ids = $sale_line_ids;
     }
 
     /**
@@ -1294,19 +1493,25 @@ final class Line extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function getFollowupLineId(): ?OdooRelation
+    public function hasSaleLineIds(OdooRelation $item): bool
     {
-        return $this->followup_line_id;
+        if (null === $this->sale_line_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->sale_line_ids);
     }
 
     /**
-     * @return OdooRelation|null
+     * @return OdooRelation[]|null
      */
-    public function getAssetId(): ?OdooRelation
+    public function getSaleLineIds(): ?array
     {
-        return $this->asset_id;
+        return $this->sale_line_ids;
     }
 
     /**

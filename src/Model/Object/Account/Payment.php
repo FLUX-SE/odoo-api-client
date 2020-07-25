@@ -26,6 +26,7 @@ final class Payment extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,7 +36,9 @@ final class Payment extends Base
 
     /**
      * Payment Reference
+     * ---
      * Reference of the document used to issue this payment. Eg. check number, file name, etc.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,9 +48,11 @@ final class Payment extends Base
 
     /**
      * Journal Entry Name
+     * ---
      * Technical field holding the number given to the journal entry, automatically set when the statement line is
      * reconciled then stored to set the same number again if the line is cancelled, set to draft and re-processed
      * again.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -57,6 +62,10 @@ final class Payment extends Base
 
     /**
      * Destination Account
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -66,6 +75,10 @@ final class Payment extends Base
 
     /**
      * Transfer To
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -75,11 +88,16 @@ final class Payment extends Base
 
     /**
      * Invoices
+     * ---
      * Technical field containing the invoice for which the payment has been generated.
      *                                                                       This does not especially correspond to
      * the invoices reconciled with the payment,
      *                                                                       as it can have been generated first, and
      * reconciled later
+     * ---
+     * Relation : many2many (account.move)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -89,7 +107,12 @@ final class Payment extends Base
 
     /**
      * Reconciled Invoices
+     * ---
      * Invoices whose journal items have been reconciled with these payments.
+     * ---
+     * Relation : many2many (account.move)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -99,7 +122,9 @@ final class Payment extends Base
 
     /**
      * Has Invoices
+     * ---
      * Technical field used for usability purposes
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -109,6 +134,7 @@ final class Payment extends Base
 
     /**
      * Reconciled Invoices Count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -118,6 +144,10 @@ final class Payment extends Base
 
     /**
      * Move Line
+     * ---
+     * Relation : one2many (account.move.line -> payment_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -127,6 +157,7 @@ final class Payment extends Base
 
     /**
      * Move Reconciled
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -136,15 +167,16 @@ final class Payment extends Base
 
     /**
      * Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> draft (Draft)
      *     -> posted (Validated)
      *     -> sent (Sent)
      *     -> reconciled (Reconciled)
      *     -> cancelled (Cancelled)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -152,13 +184,14 @@ final class Payment extends Base
 
     /**
      * Payment Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> outbound (Send Money)
      *     -> inbound (Receive Money)
      *     -> transfer (Internal Transfer)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -166,6 +199,7 @@ final class Payment extends Base
 
     /**
      * Payment Method
+     * ---
      * Manual: Get paid by cash, check or any other method outside of Odoo.
      * Electronic: Get paid automatically through a payment acquirer by requesting a transaction on a card saved by
      * the customer when buying or subscribing online (payment token).
@@ -175,6 +209,10 @@ final class Payment extends Base
      * deposit.To enable batch deposit, module account_batch_payment must be installed.
      * SEPA Credit Transfer: Pay bill from a SEPA Credit Transfer file you submit to your bank. To enable sepa credit
      * transfer, module account_sepa must be installed
+     * ---
+     * Relation : many2one (account.payment.method)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Payment\Method
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -184,7 +222,9 @@ final class Payment extends Base
 
     /**
      * Code
+     * ---
      * Technical field used to adapt the interface to the payment type selected.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -194,12 +234,13 @@ final class Payment extends Base
 
     /**
      * Partner Type
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> customer (Customer)
      *     -> supplier (Vendor)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -207,6 +248,10 @@ final class Payment extends Base
 
     /**
      * Partner
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -216,6 +261,7 @@ final class Payment extends Base
 
     /**
      * Amount
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -225,6 +271,10 @@ final class Payment extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -234,6 +284,7 @@ final class Payment extends Base
 
     /**
      * Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -243,6 +294,7 @@ final class Payment extends Base
 
     /**
      * Memo
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -252,6 +304,10 @@ final class Payment extends Base
 
     /**
      * Journal
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -261,7 +317,12 @@ final class Payment extends Base
 
     /**
      * Company
+     * ---
      * Company related to this journal
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -271,8 +332,10 @@ final class Payment extends Base
 
     /**
      * Hide Payment Method
+     * ---
      * Technical field used to hide the payment method if the selected journal has only one available which is
      * 'manual'
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -282,6 +345,7 @@ final class Payment extends Base
 
     /**
      * Payment Difference
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -291,12 +355,13 @@ final class Payment extends Base
 
     /**
      * Payment Difference Handling
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> open (Keep open)
      *     -> reconcile (Mark invoice as fully paid)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -304,6 +369,10 @@ final class Payment extends Base
 
     /**
      * Difference Account
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -313,7 +382,9 @@ final class Payment extends Base
 
     /**
      * Journal Item Label
+     * ---
      * Change label of the counterpart that will hold the payment difference
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -323,6 +394,10 @@ final class Payment extends Base
 
     /**
      * Recipient Bank Account
+     * ---
+     * Relation : many2one (res.partner.bank)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner\Bank
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -332,8 +407,10 @@ final class Payment extends Base
 
     /**
      * Show Partner Bank Account
+     * ---
      * Technical field used to know whether the field `partner_bank_account_id` needs to be displayed or not in the
      * payments form views
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -343,8 +420,10 @@ final class Payment extends Base
 
     /**
      * Require Partner Bank Account
+     * ---
      * Technical field used to know whether the field `partner_bank_account_id` needs to be required or not in the
      * payments form views
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -354,6 +433,10 @@ final class Payment extends Base
 
     /**
      * Attachments
+     * ---
+     * Relation : one2many (ir.attachment -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -362,7 +445,21 @@ final class Payment extends Base
     private $attachment_ids;
 
     /**
+     * Batch Payment
+     * ---
+     * Relation : many2one (account.batch.payment)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Batch\Payment
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $batch_payment_id;
+
+    /**
      * Amount in Words
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -372,7 +469,9 @@ final class Payment extends Base
 
     /**
      * Manual Numbering
+     * ---
      * Check this option if your pre-printed checks are not numbered.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -382,8 +481,10 @@ final class Payment extends Base
 
     /**
      * Check Number
+     * ---
      * The selected journal is configured to print check numbers. If your pre-printed check paper already has numbers
      * or if the current numbering is wrong, you can change it in the journal configuration page.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -393,6 +494,10 @@ final class Payment extends Base
 
     /**
      * Payment Transaction
+     * ---
+     * Relation : many2one (payment.transaction)
+     * @see \Flux\OdooApiClient\Model\Object\Payment\Transaction
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -402,8 +507,13 @@ final class Payment extends Base
 
     /**
      * Saved payment token
+     * ---
      * Note that tokens from acquirers set to only authorize transactions (instead of capturing the amount) are not
      * available.
+     * ---
+     * Relation : many2one (payment.token)
+     * @see \Flux\OdooApiClient\Model\Object\Payment\Token
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -413,6 +523,10 @@ final class Payment extends Base
 
     /**
      * Activities
+     * ---
+     * Relation : one2many (mail.activity -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -422,209 +536,30 @@ final class Payment extends Base
 
     /**
      * Activity State
+     * ---
      * Status based on activities
      * Overdue: Due date is already passed
      * Today: Activity date is today
      * Planned: Future activities.
-     * Searchable : no
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> overdue (Overdue)
      *     -> today (Today)
      *     -> planned (Planned)
-     *
+     * ---
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
     private $activity_state;
 
     /**
-     * Next Activity Deadline
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var DateTimeInterface|null
-     */
-    private $activity_date_deadline;
-
-    /**
-     * Activity Exception Decoration
-     * Type of the exception activity on record.
-     * Searchable : yes
-     * Sortable : no
-     * Selection : (default value, usually null)
-     *     -> warning (Alert)
-     *     -> danger (Error)
-     *
-     *
-     * @var string|null
-     */
-    private $activity_exception_decoration;
-
-    /**
-     * Icon
-     * Icon to indicate an exception activity.
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $activity_exception_icon;
-
-    /**
-     * Is Follower
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $message_is_follower;
-
-    /**
-     * Followers
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $message_follower_ids;
-
-    /**
-     * Followers (Partners)
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $message_partner_ids;
-
-    /**
-     * Followers (Channels)
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $message_channel_ids;
-
-    /**
-     * Messages
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $message_ids;
-
-    /**
-     * Unread Messages
-     * If checked, new messages require your attention.
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $message_unread;
-
-    /**
-     * Unread Messages Counter
-     * Number of unread messages
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var int|null
-     */
-    private $message_unread_counter;
-
-    /**
-     * Action Needed
-     * If checked, new messages require your attention.
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $message_needaction;
-
-    /**
-     * Number of Actions
-     * Number of messages which requires an action
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var int|null
-     */
-    private $message_needaction_counter;
-
-    /**
-     * Message Delivery error
-     * If checked, some messages have a delivery error.
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $message_has_error;
-
-    /**
-     * Number of errors
-     * Number of messages with delivery error
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var int|null
-     */
-    private $message_has_error_counter;
-
-    /**
-     * Attachment Count
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var int|null
-     */
-    private $message_attachment_count;
-
-    /**
-     * Main Attachment
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $message_main_attachment_id;
-
-    /**
-     * Website Messages
-     * Website communication history
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $website_message_ids;
-
-    /**
-     * SMS Delivery error
-     * If checked, some messages have a delivery error.
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $message_has_sms_error;
-
-    /**
-     * Batch Payment
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $batch_payment_id;
-
-    /**
      * Responsible User
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -634,6 +569,10 @@ final class Payment extends Base
 
     /**
      * Next Activity Type
+     * ---
+     * Relation : many2one (mail.activity.type)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity\Type
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -642,7 +581,18 @@ final class Payment extends Base
     private $activity_type_id;
 
     /**
+     * Next Activity Deadline
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var DateTimeInterface|null
+     */
+    private $activity_date_deadline;
+
+    /**
      * Next Activity Summary
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -651,7 +601,223 @@ final class Payment extends Base
     private $activity_summary;
 
     /**
+     * Activity Exception Decoration
+     * ---
+     * Type of the exception activity on record.
+     * ---
+     * Selection : (default value, usually null)
+     *     -> warning (Alert)
+     *     -> danger (Error)
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $activity_exception_decoration;
+
+    /**
+     * Icon
+     * ---
+     * Icon to indicate an exception activity.
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $activity_exception_icon;
+
+    /**
+     * Is Follower
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $message_is_follower;
+
+    /**
+     * Followers
+     * ---
+     * Relation : one2many (mail.followers -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Followers
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $message_follower_ids;
+
+    /**
+     * Followers (Partners)
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $message_partner_ids;
+
+    /**
+     * Followers (Channels)
+     * ---
+     * Relation : many2many (mail.channel)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Channel
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $message_channel_ids;
+
+    /**
+     * Messages
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $message_ids;
+
+    /**
+     * Unread Messages
+     * ---
+     * If checked, new messages require your attention.
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $message_unread;
+
+    /**
+     * Unread Messages Counter
+     * ---
+     * Number of unread messages
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    private $message_unread_counter;
+
+    /**
+     * Action Needed
+     * ---
+     * If checked, new messages require your attention.
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $message_needaction;
+
+    /**
+     * Number of Actions
+     * ---
+     * Number of messages which requires an action
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    private $message_needaction_counter;
+
+    /**
+     * Message Delivery error
+     * ---
+     * If checked, some messages have a delivery error.
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $message_has_error;
+
+    /**
+     * Number of errors
+     * ---
+     * Number of messages with delivery error
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    private $message_has_error_counter;
+
+    /**
+     * Attachment Count
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    private $message_attachment_count;
+
+    /**
+     * Main Attachment
+     * ---
+     * Relation : many2one (ir.attachment)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $message_main_attachment_id;
+
+    /**
+     * Website Messages
+     * ---
+     * Website communication history
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $website_message_ids;
+
+    /**
+     * SMS Delivery error
+     * ---
+     * If checked, some messages have a delivery error.
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $message_has_sms_error;
+
+    /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -661,6 +827,7 @@ final class Payment extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -670,6 +837,10 @@ final class Payment extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -679,6 +850,7 @@ final class Payment extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -688,14 +860,16 @@ final class Payment extends Base
 
     /**
      * @param string $payment_type Payment Type
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> outbound (Send Money)
      *            -> inbound (Receive Money)
      *            -> transfer (Internal Transfer)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param OdooRelation $payment_method_id Payment Method
+     *        ---
      *        Manual: Get paid by cash, check or any other method outside of Odoo.
      *        Electronic: Get paid automatically through a payment acquirer by requesting a transaction on a card saved by
      *        the customer when buying or subscribing online (payment token).
@@ -705,18 +879,32 @@ final class Payment extends Base
      *        deposit.To enable batch deposit, module account_batch_payment must be installed.
      *        SEPA Credit Transfer: Pay bill from a SEPA Credit Transfer file you submit to your bank. To enable sepa credit
      *        transfer, module account_sepa must be installed
+     *        ---
+     *        Relation : many2one (account.payment.method)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Payment\Method
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param float $amount Amount
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $currency_id Currency
+     *        ---
+     *        Relation : many2one (res.currency)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param DateTimeInterface $payment_date Date
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $journal_id Journal
+     *        ---
+     *        Relation : many2one (account.journal)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */
@@ -737,18 +925,67 @@ final class Payment extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @param OdooRelation[]|null $message_follower_ids
      */
-    public function removeMessagePartnerIds(OdooRelation $item): void
+    public function setMessageFollowerIds(?array $message_follower_ids): void
     {
-        if (null === $this->message_partner_ids) {
-            $this->message_partner_ids = [];
-        }
+        $this->message_follower_ids = $message_follower_ids;
+    }
 
-        if ($this->hasMessagePartnerIds($item)) {
-            $index = array_search($item, $this->message_partner_ids);
-            unset($this->message_partner_ids[$index]);
-        }
+    /**
+     * @return string|null
+     */
+    public function getActivityExceptionDecoration(): ?string
+    {
+        return $this->activity_exception_decoration;
+    }
+
+    /**
+     * @param string|null $activity_exception_decoration
+     */
+    public function setActivityExceptionDecoration(?string $activity_exception_decoration): void
+    {
+        $this->activity_exception_decoration = $activity_exception_decoration;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getActivityExceptionIcon(): ?string
+    {
+        return $this->activity_exception_icon;
+    }
+
+    /**
+     * @param string|null $activity_exception_icon
+     */
+    public function setActivityExceptionIcon(?string $activity_exception_icon): void
+    {
+        $this->activity_exception_icon = $activity_exception_icon;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isMessageIsFollower(): ?bool
+    {
+        return $this->message_is_follower;
+    }
+
+    /**
+     * @param bool|null $message_is_follower
+     */
+    public function setMessageIsFollower(?bool $message_is_follower): void
+    {
+        $this->message_is_follower = $message_is_follower;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getMessageFollowerIds(): ?array
+    {
+        return $this->message_follower_ids;
     }
 
     /**
@@ -763,6 +1000,14 @@ final class Payment extends Base
         }
 
         return in_array($item, $this->message_follower_ids);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getActivitySummary(): ?string
+    {
+        return $this->activity_summary;
     }
 
     /**
@@ -843,19 +1088,34 @@ final class Payment extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @param OdooRelation $item
      */
-    public function getMessageChannelIds(): ?array
+    public function removeMessagePartnerIds(OdooRelation $item): void
     {
-        return $this->message_channel_ids;
+        if (null === $this->message_partner_ids) {
+            $this->message_partner_ids = [];
+        }
+
+        if ($this->hasMessagePartnerIds($item)) {
+            $index = array_search($item, $this->message_partner_ids);
+            unset($this->message_partner_ids[$index]);
+        }
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @param string|null $activity_summary
      */
-    public function getMessageFollowerIds(): ?array
+    public function setActivitySummary(?string $activity_summary): void
     {
-        return $this->message_follower_ids;
+        $this->activity_summary = $activity_summary;
+    }
+
+    /**
+     * @param DateTimeInterface|null $activity_date_deadline
+     */
+    public function setActivityDateDeadline(?DateTimeInterface $activity_date_deadline): void
+    {
+        $this->activity_date_deadline = $activity_date_deadline;
     }
 
     /**
@@ -871,120 +1131,29 @@ final class Payment extends Base
      *
      * @return bool
      */
-    public function hasMessageChannelIds(OdooRelation $item): bool
-    {
-        if (null === $this->message_channel_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_channel_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addMessageChannelIds(OdooRelation $item): void
-    {
-        if ($this->hasMessageChannelIds($item)) {
-            return;
-        }
-
-        if (null === $this->message_channel_ids) {
-            $this->message_channel_ids = [];
-        }
-
-        $this->message_channel_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMessageChannelIds(OdooRelation $item): void
-    {
-        if (null === $this->message_channel_ids) {
-            $this->message_channel_ids = [];
-        }
-
-        if ($this->hasMessageChannelIds($item)) {
-            $index = array_search($item, $this->message_channel_ids);
-            unset($this->message_channel_ids[$index]);
-        }
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getMessageIds(): ?array
-    {
-        return $this->message_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $message_ids
-     */
-    public function setMessageIds(?array $message_ids): void
-    {
-        $this->message_ids = $message_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasMessageIds(OdooRelation $item): bool
-    {
-        if (null === $this->message_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_ids);
-    }
-
-    /**
-     * @param OdooRelation[]|null $message_follower_ids
-     */
-    public function setMessageFollowerIds(?array $message_follower_ids): void
-    {
-        $this->message_follower_ids = $message_follower_ids;
-    }
-
-    /**
-     * @param bool|null $message_is_follower
-     */
-    public function setMessageIsFollower(?bool $message_is_follower): void
-    {
-        $this->message_is_follower = $message_is_follower;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMessageIds(OdooRelation $item): void
-    {
-        if (null === $this->message_ids) {
-            $this->message_ids = [];
-        }
-
-        if ($this->hasMessageIds($item)) {
-            $index = array_search($item, $this->message_ids);
-            unset($this->message_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeActivityIds(OdooRelation $item): void
+    public function hasActivityIds(OdooRelation $item): bool
     {
         if (null === $this->activity_ids) {
-            $this->activity_ids = [];
+            return false;
         }
 
-        if ($this->hasActivityIds($item)) {
-            $index = array_search($item, $this->activity_ids);
-            unset($this->activity_ids[$index]);
-        }
+        return in_array($item, $this->activity_ids);
+    }
+
+    /**
+     * @param string|null $check_number
+     */
+    public function setCheckNumber(?string $check_number): void
+    {
+        $this->check_number = $check_number;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPaymentTransactionId(): ?OdooRelation
+    {
+        return $this->payment_transaction_id;
     }
 
     /**
@@ -1029,20 +1198,6 @@ final class Payment extends Base
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasActivityIds(OdooRelation $item): bool
-    {
-        if (null === $this->activity_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->activity_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
      */
     public function addActivityIds(OdooRelation $item): void
     {
@@ -1058,30 +1213,6 @@ final class Payment extends Base
     }
 
     /**
-     * @return string|null
-     */
-    public function getActivityState(): ?string
-    {
-        return $this->activity_state;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isMessageIsFollower(): ?bool
-    {
-        return $this->message_is_follower;
-    }
-
-    /**
-     * @param string|null $activity_state
-     */
-    public function setActivityState(?string $activity_state): void
-    {
-        $this->activity_state = $activity_state;
-    }
-
-    /**
      * @return DateTimeInterface|null
      */
     public function getActivityDateDeadline(): ?DateTimeInterface
@@ -1090,99 +1221,34 @@ final class Payment extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $activity_date_deadline
-     */
-    public function setActivityDateDeadline(?DateTimeInterface $activity_date_deadline): void
-    {
-        $this->activity_date_deadline = $activity_date_deadline;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getActivityExceptionDecoration(): ?string
-    {
-        return $this->activity_exception_decoration;
-    }
-
-    /**
-     * @param string|null $activity_exception_decoration
-     */
-    public function setActivityExceptionDecoration(?string $activity_exception_decoration): void
-    {
-        $this->activity_exception_decoration = $activity_exception_decoration;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getActivityExceptionIcon(): ?string
-    {
-        return $this->activity_exception_icon;
-    }
-
-    /**
-     * @param string|null $activity_exception_icon
-     */
-    public function setActivityExceptionIcon(?string $activity_exception_icon): void
-    {
-        $this->activity_exception_icon = $activity_exception_icon;
-    }
-
-    /**
      * @param OdooRelation $item
      */
-    public function addMessageIds(OdooRelation $item): void
+    public function removeActivityIds(OdooRelation $item): void
     {
-        if ($this->hasMessageIds($item)) {
-            return;
+        if (null === $this->activity_ids) {
+            $this->activity_ids = [];
         }
 
-        if (null === $this->message_ids) {
-            $this->message_ids = [];
+        if ($this->hasActivityIds($item)) {
+            $index = array_search($item, $this->activity_ids);
+            unset($this->activity_ids[$index]);
         }
-
-        $this->message_ids[] = $item;
     }
 
     /**
-     * @return bool|null
+     * @return string|null
      */
-    public function isMessageUnread(): ?bool
+    public function getActivityState(): ?string
     {
-        return $this->message_unread;
+        return $this->activity_state;
     }
 
     /**
-     * @param string|null $check_number
+     * @param string|null $activity_state
      */
-    public function setCheckNumber(?string $check_number): void
+    public function setActivityState(?string $activity_state): void
     {
-        $this->check_number = $check_number;
-    }
-
-    /**
-     * @param string|null $activity_summary
-     */
-    public function setActivitySummary(?string $activity_summary): void
-    {
-        $this->activity_summary = $activity_summary;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getBatchPaymentId(): ?OdooRelation
-    {
-        return $this->batch_payment_id;
-    }
-
-    /**
-     * @param OdooRelation|null $batch_payment_id
-     */
-    public function setBatchPaymentId(?OdooRelation $batch_payment_id): void
-    {
-        $this->batch_payment_id = $batch_payment_id;
+        $this->activity_state = $activity_state;
     }
 
     /**
@@ -1218,11 +1284,118 @@ final class Payment extends Base
     }
 
     /**
-     * @return string|null
+     * @return OdooRelation[]|null
      */
-    public function getActivitySummary(): ?string
+    public function getMessageChannelIds(): ?array
     {
-        return $this->activity_summary;
+        return $this->message_channel_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMessageChannelIds(OdooRelation $item): bool
+    {
+        if (null === $this->message_channel_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_channel_ids);
+    }
+
+    /**
+     * @param bool|null $check_manual_sequencing
+     */
+    public function setCheckManualSequencing(?bool $check_manual_sequencing): void
+    {
+        $this->check_manual_sequencing = $check_manual_sequencing;
+    }
+
+    /**
+     * @param bool|null $message_has_sms_error
+     */
+    public function setMessageHasSmsError(?bool $message_has_sms_error): void
+    {
+        $this->message_has_sms_error = $message_has_sms_error;
+    }
+
+    /**
+     * @param OdooRelation|null $message_main_attachment_id
+     */
+    public function setMessageMainAttachmentId(?OdooRelation $message_main_attachment_id): void
+    {
+        $this->message_main_attachment_id = $message_main_attachment_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getWebsiteMessageIds(): ?array
+    {
+        return $this->website_message_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $website_message_ids
+     */
+    public function setWebsiteMessageIds(?array $website_message_ids): void
+    {
+        $this->website_message_ids = $website_message_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasWebsiteMessageIds(OdooRelation $item): bool
+    {
+        if (null === $this->website_message_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->website_message_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addWebsiteMessageIds(OdooRelation $item): void
+    {
+        if ($this->hasWebsiteMessageIds($item)) {
+            return;
+        }
+
+        if (null === $this->website_message_ids) {
+            $this->website_message_ids = [];
+        }
+
+        $this->website_message_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeWebsiteMessageIds(OdooRelation $item): void
+    {
+        if (null === $this->website_message_ids) {
+            $this->website_message_ids = [];
+        }
+
+        if ($this->hasWebsiteMessageIds($item)) {
+            $index = array_search($item, $this->website_message_ids);
+            unset($this->website_message_ids[$index]);
+        }
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isMessageHasSmsError(): ?bool
+    {
+        return $this->message_has_sms_error;
     }
 
     /**
@@ -1234,11 +1407,11 @@ final class Payment extends Base
     }
 
     /**
-     * @return bool|null
+     * @param int|null $message_attachment_count
      */
-    public function isMessageHasSmsError(): ?bool
+    public function setMessageAttachmentCount(?int $message_attachment_count): void
     {
-        return $this->message_has_sms_error;
+        $this->message_attachment_count = $message_attachment_count;
     }
 
     /**
@@ -1298,26 +1471,35 @@ final class Payment extends Base
     }
 
     /**
-     * @param bool|null $message_has_sms_error
+     * @return OdooRelation|null
      */
-    public function setMessageHasSmsError(?bool $message_has_sms_error): void
+    public function getMessageMainAttachmentId(): ?OdooRelation
     {
-        $this->message_has_sms_error = $message_has_sms_error;
+        return $this->message_main_attachment_id;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getMessageAttachmentCount(): ?int
+    {
+        return $this->message_attachment_count;
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function removeWebsiteMessageIds(OdooRelation $item): void
+    public function addMessageChannelIds(OdooRelation $item): void
     {
-        if (null === $this->website_message_ids) {
-            $this->website_message_ids = [];
+        if ($this->hasMessageChannelIds($item)) {
+            return;
         }
 
-        if ($this->hasWebsiteMessageIds($item)) {
-            $index = array_search($item, $this->website_message_ids);
-            unset($this->website_message_ids[$index]);
+        if (null === $this->message_channel_ids) {
+            $this->message_channel_ids = [];
         }
+
+        $this->message_channel_ids[] = $item;
     }
 
     /**
@@ -1329,11 +1511,87 @@ final class Payment extends Base
     }
 
     /**
-     * @param bool|null $message_has_error
+     * @param OdooRelation $item
      */
-    public function setMessageHasError(?bool $message_has_error): void
+    public function removeMessageChannelIds(OdooRelation $item): void
     {
-        $this->message_has_error = $message_has_error;
+        if (null === $this->message_channel_ids) {
+            $this->message_channel_ids = [];
+        }
+
+        if ($this->hasMessageChannelIds($item)) {
+            $index = array_search($item, $this->message_channel_ids);
+            unset($this->message_channel_ids[$index]);
+        }
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getMessageIds(): ?array
+    {
+        return $this->message_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_ids
+     */
+    public function setMessageIds(?array $message_ids): void
+    {
+        $this->message_ids = $message_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMessageIds(OdooRelation $item): bool
+    {
+        if (null === $this->message_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMessageIds(OdooRelation $item): void
+    {
+        if ($this->hasMessageIds($item)) {
+            return;
+        }
+
+        if (null === $this->message_ids) {
+            $this->message_ids = [];
+        }
+
+        $this->message_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMessageIds(OdooRelation $item): void
+    {
+        if (null === $this->message_ids) {
+            $this->message_ids = [];
+        }
+
+        if ($this->hasMessageIds($item)) {
+            $index = array_search($item, $this->message_ids);
+            unset($this->message_ids[$index]);
+        }
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isMessageUnread(): ?bool
+    {
+        return $this->message_unread;
     }
 
     /**
@@ -1342,6 +1600,14 @@ final class Payment extends Base
     public function getMessageUnreadCounter(): ?int
     {
         return $this->message_unread_counter;
+    }
+
+    /**
+     * @param int|null $message_has_error_counter
+     */
+    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
+    {
+        $this->message_has_error_counter = $message_has_error_counter;
     }
 
     /**
@@ -1393,6 +1659,14 @@ final class Payment extends Base
     }
 
     /**
+     * @param bool|null $message_has_error
+     */
+    public function setMessageHasError(?bool $message_has_error): void
+    {
+        $this->message_has_error = $message_has_error;
+    }
+
+    /**
      * @return int|null
      */
     public function getMessageHasErrorCounter(): ?int
@@ -1401,105 +1675,19 @@ final class Payment extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     */
-    public function addWebsiteMessageIds(OdooRelation $item): void
-    {
-        if ($this->hasWebsiteMessageIds($item)) {
-            return;
-        }
-
-        if (null === $this->website_message_ids) {
-            $this->website_message_ids = [];
-        }
-
-        $this->website_message_ids[] = $item;
-    }
-
-    /**
-     * @param int|null $message_has_error_counter
-     */
-    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
-    {
-        $this->message_has_error_counter = $message_has_error_counter;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getMessageAttachmentCount(): ?int
-    {
-        return $this->message_attachment_count;
-    }
-
-    /**
-     * @param int|null $message_attachment_count
-     */
-    public function setMessageAttachmentCount(?int $message_attachment_count): void
-    {
-        $this->message_attachment_count = $message_attachment_count;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getMessageMainAttachmentId(): ?OdooRelation
-    {
-        return $this->message_main_attachment_id;
-    }
-
-    /**
-     * @param OdooRelation|null $message_main_attachment_id
-     */
-    public function setMessageMainAttachmentId(?OdooRelation $message_main_attachment_id): void
-    {
-        $this->message_main_attachment_id = $message_main_attachment_id;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getWebsiteMessageIds(): ?array
-    {
-        return $this->website_message_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $website_message_ids
-     */
-    public function setWebsiteMessageIds(?array $website_message_ids): void
-    {
-        $this->website_message_ids = $website_message_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasWebsiteMessageIds(OdooRelation $item): bool
-    {
-        if (null === $this->website_message_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->website_message_ids);
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getPaymentTransactionId(): ?OdooRelation
-    {
-        return $this->payment_transaction_id;
-    }
-
-    /**
      * @return string|null
      */
     public function getCheckNumber(): ?string
     {
         return $this->check_number;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isCheckManualSequencing(): ?bool
+    {
+        return $this->check_manual_sequencing;
     }
 
     /**
@@ -1894,11 +2082,11 @@ final class Payment extends Base
     }
 
     /**
-     * @param bool|null $check_manual_sequencing
+     * @param string|null $check_amount_in_words
      */
-    public function setCheckManualSequencing(?bool $check_manual_sequencing): void
+    public function setCheckAmountInWords(?string $check_amount_in_words): void
     {
-        $this->check_manual_sequencing = $check_manual_sequencing;
+        $this->check_amount_in_words = $check_amount_in_words;
     }
 
     /**
@@ -2035,27 +2223,27 @@ final class Payment extends Base
     }
 
     /**
+     * @return OdooRelation|null
+     */
+    public function getBatchPaymentId(): ?OdooRelation
+    {
+        return $this->batch_payment_id;
+    }
+
+    /**
+     * @param OdooRelation|null $batch_payment_id
+     */
+    public function setBatchPaymentId(?OdooRelation $batch_payment_id): void
+    {
+        $this->batch_payment_id = $batch_payment_id;
+    }
+
+    /**
      * @return string|null
      */
     public function getCheckAmountInWords(): ?string
     {
         return $this->check_amount_in_words;
-    }
-
-    /**
-     * @param string|null $check_amount_in_words
-     */
-    public function setCheckAmountInWords(?string $check_amount_in_words): void
-    {
-        $this->check_amount_in_words = $check_amount_in_words;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isCheckManualSequencing(): ?bool
-    {
-        return $this->check_manual_sequencing;
     }
 
     /**

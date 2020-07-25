@@ -26,6 +26,7 @@ final class Test extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,10 @@ final class Test extends Base
 
     /**
      * Resource
+     * ---
+     * Relation : many2one (resource.resource)
+     * @see \Flux\OdooApiClient\Model\Object\Resource_\Resource_
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +49,10 @@ final class Test extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,7 +62,12 @@ final class Test extends Base
 
     /**
      * Working Hours
+     * ---
      * Define the schedule of resource
+     * ---
+     * Relation : many2one (resource.calendar)
+     * @see \Flux\OdooApiClient\Model\Object\Resource_\Calendar
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,9 +77,9 @@ final class Test extends Base
 
     /**
      * Timezone
+     * ---
      * This field is used in order to define in which timezone the resources will work.
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> Africa/Abidjan (Africa/Abidjan)
      *     -> Africa/Accra (Africa/Accra)
@@ -660,7 +674,9 @@ final class Test extends Base
      *     -> Etc/UTC (Etc/UTC)
      *     -> Etc/Universal (Etc/Universal)
      *     -> Etc/Zulu (Etc/Zulu)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -668,6 +684,10 @@ final class Test extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -677,6 +697,7 @@ final class Test extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -686,6 +707,10 @@ final class Test extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -695,6 +720,7 @@ final class Test extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -704,6 +730,10 @@ final class Test extends Base
 
     /**
      * @param OdooRelation $resource_id Resource
+     *        ---
+     *        Relation : many2one (resource.resource)
+     *        @see \Flux\OdooApiClient\Model\Object\Resource_\Resource_
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

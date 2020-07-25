@@ -26,6 +26,7 @@ final class Filters extends Base
 {
     /**
      * Filter Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,7 +36,12 @@ final class Filters extends Base
 
     /**
      * User
+     * ---
      * The user this filter is private to. When left empty the filter is public and available to all users.
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +51,7 @@ final class Filters extends Base
 
     /**
      * Domain
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,6 +61,7 @@ final class Filters extends Base
 
     /**
      * Context
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,6 +71,7 @@ final class Filters extends Base
 
     /**
      * Sort
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,8 +81,7 @@ final class Filters extends Base
 
     /**
      * Model
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> res.groups (Access Groups)
      *     -> account.account (Account)
@@ -407,7 +415,9 @@ final class Filters extends Base
      *     -> web_editor.converter.test (Web Editor Converter Test)
      *     -> account.online.wizard (Wizard to link synchronized accounts to journal)
      *     -> resource.calendar.attendance (Work Detail)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -415,6 +425,7 @@ final class Filters extends Base
 
     /**
      * Default Filter
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -424,7 +435,12 @@ final class Filters extends Base
 
     /**
      * Action
+     * ---
      * The menu action this filter applies to. When left empty the filter applies to all menus for this model.
+     * ---
+     * Relation : many2one (ir.actions.actions)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Actions\Actions
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -434,6 +450,7 @@ final class Filters extends Base
 
     /**
      * Active
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -443,6 +460,10 @@ final class Filters extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -452,6 +473,7 @@ final class Filters extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -461,6 +483,10 @@ final class Filters extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -470,6 +496,7 @@ final class Filters extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -479,20 +506,23 @@ final class Filters extends Base
 
     /**
      * @param string $name Filter Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $domain Domain
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $context Context
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $sort Sort
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $model_id Model
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> res.groups (Access Groups)
      *            -> account.account (Account)
@@ -826,7 +856,9 @@ final class Filters extends Base
      *            -> web_editor.converter.test (Web Editor Converter Test)
      *            -> account.online.wizard (Wizard to link synchronized accounts to journal)
      *            -> resource.calendar.attendance (Work Detail)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         string $name,

@@ -26,6 +26,10 @@ final class Exclusion extends Base
 {
     /**
      * Attribute Value
+     * ---
+     * Relation : many2one (product.template.attribute.value)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Template\Attribute\Value
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +39,10 @@ final class Exclusion extends Base
 
     /**
      * Product Template
+     * ---
+     * Relation : many2one (product.template)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +52,10 @@ final class Exclusion extends Base
 
     /**
      * Attribute Values
+     * ---
+     * Relation : many2many (product.template.attribute.value)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Template\Attribute\Value
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -53,6 +65,10 @@ final class Exclusion extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +78,7 @@ final class Exclusion extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +88,10 @@ final class Exclusion extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,6 +101,7 @@ final class Exclusion extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,6 +111,10 @@ final class Exclusion extends Base
 
     /**
      * @param OdooRelation $product_tmpl_id Product Template
+     *        ---
+     *        Relation : many2one (product.template)
+     *        @see \Flux\OdooApiClient\Model\Object\Product\Template
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

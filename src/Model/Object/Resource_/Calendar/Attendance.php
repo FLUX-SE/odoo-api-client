@@ -26,6 +26,7 @@ final class Attendance extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,8 +36,7 @@ final class Attendance extends Base
 
     /**
      * Day of Week
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> 0 (Monday)
      *     -> 1 (Tuesday)
@@ -45,7 +45,9 @@ final class Attendance extends Base
      *     -> 4 (Friday)
      *     -> 5 (Saturday)
      *     -> 6 (Sunday)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -53,6 +55,7 @@ final class Attendance extends Base
 
     /**
      * Starting Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +65,7 @@ final class Attendance extends Base
 
     /**
      * End Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,8 +75,10 @@ final class Attendance extends Base
 
     /**
      * Work from
+     * ---
      * Start and End time of working.
      * A specific value of 24:00 is interpreted as 23:59:59.999999.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -82,6 +88,7 @@ final class Attendance extends Base
 
     /**
      * Work to
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -91,6 +98,10 @@ final class Attendance extends Base
 
     /**
      * Resource's Calendar
+     * ---
+     * Relation : many2one (resource.calendar)
+     * @see \Flux\OdooApiClient\Model\Object\Resource_\Calendar
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -100,12 +111,13 @@ final class Attendance extends Base
 
     /**
      * Day Period
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> morning (Morning)
      *     -> afternoon (Afternoon)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -113,6 +125,10 @@ final class Attendance extends Base
 
     /**
      * Resource
+     * ---
+     * Relation : many2one (resource.resource)
+     * @see \Flux\OdooApiClient\Model\Object\Resource_\Resource_
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -122,12 +138,13 @@ final class Attendance extends Base
 
     /**
      * Week Even/Odd
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> 1 (Odd week)
      *     -> 0 (Even week)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -135,6 +152,7 @@ final class Attendance extends Base
 
     /**
      * Calendar in 2 weeks mode
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -144,12 +162,14 @@ final class Attendance extends Base
 
     /**
      * Display Type
+     * ---
      * Technical field for UX purpose.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> line_section (Section)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -157,7 +177,9 @@ final class Attendance extends Base
 
     /**
      * Sequence
+     * ---
      * Gives the sequence of this line when displaying the resource calendar.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -167,6 +189,10 @@ final class Attendance extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -176,6 +202,7 @@ final class Attendance extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -185,6 +212,10 @@ final class Attendance extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -194,6 +225,7 @@ final class Attendance extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -203,11 +235,11 @@ final class Attendance extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $dayofweek Day of Week
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> 0 (Monday)
      *            -> 1 (Tuesday)
@@ -216,25 +248,35 @@ final class Attendance extends Base
      *            -> 4 (Friday)
      *            -> 5 (Saturday)
      *            -> 6 (Sunday)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param float $hour_from Work from
+     *        ---
      *        Start and End time of working.
      *        A specific value of 24:00 is interpreted as 23:59:59.999999.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param float $hour_to Work to
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $calendar_id Resource's Calendar
+     *        ---
+     *        Relation : many2one (resource.calendar)
+     *        @see \Flux\OdooApiClient\Model\Object\Resource_\Calendar
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $day_period Day Period
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> morning (Morning)
      *            -> afternoon (Afternoon)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         string $name,

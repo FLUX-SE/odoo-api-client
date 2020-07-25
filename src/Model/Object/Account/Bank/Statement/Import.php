@@ -23,7 +23,12 @@ final class Import extends Base
 {
     /**
      * Files
+     * ---
      * Get you bank statements in electronic format from your bank and select them here.
+     * ---
+     * Relation : many2many (ir.attachment)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -33,6 +38,10 @@ final class Import extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -42,6 +51,7 @@ final class Import extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -51,6 +61,10 @@ final class Import extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -60,6 +74,7 @@ final class Import extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -69,7 +84,12 @@ final class Import extends Base
 
     /**
      * @param OdooRelation[] $attachment_ids Files
+     *        ---
      *        Get you bank statements in electronic format from your bank and select them here.
+     *        ---
+     *        Relation : many2many (ir.attachment)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     *        ---
      *        Searchable : yes
      *        Sortable : no
      */

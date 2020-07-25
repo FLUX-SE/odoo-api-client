@@ -23,6 +23,7 @@ final class Export extends Base
 {
     /**
      * File Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,12 +33,13 @@ final class Export extends Base
 
     /**
      * Language
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> __new__ (New Language (Empty translation template))
      *     -> en_US (English (US))
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -45,13 +47,14 @@ final class Export extends Base
 
     /**
      * File Format
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> csv (CSV File)
      *     -> po (PO File)
      *     -> tgz (TGZ Archive)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -59,6 +62,10 @@ final class Export extends Base
 
     /**
      * Apps To Export
+     * ---
+     * Relation : many2many (ir.module.module)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Module\Module
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -68,21 +75,23 @@ final class Export extends Base
 
     /**
      * File
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
-     * @var int|null
+     * @var string|null
      */
     private $data;
 
     /**
      * State
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> choose (choose)
      *     -> get (get)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -90,6 +99,10 @@ final class Export extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -99,6 +112,7 @@ final class Export extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -108,6 +122,10 @@ final class Export extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -117,6 +135,7 @@ final class Export extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -126,20 +145,22 @@ final class Export extends Base
 
     /**
      * @param string $lang Language
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> __new__ (New Language (Empty translation template))
      *            -> en_US (English (US))
-     *
-     * @param string $format File Format
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $format File Format
+     *        ---
      *        Selection : (default value, usually null)
      *            -> csv (CSV File)
      *            -> po (PO File)
      *            -> tgz (TGZ Archive)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(string $lang, string $format)
     {
@@ -148,9 +169,9 @@ final class Export extends Base
     }
 
     /**
-     * @param int|null $data
+     * @param string|null $data
      */
-    public function setData(?int $data): void
+    public function setData(?string $data): void
     {
         $this->data = $data;
     }
@@ -236,9 +257,9 @@ final class Export extends Base
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getData(): ?int
+    public function getData(): ?string
     {
         return $this->data;
     }

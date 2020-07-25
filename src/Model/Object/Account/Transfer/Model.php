@@ -26,6 +26,7 @@ final class Model extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,10 @@ final class Model extends Base
 
     /**
      * Destination Journal
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,7 +49,12 @@ final class Model extends Base
 
     /**
      * Company
+     * ---
      * Company related to this journal
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -54,6 +64,7 @@ final class Model extends Base
 
     /**
      * Start Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -63,6 +74,7 @@ final class Model extends Base
 
     /**
      * Stop Date
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,13 +84,14 @@ final class Model extends Base
 
     /**
      * Frequency
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> month (Monthly)
      *     -> quarter (Quarterly)
      *     -> year (Yearly)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -86,6 +99,10 @@ final class Model extends Base
 
     /**
      * Origin Accounts
+     * ---
+     * Relation : many2many (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -95,6 +112,10 @@ final class Model extends Base
 
     /**
      * Destination Accounts
+     * ---
+     * Relation : one2many (account.transfer.model.line -> transfer_model_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Transfer\Model\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -104,6 +125,10 @@ final class Model extends Base
 
     /**
      * Generated Moves
+     * ---
+     * Relation : one2many (account.move -> transfer_model_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -113,6 +138,7 @@ final class Model extends Base
 
     /**
      * Move Ids Count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -122,6 +148,7 @@ final class Model extends Base
 
     /**
      * Total Percent
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -131,12 +158,13 @@ final class Model extends Base
 
     /**
      * State
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> disabled (Disabled)
      *     -> in_progress (Running)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -144,6 +172,10 @@ final class Model extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -153,6 +185,7 @@ final class Model extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -162,6 +195,10 @@ final class Model extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -171,6 +208,7 @@ final class Model extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -180,29 +218,37 @@ final class Model extends Base
 
     /**
      * @param string $name Name
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $journal_id Destination Journal
+     *        ---
+     *        Relation : many2one (account.journal)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param DateTimeInterface $date_start Start Date
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $frequency Frequency
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> month (Monthly)
      *            -> quarter (Quarterly)
      *            -> year (Yearly)
-     *
-     * @param string $state State
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $state State
+     *        ---
      *        Selection : (default value, usually null)
      *            -> disabled (Disabled)
      *            -> in_progress (Running)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         string $name,

@@ -26,6 +26,10 @@ final class Required extends Base
 {
     /**
      * Value
+     * ---
+     * Relation : many2one (base_import.tests.models.m2o.required.related)
+     * @see \Flux\OdooApiClient\Model\Object\BaseImport\Tests\Models\M2o\Required\Related
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +39,10 @@ final class Required extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +52,7 @@ final class Required extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +62,10 @@ final class Required extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +75,7 @@ final class Required extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +85,10 @@ final class Required extends Base
 
     /**
      * @param OdooRelation $value Value
+     *        ---
+     *        Relation : many2one (base_import.tests.models.m2o.required.related)
+     *        @see \Flux\OdooApiClient\Model\Object\BaseImport\Tests\Models\M2o\Required\Related
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

@@ -23,7 +23,12 @@ final class Users extends Partner
 {
     /**
      * Related Partner
+     * ---
      * Partner-related data of the user
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -33,7 +38,9 @@ final class Users extends Partner
 
     /**
      * Login
+     * ---
      * Used to log into the system
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -43,7 +50,9 @@ final class Users extends Partner
 
     /**
      * Password
+     * ---
      * Keep empty if you don't want the user to be able to connect on the system.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -53,8 +62,10 @@ final class Users extends Partner
 
     /**
      * Set Password
+     * ---
      * Specify a value only when creating a user or if you're changing the user's password, otherwise leave empty.
      * After a change of password, the user has to login again.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -64,6 +75,7 @@ final class Users extends Partner
 
     /**
      * Email Signature
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -73,6 +85,7 @@ final class Users extends Partner
 
     /**
      * Partner is Active
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -82,7 +95,12 @@ final class Users extends Partner
 
     /**
      * Home Action
+     * ---
      * If specified, this action will be opened at log on for this user, in addition to the standard menu.
+     * ---
+     * Relation : many2one (ir.actions.actions)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Actions\Actions
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -92,6 +110,10 @@ final class Users extends Partner
 
     /**
      * Groups
+     * ---
+     * Relation : many2many (res.groups)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Groups
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -101,6 +123,10 @@ final class Users extends Partner
 
     /**
      * User log entries
+     * ---
+     * Relation : one2many (res.users.log -> create_uid)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users\Log
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -110,6 +136,7 @@ final class Users extends Partner
 
     /**
      * Latest authentication
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -119,7 +146,9 @@ final class Users extends Partner
 
     /**
      * Share User
+     * ---
      * External user with limited access, created only for the purpose of sharing data.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -129,6 +158,7 @@ final class Users extends Partner
 
     /**
      * Number of Companies
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -138,6 +168,10 @@ final class Users extends Partner
 
     /**
      * Companies
+     * ---
+     * Relation : many2many (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -147,7 +181,9 @@ final class Users extends Partner
 
     /**
      * # Access Rights
+     * ---
      * Number of access rights that apply to the current user
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -157,7 +193,9 @@ final class Users extends Partner
 
     /**
      * # Record Rules
+     * ---
      * Number of record rules that apply to the current user
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -167,7 +205,9 @@ final class Users extends Partner
 
     /**
      * # Groups
+     * ---
      * Number of groups that apply to the current user
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -177,6 +217,10 @@ final class Users extends Partner
 
     /**
      * Resources
+     * ---
+     * Relation : one2many (resource.resource -> user_id)
+     * @see \Flux\OdooApiClient\Model\Object\Resource_\Resource_
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -186,7 +230,12 @@ final class Users extends Partner
 
     /**
      * Default Working Hours
+     * ---
      * Define the schedule of resource
+     * ---
+     * Relation : many2one (resource.calendar)
+     * @see \Flux\OdooApiClient\Model\Object\Resource_\Calendar
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -196,7 +245,12 @@ final class Users extends Partner
 
     /**
      * Alias
+     * ---
      * Email address internally associated with this user. Incoming emails will appear in the user's notifications.
+     * ---
+     * Relation : many2one (mail.alias)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Alias
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -206,18 +260,20 @@ final class Users extends Partner
 
     /**
      * Alias Contact Security
+     * ---
      * Policy to post a message on the document using the mailgateway.
      * - everyone: everyone can post
      * - partners: only authenticated partners
      * - followers: only followers of the related document or members of following channels
      *
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> everyone (Everyone)
      *     -> partners (Authenticated Partners)
      *     -> followers (Followers only)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -225,15 +281,17 @@ final class Users extends Partner
 
     /**
      * Notification
+     * ---
      * Policy on how to handle Chatter notifications:
      * - Handle by Emails: notifications are sent to your email address
      * - Handle in Odoo: notifications appear in your Odoo Inbox
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> email (Handle by Emails)
      *     -> inbox (Handle in Odoo)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string
      */
@@ -241,6 +299,7 @@ final class Users extends Partner
 
     /**
      * Is moderator
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -250,6 +309,7 @@ final class Users extends Partner
 
     /**
      * Moderation count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -259,6 +319,10 @@ final class Users extends Partner
 
     /**
      * Moderated channels
+     * ---
+     * Relation : many2many (mail.channel)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Channel
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -268,6 +332,7 @@ final class Users extends Partner
 
     /**
      * Chat Status
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -277,12 +342,13 @@ final class Users extends Partner
 
     /**
      * Status
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> new (Never Connected)
      *     -> active (Confirmed)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -290,7 +356,12 @@ final class Users extends Partner
 
     /**
      * User's Sales Team
+     * ---
      * Sales Team the user is member of. Used to compute the members of a Sales Team through the inverse one2many
+     * ---
+     * Relation : many2one (crm.team)
+     * @see \Flux\OdooApiClient\Model\Object\Crm\Team
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -300,6 +371,7 @@ final class Users extends Partner
 
     /**
      * A warning can be set on a partner (Account)
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -309,6 +381,7 @@ final class Users extends Partner
 
     /**
      * A warning can be set on a product or a customer (Sale)
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -318,6 +391,7 @@ final class Users extends Partner
 
     /**
      * Addresses in Sales Orders
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -327,6 +401,7 @@ final class Users extends Partner
 
     /**
      * Advanced Pricelists
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -336,6 +411,7 @@ final class Users extends Partner
 
     /**
      * Allow the cash rounding management
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -345,6 +421,7 @@ final class Users extends Partner
 
     /**
      * Allow to define fiscal years of more or less than a year
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -354,6 +431,7 @@ final class Users extends Partner
 
     /**
      * Analytic Accounting
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -363,6 +441,7 @@ final class Users extends Partner
 
     /**
      * Analytic Accounting Tags
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -372,6 +451,7 @@ final class Users extends Partner
 
     /**
      * Basic Pricelists
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -381,6 +461,7 @@ final class Users extends Partner
 
     /**
      * Discount on lines
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -390,6 +471,7 @@ final class Users extends Partner
 
     /**
      * Lock Confirmed Sales
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -399,6 +481,7 @@ final class Users extends Partner
 
     /**
      * Manage Multiple Units of Measure
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -408,6 +491,7 @@ final class Users extends Partner
 
     /**
      * Manage Product Packaging
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -417,6 +501,7 @@ final class Users extends Partner
 
     /**
      * Manage Product Variants
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -426,6 +511,7 @@ final class Users extends Partner
 
     /**
      * Pro-forma Invoices
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -435,6 +521,7 @@ final class Users extends Partner
 
     /**
      * Quotation Templates
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -444,7 +531,9 @@ final class Users extends Partner
 
     /**
      * Tax display B2B
+     * ---
      * Show line subtotals without taxes (B2B)
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -454,7 +543,9 @@ final class Users extends Partner
 
     /**
      * Tax display B2C
+     * ---
      * Show line subtotals with taxes included (B2C)
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -464,13 +555,14 @@ final class Users extends Partner
 
     /**
      * Administration
-     * Searchable : no
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     ->  ()
      *     -> 2 (Access Rights)
      *     -> 3 (Settings)
-     *
+     * ---
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
@@ -478,17 +570,19 @@ final class Users extends Partner
 
     /**
      * Sales
+     * ---
      * User: Own Documents Only: the user will have access to his own data in the sales application.
      * User: All Documents: the user will have access to all records of everyone in the sales application.
      * Administrator: the user will have an access to the sales configuration as well as statistic reports.
-     * Searchable : no
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     ->  ()
      *     -> 65 (User: Own Documents Only)
      *     -> 66 (User: All Documents)
      *     -> 67 (Administrator)
-     *
+     * ---
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
@@ -496,14 +590,15 @@ final class Users extends Partner
 
     /**
      * Accounting
-     * Searchable : no
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     ->  ()
      *     -> 57 (Billing)
      *     -> 60 (Accountant)
      *     -> 61 (Advisor)
-     *
+     * ---
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
@@ -511,17 +606,19 @@ final class Users extends Partner
 
     /**
      * User types
+     * ---
      * Portal: Portal members have specific access rights (such as record rules and restricted menus).
      *                                 They usually do not belong to the usual Odoo groups.
      * Public: Public users have specific access rights (such as record rules and restricted menus).
      *                                 They usually do not belong to the usual Odoo groups.
-     * Searchable : no
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> 1 (Internal User)
      *     -> 8 (Portal)
      *     -> 9 (Public)
-     *
+     * ---
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
@@ -529,6 +626,7 @@ final class Users extends Partner
 
     /**
      * Contact Creation
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -538,6 +636,7 @@ final class Users extends Partner
 
     /**
      * Multi Companies
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -547,6 +646,7 @@ final class Users extends Partner
 
     /**
      * Multi Currencies
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -556,6 +656,7 @@ final class Users extends Partner
 
     /**
      * Technical Features
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -565,6 +666,7 @@ final class Users extends Partner
 
     /**
      * Access to Private Addresses
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -574,33 +676,57 @@ final class Users extends Partner
 
     /**
      * @param OdooRelation $partner_id Related Partner
+     *        ---
      *        Partner-related data of the user
+     *        ---
+     *        Relation : many2one (res.partner)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $login Login
+     *        ---
      *        Used to log into the system
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $company_id Company
+     *        ---
      *        The default company for this user.
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $notification_type Notification
+     *        ---
      *        Policy on how to handle Chatter notifications:
      *        - Handle by Emails: notifications are sent to your email address
      *        - Handle in Odoo: notifications appear in your Odoo Inbox
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> email (Handle by Emails)
      *            -> inbox (Handle in Odoo)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param OdooRelation $property_account_payable_id Account Payable
+     *        ---
      *        This account will be used instead of the default one as the payable account for the current partner
+     *        ---
+     *        Relation : many2one (account.account)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Account
+     *        ---
      *        Searchable : yes
      *        Sortable : no
      * @param OdooRelation $property_account_receivable_id Account Receivable
+     *        ---
      *        This account will be used instead of the default one as the receivable account for the current partner
+     *        ---
+     *        Relation : many2one (account.account)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Account
+     *        ---
      *        Searchable : yes
      *        Sortable : no
      */

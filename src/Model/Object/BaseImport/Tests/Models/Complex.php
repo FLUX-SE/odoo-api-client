@@ -26,6 +26,7 @@ final class Complex extends Base
 {
     /**
      * F
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,7 @@ final class Complex extends Base
 
     /**
      * M
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +46,7 @@ final class Complex extends Base
 
     /**
      * C
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +56,10 @@ final class Complex extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -62,6 +69,7 @@ final class Complex extends Base
 
     /**
      * D
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -71,6 +79,7 @@ final class Complex extends Base
 
     /**
      * Dt
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -80,6 +89,10 @@ final class Complex extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -89,6 +102,7 @@ final class Complex extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -98,6 +112,10 @@ final class Complex extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -107,6 +125,7 @@ final class Complex extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

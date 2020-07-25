@@ -23,6 +23,10 @@ final class Partner extends Base
 {
     /**
      * Partner
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +36,7 @@ final class Partner extends Base
 
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -41,6 +46,7 @@ final class Partner extends Base
 
     /**
      * Email
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -50,6 +56,7 @@ final class Partner extends Base
 
     /**
      * Send Again
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -59,6 +66,10 @@ final class Partner extends Base
 
     /**
      * Resend wizard
+     * ---
+     * Relation : many2one (mail.resend.message)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Resend\Message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -68,6 +79,7 @@ final class Partner extends Base
 
     /**
      * Help message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -77,6 +89,10 @@ final class Partner extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -86,6 +102,7 @@ final class Partner extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -95,6 +112,10 @@ final class Partner extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -104,6 +125,7 @@ final class Partner extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -113,6 +135,10 @@ final class Partner extends Base
 
     /**
      * @param OdooRelation $partner_id Partner
+     *        ---
+     *        Relation : many2one (res.partner)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

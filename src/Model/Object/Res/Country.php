@@ -26,7 +26,9 @@ final class Country extends Base
 {
     /**
      * Country Name
+     * ---
      * The full name of the country.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -36,8 +38,10 @@ final class Country extends Base
 
     /**
      * Country Code
+     * ---
      * The ISO country code in two chars.
      * You can use this field for quick search.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -47,6 +51,7 @@ final class Country extends Base
 
     /**
      * Layout in Reports
+     * ---
      * Display format to use for addresses belonging to this country.
      *
      * You can use python-style string pattern with all the fields of the address (for example, use '%(street)s' to
@@ -55,6 +60,7 @@ final class Country extends Base
      * %(state_code)s: the code of the state
      * %(country_name)s: the name of the country
      * %(country_code)s: the code of the country
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -64,9 +70,14 @@ final class Country extends Base
 
     /**
      * Input View
+     * ---
      * Use this field if you want to replace the usual way to encode a complete address. Note that the address_format
      * field is used to modify the way to display addresses (in reports for example), while this field is used to
      * modify the input form for addresses.
+     * ---
+     * Relation : many2one (ir.ui.view)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Ui\View
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -76,6 +87,10 @@ final class Country extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -85,15 +100,17 @@ final class Country extends Base
 
     /**
      * Image
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $image;
 
     /**
      * Country Calling Code
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -103,6 +120,10 @@ final class Country extends Base
 
     /**
      * Country Groups
+     * ---
+     * Relation : many2many (res.country.group)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country\Group
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -112,6 +133,10 @@ final class Country extends Base
 
     /**
      * States
+     * ---
+     * Relation : one2many (res.country.state -> country_id)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country\State
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -121,13 +146,15 @@ final class Country extends Base
 
     /**
      * Customer Name Position
+     * ---
      * Determines where the customer/company name should be placed, i.e. after or before the address.
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> before (Before Address)
      *     -> after (After Address)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -135,7 +162,9 @@ final class Country extends Base
 
     /**
      * Vat Label
+     * ---
      * Use this field if you want to change vat label.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -145,6 +174,10 @@ final class Country extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -154,6 +187,7 @@ final class Country extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -163,6 +197,10 @@ final class Country extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -172,6 +210,7 @@ final class Country extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -181,7 +220,9 @@ final class Country extends Base
 
     /**
      * @param string $name Country Name
+     *        ---
      *        The full name of the country.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */
@@ -459,17 +500,17 @@ final class Country extends Base
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getImage(): ?int
+    public function getImage(): ?string
     {
         return $this->image;
     }
 
     /**
-     * @param int|null $image
+     * @param string|null $image
      */
-    public function setImage(?int $image): void
+    public function setImage(?string $image): void
     {
         $this->image = $image;
     }

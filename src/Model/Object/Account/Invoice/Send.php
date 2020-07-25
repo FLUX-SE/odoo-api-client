@@ -22,6 +22,7 @@ final class Send extends Message
 {
     /**
      * Email
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -31,6 +32,7 @@ final class Send extends Message
 
     /**
      * invoice(s) that will not be sent
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -40,6 +42,7 @@ final class Send extends Message
 
     /**
      * Print
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -49,6 +52,7 @@ final class Send extends Message
 
     /**
      * Is Printed
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -58,6 +62,10 @@ final class Send extends Message
 
     /**
      * Invoices
+     * ---
+     * Relation : many2many (account.move)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -67,6 +75,10 @@ final class Send extends Message
 
     /**
      * Composer
+     * ---
+     * Relation : many2one (mail.compose.message)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Compose\Message
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -76,6 +88,10 @@ final class Send extends Message
 
     /**
      * Partner
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -85,7 +101,9 @@ final class Send extends Message
 
     /**
      * Send by Post
+     * ---
      * Allows to send the document by Snailmail (coventional posting delivery service)
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -95,6 +113,7 @@ final class Send extends Message
 
     /**
      * Stamp(s)
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -104,6 +123,7 @@ final class Send extends Message
 
     /**
      * Invalid Addresses Count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -113,6 +133,10 @@ final class Send extends Message
 
     /**
      * Invalid Addresses
+     * ---
+     * Relation : many2many (account.move)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -122,17 +146,23 @@ final class Send extends Message
 
     /**
      * @param OdooRelation $composer_id Composer
+     *        ---
+     *        Relation : many2one (mail.compose.message)
+     *        @see \Flux\OdooApiClient\Model\Object\Mail\Compose\Message
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param string $message_type Type
+     *        ---
      *        Message type: email for email message, notification for system message, comment for other messages such as
      *        user replies
-     *        Searchable : yes
-     *        Sortable : yes
+     *        ---
      *        Selection : (default value, usually null)
      *            -> comment (Comment)
      *            -> notification (System notification)
-     *
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(OdooRelation $composer_id, string $message_type)
     {

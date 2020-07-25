@@ -17,6 +17,7 @@ class Base implements BaseInterface
 {
     /**
      * ID
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -26,6 +27,7 @@ class Base implements BaseInterface
 
     /**
      * Display Name
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -35,6 +37,7 @@ class Base implements BaseInterface
 
     /**
      * Last Modified on
+     * ---
      * Searchable : no
      * Sortable : no
      *

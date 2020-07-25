@@ -26,6 +26,7 @@ final class Order extends Base
 {
     /**
      * Order Reference
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,7 +36,9 @@ final class Order extends Base
 
     /**
      * Source Document
+     * ---
      * Reference of the document that generated this sales order request.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -45,6 +48,7 @@ final class Order extends Base
 
     /**
      * Customer Reference
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -54,7 +58,9 @@ final class Order extends Base
 
     /**
      * Payment Ref.
+     * ---
      * The payment communication of this sale order.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -64,15 +70,16 @@ final class Order extends Base
 
     /**
      * Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> draft (Quotation)
      *     -> sent (Quotation Sent)
      *     -> sale (Sales Order)
      *     -> done (Locked)
      *     -> cancel (Cancelled)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -80,8 +87,10 @@ final class Order extends Base
 
     /**
      * Order Date
+     * ---
      * Creation date of draft/sent orders,
      * Confirmation date of confirmed orders.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -91,6 +100,7 @@ final class Order extends Base
 
     /**
      * Expiration
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -100,6 +110,7 @@ final class Order extends Base
 
     /**
      * Is expired
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -109,7 +120,9 @@ final class Order extends Base
 
     /**
      * Online Signature
+     * ---
      * Request a online signature to the customer in order to confirm orders automatically.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -119,7 +132,9 @@ final class Order extends Base
 
     /**
      * Online Payment
+     * ---
      * Request an online payment to the customer in order to confirm orders automatically.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -129,6 +144,7 @@ final class Order extends Base
 
     /**
      * Remaining Days Before Expiration
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -138,7 +154,9 @@ final class Order extends Base
 
     /**
      * Creation Date
+     * ---
      * Date on which sales order is created.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -148,6 +166,10 @@ final class Order extends Base
 
     /**
      * Salesperson
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -157,6 +179,10 @@ final class Order extends Base
 
     /**
      * Customer
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -166,6 +192,10 @@ final class Order extends Base
 
     /**
      * Invoice Address
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -175,6 +205,10 @@ final class Order extends Base
 
     /**
      * Delivery Address
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -184,7 +218,12 @@ final class Order extends Base
 
     /**
      * Pricelist
+     * ---
      * If you change the pricelist, only newly added lines will be affected.
+     * ---
+     * Relation : many2one (product.pricelist)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Pricelist
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -194,6 +233,10 @@ final class Order extends Base
 
     /**
      * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -203,7 +246,12 @@ final class Order extends Base
 
     /**
      * Analytic Account
+     * ---
      * The analytic account related to a sales order.
+     * ---
+     * Relation : many2one (account.analytic.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Account
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -213,6 +261,10 @@ final class Order extends Base
 
     /**
      * Order Lines
+     * ---
+     * Relation : one2many (sale.order.line -> order_id)
+     * @see \Flux\OdooApiClient\Model\Object\Sale\Order\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -222,6 +274,7 @@ final class Order extends Base
 
     /**
      * Invoice Count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -231,6 +284,10 @@ final class Order extends Base
 
     /**
      * Invoices
+     * ---
+     * Relation : many2many (account.move)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -240,14 +297,15 @@ final class Order extends Base
 
     /**
      * Invoice Status
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> upselling (Upselling Opportunity)
      *     -> invoiced (Fully Invoiced)
      *     -> to invoice (To Invoice)
      *     -> no (Nothing to Invoice)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -255,6 +313,7 @@ final class Order extends Base
 
     /**
      * Terms and conditions
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -264,6 +323,7 @@ final class Order extends Base
 
     /**
      * Untaxed Amount
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -273,16 +333,19 @@ final class Order extends Base
 
     /**
      * Tax amount by group
+     * ---
      * type: [(name, amount, base, formated amount, formated base)]
+     * ---
      * Searchable : no
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $amount_by_group;
 
     /**
      * Taxes
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -292,6 +355,7 @@ final class Order extends Base
 
     /**
      * Total
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -301,7 +365,9 @@ final class Order extends Base
 
     /**
      * Currency Rate
+     * ---
      * The rate of the currency to the currency of rate 1 applicable at the date of the order
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -311,6 +377,10 @@ final class Order extends Base
 
     /**
      * Payment Terms
+     * ---
+     * Relation : many2one (account.payment.term)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Payment\Term
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -320,8 +390,13 @@ final class Order extends Base
 
     /**
      * Fiscal Position
+     * ---
      * Fiscal positions are used to adapt taxes and accounts for particular customers or sales orders/invoices.The
      * default value comes from the customer.
+     * ---
+     * Relation : many2one (account.fiscal.position)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Fiscal\Position
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -331,6 +406,10 @@ final class Order extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -340,6 +419,10 @@ final class Order extends Base
 
     /**
      * Sales Team
+     * ---
+     * Relation : many2one (crm.team)
+     * @see \Flux\OdooApiClient\Model\Object\Crm\Team
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -349,17 +432,21 @@ final class Order extends Base
 
     /**
      * Signature
+     * ---
      * Signature received through the portal.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var int|null
+     * @var string|null
      */
     private $signature;
 
     /**
      * Signed By
+     * ---
      * Name of the person that signed the SO.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -369,7 +456,9 @@ final class Order extends Base
 
     /**
      * Signed On
+     * ---
      * Date of the signature.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -379,8 +468,10 @@ final class Order extends Base
 
     /**
      * Delivery Date
+     * ---
      * This is the delivery date promised to the customer. If set, the delivery order will be scheduled based on this
      * date rather than product lead times.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -390,7 +481,9 @@ final class Order extends Base
 
     /**
      * Expected Date
+     * ---
      * Delivery date you can promise to the customer, computed from the minimum lead time of the order lines.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -400,6 +493,7 @@ final class Order extends Base
 
     /**
      * Amount Before Discount
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -409,6 +503,7 @@ final class Order extends Base
 
     /**
      * Type Name
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -418,6 +513,10 @@ final class Order extends Base
 
     /**
      * Transactions
+     * ---
+     * Relation : many2many (payment.transaction)
+     * @see \Flux\OdooApiClient\Model\Object\Payment\Transaction
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -427,6 +526,10 @@ final class Order extends Base
 
     /**
      * Authorized Transactions
+     * ---
+     * Relation : many2many (payment.transaction)
+     * @see \Flux\OdooApiClient\Model\Object\Payment\Transaction
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -436,6 +539,10 @@ final class Order extends Base
 
     /**
      * Quotation Template
+     * ---
+     * Relation : many2one (sale.order.template)
+     * @see \Flux\OdooApiClient\Model\Object\Sale\Order\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -445,6 +552,10 @@ final class Order extends Base
 
     /**
      * Optional Products Lines
+     * ---
+     * Relation : one2many (sale.order.option -> order_id)
+     * @see \Flux\OdooApiClient\Model\Object\Sale\Order\Option
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -454,7 +565,9 @@ final class Order extends Base
 
     /**
      * Is Taxcloud Configured
+     * ---
      * Used to determine whether or not to warn the user to configure TaxCloud.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -464,7 +577,9 @@ final class Order extends Base
 
     /**
      * Use TaxCloud API
+     * ---
      * Technical field to determine whether to hide taxes in views or not.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -474,8 +589,13 @@ final class Order extends Base
 
     /**
      * Campaign
+     * ---
      * This is a name that helps you keep track of your different campaign efforts, e.g. Fall_Drive,
      * Christmas_Special
+     * ---
+     * Relation : many2one (utm.campaign)
+     * @see \Flux\OdooApiClient\Model\Object\Utm\Campaign
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -485,7 +605,12 @@ final class Order extends Base
 
     /**
      * Source
+     * ---
      * This is the source of the link, e.g. Search Engine, another domain, or name of email list
+     * ---
+     * Relation : many2one (utm.source)
+     * @see \Flux\OdooApiClient\Model\Object\Utm\Source
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -495,7 +620,12 @@ final class Order extends Base
 
     /**
      * Medium
+     * ---
      * This is the method of delivery, e.g. Postcard, Email, or Banner Ad
+     * ---
+     * Relation : many2one (utm.medium)
+     * @see \Flux\OdooApiClient\Model\Object\Utm\Medium
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -505,6 +635,10 @@ final class Order extends Base
 
     /**
      * Activities
+     * ---
+     * Relation : one2many (mail.activity -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -514,17 +648,19 @@ final class Order extends Base
 
     /**
      * Activity State
+     * ---
      * Status based on activities
      * Overdue: Due date is already passed
      * Today: Activity date is today
      * Planned: Future activities.
-     * Searchable : no
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> overdue (Overdue)
      *     -> today (Today)
      *     -> planned (Planned)
-     *
+     * ---
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
@@ -532,6 +668,10 @@ final class Order extends Base
 
     /**
      * Responsible User
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -541,6 +681,10 @@ final class Order extends Base
 
     /**
      * Next Activity Type
+     * ---
+     * Relation : many2one (mail.activity.type)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity\Type
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -550,6 +694,7 @@ final class Order extends Base
 
     /**
      * Next Activity Deadline
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -559,6 +704,7 @@ final class Order extends Base
 
     /**
      * Next Activity Summary
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -568,13 +714,15 @@ final class Order extends Base
 
     /**
      * Activity Exception Decoration
+     * ---
      * Type of the exception activity on record.
-     * Searchable : yes
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> warning (Alert)
      *     -> danger (Error)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -582,7 +730,9 @@ final class Order extends Base
 
     /**
      * Icon
+     * ---
      * Icon to indicate an exception activity.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -592,6 +742,7 @@ final class Order extends Base
 
     /**
      * Is Follower
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -601,6 +752,10 @@ final class Order extends Base
 
     /**
      * Followers
+     * ---
+     * Relation : one2many (mail.followers -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Followers
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -610,6 +765,10 @@ final class Order extends Base
 
     /**
      * Followers (Partners)
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -619,6 +778,10 @@ final class Order extends Base
 
     /**
      * Followers (Channels)
+     * ---
+     * Relation : many2many (mail.channel)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Channel
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -628,6 +791,10 @@ final class Order extends Base
 
     /**
      * Messages
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -637,7 +804,9 @@ final class Order extends Base
 
     /**
      * Unread Messages
+     * ---
      * If checked, new messages require your attention.
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -647,7 +816,9 @@ final class Order extends Base
 
     /**
      * Unread Messages Counter
+     * ---
      * Number of unread messages
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -657,7 +828,9 @@ final class Order extends Base
 
     /**
      * Action Needed
+     * ---
      * If checked, new messages require your attention.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -667,7 +840,9 @@ final class Order extends Base
 
     /**
      * Number of Actions
+     * ---
      * Number of messages which requires an action
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -677,7 +852,9 @@ final class Order extends Base
 
     /**
      * Message Delivery error
+     * ---
      * If checked, some messages have a delivery error.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -687,7 +864,9 @@ final class Order extends Base
 
     /**
      * Number of errors
+     * ---
      * Number of messages with delivery error
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -697,6 +876,7 @@ final class Order extends Base
 
     /**
      * Attachment Count
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -706,6 +886,10 @@ final class Order extends Base
 
     /**
      * Main Attachment
+     * ---
+     * Relation : many2one (ir.attachment)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -715,7 +899,12 @@ final class Order extends Base
 
     /**
      * Website Messages
+     * ---
      * Website communication history
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -725,7 +914,9 @@ final class Order extends Base
 
     /**
      * SMS Delivery error
+     * ---
      * If checked, some messages have a delivery error.
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -735,7 +926,9 @@ final class Order extends Base
 
     /**
      * Portal Access URL
+     * ---
      * Customer Portal URL
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -745,6 +938,7 @@ final class Order extends Base
 
     /**
      * Security Token
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -754,6 +948,7 @@ final class Order extends Base
 
     /**
      * Access warning
+     * ---
      * Searchable : no
      * Sortable : no
      *
@@ -763,6 +958,10 @@ final class Order extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -772,6 +971,10 @@ final class Order extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -781,6 +984,7 @@ final class Order extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -790,30 +994,58 @@ final class Order extends Base
 
     /**
      * @param string $name Order Reference
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param DateTimeInterface $date_order Order Date
+     *        ---
      *        Creation date of draft/sent orders,
      *        Confirmation date of confirmed orders.
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $partner_id Customer
+     *        ---
+     *        Relation : many2one (res.partner)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $partner_invoice_id Invoice Address
+     *        ---
+     *        Relation : many2one (res.partner)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $partner_shipping_id Delivery Address
+     *        ---
+     *        Relation : many2one (res.partner)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $pricelist_id Pricelist
+     *        ---
      *        If you change the pricelist, only newly added lines will be affected.
+     *        ---
+     *        Relation : many2one (product.pricelist)
+     *        @see \Flux\OdooApiClient\Model\Object\Product\Pricelist
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $currency_id Currency
+     *        ---
+     *        Relation : many2one (res.currency)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     *        ---
      *        Searchable : yes
      *        Sortable : no
      * @param OdooRelation $company_id Company
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */
@@ -2193,9 +2425,9 @@ final class Order extends Base
     }
 
     /**
-     * @param int|null $signature
+     * @param string|null $signature
      */
-    public function setSignature(?int $signature): void
+    public function setSignature(?string $signature): void
     {
         $this->signature = $signature;
     }
@@ -2374,9 +2606,9 @@ final class Order extends Base
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getSignature(): ?int
+    public function getSignature(): ?string
     {
         return $this->signature;
     }
@@ -2477,17 +2709,17 @@ final class Order extends Base
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getAmountByGroup(): ?int
+    public function getAmountByGroup(): ?string
     {
         return $this->amount_by_group;
     }
 
     /**
-     * @param int|null $amount_by_group
+     * @param string|null $amount_by_group
      */
-    public function setAmountByGroup(?int $amount_by_group): void
+    public function setAmountByGroup(?string $amount_by_group): void
     {
         $this->amount_by_group = $amount_by_group;
     }

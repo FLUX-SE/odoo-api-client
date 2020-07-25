@@ -26,6 +26,7 @@ final class Template extends Base
 {
     /**
      * Quotation Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,10 @@ final class Template extends Base
 
     /**
      * Lines
+     * ---
+     * Relation : one2many (sale.order.template.line -> sale_order_template_id)
+     * @see \Flux\OdooApiClient\Model\Object\Sale\Order\Template\Line
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -44,6 +49,7 @@ final class Template extends Base
 
     /**
      * Terms and conditions
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -53,6 +59,10 @@ final class Template extends Base
 
     /**
      * Optional Products
+     * ---
+     * Relation : one2many (sale.order.template.option -> sale_order_template_id)
+     * @see \Flux\OdooApiClient\Model\Object\Sale\Order\Template\Option
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -62,7 +72,9 @@ final class Template extends Base
 
     /**
      * Quotation Duration
+     * ---
      * Number of days for the validity date computation of the quotation
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -72,7 +84,9 @@ final class Template extends Base
 
     /**
      * Online Signature
+     * ---
      * Request a online signature to the customer in order to confirm orders automatically.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -82,7 +96,9 @@ final class Template extends Base
 
     /**
      * Online Payment
+     * ---
      * Request an online payment to the customer in order to confirm orders automatically.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -92,7 +108,12 @@ final class Template extends Base
 
     /**
      * Confirmation Mail
+     * ---
      * This e-mail template will be sent on confirmation. Leave empty to send nothing.
+     * ---
+     * Relation : many2one (mail.template)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Template
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -102,7 +123,9 @@ final class Template extends Base
 
     /**
      * Active
+     * ---
      * If unchecked, it will allow you to hide the quotation template without removing it.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -112,6 +135,10 @@ final class Template extends Base
 
     /**
      * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -121,6 +148,10 @@ final class Template extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -130,6 +161,7 @@ final class Template extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -139,6 +171,10 @@ final class Template extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -148,6 +184,7 @@ final class Template extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -157,6 +194,7 @@ final class Template extends Base
 
     /**
      * @param string $name Quotation Template
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

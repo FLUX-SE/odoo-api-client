@@ -26,6 +26,7 @@ final class Dependency extends Base
 {
     /**
      * Name
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,6 +36,10 @@ final class Dependency extends Base
 
     /**
      * Module
+     * ---
+     * Relation : many2one (ir.module.module)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Module\Module
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -44,6 +49,10 @@ final class Dependency extends Base
 
     /**
      * Dependency
+     * ---
+     * Relation : many2one (ir.module.module)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Module\Module
+     * ---
      * Searchable : yes
      * Sortable : no
      *
@@ -53,8 +62,7 @@ final class Dependency extends Base
 
     /**
      * Status
-     * Searchable : no
-     * Sortable : no
+     * ---
      * Selection : (default value, usually null)
      *     -> uninstallable (Uninstallable)
      *     -> uninstalled (Not Installed)
@@ -63,7 +71,9 @@ final class Dependency extends Base
      *     -> to remove (To be removed)
      *     -> to install (To be installed)
      *     -> unknown (Unknown)
-     *
+     * ---
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
@@ -71,7 +81,9 @@ final class Dependency extends Base
 
     /**
      * Auto Install Required
+     * ---
      * Whether this dependency blocks automatic installation of the dependent
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -81,6 +93,10 @@ final class Dependency extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -90,6 +106,7 @@ final class Dependency extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -99,6 +116,10 @@ final class Dependency extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -108,6 +129,7 @@ final class Dependency extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

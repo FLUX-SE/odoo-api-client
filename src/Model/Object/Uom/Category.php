@@ -26,6 +26,7 @@ final class Category extends Base
 {
     /**
      * Unit of Measure Category
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -35,15 +36,16 @@ final class Category extends Base
 
     /**
      * Type of Measure
-     * Searchable : yes
-     * Sortable : yes
+     * ---
      * Selection : (default value, usually null)
      *     -> unit (Default Units)
      *     -> weight (Default Weight)
      *     -> working_time (Default Working Time)
      *     -> length (Default Length)
      *     -> volume (Default Volume)
-     *
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var string|null
      */
@@ -51,6 +53,10 @@ final class Category extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -60,6 +66,7 @@ final class Category extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -69,6 +76,10 @@ final class Category extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -78,6 +89,7 @@ final class Category extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -87,6 +99,7 @@ final class Category extends Base
 
     /**
      * @param string $name Unit of Measure Category
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */

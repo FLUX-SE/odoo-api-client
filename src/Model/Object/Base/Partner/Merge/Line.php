@@ -23,6 +23,10 @@ final class Line extends Base
 {
     /**
      * Wizard
+     * ---
+     * Relation : many2one (base.partner.merge.automatic.wizard)
+     * @see \Flux\OdooApiClient\Model\Object\Base\Partner\Merge\Automatic\Wizard
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -32,6 +36,7 @@ final class Line extends Base
 
     /**
      * MinID
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -41,6 +46,7 @@ final class Line extends Base
 
     /**
      * Ids
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -50,6 +56,10 @@ final class Line extends Base
 
     /**
      * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -59,6 +69,7 @@ final class Line extends Base
 
     /**
      * Created on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -68,6 +79,10 @@ final class Line extends Base
 
     /**
      * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -77,6 +92,7 @@ final class Line extends Base
 
     /**
      * Last Updated on
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -86,6 +102,7 @@ final class Line extends Base
 
     /**
      * @param string $aggr_ids Ids
+     *        ---
      *        Searchable : yes
      *        Sortable : yes
      */
