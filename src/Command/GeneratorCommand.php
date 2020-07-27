@@ -58,8 +58,8 @@ final class GeneratorCommand extends Command
             ->addArgument('database', InputArgument::REQUIRED, 'Your Odoo database name.')
             ->addArgument('username', InputArgument::REQUIRED, 'Your Odoo account username.')
             ->addArgument('password', InputArgument::REQUIRED, 'Your Odoo account password')
-            ->addArgument('basePath', InputArgument::OPTIONAL, 'The path where classes will be generated', dirname(__DIR__))
-            ->addArgument('baseNamespace', InputArgument::OPTIONAL, 'The base namespace of the generated classes', 'Flux\\OdooApiClient');
+            ->addArgument('basePath', InputArgument::OPTIONAL, 'The path where classes will be generated', dirname(__DIR__).'/Model/Object')
+            ->addArgument('baseNamespace', InputArgument::OPTIONAL, 'The base namespace of the generated classes', 'Flux\\OdooApiClient\\Model\\Object');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -100,13 +100,10 @@ final class GeneratorCommand extends Command
 
     protected function generateModels(string $namespace, string $path): bool
     {
-        $modelNamespace = $namespace . '\\Model\\Object';
-        $modelBasePath = $path . '/Model/Object';
+        $config = $this->odooModelsStructureConverter->convert($namespace);
 
-        $config = $this->odooModelsStructureConverter->convert($modelNamespace);
-
-        $this->odooPhpClassesGenerator->setBaseNamespace($modelNamespace);
-        $this->odooPhpClassesGenerator->setBasePath($modelBasePath);
+        $this->odooPhpClassesGenerator->setBaseNamespace($namespace);
+        $this->odooPhpClassesGenerator->setBasePath($path);
         $this->odooPhpClassesGenerator->setClassesConfig($config);
         return $this->odooPhpClassesGenerator->generate();
     }

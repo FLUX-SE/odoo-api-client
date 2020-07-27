@@ -25,14 +25,38 @@ The Odoo XMLRPC API expose 3 main endpoints :
  - `/xmlrpc/2/common` allowing to authenticate a user or get info about the Odoo installation
  - `/xmlrpc/2/object` allowing operations with all API exposed models
 
-This library help you to use those endpoints with strict types using `ext-xmlrpc` and `HttPlug`.
+This library help you to use those endpoints using `ext-xmlrpc` and `HttPlug`, **it also allows you to
+consume Odoo API using PHP classes representation of all installed Odoo Models**.
 
-The authentication is not standard, your username and your password will be used during a call to
+The authentication is not standard (compare to other APIs), your username and your password will be used during a call to
 `/xmlrpc/2/common` with the XMLRPC method `authenticate` returning your Odoo user id (`uid`).
-This uid, your password and your Odoo database name are needed to make every request calls to the
-`/xmlrpc/2/object` endpoint. 
+This uid, your password and your Odoo database name are required to make every request calls to the
+`/xmlrpc/2/object` endpoint.
+
+## How to generate your own project object model classes ?
+
+Into this library you will found a little extraction of the Odoo object models (`src/Model/Object/*`).
+If you want to use your own Odoo object model class, you can use the following command line
+to generate all of them.
+
+```bash
+./bin/generator -vvv \
+    https://myodoo-master-12345600.odoo.com \
+    myodoo-db-master-12345600 \
+    admin \
+    admin \
+    /my_path/my_project/src/Model/Object \
+    MyVendor\\MyApp\\Model\\Object
+```
 
 ## Usage example
+
+Using this library you will be able to use two ways of consuming the Odoo API :
+
+1. using array
+2. using object model classes
+
+### Using Array
 
 List your first partner (Contact) :
 
@@ -60,11 +84,11 @@ $recordListOperations = $odooApiClientBuilder->buildExecuteKwOperations(
     $username,
     $password
 );
+
 // 2.1 - Helper class to set parameters to your request
 $searchDomains = new SearchDomains();
 $searchDomains->addCriterion(Criterion::equal('is_company', true));
 // will be translated to : [['is_company', '=', true]]
-
 
 // 2.2 - Helper class to set options to your request
 $searchReadOptions = new SearchReadOptions();
@@ -84,6 +108,68 @@ array:1 [
   ]
 ]
 
+**/
+```
+
+## Using object model
+
+```php
+$loader = require_once( __DIR__.'/vendor/autoload.php');
+
+use Flux\OdooApiClient\Builder\OdooApiClientBuilder;
+use Flux\OdooApiClient\Model\Object\Res\Partner;
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\SearchDomains\Criterion;
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\SearchDomains\SearchDomains;
+
+$host = 'https://myapp.odoo.com';
+$database = 'myapp';
+$username = 'myemail@mydomain.tld';
+$password = 'myOdooPassword';
+
+// 1 - instantiate the Odoo API client builder
+$odooApiClientBuilder = new OdooApiClientBuilder($host);
+
+// 2 - "Object" endpoint XMLRPC "execute_kw" call with method name like "search*" or "read")
+$recordListOperations = $odooApiClientBuilder->buildExecuteKwOperations(
+    RecordListOperations::class,
+    $database,
+    $username,
+    $password
+);
+
+$modelListManager = new ModelListManager(
+    $odooApiClientBuilder->buildSerializer(),
+    $recordListOperations
+);
+
+// 2 - Helper class to set parameters to your request
+$searchDomains = new SearchDomains();
+$searchDomains->addCriterion(Criterion::equal('is_company', true));
+// will be translated to : [['is_company', '=', true]]
+
+
+$partner = $modelListManager->findOneBy(Partner::class, $searchDomains);
+
+dump($partner);
+
+/**
+Flux\OdooApiClient\Model\Object\Res\Partner
+{#1234
+  #name: "My test company"
+  #date: DateTimeImmutable @1577880060 {#1234
+    date: 2020-01-01 12:01:00.123456 UTC (+00:00)
+  }
+  #is_company: true
+
+  ...
+  
+  #id: 1
+  #display_name: "My test company"
+  #__last_update: DateTimeImmutable @1577923260 {#5678
+    date: 2020-01-02 00:01:00.123456 UTC (+00:00)
+  }
+}
 **/
 ```
 
