@@ -108,7 +108,10 @@ final class OdooPhpClassesGenerator implements OdooPhpClassesGeneratorInterface
                     $methodConfig['return_types'] ?? [],
                     $methodConfig['static'] ?? false,
                 );
-                $method->addMultipleLines(implode($methodConfig['body'], "\n"), "\n");
+
+                /** @var string[] $body */
+                $body = $methodConfig['body'];
+                $method->addMultipleLines(implode($body, "\n"), "\n");
                 $this->classBuilder->addMethod($method);
             }
 
