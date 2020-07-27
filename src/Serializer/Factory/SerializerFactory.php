@@ -95,12 +95,6 @@ final class SerializerFactory implements SerializerFactoryInterface
                 ObjectNormalizer::DISABLE_TYPE_ENFORCEMENT => true,
                 // => model to array
                 ObjectNormalizer::SKIP_NULL_VALUES => true,
-                // => model to array
-                ObjectNormalizer::IGNORED_ATTRIBUTES => [
-                    'id',
-                    'displayName',
-                    'lastUpdate',
-                ],
                 ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
                     return $object->getId() ?? 0;
                 },
