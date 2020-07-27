@@ -9,7 +9,9 @@ use Flux\OdooApiClient\Model\Object\Base;
 
 /**
  * Odoo model : ir.logging
+ * ---
  * Name : ir.logging
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

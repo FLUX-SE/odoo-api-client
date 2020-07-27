@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.common.report
+ * ---
  * Name : account.common.report
+ * ---
  * Info :
  * Model super-class for transient records, meant to be temporarily
  *         persistent, and regularly vacuum-cleaned.

@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : base.update.translations
+ * ---
  * Name : base.update.translations
+ * ---
  * Info :
  * Model super-class for transient records, meant to be temporarily
  *         persistent, and regularly vacuum-cleaned.

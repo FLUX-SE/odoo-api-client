@@ -9,7 +9,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : web_tour.tour
+ * ---
  * Name : web_tour.tour
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

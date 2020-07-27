@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.model
+ * ---
  * Name : ir.model
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
@@ -170,6 +172,52 @@ final class Model extends Base
     private $count;
 
     /**
+     * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $create_uid;
+
+    /**
+     * Created on
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var DateTimeInterface|null
+     */
+    private $create_date;
+
+    /**
+     * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $write_uid;
+
+    /**
+     * Last Updated on
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var DateTimeInterface|null
+     */
+    private $write_date;
+
+    /**
      * Mail Thread
      * ---
      * Whether this model supports messages and notifications.
@@ -218,52 +266,6 @@ final class Model extends Base
     private $is_mail_thread_sms;
 
     /**
-     * Created by
-     * ---
-     * Relation : many2one (res.users)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Users
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $create_uid;
-
-    /**
-     * Created on
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var DateTimeInterface|null
-     */
-    private $create_date;
-
-    /**
-     * Last Updated by
-     * ---
-     * Relation : many2one (res.users)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Users
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $write_uid;
-
-    /**
-     * Last Updated on
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var DateTimeInterface|null
-     */
-    private $write_date;
-
-    /**
      * @param string $name Model Description
      *        ---
      *        Searchable : yes
@@ -288,11 +290,11 @@ final class Model extends Base
     }
 
     /**
-     * @return bool|null
+     * @return DateTimeInterface|null
      */
-    public function isIsMailActivity(): ?bool
+    public function getCreateDate(): ?DateTimeInterface
     {
-        return $this->is_mail_activity;
+        return $this->create_date;
     }
 
     /**
@@ -389,70 +391,6 @@ final class Model extends Base
     }
 
     /**
-     * @return bool|null
-     */
-    public function isIsMailThread(): ?bool
-    {
-        return $this->is_mail_thread;
-    }
-
-    /**
-     * @param bool|null $is_mail_thread
-     */
-    public function setIsMailThread(?bool $is_mail_thread): void
-    {
-        $this->is_mail_thread = $is_mail_thread;
-    }
-
-    /**
-     * @param bool|null $is_mail_activity
-     */
-    public function setIsMailActivity(?bool $is_mail_activity): void
-    {
-        $this->is_mail_activity = $is_mail_activity;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isTransient(): ?bool
-    {
-        return $this->transient;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isIsMailBlacklist(): ?bool
-    {
-        return $this->is_mail_blacklist;
-    }
-
-    /**
-     * @param bool|null $is_mail_blacklist
-     */
-    public function setIsMailBlacklist(?bool $is_mail_blacklist): void
-    {
-        $this->is_mail_blacklist = $is_mail_blacklist;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isIsMailThreadSms(): ?bool
-    {
-        return $this->is_mail_thread_sms;
-    }
-
-    /**
-     * @param bool|null $is_mail_thread_sms
-     */
-    public function setIsMailThreadSms(?bool $is_mail_thread_sms): void
-    {
-        $this->is_mail_thread_sms = $is_mail_thread_sms;
-    }
-
-    /**
      * @return OdooRelation|null
      */
     public function getCreateUid(): ?OdooRelation
@@ -469,19 +407,19 @@ final class Model extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
      * @param DateTimeInterface|null $create_date
      */
     public function setCreateDate(?DateTimeInterface $create_date): void
     {
         $this->create_date = $create_date;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isTransient(): ?bool
+    {
+        return $this->transient;
     }
 
     /**
@@ -514,6 +452,70 @@ final class Model extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsMailThread(): ?bool
+    {
+        return $this->is_mail_thread;
+    }
+
+    /**
+     * @param bool|null $is_mail_thread
+     */
+    public function setIsMailThread(?bool $is_mail_thread): void
+    {
+        $this->is_mail_thread = $is_mail_thread;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsMailActivity(): ?bool
+    {
+        return $this->is_mail_activity;
+    }
+
+    /**
+     * @param bool|null $is_mail_activity
+     */
+    public function setIsMailActivity(?bool $is_mail_activity): void
+    {
+        $this->is_mail_activity = $is_mail_activity;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsMailBlacklist(): ?bool
+    {
+        return $this->is_mail_blacklist;
+    }
+
+    /**
+     * @param bool|null $is_mail_blacklist
+     */
+    public function setIsMailBlacklist(?bool $is_mail_blacklist): void
+    {
+        $this->is_mail_blacklist = $is_mail_blacklist;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsMailThreadSms(): ?bool
+    {
+        return $this->is_mail_thread_sms;
+    }
+
+    /**
+     * @param bool|null $is_mail_thread_sms
+     */
+    public function setIsMailThreadSms(?bool $is_mail_thread_sms): void
+    {
+        $this->is_mail_thread_sms = $is_mail_thread_sms;
     }
 
     /**

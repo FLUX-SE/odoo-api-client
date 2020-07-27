@@ -9,7 +9,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : resource.mixin
+ * ---
  * Name : resource.mixin
+ * ---
  * Info :
  * The base model, which is implicitly inherited by all models.
  */

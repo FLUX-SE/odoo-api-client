@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.actions.act_window.view
+ * ---
  * Name : ir.actions.act_window.view
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
@@ -48,31 +50,6 @@ final class View extends Base
     private $view_id;
 
     /**
-     * Action
-     * ---
-     * Relation : many2one (ir.actions.act_window)
-     * @see \Flux\OdooApiClient\Model\Object\Ir\Actions\ActWindow
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $act_window_id;
-
-    /**
-     * On Multiple Doc.
-     * ---
-     * If set to true, the action will not be displayed on the right toolbar of a form view.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $multi;
-
-    /**
      * View Type
      * ---
      * Selection : (default value, usually null)
@@ -96,6 +73,31 @@ final class View extends Base
      * @var string
      */
     private $view_mode;
+
+    /**
+     * Action
+     * ---
+     * Relation : many2one (ir.actions.act_window)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Actions\ActWindow
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $act_window_id;
+
+    /**
+     * On Multiple Doc.
+     * ---
+     * If set to true, the action will not be displayed on the right toolbar of a form view.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $multi;
 
     /**
      * Created by
@@ -234,11 +236,11 @@ final class View extends Base
     }
 
     /**
-     * @param string $view_mode
+     * @param bool|null $multi
      */
-    public function setViewMode(string $view_mode): void
+    public function setMulti(?bool $multi): void
     {
-        $this->view_mode = $view_mode;
+        $this->multi = $multi;
     }
 
     /**
@@ -247,22 +249,6 @@ final class View extends Base
     public function getSequence(): ?int
     {
         return $this->sequence;
-    }
-
-    /**
-     * @return string
-     */
-    public function getViewMode(): string
-    {
-        return $this->view_mode;
-    }
-
-    /**
-     * @param bool|null $multi
-     */
-    public function setMulti(?bool $multi): void
-    {
-        $this->multi = $multi;
     }
 
     /**
@@ -287,6 +273,22 @@ final class View extends Base
     public function getActWindowId(): ?OdooRelation
     {
         return $this->act_window_id;
+    }
+
+    /**
+     * @param string $view_mode
+     */
+    public function setViewMode(string $view_mode): void
+    {
+        $this->view_mode = $view_mode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getViewMode(): string
+    {
+        return $this->view_mode;
     }
 
     /**

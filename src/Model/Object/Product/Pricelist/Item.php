@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : product.pricelist.item
+ * ---
  * Name : product.pricelist.item
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

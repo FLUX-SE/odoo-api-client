@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.model.relation
+ * ---
  * Name : ir.model.relation
+ * ---
  * Info :
  * This model tracks PostgreSQL tables used to implement Odoo many2many
  *         relations.

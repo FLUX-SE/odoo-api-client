@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : fetchmail.server
+ * ---
  * Name : fetchmail.server
+ * ---
  * Info :
  * Incoming POP/IMAP mail server account
  */

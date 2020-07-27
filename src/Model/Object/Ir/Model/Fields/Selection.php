@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.model.fields.selection
+ * ---
  * Name : ir.model.fields.selection
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

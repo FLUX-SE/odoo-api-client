@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : uom.uom
+ * ---
  * Name : uom.uom
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
@@ -134,6 +136,18 @@ final class Uom extends Base
     private $measure_type;
 
     /**
+     * Group Products in POS
+     * ---
+     * Check if you want to group products of this category in point of sale orders
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $is_pos_groupable;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -242,11 +256,11 @@ final class Uom extends Base
     }
 
     /**
-     * @param string $uom_type
+     * @return string|null
      */
-    public function setUomType(string $uom_type): void
+    public function getMeasureType(): ?string
     {
-        $this->uom_type = $uom_type;
+        return $this->measure_type;
     }
 
     /**
@@ -314,6 +328,22 @@ final class Uom extends Base
     }
 
     /**
+     * @param bool|null $is_pos_groupable
+     */
+    public function setIsPosGroupable(?bool $is_pos_groupable): void
+    {
+        $this->is_pos_groupable = $is_pos_groupable;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsPosGroupable(): ?bool
+    {
+        return $this->is_pos_groupable;
+    }
+
+    /**
      * @param string|null $measure_type
      */
     public function setMeasureType(?string $measure_type): void
@@ -322,19 +352,11 @@ final class Uom extends Base
     }
 
     /**
-     * @return string|null
+     * @param string $uom_type
      */
-    public function getMeasureType(): ?string
+    public function setUomType(string $uom_type): void
     {
-        return $this->measure_type;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUomType(): string
-    {
-        return $this->uom_type;
+        $this->uom_type = $uom_type;
     }
 
     /**
@@ -343,6 +365,14 @@ final class Uom extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUomType(): string
+    {
+        return $this->uom_type;
     }
 
     /**

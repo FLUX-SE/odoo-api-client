@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : sms.composer
+ * ---
  * Name : sms.composer
+ * ---
  * Info :
  * Model super-class for transient records, meant to be temporarily
  *         persistent, and regularly vacuum-cleaned.

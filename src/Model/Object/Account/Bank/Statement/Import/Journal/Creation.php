@@ -9,7 +9,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.bank.statement.import.journal.creation
+ * ---
  * Name : account.bank.statement.import.journal.creation
+ * ---
  * Info :
  * Model super-class for transient records, meant to be temporarily
  *         persistent, and regularly vacuum-cleaned.
@@ -120,12 +122,12 @@ final class Creation extends Journal
     ) {
         $this->journal_id = $journal_id;
         parent::__construct(
-            $name,
-            $code,
-            $type,
-            $sequence_id,
-            $invoice_reference_type,
-            $invoice_reference_model,
+            $name, 
+            $code, 
+            $type, 
+            $sequence_id, 
+            $invoice_reference_type, 
+            $invoice_reference_model, 
             $company_id
         );
     }

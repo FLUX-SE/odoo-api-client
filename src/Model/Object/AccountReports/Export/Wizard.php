@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account_reports.export.wizard
+ * ---
  * Name : account_reports.export.wizard
+ * ---
  * Info :
  * Wizard allowing to export an accounting report in several different formats
  *         at once, saving them as attachments.

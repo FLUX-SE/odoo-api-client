@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.sequence.date_range
+ * ---
  * Name : ir.sequence.date_range
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

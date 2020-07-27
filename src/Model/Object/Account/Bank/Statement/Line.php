@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.bank.statement.line
+ * ---
  * Name : account.bank.statement.line
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
@@ -334,6 +336,19 @@ final class Line extends Base
     private $online_partner_bank_account;
 
     /**
+     * POS statement
+     * ---
+     * Relation : many2one (pos.order)
+     * @see \Flux\OdooApiClient\Model\Object\Pos\Order
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $pos_statement_id;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -404,19 +419,11 @@ final class Line extends Base
     }
 
     /**
-     * @param string|null $unique_import_id
+     * @return string|null
      */
-    public function setUniqueImportId(?string $unique_import_id): void
+    public function getOnlineIdentifier(): ?string
     {
-        $this->unique_import_id = $unique_import_id;
-    }
-
-    /**
-     * @param OdooRelation[]|null $journal_entry_ids
-     */
-    public function setJournalEntryIds(?array $journal_entry_ids): void
-    {
-        $this->journal_entry_ids = $journal_entry_ids;
+        return $this->online_identifier;
     }
 
     /**
@@ -537,19 +544,11 @@ final class Line extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $unique_import_id
      */
-    public function getOnlineIdentifier(): ?string
+    public function setUniqueImportId(?string $unique_import_id): void
     {
-        return $this->online_identifier;
-    }
-
-    /**
-     * @param OdooRelation|null $company_id
-     */
-    public function setCompanyId(?OdooRelation $company_id): void
-    {
-        $this->company_id = $company_id;
+        $this->unique_import_id = $unique_import_id;
     }
 
     /**
@@ -558,6 +557,14 @@ final class Line extends Base
     public function setOnlineIdentifier(?string $online_identifier): void
     {
         $this->online_identifier = $online_identifier;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getJournalEntryIds(): ?array
+    {
+        return $this->journal_entry_ids;
     }
 
     /**
@@ -590,6 +597,22 @@ final class Line extends Base
     public function setOnlinePartnerBankAccount(?string $online_partner_bank_account): void
     {
         $this->online_partner_bank_account = $online_partner_bank_account;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPosStatementId(): ?OdooRelation
+    {
+        return $this->pos_statement_id;
+    }
+
+    /**
+     * @param OdooRelation|null $pos_statement_id
+     */
+    public function setPosStatementId(?OdooRelation $pos_statement_id): void
+    {
+        $this->pos_statement_id = $pos_statement_id;
     }
 
     /**
@@ -657,19 +680,19 @@ final class Line extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @param OdooRelation[]|null $journal_entry_ids
      */
-    public function getJournalEntryIds(): ?array
+    public function setJournalEntryIds(?array $journal_entry_ids): void
     {
-        return $this->journal_entry_ids;
+        $this->journal_entry_ids = $journal_entry_ids;
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $company_id
      */
-    public function getCompanyId(): ?OdooRelation
+    public function setCompanyId(?OdooRelation $company_id): void
     {
-        return $this->company_id;
+        $this->company_id = $company_id;
     }
 
     /**
@@ -801,11 +824,11 @@ final class Line extends Base
     }
 
     /**
-     * @param int|null $sequence
+     * @return OdooRelation|null
      */
-    public function setSequence(?int $sequence): void
+    public function getCompanyId(): ?OdooRelation
     {
-        $this->sequence = $sequence;
+        return $this->company_id;
     }
 
     /**
@@ -910,6 +933,14 @@ final class Line extends Base
     public function getSequence(): ?int
     {
         return $this->sequence;
+    }
+
+    /**
+     * @param int|null $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
     }
 
     /**

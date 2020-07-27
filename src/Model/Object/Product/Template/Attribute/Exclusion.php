@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : product.template.attribute.exclusion
+ * ---
  * Name : product.template.attribute.exclusion
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

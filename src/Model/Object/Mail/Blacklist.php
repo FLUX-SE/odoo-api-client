@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.blacklist
+ * ---
  * Name : mail.blacklist
+ * ---
  * Info :
  * Model of blacklisted email addresses to stop sending emails.
  */

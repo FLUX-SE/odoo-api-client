@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : portal.wizard
+ * ---
  * Name : portal.wizard
+ * ---
  * Info :
  * A wizard to manage the creation/removal of portal users.
  */

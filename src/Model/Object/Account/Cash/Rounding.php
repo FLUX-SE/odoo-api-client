@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.cash.rounding
+ * ---
  * Name : account.cash.rounding
+ * ---
  * Info :
  * In some countries, we need to be able to make appear on an invoice a rounding line, appearing there only
  * because the
@@ -103,6 +105,19 @@ final class Rounding extends Base
     private $company_id;
 
     /**
+     * Loss Account
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $loss_account_id;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -190,11 +205,11 @@ final class Rounding extends Base
     }
 
     /**
-     * @param OdooRelation|null $company_id
+     * @return OdooRelation|null
      */
-    public function setCompanyId(?OdooRelation $company_id): void
+    public function getLossAccountId(): ?OdooRelation
     {
-        $this->company_id = $company_id;
+        return $this->loss_account_id;
     }
 
     /**
@@ -262,11 +277,19 @@ final class Rounding extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $loss_account_id
      */
-    public function getCompanyId(): ?OdooRelation
+    public function setLossAccountId(?OdooRelation $loss_account_id): void
     {
-        return $this->company_id;
+        $this->loss_account_id = $loss_account_id;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
     }
 
     /**
@@ -275,6 +298,14 @@ final class Rounding extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
     }
 
     /**

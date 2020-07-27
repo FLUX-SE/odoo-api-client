@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : bus.presence
+ * ---
  * Name : bus.presence
+ * ---
  * Info :
  * User Presence
  *                 Its status is 'online', 'away' or 'offline'. This model should be a one2one, but is not

@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.model.data
+ * ---
  * Name : ir.model.data
+ * ---
  * Info :
  * Holds external identifier keys for records in the database.
  *               This has two main uses:

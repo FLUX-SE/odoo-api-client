@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : resource.calendar
+ * ---
  * Name : resource.calendar
+ * ---
  * Info :
  * Calendar model for a resource. It has
  *

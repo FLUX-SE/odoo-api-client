@@ -8,7 +8,9 @@ use Flux\OdooApiClient\Model\Object\Base;
 
 /**
  * Odoo model : ir.qweb
+ * ---
  * Name : ir.qweb
+ * ---
  * Info :
  * QWeb object for rendering editor stuff
  */

@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : base_import.mapping
+ * ---
  * Name : base_import.mapping
+ * ---
  * Info :
  * mapping of previous column:field selections
  *

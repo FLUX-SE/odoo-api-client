@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.chart.template
+ * ---
  * Name : account.chart.template
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

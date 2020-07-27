@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : base_import.tests.models.complex
+ * ---
  * Name : base_import.tests.models.complex
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

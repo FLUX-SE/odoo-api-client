@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : resource.calendar.attendance
+ * ---
  * Name : resource.calendar.attendance
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

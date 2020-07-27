@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : digest.tip
+ * ---
  * Name : digest.tip
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

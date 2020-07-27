@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.invoice.report
+ * ---
  * Name : account.invoice.report
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
@@ -358,19 +360,6 @@ final class Report extends Base
     private $price_average;
 
     /**
-     * Sales Team
-     * ---
-     * Relation : many2one (crm.team)
-     * @see \Flux\OdooApiClient\Model\Object\Crm\Team
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $team_id;
-
-    /**
      * @return OdooRelation|null
      */
     public function getMoveId(): ?OdooRelation
@@ -379,11 +368,19 @@ final class Report extends Base
     }
 
     /**
+     * @param OdooRelation|null $product_id
+     */
+    public function setProductId(?OdooRelation $product_id): void
+    {
+        $this->product_id = $product_id;
+    }
+
+    /**
      * @return OdooRelation|null
      */
-    public function getProductUomId(): ?OdooRelation
+    public function getInvoicePartnerBankId(): ?OdooRelation
     {
-        return $this->product_uom_id;
+        return $this->invoice_partner_bank_id;
     }
 
     /**
@@ -467,11 +464,19 @@ final class Report extends Base
     }
 
     /**
-     * @param OdooRelation|null $product_id
+     * @return OdooRelation|null
      */
-    public function setProductId(?OdooRelation $product_id): void
+    public function getProductUomId(): ?OdooRelation
     {
-        $this->product_id = $product_id;
+        return $this->product_uom_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getInvoicePaymentTermId(): ?OdooRelation
+    {
+        return $this->invoice_payment_term_id;
     }
 
     /**
@@ -480,14 +485,6 @@ final class Report extends Base
     public function setProductUomId(?OdooRelation $product_uom_id): void
     {
         $this->product_uom_id = $product_uom_id;
-    }
-
-    /**
-     * @param OdooRelation|null $invoice_payment_term_id
-     */
-    public function setInvoicePaymentTermId(?OdooRelation $invoice_payment_term_id): void
-    {
-        $this->invoice_payment_term_id = $invoice_payment_term_id;
     }
 
     /**
@@ -571,35 +568,19 @@ final class Report extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $invoice_payment_term_id
      */
-    public function getTeamId(): ?OdooRelation
+    public function setInvoicePaymentTermId(?OdooRelation $invoice_payment_term_id): void
     {
-        return $this->team_id;
+        $this->invoice_payment_term_id = $invoice_payment_term_id;
     }
 
     /**
-     * @param OdooRelation|null $team_id
+     * @param DateTimeInterface|null $invoice_date
      */
-    public function setTeamId(?OdooRelation $team_id): void
+    public function setInvoiceDate(?DateTimeInterface $invoice_date): void
     {
-        $this->team_id = $team_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getInvoicePartnerBankId(): ?OdooRelation
-    {
-        return $this->invoice_partner_bank_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getInvoicePaymentTermId(): ?OdooRelation
-    {
-        return $this->invoice_payment_term_id;
+        $this->invoice_date = $invoice_date;
     }
 
     /**
@@ -715,11 +696,11 @@ final class Report extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $invoice_date
+     * @return DateTimeInterface|null
      */
-    public function setInvoiceDate(?DateTimeInterface $invoice_date): void
+    public function getInvoiceDate(): ?DateTimeInterface
     {
-        $this->invoice_date = $invoice_date;
+        return $this->invoice_date;
     }
 
     /**
@@ -808,14 +789,6 @@ final class Report extends Base
     public function setFiscalPositionId(?OdooRelation $fiscal_position_id): void
     {
         $this->fiscal_position_id = $fiscal_position_id;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getInvoiceDate(): ?DateTimeInterface
-    {
-        return $this->invoice_date;
     }
 
     /**

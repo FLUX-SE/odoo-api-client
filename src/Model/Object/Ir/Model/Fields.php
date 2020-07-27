@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.model.fields
+ * ---
  * Name : ir.model.fields
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
@@ -428,19 +430,6 @@ final class Fields extends Base
     private $store;
 
     /**
-     * Enable Ordered Tracking
-     * ---
-     * If set every modification done to this field is tracked in the chatter. Value is used to order tracking
-     * values.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var int|null
-     */
-    private $tracking;
-
-    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -485,6 +474,19 @@ final class Fields extends Base
      * @var DateTimeInterface|null
      */
     private $write_date;
+
+    /**
+     * Enable Ordered Tracking
+     * ---
+     * If set every modification done to this field is tracked in the chatter. Value is used to order tracking
+     * values.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var int|null
+     */
+    private $tracking;
 
     /**
      * @param string $name Field Name
@@ -739,11 +741,27 @@ final class Fields extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @return DateTimeInterface|null
      */
-    public function getCreateUid(): ?OdooRelation
+    public function getCreateDate(): ?DateTimeInterface
     {
-        return $this->create_uid;
+        return $this->create_date;
+    }
+
+    /**
+     * @param int|null $tracking
+     */
+    public function setTracking(?int $tracking): void
+    {
+        $this->tracking = $tracking;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getTracking(): ?int
+    {
+        return $this->tracking;
     }
 
     /**
@@ -787,27 +805,11 @@ final class Fields extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
      * @param OdooRelation|null $create_uid
      */
     public function setCreateUid(?OdooRelation $create_uid): void
     {
         $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @param int|null $tracking
-     */
-    public function setTracking(?int $tracking): void
-    {
-        $this->tracking = $tracking;
     }
 
     /**
@@ -819,11 +821,11 @@ final class Fields extends Base
     }
 
     /**
-     * @return int|null
+     * @return OdooRelation|null
      */
-    public function getTracking(): ?int
+    public function getCreateUid(): ?OdooRelation
     {
-        return $this->tracking;
+        return $this->create_uid;
     }
 
     /**

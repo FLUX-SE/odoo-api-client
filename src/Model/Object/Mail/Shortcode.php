@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.shortcode
+ * ---
  * Name : mail.shortcode
+ * ---
  * Info :
  * Shortcode
  *                 Canned Responses, allowing the user to defined shortcuts in its message. Should be applied

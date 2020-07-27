@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.incoterms
+ * ---
  * Name : account.incoterms
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

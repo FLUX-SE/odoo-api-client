@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : web_editor.converter.test
+ * ---
  * Name : web_editor.converter.test
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.activity
+ * ---
  * Name : mail.activity
+ * ---
  * Info :
  * An actual activity to perform. Activities are linked to
  *         documents using res_id and res_model_id fields. Activities have a deadline

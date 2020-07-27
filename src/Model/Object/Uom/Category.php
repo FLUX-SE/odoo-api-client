@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : uom.category
+ * ---
  * Name : uom.category
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
@@ -50,6 +52,18 @@ final class Category extends Base
      * @var string|null
      */
     private $measure_type;
+
+    /**
+     * Group Products in POS
+     * ---
+     * Check if you want to group products of this category in point of sale orders
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $is_pos_groupable;
 
     /**
      * Created by
@@ -138,6 +152,22 @@ final class Category extends Base
     public function setMeasureType(?string $measure_type): void
     {
         $this->measure_type = $measure_type;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsPosGroupable(): ?bool
+    {
+        return $this->is_pos_groupable;
+    }
+
+    /**
+     * @param bool|null $is_pos_groupable
+     */
+    public function setIsPosGroupable(?bool $is_pos_groupable): void
+    {
+        $this->is_pos_groupable = $is_pos_groupable;
     }
 
     /**

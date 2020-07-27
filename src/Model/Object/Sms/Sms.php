@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : sms.sms
+ * ---
  * Name : sms.sms
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

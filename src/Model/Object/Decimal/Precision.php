@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : decimal.precision
+ * ---
  * Name : decimal.precision
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

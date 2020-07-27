@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.cashbox.line
+ * ---
  * Name : account.cashbox.line
+ * ---
  * Info :
  * Cash Box Details
  */

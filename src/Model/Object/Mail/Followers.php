@@ -9,7 +9,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.followers
+ * ---
  * Name : mail.followers
+ * ---
  * Info :
  * mail_followers holds the data related to the follow mechanism inside
  *         Odoo. Partners can choose to follow documents (records) of any kind

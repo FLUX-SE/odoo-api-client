@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : product.template.attribute.line
+ * ---
  * Name : product.template.attribute.line
+ * ---
  * Info :
  * Attributes available on product.template with their selected values in a m2m.
  *         Used as a configuration model to generate the appropriate product.template.attribute.value

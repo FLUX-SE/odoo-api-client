@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.message.subtype
+ * ---
  * Name : mail.message.subtype
+ * ---
  * Info :
  * Class holding subtype definition for messages. Subtypes allow to tune
  *                 the follower subscription, allowing only some subtypes to be pushed

@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : report.paperformat
+ * ---
  * Name : report.paperformat
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

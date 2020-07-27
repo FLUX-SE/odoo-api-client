@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : res.groups
+ * ---
  * Name : res.groups
+ * ---
  * Info :
  * Update of res.groups class
  *                 - if adding users from a group, check mail.channels linked to this user

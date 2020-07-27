@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : res.config.installer
+ * ---
  * Name : res.config.installer
+ * ---
  * Info :
  * New-style configuration base specialized for addons selection
  *         and installation.

@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : payment.acquirer
+ * ---
  * Name : payment.acquirer
+ * ---
  * Info :
  * Acquirer Model. Each specific acquirer can extend the model by adding
  *         its own fields, using the acquirer_name as a prefix for the new fields.
@@ -509,23 +511,6 @@ final class Acquirer extends Base
     private $provider;
 
     /**
-     * Communication
-     * ---
-     * You can set here the communication type that will appear on sales orders.The communication will be given to
-     * the customer when they choose the payment method.
-     * ---
-     * Selection : (default value, usually null)
-     *     -> so_name (Based on Document Reference)
-     *     -> partner (Based on Customer ID)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $so_reference_type;
-
-    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -631,19 +616,11 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param bool|null $qr_code
+     * @return bool|null
      */
-    public function setQrCode(?bool $qr_code): void
+    public function isQrCode(): ?bool
     {
-        $this->qr_code = $qr_code;
-    }
-
-    /**
-     * @param string|null $image_128
-     */
-    public function setImage128(?string $image_128): void
-    {
-        $this->image_128 = $image_128;
+        return $this->qr_code;
     }
 
     /**
@@ -703,19 +680,11 @@ final class Acquirer extends Base
     }
 
     /**
-     * @return bool|null
+     * @param bool|null $qr_code
      */
-    public function isQrCode(): ?bool
+    public function setQrCode(?bool $qr_code): void
     {
-        return $this->qr_code;
-    }
-
-    /**
-     * @param OdooRelation[]|null $payment_icon_ids
-     */
-    public function setPaymentIconIds(?array $payment_icon_ids): void
-    {
-        $this->payment_icon_ids = $payment_icon_ids;
+        $this->qr_code = $qr_code;
     }
 
     /**
@@ -724,6 +693,14 @@ final class Acquirer extends Base
     public function setFeesIntVar(?float $fees_int_var): void
     {
         $this->fees_int_var = $fees_int_var;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getPaymentIconIds(): ?array
+    {
+        return $this->payment_icon_ids;
     }
 
     /**
@@ -791,41 +768,43 @@ final class Acquirer extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @return bool|null
      */
-    public function getPaymentIconIds(): ?array
+    public function isFeesActive(): ?bool
     {
-        return $this->payment_icon_ids;
+        return $this->fees_active;
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param string|null $image_128
      */
-    public function hasPaymentIconIds(OdooRelation $item): bool
+    public function setImage128(?string $image_128): void
     {
-        if (null === $this->payment_icon_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->payment_icon_ids);
+        $this->image_128 = $image_128;
     }
 
     /**
-     * @param bool|null $fees_implemented
+     * @param OdooRelation[]|null $payment_icon_ids
      */
-    public function setFeesImplemented(?bool $fees_implemented): void
+    public function setPaymentIconIds(?array $payment_icon_ids): void
     {
-        $this->fees_implemented = $fees_implemented;
+        $this->payment_icon_ids = $payment_icon_ids;
     }
 
     /**
-     * @return string|null
+     * @return bool|null
      */
-    public function getSoReferenceType(): ?string
+    public function isFeesImplemented(): ?bool
     {
-        return $this->so_reference_type;
+        return $this->fees_implemented;
+    }
+
+    /**
+     * @param string $provider
+     */
+    public function setProvider(string $provider): void
+    {
+        $this->provider = $provider;
     }
 
     /**
@@ -893,43 +872,25 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param string|null $so_reference_type
-     */
-    public function setSoReferenceType(?string $so_reference_type): void
-    {
-        $this->so_reference_type = $so_reference_type;
-    }
-
-    /**
-     * @param string $provider
-     */
-    public function setProvider(string $provider): void
-    {
-        $this->provider = $provider;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addPaymentIconIds(OdooRelation $item): void
-    {
-        if ($this->hasPaymentIconIds($item)) {
-            return;
-        }
-
-        if (null === $this->payment_icon_ids) {
-            $this->payment_icon_ids = [];
-        }
-
-        $this->payment_icon_ids[] = $item;
-    }
-
-    /**
      * @return string
      */
     public function getProvider(): string
     {
         return $this->provider;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasPaymentIconIds(OdooRelation $item): bool
+    {
+        if (null === $this->payment_icon_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->payment_icon_ids);
     }
 
     /**
@@ -1025,19 +986,35 @@ final class Acquirer extends Base
     }
 
     /**
-     * @return bool|null
+     * @param OdooRelation $item
      */
-    public function isFeesActive(): ?bool
+    public function addPaymentIconIds(OdooRelation $item): void
     {
-        return $this->fees_active;
+        if ($this->hasPaymentIconIds($item)) {
+            return;
+        }
+
+        if (null === $this->payment_icon_ids) {
+            $this->payment_icon_ids = [];
+        }
+
+        $this->payment_icon_ids[] = $item;
     }
 
     /**
-     * @return bool|null
+     * @param bool|null $fees_implemented
      */
-    public function isFeesImplemented(): ?bool
+    public function setFeesImplemented(?bool $fees_implemented): void
     {
-        return $this->fees_implemented;
+        $this->fees_implemented = $fees_implemented;
+    }
+
+    /**
+     * @param bool|null $authorize_implemented
+     */
+    public function setAuthorizeImplemented(?bool $authorize_implemented): void
+    {
+        $this->authorize_implemented = $authorize_implemented;
     }
 
     /**
@@ -1225,11 +1202,11 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param bool|null $authorize_implemented
+     * @return bool|null
      */
-    public function setAuthorizeImplemented(?bool $authorize_implemented): void
+    public function isAuthorizeImplemented(): ?bool
     {
-        $this->authorize_implemented = $authorize_implemented;
+        return $this->authorize_implemented;
     }
 
     /**
@@ -1238,14 +1215,6 @@ final class Acquirer extends Base
     public function setPendingMsg(?string $pending_msg): void
     {
         $this->pending_msg = $pending_msg;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isAuthorizeImplemented(): ?bool
-    {
-        return $this->authorize_implemented;
     }
 
     /**

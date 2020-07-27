@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.mail_server
+ * ---
  * Name : ir.mail_server
+ * ---
  * Info :
  * Represents an SMTP server, able to send outgoing emails, with SSL and TLS capabilities.
  */

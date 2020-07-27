@@ -8,7 +8,9 @@ use Flux\OdooApiClient\Model\Object\Base;
 
 /**
  * Odoo model : ir.translation
+ * ---
  * Name : ir.translation
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

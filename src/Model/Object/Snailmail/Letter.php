@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : snailmail.letter
+ * ---
  * Name : snailmail.letter
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

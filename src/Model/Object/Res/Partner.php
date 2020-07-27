@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : res.partner
+ * ---
  * Name : res.partner
+ * ---
  * Info :
  * Update partner to add a field about notification preferences. Add a generic opt-out field that can be used
  *               to restrict usage of automatic email templates.
@@ -741,6 +743,21 @@ class Partner extends Base
     protected $tz_offset;
 
     /**
+     * Salesperson
+     * ---
+     * The internal user in charge of this contact.
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    protected $user_id;
+
+    /**
      * Tax ID
      * ---
      * The Tax Identification Number. Complete it if the contact is subjected to government taxes. Used in some legal
@@ -1146,6 +1163,102 @@ class Partner extends Base
     protected $self;
 
     /**
+     * Image
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    protected $image_1920;
+
+    /**
+     * Image 1024
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    protected $image_1024;
+
+    /**
+     * Image 512
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    protected $image_512;
+
+    /**
+     * Image 256
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    protected $image_256;
+
+    /**
+     * Image 128
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    protected $image_128;
+
+    /**
+     * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    protected $create_uid;
+
+    /**
+     * Created on
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var DateTimeInterface|null
+     */
+    protected $create_date;
+
+    /**
+     * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    protected $write_uid;
+
+    /**
+     * Last Updated on
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var DateTimeInterface|null
+     */
+    protected $write_date;
+
+    /**
      * IM Status
      * ---
      * Searchable : no
@@ -1470,21 +1583,6 @@ class Partner extends Base
     protected $channel_ids;
 
     /**
-     * Salesperson
-     * ---
-     * The internal user in charge of this contact.
-     * ---
-     * Relation : many2one (res.users)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Users
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    protected $user_id;
-
-    /**
      * Contact Address Complete
      * ---
      * Searchable : yes
@@ -1612,21 +1710,6 @@ class Partner extends Base
      * @var OdooRelation|null
      */
     protected $property_product_pricelist;
-
-    /**
-     * Sales Team
-     * ---
-     * If set, this Sales Team will be used for sales and assignations related to this partner
-     * ---
-     * Relation : many2one (crm.team)
-     * @see \Flux\OdooApiClient\Model\Object\Crm\Team
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    protected $team_id;
 
     /**
      * Website Messages
@@ -1985,67 +2068,6 @@ class Partner extends Base
     protected $payment_token_count;
 
     /**
-     * SIRET
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    protected $siret;
-
-    /**
-     * Sale Order Count
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var int|null
-     */
-    protected $sale_order_count;
-
-    /**
-     * Sales Order
-     * ---
-     * Relation : one2many (sale.order -> partner_id)
-     * @see \Flux\OdooApiClient\Model\Object\Sale\Order
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    protected $sale_order_ids;
-
-    /**
-     * Sales Warnings
-     * ---
-     * Selecting the "Warning" option will notify user with the message, Selecting "Blocking Message" will throw an
-     * exception with the message and block the flow. The Message has to be written in the next field.
-     * ---
-     * Selection : (default value, usually null)
-     *     -> no-message (No Message)
-     *     -> warning (Warning)
-     *     -> block (Blocking Message)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    protected $sale_warn;
-
-    /**
-     * Message for Sales Order
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    protected $sale_warn_msg;
-
-    /**
      * Next Action Date
      * ---
      * The date before which no action should be taken.
@@ -2147,100 +2169,109 @@ class Partner extends Base
     protected $payment_responsible_id;
 
     /**
-     * Image
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    protected $image_1920;
-
-    /**
-     * Image 1024
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    protected $image_1024;
-
-    /**
-     * Image 512
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    protected $image_512;
-
-    /**
-     * Image 256
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    protected $image_256;
-
-    /**
-     * Image 128
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    protected $image_128;
-
-    /**
-     * Created by
-     * ---
-     * Relation : many2one (res.users)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * SIRET
      * ---
      * Searchable : yes
      * Sortable : yes
+     *
+     * @var string|null
+     */
+    protected $siret;
+
+    /**
+     * Customer Location
+     * ---
+     * The stock location used as destination when sending goods to this contact.
+     * ---
+     * Relation : many2one (stock.location)
+     * @see \Flux\OdooApiClient\Model\Object\Stock\Location
+     * ---
+     * Searchable : yes
+     * Sortable : no
      *
      * @var OdooRelation|null
      */
-    protected $create_uid;
+    protected $property_stock_customer;
 
     /**
-     * Created on
+     * Vendor Location
+     * ---
+     * The stock location used as source when receiving goods from this contact.
+     * ---
+     * Relation : many2one (stock.location)
+     * @see \Flux\OdooApiClient\Model\Object\Stock\Location
      * ---
      * Searchable : yes
-     * Sortable : yes
-     *
-     * @var DateTimeInterface|null
-     */
-    protected $create_date;
-
-    /**
-     * Last Updated by
-     * ---
-     * Relation : many2one (res.users)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Users
-     * ---
-     * Searchable : yes
-     * Sortable : yes
+     * Sortable : no
      *
      * @var OdooRelation|null
      */
-    protected $write_uid;
+    protected $property_stock_supplier;
 
     /**
-     * Last Updated on
+     * Stock Picking
+     * ---
+     * Selecting the "Warning" option will notify user with the message, Selecting "Blocking Message" will throw an
+     * exception with the message and block the flow. The Message has to be written in the next field.
+     * ---
+     * Selection : (default value, usually null)
+     *     -> no-message (No Message)
+     *     -> warning (Warning)
+     *     -> block (Blocking Message)
      * ---
      * Searchable : yes
      * Sortable : yes
      *
-     * @var DateTimeInterface|null
+     * @var string|null
      */
-    protected $write_date;
+    protected $picking_warn;
+
+    /**
+     * Message for Stock Picking
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    protected $picking_warn_msg;
+
+    /**
+     * Pos Order Count
+     * ---
+     * The number of point of sales orders related to this customer
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    protected $pos_order_count;
+
+    /**
+     * Pos Order
+     * ---
+     * Relation : one2many (pos.order -> partner_id)
+     * @see \Flux\OdooApiClient\Model\Object\Pos\Order
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    protected $pos_order_ids;
+
+    /**
+     * Barcode
+     * ---
+     * Use a barcode to identify this contact from the Point of Sale.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    protected $barcode;
 
     /**
      * @param OdooRelation $property_account_payable_id Account Payable
@@ -2271,11 +2302,248 @@ class Partner extends Base
     }
 
     /**
+     * @return OdooRelation[]|null
+     */
+    public function getWebsiteMessageIds(): ?array
+    {
+        return $this->website_message_ids;
+    }
+
+    /**
      * @return float|null
      */
-    public function getTotalInvoiced(): ?float
+    public function getCredit(): ?float
     {
-        return $this->total_invoiced;
+        return $this->credit;
+    }
+
+    /**
+     * @param bool|null $message_has_sms_error
+     */
+    public function setMessageHasSmsError(?bool $message_has_sms_error): void
+    {
+        $this->message_has_sms_error = $message_has_sms_error;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isMessageHasSmsError(): ?bool
+    {
+        return $this->message_has_sms_error;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeWebsiteMessageIds(OdooRelation $item): void
+    {
+        if (null === $this->website_message_ids) {
+            $this->website_message_ids = [];
+        }
+
+        if ($this->hasWebsiteMessageIds($item)) {
+            $index = array_search($item, $this->website_message_ids);
+            unset($this->website_message_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addWebsiteMessageIds(OdooRelation $item): void
+    {
+        if ($this->hasWebsiteMessageIds($item)) {
+            return;
+        }
+
+        if (null === $this->website_message_ids) {
+            $this->website_message_ids = [];
+        }
+
+        $this->website_message_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasWebsiteMessageIds(OdooRelation $item): bool
+    {
+        if (null === $this->website_message_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->website_message_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $website_message_ids
+     */
+    public function setWebsiteMessageIds(?array $website_message_ids): void
+    {
+        $this->website_message_ids = $website_message_ids;
+    }
+
+    /**
+     * @param OdooRelation|null $property_product_pricelist
+     */
+    public function setPropertyProductPricelist(?OdooRelation $property_product_pricelist): void
+    {
+        $this->property_product_pricelist = $property_product_pricelist;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getDebit(): ?float
+    {
+        return $this->debit;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPropertyProductPricelist(): ?OdooRelation
+    {
+        return $this->property_product_pricelist;
+    }
+
+    /**
+     * @param bool|null $phone_blacklisted
+     */
+    public function setPhoneBlacklisted(?bool $phone_blacklisted): void
+    {
+        $this->phone_blacklisted = $phone_blacklisted;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isPhoneBlacklisted(): ?bool
+    {
+        return $this->phone_blacklisted;
+    }
+
+    /**
+     * @param string|null $phone_sanitized
+     */
+    public function setPhoneSanitized(?string $phone_sanitized): void
+    {
+        $this->phone_sanitized = $phone_sanitized;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPhoneSanitized(): ?string
+    {
+        return $this->phone_sanitized;
+    }
+
+    /**
+     * @param string|null $additional_info
+     */
+    public function setAdditionalInfo(?string $additional_info): void
+    {
+        $this->additional_info = $additional_info;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAdditionalInfo(): ?string
+    {
+        return $this->additional_info;
+    }
+
+    /**
+     * @param float|null $credit
+     */
+    public function setCredit(?float $credit): void
+    {
+        $this->credit = $credit;
+    }
+
+    /**
+     * @param float|null $debit
+     */
+    public function setDebit(?float $debit): void
+    {
+        $this->debit = $debit;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPartnerGid(): ?int
+    {
+        return $this->partner_gid;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getPropertyAccountReceivableId(): OdooRelation
+    {
+        return $this->property_account_receivable_id;
+    }
+
+    /**
+     * @param OdooRelation|null $property_supplier_payment_term_id
+     */
+    public function setPropertySupplierPaymentTermId(?OdooRelation $property_supplier_payment_term_id): void
+    {
+        $this->property_supplier_payment_term_id = $property_supplier_payment_term_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPropertySupplierPaymentTermId(): ?OdooRelation
+    {
+        return $this->property_supplier_payment_term_id;
+    }
+
+    /**
+     * @param OdooRelation|null $property_payment_term_id
+     */
+    public function setPropertyPaymentTermId(?OdooRelation $property_payment_term_id): void
+    {
+        $this->property_payment_term_id = $property_payment_term_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPropertyPaymentTermId(): ?OdooRelation
+    {
+        return $this->property_payment_term_id;
+    }
+
+    /**
+     * @param OdooRelation|null $property_account_position_id
+     */
+    public function setPropertyAccountPositionId(?OdooRelation $property_account_position_id): void
+    {
+        $this->property_account_position_id = $property_account_position_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPropertyAccountPositionId(): ?OdooRelation
+    {
+        return $this->property_account_position_id;
+    }
+
+    /**
+     * @param OdooRelation $property_account_receivable_id
+     */
+    public function setPropertyAccountReceivableId(OdooRelation $property_account_receivable_id): void
+    {
+        $this->property_account_receivable_id = $property_account_receivable_id;
     }
 
     /**
@@ -2284,6 +2552,14 @@ class Partner extends Base
     public function setPropertyAccountPayableId(OdooRelation $property_account_payable_id): void
     {
         $this->property_account_payable_id = $property_account_payable_id;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getDebitLimit(): ?float
+    {
+        return $this->debit_limit;
     }
 
     /**
@@ -2335,6 +2611,14 @@ class Partner extends Base
     }
 
     /**
+     * @return float|null
+     */
+    public function getTotalInvoiced(): ?float
+    {
+        return $this->total_invoiced;
+    }
+
+    /**
      * @param float|null $debit_limit
      */
     public function setDebitLimit(?float $debit_limit): void
@@ -2343,230 +2627,19 @@ class Partner extends Base
     }
 
     /**
-     * @param OdooRelation $property_account_receivable_id
+     * @param int|null $partner_gid
      */
-    public function setPropertyAccountReceivableId(OdooRelation $property_account_receivable_id): void
+    public function setPartnerGid(?int $partner_gid): void
     {
-        $this->property_account_receivable_id = $property_account_receivable_id;
+        $this->partner_gid = $partner_gid;
     }
 
     /**
-     * @return float|null
+     * @param string|null $signup_url
      */
-    public function getDebitLimit(): ?float
+    public function setSignupUrl(?string $signup_url): void
     {
-        return $this->debit_limit;
-    }
-
-    /**
-     * @param float|null $debit
-     */
-    public function setDebit(?float $debit): void
-    {
-        $this->debit = $debit;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getDebit(): ?float
-    {
-        return $this->debit;
-    }
-
-    /**
-     * @param float|null $credit
-     */
-    public function setCredit(?float $credit): void
-    {
-        $this->credit = $credit;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getCredit(): ?float
-    {
-        return $this->credit;
-    }
-
-    /**
-     * @param bool|null $message_has_sms_error
-     */
-    public function setMessageHasSmsError(?bool $message_has_sms_error): void
-    {
-        $this->message_has_sms_error = $message_has_sms_error;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isMessageHasSmsError(): ?bool
-    {
-        return $this->message_has_sms_error;
-    }
-
-    /**
-     * @return OdooRelation
-     */
-    public function getPropertyAccountReceivableId(): OdooRelation
-    {
-        return $this->property_account_receivable_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getPropertyAccountPositionId(): ?OdooRelation
-    {
-        return $this->property_account_position_id;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addWebsiteMessageIds(OdooRelation $item): void
-    {
-        if ($this->hasWebsiteMessageIds($item)) {
-            return;
-        }
-
-        if (null === $this->website_message_ids) {
-            $this->website_message_ids = [];
-        }
-
-        $this->website_message_ids[] = $item;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isHasUnreconciledEntries(): ?bool
-    {
-        return $this->has_unreconciled_entries;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addInvoiceIds(OdooRelation $item): void
-    {
-        if ($this->hasInvoiceIds($item)) {
-            return;
-        }
-
-        if (null === $this->invoice_ids) {
-            $this->invoice_ids = [];
-        }
-
-        $this->invoice_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasInvoiceIds(OdooRelation $item): bool
-    {
-        if (null === $this->invoice_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->invoice_ids);
-    }
-
-    /**
-     * @param OdooRelation[]|null $invoice_ids
-     */
-    public function setInvoiceIds(?array $invoice_ids): void
-    {
-        $this->invoice_ids = $invoice_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getInvoiceIds(): ?array
-    {
-        return $this->invoice_ids;
-    }
-
-    /**
-     * @param DateTimeInterface|null $last_time_entries_checked
-     */
-    public function setLastTimeEntriesChecked(?DateTimeInterface $last_time_entries_checked): void
-    {
-        $this->last_time_entries_checked = $last_time_entries_checked;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getLastTimeEntriesChecked(): ?DateTimeInterface
-    {
-        return $this->last_time_entries_checked;
-    }
-
-    /**
-     * @param bool|null $has_unreconciled_entries
-     */
-    public function setHasUnreconciledEntries(?bool $has_unreconciled_entries): void
-    {
-        $this->has_unreconciled_entries = $has_unreconciled_entries;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeRefCompanyIds(OdooRelation $item): void
-    {
-        if (null === $this->ref_company_ids) {
-            $this->ref_company_ids = [];
-        }
-
-        if ($this->hasRefCompanyIds($item)) {
-            $index = array_search($item, $this->ref_company_ids);
-            unset($this->ref_company_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation|null $property_account_position_id
-     */
-    public function setPropertyAccountPositionId(?OdooRelation $property_account_position_id): void
-    {
-        $this->property_account_position_id = $property_account_position_id;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addRefCompanyIds(OdooRelation $item): void
-    {
-        if ($this->hasRefCompanyIds($item)) {
-            return;
-        }
-
-        if (null === $this->ref_company_ids) {
-            $this->ref_company_ids = [];
-        }
-
-        $this->ref_company_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasRefCompanyIds(OdooRelation $item): bool
-    {
-        if (null === $this->ref_company_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->ref_company_ids);
+        $this->signup_url = $signup_url;
     }
 
     /**
@@ -2578,96 +2651,171 @@ class Partner extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @return int|null
      */
-    public function getRefCompanyIds(): ?array
+    public function getMessageHasErrorCounter(): ?int
     {
-        return $this->ref_company_ids;
+        return $this->message_has_error_counter;
     }
 
     /**
-     * @param OdooRelation|null $property_supplier_payment_term_id
+     * @param string|null $email_normalized
      */
-    public function setPropertySupplierPaymentTermId(?OdooRelation $property_supplier_payment_term_id): void
+    public function setEmailNormalized(?string $email_normalized): void
     {
-        $this->property_supplier_payment_term_id = $property_supplier_payment_term_id;
+        $this->email_normalized = $email_normalized;
     }
 
     /**
-     * @return OdooRelation|null
+     * @return string|null
      */
-    public function getPropertySupplierPaymentTermId(): ?OdooRelation
+    public function getEmailNormalized(): ?string
     {
-        return $this->property_supplier_payment_term_id;
+        return $this->email_normalized;
     }
 
     /**
-     * @param OdooRelation|null $property_payment_term_id
+     * @param OdooRelation|null $message_main_attachment_id
      */
-    public function setPropertyPaymentTermId(?OdooRelation $property_payment_term_id): void
+    public function setMessageMainAttachmentId(?OdooRelation $message_main_attachment_id): void
     {
-        $this->property_payment_term_id = $property_payment_term_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getPropertyPaymentTermId(): ?OdooRelation
-    {
-        return $this->property_payment_term_id;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeWebsiteMessageIds(OdooRelation $item): void
-    {
-        if (null === $this->website_message_ids) {
-            $this->website_message_ids = [];
-        }
-
-        if ($this->hasWebsiteMessageIds($item)) {
-            $index = array_search($item, $this->website_message_ids);
-            unset($this->website_message_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasWebsiteMessageIds(OdooRelation $item): bool
-    {
-        if (null === $this->website_message_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->website_message_ids);
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getContractIds(): ?array
-    {
-        return $this->contract_ids;
+        $this->message_main_attachment_id = $message_main_attachment_id;
     }
 
     /**
      * @return OdooRelation|null
      */
-    public function getUserId(): ?OdooRelation
+    public function getMessageMainAttachmentId(): ?OdooRelation
     {
-        return $this->user_id;
+        return $this->message_main_attachment_id;
     }
 
     /**
-     * @param string|null $signup_token
+     * @param int|null $message_attachment_count
      */
-    public function setSignupToken(?string $signup_token): void
+    public function setMessageAttachmentCount(?int $message_attachment_count): void
     {
-        $this->signup_token = $signup_token;
+        $this->message_attachment_count = $message_attachment_count;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getMessageAttachmentCount(): ?int
+    {
+        return $this->message_attachment_count;
+    }
+
+    /**
+     * @param int|null $message_has_error_counter
+     */
+    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
+    {
+        $this->message_has_error_counter = $message_has_error_counter;
+    }
+
+    /**
+     * @param bool|null $message_has_error
+     */
+    public function setMessageHasError(?bool $message_has_error): void
+    {
+        $this->message_has_error = $message_has_error;
+    }
+
+    /**
+     * @param bool|null $is_blacklisted
+     */
+    public function setIsBlacklisted(?bool $is_blacklisted): void
+    {
+        $this->is_blacklisted = $is_blacklisted;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isMessageHasError(): ?bool
+    {
+        return $this->message_has_error;
+    }
+
+    /**
+     * @param int|null $message_needaction_counter
+     */
+    public function setMessageNeedactionCounter(?int $message_needaction_counter): void
+    {
+        $this->message_needaction_counter = $message_needaction_counter;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getMessageNeedactionCounter(): ?int
+    {
+        return $this->message_needaction_counter;
+    }
+
+    /**
+     * @param bool|null $message_needaction
+     */
+    public function setMessageNeedaction(?bool $message_needaction): void
+    {
+        $this->message_needaction = $message_needaction;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isMessageNeedaction(): ?bool
+    {
+        return $this->message_needaction;
+    }
+
+    /**
+     * @param int|null $message_unread_counter
+     */
+    public function setMessageUnreadCounter(?int $message_unread_counter): void
+    {
+        $this->message_unread_counter = $message_unread_counter;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getMessageUnreadCounter(): ?int
+    {
+        return $this->message_unread_counter;
+    }
+
+    /**
+     * @param bool|null $message_unread
+     */
+    public function setMessageUnread(?bool $message_unread): void
+    {
+        $this->message_unread = $message_unread;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isIsBlacklisted(): ?bool
+    {
+        return $this->is_blacklisted;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getMessageBounce(): ?int
+    {
+        return $this->message_bounce;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSignupUrl(): ?string
+    {
+        return $this->signup_url;
     }
 
     /**
@@ -2679,11 +2827,75 @@ class Partner extends Base
     }
 
     /**
+     * @param bool|null $signup_valid
+     */
+    public function setSignupValid(?bool $signup_valid): void
+    {
+        $this->signup_valid = $signup_valid;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isSignupValid(): ?bool
+    {
+        return $this->signup_valid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $signup_expiration
+     */
+    public function setSignupExpiration(?DateTimeInterface $signup_expiration): void
+    {
+        $this->signup_expiration = $signup_expiration;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getSignupExpiration(): ?DateTimeInterface
+    {
+        return $this->signup_expiration;
+    }
+
+    /**
+     * @param string|null $signup_type
+     */
+    public function setSignupType(?string $signup_type): void
+    {
+        $this->signup_type = $signup_type;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSignupType(): ?string
+    {
+        return $this->signup_type;
+    }
+
+    /**
+     * @param string|null $signup_token
+     */
+    public function setSignupToken(?string $signup_token): void
+    {
+        $this->signup_token = $signup_token;
+    }
+
+    /**
      * @param string|null $image_medium
      */
     public function setImageMedium(?string $image_medium): void
     {
         $this->image_medium = $image_medium;
+    }
+
+    /**
+     * @param int|null $message_bounce
+     */
+    public function setMessageBounce(?int $message_bounce): void
+    {
+        $this->message_bounce = $message_bounce;
     }
 
     /**
@@ -2711,14 +2923,6 @@ class Partner extends Base
     }
 
     /**
-     * @param OdooRelation|null $user_id
-     */
-    public function setUserId(?OdooRelation $user_id): void
-    {
-        $this->user_id = $user_id;
-    }
-
-    /**
      * @param OdooRelation $item
      */
     public function removeChannelIds(OdooRelation $item): void
@@ -2731,14 +2935,6 @@ class Partner extends Base
             $index = array_search($item, $this->channel_ids);
             unset($this->channel_ids[$index]);
         }
-    }
-
-    /**
-     * @param string|null $signup_type
-     */
-    public function setSignupType(?string $signup_type): void
-    {
-        $this->signup_type = $signup_type;
     }
 
     /**
@@ -2788,241 +2984,56 @@ class Partner extends Base
     }
 
     /**
-     * @param int|null $message_bounce
-     */
-    public function setMessageBounce(?int $message_bounce): void
-    {
-        $this->message_bounce = $message_bounce;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getMessageBounce(): ?int
-    {
-        return $this->message_bounce;
-    }
-
-    /**
-     * @param bool|null $is_blacklisted
-     */
-    public function setIsBlacklisted(?bool $is_blacklisted): void
-    {
-        $this->is_blacklisted = $is_blacklisted;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSignupType(): ?string
-    {
-        return $this->signup_type;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getSignupExpiration(): ?DateTimeInterface
-    {
-        return $this->signup_expiration;
-    }
-
-    /**
-     * @param OdooRelation[]|null $website_message_ids
-     */
-    public function setWebsiteMessageIds(?array $website_message_ids): void
-    {
-        $this->website_message_ids = $website_message_ids;
-    }
-
-    /**
-     * @param string|null $phone_sanitized
-     */
-    public function setPhoneSanitized(?string $phone_sanitized): void
-    {
-        $this->phone_sanitized = $phone_sanitized;
-    }
-
-    /**
      * @return OdooRelation[]|null
      */
-    public function getWebsiteMessageIds(): ?array
+    public function getRefCompanyIds(): ?array
     {
-        return $this->website_message_ids;
+        return $this->ref_company_ids;
     }
 
     /**
-     * @param OdooRelation|null $team_id
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setTeamId(?OdooRelation $team_id): void
+    public function hasRefCompanyIds(OdooRelation $item): bool
     {
-        $this->team_id = $team_id;
-    }
+        if (null === $this->ref_company_ids) {
+            return false;
+        }
 
-    /**
-     * @return OdooRelation|null
-     */
-    public function getTeamId(): ?OdooRelation
-    {
-        return $this->team_id;
-    }
-
-    /**
-     * @param OdooRelation|null $property_product_pricelist
-     */
-    public function setPropertyProductPricelist(?OdooRelation $property_product_pricelist): void
-    {
-        $this->property_product_pricelist = $property_product_pricelist;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getPropertyProductPricelist(): ?OdooRelation
-    {
-        return $this->property_product_pricelist;
-    }
-
-    /**
-     * @param bool|null $phone_blacklisted
-     */
-    public function setPhoneBlacklisted(?bool $phone_blacklisted): void
-    {
-        $this->phone_blacklisted = $phone_blacklisted;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isPhoneBlacklisted(): ?bool
-    {
-        return $this->phone_blacklisted;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getPhoneSanitized(): ?string
-    {
-        return $this->phone_sanitized;
-    }
-
-    /**
-     * @param DateTimeInterface|null $signup_expiration
-     */
-    public function setSignupExpiration(?DateTimeInterface $signup_expiration): void
-    {
-        $this->signup_expiration = $signup_expiration;
-    }
-
-    /**
-     * @param string|null $additional_info
-     */
-    public function setAdditionalInfo(?string $additional_info): void
-    {
-        $this->additional_info = $additional_info;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getAdditionalInfo(): ?string
-    {
-        return $this->additional_info;
-    }
-
-    /**
-     * @param int|null $partner_gid
-     */
-    public function setPartnerGid(?int $partner_gid): void
-    {
-        $this->partner_gid = $partner_gid;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getPartnerGid(): ?int
-    {
-        return $this->partner_gid;
-    }
-
-    /**
-     * @param string|null $signup_url
-     */
-    public function setSignupUrl(?string $signup_url): void
-    {
-        $this->signup_url = $signup_url;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSignupUrl(): ?string
-    {
-        return $this->signup_url;
-    }
-
-    /**
-     * @param bool|null $signup_valid
-     */
-    public function setSignupValid(?bool $signup_valid): void
-    {
-        $this->signup_valid = $signup_valid;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isSignupValid(): ?bool
-    {
-        return $this->signup_valid;
+        return in_array($item, $this->ref_company_ids);
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function removeInvoiceIds(OdooRelation $item): void
+    public function removeMessageIds(OdooRelation $item): void
     {
-        if (null === $this->invoice_ids) {
-            $this->invoice_ids = [];
+        if (null === $this->message_ids) {
+            $this->message_ids = [];
         }
 
-        if ($this->hasInvoiceIds($item)) {
-            $index = array_search($item, $this->invoice_ids);
-            unset($this->invoice_ids[$index]);
+        if ($this->hasMessageIds($item)) {
+            $index = array_search($item, $this->message_ids);
+            unset($this->message_ids[$index]);
         }
     }
 
     /**
-     * @param OdooRelation[]|null $contract_ids
+     * @return float|null
      */
-    public function setContractIds(?array $contract_ids): void
+    public function getTotalDue(): ?float
     {
-        $this->contract_ids = $contract_ids;
+        return $this->total_due;
     }
 
     /**
-     * @param string|null $email_normalized
+     * @param OdooRelation|null $followup_level
      */
-    public function setEmailNormalized(?string $email_normalized): void
+    public function setFollowupLevel(?OdooRelation $followup_level): void
     {
-        $this->email_normalized = $email_normalized;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeUnpaidInvoices(OdooRelation $item): void
-    {
-        if (null === $this->unpaid_invoices) {
-            $this->unpaid_invoices = [];
-        }
-
-        if ($this->hasUnpaidInvoices($item)) {
-            $index = array_search($item, $this->unpaid_invoices);
-            unset($this->unpaid_invoices[$index]);
-        }
+        $this->followup_level = $followup_level;
     }
 
     /**
@@ -3074,11 +3085,26 @@ class Partner extends Base
     }
 
     /**
-     * @return float|null
+     * @param OdooRelation $item
      */
-    public function getTotalDue(): ?float
+    public function removeUnpaidInvoices(OdooRelation $item): void
     {
-        return $this->total_due;
+        if (null === $this->unpaid_invoices) {
+            $this->unpaid_invoices = [];
+        }
+
+        if ($this->hasUnpaidInvoices($item)) {
+            $index = array_search($item, $this->unpaid_invoices);
+            unset($this->unpaid_invoices[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation|null $payment_responsible_id
+     */
+    public function setPaymentResponsibleId(?OdooRelation $payment_responsible_id): void
+    {
+        $this->payment_responsible_id = $payment_responsible_id;
     }
 
     /**
@@ -3095,14 +3121,6 @@ class Partner extends Base
         }
 
         $this->unpaid_invoices[] = $item;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getPaymentResponsibleId(): ?OdooRelation
-    {
-        return $this->payment_responsible_id;
     }
 
     /**
@@ -3181,179 +3199,19 @@ class Partner extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $unreconciled_aml_ids
-     */
-    public function setUnreconciledAmlIds(?array $unreconciled_aml_ids): void
-    {
-        $this->unreconciled_aml_ids = $unreconciled_aml_ids;
-    }
-
-    /**
-     * @param OdooRelation|null $followup_level
-     */
-    public function setFollowupLevel(?OdooRelation $followup_level): void
-    {
-        $this->followup_level = $followup_level;
-    }
-
-    /**
-     * @param OdooRelation|null $payment_responsible_id
-     */
-    public function setPaymentResponsibleId(?OdooRelation $payment_responsible_id): void
-    {
-        $this->payment_responsible_id = $payment_responsible_id;
-    }
-
-    /**
-     * @param DateTimeInterface|null $payment_next_action_date
-     */
-    public function setPaymentNextActionDate(?DateTimeInterface $payment_next_action_date): void
-    {
-        $this->payment_next_action_date = $payment_next_action_date;
-    }
-
-    /**
      * @return OdooRelation|null
      */
-    public function getCreateUid(): ?OdooRelation
+    public function getPaymentResponsibleId(): ?OdooRelation
     {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param DateTimeInterface|null $write_date
-     */
-    public function setWriteDate(?DateTimeInterface $write_date): void
-    {
-        $this->write_date = $write_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @param OdooRelation|null $create_uid
-     */
-    public function setCreateUid(?OdooRelation $create_uid): void
-    {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @param string|null $image_128
-     */
-    public function setImage128(?string $image_128): void
-    {
-        $this->image_128 = $image_128;
+        return $this->payment_responsible_id;
     }
 
     /**
      * @return string|null
      */
-    public function getImage1920(): ?string
+    public function getSiret(): ?string
     {
-        return $this->image_1920;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getImage128(): ?string
-    {
-        return $this->image_128;
-    }
-
-    /**
-     * @param string|null $image_256
-     */
-    public function setImage256(?string $image_256): void
-    {
-        $this->image_256 = $image_256;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getImage256(): ?string
-    {
-        return $this->image_256;
-    }
-
-    /**
-     * @param string|null $image_512
-     */
-    public function setImage512(?string $image_512): void
-    {
-        $this->image_512 = $image_512;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getImage512(): ?string
-    {
-        return $this->image_512;
-    }
-
-    /**
-     * @param string|null $image_1024
-     */
-    public function setImage1024(?string $image_1024): void
-    {
-        $this->image_1024 = $image_1024;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getImage1024(): ?string
-    {
-        return $this->image_1024;
-    }
-
-    /**
-     * @param string|null $image_1920
-     */
-    public function setImage1920(?string $image_1920): void
-    {
-        $this->image_1920 = $image_1920;
+        return $this->siret;
     }
 
     /**
@@ -3365,11 +3223,58 @@ class Partner extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
+     * @param int|null $pos_order_count
      */
-    public function getPaymentNextActionDate(): ?DateTimeInterface
+    public function setPosOrderCount(?int $pos_order_count): void
     {
-        return $this->payment_next_action_date;
+        $this->pos_order_count = $pos_order_count;
+    }
+
+    /**
+     * @param string|null $barcode
+     */
+    public function setBarcode(?string $barcode): void
+    {
+        $this->barcode = $barcode;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getBarcode(): ?string
+    {
+        return $this->barcode;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removePosOrderIds(OdooRelation $item): void
+    {
+        if (null === $this->pos_order_ids) {
+            $this->pos_order_ids = [];
+        }
+
+        if ($this->hasPosOrderIds($item)) {
+            $index = array_search($item, $this->pos_order_ids);
+            unset($this->pos_order_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addPosOrderIds(OdooRelation $item): void
+    {
+        if ($this->hasPosOrderIds($item)) {
+            return;
+        }
+
+        if (null === $this->pos_order_ids) {
+            $this->pos_order_ids = [];
+        }
+
+        $this->pos_order_ids[] = $item;
     }
 
     /**
@@ -3377,117 +3282,156 @@ class Partner extends Base
      *
      * @return bool
      */
-    public function hasContractIds(OdooRelation $item): bool
+    public function hasPosOrderIds(OdooRelation $item): bool
     {
-        if (null === $this->contract_ids) {
+        if (null === $this->pos_order_ids) {
             return false;
         }
 
-        return in_array($item, $this->contract_ids);
+        return in_array($item, $this->pos_order_ids);
     }
 
     /**
-     * @return string|null
+     * @param OdooRelation[]|null $pos_order_ids
      */
-    public function getInvoiceWarnMsg(): ?string
+    public function setPosOrderIds(?array $pos_order_ids): void
     {
-        return $this->invoice_warn_msg;
+        $this->pos_order_ids = $pos_order_ids;
     }
 
     /**
-     * @param string|null $online_partner_vendor_name
+     * @return OdooRelation[]|null
      */
-    public function setOnlinePartnerVendorName(?string $online_partner_vendor_name): void
+    public function getPosOrderIds(): ?array
     {
-        $this->online_partner_vendor_name = $online_partner_vendor_name;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getOnlinePartnerVendorName(): ?string
-    {
-        return $this->online_partner_vendor_name;
-    }
-
-    /**
-     * @param int|null $customer_rank
-     */
-    public function setCustomerRank(?int $customer_rank): void
-    {
-        $this->customer_rank = $customer_rank;
+        return $this->pos_order_ids;
     }
 
     /**
      * @return int|null
      */
-    public function getCustomerRank(): ?int
+    public function getPosOrderCount(): ?int
     {
-        return $this->customer_rank;
+        return $this->pos_order_count;
     }
 
     /**
-     * @param int|null $supplier_rank
+     * @param string|null $siret
      */
-    public function setSupplierRank(?int $supplier_rank): void
+    public function setSiret(?string $siret): void
     {
-        $this->supplier_rank = $supplier_rank;
+        $this->siret = $siret;
     }
 
     /**
-     * @return int|null
+     * @param string|null $picking_warn_msg
      */
-    public function getSupplierRank(): ?int
+    public function setPickingWarnMsg(?string $picking_warn_msg): void
     {
-        return $this->supplier_rank;
-    }
-
-    /**
-     * @param string|null $invoice_warn_msg
-     */
-    public function setInvoiceWarnMsg(?string $invoice_warn_msg): void
-    {
-        $this->invoice_warn_msg = $invoice_warn_msg;
-    }
-
-    /**
-     * @param string|null $invoice_warn
-     */
-    public function setInvoiceWarn(?string $invoice_warn): void
-    {
-        $this->invoice_warn = $invoice_warn;
-    }
-
-    /**
-     * @param string|null $online_partner_bank_account
-     */
-    public function setOnlinePartnerBankAccount(?string $online_partner_bank_account): void
-    {
-        $this->online_partner_bank_account = $online_partner_bank_account;
+        $this->picking_warn_msg = $picking_warn_msg;
     }
 
     /**
      * @return string|null
      */
-    public function getInvoiceWarn(): ?string
+    public function getPickingWarnMsg(): ?string
     {
-        return $this->invoice_warn;
+        return $this->picking_warn_msg;
     }
 
     /**
-     * @param string|null $trust
+     * @param string|null $picking_warn
      */
-    public function setTrust(?string $trust): void
+    public function setPickingWarn(?string $picking_warn): void
     {
-        $this->trust = $trust;
+        $this->picking_warn = $picking_warn;
     }
 
     /**
      * @return string|null
      */
-    public function getTrust(): ?string
+    public function getPickingWarn(): ?string
     {
-        return $this->trust;
+        return $this->picking_warn;
+    }
+
+    /**
+     * @param OdooRelation|null $property_stock_supplier
+     */
+    public function setPropertyStockSupplier(?OdooRelation $property_stock_supplier): void
+    {
+        $this->property_stock_supplier = $property_stock_supplier;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPropertyStockSupplier(): ?OdooRelation
+    {
+        return $this->property_stock_supplier;
+    }
+
+    /**
+     * @param OdooRelation|null $property_stock_customer
+     */
+    public function setPropertyStockCustomer(?OdooRelation $property_stock_customer): void
+    {
+        $this->property_stock_customer = $property_stock_customer;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPropertyStockCustomer(): ?OdooRelation
+    {
+        return $this->property_stock_customer;
+    }
+
+    /**
+     * @param OdooRelation[]|null $unreconciled_aml_ids
+     */
+    public function setUnreconciledAmlIds(?array $unreconciled_aml_ids): void
+    {
+        $this->unreconciled_aml_ids = $unreconciled_aml_ids;
+    }
+
+    /**
+     * @param DateTimeInterface|null $payment_next_action_date
+     */
+    public function setPaymentNextActionDate(?DateTimeInterface $payment_next_action_date): void
+    {
+        $this->payment_next_action_date = $payment_next_action_date;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addRefCompanyIds(OdooRelation $item): void
+    {
+        if ($this->hasRefCompanyIds($item)) {
+            return;
+        }
+
+        if (null === $this->ref_company_ids) {
+            $this->ref_company_ids = [];
+        }
+
+        $this->ref_company_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeInvoiceIds(OdooRelation $item): void
+    {
+        if (null === $this->invoice_ids) {
+            $this->invoice_ids = [];
+        }
+
+        if ($this->hasInvoiceIds($item)) {
+            $index = array_search($item, $this->invoice_ids);
+            unset($this->invoice_ids[$index]);
+        }
     }
 
     /**
@@ -3538,90 +3482,57 @@ class Partner extends Base
     }
 
     /**
-     * @return string|null
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function getOnlinePartnerBankAccount(): ?string
+    public function hasContractIds(OdooRelation $item): bool
     {
-        return $this->online_partner_bank_account;
+        if (null === $this->contract_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->contract_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $contract_ids
+     */
+    public function setContractIds(?array $contract_ids): void
+    {
+        $this->contract_ids = $contract_ids;
     }
 
     /**
      * @return OdooRelation[]|null
      */
-    public function getPaymentTokenIds(): ?array
+    public function getContractIds(): ?array
     {
-        return $this->payment_token_ids;
-    }
-
-    /**
-     * @param string|null $sale_warn_msg
-     */
-    public function setSaleWarnMsg(?string $sale_warn_msg): void
-    {
-        $this->sale_warn_msg = $sale_warn_msg;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getSaleOrderIds(): ?array
-    {
-        return $this->sale_order_ids;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSaleWarnMsg(): ?string
-    {
-        return $this->sale_warn_msg;
-    }
-
-    /**
-     * @param string|null $sale_warn
-     */
-    public function setSaleWarn(?string $sale_warn): void
-    {
-        $this->sale_warn = $sale_warn;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSaleWarn(): ?string
-    {
-        return $this->sale_warn;
+        return $this->contract_ids;
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function removeSaleOrderIds(OdooRelation $item): void
+    public function addInvoiceIds(OdooRelation $item): void
     {
-        if (null === $this->sale_order_ids) {
-            $this->sale_order_ids = [];
-        }
-
-        if ($this->hasSaleOrderIds($item)) {
-            $index = array_search($item, $this->sale_order_ids);
-            unset($this->sale_order_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addSaleOrderIds(OdooRelation $item): void
-    {
-        if ($this->hasSaleOrderIds($item)) {
+        if ($this->hasInvoiceIds($item)) {
             return;
         }
 
-        if (null === $this->sale_order_ids) {
-            $this->sale_order_ids = [];
+        if (null === $this->invoice_ids) {
+            $this->invoice_ids = [];
         }
 
-        $this->sale_order_ids[] = $item;
+        $this->invoice_ids[] = $item;
+    }
+
+    /**
+     * @param string|null $trust
+     */
+    public function setTrust(?string $trust): void
+    {
+        $this->trust = $trust;
     }
 
     /**
@@ -3629,61 +3540,108 @@ class Partner extends Base
      *
      * @return bool
      */
-    public function hasSaleOrderIds(OdooRelation $item): bool
+    public function hasInvoiceIds(OdooRelation $item): bool
     {
-        if (null === $this->sale_order_ids) {
+        if (null === $this->invoice_ids) {
             return false;
         }
 
-        return in_array($item, $this->sale_order_ids);
+        return in_array($item, $this->invoice_ids);
     }
 
     /**
-     * @param OdooRelation[]|null $sale_order_ids
+     * @param OdooRelation[]|null $invoice_ids
      */
-    public function setSaleOrderIds(?array $sale_order_ids): void
+    public function setInvoiceIds(?array $invoice_ids): void
     {
-        $this->sale_order_ids = $sale_order_ids;
+        $this->invoice_ids = $invoice_ids;
     }
 
     /**
-     * @param int|null $sale_order_count
+     * @return OdooRelation[]|null
      */
-    public function setSaleOrderCount(?int $sale_order_count): void
+    public function getInvoiceIds(): ?array
     {
-        $this->sale_order_count = $sale_order_count;
+        return $this->invoice_ids;
     }
 
     /**
-     * @param OdooRelation[]|null $payment_token_ids
+     * @param DateTimeInterface|null $last_time_entries_checked
      */
-    public function setPaymentTokenIds(?array $payment_token_ids): void
+    public function setLastTimeEntriesChecked(?DateTimeInterface $last_time_entries_checked): void
     {
-        $this->payment_token_ids = $payment_token_ids;
+        $this->last_time_entries_checked = $last_time_entries_checked;
     }
 
     /**
-     * @return int|null
+     * @return DateTimeInterface|null
      */
-    public function getSaleOrderCount(): ?int
+    public function getLastTimeEntriesChecked(): ?DateTimeInterface
     {
-        return $this->sale_order_count;
+        return $this->last_time_entries_checked;
     }
 
     /**
-     * @param string|null $siret
+     * @param bool|null $has_unreconciled_entries
      */
-    public function setSiret(?string $siret): void
+    public function setHasUnreconciledEntries(?bool $has_unreconciled_entries): void
     {
-        $this->siret = $siret;
+        $this->has_unreconciled_entries = $has_unreconciled_entries;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isHasUnreconciledEntries(): ?bool
+    {
+        return $this->has_unreconciled_entries;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeRefCompanyIds(OdooRelation $item): void
+    {
+        if (null === $this->ref_company_ids) {
+            $this->ref_company_ids = [];
+        }
+
+        if ($this->hasRefCompanyIds($item)) {
+            $index = array_search($item, $this->ref_company_ids);
+            unset($this->ref_company_ids[$index]);
+        }
     }
 
     /**
      * @return string|null
      */
-    public function getSiret(): ?string
+    public function getTrust(): ?string
     {
-        return $this->siret;
+        return $this->trust;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getInvoiceWarn(): ?string
+    {
+        return $this->invoice_warn;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getPaymentNextActionDate(): ?DateTimeInterface
+    {
+        return $this->payment_next_action_date;
+    }
+
+    /**
+     * @param string|null $online_partner_bank_account
+     */
+    public function setOnlinePartnerBankAccount(?string $online_partner_bank_account): void
+    {
+        $this->online_partner_bank_account = $online_partner_bank_account;
     }
 
     /**
@@ -3748,19 +3706,123 @@ class Partner extends Base
     }
 
     /**
-     * @return bool|null
+     * @param OdooRelation[]|null $payment_token_ids
      */
-    public function isIsBlacklisted(): ?bool
+    public function setPaymentTokenIds(?array $payment_token_ids): void
     {
-        return $this->is_blacklisted;
+        $this->payment_token_ids = $payment_token_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getPaymentTokenIds(): ?array
+    {
+        return $this->payment_token_ids;
     }
 
     /**
      * @return string|null
      */
-    public function getEmailNormalized(): ?string
+    public function getOnlinePartnerBankAccount(): ?string
     {
-        return $this->email_normalized;
+        return $this->online_partner_bank_account;
+    }
+
+    /**
+     * @param string|null $invoice_warn
+     */
+    public function setInvoiceWarn(?string $invoice_warn): void
+    {
+        $this->invoice_warn = $invoice_warn;
+    }
+
+    /**
+     * @param string|null $online_partner_vendor_name
+     */
+    public function setOnlinePartnerVendorName(?string $online_partner_vendor_name): void
+    {
+        $this->online_partner_vendor_name = $online_partner_vendor_name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getOnlinePartnerVendorName(): ?string
+    {
+        return $this->online_partner_vendor_name;
+    }
+
+    /**
+     * @param int|null $customer_rank
+     */
+    public function setCustomerRank(?int $customer_rank): void
+    {
+        $this->customer_rank = $customer_rank;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCustomerRank(): ?int
+    {
+        return $this->customer_rank;
+    }
+
+    /**
+     * @param int|null $supplier_rank
+     */
+    public function setSupplierRank(?int $supplier_rank): void
+    {
+        $this->supplier_rank = $supplier_rank;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSupplierRank(): ?int
+    {
+        return $this->supplier_rank;
+    }
+
+    /**
+     * @param string|null $invoice_warn_msg
+     */
+    public function setInvoiceWarnMsg(?string $invoice_warn_msg): void
+    {
+        $this->invoice_warn_msg = $invoice_warn_msg;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getInvoiceWarnMsg(): ?string
+    {
+        return $this->invoice_warn_msg;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isMessageUnread(): ?bool
+    {
+        return $this->message_unread;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMessageIds(OdooRelation $item): void
+    {
+        if ($this->hasMessageIds($item)) {
+            return;
+        }
+
+        if (null === $this->message_ids) {
+            $this->message_ids = [];
+        }
+
+        $this->message_ids[] = $item;
     }
 
     /**
@@ -3772,19 +3834,11 @@ class Partner extends Base
     }
 
     /**
-     * @param string|null $function
-     */
-    public function setFunction(?string $function): void
-    {
-        $this->function = $function;
-    }
-
-    /**
      * @return string|null
      */
-    public function getZip(): ?string
+    public function getFunction(): ?string
     {
-        return $this->zip;
+        return $this->function;
     }
 
     /**
@@ -3836,19 +3890,11 @@ class Partner extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $function
      */
-    public function getFunction(): ?string
+    public function setFunction(?string $function): void
     {
-        return $this->function;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getCity(): ?string
-    {
-        return $this->city;
+        $this->function = $function;
     }
 
     /**
@@ -3857,6 +3903,14 @@ class Partner extends Base
     public function setEmployee(?bool $employee): void
     {
         $this->employee = $employee;
+    }
+
+    /**
+     * @param string|null $zip
+     */
+    public function setZip(?string $zip): void
+    {
+        $this->zip = $zip;
     }
 
     /**
@@ -3915,49 +3969,51 @@ class Partner extends Base
     }
 
     /**
-     * @param string|null $zip
-     */
-    public function setZip(?string $zip): void
-    {
-        $this->zip = $zip;
-    }
-
-    /**
-     * @param string|null $city
-     */
-    public function setCity(?string $city): void
-    {
-        $this->city = $city;
-    }
-
-    /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasCategoryId(OdooRelation $item): bool
+    public function addCategoryId(OdooRelation $item): void
     {
-        if (null === $this->category_id) {
-            return false;
+        if ($this->hasCategoryId($item)) {
+            return;
         }
 
-        return in_array($item, $this->category_id);
+        if (null === $this->category_id) {
+            $this->category_id = [];
+        }
+
+        $this->category_id[] = $item;
     }
 
     /**
      * @return string|null
      */
-    public function getEmailFormatted(): ?string
+    public function getZip(): ?string
     {
-        return $this->email_formatted;
+        return $this->zip;
     }
 
     /**
-     * @param bool|null $is_company
+     * @return string|null
      */
-    public function setIsCompany(?bool $is_company): void
+    public function getCity(): ?string
     {
-        $this->is_company = $is_company;
+        return $this->city;
+    }
+
+    /**
+     * @param OdooRelation[]|null $category_id
+     */
+    public function setCategoryId(?array $category_id): void
+    {
+        $this->category_id = $category_id;
+    }
+
+    /**
+     * @param string|null $email
+     */
+    public function setEmail(?string $email): void
+    {
+        $this->email = $email;
     }
 
     /**
@@ -4009,19 +4065,11 @@ class Partner extends Base
     }
 
     /**
-     * @param string|null $email
+     * @return string|null
      */
-    public function setEmail(?string $email): void
+    public function getEmailFormatted(): ?string
     {
-        $this->email = $email;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getStateId(): ?OdooRelation
-    {
-        return $this->state_id;
+        return $this->email_formatted;
     }
 
     /**
@@ -4030,6 +4078,14 @@ class Partner extends Base
     public function getEmail(): ?string
     {
         return $this->email;
+    }
+
+    /**
+     * @param string|null $city
+     */
+    public function setCity(?string $city): void
+    {
+        $this->city = $city;
     }
 
     /**
@@ -4089,43 +4145,57 @@ class Partner extends Base
     }
 
     /**
+     * @return OdooRelation|null
+     */
+    public function getStateId(): ?OdooRelation
+    {
+        return $this->state_id;
+    }
+
+    /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function addCategoryId(OdooRelation $item): void
+    public function hasCategoryId(OdooRelation $item): bool
     {
-        if ($this->hasCategoryId($item)) {
-            return;
-        }
-
         if (null === $this->category_id) {
-            $this->category_id = [];
+            return false;
         }
 
-        $this->category_id[] = $item;
+        return in_array($item, $this->category_id);
     }
 
     /**
-     * @param OdooRelation[]|null $category_id
+     * @return OdooRelation[]|null
      */
-    public function setCategoryId(?array $category_id): void
+    public function getCategoryId(): ?array
     {
-        $this->category_id = $category_id;
+        return $this->category_id;
     }
 
     /**
-     * @param OdooRelation|null $industry_id
+     * @return OdooRelation|null
      */
-    public function setIndustryId(?OdooRelation $industry_id): void
+    public function getIndustryId(): ?OdooRelation
     {
-        $this->industry_id = $industry_id;
+        return $this->industry_id;
     }
 
     /**
-     * @param string|null $parent_name
+     * @return OdooRelation[]|null
      */
-    public function setParentName(?string $parent_name): void
+    public function getChildIds(): ?array
     {
-        $this->parent_name = $parent_name;
+        return $this->child_ids;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLang(): ?string
+    {
+        return $this->lang;
     }
 
     /**
@@ -4198,11 +4268,19 @@ class Partner extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @param string|null $parent_name
      */
-    public function getChildIds(): ?array
+    public function setParentName(?string $parent_name): void
     {
-        return $this->child_ids;
+        $this->parent_name = $parent_name;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getActiveLangCount(): ?int
+    {
+        return $this->active_lang_count;
     }
 
     /**
@@ -4211,14 +4289,6 @@ class Partner extends Base
     public function getParentName(): ?string
     {
         return $this->parent_name;
-    }
-
-    /**
-     * @param string|null $lang
-     */
-    public function setLang(?string $lang): void
-    {
-        $this->lang = $lang;
     }
 
     /**
@@ -4278,35 +4348,19 @@ class Partner extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $lang
      */
-    public function getLang(): ?string
+    public function setLang(?string $lang): void
     {
-        return $this->lang;
+        $this->lang = $lang;
     }
 
     /**
-     * @return int|null
+     * @param int|null $active_lang_count
      */
-    public function getActiveLangCount(): ?int
+    public function setActiveLangCount(?int $active_lang_count): void
     {
-        return $this->active_lang_count;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getCategoryId(): ?array
-    {
-        return $this->category_id;
-    }
-
-    /**
-     * @param OdooRelation[]|null $bank_ids
-     */
-    public function setBankIds(?array $bank_ids): void
-    {
-        $this->bank_ids = $bank_ids;
+        $this->active_lang_count = $active_lang_count;
     }
 
     /**
@@ -4315,6 +4369,14 @@ class Partner extends Base
     public function setComment(?string $comment): void
     {
         $this->comment = $comment;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getBankIds(): ?array
+    {
+        return $this->bank_ids;
     }
 
     /**
@@ -4387,19 +4449,11 @@ class Partner extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @param OdooRelation[]|null $bank_ids
      */
-    public function getBankIds(): ?array
+    public function setBankIds(?array $bank_ids): void
     {
-        return $this->bank_ids;
-    }
-
-    /**
-     * @param int|null $active_lang_count
-     */
-    public function setActiveLangCount(?int $active_lang_count): void
-    {
-        $this->active_lang_count = $active_lang_count;
+        $this->bank_ids = $bank_ids;
     }
 
     /**
@@ -4408,6 +4462,14 @@ class Partner extends Base
     public function setSameVatPartnerId(?OdooRelation $same_vat_partner_id): void
     {
         $this->same_vat_partner_id = $same_vat_partner_id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTz(): ?string
+    {
+        return $this->tz;
     }
 
     /**
@@ -4435,6 +4497,22 @@ class Partner extends Base
     }
 
     /**
+     * @param OdooRelation|null $user_id
+     */
+    public function setUserId(?OdooRelation $user_id): void
+    {
+        $this->user_id = $user_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getUserId(): ?OdooRelation
+    {
+        return $this->user_id;
+    }
+
+    /**
      * @param string|null $tz_offset
      */
     public function setTzOffset(?string $tz_offset): void
@@ -4459,330 +4537,19 @@ class Partner extends Base
     }
 
     /**
-     * @return string|null
+     * @param bool|null $is_company
      */
-    public function getTz(): ?string
+    public function setIsCompany(?bool $is_company): void
     {
-        return $this->tz;
+        $this->is_company = $is_company;
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $industry_id
      */
-    public function getIndustryId(): ?OdooRelation
+    public function setIndustryId(?OdooRelation $industry_id): void
     {
-        return $this->industry_id;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getCompanyType(): ?string
-    {
-        return $this->company_type;
-    }
-
-    /**
-     * @param OdooRelation|null $message_main_attachment_id
-     */
-    public function setMessageMainAttachmentId(?OdooRelation $message_main_attachment_id): void
-    {
-        $this->message_main_attachment_id = $message_main_attachment_id;
-    }
-
-    /**
-     * @param OdooRelation[]|null $message_partner_ids
-     */
-    public function setMessagePartnerIds(?array $message_partner_ids): void
-    {
-        $this->message_partner_ids = $message_partner_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addMessageChannelIds(OdooRelation $item): void
-    {
-        if ($this->hasMessageChannelIds($item)) {
-            return;
-        }
-
-        if (null === $this->message_channel_ids) {
-            $this->message_channel_ids = [];
-        }
-
-        $this->message_channel_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasMessageChannelIds(OdooRelation $item): bool
-    {
-        if (null === $this->message_channel_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_channel_ids);
-    }
-
-    /**
-     * @param OdooRelation[]|null $message_channel_ids
-     */
-    public function setMessageChannelIds(?array $message_channel_ids): void
-    {
-        $this->message_channel_ids = $message_channel_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getMessageChannelIds(): ?array
-    {
-        return $this->message_channel_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMessagePartnerIds(OdooRelation $item): void
-    {
-        if (null === $this->message_partner_ids) {
-            $this->message_partner_ids = [];
-        }
-
-        if ($this->hasMessagePartnerIds($item)) {
-            $index = array_search($item, $this->message_partner_ids);
-            unset($this->message_partner_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addMessagePartnerIds(OdooRelation $item): void
-    {
-        if ($this->hasMessagePartnerIds($item)) {
-            return;
-        }
-
-        if (null === $this->message_partner_ids) {
-            $this->message_partner_ids = [];
-        }
-
-        $this->message_partner_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasMessagePartnerIds(OdooRelation $item): bool
-    {
-        if (null === $this->message_partner_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_partner_ids);
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getMessagePartnerIds(): ?array
-    {
-        return $this->message_partner_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getMessageIds(): ?array
-    {
-        return $this->message_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMessageFollowerIds(OdooRelation $item): void
-    {
-        if (null === $this->message_follower_ids) {
-            $this->message_follower_ids = [];
-        }
-
-        if ($this->hasMessageFollowerIds($item)) {
-            $index = array_search($item, $this->message_follower_ids);
-            unset($this->message_follower_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addMessageFollowerIds(OdooRelation $item): void
-    {
-        if ($this->hasMessageFollowerIds($item)) {
-            return;
-        }
-
-        if (null === $this->message_follower_ids) {
-            $this->message_follower_ids = [];
-        }
-
-        $this->message_follower_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasMessageFollowerIds(OdooRelation $item): bool
-    {
-        if (null === $this->message_follower_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_follower_ids);
-    }
-
-    /**
-     * @param OdooRelation[]|null $message_follower_ids
-     */
-    public function setMessageFollowerIds(?array $message_follower_ids): void
-    {
-        $this->message_follower_ids = $message_follower_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getMessageFollowerIds(): ?array
-    {
-        return $this->message_follower_ids;
-    }
-
-    /**
-     * @param bool|null $message_is_follower
-     */
-    public function setMessageIsFollower(?bool $message_is_follower): void
-    {
-        $this->message_is_follower = $message_is_follower;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isMessageIsFollower(): ?bool
-    {
-        return $this->message_is_follower;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMessageChannelIds(OdooRelation $item): void
-    {
-        if (null === $this->message_channel_ids) {
-            $this->message_channel_ids = [];
-        }
-
-        if ($this->hasMessageChannelIds($item)) {
-            $index = array_search($item, $this->message_channel_ids);
-            unset($this->message_channel_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation[]|null $message_ids
-     */
-    public function setMessageIds(?array $message_ids): void
-    {
-        $this->message_ids = $message_ids;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getActivityExceptionIcon(): ?string
-    {
-        return $this->activity_exception_icon;
-    }
-
-    /**
-     * @param int|null $message_needaction_counter
-     */
-    public function setMessageNeedactionCounter(?int $message_needaction_counter): void
-    {
-        $this->message_needaction_counter = $message_needaction_counter;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getMessageMainAttachmentId(): ?OdooRelation
-    {
-        return $this->message_main_attachment_id;
-    }
-
-    /**
-     * @param int|null $message_attachment_count
-     */
-    public function setMessageAttachmentCount(?int $message_attachment_count): void
-    {
-        $this->message_attachment_count = $message_attachment_count;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getMessageAttachmentCount(): ?int
-    {
-        return $this->message_attachment_count;
-    }
-
-    /**
-     * @param int|null $message_has_error_counter
-     */
-    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
-    {
-        $this->message_has_error_counter = $message_has_error_counter;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getMessageHasErrorCounter(): ?int
-    {
-        return $this->message_has_error_counter;
-    }
-
-    /**
-     * @param bool|null $message_has_error
-     */
-    public function setMessageHasError(?bool $message_has_error): void
-    {
-        $this->message_has_error = $message_has_error;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isMessageHasError(): ?bool
-    {
-        return $this->message_has_error;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getMessageNeedactionCounter(): ?int
-    {
-        return $this->message_needaction_counter;
+        $this->industry_id = $industry_id;
     }
 
     /**
@@ -4800,90 +4567,11 @@ class Partner extends Base
     }
 
     /**
-     * @param bool|null $message_needaction
+     * @return OdooRelation|null
      */
-    public function setMessageNeedaction(?bool $message_needaction): void
+    public function getActivityTypeId(): ?OdooRelation
     {
-        $this->message_needaction = $message_needaction;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isMessageNeedaction(): ?bool
-    {
-        return $this->message_needaction;
-    }
-
-    /**
-     * @param int|null $message_unread_counter
-     */
-    public function setMessageUnreadCounter(?int $message_unread_counter): void
-    {
-        $this->message_unread_counter = $message_unread_counter;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getMessageUnreadCounter(): ?int
-    {
-        return $this->message_unread_counter;
-    }
-
-    /**
-     * @param bool|null $message_unread
-     */
-    public function setMessageUnread(?bool $message_unread): void
-    {
-        $this->message_unread = $message_unread;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isMessageUnread(): ?bool
-    {
-        return $this->message_unread;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMessageIds(OdooRelation $item): void
-    {
-        if (null === $this->message_ids) {
-            $this->message_ids = [];
-        }
-
-        if ($this->hasMessageIds($item)) {
-            $index = array_search($item, $this->message_ids);
-            unset($this->message_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addMessageIds(OdooRelation $item): void
-    {
-        if ($this->hasMessageIds($item)) {
-            return;
-        }
-
-        if (null === $this->message_ids) {
-            $this->message_ids = [];
-        }
-
-        $this->message_ids[] = $item;
-    }
-
-    /**
-     * @param string|null $activity_exception_icon
-     */
-    public function setActivityExceptionIcon(?string $activity_exception_icon): void
-    {
-        $this->activity_exception_icon = $activity_exception_icon;
+        return $this->activity_type_id;
     }
 
     /**
@@ -4895,208 +4583,11 @@ class Partner extends Base
     }
 
     /**
-     * @param string|null $company_type
-     */
-    public function setCompanyType(?string $company_type): void
-    {
-        $this->company_type = $company_type;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isPartnerShare(): ?bool
-    {
-        return $this->partner_share;
-    }
-
-    /**
-     * @param string|null $commercial_company_name
-     */
-    public function setCommercialCompanyName(?string $commercial_company_name): void
-    {
-        $this->commercial_company_name = $commercial_company_name;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getCommercialCompanyName(): ?string
-    {
-        return $this->commercial_company_name;
-    }
-
-    /**
-     * @param OdooRelation|null $commercial_partner_id
-     */
-    public function setCommercialPartnerId(?OdooRelation $commercial_partner_id): void
-    {
-        $this->commercial_partner_id = $commercial_partner_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getCommercialPartnerId(): ?OdooRelation
-    {
-        return $this->commercial_partner_id;
-    }
-
-    /**
-     * @param string|null $contact_address
-     */
-    public function setContactAddress(?string $contact_address): void
-    {
-        $this->contact_address = $contact_address;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getContactAddress(): ?string
-    {
-        return $this->contact_address;
-    }
-
-    /**
-     * @param bool|null $partner_share
-     */
-    public function setPartnerShare(?bool $partner_share): void
-    {
-        $this->partner_share = $partner_share;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeUserIds(OdooRelation $item): void
-    {
-        if (null === $this->user_ids) {
-            $this->user_ids = [];
-        }
-
-        if ($this->hasUserIds($item)) {
-            $index = array_search($item, $this->user_ids);
-            unset($this->user_ids[$index]);
-        }
-    }
-
-    /**
-     * @param string|null $company_name
-     */
-    public function setCompanyName(?string $company_name): void
-    {
-        $this->company_name = $company_name;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addUserIds(OdooRelation $item): void
-    {
-        if ($this->hasUserIds($item)) {
-            return;
-        }
-
-        if (null === $this->user_ids) {
-            $this->user_ids = [];
-        }
-
-        $this->user_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasUserIds(OdooRelation $item): bool
-    {
-        if (null === $this->user_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->user_ids);
-    }
-
-    /**
-     * @param OdooRelation[]|null $user_ids
-     */
-    public function setUserIds(?array $user_ids): void
-    {
-        $this->user_ids = $user_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getUserIds(): ?array
-    {
-        return $this->user_ids;
-    }
-
-    /**
-     * @param int|null $color
-     */
-    public function setColor(?int $color): void
-    {
-        $this->color = $color;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getColor(): ?int
-    {
-        return $this->color;
-    }
-
-    /**
-     * @param OdooRelation|null $company_id
-     */
-    public function setCompanyId(?OdooRelation $company_id): void
-    {
-        $this->company_id = $company_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getCompanyId(): ?OdooRelation
-    {
-        return $this->company_id;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getCompanyName(): ?string
-    {
-        return $this->company_name;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getSelf(): ?OdooRelation
-    {
-        return $this->self;
-    }
-
-    /**
      * @return string|null
      */
     public function getActivityExceptionDecoration(): ?string
     {
         return $this->activity_exception_decoration;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getActivityUserId(): ?OdooRelation
-    {
-        return $this->activity_user_id;
     }
 
     /**
@@ -5140,14 +4631,6 @@ class Partner extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     */
-    public function getActivityTypeId(): ?OdooRelation
-    {
-        return $this->activity_type_id;
-    }
-
-    /**
      * @param OdooRelation|null $activity_user_id
      */
     public function setActivityUserId(?OdooRelation $activity_user_id): void
@@ -5156,19 +4639,27 @@ class Partner extends Base
     }
 
     /**
+     * @param string|null $activity_exception_icon
+     */
+    public function setActivityExceptionIcon(?string $activity_exception_icon): void
+    {
+        $this->activity_exception_icon = $activity_exception_icon;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getActivityUserId(): ?OdooRelation
+    {
+        return $this->activity_user_id;
+    }
+
+    /**
      * @param string|null $activity_state
      */
     public function setActivityState(?string $activity_state): void
     {
         $this->activity_state = $activity_state;
-    }
-
-    /**
-     * @param OdooRelation|null $self
-     */
-    public function setSelf(?OdooRelation $self): void
-    {
-        $this->self = $self;
     }
 
     /**
@@ -5241,11 +4732,19 @@ class Partner extends Base
     }
 
     /**
-     * @param string|null $im_status
+     * @return string|null
      */
-    public function setImStatus(?string $im_status): void
+    public function getActivityExceptionIcon(): ?string
     {
-        $this->im_status = $im_status;
+        return $this->activity_exception_icon;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isMessageIsFollower(): ?bool
+    {
+        return $this->message_is_follower;
     }
 
     /**
@@ -5254,6 +4753,570 @@ class Partner extends Base
     public function getImStatus(): ?string
     {
         return $this->im_status;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMessagePartnerIds(OdooRelation $item): void
+    {
+        if (null === $this->message_partner_ids) {
+            $this->message_partner_ids = [];
+        }
+
+        if ($this->hasMessagePartnerIds($item)) {
+            $index = array_search($item, $this->message_partner_ids);
+            unset($this->message_partner_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_ids
+     */
+    public function setMessageIds(?array $message_ids): void
+    {
+        $this->message_ids = $message_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getMessageIds(): ?array
+    {
+        return $this->message_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMessageChannelIds(OdooRelation $item): void
+    {
+        if (null === $this->message_channel_ids) {
+            $this->message_channel_ids = [];
+        }
+
+        if ($this->hasMessageChannelIds($item)) {
+            $index = array_search($item, $this->message_channel_ids);
+            unset($this->message_channel_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMessageChannelIds(OdooRelation $item): void
+    {
+        if ($this->hasMessageChannelIds($item)) {
+            return;
+        }
+
+        if (null === $this->message_channel_ids) {
+            $this->message_channel_ids = [];
+        }
+
+        $this->message_channel_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMessageChannelIds(OdooRelation $item): bool
+    {
+        if (null === $this->message_channel_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_channel_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_channel_ids
+     */
+    public function setMessageChannelIds(?array $message_channel_ids): void
+    {
+        $this->message_channel_ids = $message_channel_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getMessageChannelIds(): ?array
+    {
+        return $this->message_channel_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMessagePartnerIds(OdooRelation $item): void
+    {
+        if ($this->hasMessagePartnerIds($item)) {
+            return;
+        }
+
+        if (null === $this->message_partner_ids) {
+            $this->message_partner_ids = [];
+        }
+
+        $this->message_partner_ids[] = $item;
+    }
+
+    /**
+     * @param bool|null $message_is_follower
+     */
+    public function setMessageIsFollower(?bool $message_is_follower): void
+    {
+        $this->message_is_follower = $message_is_follower;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMessagePartnerIds(OdooRelation $item): bool
+    {
+        if (null === $this->message_partner_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_partner_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_partner_ids
+     */
+    public function setMessagePartnerIds(?array $message_partner_ids): void
+    {
+        $this->message_partner_ids = $message_partner_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getMessagePartnerIds(): ?array
+    {
+        return $this->message_partner_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMessageFollowerIds(OdooRelation $item): void
+    {
+        if (null === $this->message_follower_ids) {
+            $this->message_follower_ids = [];
+        }
+
+        if ($this->hasMessageFollowerIds($item)) {
+            $index = array_search($item, $this->message_follower_ids);
+            unset($this->message_follower_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMessageFollowerIds(OdooRelation $item): void
+    {
+        if ($this->hasMessageFollowerIds($item)) {
+            return;
+        }
+
+        if (null === $this->message_follower_ids) {
+            $this->message_follower_ids = [];
+        }
+
+        $this->message_follower_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMessageFollowerIds(OdooRelation $item): bool
+    {
+        if (null === $this->message_follower_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_follower_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_follower_ids
+     */
+    public function setMessageFollowerIds(?array $message_follower_ids): void
+    {
+        $this->message_follower_ids = $message_follower_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getMessageFollowerIds(): ?array
+    {
+        return $this->message_follower_ids;
+    }
+
+    /**
+     * @param string|null $im_status
+     */
+    public function setImStatus(?string $im_status): void
+    {
+        $this->im_status = $im_status;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCompanyType(): ?string
+    {
+        return $this->company_type;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeUserIds(OdooRelation $item): void
+    {
+        if (null === $this->user_ids) {
+            $this->user_ids = [];
+        }
+
+        if ($this->hasUserIds($item)) {
+            $index = array_search($item, $this->user_ids);
+            unset($this->user_ids[$index]);
+        }
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCommercialCompanyName(): ?string
+    {
+        return $this->commercial_company_name;
+    }
+
+    /**
+     * @param OdooRelation|null $commercial_partner_id
+     */
+    public function setCommercialPartnerId(?OdooRelation $commercial_partner_id): void
+    {
+        $this->commercial_partner_id = $commercial_partner_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCommercialPartnerId(): ?OdooRelation
+    {
+        return $this->commercial_partner_id;
+    }
+
+    /**
+     * @param string|null $contact_address
+     */
+    public function setContactAddress(?string $contact_address): void
+    {
+        $this->contact_address = $contact_address;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getContactAddress(): ?string
+    {
+        return $this->contact_address;
+    }
+
+    /**
+     * @param bool|null $partner_share
+     */
+    public function setPartnerShare(?bool $partner_share): void
+    {
+        $this->partner_share = $partner_share;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isPartnerShare(): ?bool
+    {
+        return $this->partner_share;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addUserIds(OdooRelation $item): void
+    {
+        if ($this->hasUserIds($item)) {
+            return;
+        }
+
+        if (null === $this->user_ids) {
+            $this->user_ids = [];
+        }
+
+        $this->user_ids[] = $item;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCompanyName(): ?string
+    {
+        return $this->company_name;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasUserIds(OdooRelation $item): bool
+    {
+        if (null === $this->user_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->user_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $user_ids
+     */
+    public function setUserIds(?array $user_ids): void
+    {
+        $this->user_ids = $user_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getUserIds(): ?array
+    {
+        return $this->user_ids;
+    }
+
+    /**
+     * @param int|null $color
+     */
+    public function setColor(?int $color): void
+    {
+        $this->color = $color;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getColor(): ?int
+    {
+        return $this->color;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param string|null $company_type
+     */
+    public function setCompanyType(?string $company_type): void
+    {
+        $this->company_type = $company_type;
+    }
+
+    /**
+     * @param string|null $commercial_company_name
+     */
+    public function setCommercialCompanyName(?string $commercial_company_name): void
+    {
+        $this->commercial_company_name = $commercial_company_name;
+    }
+
+    /**
+     * @param string|null $company_name
+     */
+    public function setCompanyName(?string $company_name): void
+    {
+        $this->company_name = $company_name;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImage128(): ?string
+    {
+        return $this->image_128;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param string|null $image_128
+     */
+    public function setImage128(?string $image_128): void
+    {
+        $this->image_128 = $image_128;
+    }
+
+    /**
+     * @param string|null $image_256
+     */
+    public function setImage256(?string $image_256): void
+    {
+        $this->image_256 = $image_256;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getSelf(): ?OdooRelation
+    {
+        return $this->self;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImage256(): ?string
+    {
+        return $this->image_256;
+    }
+
+    /**
+     * @param string|null $image_512
+     */
+    public function setImage512(?string $image_512): void
+    {
+        $this->image_512 = $image_512;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImage512(): ?string
+    {
+        return $this->image_512;
+    }
+
+    /**
+     * @param string|null $image_1024
+     */
+    public function setImage1024(?string $image_1024): void
+    {
+        $this->image_1024 = $image_1024;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImage1024(): ?string
+    {
+        return $this->image_1024;
+    }
+
+    /**
+     * @param string|null $image_1920
+     */
+    public function setImage1920(?string $image_1920): void
+    {
+        $this->image_1920 = $image_1920;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImage1920(): ?string
+    {
+        return $this->image_1920;
+    }
+
+    /**
+     * @param OdooRelation|null $self
+     */
+    public function setSelf(?OdooRelation $self): void
+    {
+        $this->self = $self;
     }
 
     /**

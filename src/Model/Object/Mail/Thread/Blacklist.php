@@ -9,7 +9,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.thread.blacklist
+ * ---
  * Name : mail.thread.blacklist
+ * ---
  * Info :
  * Mixin that is inherited by all model with opt out. This mixin inherits from
  *         mail.address.mixin which defines the _primary_email variable and the email_normalized

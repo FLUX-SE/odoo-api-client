@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.ui.view
+ * ---
  * Name : ir.ui.view
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
@@ -65,6 +67,33 @@ final class View extends Base
     private $priority;
 
     /**
+     * View Type
+     * ---
+     * Selection : (default value, usually null)
+     *     -> tree (Tree)
+     *     -> form (Form)
+     *     -> graph (Graph)
+     *     -> pivot (Pivot)
+     *     -> calendar (Calendar)
+     *     -> diagram (Diagram)
+     *     -> gantt (Gantt)
+     *     -> kanban (Kanban)
+     *     -> search (Search)
+     *     -> qweb (QWeb)
+     *     -> cohort (Cohort)
+     *     -> dashboard (Dashboard)
+     *     -> grid (Grid)
+     *     -> activity (Activity)
+     *     -> map (Map)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $type;
+
+    /**
      * View Architecture
      * ---
      * This field should be used when accessing view arch. It will use translation.
@@ -106,7 +135,7 @@ final class View extends Base
      * Arch Filename
      * ---
      * File from where the view originates.
-     *
+     *                                                                                                               
      * Useful to (hard) reset broken views or to read arch from file in dev-xml mode.
      * ---
      * Searchable : yes
@@ -130,7 +159,7 @@ final class View extends Base
      * Previous View Architecture
      * ---
      * This field will save the current `arch_db` before writing on it.
-     *
+     *                                                                                                               
      * Useful to (soft) reset a broken view.
      * ---
      * Searchable : yes
@@ -261,7 +290,7 @@ final class View extends Base
      * If this view is inherited,
      * * if True, the view always extends its parent
      * * if False, the view currently does not extend its parent but can be enabled
-     *
+     *                   
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -269,33 +298,6 @@ final class View extends Base
      * @var bool|null
      */
     private $active;
-
-    /**
-     * View Type
-     * ---
-     * Selection : (default value, usually null)
-     *     -> tree (Tree)
-     *     -> form (Form)
-     *     -> graph (Graph)
-     *     -> pivot (Pivot)
-     *     -> calendar (Calendar)
-     *     -> diagram (Diagram)
-     *     -> gantt (Gantt)
-     *     -> kanban (Kanban)
-     *     -> search (Search)
-     *     -> qweb (QWeb)
-     *     -> cohort (Cohort)
-     *     -> dashboard (Dashboard)
-     *     -> grid (Grid)
-     *     -> activity (Activity)
-     *     -> map (Map)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $type;
 
     /**
      * Created by
@@ -355,7 +357,7 @@ final class View extends Base
      * @param string $mode View inheritance mode
      *        ---
      *        Only applies if this view inherits from an other one (inherit_id is not False/Null).
-     *
+     *       
      *        * if extension (default), if this view is requested the closest primary view
      *        is looked up (via inherit_id), then all views inheriting from it with this
      *        view's model are applied
@@ -363,7 +365,7 @@ final class View extends Base
      *        different model than this one), then this view's inheritance specs
      *        (<xpath/>) are applied, and the result is used as if it were this view's
      *        actual arch.
-     *
+     *       
      *        ---
      *        Selection : (default value, usually null)
      *            -> primary (Base view)
@@ -380,11 +382,35 @@ final class View extends Base
     }
 
     /**
-     * @return string
+     * @param OdooRelation $item
      */
-    public function getMode(): string
+    public function addModelIds(OdooRelation $item): void
     {
-        return $this->mode;
+        if ($this->hasModelIds($item)) {
+            return;
+        }
+
+        if (null === $this->model_ids) {
+            $this->model_ids = [];
+        }
+
+        $this->model_ids[] = $item;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getModelDataId(): ?OdooRelation
+    {
+        return $this->model_data_id;
+    }
+
+    /**
+     * @param OdooRelation|null $model_data_id
+     */
+    public function setModelDataId(?OdooRelation $model_data_id): void
+    {
+        $this->model_data_id = $model_data_id;
     }
 
     /**
@@ -497,22 +523,6 @@ final class View extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addModelIds(OdooRelation $item): void
-    {
-        if ($this->hasModelIds($item)) {
-            return;
-        }
-
-        if (null === $this->model_ids) {
-            $this->model_ids = [];
-        }
-
-        $this->model_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
     public function removeModelIds(OdooRelation $item): void
     {
         if (null === $this->model_ids) {
@@ -526,19 +536,27 @@ final class View extends Base
     }
 
     /**
+     * @return string|null
+     */
+    public function getFieldParent(): ?string
+    {
+        return $this->field_parent;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMode(): string
+    {
+        return $this->mode;
+    }
+
+    /**
      * @param string $mode
      */
     public function setMode(string $mode): void
     {
         $this->mode = $mode;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getModelDataId(): ?OdooRelation
-    {
-        return $this->model_data_id;
     }
 
     /**
@@ -555,22 +573,6 @@ final class View extends Base
     public function setActive(?bool $active): void
     {
         $this->active = $active;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param string|null $type
-     */
-    public function setType(?string $type): void
-    {
-        $this->type = $type;
     }
 
     /**
@@ -638,19 +640,26 @@ final class View extends Base
     }
 
     /**
-     * @param OdooRelation|null $model_data_id
-     */
-    public function setModelDataId(?OdooRelation $model_data_id): void
-    {
-        $this->model_data_id = $model_data_id;
-    }
-
-    /**
      * @param string|null $field_parent
      */
     public function setFieldParent(?string $field_parent): void
     {
         $this->field_parent = $field_parent;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeInheritChildrenIds(OdooRelation $item): void
+    {
+        if (null === $this->inherit_children_ids) {
+            $this->inherit_children_ids = [];
+        }
+
+        if ($this->hasInheritChildrenIds($item)) {
+            $index = array_search($item, $this->inherit_children_ids);
+            unset($this->inherit_children_ids[$index]);
+        }
     }
 
     /**
@@ -662,11 +671,11 @@ final class View extends Base
     }
 
     /**
-     * @param string|null $arch_db
+     * @param string|null $arch_base
      */
-    public function setArchDb(?string $arch_db): void
+    public function setArchBase(?string $arch_base): void
     {
-        $this->arch_db = $arch_db;
+        $this->arch_base = $arch_base;
     }
 
     /**
@@ -728,6 +737,22 @@ final class View extends Base
     /**
      * @return string|null
      */
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string|null $type
+     */
+    public function setType(?string $type): void
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return string|null
+     */
     public function getArch(): ?string
     {
         return $this->arch;
@@ -750,14 +775,6 @@ final class View extends Base
     }
 
     /**
-     * @param string|null $arch_base
-     */
-    public function setArchBase(?string $arch_base): void
-    {
-        $this->arch_base = $arch_base;
-    }
-
-    /**
      * @return string|null
      */
     public function getArchDb(): ?string
@@ -766,19 +783,35 @@ final class View extends Base
     }
 
     /**
-     * @return string|null
+     * @param OdooRelation $item
      */
-    public function getArchFs(): ?string
+    public function addInheritChildrenIds(OdooRelation $item): void
     {
-        return $this->arch_fs;
+        if ($this->hasInheritChildrenIds($item)) {
+            return;
+        }
+
+        if (null === $this->inherit_children_ids) {
+            $this->inherit_children_ids = [];
+        }
+
+        $this->inherit_children_ids[] = $item;
+    }
+
+    /**
+     * @param string|null $arch_db
+     */
+    public function setArchDb(?string $arch_db): void
+    {
+        $this->arch_db = $arch_db;
     }
 
     /**
      * @return string|null
      */
-    public function getFieldParent(): ?string
+    public function getArchFs(): ?string
     {
-        return $this->field_parent;
+        return $this->arch_fs;
     }
 
     /**
@@ -865,37 +898,6 @@ final class View extends Base
         }
 
         return in_array($item, $this->inherit_children_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addInheritChildrenIds(OdooRelation $item): void
-    {
-        if ($this->hasInheritChildrenIds($item)) {
-            return;
-        }
-
-        if (null === $this->inherit_children_ids) {
-            $this->inherit_children_ids = [];
-        }
-
-        $this->inherit_children_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeInheritChildrenIds(OdooRelation $item): void
-    {
-        if (null === $this->inherit_children_ids) {
-            $this->inherit_children_ids = [];
-        }
-
-        if ($this->hasInheritChildrenIds($item)) {
-            $index = array_search($item, $this->inherit_children_ids);
-            unset($this->inherit_children_ids[$index]);
-        }
     }
 
     /**

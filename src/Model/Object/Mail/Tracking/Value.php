@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.tracking.value
+ * ---
  * Name : mail.tracking.value
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

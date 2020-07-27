@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.payment.term.line
+ * ---
  * Name : account.payment.term.line
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

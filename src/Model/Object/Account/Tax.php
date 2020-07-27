@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.tax
+ * ---
  * Name : account.tax
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
@@ -64,7 +66,7 @@ final class Tax extends Base
      *         - Percentage of Price Tax Included: The tax amount is a division of the price:
      *                 e.g 180 / (1 - 10%) = 200 (not price included)
      *                 e.g 200 * (1 - 10%) = 180 (price included)
-     *
+     *                 
      * ---
      * Selection : (default value, usually null)
      *     -> group (Group of Taxes)
@@ -369,7 +371,7 @@ final class Tax extends Base
      *        Sortable : yes
      * @param string $amount_type Tax Computation
      *        ---
-     *
+     *       
      *                - Group of Taxes: The tax is a set of sub taxes.
      *                - Fixed: The tax amount stays the same whatever the price.
      *                - Percentage of Price: The tax amount is a % of the price:
@@ -378,7 +380,7 @@ final class Tax extends Base
      *                - Percentage of Price Tax Included: The tax amount is a division of the price:
      *                        e.g 180 / (1 - 10%) = 200 (not price included)
      *                        e.g 200 * (1 - 10%) = 180 (price included)
-     *
+     *                        
      *        ---
      *        Selection : (default value, usually null)
      *            -> group (Group of Taxes)

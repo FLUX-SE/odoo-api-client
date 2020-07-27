@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : digest.digest
+ * ---
  * Name : digest.digest
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
@@ -226,24 +228,24 @@ final class Digest extends Base
     private $kpi_account_bank_cash_value;
 
     /**
-     * All Sales
+     * POS Sales
      * ---
      * Searchable : yes
      * Sortable : yes
      *
      * @var bool|null
      */
-    private $kpi_all_sale_total;
+    private $kpi_pos_total;
 
     /**
-     * Kpi All Sale Total Value
+     * Kpi Pos Total Value
      * ---
      * Searchable : no
      * Sortable : no
      *
      * @var float|null
      */
-    private $kpi_all_sale_total_value;
+    private $kpi_pos_total_value;
 
     /**
      * Created by
@@ -411,9 +413,9 @@ final class Digest extends Base
     /**
      * @return bool|null
      */
-    public function isKpiAllSaleTotal(): ?bool
+    public function isKpiPosTotal(): ?bool
     {
-        return $this->kpi_all_sale_total;
+        return $this->kpi_pos_total;
     }
 
     /**
@@ -425,27 +427,27 @@ final class Digest extends Base
     }
 
     /**
-     * @param bool|null $kpi_all_sale_total
+     * @param bool|null $kpi_pos_total
      */
-    public function setKpiAllSaleTotal(?bool $kpi_all_sale_total): void
+    public function setKpiPosTotal(?bool $kpi_pos_total): void
     {
-        $this->kpi_all_sale_total = $kpi_all_sale_total;
+        $this->kpi_pos_total = $kpi_pos_total;
     }
 
     /**
      * @return float|null
      */
-    public function getKpiAllSaleTotalValue(): ?float
+    public function getKpiPosTotalValue(): ?float
     {
-        return $this->kpi_all_sale_total_value;
+        return $this->kpi_pos_total_value;
     }
 
     /**
-     * @param float|null $kpi_all_sale_total_value
+     * @param float|null $kpi_pos_total_value
      */
-    public function setKpiAllSaleTotalValue(?float $kpi_all_sale_total_value): void
+    public function setKpiPosTotalValue(?float $kpi_pos_total_value): void
     {
-        $this->kpi_all_sale_total_value = $kpi_all_sale_total_value;
+        $this->kpi_pos_total_value = $kpi_pos_total_value;
     }
 
     /**

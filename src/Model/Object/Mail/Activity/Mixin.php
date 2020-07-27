@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.activity.mixin
+ * ---
  * Name : mail.activity.mixin
+ * ---
  * Info :
  * Mail Activity Mixin is a mixin class to use if you want to add activities
  *         management on a model. It works like the mail.thread mixin. It defines

@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.model.access
+ * ---
  * Name : ir.model.access
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

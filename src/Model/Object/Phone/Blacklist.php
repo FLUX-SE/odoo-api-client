@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : phone.blacklist
+ * ---
  * Name : phone.blacklist
+ * ---
  * Info :
  * Blacklist of phone numbers. Used to avoid sending unwanted messages to people.
  */

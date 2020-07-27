@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.invoice_extract.words
+ * ---
  * Name : account.invoice_extract.words
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

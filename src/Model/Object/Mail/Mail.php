@@ -8,7 +8,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.mail
+ * ---
  * Name : mail.mail
+ * ---
  * Info :
  * Model holding RFC2822 email messages to send. This model also provides
  *                 facilities to queue and send new email messages.

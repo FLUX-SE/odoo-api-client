@@ -8,7 +8,9 @@ use Flux\OdooApiClient\Model\Object\Base;
 
 /**
  * Odoo model : ir.fields.converter
+ * ---
  * Name : ir.fields.converter
+ * ---
  * Info :
  * The base model, which is implicitly inherited by all models.
  */

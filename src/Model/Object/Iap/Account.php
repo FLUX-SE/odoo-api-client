@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : iap.account
+ * ---
  * Name : iap.account
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

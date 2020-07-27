@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.notification
+ * ---
  * Name : mail.notification
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

@@ -8,7 +8,9 @@ use Flux\OdooApiClient\Model\Object\Base;
 
 /**
  * Odoo model : ir.qweb.field.date
+ * ---
  * Name : ir.qweb.field.date
+ * ---
  * Info :
  * Used to convert a t-field specification into an output HTML field.
  *

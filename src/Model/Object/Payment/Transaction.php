@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : payment.transaction
+ * ---
  * Name : payment.transaction
+ * ---
  * Info :
  * Transaction Model. Each specific acquirer can extend the model by adding
  *         its own fields.
@@ -393,29 +395,6 @@ final class Transaction extends Base
     private $invoice_ids_nbr;
 
     /**
-     * Sales Orders
-     * ---
-     * Relation : many2many (sale.order)
-     * @see \Flux\OdooApiClient\Model\Object\Sale\Order
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $sale_order_ids;
-
-    /**
-     * # of Sales Orders
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var int|null
-     */
-    private $sale_order_ids_nbr;
-
-    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -535,51 +514,11 @@ final class Transaction extends Base
     }
 
     /**
-     * @param string|null $return_url
+     * @param string|null $callback_method
      */
-    public function setReturnUrl(?string $return_url): void
+    public function setCallbackMethod(?string $callback_method): void
     {
-        $this->return_url = $return_url;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getInvoiceIds(): ?array
-    {
-        return $this->invoice_ids;
-    }
-
-    /**
-     * @param OdooRelation|null $payment_id
-     */
-    public function setPaymentId(?OdooRelation $payment_id): void
-    {
-        $this->payment_id = $payment_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getPaymentId(): ?OdooRelation
-    {
-        return $this->payment_id;
-    }
-
-    /**
-     * @param OdooRelation|null $payment_token_id
-     */
-    public function setPaymentTokenId(?OdooRelation $payment_token_id): void
-    {
-        $this->payment_token_id = $payment_token_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getPaymentTokenId(): ?OdooRelation
-    {
-        return $this->payment_token_id;
+        $this->callback_method = $callback_method;
     }
 
     /**
@@ -599,25 +538,19 @@ final class Transaction extends Base
     }
 
     /**
+     * @param string|null $return_url
+     */
+    public function setReturnUrl(?string $return_url): void
+    {
+        $this->return_url = $return_url;
+    }
+
+    /**
      * @return string|null
      */
     public function getReturnUrl(): ?string
     {
         return $this->return_url;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasInvoiceIds(OdooRelation $item): bool
-    {
-        if (null === $this->invoice_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->invoice_ids);
     }
 
     /**
@@ -637,19 +570,19 @@ final class Transaction extends Base
     }
 
     /**
-     * @param string|null $callback_method
-     */
-    public function setCallbackMethod(?string $callback_method): void
-    {
-        $this->callback_method = $callback_method;
-    }
-
-    /**
      * @return string|null
      */
     public function getCallbackMethod(): ?string
     {
         return $this->callback_method;
+    }
+
+    /**
+     * @param OdooRelation|null $payment_token_id
+     */
+    public function setPaymentTokenId(?OdooRelation $payment_token_id): void
+    {
+        $this->payment_token_id = $payment_token_id;
     }
 
     /**
@@ -677,27 +610,11 @@ final class Transaction extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $invoice_ids
+     * @return OdooRelation|null
      */
-    public function setInvoiceIds(?array $invoice_ids): void
+    public function getCallbackModelId(): ?OdooRelation
     {
-        $this->invoice_ids = $invoice_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addInvoiceIds(OdooRelation $item): void
-    {
-        if ($this->hasInvoiceIds($item)) {
-            return;
-        }
-
-        if (null === $this->invoice_ids) {
-            $this->invoice_ids = [];
-        }
-
-        $this->invoice_ids[] = $item;
+        return $this->callback_model_id;
     }
 
     /**
@@ -709,11 +626,51 @@ final class Transaction extends Base
     }
 
     /**
+     * @return string|null
+     */
+    public function getHtml3ds(): ?string
+    {
+        return $this->html_3ds;
+    }
+
+    /**
+     * @param string|null $partner_phone
+     */
+    public function setPartnerPhone(?string $partner_phone): void
+    {
+        $this->partner_phone = $partner_phone;
+    }
+
+    /**
      * @return OdooRelation|null
      */
-    public function getCreateUid(): ?OdooRelation
+    public function getPaymentTokenId(): ?OdooRelation
     {
-        return $this->create_uid;
+        return $this->payment_token_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPaymentId(): ?OdooRelation
+    {
+        return $this->payment_id;
+    }
+
+    /**
+     * @param OdooRelation $partner_country_id
+     */
+    public function setPartnerCountryId(OdooRelation $partner_country_id): void
+    {
+        $this->partner_country_id = $partner_country_id;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
     }
 
     /**
@@ -765,103 +722,19 @@ final class Transaction extends Base
     }
 
     /**
-     * @param OdooRelation|null $create_uid
+     * @return OdooRelation|null
      */
-    public function setCreateUid(?OdooRelation $create_uid): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->create_uid = $create_uid;
+        return $this->create_uid;
     }
 
     /**
-     * @param int|null $sale_order_ids_nbr
+     * @param OdooRelation|null $payment_id
      */
-    public function setSaleOrderIdsNbr(?int $sale_order_ids_nbr): void
+    public function setPaymentId(?OdooRelation $payment_id): void
     {
-        $this->sale_order_ids_nbr = $sale_order_ids_nbr;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeInvoiceIds(OdooRelation $item): void
-    {
-        if (null === $this->invoice_ids) {
-            $this->invoice_ids = [];
-        }
-
-        if ($this->hasInvoiceIds($item)) {
-            $index = array_search($item, $this->invoice_ids);
-            unset($this->invoice_ids[$index]);
-        }
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getSaleOrderIdsNbr(): ?int
-    {
-        return $this->sale_order_ids_nbr;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeSaleOrderIds(OdooRelation $item): void
-    {
-        if (null === $this->sale_order_ids) {
-            $this->sale_order_ids = [];
-        }
-
-        if ($this->hasSaleOrderIds($item)) {
-            $index = array_search($item, $this->sale_order_ids);
-            unset($this->sale_order_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addSaleOrderIds(OdooRelation $item): void
-    {
-        if ($this->hasSaleOrderIds($item)) {
-            return;
-        }
-
-        if (null === $this->sale_order_ids) {
-            $this->sale_order_ids = [];
-        }
-
-        $this->sale_order_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasSaleOrderIds(OdooRelation $item): bool
-    {
-        if (null === $this->sale_order_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->sale_order_ids);
-    }
-
-    /**
-     * @param OdooRelation[]|null $sale_order_ids
-     */
-    public function setSaleOrderIds(?array $sale_order_ids): void
-    {
-        $this->sale_order_ids = $sale_order_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getSaleOrderIds(): ?array
-    {
-        return $this->sale_order_ids;
+        $this->payment_id = $payment_id;
     }
 
     /**
@@ -881,19 +754,80 @@ final class Transaction extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation $item
      */
-    public function getCallbackModelId(): ?OdooRelation
+    public function removeInvoiceIds(OdooRelation $item): void
     {
-        return $this->callback_model_id;
+        if (null === $this->invoice_ids) {
+            $this->invoice_ids = [];
+        }
+
+        if ($this->hasInvoiceIds($item)) {
+            $index = array_search($item, $this->invoice_ids);
+            unset($this->invoice_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addInvoiceIds(OdooRelation $item): void
+    {
+        if ($this->hasInvoiceIds($item)) {
+            return;
+        }
+
+        if (null === $this->invoice_ids) {
+            $this->invoice_ids = [];
+        }
+
+        $this->invoice_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasInvoiceIds(OdooRelation $item): bool
+    {
+        if (null === $this->invoice_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->invoice_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $invoice_ids
+     */
+    public function setInvoiceIds(?array $invoice_ids): void
+    {
+        $this->invoice_ids = $invoice_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     */
+    public function getInvoiceIds(): ?array
+    {
+        return $this->invoice_ids;
     }
 
     /**
      * @return string|null
      */
-    public function getHtml3ds(): ?string
+    public function getPartnerPhone(): ?string
     {
-        return $this->html_3ds;
+        return $this->partner_phone;
+    }
+
+    /**
+     * @return OdooRelation
+     */
+    public function getPartnerCountryId(): OdooRelation
+    {
+        return $this->partner_country_id;
     }
 
     /**
@@ -905,27 +839,11 @@ final class Transaction extends Base
     }
 
     /**
-     * @return string|null
+     * @param string $state
      */
-    public function getStateMessage(): ?string
+    public function setState(string $state): void
     {
-        return $this->state_message;
-    }
-
-    /**
-     * @param OdooRelation $currency_id
-     */
-    public function setCurrencyId(OdooRelation $currency_id): void
-    {
-        $this->currency_id = $currency_id;
-    }
-
-    /**
-     * @return OdooRelation
-     */
-    public function getCurrencyId(): OdooRelation
-    {
-        return $this->currency_id;
+        $this->state = $state;
     }
 
     /**
@@ -969,19 +887,11 @@ final class Transaction extends Base
     }
 
     /**
-     * @param string $state
+     * @return string|null
      */
-    public function setState(string $state): void
+    public function getStateMessage(): ?string
     {
-        $this->state = $state;
-    }
-
-    /**
-     * @param string $reference
-     */
-    public function setReference(string $reference): void
-    {
-        $this->reference = $reference;
+        return $this->state_message;
     }
 
     /**
@@ -990,6 +900,14 @@ final class Transaction extends Base
     public function getState(): string
     {
         return $this->state;
+    }
+
+    /**
+     * @param OdooRelation $currency_id
+     */
+    public function setCurrencyId(OdooRelation $currency_id): void
+    {
+        $this->currency_id = $currency_id;
     }
 
     /**
@@ -1049,6 +967,14 @@ final class Transaction extends Base
     }
 
     /**
+     * @return OdooRelation
+     */
+    public function getCurrencyId(): OdooRelation
+    {
+        return $this->currency_id;
+    }
+
+    /**
      * @return string
      */
     public function getReference(): string
@@ -1057,59 +983,19 @@ final class Transaction extends Base
     }
 
     /**
-     * @return string|null
-     */
-    public function getAcquirerReference(): ?string
-    {
-        return $this->acquirer_reference;
-    }
-
-    /**
-     * @param string|null $partner_phone
-     */
-    public function setPartnerPhone(?string $partner_phone): void
-    {
-        $this->partner_phone = $partner_phone;
-    }
-
-    /**
-     * @param string|null $partner_zip
-     */
-    public function setPartnerZip(?string $partner_zip): void
-    {
-        $this->partner_zip = $partner_zip;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getPartnerPhone(): ?string
-    {
-        return $this->partner_phone;
-    }
-
-    /**
-     * @param OdooRelation $partner_country_id
-     */
-    public function setPartnerCountryId(OdooRelation $partner_country_id): void
-    {
-        $this->partner_country_id = $partner_country_id;
-    }
-
-    /**
-     * @return OdooRelation
-     */
-    public function getPartnerCountryId(): OdooRelation
-    {
-        return $this->partner_country_id;
-    }
-
-    /**
      * @param string|null $partner_city
      */
     public function setPartnerCity(?string $partner_city): void
     {
         $this->partner_city = $partner_city;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPartnerEmail(): ?string
+    {
+        return $this->partner_email;
     }
 
     /**
@@ -1137,19 +1023,19 @@ final class Transaction extends Base
     }
 
     /**
+     * @param string|null $partner_zip
+     */
+    public function setPartnerZip(?string $partner_zip): void
+    {
+        $this->partner_zip = $partner_zip;
+    }
+
+    /**
      * @return string|null
      */
     public function getPartnerZip(): ?string
     {
         return $this->partner_zip;
-    }
-
-    /**
-     * @param string|null $acquirer_reference
-     */
-    public function setAcquirerReference(?string $acquirer_reference): void
-    {
-        $this->acquirer_reference = $acquirer_reference;
     }
 
     /**
@@ -1161,19 +1047,19 @@ final class Transaction extends Base
     }
 
     /**
-     * @return string|null
-     */
-    public function getPartnerEmail(): ?string
-    {
-        return $this->partner_email;
-    }
-
-    /**
      * @param string|null $partner_lang
      */
     public function setPartnerLang(?string $partner_lang): void
     {
         $this->partner_lang = $partner_lang;
+    }
+
+    /**
+     * @param string $reference
+     */
+    public function setReference(string $reference): void
+    {
+        $this->reference = $reference;
     }
 
     /**
@@ -1214,6 +1100,22 @@ final class Transaction extends Base
     public function getPartnerId(): ?OdooRelation
     {
         return $this->partner_id;
+    }
+
+    /**
+     * @param string|null $acquirer_reference
+     */
+    public function setAcquirerReference(?string $acquirer_reference): void
+    {
+        $this->acquirer_reference = $acquirer_reference;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAcquirerReference(): ?string
+    {
+        return $this->acquirer_reference;
     }
 
     /**

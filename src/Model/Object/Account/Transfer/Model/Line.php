@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.transfer.model.line
+ * ---
  * Name : account.transfer.model.line
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

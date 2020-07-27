@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : res.currency
+ * ---
  * Name : res.currency
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

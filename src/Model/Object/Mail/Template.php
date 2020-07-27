@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.template
+ * ---
  * Name : mail.template
+ * ---
  * Info :
  * Templates for sending email
  */

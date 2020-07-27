@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.bank.statement.closebalance
+ * ---
  * Name : account.bank.statement.closebalance
+ * ---
  * Info :
  * Account Bank Statement wizard that check that closing balance is correct.
  */

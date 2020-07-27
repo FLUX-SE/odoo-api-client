@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : sms.template
+ * ---
  * Name : sms.template
+ * ---
  * Info :
  * Templates for sending SMS
  */

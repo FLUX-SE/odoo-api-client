@@ -8,7 +8,9 @@ use Flux\OdooApiClient\Model\Object\Base;
 
 /**
  * Odoo model : ir.qweb.field.barcode
+ * ---
  * Name : ir.qweb.field.barcode
+ * ---
  * Info :
  * ``barcode`` widget rendering, inserts a data:uri-using image tag in the
  *         document. May be overridden by e.g. the website module to generate links

@@ -8,7 +8,9 @@ use Flux\OdooApiClient\Model\Object\Base;
 
 /**
  * Odoo model : account.aged.receivable
+ * ---
  * Name : account.aged.receivable
+ * ---
  * Info :
  * The base model, which is implicitly inherited by all models.
  */

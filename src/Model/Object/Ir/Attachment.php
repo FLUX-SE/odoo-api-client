@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.attachment
+ * ---
  * Name : ir.attachment
+ * ---
  * Info :
  * Attachments are used to link binary files or url to any openerp document.
  *
@@ -221,46 +223,6 @@ final class Attachment extends Base
     private $index_content;
 
     /**
-     * Attachment URL
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $local_url;
-
-    /**
-     * Image Src
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $image_src;
-
-    /**
-     * Image Width
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var int|null
-     */
-    private $image_width;
-
-    /**
-     * Image Height
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var int|null
-     */
-    private $image_height;
-
-    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -307,6 +269,46 @@ final class Attachment extends Base
     private $write_date;
 
     /**
+     * Attachment URL
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $local_url;
+
+    /**
+     * Image Src
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $image_src;
+
+    /**
+     * Image Width
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    private $image_width;
+
+    /**
+     * Image Height
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    private $image_height;
+
+    /**
      * @param string $name Name
      *        ---
      *        Searchable : yes
@@ -329,11 +331,11 @@ final class Attachment extends Base
     }
 
     /**
-     * @param string|null $image_src
+     * @param DateTimeInterface|null $create_date
      */
-    public function setImageSrc(?string $image_src): void
+    public function setCreateDate(?DateTimeInterface $create_date): void
     {
-        $this->image_src = $image_src;
+        $this->create_date = $create_date;
     }
 
     /**
@@ -393,70 +395,6 @@ final class Attachment extends Base
     }
 
     /**
-     * @return string|null
-     */
-    public function getLocalUrl(): ?string
-    {
-        return $this->local_url;
-    }
-
-    /**
-     * @param string|null $local_url
-     */
-    public function setLocalUrl(?string $local_url): void
-    {
-        $this->local_url = $local_url;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getImageSrc(): ?string
-    {
-        return $this->image_src;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getImageWidth(): ?int
-    {
-        return $this->image_width;
-    }
-
-    /**
-     * @param string|null $store_fname
-     */
-    public function setStoreFname(?string $store_fname): void
-    {
-        $this->store_fname = $store_fname;
-    }
-
-    /**
-     * @param int|null $image_width
-     */
-    public function setImageWidth(?int $image_width): void
-    {
-        $this->image_width = $image_width;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getImageHeight(): ?int
-    {
-        return $this->image_height;
-    }
-
-    /**
-     * @param int|null $image_height
-     */
-    public function setImageHeight(?int $image_height): void
-    {
-        $this->image_height = $image_height;
-    }
-
-    /**
      * @return OdooRelation|null
      */
     public function getCreateUid(): ?OdooRelation
@@ -481,19 +419,19 @@ final class Attachment extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
      * @return OdooRelation|null
      */
     public function getWriteUid(): ?OdooRelation
     {
         return $this->write_uid;
+    }
+
+    /**
+     * @param string|null $store_fname
+     */
+    public function setStoreFname(?string $store_fname): void
+    {
+        $this->store_fname = $store_fname;
     }
 
     /**
@@ -518,6 +456,70 @@ final class Attachment extends Base
     public function setWriteDate(?DateTimeInterface $write_date): void
     {
         $this->write_date = $write_date;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLocalUrl(): ?string
+    {
+        return $this->local_url;
+    }
+
+    /**
+     * @param string|null $local_url
+     */
+    public function setLocalUrl(?string $local_url): void
+    {
+        $this->local_url = $local_url;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImageSrc(): ?string
+    {
+        return $this->image_src;
+    }
+
+    /**
+     * @param string|null $image_src
+     */
+    public function setImageSrc(?string $image_src): void
+    {
+        $this->image_src = $image_src;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getImageWidth(): ?int
+    {
+        return $this->image_width;
+    }
+
+    /**
+     * @param int|null $image_width
+     */
+    public function setImageWidth(?int $image_width): void
+    {
+        $this->image_width = $image_width;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getImageHeight(): ?int
+    {
+        return $this->image_height;
+    }
+
+    /**
+     * @param int|null $image_height
+     */
+    public function setImageHeight(?int $image_height): void
+    {
+        $this->image_height = $image_height;
     }
 
     /**

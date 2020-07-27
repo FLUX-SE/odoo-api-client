@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.change.lock.date
+ * ---
  * Name : account.change.lock.date
+ * ---
  * Info :
  * This wizard is used to change the lock date
  */

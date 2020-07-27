@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : res.config
+ * ---
  * Name : res.config
+ * ---
  * Info :
  * Base classes for new-style configuration items
  *

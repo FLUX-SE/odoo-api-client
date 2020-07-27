@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.actions.act_window_close
+ * ---
  * Name : ir.actions.act_window_close
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : product.attribute.value
+ * ---
  * Name : product.attribute.value
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
@@ -85,48 +87,6 @@ final class Value extends Base
     private $is_used_on_products;
 
     /**
-     * Is custom value
-     * ---
-     * Allow users to input custom values for this attribute value
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $is_custom;
-
-    /**
-     * Color
-     * ---
-     * Here you can set a specific HTML color index (e.g. #ff0000) to display the color if the attribute type is
-     * 'Color'.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $html_color;
-
-    /**
-     * Display Type
-     * ---
-     * The display type used in the Product Configurator.
-     * ---
-     * Selection : (default value, usually null)
-     *     -> radio (Radio)
-     *     -> select (Select)
-     *     -> color (Color)
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $display_type;
-
-    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -194,11 +154,11 @@ final class Value extends Base
     }
 
     /**
-     * @param bool|null $is_custom
+     * @return bool|null
      */
-    public function setIsCustom(?bool $is_custom): void
+    public function isIsUsedOnProducts(): ?bool
     {
-        $this->is_custom = $is_custom;
+        return $this->is_used_on_products;
     }
 
     /**
@@ -266,67 +226,11 @@ final class Value extends Base
     }
 
     /**
-     * @param string|null $display_type
-     */
-    public function setDisplayType(?string $display_type): void
-    {
-        $this->display_type = $display_type;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getDisplayType(): ?string
-    {
-        return $this->display_type;
-    }
-
-    /**
-     * @param string|null $html_color
-     */
-    public function setHtmlColor(?string $html_color): void
-    {
-        $this->html_color = $html_color;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getHtmlColor(): ?string
-    {
-        return $this->html_color;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isIsCustom(): ?bool
-    {
-        return $this->is_custom;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
      * @param bool|null $is_used_on_products
      */
     public function setIsUsedOnProducts(?bool $is_used_on_products): void
     {
         $this->is_used_on_products = $is_used_on_products;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isIsUsedOnProducts(): ?bool
-    {
-        return $this->is_used_on_products;
     }
 
     /**
@@ -342,6 +246,14 @@ final class Value extends Base
             $index = array_search($item, $this->pav_attribute_line_ids);
             unset($this->pav_attribute_line_ids[$index]);
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     /**

@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.config_parameter
+ * ---
  * Name : ir.config_parameter
+ * ---
  * Info :
  * Per-database storage of configuration key-value pairs.
  */

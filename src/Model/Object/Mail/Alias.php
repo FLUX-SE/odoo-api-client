@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.alias
+ * ---
  * Name : mail.alias
+ * ---
  * Info :
  * A Mail Alias is a mapping of an email address with a given Odoo Document
  *               model. It is used by Odoo's mail gateway when processing incoming emails
@@ -224,7 +226,7 @@ class Alias extends Base
      *        - everyone: everyone can post
      *        - partners: only authenticated partners
      *        - followers: only followers of the related document or members of following channels
-     *
+     *       
      *        ---
      *        Selection : (default value, usually null)
      *            -> everyone (Everyone)

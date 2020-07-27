@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.full.reconcile
+ * ---
  * Name : account.full.reconcile
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

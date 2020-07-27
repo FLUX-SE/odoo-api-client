@@ -9,7 +9,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.alias.mixin
+ * ---
  * Name : mail.alias.mixin
+ * ---
  * Info :
  * A mixin for models that inherits mail.alias. This mixin initializes the
  *                 alias_id column in database, and manages the expected one-to-one
@@ -60,7 +62,7 @@ final class Mixin extends Alias
      *        - everyone: everyone can post
      *        - partners: only authenticated partners
      *        - followers: only followers of the related document or members of following channels
-     *
+     *       
      *        ---
      *        Selection : (default value, usually null)
      *            -> everyone (Everyone)

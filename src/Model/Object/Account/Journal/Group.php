@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.journal.group
+ * ---
  * Name : account.journal.group
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

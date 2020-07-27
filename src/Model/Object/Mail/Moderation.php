@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.moderation
+ * ---
  * Name : mail.moderation
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : change.password.user
+ * ---
  * Name : change.password.user
+ * ---
  * Info :
  * A model to configure users in the change password wizard.
  */

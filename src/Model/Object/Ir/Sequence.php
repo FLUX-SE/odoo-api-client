@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.sequence
+ * ---
  * Name : ir.sequence
+ * ---
  * Info :
  * Sequence model.
  *

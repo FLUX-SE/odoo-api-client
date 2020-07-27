@@ -8,7 +8,9 @@ use Flux\OdooApiClient\Model\Object\Base;
 
 /**
  * Odoo model : account.general.ledger
+ * ---
  * Name : account.general.ledger
+ * ---
  * Info :
  * The base model, which is implicitly inherited by all models.
  */

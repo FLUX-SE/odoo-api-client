@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.compose.message
+ * ---
  * Name : mail.compose.message
+ * ---
  * Info :
  * Generic message composition wizard. You may inherit from this wizard
  *                 at model and view levels to provide specific features.

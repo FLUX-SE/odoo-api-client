@@ -9,7 +9,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.thread
+ * ---
  * Name : mail.thread
+ * ---
  * Info :
  * mail_thread model is meant to be inherited by any model that needs to
  *                 act as a discussion topic on which messages can be attached. Public

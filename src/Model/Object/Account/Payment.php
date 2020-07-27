@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.payment
+ * ---
  * Name : account.payment
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
@@ -208,7 +210,7 @@ final class Payment extends Base
      * When encoding the bank statement in Odoo, you are suggested to reconcile the transaction with the batch
      * deposit.To enable batch deposit, module account_batch_payment must be installed.
      * SEPA Credit Transfer: Pay bill from a SEPA Credit Transfer file you submit to your bank. To enable sepa credit
-     * transfer, module account_sepa must be installed
+     * transfer, module account_sepa must be installed 
      * ---
      * Relation : many2one (account.payment.method)
      * @see \Flux\OdooApiClient\Model\Object\Account\Payment\Method
@@ -445,17 +447,33 @@ final class Payment extends Base
     private $attachment_ids;
 
     /**
-     * Batch Payment
+     * Payment Transaction
      * ---
-     * Relation : many2one (account.batch.payment)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Batch\Payment
+     * Relation : many2one (payment.transaction)
+     * @see \Flux\OdooApiClient\Model\Object\Payment\Transaction
      * ---
      * Searchable : yes
      * Sortable : yes
      *
      * @var OdooRelation|null
      */
-    private $batch_payment_id;
+    private $payment_transaction_id;
+
+    /**
+     * Saved payment token
+     * ---
+     * Note that tokens from acquirers set to only authorize transactions (instead of capturing the amount) are not
+     * available.
+     * ---
+     * Relation : many2one (payment.token)
+     * @see \Flux\OdooApiClient\Model\Object\Payment\Token
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $payment_token_id;
 
     /**
      * Amount in Words
@@ -491,35 +509,6 @@ final class Payment extends Base
      * @var string|null
      */
     private $check_number;
-
-    /**
-     * Payment Transaction
-     * ---
-     * Relation : many2one (payment.transaction)
-     * @see \Flux\OdooApiClient\Model\Object\Payment\Transaction
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $payment_transaction_id;
-
-    /**
-     * Saved payment token
-     * ---
-     * Note that tokens from acquirers set to only authorize transactions (instead of capturing the amount) are not
-     * available.
-     * ---
-     * Relation : many2one (payment.token)
-     * @see \Flux\OdooApiClient\Model\Object\Payment\Token
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $payment_token_id;
 
     /**
      * Activities
@@ -878,7 +867,7 @@ final class Payment extends Base
      *        When encoding the bank statement in Odoo, you are suggested to reconcile the transaction with the batch
      *        deposit.To enable batch deposit, module account_batch_payment must be installed.
      *        SEPA Credit Transfer: Pay bill from a SEPA Credit Transfer file you submit to your bank. To enable sepa credit
-     *        transfer, module account_sepa must be installed
+     *        transfer, module account_sepa must be installed 
      *        ---
      *        Relation : many2one (account.payment.method)
      *        @see \Flux\OdooApiClient\Model\Object\Account\Payment\Method
@@ -925,19 +914,17 @@ final class Payment extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $message_follower_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setMessageFollowerIds(?array $message_follower_ids): void
+    public function hasMessageFollowerIds(OdooRelation $item): bool
     {
-        $this->message_follower_ids = $message_follower_ids;
-    }
+        if (null === $this->message_follower_ids) {
+            return false;
+        }
 
-    /**
-     * @return string|null
-     */
-    public function getActivityExceptionDecoration(): ?string
-    {
-        return $this->activity_exception_decoration;
+        return in_array($item, $this->message_follower_ids);
     }
 
     /**
@@ -989,25 +976,11 @@ final class Payment extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param OdooRelation[]|null $message_follower_ids
      */
-    public function hasMessageFollowerIds(OdooRelation $item): bool
+    public function setMessageFollowerIds(?array $message_follower_ids): void
     {
-        if (null === $this->message_follower_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_follower_ids);
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getActivitySummary(): ?string
-    {
-        return $this->activity_summary;
+        $this->message_follower_ids = $message_follower_ids;
     }
 
     /**
@@ -1024,6 +997,14 @@ final class Payment extends Base
         }
 
         $this->message_follower_ids[] = $item;
+    }
+
+    /**
+     * @param string|null $activity_summary
+     */
+    public function setActivitySummary(?string $activity_summary): void
+    {
+        $this->activity_summary = $activity_summary;
     }
 
     /**
@@ -1103,27 +1084,27 @@ final class Payment extends Base
     }
 
     /**
-     * @param string|null $activity_summary
+     * @return OdooRelation[]|null
      */
-    public function setActivitySummary(?string $activity_summary): void
+    public function getMessageChannelIds(): ?array
     {
-        $this->activity_summary = $activity_summary;
+        return $this->message_channel_ids;
     }
 
     /**
-     * @param DateTimeInterface|null $activity_date_deadline
+     * @return string|null
      */
-    public function setActivityDateDeadline(?DateTimeInterface $activity_date_deadline): void
+    public function getActivityExceptionDecoration(): ?string
     {
-        $this->activity_date_deadline = $activity_date_deadline;
+        return $this->activity_exception_decoration;
     }
 
     /**
-     * @param OdooRelation[]|null $message_channel_ids
+     * @return string|null
      */
-    public function setMessageChannelIds(?array $message_channel_ids): void
+    public function getActivitySummary(): ?string
     {
-        $this->message_channel_ids = $message_channel_ids;
+        return $this->activity_summary;
     }
 
     /**
@@ -1131,13 +1112,53 @@ final class Payment extends Base
      *
      * @return bool
      */
-    public function hasActivityIds(OdooRelation $item): bool
+    public function hasMessageChannelIds(OdooRelation $item): bool
     {
-        if (null === $this->activity_ids) {
+        if (null === $this->message_channel_ids) {
             return false;
         }
 
-        return in_array($item, $this->activity_ids);
+        return in_array($item, $this->message_channel_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addActivityIds(OdooRelation $item): void
+    {
+        if ($this->hasActivityIds($item)) {
+            return;
+        }
+
+        if (null === $this->activity_ids) {
+            $this->activity_ids = [];
+        }
+
+        $this->activity_ids[] = $item;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isCheckManualSequencing(): ?bool
+    {
+        return $this->check_manual_sequencing;
+    }
+
+    /**
+     * @param bool|null $check_manual_sequencing
+     */
+    public function setCheckManualSequencing(?bool $check_manual_sequencing): void
+    {
+        $this->check_manual_sequencing = $check_manual_sequencing;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCheckNumber(): ?string
+    {
+        return $this->check_number;
     }
 
     /**
@@ -1146,38 +1167,6 @@ final class Payment extends Base
     public function setCheckNumber(?string $check_number): void
     {
         $this->check_number = $check_number;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getPaymentTransactionId(): ?OdooRelation
-    {
-        return $this->payment_transaction_id;
-    }
-
-    /**
-     * @param OdooRelation|null $payment_transaction_id
-     */
-    public function setPaymentTransactionId(?OdooRelation $payment_transaction_id): void
-    {
-        $this->payment_transaction_id = $payment_transaction_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getPaymentTokenId(): ?OdooRelation
-    {
-        return $this->payment_token_id;
-    }
-
-    /**
-     * @param OdooRelation|null $payment_token_id
-     */
-    public function setPaymentTokenId(?OdooRelation $payment_token_id): void
-    {
-        $this->payment_token_id = $payment_token_id;
     }
 
     /**
@@ -1198,26 +1187,16 @@ final class Payment extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function addActivityIds(OdooRelation $item): void
+    public function hasActivityIds(OdooRelation $item): bool
     {
-        if ($this->hasActivityIds($item)) {
-            return;
-        }
-
         if (null === $this->activity_ids) {
-            $this->activity_ids = [];
+            return false;
         }
 
-        $this->activity_ids[] = $item;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getActivityDateDeadline(): ?DateTimeInterface
-    {
-        return $this->activity_date_deadline;
+        return in_array($item, $this->activity_ids);
     }
 
     /**
@@ -1233,6 +1212,14 @@ final class Payment extends Base
             $index = array_search($item, $this->activity_ids);
             unset($this->activity_ids[$index]);
         }
+    }
+
+    /**
+     * @param DateTimeInterface|null $activity_date_deadline
+     */
+    public function setActivityDateDeadline(?DateTimeInterface $activity_date_deadline): void
+    {
+        $this->activity_date_deadline = $activity_date_deadline;
     }
 
     /**
@@ -1284,33 +1271,43 @@ final class Payment extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @return DateTimeInterface|null
      */
-    public function getMessageChannelIds(): ?array
+    public function getActivityDateDeadline(): ?DateTimeInterface
     {
-        return $this->message_channel_ids;
+        return $this->activity_date_deadline;
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_channel_ids
+     */
+    public function setMessageChannelIds(?array $message_channel_ids): void
+    {
+        $this->message_channel_ids = $message_channel_ids;
     }
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasMessageChannelIds(OdooRelation $item): bool
+    public function addMessageChannelIds(OdooRelation $item): void
     {
-        if (null === $this->message_channel_ids) {
-            return false;
+        if ($this->hasMessageChannelIds($item)) {
+            return;
         }
 
-        return in_array($item, $this->message_channel_ids);
+        if (null === $this->message_channel_ids) {
+            $this->message_channel_ids = [];
+        }
+
+        $this->message_channel_ids[] = $item;
     }
 
     /**
-     * @param bool|null $check_manual_sequencing
+     * @return string|null
      */
-    public function setCheckManualSequencing(?bool $check_manual_sequencing): void
+    public function getCheckAmountInWords(): ?string
     {
-        $this->check_manual_sequencing = $check_manual_sequencing;
+        return $this->check_amount_in_words;
     }
 
     /**
@@ -1489,30 +1486,6 @@ final class Payment extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addMessageChannelIds(OdooRelation $item): void
-    {
-        if ($this->hasMessageChannelIds($item)) {
-            return;
-        }
-
-        if (null === $this->message_channel_ids) {
-            $this->message_channel_ids = [];
-        }
-
-        $this->message_channel_ids[] = $item;
-    }
-
-    /**
-     * @param bool|null $message_unread
-     */
-    public function setMessageUnread(?bool $message_unread): void
-    {
-        $this->message_unread = $message_unread;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
     public function removeMessageChannelIds(OdooRelation $item): void
     {
         if (null === $this->message_channel_ids) {
@@ -1523,6 +1496,14 @@ final class Payment extends Base
             $index = array_search($item, $this->message_channel_ids);
             unset($this->message_channel_ids[$index]);
         }
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getMessageUnreadCounter(): ?int
+    {
+        return $this->message_unread_counter;
     }
 
     /**
@@ -1595,19 +1576,11 @@ final class Payment extends Base
     }
 
     /**
-     * @return int|null
+     * @param bool|null $message_unread
      */
-    public function getMessageUnreadCounter(): ?int
+    public function setMessageUnread(?bool $message_unread): void
     {
-        return $this->message_unread_counter;
-    }
-
-    /**
-     * @param int|null $message_has_error_counter
-     */
-    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
-    {
-        $this->message_has_error_counter = $message_has_error_counter;
+        $this->message_unread = $message_unread;
     }
 
     /**
@@ -1616,6 +1589,14 @@ final class Payment extends Base
     public function setMessageUnreadCounter(?int $message_unread_counter): void
     {
         $this->message_unread_counter = $message_unread_counter;
+    }
+
+    /**
+     * @param int|null $message_has_error_counter
+     */
+    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
+    {
+        $this->message_has_error_counter = $message_has_error_counter;
     }
 
     /**
@@ -1675,19 +1656,19 @@ final class Payment extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $check_amount_in_words
      */
-    public function getCheckNumber(): ?string
+    public function setCheckAmountInWords(?string $check_amount_in_words): void
     {
-        return $this->check_number;
+        $this->check_amount_in_words = $check_amount_in_words;
     }
 
     /**
-     * @return bool|null
+     * @param OdooRelation|null $payment_token_id
      */
-    public function isCheckManualSequencing(): ?bool
+    public function setPaymentTokenId(?OdooRelation $payment_token_id): void
     {
-        return $this->check_manual_sequencing;
+        $this->payment_token_id = $payment_token_id;
     }
 
     /**
@@ -1699,11 +1680,26 @@ final class Payment extends Base
     }
 
     /**
-     * @return bool|null
+     * @param OdooRelation $item
      */
-    public function isMoveReconciled(): ?bool
+    public function removeMoveLineIds(OdooRelation $item): void
     {
-        return $this->move_reconciled;
+        if (null === $this->move_line_ids) {
+            $this->move_line_ids = [];
+        }
+
+        if ($this->hasMoveLineIds($item)) {
+            $index = array_search($item, $this->move_line_ids);
+            unset($this->move_line_ids[$index]);
+        }
+    }
+
+    /**
+     * @param bool|null $has_invoices
+     */
+    public function setHasInvoices(?bool $has_invoices): void
+    {
+        $this->has_invoices = $has_invoices;
     }
 
     /**
@@ -1769,17 +1765,25 @@ final class Payment extends Base
     }
 
     /**
+     * @return bool|null
+     */
+    public function isMoveReconciled(): ?bool
+    {
+        return $this->move_reconciled;
+    }
+
+    /**
      * @param OdooRelation $item
      */
-    public function removeMoveLineIds(OdooRelation $item): void
+    public function removeReconciledInvoiceIds(OdooRelation $item): void
     {
-        if (null === $this->move_line_ids) {
-            $this->move_line_ids = [];
+        if (null === $this->reconciled_invoice_ids) {
+            $this->reconciled_invoice_ids = [];
         }
 
-        if ($this->hasMoveLineIds($item)) {
-            $index = array_search($item, $this->move_line_ids);
-            unset($this->move_line_ids[$index]);
+        if ($this->hasReconciledInvoiceIds($item)) {
+            $index = array_search($item, $this->reconciled_invoice_ids);
+            unset($this->reconciled_invoice_ids[$index]);
         }
     }
 
@@ -1789,14 +1793,6 @@ final class Payment extends Base
     public function setMoveReconciled(?bool $move_reconciled): void
     {
         $this->move_reconciled = $move_reconciled;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isHasInvoices(): ?bool
-    {
-        return $this->has_invoices;
     }
 
     /**
@@ -1848,42 +1844,35 @@ final class Payment extends Base
     }
 
     /**
-     * @return string|null
+     * @return bool|null
      */
-    public function getPaymentMethodCode(): ?string
+    public function isHasInvoices(): ?bool
     {
-        return $this->payment_method_code;
-    }
-
-    /**
-     * @param bool|null $has_invoices
-     */
-    public function setHasInvoices(?bool $has_invoices): void
-    {
-        $this->has_invoices = $has_invoices;
+        return $this->has_invoices;
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function removeReconciledInvoiceIds(OdooRelation $item): void
+    public function addReconciledInvoiceIds(OdooRelation $item): void
     {
+        if ($this->hasReconciledInvoiceIds($item)) {
+            return;
+        }
+
         if (null === $this->reconciled_invoice_ids) {
             $this->reconciled_invoice_ids = [];
         }
 
-        if ($this->hasReconciledInvoiceIds($item)) {
-            $index = array_search($item, $this->reconciled_invoice_ids);
-            unset($this->reconciled_invoice_ids[$index]);
-        }
+        $this->reconciled_invoice_ids[] = $item;
     }
 
     /**
-     * @return string|null
+     * @param string|null $payment_method_code
      */
-    public function getPartnerType(): ?string
+    public function setPaymentMethodCode(?string $payment_method_code): void
     {
-        return $this->partner_type;
+        $this->payment_method_code = $payment_method_code;
     }
 
     /**
@@ -1960,18 +1949,16 @@ final class Payment extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function addReconciledInvoiceIds(OdooRelation $item): void
+    public function hasReconciledInvoiceIds(OdooRelation $item): bool
     {
-        if ($this->hasReconciledInvoiceIds($item)) {
-            return;
-        }
-
         if (null === $this->reconciled_invoice_ids) {
-            $this->reconciled_invoice_ids = [];
+            return false;
         }
 
-        $this->reconciled_invoice_ids[] = $item;
+        return in_array($item, $this->reconciled_invoice_ids);
     }
 
     /**
@@ -2052,49 +2039,43 @@ final class Payment extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @return string|null
      */
-    public function hasReconciledInvoiceIds(OdooRelation $item): bool
+    public function getPaymentMethodCode(): ?string
     {
-        if (null === $this->reconciled_invoice_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->reconciled_invoice_ids);
+        return $this->payment_method_code;
     }
 
     /**
-     * @param string|null $payment_method_code
+     * @return string|null
      */
-    public function setPaymentMethodCode(?string $payment_method_code): void
+    public function getPartnerType(): ?string
     {
-        $this->payment_method_code = $payment_method_code;
+        return $this->partner_type;
     }
 
     /**
-     * @param string|null $partner_type
+     * @return OdooRelation|null
      */
-    public function setPartnerType(?string $partner_type): void
+    public function getPaymentTokenId(): ?OdooRelation
     {
-        $this->partner_type = $partner_type;
+        return $this->payment_token_id;
     }
 
     /**
-     * @param string|null $check_amount_in_words
+     * @return bool|null
      */
-    public function setCheckAmountInWords(?string $check_amount_in_words): void
+    public function isRequirePartnerBankAccount(): ?bool
     {
-        $this->check_amount_in_words = $check_amount_in_words;
+        return $this->require_partner_bank_account;
     }
 
     /**
-     * @param bool|null $require_partner_bank_account
+     * @param OdooRelation|null $writeoff_account_id
      */
-    public function setRequirePartnerBankAccount(?bool $require_partner_bank_account): void
+    public function setWriteoffAccountId(?OdooRelation $writeoff_account_id): void
     {
-        $this->require_partner_bank_account = $require_partner_bank_account;
+        $this->writeoff_account_id = $writeoff_account_id;
     }
 
     /**
@@ -2146,11 +2127,19 @@ final class Payment extends Base
     }
 
     /**
-     * @return bool|null
+     * @param bool|null $require_partner_bank_account
      */
-    public function isRequirePartnerBankAccount(): ?bool
+    public function setRequirePartnerBankAccount(?bool $require_partner_bank_account): void
     {
-        return $this->require_partner_bank_account;
+        $this->require_partner_bank_account = $require_partner_bank_account;
+    }
+
+    /**
+     * @param string|null $payment_difference_handling
+     */
+    public function setPaymentDifferenceHandling(?string $payment_difference_handling): void
+    {
+        $this->payment_difference_handling = $payment_difference_handling;
     }
 
     /**
@@ -2159,14 +2148,6 @@ final class Payment extends Base
     public function getAttachmentIds(): ?array
     {
         return $this->attachment_ids;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getWriteoffAccountId(): ?OdooRelation
-    {
-        return $this->writeoff_account_id;
     }
 
     /**
@@ -2225,41 +2206,49 @@ final class Payment extends Base
     /**
      * @return OdooRelation|null
      */
-    public function getBatchPaymentId(): ?OdooRelation
+    public function getPaymentTransactionId(): ?OdooRelation
     {
-        return $this->batch_payment_id;
+        return $this->payment_transaction_id;
     }
 
     /**
-     * @param OdooRelation|null $batch_payment_id
+     * @param OdooRelation|null $payment_transaction_id
      */
-    public function setBatchPaymentId(?OdooRelation $batch_payment_id): void
+    public function setPaymentTransactionId(?OdooRelation $payment_transaction_id): void
     {
-        $this->batch_payment_id = $batch_payment_id;
+        $this->payment_transaction_id = $payment_transaction_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteoffAccountId(): ?OdooRelation
+    {
+        return $this->writeoff_account_id;
     }
 
     /**
      * @return string|null
      */
-    public function getCheckAmountInWords(): ?string
+    public function getPaymentDifferenceHandling(): ?string
     {
-        return $this->check_amount_in_words;
+        return $this->payment_difference_handling;
     }
 
     /**
-     * @param OdooRelation|null $writeoff_account_id
+     * @param string|null $partner_type
      */
-    public function setWriteoffAccountId(?OdooRelation $writeoff_account_id): void
+    public function setPartnerType(?string $partner_type): void
     {
-        $this->writeoff_account_id = $writeoff_account_id;
+        $this->partner_type = $partner_type;
     }
 
     /**
-     * @param string|null $payment_difference_handling
+     * @param DateTimeInterface $payment_date
      */
-    public function setPaymentDifferenceHandling(?string $payment_difference_handling): void
+    public function setPaymentDate(DateTimeInterface $payment_date): void
     {
-        $this->payment_difference_handling = $payment_difference_handling;
+        $this->payment_date = $payment_date;
     }
 
     /**
@@ -2268,14 +2257,6 @@ final class Payment extends Base
     public function getPartnerId(): ?OdooRelation
     {
         return $this->partner_id;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getCommunication(): ?string
-    {
-        return $this->communication;
     }
 
     /**
@@ -2327,11 +2308,19 @@ final class Payment extends Base
     }
 
     /**
-     * @param DateTimeInterface $payment_date
+     * @return string|null
      */
-    public function setPaymentDate(DateTimeInterface $payment_date): void
+    public function getCommunication(): ?string
     {
-        $this->payment_date = $payment_date;
+        return $this->communication;
+    }
+
+    /**
+     * @param float|null $payment_difference
+     */
+    public function setPaymentDifference(?float $payment_difference): void
+    {
+        $this->payment_difference = $payment_difference;
     }
 
     /**
@@ -2340,14 +2329,6 @@ final class Payment extends Base
     public function setCommunication(?string $communication): void
     {
         $this->communication = $communication;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getPaymentDifferenceHandling(): ?string
-    {
-        return $this->payment_difference_handling;
     }
 
     /**
@@ -2404,14 +2385,6 @@ final class Payment extends Base
     public function getPaymentDifference(): ?float
     {
         return $this->payment_difference;
-    }
-
-    /**
-     * @param float|null $payment_difference
-     */
-    public function setPaymentDifference(?float $payment_difference): void
-    {
-        $this->payment_difference = $payment_difference;
     }
 
     /**

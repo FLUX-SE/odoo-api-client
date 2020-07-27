@@ -8,7 +8,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.channel
+ * ---
  * Name : mail.channel
+ * ---
  * Info :
  * A mail.channel is a discussion group that may behave like a listener
  *         on documents.
@@ -538,7 +540,7 @@ final class Channel extends Alias
      *        - everyone: everyone can post
      *        - partners: only authenticated partners
      *        - followers: only followers of the related document or members of following channels
-     *
+     *       
      *        ---
      *        Selection : (default value, usually null)
      *            -> everyone (Everyone)

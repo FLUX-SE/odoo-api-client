@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : base.partner.merge.automatic.wizard
+ * ---
  * Name : base.partner.merge.automatic.wizard
+ * ---
  * Info :
  * The idea behind this wizard is to create a list of potential partners to
  *                 merge. We use two objects, the first one is the wizard for the end-user.

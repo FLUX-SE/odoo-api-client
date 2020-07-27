@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.message
+ * ---
  * Name : mail.message
+ * ---
  * Info :
  * Override MailMessage class in order to add a new type: SMS messages.
  *         Those messages comes with their own notification method, using SMS

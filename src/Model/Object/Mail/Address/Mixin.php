@@ -8,7 +8,9 @@ use Flux\OdooApiClient\Model\Object\Base;
 
 /**
  * Odoo model : mail.address.mixin
+ * ---
  * Name : mail.address.mixin
+ * ---
  * Info :
  * Purpose of this mixin is to store a normalized email based on the primary email field.
  *         A normalized email is considered as :

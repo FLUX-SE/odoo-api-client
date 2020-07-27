@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.activity.type
+ * ---
  * Name : mail.activity.type
+ * ---
  * Info :
  * Activity Types are used to categorize activities. Each type is a different
  *         kind of activity e.g. call, mail, meeting. An activity can be generic i.e.

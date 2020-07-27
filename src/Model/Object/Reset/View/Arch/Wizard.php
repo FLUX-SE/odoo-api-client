@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : reset.view.arch.wizard
+ * ---
  * Name : reset.view.arch.wizard
+ * ---
  * Info :
  * A wizard to reset views architecture.
  */

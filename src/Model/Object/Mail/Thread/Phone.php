@@ -9,7 +9,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.thread.phone
+ * ---
  * Name : mail.thread.phone
+ * ---
  * Info :
  * Purpose of this mixin is to offer two services
  *

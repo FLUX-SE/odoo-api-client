@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : mail.wizard.invite
+ * ---
  * Name : mail.wizard.invite
+ * ---
  * Info :
  * Wizard to invite partners (or channels) and make them followers.
  */

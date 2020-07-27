@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : res.partner.bank
+ * ---
  * Name : res.partner.bank
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
@@ -167,33 +169,6 @@ class Bank extends Base
     protected $qr_code_valid;
 
     /**
-     * Account Journal
-     * ---
-     * The accounting journal corresponding to this bank account.
-     * ---
-     * Relation : one2many (account.journal -> bank_account_id)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    protected $journal_id;
-
-    /**
-     * ABA/Routing
-     * ---
-     * American Bankers Association Routing Number
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    protected $aba_routing;
-
-    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -240,6 +215,33 @@ class Bank extends Base
     protected $write_date;
 
     /**
+     * Account Journal
+     * ---
+     * The accounting journal corresponding to this bank account.
+     * ---
+     * Relation : one2many (account.journal -> bank_account_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    protected $journal_id;
+
+    /**
+     * ABA/Routing
+     * ---
+     * American Bankers Association Routing Number
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    protected $aba_routing;
+
+    /**
      * @param string $acc_number Account Number
      *        ---
      *        Searchable : yes
@@ -259,11 +261,11 @@ class Bank extends Base
     }
 
     /**
-     * @return string|null
+     * @param OdooRelation|null $write_uid
      */
-    public function getAbaRouting(): ?string
+    public function setWriteUid(?OdooRelation $write_uid): void
     {
-        return $this->aba_routing;
+        $this->write_uid = $write_uid;
     }
 
     /**
@@ -280,6 +282,70 @@ class Bank extends Base
     public function setQrCodeValid(?bool $qr_code_valid): void
     {
         $this->qr_code_valid = $qr_code_valid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -344,83 +410,19 @@ class Bank extends Base
     }
 
     /**
+     * @return string|null
+     */
+    public function getAbaRouting(): ?string
+    {
+        return $this->aba_routing;
+    }
+
+    /**
      * @param string|null $aba_routing
      */
     public function setAbaRouting(?string $aba_routing): void
     {
         $this->aba_routing = $aba_routing;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getCompanyId(): ?OdooRelation
-    {
-        return $this->company_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $create_uid
-     */
-    public function setCreateUid(?OdooRelation $create_uid): void
-    {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $write_date
-     */
-    public function setWriteDate(?DateTimeInterface $write_date): void
-    {
-        $this->write_date = $write_date;
     }
 
     /**

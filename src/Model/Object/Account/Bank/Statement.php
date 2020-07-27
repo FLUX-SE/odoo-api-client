@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.bank.statement
+ * ---
  * Name : account.bank.statement
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *
@@ -322,6 +324,34 @@ final class Statement extends Base
     private $attachment_ids;
 
     /**
+     * Session
+     * ---
+     * Relation : many2one (pos.session)
+     * @see \Flux\OdooApiClient\Model\Object\Pos\Session
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $pos_session_id;
+
+    /**
+     * Default Debit Account
+     * ---
+     * It acts as a default account for debit amount
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $account_id;
+
+    /**
      * Is Follower
      * ---
      * Searchable : yes
@@ -580,19 +610,11 @@ final class Statement extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $message_channel_ids
+     * @return OdooRelation[]|null
      */
-    public function setMessageChannelIds(?array $message_channel_ids): void
+    public function getMessageChannelIds(): ?array
     {
-        $this->message_channel_ids = $message_channel_ids;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getMessageUnreadCounter(): ?int
-    {
-        return $this->message_unread_counter;
+        return $this->message_channel_ids;
     }
 
     /**
@@ -718,19 +740,11 @@ final class Statement extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @param OdooRelation[]|null $message_channel_ids
      */
-    public function getMessageChannelIds(): ?array
+    public function setMessageChannelIds(?array $message_channel_ids): void
     {
-        return $this->message_channel_ids;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isMessageNeedaction(): ?bool
-    {
-        return $this->message_needaction;
+        $this->message_channel_ids = $message_channel_ids;
     }
 
     /**
@@ -746,6 +760,14 @@ final class Statement extends Base
             $index = array_search($item, $this->message_partner_ids);
             unset($this->message_partner_ids[$index]);
         }
+    }
+
+    /**
+     * @param int|null $message_unread_counter
+     */
+    public function setMessageUnreadCounter(?int $message_unread_counter): void
+    {
+        $this->message_unread_counter = $message_unread_counter;
     }
 
     /**
@@ -864,34 +886,43 @@ final class Statement extends Base
     }
 
     /**
-     * @param int|null $message_unread_counter
+     * @return bool|null
      */
-    public function setMessageUnreadCounter(?int $message_unread_counter): void
+    public function isMessageIsFollower(): ?bool
     {
-        $this->message_unread_counter = $message_unread_counter;
+        return $this->message_is_follower;
     }
 
     /**
-     * @param bool|null $message_needaction
+     * @param OdooRelation|null $account_id
      */
-    public function setMessageNeedaction(?bool $message_needaction): void
+    public function setAccountId(?OdooRelation $account_id): void
     {
-        $this->message_needaction = $message_needaction;
+        $this->account_id = $account_id;
     }
 
     /**
-     * @param OdooRelation $item
+     * @return int|null
      */
-    public function removeAttachmentIds(OdooRelation $item): void
+    public function getMessageUnreadCounter(): ?int
     {
-        if (null === $this->attachment_ids) {
-            $this->attachment_ids = [];
-        }
+        return $this->message_unread_counter;
+    }
 
-        if ($this->hasAttachmentIds($item)) {
-            $index = array_search($item, $this->attachment_ids);
-            unset($this->attachment_ids[$index]);
-        }
+    /**
+     * @return bool|null
+     */
+    public function isMessageNeedaction(): ?bool
+    {
+        return $this->message_needaction;
+    }
+
+    /**
+     * @param OdooRelation|null $pos_session_id
+     */
+    public function setPosSessionId(?OdooRelation $pos_session_id): void
+    {
+        $this->pos_session_id = $pos_session_id;
     }
 
     /**
@@ -1020,11 +1051,11 @@ final class Statement extends Base
     }
 
     /**
-     * @return int|null
+     * @param bool|null $message_needaction
      */
-    public function getMessageNeedactionCounter(): ?int
+    public function setMessageNeedaction(?bool $message_needaction): void
     {
-        return $this->message_needaction_counter;
+        $this->message_needaction = $message_needaction;
     }
 
     /**
@@ -1116,27 +1147,27 @@ final class Statement extends Base
     }
 
     /**
-     * @return bool|null
+     * @return int|null
      */
-    public function isMessageIsFollower(): ?bool
+    public function getMessageNeedactionCounter(): ?int
     {
-        return $this->message_is_follower;
+        return $this->message_needaction_counter;
     }
 
     /**
-     * @param OdooRelation $item
+     * @return OdooRelation|null
      */
-    public function addAttachmentIds(OdooRelation $item): void
+    public function getAccountId(): ?OdooRelation
     {
-        if ($this->hasAttachmentIds($item)) {
-            return;
-        }
+        return $this->account_id;
+    }
 
-        if (null === $this->attachment_ids) {
-            $this->attachment_ids = [];
-        }
-
-        $this->attachment_ids[] = $item;
+    /**
+     * @return OdooRelation|null
+     */
+    public function getPosSessionId(): ?OdooRelation
+    {
+        return $this->pos_session_id;
     }
 
     /**
@@ -1148,11 +1179,19 @@ final class Statement extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $accounting_date
+     * @return string
      */
-    public function setAccountingDate(?DateTimeInterface $accounting_date): void
+    public function getState(): string
     {
-        $this->accounting_date = $accounting_date;
+        return $this->state;
+    }
+
+    /**
+     * @param float|null $total_entry_encoding
+     */
+    public function setTotalEntryEncoding(?float $total_entry_encoding): void
+    {
+        $this->total_entry_encoding = $total_entry_encoding;
     }
 
     /**
@@ -1236,11 +1275,19 @@ final class Statement extends Base
     }
 
     /**
-     * @return string
+     * @param DateTimeInterface|null $accounting_date
      */
-    public function getState(): string
+    public function setAccountingDate(?DateTimeInterface $accounting_date): void
     {
-        return $this->state;
+        $this->accounting_date = $accounting_date;
+    }
+
+    /**
+     * @param float|null $balance_end
+     */
+    public function setBalanceEnd(?float $balance_end): void
+    {
+        $this->balance_end = $balance_end;
     }
 
     /**
@@ -1249,14 +1296,6 @@ final class Statement extends Base
     public function getAccountingDate(): ?DateTimeInterface
     {
         return $this->accounting_date;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getBalanceEnd(): ?float
-    {
-        return $this->balance_end;
     }
 
     /**
@@ -1348,19 +1387,58 @@ final class Statement extends Base
     }
 
     /**
-     * @param float|null $total_entry_encoding
+     * @return float|null
      */
-    public function setTotalEntryEncoding(?float $total_entry_encoding): void
+    public function getBalanceEnd(): ?float
     {
-        $this->total_entry_encoding = $total_entry_encoding;
+        return $this->balance_end;
     }
 
     /**
-     * @param float|null $balance_end
+     * @return float|null
      */
-    public function setBalanceEnd(?float $balance_end): void
+    public function getDifference(): ?float
     {
-        $this->balance_end = $balance_end;
+        return $this->difference;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeAttachmentIds(OdooRelation $item): void
+    {
+        if (null === $this->attachment_ids) {
+            $this->attachment_ids = [];
+        }
+
+        if ($this->hasAttachmentIds($item)) {
+            $index = array_search($item, $this->attachment_ids);
+            unset($this->attachment_ids[$index]);
+        }
+    }
+
+    /**
+     * @param bool|null $all_lines_reconciled
+     */
+    public function setAllLinesReconciled(?bool $all_lines_reconciled): void
+    {
+        $this->all_lines_reconciled = $all_lines_reconciled;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addAttachmentIds(OdooRelation $item): void
+    {
+        if ($this->hasAttachmentIds($item)) {
+            return;
+        }
+
+        if (null === $this->attachment_ids) {
+            $this->attachment_ids = [];
+        }
+
+        $this->attachment_ids[] = $item;
     }
 
     /**
@@ -1375,14 +1453,6 @@ final class Statement extends Base
         }
 
         return in_array($item, $this->attachment_ids);
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isAllLinesReconciled(): ?bool
-    {
-        return $this->all_lines_reconciled;
     }
 
     /**
@@ -1466,11 +1536,19 @@ final class Statement extends Base
     }
 
     /**
-     * @param bool|null $all_lines_reconciled
+     * @return bool|null
      */
-    public function setAllLinesReconciled(?bool $all_lines_reconciled): void
+    public function isAllLinesReconciled(): ?bool
     {
-        $this->all_lines_reconciled = $all_lines_reconciled;
+        return $this->all_lines_reconciled;
+    }
+
+    /**
+     * @param float|null $difference
+     */
+    public function setDifference(?float $difference): void
+    {
+        $this->difference = $difference;
     }
 
     /**
@@ -1479,14 +1557,6 @@ final class Statement extends Base
     public function setMoveLineCount(?int $move_line_count): void
     {
         $this->move_line_count = $move_line_count;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getDifference(): ?float
-    {
-        return $this->difference;
     }
 
     /**
@@ -1617,14 +1687,6 @@ final class Statement extends Base
     public function getLineIds(): ?array
     {
         return $this->line_ids;
-    }
-
-    /**
-     * @param float|null $difference
-     */
-    public function setDifference(?float $difference): void
-    {
-        $this->difference = $difference;
     }
 
     /**

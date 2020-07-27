@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : base.document.layout
+ * ---
  * Name : base.document.layout
+ * ---
  * Info :
  * Customise the company document layout and display a live preview
  */

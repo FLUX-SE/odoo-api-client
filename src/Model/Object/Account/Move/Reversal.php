@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.move.reversal
+ * ---
  * Name : account.move.reversal
+ * ---
  * Info :
  * Account move reversal wizard, it cancel an account move by reversing it.
  */

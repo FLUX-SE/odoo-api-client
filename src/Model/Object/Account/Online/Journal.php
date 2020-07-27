@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.online.journal
+ * ---
  * Name : account.online.journal
+ * ---
  * Info :
  * This class is used as an interface.
  *         It is used to save the state of the current online accout.

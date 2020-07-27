@@ -8,7 +8,9 @@ use Flux\OdooApiClient\Model\Object\Base;
 
 /**
  * Odoo model : account.analytic.report
+ * ---
  * Name : account.analytic.report
+ * ---
  * Info :
  * The base model, which is implicitly inherited by all models.
  */

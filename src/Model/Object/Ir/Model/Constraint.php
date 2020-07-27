@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.model.constraint
+ * ---
  * Name : ir.model.constraint
+ * ---
  * Info :
  * This model tracks PostgreSQL foreign keys and constraints used by Odoo
  *         models.

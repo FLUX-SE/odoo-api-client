@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : res.partner.autocomplete.sync
+ * ---
  * Name : res.partner.autocomplete.sync
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

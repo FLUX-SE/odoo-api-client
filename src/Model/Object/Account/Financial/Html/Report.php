@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : account.financial.html.report
+ * ---
  * Name : account.financial.html.report
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

@@ -8,7 +8,9 @@ use Flux\OdooApiClient\Model\Object\Base;
 
 /**
  * Odoo model : ir.autovacuum
+ * ---
  * Name : ir.autovacuum
+ * ---
  * Info :
  * Expose the vacuum method to the cron jobs mechanism.
  */

@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.actions.todo
+ * ---
  * Name : ir.actions.todo
+ * ---
  * Info :
  * Configuration Wizards
  */

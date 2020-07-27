@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : product.tic.category
+ * ---
  * Name : product.tic.category
+ * ---
  * Info :
  * Main super-class for regular database-persisted Odoo models.
  *

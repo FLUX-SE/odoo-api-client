@@ -8,7 +8,9 @@ use Flux\OdooApiClient\Model\Object\Base;
 
 /**
  * Odoo model : portal.mixin
+ * ---
  * Name : portal.mixin
+ * ---
  * Info :
  * The base model, which is implicitly inherited by all models.
  */

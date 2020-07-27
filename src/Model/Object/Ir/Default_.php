@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.default
+ * ---
  * Name : ir.default
+ * ---
  * Info :
  * User-defined default values for fields.
  */

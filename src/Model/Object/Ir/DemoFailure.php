@@ -10,7 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 
 /**
  * Odoo model : ir.demo_failure
+ * ---
  * Name : ir.demo_failure
+ * ---
  * Info :
  * Stores modules for which we could not install demo data
  */

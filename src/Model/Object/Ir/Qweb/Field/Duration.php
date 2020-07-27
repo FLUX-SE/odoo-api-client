@@ -8,7 +8,9 @@ use Flux\OdooApiClient\Model\Object\Base;
 
 /**
  * Odoo model : ir.qweb.field.duration
+ * ---
  * Name : ir.qweb.field.duration
+ * ---
  * Info :
  * ``duration`` converter, to display integral or fractional values as
  *         human-readable time spans (e.g. 1.5 as "1 hour 30 minutes").

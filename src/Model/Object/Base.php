@@ -9,7 +9,9 @@ use Flux\OdooApiClient\Model\BaseInterface;
 
 /**
  * Odoo model : base
+ * ---
  * Name : base
+ * ---
  * Info :
  * The base model, which is implicitly inherited by all models.
  */
