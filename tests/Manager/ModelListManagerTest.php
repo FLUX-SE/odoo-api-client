@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace Tests\Flux\OdooApiClient\Manager;
 
 use Flux\OdooApiClient\Manager\ModelListManager;
-use Flux\OdooApiClient\Manager\ModelManager;
 use Flux\OdooApiClient\Manager\ModelManagerInterface;
 use Flux\OdooApiClient\Model\Object\Res\Partner;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\SearchDomains\SearchDomains;
 use PHPUnit\Framework\TestCase;
 use Tests\Flux\OdooApiClient\Operations\Object\ExecuteKw\ExecuteKwOperationsTrait;
 
