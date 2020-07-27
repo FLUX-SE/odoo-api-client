@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Flux\OdooApiClient\PhpGenerator;
 
-use DateTimeInterface;
 use Exception;
 use Flux\OdooApiClient\Model\BaseInterface;
 use Flux\OdooApiClient\Model\OdooRelation;
@@ -76,60 +75,6 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         }
 
         return $config;
-    }
-
-    /**
-     * @param array<string, string> $fieldInfo
-     * @param string $baseNamespace
-     *
-     * @return array<int, string>
-     */
-    private function transformTypes(array $fieldInfo, string $baseNamespace): array
-    {
-        $phpTypes = [];
-
-        $odooType = $fieldInfo['type'] ?? null;
-        switch ($odooType) {
-            case 'integer':
-            case 'many2one_reference':
-                $phpTypes[] = 'int';
-                break;
-            case 'boolean':
-                $phpTypes[] = 'bool';
-                break;
-            case 'binary':
-            case 'char':
-            case 'html':
-            case 'text':
-            case 'selection':
-                $phpTypes[] = 'string';
-                break;
-            case 'date':
-            case 'datetime':
-                $phpTypes[] = DateTimeInterface::class;
-                break;
-            case 'float':
-            case 'monetary':
-                $phpTypes[] = 'float';
-                break;
-            case 'many2one':
-                $phpTypes[] = OdooRelation::class;
-                break;
-            case 'many2many':
-            case 'one2many':
-                $phpTypes[] = OdooRelation::class . '[]';
-                break;
-            default:
-                $phpTypes[] = 'mixed';
-                break;
-        }
-
-        $required = (bool) ($fieldInfo['required'] ?? false);
-        if (false === $required) {
-            $phpTypes[] = 'null';
-        }
-
-        return $phpTypes;
     }
 
     private function buildClassNameFormModelName(string $modelName): string
@@ -297,7 +242,9 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             'description' => [
                 PhpDocInterface::TYPE_DESCRIPTION => [
                     sprintf('Odoo model : %s', $modelName),
+                    '---',
                     sprintf('Name : %s', $item['model']),
+                    '---',
                     'Info :',
                     $info,
                 ]
@@ -312,13 +259,13 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
     {
         $properties = [];
         foreach ($fieldsInfos as $fieldName => $fieldInfo) {
-            $types = $this->transformTypes($fieldInfo, $baseModelNamespace);
+            $types = OdooModelsStructureConverterHelper::transformTypes($fieldInfo);
             $description = $this->buildModelPropertyDescription($fieldInfo, $baseModelNamespace, $types);
 
             $inheritedFieldInfo = $this->getInheritedFieldInfo($item, $fieldName);
             $inheritedTypes = [];
             if (null !== $inheritedFieldInfo) {
-                $inheritedTypes = $this->transformTypes($inheritedFieldInfo, $baseModelNamespace);
+                $inheritedTypes = OdooModelsStructureConverterHelper::transformTypes($inheritedFieldInfo);
             }
 
             $properties[] = [
@@ -349,7 +296,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             $description[] = 'Selection : (default value, usually null)';
             $description = array_merge(
                 $description,
-                $this->prettyGetSelection($fieldInfo['selection'])
+                OdooModelsStructureConverterHelper::prettyGetSelection($fieldInfo['selection'])
             );
         }
 
@@ -396,30 +343,5 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         }
 
         return null;
-    }
-
-    private function prettyGetSelection(array $selection, int $deep = 0): array
-    {
-        $lines = [];
-        $line = '';
-        foreach ($selection as $i => $item) {
-            if (is_array($item)) {
-                $lines = array_merge($lines, $this->prettyGetSelection($item, $deep + 1));
-                continue;
-            }
-
-            if ($i !== 0) {
-                $line .= ' (' . $item . ')';
-                continue;
-            }
-
-            $line = str_repeat('  ', $deep) . '-> ' . $item;
-        }
-
-        if (false === empty($line)) {
-            $lines[] = $line;
-        }
-
-        return $lines;
     }
 }
