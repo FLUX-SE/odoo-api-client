@@ -259,12 +259,12 @@ final class Cron extends Server
         $this->user_id = $user_id;
         $this->nextcall = $nextcall;
         parent::__construct(
-            $name, 
-            $type, 
-            $usage, 
-            $state, 
-            $model_id, 
-            $binding_type, 
+            $name,
+            $type,
+            $usage,
+            $state,
+            $model_id,
+            $binding_type,
             $activity_user_type
         );
     }

@@ -183,7 +183,7 @@ final class Product extends Template
     private $stock_move_ids;
 
     /**
-     * Free To Use Quantity 
+     * Free To Use Quantity
      * ---
      * Forecast quantity (computed as Quantity On Hand - reserved quantity)
      * In a context with a single Stock Location, this includes goods stored in this location, or any of its
@@ -342,12 +342,12 @@ final class Product extends Template
     ) {
         $this->product_tmpl_id = $product_tmpl_id;
         parent::__construct(
-            $name, 
-            $categ_id, 
-            $uom_id, 
-            $uom_po_id, 
-            $product_variant_ids, 
-            $type, 
+            $name,
+            $categ_id,
+            $uom_id,
+            $uom_po_id,
+            $product_variant_ids,
+            $type,
             $tracking
         );
     }

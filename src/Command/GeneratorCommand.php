@@ -58,7 +58,7 @@ final class GeneratorCommand extends Command
             ->addArgument('database', InputArgument::REQUIRED, 'Your Odoo database name.')
             ->addArgument('username', InputArgument::REQUIRED, 'Your Odoo account username.')
             ->addArgument('password', InputArgument::REQUIRED, 'Your Odoo account password')
-            ->addArgument('basePath', InputArgument::OPTIONAL, 'The path where classes will be generated', dirname(__DIR__).'/Model/Object')
+            ->addArgument('basePath', InputArgument::OPTIONAL, 'The path where classes will be generated', dirname(__DIR__) . '/Model/Object')
             ->addArgument('baseNamespace', InputArgument::OPTIONAL, 'The base namespace of the generated classes', 'Flux\\OdooApiClient\\Model\\Object');
     }
 

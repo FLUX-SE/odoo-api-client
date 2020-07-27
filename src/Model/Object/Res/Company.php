@@ -808,9 +808,9 @@ final class Company extends Base
      * Bank Reconciliation Threshold
      * ---
      * The bank reconciliation widget won't ask to reconcile payments older than this date.
-     *                                                                                                               
+     *
      * This is useful if you install accounting after having used invoicing for some time and
-     *                                                                                                               
+     *
      * don't want to reconcile all the past payments with bank statements.
      * ---
      * Searchable : yes

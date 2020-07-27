@@ -1349,7 +1349,7 @@ final class Settings extends Base
     /**
      * Company Country code
      * ---
-     * The ISO country code in two chars. 
+     * The ISO country code in two chars.
      * You can use this field for quick search.
      * ---
      * Searchable : yes
@@ -1507,7 +1507,7 @@ final class Settings extends Base
     /**
      * Expiration Dates
      * ---
-     * Track following dates on lots & serial numbers: best before, removal, end of life, alert. 
+     * Track following dates on lots & serial numbers: best before, removal, end of life, alert.
      *   Such dates are set automatically at lot/serial number creation based on values set on the product (in days).
      * ---
      * Searchable : yes
@@ -1561,7 +1561,7 @@ final class Settings extends Base
      * Multi-Step Routes
      * ---
      * Add and customize route operations to process product moves in your warehouse(s): e.g. unload > quality
-     * control > stock for incoming products, pick > pack > ship for outgoing products. 
+     * control > stock for incoming products, pick > pack > ship for outgoing products.
      *   You can also set putaway strategies on warehouse locations in order to send incoming products into specific
      * child locations straight away (e.g. specific bins, racks).
      * ---

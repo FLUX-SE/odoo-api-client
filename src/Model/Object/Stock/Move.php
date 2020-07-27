@@ -235,7 +235,7 @@ final class Move extends Base
     private $location_dest_id;
 
     /**
-     * Destination Address 
+     * Destination Address
      * ---
      * Optional address where goods are to be delivered, specifically used for allotment
      * ---
@@ -617,7 +617,7 @@ final class Move extends Base
     private $string_availability_info;
 
     /**
-     * Owner 
+     * Owner
      * ---
      * Technical field used to depict a restriction on the ownership of quants to consider when marking this move as
      * 'done'

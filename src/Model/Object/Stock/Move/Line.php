@@ -269,7 +269,7 @@ final class Line extends Base
      * Create New Lots/Serial Numbers
      * ---
      * If this is checked only, it will suppose you want to create new Lots/Serial Numbers, so you can provide them
-     * in a text field. 
+     * in a text field.
      * ---
      * Searchable : yes
      * Sortable : no
@@ -282,7 +282,7 @@ final class Line extends Base
      * Use Existing Lots/Serial Numbers
      * ---
      * If this is checked, you will be able to choose the Lots/Serial Numbers. You can also decide to not put lots in
-     * this operation type.  This means it will create stock with no lot or not put a restriction on the lot taken. 
+     * this operation type.  This means it will create stock with no lot or not put a restriction on the lot taken.
      * ---
      * Searchable : yes
      * Sortable : no
@@ -341,7 +341,7 @@ final class Line extends Base
     /**
      * Consume Line
      * ---
-     * Technical link to see who consumed what. 
+     * Technical link to see who consumed what.
      * ---
      * Relation : many2many (stock.move.line)
      * @see \Flux\OdooApiClient\Model\Object\Stock\Move\Line
@@ -356,7 +356,7 @@ final class Line extends Base
     /**
      * Produce Line
      * ---
-     * Technical link to see which line was produced with this. 
+     * Technical link to see which line was produced with this.
      * ---
      * Relation : many2many (stock.move.line)
      * @see \Flux\OdooApiClient\Model\Object\Stock\Move\Line

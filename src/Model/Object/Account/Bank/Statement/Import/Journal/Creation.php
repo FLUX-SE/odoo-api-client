@@ -122,12 +122,12 @@ final class Creation extends Journal
     ) {
         $this->journal_id = $journal_id;
         parent::__construct(
-            $name, 
-            $code, 
-            $type, 
-            $sequence_id, 
-            $invoice_reference_type, 
-            $invoice_reference_model, 
+            $name,
+            $code,
+            $type,
+            $sequence_id,
+            $invoice_reference_type,
+            $invoice_reference_model,
             $company_id
         );
     }

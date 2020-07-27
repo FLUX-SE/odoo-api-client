@@ -443,7 +443,7 @@ final class Picking extends Base
      * Create New Lots/Serial Numbers
      * ---
      * If this is checked only, it will suppose you want to create new Lots/Serial Numbers, so you can provide them
-     * in a text field. 
+     * in a text field.
      * ---
      * Searchable : yes
      * Sortable : no

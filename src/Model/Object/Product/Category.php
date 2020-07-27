@@ -203,7 +203,7 @@ final class Category extends Base
      * Manual: The accounting entries to value the inventory are not posted automatically.
      *                 Automated: An accounting entry is automatically created to value the inventory when a product
      * enters or leaves the company.
-     *                 
+     *
      * ---
      * Selection : (default value, usually null)
      *     -> manual_periodic (Manual)
@@ -223,7 +223,7 @@ final class Category extends Base
      *                 Average Cost (AVCO): The products are valued at weighted average cost.
      *                 First In First Out (FIFO): The products are valued supposing those that enter the company
      * first will also leave it first.
-     *                 
+     *
      * ---
      * Selection : (default value, usually null)
      *     -> standard (Standard Price)
@@ -363,7 +363,7 @@ final class Category extends Base
      *        Manual: The accounting entries to value the inventory are not posted automatically.
      *                        Automated: An accounting entry is automatically created to value the inventory when a product
      *        enters or leaves the company.
-     *                        
+     *
      *        ---
      *        Selection : (default value, usually null)
      *            -> manual_periodic (Manual)
@@ -377,7 +377,7 @@ final class Category extends Base
      *                        Average Cost (AVCO): The products are valued at weighted average cost.
      *                        First In First Out (FIFO): The products are valued supposing those that enter the company
      *        first will also leave it first.
-     *                        
+     *
      *        ---
      *        Selection : (default value, usually null)
      *            -> standard (Standard Price)

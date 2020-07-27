@@ -65,7 +65,7 @@ final class Config extends Base
      * Use Existing Lots/Serial Numbers
      * ---
      * If this is checked, you will be able to choose the Lots/Serial Numbers. You can also decide to not put lots in
-     * this operation type.  This means it will create stock with no lot or not put a restriction on the lot taken. 
+     * this operation type.  This means it will create stock with no lot or not put a restriction on the lot taken.
      * ---
      * Searchable : yes
      * Sortable : no
@@ -144,7 +144,7 @@ final class Config extends Base
     /**
      * Virtual KeyBoard
      * ---
-     * Don’t turn this option on if you take orders on smartphones or tablets. 
+     * Don’t turn this option on if you take orders on smartphones or tablets.
      *   Such devices already benefit from a native keyboard.
      * ---
      * Searchable : yes
