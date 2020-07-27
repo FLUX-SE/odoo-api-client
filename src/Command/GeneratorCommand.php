@@ -9,7 +9,6 @@ use Flux\OdooApiClient\Operations\ObjectOperationsInterface;
 use Flux\OdooApiClient\PhpGenerator\OdooModelsStructureConverterInterface;
 use Flux\OdooApiClient\PhpGenerator\OdooPhpClassesGeneratorInterface;
 use Http\Discovery\Psr17FactoryDiscovery;
-use LogicException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -76,11 +75,6 @@ final class GeneratorCommand extends Command
 
         $this->generateModels($this->baseNamespace, $this->basePath);
 
-        $managerNamespace = $this->baseNamespace . '\\Manager\\Object';
-        $managerBasePath = $this->basePath . '/Manager/Object';
-
-        $this->generateManagers($managerNamespace, $managerBasePath);
-
         return Command::SUCCESS;
     }
 
@@ -115,22 +109,5 @@ final class GeneratorCommand extends Command
         $this->odooPhpClassesGenerator->setBasePath($modelBasePath);
         $this->odooPhpClassesGenerator->setClassesConfig($config);
         return $this->odooPhpClassesGenerator->generate();
-    }
-
-    protected function generateManagers(string $namespace, string $path): bool
-    {
-        /*
-        $modelNamespace = $namespace . '\\Manager\\Object';
-        $modelBasePath = $path . '/Manager/Object';
-
-        $config = $this->odooManagersStructureConverter->convert($modelNamespace);
-
-        $this->odooPhpClassesGenerator->setBaseNamespace($modelNamespace);
-        $this->odooPhpClassesGenerator->setBasePath($modelBasePath);
-        $this->odooPhpClassesGenerator->setClassesConfig($config);
-        return $this->odooPhpClassesGenerator->generate();
-        */
-
-        return true;
     }
 }
