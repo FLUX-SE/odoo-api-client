@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Mail\Resend;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : mail.resend.message
@@ -130,6 +131,8 @@ final class Message extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("mail_message_id")
      */
     public function getMailMessageId(): ?OdooRelation
     {
@@ -154,6 +157,8 @@ final class Message extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -170,6 +175,8 @@ final class Message extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -186,6 +193,8 @@ final class Message extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -202,6 +211,8 @@ final class Message extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -218,6 +229,8 @@ final class Message extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("partner_readonly")
      */
     public function isPartnerReadonly(): ?bool
     {
@@ -226,6 +239,8 @@ final class Message extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("has_cancel")
      */
     public function isHasCancel(): ?bool
     {
@@ -295,6 +310,8 @@ final class Message extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("notification_ids")
      */
     public function getNotificationIds(): ?array
     {
@@ -356,6 +373,8 @@ final class Message extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("partner_ids")
      */
     public function getPartnerIds(): ?array
     {

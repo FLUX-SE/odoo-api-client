@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Asset;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.asset.sell
@@ -221,6 +222,8 @@ final class Sell extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("loss_account_id")
      */
     public function getLossAccountId(): ?OdooRelation
     {
@@ -237,6 +240,8 @@ final class Sell extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -253,6 +258,8 @@ final class Sell extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -269,6 +276,8 @@ final class Sell extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -285,6 +294,8 @@ final class Sell extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -301,6 +312,8 @@ final class Sell extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("gain_or_loss")
      */
     public function getGainOrLoss(): ?string
     {
@@ -325,6 +338,8 @@ final class Sell extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("asset_id")
      */
     public function getAssetId(): OdooRelation
     {
@@ -333,6 +348,8 @@ final class Sell extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("gain_account_id")
      */
     public function getGainAccountId(): ?OdooRelation
     {
@@ -349,6 +366,8 @@ final class Sell extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("select_invoice_line_id")
      */
     public function isSelectInvoiceLineId(): ?bool
     {
@@ -365,6 +384,8 @@ final class Sell extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("invoice_line_id")
      */
     public function getInvoiceLineId(): ?OdooRelation
     {
@@ -381,6 +402,8 @@ final class Sell extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("invoice_id")
      */
     public function getInvoiceId(): ?OdooRelation
     {
@@ -397,6 +420,8 @@ final class Sell extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("action")
      */
     public function getAction(): string
     {
@@ -413,6 +438,8 @@ final class Sell extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {

@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Payment\Acquirer\Onboarding;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : payment.acquirer.onboarding.wizard
@@ -191,6 +192,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("payment_method")
      */
     public function getPaymentMethod(): ?string
     {
@@ -199,6 +202,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("journal_name")
      */
     public function getJournalName(): ?string
     {
@@ -215,6 +220,8 @@ final class Wizard extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -231,6 +238,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -247,6 +256,8 @@ final class Wizard extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -263,6 +274,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -279,6 +292,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("manual_post_msg")
      */
     public function getManualPostMsg(): ?string
     {
@@ -295,6 +310,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("acc_number")
      */
     public function getAccNumber(): ?string
     {
@@ -327,6 +344,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("manual_name")
      */
     public function getManualName(): ?string
     {
@@ -343,6 +362,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("stripe_publishable_key")
      */
     public function getStripePublishableKey(): ?string
     {
@@ -359,6 +380,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("stripe_secret_key")
      */
     public function getStripeSecretKey(): ?string
     {
@@ -375,6 +398,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("paypal_pdt_token")
      */
     public function getPaypalPdtToken(): ?string
     {
@@ -391,6 +416,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("paypal_seller_account")
      */
     public function getPaypalSellerAccount(): ?string
     {
@@ -407,6 +434,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("paypal_email_account")
      */
     public function getPaypalEmailAccount(): ?string
     {
@@ -423,6 +452,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("paypal_user_type")
      */
     public function getPaypalUserType(): ?string
     {

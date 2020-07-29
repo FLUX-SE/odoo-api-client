@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Online;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.online.provider
@@ -453,6 +454,8 @@ final class Provider extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_unread")
      */
     public function isMessageUnread(): ?bool
     {
@@ -461,6 +464,8 @@ final class Provider extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_has_error")
      */
     public function isMessageHasError(): ?bool
     {
@@ -477,6 +482,8 @@ final class Provider extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_needaction_counter")
      */
     public function getMessageNeedactionCounter(): ?int
     {
@@ -493,6 +500,8 @@ final class Provider extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_needaction")
      */
     public function isMessageNeedaction(): ?bool
     {
@@ -509,6 +518,8 @@ final class Provider extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_unread_counter")
      */
     public function getMessageUnreadCounter(): ?int
     {
@@ -540,6 +551,8 @@ final class Provider extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_has_error_counter")
      */
     public function getMessageHasErrorCounter(): ?int
     {
@@ -586,6 +599,8 @@ final class Provider extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_ids")
      */
     public function getMessageIds(): ?array
     {
@@ -694,6 +709,8 @@ final class Provider extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -710,6 +727,8 @@ final class Provider extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -726,6 +745,8 @@ final class Provider extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -742,6 +763,8 @@ final class Provider extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -750,6 +773,8 @@ final class Provider extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_has_sms_error")
      */
     public function isMessageHasSmsError(): ?bool
     {
@@ -758,6 +783,8 @@ final class Provider extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_attachment_count")
      */
     public function getMessageAttachmentCount(): ?int
     {
@@ -819,6 +846,8 @@ final class Provider extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("website_message_ids")
      */
     public function getWebsiteMessageIds(): ?array
     {
@@ -835,6 +864,8 @@ final class Provider extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("message_main_attachment_id")
      */
     public function getMessageMainAttachmentId(): ?OdooRelation
     {
@@ -851,6 +882,8 @@ final class Provider extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_channel_ids")
      */
     public function getMessageChannelIds(): ?array
     {
@@ -875,6 +908,8 @@ final class Provider extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -883,6 +918,8 @@ final class Provider extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("message")
      */
     public function getMessage(): ?string
     {
@@ -891,6 +928,8 @@ final class Provider extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("account_online_journal_ids")
      */
     public function getAccountOnlineJournalIds(): ?array
     {
@@ -907,6 +946,8 @@ final class Provider extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("next_refresh")
      */
     public function getNextRefresh(): ?DateTimeInterface
     {
@@ -923,6 +964,8 @@ final class Provider extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("last_refresh")
      */
     public function getLastRefresh(): ?DateTimeInterface
     {
@@ -939,6 +982,8 @@ final class Provider extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("action_required")
      */
     public function isActionRequired(): ?bool
     {
@@ -977,6 +1022,8 @@ final class Provider extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("status_code")
      */
     public function getStatusCode(): ?string
     {
@@ -993,6 +1040,8 @@ final class Provider extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("status")
      */
     public function getStatus(): ?string
     {
@@ -1009,6 +1058,8 @@ final class Provider extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("provider_identifier")
      */
     public function getProviderIdentifier(): ?string
     {
@@ -1025,6 +1076,8 @@ final class Provider extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("provider_account_identifier")
      */
     public function getProviderAccountIdentifier(): ?string
     {
@@ -1079,6 +1132,8 @@ final class Provider extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_is_follower")
      */
     public function isMessageIsFollower(): ?bool
     {
@@ -1095,6 +1150,8 @@ final class Provider extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_partner_ids")
      */
     public function getMessagePartnerIds(): ?array
     {
@@ -1156,6 +1213,8 @@ final class Provider extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_follower_ids")
      */
     public function getMessageFollowerIds(): ?array
     {
@@ -1195,6 +1254,8 @@ final class Provider extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("provider_type")
      */
     public function getProviderType(): ?string
     {
@@ -1211,6 +1272,8 @@ final class Provider extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("ponto_token")
      */
     public function getPontoToken(): ?string
     {
@@ -1227,6 +1290,8 @@ final class Provider extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("plaid_item_id")
      */
     public function getPlaidItemId(): ?string
     {
@@ -1243,6 +1308,8 @@ final class Provider extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("plaid_error_type")
      */
     public function getPlaidErrorType(): ?string
     {
@@ -1259,6 +1326,8 @@ final class Provider extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): OdooRelation
     {

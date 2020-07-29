@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Sms\Resend;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : sms.resend.recipient
@@ -182,6 +183,8 @@ final class Recipient extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("sms_number")
      */
     public function getSmsNumber(): ?string
     {
@@ -198,6 +201,8 @@ final class Recipient extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -214,6 +219,8 @@ final class Recipient extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -230,6 +237,8 @@ final class Recipient extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -246,6 +255,8 @@ final class Recipient extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -270,6 +281,8 @@ final class Recipient extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("sms_resend_id")
      */
     public function getSmsResendId(): OdooRelation
     {
@@ -278,6 +291,8 @@ final class Recipient extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("partner_name")
      */
     public function getPartnerName(): ?string
     {
@@ -294,6 +309,8 @@ final class Recipient extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("partner_id")
      */
     public function getPartnerId(): ?OdooRelation
     {
@@ -310,6 +327,8 @@ final class Recipient extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("failure_type")
      */
     public function getFailureType(): ?string
     {
@@ -326,6 +345,8 @@ final class Recipient extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("resend")
      */
     public function isResend(): ?bool
     {
@@ -342,6 +363,8 @@ final class Recipient extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("notification_id")
      */
     public function getNotificationId(): OdooRelation
     {

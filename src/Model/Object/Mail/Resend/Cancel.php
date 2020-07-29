@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Mail\Resend;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : mail.resend.cancel
@@ -91,6 +92,8 @@ final class Cancel extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("model")
      */
     public function getModel(): ?string
     {
@@ -107,6 +110,8 @@ final class Cancel extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("help_message")
      */
     public function getHelpMessage(): ?string
     {
@@ -123,6 +128,8 @@ final class Cancel extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -139,6 +146,8 @@ final class Cancel extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -155,6 +164,8 @@ final class Cancel extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -171,6 +182,8 @@ final class Cancel extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {

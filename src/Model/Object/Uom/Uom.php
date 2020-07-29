@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Uom;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : uom.uom
@@ -136,18 +137,6 @@ final class Uom extends Base
     private $measure_type;
 
     /**
-     * Group Products in POS
-     * ---
-     * Check if you want to group products of this category in point of sale orders
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $is_pos_groupable;
-
-    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -256,11 +245,11 @@ final class Uom extends Base
     }
 
     /**
-     * @return string|null
+     * @param string $uom_type
      */
-    public function getMeasureType(): ?string
+    public function setUomType(string $uom_type): void
     {
-        return $this->measure_type;
+        $this->uom_type = $uom_type;
     }
 
     /**
@@ -273,6 +262,8 @@ final class Uom extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -289,6 +280,8 @@ final class Uom extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -305,6 +298,8 @@ final class Uom extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -321,26 +316,12 @@ final class Uom extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
-    }
-
-    /**
-     * @param bool|null $is_pos_groupable
-     */
-    public function setIsPosGroupable(?bool $is_pos_groupable): void
-    {
-        $this->is_pos_groupable = $is_pos_groupable;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isIsPosGroupable(): ?bool
-    {
-        return $this->is_pos_groupable;
     }
 
     /**
@@ -352,27 +333,33 @@ final class Uom extends Base
     }
 
     /**
-     * @param string $uom_type
+     * @return string|null
+     *
+     * @SerializedName("measure_type")
      */
-    public function setUomType(string $uom_type): void
+    public function getMeasureType(): ?string
     {
-        $this->uom_type = $uom_type;
+        return $this->measure_type;
     }
 
     /**
      * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return string
+     *
+     * @SerializedName("uom_type")
      */
     public function getUomType(): string
     {
         return $this->uom_type;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("name")
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     /**
@@ -385,6 +372,8 @@ final class Uom extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active")
      */
     public function isActive(): ?bool
     {
@@ -401,6 +390,8 @@ final class Uom extends Base
 
     /**
      * @return float
+     *
+     * @SerializedName("rounding")
      */
     public function getRounding(): float
     {
@@ -417,6 +408,8 @@ final class Uom extends Base
 
     /**
      * @return float
+     *
+     * @SerializedName("factor_inv")
      */
     public function getFactorInv(): float
     {
@@ -433,6 +426,8 @@ final class Uom extends Base
 
     /**
      * @return float
+     *
+     * @SerializedName("factor")
      */
     public function getFactor(): float
     {
@@ -449,6 +444,8 @@ final class Uom extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("category_id")
      */
     public function getCategoryId(): OdooRelation
     {

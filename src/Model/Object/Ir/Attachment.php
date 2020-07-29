@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.attachment
@@ -223,6 +224,46 @@ final class Attachment extends Base
     private $index_content;
 
     /**
+     * Attachment URL
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $local_url;
+
+    /**
+     * Image Src
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $image_src;
+
+    /**
+     * Image Width
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    private $image_width;
+
+    /**
+     * Image Height
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    private $image_height;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -269,46 +310,6 @@ final class Attachment extends Base
     private $write_date;
 
     /**
-     * Attachment URL
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $local_url;
-
-    /**
-     * Image Src
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $image_src;
-
-    /**
-     * Image Width
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var int|null
-     */
-    private $image_width;
-
-    /**
-     * Image Height
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var int|null
-     */
-    private $image_height;
-
-    /**
      * @param string $name Name
      *        ---
      *        Searchable : yes
@@ -331,11 +332,11 @@ final class Attachment extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $create_date
+     * @param string|null $image_src
      */
-    public function setCreateDate(?DateTimeInterface $create_date): void
+    public function setImageSrc(?string $image_src): void
     {
-        $this->create_date = $create_date;
+        $this->image_src = $image_src;
     }
 
     /**
@@ -348,6 +349,8 @@ final class Attachment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("checksum")
      */
     public function getChecksum(): ?string
     {
@@ -364,6 +367,8 @@ final class Attachment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("mimetype")
      */
     public function getMimetype(): ?string
     {
@@ -380,6 +385,8 @@ final class Attachment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("index_content")
      */
     public function getIndexContent(): ?string
     {
@@ -395,71 +402,9 @@ final class Attachment extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $create_uid
-     */
-    public function setCreateUid(?OdooRelation $create_uid): void
-    {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param string|null $store_fname
-     */
-    public function setStoreFname(?string $store_fname): void
-    {
-        $this->store_fname = $store_fname;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $write_date
-     */
-    public function setWriteDate(?DateTimeInterface $write_date): void
-    {
-        $this->write_date = $write_date;
-    }
-
-    /**
      * @return string|null
+     *
+     * @SerializedName("local_url")
      */
     public function getLocalUrl(): ?string
     {
@@ -476,6 +421,8 @@ final class Attachment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("image_src")
      */
     public function getImageSrc(): ?string
     {
@@ -483,19 +430,21 @@ final class Attachment extends Base
     }
 
     /**
-     * @param string|null $image_src
-     */
-    public function setImageSrc(?string $image_src): void
-    {
-        $this->image_src = $image_src;
-    }
-
-    /**
      * @return int|null
+     *
+     * @SerializedName("image_width")
      */
     public function getImageWidth(): ?int
     {
         return $this->image_width;
+    }
+
+    /**
+     * @param string|null $store_fname
+     */
+    public function setStoreFname(?string $store_fname): void
+    {
+        $this->store_fname = $store_fname;
     }
 
     /**
@@ -508,6 +457,8 @@ final class Attachment extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("image_height")
      */
     public function getImageHeight(): ?int
     {
@@ -523,7 +474,81 @@ final class Attachment extends Base
     }
 
     /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
+    }
+
+    /**
      * @return int|null
+     *
+     * @SerializedName("file_size")
      */
     public function getFileSize(): ?int
     {
@@ -532,6 +557,8 @@ final class Attachment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("store_fname")
      */
     public function getStoreFname(): ?string
     {
@@ -540,6 +567,8 @@ final class Attachment extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -548,6 +577,8 @@ final class Attachment extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {
@@ -564,6 +595,8 @@ final class Attachment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("description")
      */
     public function getDescription(): ?string
     {
@@ -580,6 +613,8 @@ final class Attachment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("res_name")
      */
     public function getResName(): ?string
     {
@@ -596,6 +631,8 @@ final class Attachment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("res_model")
      */
     public function getResModel(): ?string
     {
@@ -612,6 +649,8 @@ final class Attachment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("res_field")
      */
     public function getResField(): ?string
     {
@@ -628,6 +667,8 @@ final class Attachment extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("res_id")
      */
     public function getResId(): ?int
     {
@@ -660,6 +701,8 @@ final class Attachment extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("type")
      */
     public function getType(): string
     {
@@ -676,6 +719,8 @@ final class Attachment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("url")
      */
     public function getUrl(): ?string
     {
@@ -692,6 +737,8 @@ final class Attachment extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("public")
      */
     public function isPublic(): ?bool
     {
@@ -708,6 +755,8 @@ final class Attachment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("access_token")
      */
     public function getAccessToken(): ?string
     {
@@ -724,6 +773,8 @@ final class Attachment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("datas")
      */
     public function getDatas(): ?string
     {
@@ -740,6 +791,8 @@ final class Attachment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("db_datas")
      */
     public function getDbDatas(): ?string
     {

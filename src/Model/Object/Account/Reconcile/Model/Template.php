@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Reconcile\Model;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.reconcile.model.template
@@ -717,6 +718,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("tax_ids")
      */
     public function getTaxIds(): ?array
     {
@@ -733,6 +736,8 @@ final class Template extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("has_second_line")
      */
     public function isHasSecondLine(): ?bool
     {
@@ -749,6 +754,8 @@ final class Template extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("force_tax_included")
      */
     public function isForceTaxIncluded(): ?bool
     {
@@ -765,6 +772,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("decimal_separator")
      */
     public function getDecimalSeparator(): ?string
     {
@@ -773,6 +782,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("amount_from_label_regex")
      */
     public function getAmountFromLabelRegex(): ?string
     {
@@ -781,6 +792,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("second_account_id")
      */
     public function getSecondAccountId(): ?OdooRelation
     {
@@ -797,6 +810,8 @@ final class Template extends Base
 
     /**
      * @return float
+     *
+     * @SerializedName("amount")
      */
     public function getAmount(): float
     {
@@ -813,6 +828,8 @@ final class Template extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("amount_type")
      */
     public function getAmountType(): string
     {
@@ -829,6 +846,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("label")
      */
     public function getLabel(): ?string
     {
@@ -845,6 +864,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("account_id")
      */
     public function getAccountId(): ?OdooRelation
     {
@@ -937,6 +958,8 @@ final class Template extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -953,6 +976,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -969,6 +994,8 @@ final class Template extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -985,6 +1012,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -1032,6 +1061,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("second_label")
      */
     public function getSecondLabel(): ?string
     {
@@ -1040,6 +1071,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("second_tax_ids")
      */
     public function getSecondTaxIds(): ?array
     {
@@ -1056,6 +1089,8 @@ final class Template extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("force_second_tax_included")
      */
     public function isForceSecondTaxIncluded(): ?bool
     {
@@ -1072,6 +1107,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("second_amount_from_label_regex")
      */
     public function getSecondAmountFromLabelRegex(): ?string
     {
@@ -1088,6 +1125,8 @@ final class Template extends Base
 
     /**
      * @return float
+     *
+     * @SerializedName("second_amount")
      */
     public function getSecondAmount(): float
     {
@@ -1104,6 +1143,8 @@ final class Template extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("second_amount_type")
      */
     public function getSecondAmountType(): string
     {
@@ -1134,6 +1175,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("match_partner_category_ids")
      */
     public function getMatchPartnerCategoryIds(): ?array
     {
@@ -1142,6 +1185,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("chart_template_id")
      */
     public function getChartTemplateId(): OdooRelation
     {
@@ -1150,6 +1195,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("match_journal_ids")
      */
     public function getMatchJournalIds(): ?array
     {
@@ -1166,6 +1213,8 @@ final class Template extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("match_amount_min")
      */
     public function getMatchAmountMin(): ?float
     {
@@ -1182,6 +1231,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("match_amount")
      */
     public function getMatchAmount(): ?string
     {
@@ -1198,6 +1249,8 @@ final class Template extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("match_nature")
      */
     public function getMatchNature(): string
     {
@@ -1275,6 +1328,8 @@ final class Template extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("to_check")
      */
     public function isToCheck(): ?bool
     {
@@ -1291,6 +1346,8 @@ final class Template extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("auto_reconcile")
      */
     public function isAutoReconcile(): ?bool
     {
@@ -1307,6 +1364,8 @@ final class Template extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("rule_type")
      */
     public function getRuleType(): string
     {
@@ -1323,6 +1382,8 @@ final class Template extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): int
     {
@@ -1339,6 +1400,8 @@ final class Template extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -1355,6 +1418,8 @@ final class Template extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("match_amount_max")
      */
     public function getMatchAmountMax(): ?float
     {
@@ -1363,6 +1428,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("match_label")
      */
     public function getMatchLabel(): ?string
     {
@@ -1432,6 +1499,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("match_partner_ids")
      */
     public function getMatchPartnerIds(): ?array
     {
@@ -1448,6 +1517,8 @@ final class Template extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("match_partner")
      */
     public function isMatchPartner(): ?bool
     {
@@ -1464,6 +1535,8 @@ final class Template extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("match_total_amount_param")
      */
     public function getMatchTotalAmountParam(): ?float
     {
@@ -1480,6 +1553,8 @@ final class Template extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("match_total_amount")
      */
     public function isMatchTotalAmount(): ?bool
     {
@@ -1488,6 +1563,8 @@ final class Template extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("match_same_currency")
      */
     public function isMatchSameCurrency(): ?bool
     {
@@ -1512,6 +1589,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("match_transaction_type_param")
      */
     public function getMatchTransactionTypeParam(): ?string
     {
@@ -1528,6 +1607,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("match_transaction_type")
      */
     public function getMatchTransactionType(): ?string
     {
@@ -1544,6 +1625,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("match_note_param")
      */
     public function getMatchNoteParam(): ?string
     {
@@ -1560,6 +1643,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("match_note")
      */
     public function getMatchNote(): ?string
     {
@@ -1576,6 +1661,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("match_label_param")
      */
     public function getMatchLabelParam(): ?string
     {

@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Transfer\Model;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.transfer.model.line
@@ -167,6 +168,8 @@ final class Line extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("percent_is_readonly")
      */
     public function isPercentIsReadonly(): ?bool
     {
@@ -183,6 +186,8 @@ final class Line extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -199,6 +204,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -215,6 +222,8 @@ final class Line extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -231,6 +240,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -262,6 +273,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("transfer_model_id")
      */
     public function getTransferModelId(): OdooRelation
     {
@@ -308,6 +321,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("analytic_account_ids")
      */
     public function getAnalyticAccountIds(): ?array
     {
@@ -324,6 +339,8 @@ final class Line extends Base
 
     /**
      * @return float
+     *
+     * @SerializedName("percent")
      */
     public function getPercent(): float
     {
@@ -340,6 +357,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("account_id")
      */
     public function getAccountId(): OdooRelation
     {

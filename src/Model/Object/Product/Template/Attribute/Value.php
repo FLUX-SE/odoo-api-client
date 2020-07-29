@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Product\Template\Attribute;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : product.template.attribute.value
@@ -202,6 +203,8 @@ final class Value extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("attribute_id")
      */
     public function getAttributeId(): ?OdooRelation
     {
@@ -218,6 +221,8 @@ final class Value extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -234,6 +239,8 @@ final class Value extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -250,6 +257,8 @@ final class Value extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -266,6 +275,8 @@ final class Value extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -327,6 +338,8 @@ final class Value extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("ptav_product_variant_ids")
      */
     public function getPtavProductVariantIds(): ?array
     {
@@ -351,6 +364,8 @@ final class Value extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("ptav_active")
      */
     public function isPtavActive(): ?bool
     {
@@ -375,6 +390,8 @@ final class Value extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -391,6 +408,8 @@ final class Value extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("product_attribute_value_id")
      */
     public function getProductAttributeValueId(): OdooRelation
     {
@@ -407,6 +426,8 @@ final class Value extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("attribute_line_id")
      */
     public function getAttributeLineId(): OdooRelation
     {
@@ -415,6 +436,8 @@ final class Value extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("price_extra")
      */
     public function getPriceExtra(): ?float
     {
@@ -423,6 +446,8 @@ final class Value extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("product_tmpl_id")
      */
     public function getProductTmplId(): ?OdooRelation
     {
@@ -439,6 +464,8 @@ final class Value extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("exclude_for")
      */
     public function getExcludeFor(): ?array
     {

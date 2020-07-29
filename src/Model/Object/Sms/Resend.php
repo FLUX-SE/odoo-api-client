@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Sms;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : sms.resend
@@ -147,6 +148,8 @@ final class Resend extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -163,6 +166,8 @@ final class Resend extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -179,6 +184,8 @@ final class Resend extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -195,6 +202,8 @@ final class Resend extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -203,6 +212,8 @@ final class Resend extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("has_insufficient_credit")
      */
     public function isHasInsufficientCredit(): ?bool
     {
@@ -211,6 +222,8 @@ final class Resend extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("mail_message_id")
      */
     public function getMailMessageId(): OdooRelation
     {
@@ -227,6 +240,8 @@ final class Resend extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("has_cancel")
      */
     public function isHasCancel(): ?bool
     {
@@ -288,6 +303,8 @@ final class Resend extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("recipient_ids")
      */
     public function getRecipientIds(): ?array
     {

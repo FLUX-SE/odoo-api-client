@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.payment
@@ -447,35 +448,6 @@ final class Payment extends Base
     private $attachment_ids;
 
     /**
-     * Payment Transaction
-     * ---
-     * Relation : many2one (payment.transaction)
-     * @see \Flux\OdooApiClient\Model\Object\Payment\Transaction
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $payment_transaction_id;
-
-    /**
-     * Saved payment token
-     * ---
-     * Note that tokens from acquirers set to only authorize transactions (instead of capturing the amount) are not
-     * available.
-     * ---
-     * Relation : many2one (payment.token)
-     * @see \Flux\OdooApiClient\Model\Object\Payment\Token
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $payment_token_id;
-
-    /**
      * Amount in Words
      * ---
      * Searchable : yes
@@ -509,6 +481,35 @@ final class Payment extends Base
      * @var string|null
      */
     private $check_number;
+
+    /**
+     * Payment Transaction
+     * ---
+     * Relation : many2one (payment.transaction)
+     * @see \Flux\OdooApiClient\Model\Object\Payment\Transaction
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $payment_transaction_id;
+
+    /**
+     * Saved payment token
+     * ---
+     * Note that tokens from acquirers set to only authorize transactions (instead of capturing the amount) are not
+     * available.
+     * ---
+     * Relation : many2one (payment.token)
+     * @see \Flux\OdooApiClient\Model\Object\Payment\Token
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $payment_token_id;
 
     /**
      * Activities
@@ -937,6 +938,8 @@ final class Payment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("activity_exception_icon")
      */
     public function getActivityExceptionIcon(): ?string
     {
@@ -953,6 +956,8 @@ final class Payment extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_is_follower")
      */
     public function isMessageIsFollower(): ?bool
     {
@@ -969,6 +974,8 @@ final class Payment extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_follower_ids")
      */
     public function getMessageFollowerIds(): ?array
     {
@@ -1024,6 +1031,8 @@ final class Payment extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_partner_ids")
      */
     public function getMessagePartnerIds(): ?array
     {
@@ -1085,6 +1094,8 @@ final class Payment extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_channel_ids")
      */
     public function getMessageChannelIds(): ?array
     {
@@ -1093,6 +1104,8 @@ final class Payment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("activity_exception_decoration")
      */
     public function getActivityExceptionDecoration(): ?string
     {
@@ -1101,6 +1114,8 @@ final class Payment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("activity_summary")
      */
     public function getActivitySummary(): ?string
     {
@@ -1138,39 +1153,45 @@ final class Payment extends Base
     }
 
     /**
-     * @return bool|null
+     * @return OdooRelation|null
+     *
+     * @SerializedName("payment_transaction_id")
      */
-    public function isCheckManualSequencing(): ?bool
+    public function getPaymentTransactionId(): ?OdooRelation
     {
-        return $this->check_manual_sequencing;
+        return $this->payment_transaction_id;
     }
 
     /**
-     * @param bool|null $check_manual_sequencing
+     * @param OdooRelation|null $payment_transaction_id
      */
-    public function setCheckManualSequencing(?bool $check_manual_sequencing): void
+    public function setPaymentTransactionId(?OdooRelation $payment_transaction_id): void
     {
-        $this->check_manual_sequencing = $check_manual_sequencing;
+        $this->payment_transaction_id = $payment_transaction_id;
     }
 
     /**
-     * @return string|null
+     * @return OdooRelation|null
+     *
+     * @SerializedName("payment_token_id")
      */
-    public function getCheckNumber(): ?string
+    public function getPaymentTokenId(): ?OdooRelation
     {
-        return $this->check_number;
+        return $this->payment_token_id;
     }
 
     /**
-     * @param string|null $check_number
+     * @param OdooRelation|null $payment_token_id
      */
-    public function setCheckNumber(?string $check_number): void
+    public function setPaymentTokenId(?OdooRelation $payment_token_id): void
     {
-        $this->check_number = $check_number;
+        $this->payment_token_id = $payment_token_id;
     }
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("activity_ids")
      */
     public function getActivityIds(): ?array
     {
@@ -1224,6 +1245,8 @@ final class Payment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("activity_state")
      */
     public function getActivityState(): ?string
     {
@@ -1240,6 +1263,8 @@ final class Payment extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("activity_user_id")
      */
     public function getActivityUserId(): ?OdooRelation
     {
@@ -1256,6 +1281,8 @@ final class Payment extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("activity_type_id")
      */
     public function getActivityTypeId(): ?OdooRelation
     {
@@ -1272,6 +1299,8 @@ final class Payment extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("activity_date_deadline")
      */
     public function getActivityDateDeadline(): ?DateTimeInterface
     {
@@ -1304,10 +1333,12 @@ final class Payment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("check_number")
      */
-    public function getCheckAmountInWords(): ?string
+    public function getCheckNumber(): ?string
     {
-        return $this->check_amount_in_words;
+        return $this->check_number;
     }
 
     /**
@@ -1328,6 +1359,8 @@ final class Payment extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("website_message_ids")
      */
     public function getWebsiteMessageIds(): ?array
     {
@@ -1389,6 +1422,8 @@ final class Payment extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_has_sms_error")
      */
     public function isMessageHasSmsError(): ?bool
     {
@@ -1397,6 +1432,8 @@ final class Payment extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -1421,6 +1458,8 @@ final class Payment extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -1437,6 +1476,8 @@ final class Payment extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -1453,6 +1494,8 @@ final class Payment extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -1469,6 +1512,8 @@ final class Payment extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("message_main_attachment_id")
      */
     public function getMessageMainAttachmentId(): ?OdooRelation
     {
@@ -1477,6 +1522,8 @@ final class Payment extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_attachment_count")
      */
     public function getMessageAttachmentCount(): ?int
     {
@@ -1500,6 +1547,8 @@ final class Payment extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_unread_counter")
      */
     public function getMessageUnreadCounter(): ?int
     {
@@ -1508,6 +1557,8 @@ final class Payment extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_ids")
      */
     public function getMessageIds(): ?array
     {
@@ -1569,6 +1620,8 @@ final class Payment extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_unread")
      */
     public function isMessageUnread(): ?bool
     {
@@ -1601,6 +1654,8 @@ final class Payment extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_needaction")
      */
     public function isMessageNeedaction(): ?bool
     {
@@ -1617,6 +1672,8 @@ final class Payment extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_needaction_counter")
      */
     public function getMessageNeedactionCounter(): ?int
     {
@@ -1633,6 +1690,8 @@ final class Payment extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_has_error")
      */
     public function isMessageHasError(): ?bool
     {
@@ -1649,6 +1708,8 @@ final class Payment extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_has_error_counter")
      */
     public function getMessageHasErrorCounter(): ?int
     {
@@ -1656,23 +1717,25 @@ final class Payment extends Base
     }
 
     /**
-     * @param string|null $check_amount_in_words
+     * @param string|null $check_number
      */
-    public function setCheckAmountInWords(?string $check_amount_in_words): void
+    public function setCheckNumber(?string $check_number): void
     {
-        $this->check_amount_in_words = $check_amount_in_words;
+        $this->check_number = $check_number;
     }
 
     /**
-     * @param OdooRelation|null $payment_token_id
+     * @param bool|null $check_manual_sequencing
      */
-    public function setPaymentTokenId(?OdooRelation $payment_token_id): void
+    public function setCheckManualSequencing(?bool $check_manual_sequencing): void
     {
-        $this->payment_token_id = $payment_token_id;
+        $this->check_manual_sequencing = $check_manual_sequencing;
     }
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -1704,6 +1767,8 @@ final class Payment extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("reconciled_invoices_count")
      */
     public function getReconciledInvoicesCount(): ?int
     {
@@ -1720,6 +1785,8 @@ final class Payment extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("move_line_ids")
      */
     public function getMoveLineIds(): ?array
     {
@@ -1766,6 +1833,8 @@ final class Payment extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("move_reconciled")
      */
     public function isMoveReconciled(): ?bool
     {
@@ -1797,6 +1866,8 @@ final class Payment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("state")
      */
     public function getState(): ?string
     {
@@ -1813,6 +1884,8 @@ final class Payment extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("payment_type")
      */
     public function getPaymentType(): string
     {
@@ -1829,6 +1902,8 @@ final class Payment extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("payment_method_id")
      */
     public function getPaymentMethodId(): OdooRelation
     {
@@ -1845,6 +1920,8 @@ final class Payment extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("has_invoices")
      */
     public function isHasInvoices(): ?bool
     {
@@ -1877,6 +1954,8 @@ final class Payment extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("destination_journal_id")
      */
     public function getDestinationJournalId(): ?OdooRelation
     {
@@ -1893,6 +1972,8 @@ final class Payment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("payment_reference")
      */
     public function getPaymentReference(): ?string
     {
@@ -1909,6 +1990,8 @@ final class Payment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("move_name")
      */
     public function getMoveName(): ?string
     {
@@ -1925,6 +2008,8 @@ final class Payment extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("destination_account_id")
      */
     public function getDestinationAccountId(): ?OdooRelation
     {
@@ -1963,6 +2048,8 @@ final class Payment extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("invoice_ids")
      */
     public function getInvoiceIds(): ?array
     {
@@ -2024,6 +2111,8 @@ final class Payment extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("reconciled_invoice_ids")
      */
     public function getReconciledInvoiceIds(): ?array
     {
@@ -2040,6 +2129,8 @@ final class Payment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("payment_method_code")
      */
     public function getPaymentMethodCode(): ?string
     {
@@ -2048,6 +2139,8 @@ final class Payment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("partner_type")
      */
     public function getPartnerType(): ?string
     {
@@ -2055,15 +2148,19 @@ final class Payment extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @return bool|null
+     *
+     * @SerializedName("check_manual_sequencing")
      */
-    public function getPaymentTokenId(): ?OdooRelation
+    public function isCheckManualSequencing(): ?bool
     {
-        return $this->payment_token_id;
+        return $this->check_manual_sequencing;
     }
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("require_partner_bank_account")
      */
     public function isRequirePartnerBankAccount(): ?bool
     {
@@ -2080,6 +2177,8 @@ final class Payment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("writeoff_label")
      */
     public function getWriteoffLabel(): ?string
     {
@@ -2096,6 +2195,8 @@ final class Payment extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("partner_bank_account_id")
      */
     public function getPartnerBankAccountId(): ?OdooRelation
     {
@@ -2112,6 +2213,8 @@ final class Payment extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("show_partner_bank_account")
      */
     public function isShowPartnerBankAccount(): ?bool
     {
@@ -2144,6 +2247,8 @@ final class Payment extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("attachment_ids")
      */
     public function getAttachmentIds(): ?array
     {
@@ -2204,23 +2309,27 @@ final class Payment extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @return string|null
+     *
+     * @SerializedName("check_amount_in_words")
      */
-    public function getPaymentTransactionId(): ?OdooRelation
+    public function getCheckAmountInWords(): ?string
     {
-        return $this->payment_transaction_id;
+        return $this->check_amount_in_words;
     }
 
     /**
-     * @param OdooRelation|null $payment_transaction_id
+     * @param string|null $check_amount_in_words
      */
-    public function setPaymentTransactionId(?OdooRelation $payment_transaction_id): void
+    public function setCheckAmountInWords(?string $check_amount_in_words): void
     {
-        $this->payment_transaction_id = $payment_transaction_id;
+        $this->check_amount_in_words = $check_amount_in_words;
     }
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("writeoff_account_id")
      */
     public function getWriteoffAccountId(): ?OdooRelation
     {
@@ -2229,6 +2338,8 @@ final class Payment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("payment_difference_handling")
      */
     public function getPaymentDifferenceHandling(): ?string
     {
@@ -2253,6 +2364,8 @@ final class Payment extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("partner_id")
      */
     public function getPartnerId(): ?OdooRelation
     {
@@ -2269,6 +2382,8 @@ final class Payment extends Base
 
     /**
      * @return float
+     *
+     * @SerializedName("amount")
      */
     public function getAmount(): float
     {
@@ -2285,6 +2400,8 @@ final class Payment extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("currency_id")
      */
     public function getCurrencyId(): OdooRelation
     {
@@ -2301,6 +2418,8 @@ final class Payment extends Base
 
     /**
      * @return DateTimeInterface
+     *
+     * @SerializedName("payment_date")
      */
     public function getPaymentDate(): DateTimeInterface
     {
@@ -2309,6 +2428,8 @@ final class Payment extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("communication")
      */
     public function getCommunication(): ?string
     {
@@ -2333,6 +2454,8 @@ final class Payment extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("journal_id")
      */
     public function getJournalId(): OdooRelation
     {
@@ -2349,6 +2472,8 @@ final class Payment extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {
@@ -2365,6 +2490,8 @@ final class Payment extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("hide_payment_method")
      */
     public function isHidePaymentMethod(): ?bool
     {
@@ -2381,6 +2508,8 @@ final class Payment extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("payment_difference")
      */
     public function getPaymentDifference(): ?float
     {

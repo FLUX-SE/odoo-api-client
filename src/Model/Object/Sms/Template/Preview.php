@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Sms\Template;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : sms.template.preview
@@ -287,6 +288,8 @@ final class Preview extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("sub_model_object_field")
      */
     public function getSubModelObjectField(): ?OdooRelation
     {
@@ -303,6 +306,8 @@ final class Preview extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("null_value")
      */
     public function getNullValue(): ?string
     {
@@ -319,6 +324,8 @@ final class Preview extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("copyvalue")
      */
     public function getCopyvalue(): ?string
     {
@@ -327,6 +334,8 @@ final class Preview extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -351,6 +360,8 @@ final class Preview extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -367,6 +378,8 @@ final class Preview extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -383,6 +396,8 @@ final class Preview extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -399,6 +414,8 @@ final class Preview extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("sub_object")
      */
     public function getSubObject(): ?OdooRelation
     {
@@ -407,6 +424,8 @@ final class Preview extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("model_object_field")
      */
     public function getModelObjectField(): ?OdooRelation
     {
@@ -415,6 +434,8 @@ final class Preview extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("sms_template_id")
      */
     public function getSmsTemplateId(): ?OdooRelation
     {
@@ -423,6 +444,8 @@ final class Preview extends Base
 
     /**
      * @return mixed|null
+     *
+     * @SerializedName("resource_ref")
      */
     public function getResourceRef()
     {
@@ -439,6 +462,8 @@ final class Preview extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("lang")
      */
     public function getLang(): ?string
     {
@@ -455,6 +480,8 @@ final class Preview extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("model_id")
      */
     public function getModelId(): OdooRelation
     {
@@ -471,6 +498,8 @@ final class Preview extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("res_id")
      */
     public function getResId(): ?int
     {
@@ -503,6 +532,8 @@ final class Preview extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -519,6 +550,8 @@ final class Preview extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("model")
      */
     public function getModel(): ?string
     {
@@ -535,6 +568,8 @@ final class Preview extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("body")
      */
     public function getBody(): string
     {
@@ -551,6 +586,8 @@ final class Preview extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("sidebar_action_id")
      */
     public function getSidebarActionId(): ?OdooRelation
     {

@@ -6,6 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Res;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : res.users
@@ -367,16 +368,6 @@ final class Users extends Partner
     private $in_group_62;
 
     /**
-     * A warning can be set on a partner (Stock)
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $in_group_74;
-
-    /**
      * Advanced Pricelists
      * ---
      * Searchable : no
@@ -447,46 +438,6 @@ final class Users extends Partner
     private $in_group_56;
 
     /**
-     * Display Serial & Lot Number in Delivery Slips
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $in_group_70;
-
-    /**
-     * Manage Different Stock Owners
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $in_group_73;
-
-    /**
-     * Manage Lots / Serial Numbers
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $in_group_69;
-
-    /**
-     * Manage Multiple Stock Locations
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $in_group_65;
-
-    /**
      * Manage Multiple Units of Measure
      * ---
      * Searchable : no
@@ -495,26 +446,6 @@ final class Users extends Partner
      * @var bool|null
      */
     private $in_group_49;
-
-    /**
-     * Manage Multiple Warehouses
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $in_group_66;
-
-    /**
-     * Manage Packages
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $in_group_71;
 
     /**
      * Manage Product Packaging
@@ -535,16 +466,6 @@ final class Users extends Partner
      * @var bool|null
      */
     private $in_group_55;
-
-    /**
-     * Manage Push and Pull inventory flows
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $in_group_72;
 
     /**
      * Tax display B2B
@@ -586,21 +507,6 @@ final class Users extends Partner
     private $sel_groups_2_3;
 
     /**
-     * Inventory
-     * ---
-     * Selection : (default value, usually null)
-     *     ->  ()
-     *     -> 67 (User)
-     *     -> 68 (Administrator)
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $sel_groups_67_68;
-
-    /**
      * Accounting
      * ---
      * Selection : (default value, usually null)
@@ -635,21 +541,6 @@ final class Users extends Partner
      * @var string|null
      */
     private $sel_groups_1_8_9;
-
-    /**
-     * Point Of Sale
-     * ---
-     * Selection : (default value, usually null)
-     *     ->  ()
-     *     -> 75 (User)
-     *     -> 76 (Administrator)
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $sel_groups_75_76;
 
     /**
      * Contact Creation
@@ -773,6 +664,16 @@ final class Users extends Partner
     }
 
     /**
+     * @return bool|null
+     *
+     * @SerializedName("in_group_53")
+     */
+    public function isInGroup53(): ?bool
+    {
+        return $this->in_group_53;
+    }
+
+    /**
      * @param bool|null $in_group_52
      */
     public function setInGroup52(?bool $in_group_52): void
@@ -782,122 +683,12 @@ final class Users extends Partner
 
     /**
      * @return bool|null
-     */
-    public function isInGroup66(): ?bool
-    {
-        return $this->in_group_66;
-    }
-
-    /**
-     * @param bool|null $in_group_49
-     */
-    public function setInGroup49(?bool $in_group_49): void
-    {
-        $this->in_group_49 = $in_group_49;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isInGroup49(): ?bool
-    {
-        return $this->in_group_49;
-    }
-
-    /**
-     * @param bool|null $in_group_65
-     */
-    public function setInGroup65(?bool $in_group_65): void
-    {
-        $this->in_group_65 = $in_group_65;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isInGroup65(): ?bool
-    {
-        return $this->in_group_65;
-    }
-
-    /**
-     * @param bool|null $in_group_69
-     */
-    public function setInGroup69(?bool $in_group_69): void
-    {
-        $this->in_group_69 = $in_group_69;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isInGroup69(): ?bool
-    {
-        return $this->in_group_69;
-    }
-
-    /**
-     * @param bool|null $in_group_73
-     */
-    public function setInGroup73(?bool $in_group_73): void
-    {
-        $this->in_group_73 = $in_group_73;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isInGroup73(): ?bool
-    {
-        return $this->in_group_73;
-    }
-
-    /**
-     * @param bool|null $in_group_70
-     */
-    public function setInGroup70(?bool $in_group_70): void
-    {
-        $this->in_group_70 = $in_group_70;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isInGroup70(): ?bool
-    {
-        return $this->in_group_70;
-    }
-
-    /**
-     * @param bool|null $in_group_56
-     */
-    public function setInGroup56(?bool $in_group_56): void
-    {
-        $this->in_group_56 = $in_group_56;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isInGroup56(): ?bool
-    {
-        return $this->in_group_56;
-    }
-
-    /**
-     * @return bool|null
+     *
+     * @SerializedName("in_group_52")
      */
     public function isInGroup52(): ?bool
     {
         return $this->in_group_52;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isInGroup71(): ?bool
-    {
-        return $this->in_group_71;
     }
 
     /**
@@ -910,6 +701,8 @@ final class Users extends Partner
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("in_group_51")
      */
     public function isInGroup51(): ?bool
     {
@@ -926,6 +719,8 @@ final class Users extends Partner
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("in_group_50")
      */
     public function isInGroup50(): ?bool
     {
@@ -942,6 +737,8 @@ final class Users extends Partner
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("in_group_64")
      */
     public function isInGroup64(): ?bool
     {
@@ -958,6 +755,8 @@ final class Users extends Partner
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("in_group_63")
      */
     public function isInGroup63(): ?bool
     {
@@ -973,30 +772,6 @@ final class Users extends Partner
     }
 
     /**
-     * @return bool|null
-     */
-    public function isInGroup53(): ?bool
-    {
-        return $this->in_group_53;
-    }
-
-    /**
-     * @param bool|null $in_group_74
-     */
-    public function setInGroup74(?bool $in_group_74): void
-    {
-        $this->in_group_74 = $in_group_74;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isInGroup74(): ?bool
-    {
-        return $this->in_group_74;
-    }
-
-    /**
      * @param bool|null $in_group_62
      */
     public function setInGroup62(?bool $in_group_62): void
@@ -1005,7 +780,17 @@ final class Users extends Partner
     }
 
     /**
+     * @param bool|null $in_group_56
+     */
+    public function setInGroup56(?bool $in_group_56): void
+    {
+        $this->in_group_56 = $in_group_56;
+    }
+
+    /**
      * @return bool|null
+     *
+     * @SerializedName("in_group_62")
      */
     public function isInGroup62(): ?bool
     {
@@ -1013,23 +798,17 @@ final class Users extends Partner
     }
 
     /**
-     * @param bool|null $in_group_66
+     * @param string|null $state
      */
-    public function setInGroup66(?bool $in_group_66): void
+    public function setState(?string $state): void
     {
-        $this->in_group_66 = $in_group_66;
-    }
-
-    /**
-     * @param bool|null $in_group_71
-     */
-    public function setInGroup71(?bool $in_group_71): void
-    {
-        $this->in_group_71 = $in_group_71;
+        $this->state = $state;
     }
 
     /**
      * @return string|null
+     *
+     * @SerializedName("state")
      */
     public function getState(): ?string
     {
@@ -1037,7 +816,126 @@ final class Users extends Partner
     }
 
     /**
+     * @param string|null $out_of_office_message
+     */
+    public function setOutOfOfficeMessage(?string $out_of_office_message): void
+    {
+        $this->out_of_office_message = $out_of_office_message;
+    }
+
+    /**
      * @return string|null
+     *
+     * @SerializedName("out_of_office_message")
+     */
+    public function getOutOfOfficeMessage(): ?string
+    {
+        return $this->out_of_office_message;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeModerationChannelIds(OdooRelation $item): void
+    {
+        if (null === $this->moderation_channel_ids) {
+            $this->moderation_channel_ids = [];
+        }
+
+        if ($this->hasModerationChannelIds($item)) {
+            $index = array_search($item, $this->moderation_channel_ids);
+            unset($this->moderation_channel_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addModerationChannelIds(OdooRelation $item): void
+    {
+        if ($this->hasModerationChannelIds($item)) {
+            return;
+        }
+
+        if (null === $this->moderation_channel_ids) {
+            $this->moderation_channel_ids = [];
+        }
+
+        $this->moderation_channel_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasModerationChannelIds(OdooRelation $item): bool
+    {
+        if (null === $this->moderation_channel_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->moderation_channel_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $moderation_channel_ids
+     */
+    public function setModerationChannelIds(?array $moderation_channel_ids): void
+    {
+        $this->moderation_channel_ids = $moderation_channel_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("moderation_channel_ids")
+     */
+    public function getModerationChannelIds(): ?array
+    {
+        return $this->moderation_channel_ids;
+    }
+
+    /**
+     * @param int|null $moderation_counter
+     */
+    public function setModerationCounter(?int $moderation_counter): void
+    {
+        $this->moderation_counter = $moderation_counter;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("in_group_56")
+     */
+    public function isInGroup56(): ?bool
+    {
+        return $this->in_group_56;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("in_group_49")
+     */
+    public function isInGroup49(): ?bool
+    {
+        return $this->in_group_49;
+    }
+
+    /**
+     * @param bool|null $is_moderator
+     */
+    public function setIsModerator(?bool $is_moderator): void
+    {
+        $this->is_moderator = $is_moderator;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("sel_groups_1_8_9")
      */
     public function getSelGroups189(): ?string
     {
@@ -1054,6 +952,8 @@ final class Users extends Partner
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("in_group_10")
      */
     public function isInGroup10(): ?bool
     {
@@ -1070,6 +970,8 @@ final class Users extends Partner
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("in_group_6")
      */
     public function isInGroup6(): ?bool
     {
@@ -1086,6 +988,8 @@ final class Users extends Partner
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("in_group_5")
      */
     public function isInGroup5(): ?bool
     {
@@ -1102,6 +1006,8 @@ final class Users extends Partner
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("in_group_4")
      */
     public function isInGroup4(): ?bool
     {
@@ -1118,26 +1024,12 @@ final class Users extends Partner
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("in_group_7")
      */
     public function isInGroup7(): ?bool
     {
         return $this->in_group_7;
-    }
-
-    /**
-     * @param string|null $sel_groups_75_76
-     */
-    public function setSelGroups7576(?string $sel_groups_75_76): void
-    {
-        $this->sel_groups_75_76 = $sel_groups_75_76;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSelGroups7576(): ?string
-    {
-        return $this->sel_groups_75_76;
     }
 
     /**
@@ -1157,35 +1049,21 @@ final class Users extends Partner
     }
 
     /**
-     * @return bool|null
+     * @param bool|null $in_group_49
      */
-    public function isInGroup54(): ?bool
+    public function setInGroup49(?bool $in_group_49): void
     {
-        return $this->in_group_54;
+        $this->in_group_49 = $in_group_49;
     }
 
     /**
      * @return string|null
+     *
+     * @SerializedName("sel_groups_57_60_61")
      */
     public function getSelGroups576061(): ?string
     {
         return $this->sel_groups_57_60_61;
-    }
-
-    /**
-     * @param string|null $sel_groups_67_68
-     */
-    public function setSelGroups6768(?string $sel_groups_67_68): void
-    {
-        $this->sel_groups_67_68 = $sel_groups_67_68;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSelGroups6768(): ?string
-    {
-        return $this->sel_groups_67_68;
     }
 
     /**
@@ -1198,6 +1076,8 @@ final class Users extends Partner
 
     /**
      * @return string|null
+     *
+     * @SerializedName("sel_groups_2_3")
      */
     public function getSelGroups23(): ?string
     {
@@ -1214,6 +1094,8 @@ final class Users extends Partner
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("in_group_59")
      */
     public function isInGroup59(): ?bool
     {
@@ -1230,26 +1112,12 @@ final class Users extends Partner
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("in_group_58")
      */
     public function isInGroup58(): ?bool
     {
         return $this->in_group_58;
-    }
-
-    /**
-     * @param bool|null $in_group_72
-     */
-    public function setInGroup72(?bool $in_group_72): void
-    {
-        $this->in_group_72 = $in_group_72;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isInGroup72(): ?bool
-    {
-        return $this->in_group_72;
     }
 
     /**
@@ -1262,6 +1130,8 @@ final class Users extends Partner
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("in_group_55")
      */
     public function isInGroup55(): ?bool
     {
@@ -1277,23 +1147,39 @@ final class Users extends Partner
     }
 
     /**
-     * @param string|null $state
+     * @return bool|null
+     *
+     * @SerializedName("in_group_54")
      */
-    public function setState(?string $state): void
+    public function isInGroup54(): ?bool
     {
-        $this->state = $state;
+        return $this->in_group_54;
     }
 
     /**
-     * @param string|null $out_of_office_message
+     * @return int|null
+     *
+     * @SerializedName("moderation_counter")
      */
-    public function setOutOfOfficeMessage(?string $out_of_office_message): void
+    public function getModerationCounter(): ?int
     {
-        $this->out_of_office_message = $out_of_office_message;
+        return $this->moderation_counter;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("is_moderator")
+     */
+    public function isIsModerator(): ?bool
+    {
+        return $this->is_moderator;
     }
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("partner_id")
      */
     public function getPartnerId(): OdooRelation
     {
@@ -1301,61 +1187,17 @@ final class Users extends Partner
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param OdooRelation|null $action_id
      */
-    public function hasGroupsId(OdooRelation $item): bool
+    public function setActionId(?OdooRelation $action_id): void
     {
-        if (null === $this->groups_id) {
-            return false;
-        }
-
-        return in_array($item, $this->groups_id);
-    }
-
-    /**
-     * @param int|null $companies_count
-     */
-    public function setCompaniesCount(?int $companies_count): void
-    {
-        $this->companies_count = $companies_count;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getCompaniesCount(): ?int
-    {
-        return $this->companies_count;
-    }
-
-    /**
-     * @param bool|null $share
-     */
-    public function setShare(?bool $share): void
-    {
-        $this->share = $share;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isShare(): ?bool
-    {
-        return $this->share;
-    }
-
-    /**
-     * @param DateTimeInterface|null $login_date
-     */
-    public function setLoginDate(?DateTimeInterface $login_date): void
-    {
-        $this->login_date = $login_date;
+        $this->action_id = $action_id;
     }
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("login_date")
      */
     public function getLoginDate(): ?DateTimeInterface
     {
@@ -1417,6 +1259,8 @@ final class Users extends Partner
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("log_ids")
      */
     public function getLogIds(): ?array
     {
@@ -1455,6 +1299,20 @@ final class Users extends Partner
     }
 
     /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasGroupsId(OdooRelation $item): bool
+    {
+        if (null === $this->groups_id) {
+            return false;
+        }
+
+        return in_array($item, $this->groups_id);
+    }
+
+    /**
      * @param OdooRelation[]|null $groups_id
      */
     public function setGroupsId(?array $groups_id): void
@@ -1463,15 +1321,9 @@ final class Users extends Partner
     }
 
     /**
-     * @param OdooRelation[]|null $company_ids
-     */
-    public function setCompanyIds(?array $company_ids): void
-    {
-        $this->company_ids = $company_ids;
-    }
-
-    /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("groups_id")
      */
     public function getGroupsId(): ?array
     {
@@ -1479,19 +1331,23 @@ final class Users extends Partner
     }
 
     /**
-     * @param OdooRelation|null $action_id
-     */
-    public function setActionId(?OdooRelation $action_id): void
-    {
-        $this->action_id = $action_id;
-    }
-
-    /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("action_id")
      */
     public function getActionId(): ?OdooRelation
     {
         return $this->action_id;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("share")
+     */
+    public function isShare(): ?bool
+    {
+        return $this->share;
     }
 
     /**
@@ -1504,6 +1360,8 @@ final class Users extends Partner
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active_partner")
      */
     public function isActivePartner(): ?bool
     {
@@ -1520,6 +1378,8 @@ final class Users extends Partner
 
     /**
      * @return string|null
+     *
+     * @SerializedName("signature")
      */
     public function getSignature(): ?string
     {
@@ -1536,6 +1396,8 @@ final class Users extends Partner
 
     /**
      * @return string|null
+     *
+     * @SerializedName("new_password")
      */
     public function getNewPassword(): ?string
     {
@@ -1552,6 +1414,8 @@ final class Users extends Partner
 
     /**
      * @return string|null
+     *
+     * @SerializedName("password")
      */
     public function getPassword(): ?string
     {
@@ -1568,6 +1432,8 @@ final class Users extends Partner
 
     /**
      * @return string
+     *
+     * @SerializedName("login")
      */
     public function getLogin(): string
     {
@@ -1583,134 +1449,19 @@ final class Users extends Partner
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @param DateTimeInterface|null $login_date
      */
-    public function getCompanyIds(): ?array
+    public function setLoginDate(?DateTimeInterface $login_date): void
     {
-        return $this->company_ids;
+        $this->login_date = $login_date;
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param bool|null $share
      */
-    public function hasCompanyIds(OdooRelation $item): bool
+    public function setShare(?bool $share): void
     {
-        if (null === $this->company_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->company_ids);
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getOutOfOfficeMessage(): ?string
-    {
-        return $this->out_of_office_message;
-    }
-
-    /**
-     * @param OdooRelation|null $alias_id
-     */
-    public function setAliasId(?OdooRelation $alias_id): void
-    {
-        $this->alias_id = $alias_id;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeModerationChannelIds(OdooRelation $item): void
-    {
-        if (null === $this->moderation_channel_ids) {
-            $this->moderation_channel_ids = [];
-        }
-
-        if ($this->hasModerationChannelIds($item)) {
-            $index = array_search($item, $this->moderation_channel_ids);
-            unset($this->moderation_channel_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addModerationChannelIds(OdooRelation $item): void
-    {
-        if ($this->hasModerationChannelIds($item)) {
-            return;
-        }
-
-        if (null === $this->moderation_channel_ids) {
-            $this->moderation_channel_ids = [];
-        }
-
-        $this->moderation_channel_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasModerationChannelIds(OdooRelation $item): bool
-    {
-        if (null === $this->moderation_channel_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->moderation_channel_ids);
-    }
-
-    /**
-     * @param OdooRelation[]|null $moderation_channel_ids
-     */
-    public function setModerationChannelIds(?array $moderation_channel_ids): void
-    {
-        $this->moderation_channel_ids = $moderation_channel_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getModerationChannelIds(): ?array
-    {
-        return $this->moderation_channel_ids;
-    }
-
-    /**
-     * @param int|null $moderation_counter
-     */
-    public function setModerationCounter(?int $moderation_counter): void
-    {
-        $this->moderation_counter = $moderation_counter;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getModerationCounter(): ?int
-    {
-        return $this->moderation_counter;
-    }
-
-    /**
-     * @param bool|null $is_moderator
-     */
-    public function setIsModerator(?bool $is_moderator): void
-    {
-        $this->is_moderator = $is_moderator;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isIsModerator(): ?bool
-    {
-        return $this->is_moderator;
+        $this->share = $share;
     }
 
     /**
@@ -1722,7 +1473,19 @@ final class Users extends Partner
     }
 
     /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("resource_ids")
+     */
+    public function getResourceIds(): ?array
+    {
+        return $this->resource_ids;
+    }
+
+    /**
      * @return string
+     *
+     * @SerializedName("notification_type")
      */
     public function getNotificationType(): string
     {
@@ -1739,6 +1502,8 @@ final class Users extends Partner
 
     /**
      * @return string|null
+     *
+     * @SerializedName("alias_contact")
      */
     public function getAliasContact(): ?string
     {
@@ -1746,27 +1511,21 @@ final class Users extends Partner
     }
 
     /**
+     * @param OdooRelation|null $alias_id
+     */
+    public function setAliasId(?OdooRelation $alias_id): void
+    {
+        $this->alias_id = $alias_id;
+    }
+
+    /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("alias_id")
      */
     public function getAliasId(): ?OdooRelation
     {
         return $this->alias_id;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addCompanyIds(OdooRelation $item): void
-    {
-        if ($this->hasCompanyIds($item)) {
-            return;
-        }
-
-        if (null === $this->company_ids) {
-            $this->company_ids = [];
-        }
-
-        $this->company_ids[] = $item;
     }
 
     /**
@@ -1779,6 +1538,8 @@ final class Users extends Partner
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("resource_calendar_id")
      */
     public function getResourceCalendarId(): ?OdooRelation
     {
@@ -1839,14 +1600,6 @@ final class Users extends Partner
     }
 
     /**
-     * @return OdooRelation[]|null
-     */
-    public function getResourceIds(): ?array
-    {
-        return $this->resource_ids;
-    }
-
-    /**
      * @param int|null $groups_count
      */
     public function setGroupsCount(?int $groups_count): void
@@ -1856,6 +1609,18 @@ final class Users extends Partner
 
     /**
      * @return int|null
+     *
+     * @SerializedName("companies_count")
+     */
+    public function getCompaniesCount(): ?int
+    {
+        return $this->companies_count;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("groups_count")
      */
     public function getGroupsCount(): ?int
     {
@@ -1872,6 +1637,8 @@ final class Users extends Partner
 
     /**
      * @return int|null
+     *
+     * @SerializedName("rules_count")
      */
     public function getRulesCount(): ?int
     {
@@ -1888,6 +1655,8 @@ final class Users extends Partner
 
     /**
      * @return int|null
+     *
+     * @SerializedName("accesses_count")
      */
     public function getAccessesCount(): ?int
     {
@@ -1907,6 +1676,62 @@ final class Users extends Partner
             $index = array_search($item, $this->company_ids);
             unset($this->company_ids[$index]);
         }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addCompanyIds(OdooRelation $item): void
+    {
+        if ($this->hasCompanyIds($item)) {
+            return;
+        }
+
+        if (null === $this->company_ids) {
+            $this->company_ids = [];
+        }
+
+        $this->company_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasCompanyIds(OdooRelation $item): bool
+    {
+        if (null === $this->company_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->company_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $company_ids
+     */
+    public function setCompanyIds(?array $company_ids): void
+    {
+        $this->company_ids = $company_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("company_ids")
+     */
+    public function getCompanyIds(): ?array
+    {
+        return $this->company_ids;
+    }
+
+    /**
+     * @param int|null $companies_count
+     */
+    public function setCompaniesCount(?int $companies_count): void
+    {
+        $this->companies_count = $companies_count;
     }
 
     /**

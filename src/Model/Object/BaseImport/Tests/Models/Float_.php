@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\BaseImport\Tests\Models;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : base_import.tests.models.float
@@ -107,6 +108,8 @@ final class Float_ extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("value")
      */
     public function getValue(): ?float
     {
@@ -123,6 +126,8 @@ final class Float_ extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("value2")
      */
     public function getValue2(): ?float
     {
@@ -139,6 +144,8 @@ final class Float_ extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("currency_id")
      */
     public function getCurrencyId(): ?OdooRelation
     {
@@ -155,6 +162,8 @@ final class Float_ extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -171,6 +180,8 @@ final class Float_ extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -187,6 +198,8 @@ final class Float_ extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -203,6 +216,8 @@ final class Float_ extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {

@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Online;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.online.journal
@@ -204,6 +205,8 @@ final class Journal extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -212,6 +215,8 @@ final class Journal extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("ponto_last_synchronization_identifier")
      */
     public function getPontoLastSynchronizationIdentifier(): ?string
     {
@@ -229,6 +234,8 @@ final class Journal extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("yodlee_account_status")
      */
     public function getYodleeAccountStatus(): ?string
     {
@@ -245,6 +252,8 @@ final class Journal extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("yodlee_status_code")
      */
     public function getYodleeStatusCode(): ?int
     {
@@ -269,6 +278,8 @@ final class Journal extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("balance")
      */
     public function getBalance(): ?float
     {
@@ -277,6 +288,8 @@ final class Journal extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -293,6 +306,8 @@ final class Journal extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -309,6 +324,8 @@ final class Journal extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -341,6 +358,8 @@ final class Journal extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -373,6 +392,8 @@ final class Journal extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("account_online_provider_id")
      */
     public function getAccountOnlineProviderId(): ?OdooRelation
     {
@@ -389,6 +410,8 @@ final class Journal extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("journal_ids")
      */
     public function getJournalIds(): ?array
     {
@@ -434,6 +457,8 @@ final class Journal extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("provider_name")
      */
     public function getProviderName(): ?string
     {
@@ -442,6 +467,8 @@ final class Journal extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("account_number")
      */
     public function getAccountNumber(): ?string
     {
@@ -458,6 +485,8 @@ final class Journal extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("last_sync")
      */
     public function getLastSync(): ?DateTimeInterface
     {
@@ -474,6 +503,8 @@ final class Journal extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("online_identifier")
      */
     public function getOnlineIdentifier(): ?string
     {

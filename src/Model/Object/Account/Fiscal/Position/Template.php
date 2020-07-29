@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Fiscal\Position;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.fiscal.position.template
@@ -183,16 +184,6 @@ final class Template extends Base
     private $zip_to;
 
     /**
-     * Use TaxCloud API
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $is_taxcloud;
-
-    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -258,11 +249,21 @@ final class Template extends Base
     }
 
     /**
-     * @param string|null $zip_to
+     * @param string|null $zip_from
      */
-    public function setZipTo(?string $zip_to): void
+    public function setZipFrom(?string $zip_from): void
     {
-        $this->zip_to = $zip_to;
+        $this->zip_from = $zip_from;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("country_group_id")
+     */
+    public function getCountryGroupId(): ?OdooRelation
+    {
+        return $this->country_group_id;
     }
 
     /**
@@ -275,6 +276,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("state_ids")
      */
     public function getStateIds(): ?array
     {
@@ -336,6 +339,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("zip_from")
      */
     public function getZipFrom(): ?string
     {
@@ -343,15 +348,9 @@ final class Template extends Base
     }
 
     /**
-     * @param string|null $zip_from
-     */
-    public function setZipFrom(?string $zip_from): void
-    {
-        $this->zip_from = $zip_from;
-    }
-
-    /**
      * @return string|null
+     *
+     * @SerializedName("zip_to")
      */
     public function getZipTo(): ?string
     {
@@ -359,31 +358,27 @@ final class Template extends Base
     }
 
     /**
-     * @return bool|null
+     * @return OdooRelation|null
+     *
+     * @SerializedName("country_id")
      */
-    public function isIsTaxcloud(): ?bool
+    public function getCountryId(): ?OdooRelation
     {
-        return $this->is_taxcloud;
+        return $this->country_id;
     }
 
     /**
-     * @param OdooRelation|null $country_id
+     * @param string|null $zip_to
      */
-    public function setCountryId(?OdooRelation $country_id): void
+    public function setZipTo(?string $zip_to): void
     {
-        $this->country_id = $country_id;
-    }
-
-    /**
-     * @param bool|null $is_taxcloud
-     */
-    public function setIsTaxcloud(?bool $is_taxcloud): void
-    {
-        $this->is_taxcloud = $is_taxcloud;
+        $this->zip_to = $zip_to;
     }
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -400,6 +395,8 @@ final class Template extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -416,6 +413,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -432,6 +431,8 @@ final class Template extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -447,23 +448,25 @@ final class Template extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $country_id
      */
-    public function getCountryGroupId(): ?OdooRelation
+    public function setCountryId(?OdooRelation $country_id): void
     {
-        return $this->country_group_id;
+        $this->country_id = $country_id;
     }
 
     /**
-     * @return OdooRelation|null
+     * @param bool|null $vat_required
      */
-    public function getCountryId(): ?OdooRelation
+    public function setVatRequired(?bool $vat_required): void
     {
-        return $this->country_id;
+        $this->vat_required = $vat_required;
     }
 
     /**
      * @return int|null
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): ?int
     {
@@ -473,16 +476,17 @@ final class Template extends Base
     /**
      * @param OdooRelation $item
      */
-    public function removeAccountIds(OdooRelation $item): void
+    public function addAccountIds(OdooRelation $item): void
     {
+        if ($this->hasAccountIds($item)) {
+            return;
+        }
+
         if (null === $this->account_ids) {
             $this->account_ids = [];
         }
 
-        if ($this->hasAccountIds($item)) {
-            $index = array_search($item, $this->account_ids);
-            unset($this->account_ids[$index]);
-        }
+        $this->account_ids[] = $item;
     }
 
     /**
@@ -495,6 +499,8 @@ final class Template extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -511,6 +517,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("chart_template_id")
      */
     public function getChartTemplateId(): OdooRelation
     {
@@ -527,6 +535,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("account_ids")
      */
     public function getAccountIds(): ?array
     {
@@ -558,33 +568,36 @@ final class Template extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addAccountIds(OdooRelation $item): void
+    public function removeAccountIds(OdooRelation $item): void
     {
-        if ($this->hasAccountIds($item)) {
-            return;
-        }
-
         if (null === $this->account_ids) {
             $this->account_ids = [];
         }
 
-        $this->account_ids[] = $item;
+        if ($this->hasAccountIds($item)) {
+            $index = array_search($item, $this->account_ids);
+            unset($this->account_ids[$index]);
+        }
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("vat_required")
+     */
+    public function isVatRequired(): ?bool
+    {
+        return $this->vat_required;
     }
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("tax_ids")
      */
     public function getTaxIds(): ?array
     {
         return $this->tax_ids;
-    }
-
-    /**
-     * @param bool|null $vat_required
-     */
-    public function setVatRequired(?bool $vat_required): void
-    {
-        $this->vat_required = $vat_required;
     }
 
     /**
@@ -642,6 +655,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("note")
      */
     public function getNote(): ?string
     {
@@ -658,6 +673,8 @@ final class Template extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("auto_apply")
      */
     public function isAutoApply(): ?bool
     {
@@ -670,14 +687,6 @@ final class Template extends Base
     public function setAutoApply(?bool $auto_apply): void
     {
         $this->auto_apply = $auto_apply;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isVatRequired(): ?bool
-    {
-        return $this->vat_required;
     }
 
     /**

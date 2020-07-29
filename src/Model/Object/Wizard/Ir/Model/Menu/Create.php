@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Wizard\Ir\Model\Menu;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : wizard.ir.model.menu.create
@@ -113,6 +114,8 @@ final class Create extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("menu_id")
      */
     public function getMenuId(): OdooRelation
     {
@@ -129,6 +132,8 @@ final class Create extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -145,6 +150,8 @@ final class Create extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -161,6 +168,8 @@ final class Create extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -177,6 +186,8 @@ final class Create extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -193,6 +204,8 @@ final class Create extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {

@@ -11,10 +11,12 @@ use Flux\OdooApiClient\Operations\Object\ExecuteKw\InspectionOperationsInterface
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\FieldsGetOptions;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterface;
 use Flux\OdooApiClient\PhpGenerator\ModelFixer\ModelFixerInterface;
+use Http\Client\Common\Exception\ClientErrorException;
 use LogicException;
 use Prometee\PhpClassGenerator\Builder\ClassBuilderInterface;
 use Prometee\PhpClassGenerator\Helper\PhpReservedWordsHelperInterface;
 use Prometee\PhpClassGenerator\Model\PhpDoc\PhpDocInterface;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 use function Symfony\Component\String\u;
 
 final class OdooModelsStructureConverter implements OdooModelsStructureConverterInterface
@@ -142,7 +144,6 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
                 'required',
                 'selection',
                 'inherited_model_ids',
-                'domain',
                 'searchable',
                 'sortable'
             ]);
@@ -260,7 +261,11 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         $properties = [];
         foreach ($fieldsInfos as $fieldName => $fieldInfo) {
             $types = OdooModelsStructureConverterHelper::transformTypes($fieldInfo);
-            $description = $this->buildModelPropertyDescription($fieldInfo, $baseModelNamespace, $types);
+            $description = $this->buildModelPropertyDescription($fieldName, $fieldInfo, $baseModelNamespace, $types);
+
+            if ($item['model'] === 'base' && $fieldName === 'id') {
+                $types[] = 'false';
+            }
 
             $inheritedFieldInfo = $this->getInheritedFieldInfo($item, $fieldName);
             $inheritedTypes = [];
@@ -281,8 +286,12 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         return $properties;
     }
 
-    private function buildModelPropertyDescription(array $fieldInfo, string $baseModelNamespace, array $types): array
-    {
+    private function buildModelPropertyDescription(
+        string $fieldName,
+        array $fieldInfo,
+        string $baseModelNamespace,
+        array $types
+    ): array {
         $description = [
             $fieldInfo['string'],
         ];

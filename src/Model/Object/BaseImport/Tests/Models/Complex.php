@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\BaseImport\Tests\Models;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : base_import.tests.models.complex
@@ -137,6 +138,8 @@ final class Complex extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("f")
      */
     public function getF(): ?float
     {
@@ -161,6 +164,8 @@ final class Complex extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -177,6 +182,8 @@ final class Complex extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -193,6 +200,8 @@ final class Complex extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -209,6 +218,8 @@ final class Complex extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -217,6 +228,8 @@ final class Complex extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("dt")
      */
     public function getDt(): ?DateTimeInterface
     {
@@ -241,6 +254,8 @@ final class Complex extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("d")
      */
     public function getD(): ?DateTimeInterface
     {
@@ -257,6 +272,8 @@ final class Complex extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("currency_id")
      */
     public function getCurrencyId(): ?OdooRelation
     {
@@ -273,6 +290,8 @@ final class Complex extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("c")
      */
     public function getC(): ?string
     {
@@ -289,6 +308,8 @@ final class Complex extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("m")
      */
     public function getM(): ?float
     {

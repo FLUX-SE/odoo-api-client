@@ -6,6 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Mail\Alias;
 
 use Flux\OdooApiClient\Model\Object\Mail\Alias;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : mail.alias.mixin
@@ -84,6 +85,8 @@ final class Mixin extends Alias
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("alias_id")
      */
     public function getAliasId(): OdooRelation
     {

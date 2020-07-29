@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Resource_\Calendar;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : resource.calendar.leaves
@@ -178,6 +179,8 @@ final class Leaves extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("time_type")
      */
     public function getTimeType(): ?string
     {
@@ -194,6 +197,8 @@ final class Leaves extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -210,6 +215,8 @@ final class Leaves extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -226,6 +233,8 @@ final class Leaves extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -242,6 +251,8 @@ final class Leaves extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -266,6 +277,8 @@ final class Leaves extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -274,6 +287,8 @@ final class Leaves extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("resource_id")
      */
     public function getResourceId(): ?OdooRelation
     {
@@ -290,6 +305,8 @@ final class Leaves extends Base
 
     /**
      * @return DateTimeInterface
+     *
+     * @SerializedName("date_to")
      */
     public function getDateTo(): DateTimeInterface
     {
@@ -306,6 +323,8 @@ final class Leaves extends Base
 
     /**
      * @return DateTimeInterface
+     *
+     * @SerializedName("date_from")
      */
     public function getDateFrom(): DateTimeInterface
     {
@@ -322,6 +341,8 @@ final class Leaves extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("calendar_id")
      */
     public function getCalendarId(): ?OdooRelation
     {
@@ -338,6 +359,8 @@ final class Leaves extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {

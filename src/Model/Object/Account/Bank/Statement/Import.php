@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Bank\Statement;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.bank.statement.import
@@ -102,6 +103,8 @@ final class Import extends Base
 
     /**
      * @return OdooRelation[]
+     *
+     * @SerializedName("attachment_ids")
      */
     public function getAttachmentIds(): array
     {
@@ -151,6 +154,8 @@ final class Import extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -167,6 +172,8 @@ final class Import extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -183,6 +190,8 @@ final class Import extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -199,6 +208,8 @@ final class Import extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {

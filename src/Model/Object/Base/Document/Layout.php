@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Base\Document;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : base.document.layout
@@ -262,6 +263,8 @@ final class Layout extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("logo_primary_color")
      */
     public function getLogoPrimaryColor(): ?string
     {
@@ -278,6 +281,8 @@ final class Layout extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("logo_secondary_color")
      */
     public function getLogoSecondaryColor(): ?string
     {
@@ -294,6 +299,8 @@ final class Layout extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("report_layout_id")
      */
     public function getReportLayoutId(): ?OdooRelation
     {
@@ -310,6 +317,8 @@ final class Layout extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("preview")
      */
     public function getPreview(): ?string
     {
@@ -318,6 +327,8 @@ final class Layout extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -326,6 +337,8 @@ final class Layout extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("custom_colors")
      */
     public function isCustomColors(): ?bool
     {
@@ -342,6 +355,8 @@ final class Layout extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -358,6 +373,8 @@ final class Layout extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -374,6 +391,8 @@ final class Layout extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -406,6 +425,8 @@ final class Layout extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): OdooRelation
     {
@@ -414,6 +435,8 @@ final class Layout extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("report_footer")
      */
     public function getReportFooter(): ?string
     {
@@ -430,6 +453,8 @@ final class Layout extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("logo")
      */
     public function getLogo(): ?string
     {
@@ -446,6 +471,8 @@ final class Layout extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("preview_logo")
      */
     public function getPreviewLogo(): ?string
     {
@@ -462,6 +489,8 @@ final class Layout extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("report_header")
      */
     public function getReportHeader(): ?string
     {
@@ -486,6 +515,8 @@ final class Layout extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("secondary_color")
      */
     public function getSecondaryColor(): ?string
     {
@@ -494,6 +525,8 @@ final class Layout extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("paperformat_id")
      */
     public function getPaperformatId(): ?OdooRelation
     {
@@ -510,6 +543,8 @@ final class Layout extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("external_report_layout_id")
      */
     public function getExternalReportLayoutId(): ?OdooRelation
     {
@@ -526,6 +561,8 @@ final class Layout extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("font")
      */
     public function getFont(): ?string
     {
@@ -542,6 +579,8 @@ final class Layout extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("primary_color")
      */
     public function getPrimaryColor(): ?string
     {

@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Analytic;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.analytic.tag
@@ -176,6 +177,8 @@ final class Tag extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -192,6 +195,8 @@ final class Tag extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -208,6 +213,8 @@ final class Tag extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -224,6 +231,8 @@ final class Tag extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -240,6 +249,8 @@ final class Tag extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {
@@ -264,6 +275,8 @@ final class Tag extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -294,6 +307,8 @@ final class Tag extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("analytic_distribution_ids")
      */
     public function getAnalyticDistributionIds(): ?array
     {
@@ -310,6 +325,8 @@ final class Tag extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active_analytic_distribution")
      */
     public function isActiveAnalyticDistribution(): ?bool
     {
@@ -326,6 +343,8 @@ final class Tag extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active")
      */
     public function isActive(): ?bool
     {
@@ -342,6 +361,8 @@ final class Tag extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("color")
      */
     public function getColor(): ?int
     {

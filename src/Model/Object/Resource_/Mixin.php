@@ -6,6 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Resource_;
 
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : resource.mixin
@@ -681,6 +682,8 @@ final class Mixin extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("resource_id")
      */
     public function getResourceId(): OdooRelation
     {
@@ -697,6 +700,8 @@ final class Mixin extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {
@@ -713,6 +718,8 @@ final class Mixin extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("resource_calendar_id")
      */
     public function getResourceCalendarId(): ?OdooRelation
     {
@@ -729,6 +736,8 @@ final class Mixin extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("tz")
      */
     public function getTz(): ?string
     {

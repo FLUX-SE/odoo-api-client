@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.asset
@@ -902,6 +903,8 @@ final class Asset extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("activity_exception_icon")
      */
     public function getActivityExceptionIcon(): ?string
     {
@@ -918,6 +921,8 @@ final class Asset extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_is_follower")
      */
     public function isMessageIsFollower(): ?bool
     {
@@ -934,6 +939,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_follower_ids")
      */
     public function getMessageFollowerIds(): ?array
     {
@@ -989,6 +996,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_partner_ids")
      */
     public function getMessagePartnerIds(): ?array
     {
@@ -1050,6 +1059,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_channel_ids")
      */
     public function getMessageChannelIds(): ?array
     {
@@ -1058,6 +1069,8 @@ final class Asset extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("activity_exception_decoration")
      */
     public function getActivityExceptionDecoration(): ?string
     {
@@ -1066,6 +1079,8 @@ final class Asset extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("activity_summary")
      */
     public function getActivitySummary(): ?string
     {
@@ -1157,6 +1172,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("activity_ids")
      */
     public function getActivityIds(): ?array
     {
@@ -1210,6 +1227,8 @@ final class Asset extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("activity_state")
      */
     public function getActivityState(): ?string
     {
@@ -1226,6 +1245,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("activity_user_id")
      */
     public function getActivityUserId(): ?OdooRelation
     {
@@ -1242,6 +1263,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("activity_type_id")
      */
     public function getActivityTypeId(): ?OdooRelation
     {
@@ -1258,6 +1281,8 @@ final class Asset extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("activity_date_deadline")
      */
     public function getActivityDateDeadline(): ?DateTimeInterface
     {
@@ -1314,6 +1339,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("website_message_ids")
      */
     public function getWebsiteMessageIds(): ?array
     {
@@ -1375,6 +1402,8 @@ final class Asset extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_has_sms_error")
      */
     public function isMessageHasSmsError(): ?bool
     {
@@ -1383,6 +1412,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -1407,6 +1438,8 @@ final class Asset extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -1423,6 +1456,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -1439,6 +1474,8 @@ final class Asset extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -1455,6 +1492,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("message_main_attachment_id")
      */
     public function getMessageMainAttachmentId(): ?OdooRelation
     {
@@ -1463,6 +1502,8 @@ final class Asset extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_attachment_count")
      */
     public function getMessageAttachmentCount(): ?int
     {
@@ -1486,6 +1527,8 @@ final class Asset extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_unread_counter")
      */
     public function getMessageUnreadCounter(): ?int
     {
@@ -1494,6 +1537,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_ids")
      */
     public function getMessageIds(): ?array
     {
@@ -1555,6 +1600,8 @@ final class Asset extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_unread")
      */
     public function isMessageUnread(): ?bool
     {
@@ -1587,6 +1634,8 @@ final class Asset extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_needaction")
      */
     public function isMessageNeedaction(): ?bool
     {
@@ -1603,6 +1652,8 @@ final class Asset extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_needaction_counter")
      */
     public function getMessageNeedactionCounter(): ?int
     {
@@ -1619,6 +1670,8 @@ final class Asset extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_has_error")
      */
     public function isMessageHasError(): ?bool
     {
@@ -1635,6 +1688,8 @@ final class Asset extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_has_error_counter")
      */
     public function getMessageHasErrorCounter(): ?int
     {
@@ -1643,6 +1698,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("children_ids")
      */
     public function getChildrenIds(): ?array
     {
@@ -1651,6 +1708,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("parent_id")
      */
     public function getParentId(): ?OdooRelation
     {
@@ -1659,6 +1718,8 @@ final class Asset extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("depreciation_entries_count")
      */
     public function getDepreciationEntriesCount(): ?int
     {
@@ -1667,6 +1728,8 @@ final class Asset extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("prorata_date")
      */
     public function getProrataDate(): ?DateTimeInterface
     {
@@ -1683,6 +1746,8 @@ final class Asset extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("method_period")
      */
     public function getMethodPeriod(): ?string
     {
@@ -1699,6 +1764,8 @@ final class Asset extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("method_progress_factor")
      */
     public function getMethodProgressFactor(): ?float
     {
@@ -1715,6 +1782,8 @@ final class Asset extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("prorata")
      */
     public function isProrata(): ?bool
     {
@@ -1747,6 +1816,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("account_asset_id")
      */
     public function getAccountAssetId(): ?OdooRelation
     {
@@ -1763,6 +1834,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("account_depreciation_id")
      */
     public function getAccountDepreciationId(): ?OdooRelation
     {
@@ -1779,6 +1852,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("account_depreciation_expense_id")
      */
     public function getAccountDepreciationExpenseId(): ?OdooRelation
     {
@@ -1795,6 +1870,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("journal_id")
      */
     public function getJournalId(): ?OdooRelation
     {
@@ -1803,6 +1880,8 @@ final class Asset extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("method_number")
      */
     public function getMethodNumber(): ?int
     {
@@ -1811,6 +1890,8 @@ final class Asset extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("method")
      */
     public function getMethod(): ?string
     {
@@ -1819,6 +1900,8 @@ final class Asset extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("original_value")
      */
     public function getOriginalValue(): ?float
     {
@@ -1827,6 +1910,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("currency_id")
      */
     public function getCurrencyId(): OdooRelation
     {
@@ -1843,6 +1928,8 @@ final class Asset extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("gross_increase_count")
      */
     public function getGrossIncreaseCount(): ?int
     {
@@ -1859,6 +1946,8 @@ final class Asset extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("total_depreciation_entries_count")
      */
     public function getTotalDepreciationEntriesCount(): ?int
     {
@@ -1875,6 +1964,8 @@ final class Asset extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -1907,6 +1998,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): OdooRelation
     {
@@ -1923,6 +2016,8 @@ final class Asset extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("state")
      */
     public function getState(): ?string
     {
@@ -1939,6 +2034,8 @@ final class Asset extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active")
      */
     public function isActive(): ?bool
     {
@@ -1955,6 +2052,8 @@ final class Asset extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("asset_type")
      */
     public function getAssetType(): ?string
     {
@@ -1987,6 +2086,8 @@ final class Asset extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("disposal_date")
      */
     public function getDisposalDate(): ?DateTimeInterface
     {
@@ -2040,6 +2141,8 @@ final class Asset extends Base
 
     /**
      * @return DateTimeInterface
+     *
+     * @SerializedName("first_depreciation_date")
      */
     public function getFirstDepreciationDate(): DateTimeInterface
     {
@@ -2056,6 +2159,8 @@ final class Asset extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("acquisition_date")
      */
     public function getAcquisitionDate(): ?DateTimeInterface
     {
@@ -2080,6 +2185,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("analytic_tag_ids")
      */
     public function getAnalyticTagIds(): ?array
     {
@@ -2088,6 +2195,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("model_id")
      */
     public function getModelId(): ?OdooRelation
     {
@@ -2104,6 +2213,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("user_type_id")
      */
     public function getUserTypeId(): ?OdooRelation
     {
@@ -2120,6 +2231,8 @@ final class Asset extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("display_model_choice")
      */
     public function isDisplayModelChoice(): ?bool
     {
@@ -2136,6 +2249,8 @@ final class Asset extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("display_account_asset_id")
      */
     public function isDisplayAccountAssetId(): ?bool
     {
@@ -2160,6 +2275,8 @@ final class Asset extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("book_value")
      */
     public function getBookValue(): ?float
     {
@@ -2168,6 +2285,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("depreciation_move_ids")
      */
     public function getDepreciationMoveIds(): ?array
     {
@@ -2184,6 +2303,8 @@ final class Asset extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("value_residual")
      */
     public function getValueResidual(): ?float
     {
@@ -2200,6 +2321,8 @@ final class Asset extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("salvage_value")
      */
     public function getSalvageValue(): ?float
     {
@@ -2216,6 +2339,8 @@ final class Asset extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("gross_increase_value")
      */
     public function getGrossIncreaseValue(): ?float
     {
@@ -2240,6 +2365,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("account_analytic_id")
      */
     public function getAccountAnalyticId(): ?OdooRelation
     {
@@ -2293,6 +2420,8 @@ final class Asset extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("original_move_line_ids")
      */
     public function getOriginalMoveLineIds(): ?array
     {

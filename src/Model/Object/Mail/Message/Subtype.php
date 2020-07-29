@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Mail\Message;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : mail.message.subtype
@@ -199,6 +200,8 @@ final class Subtype extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): ?int
     {
@@ -215,6 +218,8 @@ final class Subtype extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -231,6 +236,8 @@ final class Subtype extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -247,6 +254,8 @@ final class Subtype extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -263,6 +272,8 @@ final class Subtype extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -279,6 +290,8 @@ final class Subtype extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("hidden")
      */
     public function isHidden(): ?bool
     {
@@ -303,6 +316,8 @@ final class Subtype extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -311,6 +326,8 @@ final class Subtype extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("default")
      */
     public function isDefault(): ?bool
     {
@@ -327,6 +344,8 @@ final class Subtype extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("res_model")
      */
     public function getResModel(): ?string
     {
@@ -343,6 +362,8 @@ final class Subtype extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("relation_field")
      */
     public function getRelationField(): ?string
     {
@@ -359,6 +380,8 @@ final class Subtype extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("parent_id")
      */
     public function getParentId(): ?OdooRelation
     {
@@ -375,6 +398,8 @@ final class Subtype extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("internal")
      */
     public function isInternal(): ?bool
     {
@@ -391,6 +416,8 @@ final class Subtype extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("description")
      */
     public function getDescription(): ?string
     {

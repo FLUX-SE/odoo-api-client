@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Model;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.model.fields
@@ -430,6 +431,19 @@ final class Fields extends Base
     private $store;
 
     /**
+     * Enable Ordered Tracking
+     * ---
+     * If set every modification done to this field is tracked in the chatter. Value is used to order tracking
+     * values.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var int|null
+     */
+    private $tracking;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -474,19 +488,6 @@ final class Fields extends Base
      * @var DateTimeInterface|null
      */
     private $write_date;
-
-    /**
-     * Enable Ordered Tracking
-     * ---
-     * If set every modification done to this field is tracked in the chatter. Value is used to order tracking
-     * values.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var int|null
-     */
-    private $tracking;
 
     /**
      * @param string $name Field Name
@@ -575,6 +576,8 @@ final class Fields extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("relation_table")
      */
     public function getRelationTable(): ?string
     {
@@ -591,6 +594,8 @@ final class Fields extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("modules")
      */
     public function getModules(): ?string
     {
@@ -607,6 +612,8 @@ final class Fields extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("selectable")
      */
     public function isSelectable(): ?bool
     {
@@ -654,6 +661,8 @@ final class Fields extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("column1")
      */
     public function getColumn1(): ?string
     {
@@ -662,6 +671,8 @@ final class Fields extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("groups")
      */
     public function getGroups(): ?array
     {
@@ -678,6 +689,8 @@ final class Fields extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("domain")
      */
     public function getDomain(): ?string
     {
@@ -694,6 +707,8 @@ final class Fields extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("on_delete")
      */
     public function getOnDelete(): ?string
     {
@@ -710,6 +725,8 @@ final class Fields extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("state")
      */
     public function getState(): string
     {
@@ -734,6 +751,8 @@ final class Fields extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("size")
      */
     public function getSize(): ?int
     {
@@ -741,27 +760,13 @@ final class Fields extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function getCreateUid(): ?OdooRelation
     {
-        return $this->create_date;
-    }
-
-    /**
-     * @param int|null $tracking
-     */
-    public function setTracking(?int $tracking): void
-    {
-        $this->tracking = $tracking;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getTracking(): ?int
-    {
-        return $this->tracking;
+        return $this->create_uid;
     }
 
     /**
@@ -774,6 +779,8 @@ final class Fields extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -790,6 +797,8 @@ final class Fields extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -805,6 +814,16 @@ final class Fields extends Base
     }
 
     /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
      * @param OdooRelation|null $create_uid
      */
     public function setCreateUid(?OdooRelation $create_uid): void
@@ -813,7 +832,17 @@ final class Fields extends Base
     }
 
     /**
+     * @param int|null $tracking
+     */
+    public function setTracking(?int $tracking): void
+    {
+        $this->tracking = $tracking;
+    }
+
+    /**
      * @return string|null
+     *
+     * @SerializedName("column2")
      */
     public function getColumn2(): ?string
     {
@@ -821,11 +850,13 @@ final class Fields extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @return int|null
+     *
+     * @SerializedName("tracking")
      */
-    public function getCreateUid(): ?OdooRelation
+    public function getTracking(): ?int
     {
-        return $this->create_uid;
+        return $this->tracking;
     }
 
     /**
@@ -838,6 +869,8 @@ final class Fields extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("store")
      */
     public function isStore(): ?bool
     {
@@ -854,6 +887,8 @@ final class Fields extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("depends")
      */
     public function getDepends(): ?string
     {
@@ -870,6 +905,8 @@ final class Fields extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("compute")
      */
     public function getCompute(): ?string
     {
@@ -902,6 +939,8 @@ final class Fields extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -910,6 +949,8 @@ final class Fields extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("relation_field_id")
      */
     public function getRelationFieldId(): ?OdooRelation
     {
@@ -926,6 +967,8 @@ final class Fields extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("help")
      */
     public function getHelp(): ?string
     {
@@ -942,6 +985,8 @@ final class Fields extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("field_description")
      */
     public function getFieldDescription(): string
     {
@@ -958,6 +1003,8 @@ final class Fields extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("model_id")
      */
     public function getModelId(): OdooRelation
     {
@@ -990,6 +1037,8 @@ final class Fields extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("relation_field")
      */
     public function getRelationField(): ?string
     {
@@ -1006,6 +1055,8 @@ final class Fields extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("relation")
      */
     public function getRelation(): ?string
     {
@@ -1022,6 +1073,8 @@ final class Fields extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("model")
      */
     public function getModel(): string
     {
@@ -1038,6 +1091,8 @@ final class Fields extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("complete_name")
      */
     public function getCompleteName(): ?string
     {
@@ -1054,6 +1109,8 @@ final class Fields extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("ttype")
      */
     public function getTtype(): string
     {
@@ -1062,6 +1119,8 @@ final class Fields extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("selection")
      */
     public function getSelection(): ?string
     {
@@ -1070,6 +1129,8 @@ final class Fields extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("translate")
      */
     public function isTranslate(): ?bool
     {
@@ -1078,6 +1139,8 @@ final class Fields extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("related_field_id")
      */
     public function getRelatedFieldId(): ?OdooRelation
     {
@@ -1094,6 +1157,8 @@ final class Fields extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("index")
      */
     public function isIndex(): ?bool
     {
@@ -1110,6 +1175,8 @@ final class Fields extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("readonly")
      */
     public function isReadonly(): ?bool
     {
@@ -1126,6 +1193,8 @@ final class Fields extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("required")
      */
     public function isRequired(): ?bool
     {
@@ -1158,6 +1227,8 @@ final class Fields extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("related")
      */
     public function getRelated(): ?string
     {
@@ -1174,6 +1245,8 @@ final class Fields extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("copied")
      */
     public function isCopied(): ?bool
     {
@@ -1235,6 +1308,8 @@ final class Fields extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("selection_ids")
      */
     public function getSelectionIds(): ?array
     {

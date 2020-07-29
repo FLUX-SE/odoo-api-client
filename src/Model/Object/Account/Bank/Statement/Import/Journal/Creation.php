@@ -6,6 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Bank\Statement\Import\Journal;
 
 use Flux\OdooApiClient\Model\Object\Account\Journal;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.bank.statement.import.journal.creation
@@ -134,6 +135,8 @@ final class Creation extends Journal
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("journal_id")
      */
     public function getJournalId(): OdooRelation
     {

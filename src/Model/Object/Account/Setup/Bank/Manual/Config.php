@@ -6,6 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Setup\Bank\Manual;
 
 use Flux\OdooApiClient\Model\Object\Res\Partner\Bank;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.setup.bank.manual.config
@@ -139,6 +140,8 @@ final class Config extends Bank
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("res_partner_bank_id")
      */
     public function getResPartnerBankId(): OdooRelation
     {
@@ -155,6 +158,8 @@ final class Config extends Bank
 
     /**
      * @return string
+     *
+     * @SerializedName("new_journal_name")
      */
     public function getNewJournalName(): string
     {
@@ -171,6 +176,8 @@ final class Config extends Bank
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("linked_journal_id")
      */
     public function getLinkedJournalId(): ?OdooRelation
     {
@@ -187,6 +194,8 @@ final class Config extends Bank
 
     /**
      * @return string
+     *
+     * @SerializedName("new_journal_code")
      */
     public function getNewJournalCode(): string
     {
@@ -203,6 +212,8 @@ final class Config extends Bank
 
     /**
      * @return int|null
+     *
+     * @SerializedName("num_journals_without_account")
      */
     public function getNumJournalsWithoutAccount(): ?int
     {
@@ -219,6 +230,8 @@ final class Config extends Bank
 
     /**
      * @return string|null
+     *
+     * @SerializedName("related_acc_type")
      */
     public function getRelatedAccType(): ?string
     {

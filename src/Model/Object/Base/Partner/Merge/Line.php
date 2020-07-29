@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Base\Partner\Merge;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : base.partner.merge.line
@@ -115,6 +116,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("wizard_id")
      */
     public function getWizardId(): ?OdooRelation
     {
@@ -131,6 +134,8 @@ final class Line extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("min_id")
      */
     public function getMinId(): ?int
     {
@@ -147,6 +152,8 @@ final class Line extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("aggr_ids")
      */
     public function getAggrIds(): string
     {
@@ -163,6 +170,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -179,6 +188,8 @@ final class Line extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -195,6 +206,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -211,6 +224,8 @@ final class Line extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {

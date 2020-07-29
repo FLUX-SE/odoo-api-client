@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Mail\Activity;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : mail.activity.mixin
@@ -148,6 +149,8 @@ final class Mixin extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("activity_ids")
      */
     public function getActivityIds(): ?array
     {
@@ -156,6 +159,8 @@ final class Mixin extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("activity_date_deadline")
      */
     public function getActivityDateDeadline(): ?DateTimeInterface
     {
@@ -172,6 +177,8 @@ final class Mixin extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("activity_exception_icon")
      */
     public function getActivityExceptionIcon(): ?string
     {
@@ -188,6 +195,8 @@ final class Mixin extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("activity_exception_decoration")
      */
     public function getActivityExceptionDecoration(): ?string
     {
@@ -204,6 +213,8 @@ final class Mixin extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("activity_summary")
      */
     public function getActivitySummary(): ?string
     {
@@ -236,6 +247,8 @@ final class Mixin extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("activity_type_id")
      */
     public function getActivityTypeId(): ?OdooRelation
     {
@@ -252,6 +265,8 @@ final class Mixin extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("activity_user_id")
      */
     public function getActivityUserId(): ?OdooRelation
     {
@@ -268,6 +283,8 @@ final class Mixin extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("activity_state")
      */
     public function getActivityState(): ?string
     {

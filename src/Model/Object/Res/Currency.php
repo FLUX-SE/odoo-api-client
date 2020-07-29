@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Res;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : res.currency
@@ -223,6 +224,8 @@ final class Currency extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -231,6 +234,8 @@ final class Currency extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("date")
      */
     public function getDate(): ?DateTimeInterface
     {
@@ -247,6 +252,8 @@ final class Currency extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("currency_unit_label")
      */
     public function getCurrencyUnitLabel(): ?string
     {
@@ -263,6 +270,8 @@ final class Currency extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("currency_subunit_label")
      */
     public function getCurrencySubunitLabel(): ?string
     {
@@ -287,6 +296,8 @@ final class Currency extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("position")
      */
     public function getPosition(): ?string
     {
@@ -295,6 +306,8 @@ final class Currency extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -311,6 +324,8 @@ final class Currency extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -327,6 +342,8 @@ final class Currency extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -359,6 +376,8 @@ final class Currency extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -383,6 +402,8 @@ final class Currency extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("symbol")
      */
     public function getSymbol(): string
     {
@@ -399,6 +420,8 @@ final class Currency extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("rate")
      */
     public function getRate(): ?float
     {
@@ -415,6 +438,8 @@ final class Currency extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("rate_ids")
      */
     public function getRateIds(): ?array
     {
@@ -437,6 +462,8 @@ final class Currency extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active")
      */
     public function isActive(): ?bool
     {
@@ -476,6 +503,8 @@ final class Currency extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("rounding")
      */
     public function getRounding(): ?float
     {
@@ -492,6 +521,8 @@ final class Currency extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("decimal_places")
      */
     public function getDecimalPlaces(): ?int
     {

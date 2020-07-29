@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Mail;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : mail.template
@@ -393,6 +394,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -409,6 +412,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("attachment_ids")
      */
     public function getAttachmentIds(): ?array
     {
@@ -470,6 +475,8 @@ final class Template extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("auto_delete")
      */
     public function isAutoDelete(): ?bool
     {
@@ -486,6 +493,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("model_object_field")
      */
     public function getModelObjectField(): ?OdooRelation
     {
@@ -502,6 +511,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("sub_object")
      */
     public function getSubObject(): ?OdooRelation
     {
@@ -518,6 +529,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("sub_model_object_field")
      */
     public function getSubModelObjectField(): ?OdooRelation
     {
@@ -526,6 +539,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("null_value")
      */
     public function getNullValue(): ?string
     {
@@ -534,6 +549,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("ref_ir_act_window")
      */
     public function getRefIrActWindow(): ?OdooRelation
     {
@@ -550,6 +567,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("copyvalue")
      */
     public function getCopyvalue(): ?string
     {
@@ -566,6 +585,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("scheduled_date")
      */
     public function getScheduledDate(): ?string
     {
@@ -582,6 +603,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -598,6 +621,8 @@ final class Template extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -614,6 +639,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -630,6 +657,8 @@ final class Template extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -678,6 +707,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("model_id")
      */
     public function getModelId(): ?OdooRelation
     {
@@ -694,6 +725,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("model")
      */
     public function getModel(): ?string
     {
@@ -710,6 +743,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("lang")
      */
     public function getLang(): ?string
     {
@@ -726,6 +761,8 @@ final class Template extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("user_signature")
      */
     public function isUserSignature(): ?bool
     {
@@ -742,6 +779,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("subject")
      */
     public function getSubject(): ?string
     {
@@ -758,6 +797,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("email_from")
      */
     public function getEmailFrom(): ?string
     {
@@ -774,6 +815,8 @@ final class Template extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("use_default_to")
      */
     public function isUseDefaultTo(): ?bool
     {
@@ -782,6 +825,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("email_to")
      */
     public function getEmailTo(): ?string
     {
@@ -790,6 +835,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("report_template")
      */
     public function getReportTemplate(): ?OdooRelation
     {
@@ -806,6 +853,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("partner_to")
      */
     public function getPartnerTo(): ?string
     {
@@ -822,6 +871,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("email_cc")
      */
     public function getEmailCc(): ?string
     {
@@ -838,6 +889,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("reply_to")
      */
     public function getReplyTo(): ?string
     {
@@ -854,6 +907,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("mail_server_id")
      */
     public function getMailServerId(): ?OdooRelation
     {
@@ -870,6 +925,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("body_html")
      */
     public function getBodyHtml(): ?string
     {
@@ -886,6 +943,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("report_name")
      */
     public function getReportName(): ?string
     {

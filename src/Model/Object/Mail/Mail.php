@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Mail;
 
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : mail.mail
@@ -229,6 +230,8 @@ final class Mail extends Message
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("fetchmail_server_id")
      */
     public function getFetchmailServerId(): ?OdooRelation
     {
@@ -245,6 +248,8 @@ final class Mail extends Message
 
     /**
      * @return string|null
+     *
+     * @SerializedName("scheduled_date")
      */
     public function getScheduledDate(): ?string
     {
@@ -261,6 +266,8 @@ final class Mail extends Message
 
     /**
      * @return string|null
+     *
+     * @SerializedName("failure_reason")
      */
     public function getFailureReason(): ?string
     {
@@ -277,6 +284,8 @@ final class Mail extends Message
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("auto_delete")
      */
     public function isAutoDelete(): ?bool
     {
@@ -293,6 +302,8 @@ final class Mail extends Message
 
     /**
      * @return string|null
+     *
+     * @SerializedName("state")
      */
     public function getState(): ?string
     {
@@ -346,6 +357,8 @@ final class Mail extends Message
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("recipient_ids")
      */
     public function getRecipientIds(): ?array
     {
@@ -354,6 +367,8 @@ final class Mail extends Message
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("mail_message_id")
      */
     public function getMailMessageId(): OdooRelation
     {
@@ -370,6 +385,8 @@ final class Mail extends Message
 
     /**
      * @return string|null
+     *
+     * @SerializedName("email_cc")
      */
     public function getEmailCc(): ?string
     {
@@ -386,6 +403,8 @@ final class Mail extends Message
 
     /**
      * @return string|null
+     *
+     * @SerializedName("email_to")
      */
     public function getEmailTo(): ?string
     {
@@ -402,6 +421,8 @@ final class Mail extends Message
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("notification")
      */
     public function isNotification(): ?bool
     {
@@ -418,6 +439,8 @@ final class Mail extends Message
 
     /**
      * @return string|null
+     *
+     * @SerializedName("headers")
      */
     public function getHeaders(): ?string
     {
@@ -434,6 +457,8 @@ final class Mail extends Message
 
     /**
      * @return string|null
+     *
+     * @SerializedName("references")
      */
     public function getReferences(): ?string
     {
@@ -450,6 +475,8 @@ final class Mail extends Message
 
     /**
      * @return string|null
+     *
+     * @SerializedName("body_html")
      */
     public function getBodyHtml(): ?string
     {

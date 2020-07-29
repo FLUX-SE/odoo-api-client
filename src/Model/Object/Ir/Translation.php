@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Ir;
 
 use Flux\OdooApiClient\Model\Object\Base;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.translation
@@ -144,6 +145,8 @@ final class Translation extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("value")
      */
     public function getValue(): ?string
     {
@@ -160,6 +163,8 @@ final class Translation extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("comments")
      */
     public function getComments(): ?string
     {
@@ -176,6 +181,8 @@ final class Translation extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("state")
      */
     public function getState(): ?string
     {
@@ -192,6 +199,8 @@ final class Translation extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("module")
      */
     public function getModule(): ?string
     {
@@ -216,6 +225,8 @@ final class Translation extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -224,6 +235,8 @@ final class Translation extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("src")
      */
     public function getSrc(): ?string
     {
@@ -240,6 +253,8 @@ final class Translation extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("type")
      */
     public function getType(): ?string
     {
@@ -256,6 +271,8 @@ final class Translation extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("lang")
      */
     public function getLang(): ?string
     {
@@ -272,6 +289,8 @@ final class Translation extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("res_id")
      */
     public function getResId(): ?int
     {

@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Tax\Report;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.tax.report.line
@@ -269,6 +270,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("tag_name")
      */
     public function getTagName(): ?string
     {
@@ -285,6 +288,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("code")
      */
     public function getCode(): ?string
     {
@@ -301,6 +306,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("formula")
      */
     public function getFormula(): ?string
     {
@@ -309,6 +316,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -333,6 +342,8 @@ final class Line extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -349,6 +360,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -365,6 +378,8 @@ final class Line extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -381,6 +396,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("parent_path")
      */
     public function getParentPath(): ?string
     {
@@ -389,6 +406,8 @@ final class Line extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): int
     {
@@ -397,6 +416,8 @@ final class Line extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -421,6 +442,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("tag_ids")
      */
     public function getTagIds(): ?array
     {
@@ -482,6 +505,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("country_id")
      */
     public function getCountryId(): OdooRelation
     {
@@ -490,6 +515,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("report_action_id")
      */
     public function getReportActionId(): ?OdooRelation
     {
@@ -514,6 +541,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("children_line_ids")
      */
     public function getChildrenLineIds(): ?array
     {
@@ -575,6 +604,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("parent_id")
      */
     public function getParentId(): ?OdooRelation
     {

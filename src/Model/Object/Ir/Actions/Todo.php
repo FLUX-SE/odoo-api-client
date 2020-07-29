@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Actions;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.actions.todo
@@ -152,6 +153,8 @@ final class Todo extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -168,6 +171,8 @@ final class Todo extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -184,6 +189,8 @@ final class Todo extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -192,6 +199,8 @@ final class Todo extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -200,6 +209,8 @@ final class Todo extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("action_id")
      */
     public function getActionId(): OdooRelation
     {
@@ -216,6 +227,8 @@ final class Todo extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -232,6 +245,8 @@ final class Todo extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("state")
      */
     public function getState(): string
     {
@@ -248,6 +263,8 @@ final class Todo extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): ?int
     {

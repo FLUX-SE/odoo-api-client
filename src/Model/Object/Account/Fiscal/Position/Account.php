@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Fiscal\Position;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.fiscal.position.account
@@ -146,6 +147,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("position_id")
      */
     public function getPositionId(): OdooRelation
     {
@@ -162,6 +165,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("account_src_id")
      */
     public function getAccountSrcId(): OdooRelation
     {
@@ -178,6 +183,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("account_dest_id")
      */
     public function getAccountDestId(): OdooRelation
     {
@@ -194,6 +201,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -210,6 +219,8 @@ final class Account extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -226,6 +237,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -242,6 +255,8 @@ final class Account extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {

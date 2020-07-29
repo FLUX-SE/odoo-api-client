@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Journal;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.journal.group
@@ -155,6 +156,8 @@ final class Group extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -171,6 +174,8 @@ final class Group extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -187,6 +192,8 @@ final class Group extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -203,6 +210,8 @@ final class Group extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -211,6 +220,8 @@ final class Group extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): ?int
     {
@@ -219,6 +230,8 @@ final class Group extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -280,6 +293,8 @@ final class Group extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("excluded_journal_ids")
      */
     public function getExcludedJournalIds(): ?array
     {
@@ -296,6 +311,8 @@ final class Group extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): OdooRelation
     {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Mail\Address;
 
 use Flux\OdooApiClient\Model\Object\Base;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : mail.address.mixin
@@ -43,6 +44,8 @@ final class Mixin extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("email_normalized")
      */
     public function getEmailNormalized(): ?string
     {

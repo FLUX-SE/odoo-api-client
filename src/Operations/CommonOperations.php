@@ -17,7 +17,6 @@ final class CommonOperations extends AbstractOperations implements CommonOperati
     public function version(): Version
     {
         $responseBody = $this->request(__FUNCTION__);
-
         return $this->deserializeModel($responseBody, Version::class);
     }
 

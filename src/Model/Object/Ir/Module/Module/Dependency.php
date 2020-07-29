@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Module\Module;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.module.module.dependency
@@ -141,6 +142,8 @@ final class Dependency extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -149,6 +152,8 @@ final class Dependency extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -165,6 +170,8 @@ final class Dependency extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -181,6 +188,8 @@ final class Dependency extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -197,6 +206,8 @@ final class Dependency extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -229,6 +240,8 @@ final class Dependency extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("auto_install_required")
      */
     public function isAutoInstallRequired(): ?bool
     {
@@ -245,6 +258,8 @@ final class Dependency extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("state")
      */
     public function getState(): ?string
     {
@@ -261,6 +276,8 @@ final class Dependency extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("depend_id")
      */
     public function getDependId(): ?OdooRelation
     {
@@ -277,6 +294,8 @@ final class Dependency extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("module_id")
      */
     public function getModuleId(): ?OdooRelation
     {

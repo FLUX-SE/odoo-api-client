@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Chart;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.chart.template
@@ -485,6 +486,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("property_account_income_categ_id")
      */
     public function getPropertyAccountIncomeCategId(): ?OdooRelation
     {
@@ -493,6 +496,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("property_stock_account_input_categ_id")
      */
     public function getPropertyStockAccountInputCategId(): ?OdooRelation
     {
@@ -509,6 +514,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("property_account_income_id")
      */
     public function getPropertyAccountIncomeId(): ?OdooRelation
     {
@@ -525,6 +532,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("property_account_expense_id")
      */
     public function getPropertyAccountExpenseId(): ?OdooRelation
     {
@@ -549,6 +558,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("property_stock_account_output_categ_id")
      */
     public function getPropertyStockAccountOutputCategId(): ?OdooRelation
     {
@@ -557,6 +568,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("property_account_expense_categ_id")
      */
     public function getPropertyAccountExpenseCategId(): ?OdooRelation
     {
@@ -573,6 +586,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("property_account_payable_id")
      */
     public function getPropertyAccountPayableId(): ?OdooRelation
     {
@@ -589,6 +604,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("property_account_receivable_id")
      */
     public function getPropertyAccountReceivableId(): ?OdooRelation
     {
@@ -648,6 +665,8 @@ final class Template extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -664,6 +683,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -680,6 +701,8 @@ final class Template extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -688,6 +711,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -696,6 +721,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("property_stock_valuation_account_id")
      */
     public function getPropertyStockValuationAccountId(): ?OdooRelation
     {
@@ -713,6 +740,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("property_advance_tax_payment_account_id")
      */
     public function getPropertyAdvanceTaxPaymentAccountId(): ?OdooRelation
     {
@@ -730,6 +759,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("property_tax_receivable_account_id")
      */
     public function getPropertyTaxReceivableAccountId(): ?OdooRelation
     {
@@ -746,6 +777,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("property_tax_payable_account_id")
      */
     public function getPropertyTaxPayableAccountId(): ?OdooRelation
     {
@@ -763,6 +796,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("default_pos_receivable_account_id")
      */
     public function getDefaultPosReceivableAccountId(): ?OdooRelation
     {
@@ -771,6 +806,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("default_cash_difference_expense_account_id")
      */
     public function getDefaultCashDifferenceExpenseAccountId(): ?OdooRelation
     {
@@ -779,6 +816,8 @@ final class Template extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -803,6 +842,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("account_ids")
      */
     public function getAccountIds(): ?array
     {
@@ -819,6 +860,8 @@ final class Template extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("complete_tax_set")
      */
     public function isCompleteTaxSet(): ?bool
     {
@@ -835,6 +878,8 @@ final class Template extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("use_anglo_saxon")
      */
     public function isUseAngloSaxon(): ?bool
     {
@@ -843,6 +888,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("currency_id")
      */
     public function getCurrencyId(): OdooRelation
     {
@@ -875,6 +922,8 @@ final class Template extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("visible")
      */
     public function isVisible(): ?bool
     {
@@ -891,6 +940,8 @@ final class Template extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("code_digits")
      */
     public function getCodeDigits(): int
     {
@@ -907,6 +958,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("parent_id")
      */
     public function getParentId(): ?OdooRelation
     {
@@ -961,6 +1014,8 @@ final class Template extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("transfer_account_code_prefix")
      */
     public function getTransferAccountCodePrefix(): string
     {
@@ -969,6 +1024,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("default_cash_difference_income_account_id")
      */
     public function getDefaultCashDifferenceIncomeAccountId(): ?OdooRelation
     {
@@ -986,6 +1043,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("expense_currency_exchange_account_id")
      */
     public function getExpenseCurrencyExchangeAccountId(): ?OdooRelation
     {
@@ -1003,6 +1062,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("income_currency_exchange_account_id")
      */
     public function getIncomeCurrencyExchangeAccountId(): ?OdooRelation
     {
@@ -1027,6 +1088,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("tax_template_ids")
      */
     public function getTaxTemplateIds(): ?array
     {
@@ -1035,6 +1098,8 @@ final class Template extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("cash_account_code_prefix")
      */
     public function getCashAccountCodePrefix(): string
     {
@@ -1051,6 +1116,8 @@ final class Template extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("bank_account_code_prefix")
      */
     public function getBankAccountCodePrefix(): string
     {

@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\InvoiceExtract;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.invoice_extract.words
@@ -192,6 +193,8 @@ final class Words extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("invoice_id")
      */
     public function getInvoiceId(): ?OdooRelation
     {
@@ -200,6 +203,8 @@ final class Words extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("word_box_width")
      */
     public function getWordBoxWidth(): ?float
     {
@@ -216,6 +221,8 @@ final class Words extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -232,6 +239,8 @@ final class Words extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -248,6 +257,8 @@ final class Words extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -264,6 +275,8 @@ final class Words extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -280,6 +293,8 @@ final class Words extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("word_box_angle")
      */
     public function getWordBoxAngle(): ?float
     {
@@ -296,6 +311,8 @@ final class Words extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("word_box_height")
      */
     public function getWordBoxHeight(): ?float
     {
@@ -328,6 +345,8 @@ final class Words extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("word_box_midY")
      */
     public function getWordBoxMidY(): ?float
     {
@@ -344,6 +363,8 @@ final class Words extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("word_box_midX")
      */
     public function getWordBoxMidX(): ?float
     {
@@ -360,6 +381,8 @@ final class Words extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("word_page")
      */
     public function getWordPage(): ?int
     {
@@ -376,6 +399,8 @@ final class Words extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("word_text")
      */
     public function getWordText(): ?string
     {
@@ -392,6 +417,8 @@ final class Words extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("user_selected")
      */
     public function isUserSelected(): ?bool
     {
@@ -408,6 +435,8 @@ final class Words extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("selected_status")
      */
     public function getSelectedStatus(): ?int
     {
@@ -424,6 +453,8 @@ final class Words extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("field")
      */
     public function getField(): ?string
     {

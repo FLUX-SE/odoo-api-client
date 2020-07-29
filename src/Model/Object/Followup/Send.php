@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Followup;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : followup.send
@@ -127,6 +128,8 @@ final class Send extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("snailmail_cost")
      */
     public function getSnailmailCost(): ?float
     {
@@ -157,6 +160,8 @@ final class Send extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -173,6 +178,8 @@ final class Send extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -189,6 +196,8 @@ final class Send extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -205,6 +214,8 @@ final class Send extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -260,6 +271,8 @@ final class Send extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("invalid_partner_ids")
      */
     public function getInvalidPartnerIds(): ?array
     {
@@ -276,6 +289,8 @@ final class Send extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("invalid_addresses")
      */
     public function getInvalidAddresses(): ?int
     {
@@ -337,6 +352,8 @@ final class Send extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("partner_ids")
      */
     public function getPartnerIds(): ?array
     {
@@ -353,6 +370,8 @@ final class Send extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("letters_qty")
      */
     public function getLettersQty(): ?int
     {

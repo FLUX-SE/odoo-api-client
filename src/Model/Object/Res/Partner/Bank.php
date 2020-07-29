@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Res\Partner;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : res.partner.bank
@@ -169,6 +170,21 @@ class Bank extends Base
     protected $qr_code_valid;
 
     /**
+     * Account Journal
+     * ---
+     * The accounting journal corresponding to this bank account.
+     * ---
+     * Relation : one2many (account.journal -> bank_account_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    protected $journal_id;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -215,33 +231,6 @@ class Bank extends Base
     protected $write_date;
 
     /**
-     * Account Journal
-     * ---
-     * The accounting journal corresponding to this bank account.
-     * ---
-     * Relation : one2many (account.journal -> bank_account_id)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    protected $journal_id;
-
-    /**
-     * ABA/Routing
-     * ---
-     * American Bankers Association Routing Number
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    protected $aba_routing;
-
-    /**
      * @param string $acc_number Account Number
      *        ---
      *        Searchable : yes
@@ -261,15 +250,32 @@ class Bank extends Base
     }
 
     /**
-     * @param OdooRelation|null $write_uid
+     * @param OdooRelation $item
      */
-    public function setWriteUid(?OdooRelation $write_uid): void
+    public function removeJournalId(OdooRelation $item): void
     {
-        $this->write_uid = $write_uid;
+        if (null === $this->journal_id) {
+            $this->journal_id = [];
+        }
+
+        if ($this->hasJournalId($item)) {
+            $index = array_search($item, $this->journal_id);
+            unset($this->journal_id[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
     }
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("qr_code_valid")
      */
     public function isQrCodeValid(): ?bool
     {
@@ -285,71 +291,9 @@ class Bank extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $create_uid
-     */
-    public function setCreateUid(?OdooRelation $create_uid): void
-    {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getCompanyId(): ?OdooRelation
-    {
-        return $this->company_id;
-    }
-
-    /**
-     * @param DateTimeInterface|null $write_date
-     */
-    public function setWriteDate(?DateTimeInterface $write_date): void
-    {
-        $this->write_date = $write_date;
-    }
-
-    /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("journal_id")
      */
     public function getJournalId(): ?array
     {
@@ -395,42 +339,13 @@ class Bank extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
-    public function removeJournalId(OdooRelation $item): void
+    public function getCreateUid(): ?OdooRelation
     {
-        if (null === $this->journal_id) {
-            $this->journal_id = [];
-        }
-
-        if ($this->hasJournalId($item)) {
-            $index = array_search($item, $this->journal_id);
-            unset($this->journal_id[$index]);
-        }
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getAbaRouting(): ?string
-    {
-        return $this->aba_routing;
-    }
-
-    /**
-     * @param string|null $aba_routing
-     */
-    public function setAbaRouting(?string $aba_routing): void
-    {
-        $this->aba_routing = $aba_routing;
-    }
-
-    /**
-     * @param OdooRelation|null $company_id
-     */
-    public function setCompanyId(?OdooRelation $company_id): void
-    {
-        $this->company_id = $company_id;
+        return $this->create_uid;
     }
 
     /**
@@ -442,7 +357,91 @@ class Bank extends Base
     }
 
     /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("currency_id")
+     */
+    public function getCurrencyId(): ?OdooRelation
+    {
+        return $this->currency_id;
+    }
+
+    /**
      * @return string|null
+     *
+     * @SerializedName("acc_type")
      */
     public function getAccType(): ?string
     {
@@ -451,6 +450,8 @@ class Bank extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("partner_id")
      */
     public function getPartnerId(): OdooRelation
     {
@@ -467,6 +468,8 @@ class Bank extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("acc_number")
      */
     public function getAccNumber(): string
     {
@@ -483,6 +486,8 @@ class Bank extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("sanitized_acc_number")
      */
     public function getSanitizedAccNumber(): ?string
     {
@@ -499,6 +504,8 @@ class Bank extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("acc_holder_name")
      */
     public function getAccHolderName(): ?string
     {
@@ -522,15 +529,17 @@ class Bank extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param int|null $sequence
      */
-    public function getCurrencyId(): ?OdooRelation
+    public function setSequence(?int $sequence): void
     {
-        return $this->currency_id;
+        $this->sequence = $sequence;
     }
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("bank_id")
      */
     public function getBankId(): ?OdooRelation
     {
@@ -547,6 +556,8 @@ class Bank extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("bank_name")
      */
     public function getBankName(): ?string
     {
@@ -563,6 +574,8 @@ class Bank extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("bank_bic")
      */
     public function getBankBic(): ?string
     {
@@ -579,18 +592,12 @@ class Bank extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): ?int
     {
         return $this->sequence;
-    }
-
-    /**
-     * @param int|null $sequence
-     */
-    public function setSequence(?int $sequence): void
-    {
-        $this->sequence = $sequence;
     }
 
     /**

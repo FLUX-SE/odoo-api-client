@@ -6,6 +6,7 @@ namespace Flux\OdooApiClient\PhpGenerator;
 
 use Exception;
 use Prometee\PhpClassGenerator\Builder\ClassBuilderInterface;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 final class OdooPhpClassesGenerator implements OdooPhpClassesGeneratorInterface
 {
@@ -59,7 +60,6 @@ final class OdooPhpClassesGenerator implements OdooPhpClassesGeneratorInterface
             $this->classBuilder->setClassType($config['type']);
             $this->classBuilder->setExtendClass($config['extends'] ?? null);
             $this->classBuilder->setImplements($config['implements'] ?? []);
-            $this->classBuilder->getClassModel()->getPhpDoc()->setLines($config['description'] ?? []);
 
             $constantsConfig = $config['constants'] ?? [];
             foreach ($constantsConfig as $constantConfig) {
@@ -81,11 +81,12 @@ final class OdooPhpClassesGenerator implements OdooPhpClassesGeneratorInterface
 
             $propertiesConfig = $config['properties'] ?? [];
             foreach ($propertiesConfig as $propertyConfig) {
+                $description = implode($eol, $propertyConfig['description']);
                 $property = $this->classBuilder->createProperty(
                     $propertyConfig['name'],
                     $propertyConfig['types'],
                     $propertyConfig['default'],
-                    implode($eol, $propertyConfig['description'])
+                    $description
                 );
 
                 if ($config['type'] !== ClassBuilderInterface::CLASS_TYPE_FINAL) {
@@ -115,7 +116,11 @@ final class OdooPhpClassesGenerator implements OdooPhpClassesGeneratorInterface
                 $this->classBuilder->addMethod($method);
             }
 
-            $classContent = $this->classBuilder->build($classNamespace, $className);
+            $classModel = $this->classBuilder->buildClass($classNamespace, $className);
+            $classModel->getPhpDoc()->setLines($config['description'] ?? []);
+
+            $classContent = $this->classBuilder->renderClass($classModel);
+            $this->classBuilder->reset();
 
             if (null === $classContent) {
                 continue;

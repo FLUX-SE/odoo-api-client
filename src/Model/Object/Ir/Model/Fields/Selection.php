@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Model\Fields;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.model.fields.selection
@@ -157,6 +158,8 @@ final class Selection extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -173,6 +176,8 @@ final class Selection extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -189,6 +194,8 @@ final class Selection extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -197,6 +204,8 @@ final class Selection extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -205,6 +214,8 @@ final class Selection extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("field_id")
      */
     public function getFieldId(): OdooRelation
     {
@@ -221,6 +232,8 @@ final class Selection extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): ?int
     {
@@ -237,6 +250,8 @@ final class Selection extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -253,6 +268,8 @@ final class Selection extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("value")
      */
     public function getValue(): string
     {

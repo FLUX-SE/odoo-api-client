@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Fiscal;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.fiscal.position
@@ -207,28 +208,6 @@ final class Position extends Base
     private $states_count;
 
     /**
-     * Is Taxcloud Configured
-     * ---
-     * Used to determine whether or not to warn the user to configure TaxCloud.
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $is_taxcloud_configured;
-
-    /**
-     * Use TaxCloud API
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $is_taxcloud;
-
-    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -294,15 +273,37 @@ final class Position extends Base
     }
 
     /**
-     * @param int|null $states_count
+     * @return string|null
+     *
+     * @SerializedName("zip_to")
      */
-    public function setStatesCount(?int $states_count): void
+    public function getZipTo(): ?string
     {
-        $this->states_count = $states_count;
+        return $this->zip_to;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("country_group_id")
+     */
+    public function getCountryGroupId(): ?OdooRelation
+    {
+        return $this->country_group_id;
+    }
+
+    /**
+     * @param OdooRelation|null $country_group_id
+     */
+    public function setCountryGroupId(?OdooRelation $country_group_id): void
+    {
+        $this->country_group_id = $country_group_id;
     }
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("state_ids")
      */
     public function getStateIds(): ?array
     {
@@ -364,6 +365,8 @@ final class Position extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("zip_from")
      */
     public function getZipFrom(): ?string
     {
@@ -379,14 +382,6 @@ final class Position extends Base
     }
 
     /**
-     * @return string|null
-     */
-    public function getZipTo(): ?string
-    {
-        return $this->zip_to;
-    }
-
-    /**
      * @param string|null $zip_to
      */
     public function setZipTo(?string $zip_to): void
@@ -395,7 +390,19 @@ final class Position extends Base
     }
 
     /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("country_id")
+     */
+    public function getCountryId(): ?OdooRelation
+    {
+        return $this->country_id;
+    }
+
+    /**
      * @return int|null
+     *
+     * @SerializedName("states_count")
      */
     public function getStatesCount(): ?int
     {
@@ -403,47 +410,17 @@ final class Position extends Base
     }
 
     /**
-     * @return bool|null
+     * @param int|null $states_count
      */
-    public function isIsTaxcloudConfigured(): ?bool
+    public function setStatesCount(?int $states_count): void
     {
-        return $this->is_taxcloud_configured;
+        $this->states_count = $states_count;
     }
 
     /**
      * @return OdooRelation|null
-     */
-    public function getCountryGroupId(): ?OdooRelation
-    {
-        return $this->country_group_id;
-    }
-
-    /**
-     * @param bool|null $is_taxcloud_configured
-     */
-    public function setIsTaxcloudConfigured(?bool $is_taxcloud_configured): void
-    {
-        $this->is_taxcloud_configured = $is_taxcloud_configured;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isIsTaxcloud(): ?bool
-    {
-        return $this->is_taxcloud;
-    }
-
-    /**
-     * @param bool|null $is_taxcloud
-     */
-    public function setIsTaxcloud(?bool $is_taxcloud): void
-    {
-        $this->is_taxcloud = $is_taxcloud;
-    }
-
-    /**
-     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -460,6 +437,8 @@ final class Position extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -476,6 +455,8 @@ final class Position extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -492,6 +473,8 @@ final class Position extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -507,14 +490,6 @@ final class Position extends Base
     }
 
     /**
-     * @param OdooRelation|null $country_group_id
-     */
-    public function setCountryGroupId(?OdooRelation $country_group_id): void
-    {
-        $this->country_group_id = $country_group_id;
-    }
-
-    /**
      * @param OdooRelation|null $country_id
      */
     public function setCountryId(?OdooRelation $country_id): void
@@ -523,11 +498,115 @@ final class Position extends Base
     }
 
     /**
+     * @param bool|null $vat_required
+     */
+    public function setVatRequired(?bool $vat_required): void
+    {
+        $this->vat_required = $vat_required;
+    }
+
+    /**
      * @return int|null
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): ?int
     {
         return $this->sequence;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasAccountIds(OdooRelation $item): bool
+    {
+        if (null === $this->account_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->account_ids);
+    }
+
+    /**
+     * @param int|null $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("name")
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("active")
+     */
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param bool|null $active
+     */
+    public function setActive(?bool $active): void
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("company_id")
+     */
+    public function getCompanyId(): OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param OdooRelation $company_id
+     */
+    public function setCompanyId(OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("account_ids")
+     */
+    public function getAccountIds(): ?array
+    {
+        return $this->account_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $account_ids
+     */
+    public function setAccountIds(?array $account_ids): void
+    {
+        $this->account_ids = $account_ids;
     }
 
     /**
@@ -547,89 +626,13 @@ final class Position extends Base
     }
 
     /**
-     * @param int|null $sequence
-     */
-    public function setSequence(?int $sequence): void
-    {
-        $this->sequence = $sequence;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
      * @return bool|null
-     */
-    public function isActive(): ?bool
-    {
-        return $this->active;
-    }
-
-    /**
-     * @param bool|null $active
-     */
-    public function setActive(?bool $active): void
-    {
-        $this->active = $active;
-    }
-
-    /**
-     * @return OdooRelation
-     */
-    public function getCompanyId(): OdooRelation
-    {
-        return $this->company_id;
-    }
-
-    /**
-     * @param OdooRelation $company_id
-     */
-    public function setCompanyId(OdooRelation $company_id): void
-    {
-        $this->company_id = $company_id;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     */
-    public function getAccountIds(): ?array
-    {
-        return $this->account_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $account_ids
-     */
-    public function setAccountIds(?array $account_ids): void
-    {
-        $this->account_ids = $account_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
      *
-     * @return bool
+     * @SerializedName("vat_required")
      */
-    public function hasAccountIds(OdooRelation $item): bool
+    public function isVatRequired(): ?bool
     {
-        if (null === $this->account_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->account_ids);
+        return $this->vat_required;
     }
 
     /**
@@ -648,15 +651,9 @@ final class Position extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     */
-    public function getCountryId(): ?OdooRelation
-    {
-        return $this->country_id;
-    }
-
-    /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("tax_ids")
      */
     public function getTaxIds(): ?array
     {
@@ -718,6 +715,8 @@ final class Position extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("note")
      */
     public function getNote(): ?string
     {
@@ -734,6 +733,8 @@ final class Position extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("auto_apply")
      */
     public function isAutoApply(): ?bool
     {
@@ -746,22 +747,6 @@ final class Position extends Base
     public function setAutoApply(?bool $auto_apply): void
     {
         $this->auto_apply = $auto_apply;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isVatRequired(): ?bool
-    {
-        return $this->vat_required;
-    }
-
-    /**
-     * @param bool|null $vat_required
-     */
-    public function setVatRequired(?bool $vat_required): void
-    {
-        $this->vat_required = $vat_required;
     }
 
     /**

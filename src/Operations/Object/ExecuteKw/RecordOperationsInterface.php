@@ -8,7 +8,20 @@ interface RecordOperationsInterface extends OperationsInterface
 {
     public function create(string $modelName, array $model): int;
 
-    public function write(string $modelName, int $id, array $model): array;
+    /**
+     * @param string $modelName
+     * @param int[] $ids
+     * @param array $model
+     *
+     * @return bool
+     */
+    public function write(string $modelName, array $ids, array $model): bool;
 
-    public function unlink(string $modelName, int $id): array;
+    /**
+     * @param string $modelName
+     * @param int[] $ids
+     *
+     * @return bool
+     */
+    public function unlink(string $modelName, array $ids): bool;
 }

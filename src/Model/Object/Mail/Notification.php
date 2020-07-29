@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Mail;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : mail.notification
@@ -196,6 +197,8 @@ final class Notification extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("read_date")
      */
     public function getReadDate(): ?DateTimeInterface
     {
@@ -212,6 +215,8 @@ final class Notification extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("failure_type")
      */
     public function getFailureType(): ?string
     {
@@ -228,6 +233,8 @@ final class Notification extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("sms_number")
      */
     public function getSmsNumber(): ?string
     {
@@ -244,6 +251,8 @@ final class Notification extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("sms_id")
      */
     public function getSmsId(): ?OdooRelation
     {
@@ -260,6 +269,8 @@ final class Notification extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("notification_type")
      */
     public function getNotificationType(): string
     {
@@ -284,6 +295,8 @@ final class Notification extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("mail_message_id")
      */
     public function getMailMessageId(): OdooRelation
     {
@@ -292,6 +305,8 @@ final class Notification extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("failure_reason")
      */
     public function getFailureReason(): ?string
     {
@@ -308,6 +323,8 @@ final class Notification extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("mail_id")
      */
     public function getMailId(): ?OdooRelation
     {
@@ -324,6 +341,8 @@ final class Notification extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("notification_status")
      */
     public function getNotificationStatus(): ?string
     {
@@ -340,6 +359,8 @@ final class Notification extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("is_read")
      */
     public function isIsRead(): ?bool
     {
@@ -356,6 +377,8 @@ final class Notification extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("res_partner_id")
      */
     public function getResPartnerId(): ?OdooRelation
     {

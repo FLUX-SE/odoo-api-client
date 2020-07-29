@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Res;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : res.lang
@@ -314,6 +315,8 @@ final class Lang extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -330,6 +333,8 @@ final class Lang extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -346,6 +351,8 @@ final class Lang extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -362,6 +369,8 @@ final class Lang extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -378,6 +387,8 @@ final class Lang extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("thousands_sep")
      */
     public function getThousandsSep(): ?string
     {
@@ -394,6 +405,8 @@ final class Lang extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("decimal_point")
      */
     public function getDecimalPoint(): string
     {
@@ -410,6 +423,8 @@ final class Lang extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("grouping")
      */
     public function getGrouping(): string
     {
@@ -418,6 +433,8 @@ final class Lang extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("week_start")
      */
     public function getWeekStart(): string
     {
@@ -426,6 +443,8 @@ final class Lang extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -450,6 +469,8 @@ final class Lang extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("code")
      */
     public function getCode(): string
     {
@@ -466,6 +487,8 @@ final class Lang extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("iso_code")
      */
     public function getIsoCode(): ?string
     {
@@ -482,6 +505,8 @@ final class Lang extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("url_code")
      */
     public function getUrlCode(): string
     {
@@ -490,6 +515,8 @@ final class Lang extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active")
      */
     public function isActive(): ?bool
     {
@@ -514,6 +541,8 @@ final class Lang extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("direction")
      */
     public function getDirection(): string
     {
@@ -530,6 +559,8 @@ final class Lang extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("date_format")
      */
     public function getDateFormat(): string
     {
@@ -546,6 +577,8 @@ final class Lang extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("time_format")
      */
     public function getTimeFormat(): string
     {

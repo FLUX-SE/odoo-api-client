@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Model;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.model.data
@@ -191,6 +192,8 @@ final class Data extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("date_init")
      */
     public function getDateInit(): ?DateTimeInterface
     {
@@ -207,6 +210,8 @@ final class Data extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -223,6 +228,8 @@ final class Data extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -239,6 +246,8 @@ final class Data extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -255,6 +264,8 @@ final class Data extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -271,6 +282,8 @@ final class Data extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("reference")
      */
     public function getReference(): ?string
     {
@@ -295,6 +308,8 @@ final class Data extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -303,6 +318,8 @@ final class Data extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("date_update")
      */
     public function getDateUpdate(): ?DateTimeInterface
     {
@@ -319,6 +336,8 @@ final class Data extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("noupdate")
      */
     public function isNoupdate(): ?bool
     {
@@ -335,6 +354,8 @@ final class Data extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("res_id")
      */
     public function getResId(): ?int
     {
@@ -351,6 +372,8 @@ final class Data extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("module")
      */
     public function getModule(): string
     {
@@ -367,6 +390,8 @@ final class Data extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("model")
      */
     public function getModel(): string
     {
@@ -383,6 +408,8 @@ final class Data extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("complete_name")
      */
     public function getCompleteName(): ?string
     {

@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Partial;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.partial.reconcile
@@ -213,6 +214,8 @@ final class Reconcile extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("full_reconcile_id")
      */
     public function getFullReconcileId(): ?OdooRelation
     {
@@ -229,6 +232,8 @@ final class Reconcile extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -245,6 +250,8 @@ final class Reconcile extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -261,6 +268,8 @@ final class Reconcile extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -277,6 +286,8 @@ final class Reconcile extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -293,6 +304,8 @@ final class Reconcile extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("max_date")
      */
     public function getMaxDate(): ?DateTimeInterface
     {
@@ -317,6 +330,8 @@ final class Reconcile extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("debit_move_id")
      */
     public function getDebitMoveId(): OdooRelation
     {
@@ -325,6 +340,8 @@ final class Reconcile extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {
@@ -341,6 +358,8 @@ final class Reconcile extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_currency_id")
      */
     public function getCompanyCurrencyId(): ?OdooRelation
     {
@@ -357,6 +376,8 @@ final class Reconcile extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("currency_id")
      */
     public function getCurrencyId(): ?OdooRelation
     {
@@ -373,6 +394,8 @@ final class Reconcile extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("amount_currency")
      */
     public function getAmountCurrency(): ?float
     {
@@ -389,6 +412,8 @@ final class Reconcile extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("amount")
      */
     public function getAmount(): ?float
     {
@@ -405,6 +430,8 @@ final class Reconcile extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("credit_move_id")
      */
     public function getCreditMoveId(): OdooRelation
     {

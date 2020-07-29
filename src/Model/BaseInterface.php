@@ -8,9 +8,15 @@ use DateTimeInterface;
 
 interface BaseInterface
 {
-    public function getId(): ?int;
+    /**
+     * @return int|null|false
+     */
+    public function getId();
 
-    public function setId(?int $id): void;
+    /**
+     * @param int|null|false $id
+     */
+    public function setId($id): void;
 
     public function getDisplayName(): ?string;
 

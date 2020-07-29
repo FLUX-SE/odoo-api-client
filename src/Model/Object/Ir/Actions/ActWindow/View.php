@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Actions\ActWindow;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.actions.act_window.view
@@ -50,31 +51,6 @@ final class View extends Base
     private $view_id;
 
     /**
-     * View Type
-     * ---
-     * Selection : (default value, usually null)
-     *     -> tree (Tree)
-     *     -> form (Form)
-     *     -> graph (Graph)
-     *     -> pivot (Pivot)
-     *     -> calendar (Calendar)
-     *     -> gantt (Gantt)
-     *     -> kanban (Kanban)
-     *     -> qweb (QWeb)
-     *     -> cohort (Cohort)
-     *     -> dashboard (Dashboard)
-     *     -> grid (Grid)
-     *     -> activity (Activity)
-     *     -> map (Map)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string
-     */
-    private $view_mode;
-
-    /**
      * Action
      * ---
      * Relation : many2one (ir.actions.act_window)
@@ -98,6 +74,30 @@ final class View extends Base
      * @var bool|null
      */
     private $multi;
+
+    /**
+     * View Type
+     * ---
+     * Selection : (default value, usually null)
+     *     -> tree (Tree)
+     *     -> form (Form)
+     *     -> graph (Graph)
+     *     -> pivot (Pivot)
+     *     -> calendar (Calendar)
+     *     -> gantt (Gantt)
+     *     -> kanban (Kanban)
+     *     -> qweb (QWeb)
+     *     -> cohort (Cohort)
+     *     -> grid (Grid)
+     *     -> activity (Activity)
+     *     -> map (Map)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    private $view_mode;
 
     /**
      * Created by
@@ -158,7 +158,6 @@ final class View extends Base
      *            -> kanban (Kanban)
      *            -> qweb (QWeb)
      *            -> cohort (Cohort)
-     *            -> dashboard (Dashboard)
      *            -> grid (Grid)
      *            -> activity (Activity)
      *            -> map (Map)
@@ -173,6 +172,8 @@ final class View extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -189,6 +190,8 @@ final class View extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -205,6 +208,8 @@ final class View extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -221,6 +226,8 @@ final class View extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -236,6 +243,34 @@ final class View extends Base
     }
 
     /**
+     * @param string $view_mode
+     */
+    public function setViewMode(string $view_mode): void
+    {
+        $this->view_mode = $view_mode;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("sequence")
+     */
+    public function getSequence(): ?int
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("view_mode")
+     */
+    public function getViewMode(): string
+    {
+        return $this->view_mode;
+    }
+
+    /**
      * @param bool|null $multi
      */
     public function setMulti(?bool $multi): void
@@ -244,15 +279,9 @@ final class View extends Base
     }
 
     /**
-     * @return int|null
-     */
-    public function getSequence(): ?int
-    {
-        return $this->sequence;
-    }
-
-    /**
      * @return bool|null
+     *
+     * @SerializedName("multi")
      */
     public function isMulti(): ?bool
     {
@@ -269,26 +298,12 @@ final class View extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("act_window_id")
      */
     public function getActWindowId(): ?OdooRelation
     {
         return $this->act_window_id;
-    }
-
-    /**
-     * @param string $view_mode
-     */
-    public function setViewMode(string $view_mode): void
-    {
-        $this->view_mode = $view_mode;
-    }
-
-    /**
-     * @return string
-     */
-    public function getViewMode(): string
-    {
-        return $this->view_mode;
     }
 
     /**
@@ -301,6 +316,8 @@ final class View extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("view_id")
      */
     public function getViewId(): ?OdooRelation
     {

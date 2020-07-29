@@ -6,6 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Mail;
 
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : mail.thread
@@ -237,6 +238,8 @@ final class Thread extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_is_follower")
      */
     public function isMessageIsFollower(): ?bool
     {
@@ -245,6 +248,8 @@ final class Thread extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_attachment_count")
      */
     public function getMessageAttachmentCount(): ?int
     {
@@ -253,6 +258,8 @@ final class Thread extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_needaction")
      */
     public function isMessageNeedaction(): ?bool
     {
@@ -269,6 +276,8 @@ final class Thread extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_needaction_counter")
      */
     public function getMessageNeedactionCounter(): ?int
     {
@@ -285,6 +294,8 @@ final class Thread extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_has_error")
      */
     public function isMessageHasError(): ?bool
     {
@@ -301,6 +312,8 @@ final class Thread extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_has_error_counter")
      */
     public function getMessageHasErrorCounter(): ?int
     {
@@ -325,6 +338,8 @@ final class Thread extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_unread_counter")
      */
     public function getMessageUnreadCounter(): ?int
     {
@@ -333,6 +348,8 @@ final class Thread extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("message_main_attachment_id")
      */
     public function getMessageMainAttachmentId(): ?OdooRelation
     {
@@ -349,6 +366,8 @@ final class Thread extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("website_message_ids")
      */
     public function getWebsiteMessageIds(): ?array
     {
@@ -410,6 +429,8 @@ final class Thread extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_has_sms_error")
      */
     public function isMessageHasSmsError(): ?bool
     {
@@ -465,6 +486,8 @@ final class Thread extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_follower_ids")
      */
     public function getMessageFollowerIds(): ?array
     {
@@ -526,6 +549,8 @@ final class Thread extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_partner_ids")
      */
     public function getMessagePartnerIds(): ?array
     {
@@ -572,6 +597,8 @@ final class Thread extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_channel_ids")
      */
     public function getMessageChannelIds(): ?array
     {
@@ -580,6 +607,8 @@ final class Thread extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_unread")
      */
     public function isMessageUnread(): ?bool
     {
@@ -641,6 +670,8 @@ final class Thread extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_ids")
      */
     public function getMessageIds(): ?array
     {

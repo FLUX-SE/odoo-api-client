@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Base\Language;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : base.language.export
@@ -188,6 +189,8 @@ final class Export extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -204,6 +207,8 @@ final class Export extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -220,6 +225,8 @@ final class Export extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -236,6 +243,8 @@ final class Export extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -252,6 +261,8 @@ final class Export extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("state")
      */
     public function getState(): ?string
     {
@@ -260,6 +271,8 @@ final class Export extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("data")
      */
     public function getData(): ?string
     {
@@ -268,6 +281,8 @@ final class Export extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -329,6 +344,8 @@ final class Export extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("modules")
      */
     public function getModules(): ?array
     {
@@ -345,6 +362,8 @@ final class Export extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("format")
      */
     public function getFormat(): string
     {
@@ -361,6 +380,8 @@ final class Export extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("lang")
      */
     public function getLang(): string
     {

@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Sms;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : sms.sms
@@ -187,6 +188,8 @@ final class Sms extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -203,6 +206,8 @@ final class Sms extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -219,6 +224,8 @@ final class Sms extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -235,6 +242,8 @@ final class Sms extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -243,6 +252,8 @@ final class Sms extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("error_code")
      */
     public function getErrorCode(): ?string
     {
@@ -251,6 +262,8 @@ final class Sms extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("number")
      */
     public function getNumber(): ?string
     {
@@ -267,6 +280,8 @@ final class Sms extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("state")
      */
     public function getState(): string
     {
@@ -283,6 +298,8 @@ final class Sms extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("mail_message_id")
      */
     public function getMailMessageId(): ?OdooRelation
     {
@@ -299,6 +316,8 @@ final class Sms extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("partner_id")
      */
     public function getPartnerId(): ?OdooRelation
     {
@@ -315,6 +334,8 @@ final class Sms extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("body")
      */
     public function getBody(): ?string
     {

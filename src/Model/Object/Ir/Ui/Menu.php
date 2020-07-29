@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Ui;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.ui.menu
@@ -223,6 +224,8 @@ final class Menu extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("web_icon")
      */
     public function getWebIcon(): ?string
     {
@@ -239,6 +242,8 @@ final class Menu extends Base
 
     /**
      * @return mixed|null
+     *
+     * @SerializedName("action")
      */
     public function getAction()
     {
@@ -255,6 +260,8 @@ final class Menu extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("web_icon_data")
      */
     public function getWebIconData(): ?string
     {
@@ -263,6 +270,8 @@ final class Menu extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -294,6 +303,8 @@ final class Menu extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -310,6 +321,8 @@ final class Menu extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -326,6 +339,8 @@ final class Menu extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -342,6 +357,8 @@ final class Menu extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("complete_name")
      */
     public function getCompleteName(): ?string
     {
@@ -366,6 +383,8 @@ final class Menu extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -396,6 +415,8 @@ final class Menu extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active")
      */
     public function isActive(): ?bool
     {
@@ -412,6 +433,8 @@ final class Menu extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): ?int
     {
@@ -428,6 +451,8 @@ final class Menu extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("child_id")
      */
     public function getChildId(): ?array
     {
@@ -489,6 +514,8 @@ final class Menu extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("parent_id")
      */
     public function getParentId(): ?OdooRelation
     {
@@ -505,6 +532,8 @@ final class Menu extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("parent_path")
      */
     public function getParentPath(): ?string
     {
@@ -521,6 +550,8 @@ final class Menu extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("groups_id")
      */
     public function getGroupsId(): ?array
     {

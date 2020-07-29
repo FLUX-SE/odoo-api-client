@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Product;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : product.attribute
@@ -195,6 +196,8 @@ final class Attribute extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("is_used_on_products")
      */
     public function isIsUsedOnProducts(): ?bool
     {
@@ -211,6 +214,8 @@ final class Attribute extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -227,6 +232,8 @@ final class Attribute extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -243,6 +250,8 @@ final class Attribute extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -259,6 +268,8 @@ final class Attribute extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -320,6 +331,8 @@ final class Attribute extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("product_tmpl_ids")
      */
     public function getProductTmplIds(): ?array
     {
@@ -344,6 +357,8 @@ final class Attribute extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -352,6 +367,8 @@ final class Attribute extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("create_variant")
      */
     public function getCreateVariant(): string
     {
@@ -413,6 +430,8 @@ final class Attribute extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("attribute_line_ids")
      */
     public function getAttributeLineIds(): ?array
     {
@@ -429,6 +448,8 @@ final class Attribute extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): ?int
     {
@@ -490,6 +511,8 @@ final class Attribute extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("value_ids")
      */
     public function getValueIds(): ?array
     {

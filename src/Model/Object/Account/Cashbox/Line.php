@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Cashbox;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.cashbox.line
@@ -135,6 +136,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -151,6 +154,8 @@ final class Line extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -167,6 +172,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -183,6 +190,8 @@ final class Line extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -207,6 +216,8 @@ final class Line extends Base
 
     /**
      * @return float
+     *
+     * @SerializedName("coin_value")
      */
     public function getCoinValue(): float
     {
@@ -215,6 +226,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("currency_id")
      */
     public function getCurrencyId(): ?OdooRelation
     {
@@ -231,6 +244,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("cashbox_id")
      */
     public function getCashboxId(): ?OdooRelation
     {
@@ -247,6 +262,8 @@ final class Line extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("subtotal")
      */
     public function getSubtotal(): ?float
     {
@@ -263,6 +280,8 @@ final class Line extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("number")
      */
     public function getNumber(): ?int
     {

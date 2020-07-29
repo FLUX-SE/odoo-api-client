@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\AccountReports\Export;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account_reports.export.wizard
@@ -144,6 +145,8 @@ final class Wizard extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -160,6 +163,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -176,6 +181,8 @@ final class Wizard extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -192,6 +199,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -200,6 +209,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("doc_name")
      */
     public function getDocName(): ?string
     {
@@ -208,6 +219,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("export_format_ids")
      */
     public function getExportFormatIds(): ?array
     {
@@ -224,6 +237,8 @@ final class Wizard extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("report_id")
      */
     public function getReportId(): int
     {
@@ -240,6 +255,8 @@ final class Wizard extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("report_model")
      */
     public function getReportModel(): string
     {

@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Mail\Channel;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : mail.channel.partner
@@ -181,6 +182,8 @@ final class Partner extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("custom_channel_name")
      */
     public function getCustomChannelName(): ?string
     {
@@ -189,6 +192,8 @@ final class Partner extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("is_minimized")
      */
     public function isIsMinimized(): ?bool
     {
@@ -205,6 +210,8 @@ final class Partner extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -221,6 +228,8 @@ final class Partner extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -237,6 +246,8 @@ final class Partner extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -253,6 +264,8 @@ final class Partner extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -269,6 +282,8 @@ final class Partner extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("is_pinned")
      */
     public function isIsPinned(): ?bool
     {
@@ -301,6 +316,8 @@ final class Partner extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("fold_state")
      */
     public function getFoldState(): ?string
     {
@@ -317,6 +334,8 @@ final class Partner extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("seen_message_id")
      */
     public function getSeenMessageId(): ?OdooRelation
     {
@@ -333,6 +352,8 @@ final class Partner extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("fetched_message_id")
      */
     public function getFetchedMessageId(): ?OdooRelation
     {
@@ -349,6 +370,8 @@ final class Partner extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("channel_id")
      */
     public function getChannelId(): ?OdooRelation
     {
@@ -365,6 +388,8 @@ final class Partner extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("partner_email")
      */
     public function getPartnerEmail(): ?string
     {
@@ -381,6 +406,8 @@ final class Partner extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("partner_id")
      */
     public function getPartnerId(): ?OdooRelation
     {

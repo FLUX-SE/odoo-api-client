@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Ir\Actions\Server;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.cron
@@ -191,6 +192,26 @@ final class Cron extends Server
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param OdooRelation $model_id Model
+     *        ---
+     *        Model on which the server action runs.
+     *        ---
+     *        Relation : many2one (ir.model)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $activity_user_type Activity User Type
+     *        ---
+     *        Use 'Specific User' to always assign the same user on the next activity. Use 'Generic User From Record' to
+     *        specify the field name of the user to choose on the record.
+     *        ---
+     *        Selection : (default value, usually null)
+     *            -> specific (Specific User)
+     *            -> generic (Generic User From Record)
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $state Action To Do
      *        ---
      *        Type of server action. The following values are available:
@@ -214,31 +235,11 @@ final class Cron extends Server
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param OdooRelation $model_id Model
-     *        ---
-     *        Model on which the server action runs.
-     *        ---
-     *        Relation : many2one (ir.model)
-     *        @see \Flux\OdooApiClient\Model\Object\Ir\Model
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
      * @param string $binding_type Binding Type
      *        ---
      *        Selection : (default value, usually null)
      *            -> action (Action)
      *            -> report (Report)
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
-     * @param string $activity_user_type Activity User Type
-     *        ---
-     *        Use 'Specific User' to always assign the same user on the next activity. Use 'Generic User From Record' to
-     *        specify the field name of the user to choose on the record.
-     *        ---
-     *        Selection : (default value, usually null)
-     *            -> specific (Specific User)
-     *            -> generic (Generic User From Record)
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -250,10 +251,10 @@ final class Cron extends Server
         string $name,
         string $type,
         string $usage,
-        string $state,
         OdooRelation $model_id,
-        string $binding_type,
-        string $activity_user_type
+        string $activity_user_type,
+        string $state,
+        string $binding_type
     ) {
         $this->ir_actions_server_id = $ir_actions_server_id;
         $this->user_id = $user_id;
@@ -262,15 +263,17 @@ final class Cron extends Server
             $name,
             $type,
             $usage,
-            $state,
             $model_id,
-            $binding_type,
-            $activity_user_type
+            $activity_user_type,
+            $state,
+            $binding_type
         );
     }
 
     /**
      * @return int|null
+     *
+     * @SerializedName("numbercall")
      */
     public function getNumbercall(): ?int
     {
@@ -287,6 +290,8 @@ final class Cron extends Server
 
     /**
      * @return int|null
+     *
+     * @SerializedName("priority")
      */
     public function getPriority(): ?int
     {
@@ -303,6 +308,8 @@ final class Cron extends Server
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("lastcall")
      */
     public function getLastcall(): ?DateTimeInterface
     {
@@ -319,6 +326,8 @@ final class Cron extends Server
 
     /**
      * @return DateTimeInterface
+     *
+     * @SerializedName("nextcall")
      */
     public function getNextcall(): DateTimeInterface
     {
@@ -335,6 +344,8 @@ final class Cron extends Server
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("doall")
      */
     public function isDoall(): ?bool
     {
@@ -359,6 +370,8 @@ final class Cron extends Server
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("ir_actions_server_id")
      */
     public function getIrActionsServerId(): OdooRelation
     {
@@ -367,6 +380,8 @@ final class Cron extends Server
 
     /**
      * @return string|null
+     *
+     * @SerializedName("interval_type")
      */
     public function getIntervalType(): ?string
     {
@@ -383,6 +398,8 @@ final class Cron extends Server
 
     /**
      * @return int|null
+     *
+     * @SerializedName("interval_number")
      */
     public function getIntervalNumber(): ?int
     {
@@ -399,6 +416,8 @@ final class Cron extends Server
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active")
      */
     public function isActive(): ?bool
     {
@@ -415,6 +434,8 @@ final class Cron extends Server
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("user_id")
      */
     public function getUserId(): OdooRelation
     {
@@ -431,6 +452,8 @@ final class Cron extends Server
 
     /**
      * @return string|null
+     *
+     * @SerializedName("cron_name")
      */
     public function getCronName(): ?string
     {

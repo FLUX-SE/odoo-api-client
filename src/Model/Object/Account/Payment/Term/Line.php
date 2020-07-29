@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Payment\Term;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.payment.term.line
@@ -208,6 +209,8 @@ final class Line extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): ?int
     {
@@ -224,6 +227,8 @@ final class Line extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -240,6 +245,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -256,6 +263,8 @@ final class Line extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -272,6 +281,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -296,6 +307,8 @@ final class Line extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("value")
      */
     public function getValue(): string
     {
@@ -304,6 +317,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("payment_id")
      */
     public function getPaymentId(): OdooRelation
     {
@@ -320,6 +335,8 @@ final class Line extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("option")
      */
     public function getOption(): string
     {
@@ -336,6 +353,8 @@ final class Line extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("day_of_the_month")
      */
     public function getDayOfTheMonth(): ?int
     {
@@ -352,6 +371,8 @@ final class Line extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("days")
      */
     public function getDays(): int
     {
@@ -368,6 +389,8 @@ final class Line extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("value_amount")
      */
     public function getValueAmount(): ?float
     {

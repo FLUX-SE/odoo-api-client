@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Res\Partner;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : res.partner.category
@@ -166,6 +167,8 @@ final class Category extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("partner_ids")
      */
     public function getPartnerIds(): ?array
     {
@@ -182,6 +185,8 @@ final class Category extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -198,6 +203,8 @@ final class Category extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -214,6 +221,8 @@ final class Category extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -230,6 +239,8 @@ final class Category extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -299,6 +310,8 @@ final class Category extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -307,6 +320,8 @@ final class Category extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("parent_path")
      */
     public function getParentPath(): ?string
     {
@@ -323,6 +338,8 @@ final class Category extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active")
      */
     public function isActive(): ?bool
     {
@@ -384,6 +401,8 @@ final class Category extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("child_ids")
      */
     public function getChildIds(): ?array
     {
@@ -400,6 +419,8 @@ final class Category extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("parent_id")
      */
     public function getParentId(): ?OdooRelation
     {
@@ -416,6 +437,8 @@ final class Category extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("color")
      */
     public function getColor(): ?int
     {

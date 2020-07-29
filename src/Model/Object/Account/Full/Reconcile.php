@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Full;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.full.reconcile
@@ -134,6 +135,8 @@ final class Reconcile extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("exchange_move_id")
      */
     public function getExchangeMoveId(): ?OdooRelation
     {
@@ -150,6 +153,8 @@ final class Reconcile extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -166,6 +171,8 @@ final class Reconcile extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -182,6 +189,8 @@ final class Reconcile extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -198,6 +207,8 @@ final class Reconcile extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -229,6 +240,8 @@ final class Reconcile extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -275,6 +288,8 @@ final class Reconcile extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("reconciled_line_ids")
      */
     public function getReconciledLineIds(): ?array
     {
@@ -336,6 +351,8 @@ final class Reconcile extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("partial_reconcile_ids")
      */
     public function getPartialReconcileIds(): ?array
     {

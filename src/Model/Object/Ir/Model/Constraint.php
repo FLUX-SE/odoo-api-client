@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Model;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.model.constraint
@@ -193,6 +194,8 @@ final class Constraint extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -209,6 +212,8 @@ final class Constraint extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -225,6 +230,8 @@ final class Constraint extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -241,6 +248,8 @@ final class Constraint extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -249,6 +258,8 @@ final class Constraint extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("type")
      */
     public function getType(): string
     {
@@ -257,6 +268,8 @@ final class Constraint extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -273,6 +286,8 @@ final class Constraint extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("module")
      */
     public function getModule(): OdooRelation
     {
@@ -289,6 +304,8 @@ final class Constraint extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("model")
      */
     public function getModel(): OdooRelation
     {
@@ -305,6 +322,8 @@ final class Constraint extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("message")
      */
     public function getMessage(): ?string
     {
@@ -321,6 +340,8 @@ final class Constraint extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("definition")
      */
     public function getDefinition(): ?string
     {

@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Digest;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : digest.digest
@@ -228,26 +229,6 @@ final class Digest extends Base
     private $kpi_account_bank_cash_value;
 
     /**
-     * POS Sales
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $kpi_pos_total;
-
-    /**
-     * Kpi Pos Total Value
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var float|null
-     */
-    private $kpi_pos_total_value;
-
-    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -323,11 +304,31 @@ final class Digest extends Base
     }
 
     /**
-     * @param float|null $kpi_account_bank_cash_value
+     * @return bool|null
+     *
+     * @SerializedName("kpi_account_bank_cash")
      */
-    public function setKpiAccountBankCashValue(?float $kpi_account_bank_cash_value): void
+    public function isKpiAccountBankCash(): ?bool
     {
-        $this->kpi_account_bank_cash_value = $kpi_account_bank_cash_value;
+        return $this->kpi_account_bank_cash;
+    }
+
+    /**
+     * @param int|null $kpi_res_users_connected_value
+     */
+    public function setKpiResUsersConnectedValue(?int $kpi_res_users_connected_value): void
+    {
+        $this->kpi_res_users_connected_value = $kpi_res_users_connected_value;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("kpi_mail_message_total")
+     */
+    public function isKpiMailMessageTotal(): ?bool
+    {
+        return $this->kpi_mail_message_total;
     }
 
     /**
@@ -340,6 +341,8 @@ final class Digest extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("kpi_mail_message_total_value")
      */
     public function getKpiMailMessageTotalValue(): ?int
     {
@@ -356,6 +359,8 @@ final class Digest extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("kpi_account_total_revenue")
      */
     public function isKpiAccountTotalRevenue(): ?bool
     {
@@ -372,6 +377,8 @@ final class Digest extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("kpi_account_total_revenue_value")
      */
     public function getKpiAccountTotalRevenueValue(): ?float
     {
@@ -387,14 +394,6 @@ final class Digest extends Base
     }
 
     /**
-     * @return bool|null
-     */
-    public function isKpiAccountBankCash(): ?bool
-    {
-        return $this->kpi_account_bank_cash;
-    }
-
-    /**
      * @param bool|null $kpi_account_bank_cash
      */
     public function setKpiAccountBankCash(?bool $kpi_account_bank_cash): void
@@ -403,7 +402,17 @@ final class Digest extends Base
     }
 
     /**
+     * @param bool|null $kpi_res_users_connected
+     */
+    public function setKpiResUsersConnected(?bool $kpi_res_users_connected): void
+    {
+        $this->kpi_res_users_connected = $kpi_res_users_connected;
+    }
+
+    /**
      * @return float|null
+     *
+     * @SerializedName("kpi_account_bank_cash_value")
      */
     public function getKpiAccountBankCashValue(): ?float
     {
@@ -411,47 +420,17 @@ final class Digest extends Base
     }
 
     /**
-     * @return bool|null
+     * @param float|null $kpi_account_bank_cash_value
      */
-    public function isKpiPosTotal(): ?bool
+    public function setKpiAccountBankCashValue(?float $kpi_account_bank_cash_value): void
     {
-        return $this->kpi_pos_total;
-    }
-
-    /**
-     * @param int|null $kpi_res_users_connected_value
-     */
-    public function setKpiResUsersConnectedValue(?int $kpi_res_users_connected_value): void
-    {
-        $this->kpi_res_users_connected_value = $kpi_res_users_connected_value;
-    }
-
-    /**
-     * @param bool|null $kpi_pos_total
-     */
-    public function setKpiPosTotal(?bool $kpi_pos_total): void
-    {
-        $this->kpi_pos_total = $kpi_pos_total;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getKpiPosTotalValue(): ?float
-    {
-        return $this->kpi_pos_total_value;
-    }
-
-    /**
-     * @param float|null $kpi_pos_total_value
-     */
-    public function setKpiPosTotalValue(?float $kpi_pos_total_value): void
-    {
-        $this->kpi_pos_total_value = $kpi_pos_total_value;
+        $this->kpi_account_bank_cash_value = $kpi_account_bank_cash_value;
     }
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -468,6 +447,8 @@ final class Digest extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -484,6 +465,8 @@ final class Digest extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -500,6 +483,8 @@ final class Digest extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -515,15 +500,9 @@ final class Digest extends Base
     }
 
     /**
-     * @return bool|null
-     */
-    public function isKpiMailMessageTotal(): ?bool
-    {
-        return $this->kpi_mail_message_total;
-    }
-
-    /**
      * @return int|null
+     *
+     * @SerializedName("kpi_res_users_connected_value")
      */
     public function getKpiResUsersConnectedValue(): ?int
     {
@@ -531,7 +510,19 @@ final class Digest extends Base
     }
 
     /**
+     * @return bool|null
+     *
+     * @SerializedName("kpi_res_users_connected")
+     */
+    public function isKpiResUsersConnected(): ?bool
+    {
+        return $this->kpi_res_users_connected;
+    }
+
+    /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -539,11 +530,11 @@ final class Digest extends Base
     }
 
     /**
-     * @return OdooRelation
+     * @param DateTimeInterface|null $next_run_date
      */
-    public function getTemplateId(): OdooRelation
+    public function setNextRunDate(?DateTimeInterface $next_run_date): void
     {
-        return $this->template_id;
+        $this->next_run_date = $next_run_date;
     }
 
     /**
@@ -556,6 +547,8 @@ final class Digest extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("user_ids")
      */
     public function getUserIds(): ?array
     {
@@ -617,6 +610,8 @@ final class Digest extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("periodicity")
      */
     public function getPeriodicity(): string
     {
@@ -633,6 +628,8 @@ final class Digest extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("next_run_date")
      */
     public function getNextRunDate(): ?DateTimeInterface
     {
@@ -640,11 +637,21 @@ final class Digest extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $next_run_date
+     * @return OdooRelation
+     *
+     * @SerializedName("template_id")
      */
-    public function setNextRunDate(?DateTimeInterface $next_run_date): void
+    public function getTemplateId(): OdooRelation
     {
-        $this->next_run_date = $next_run_date;
+        return $this->template_id;
+    }
+
+    /**
+     * @param string|null $state
+     */
+    public function setState(?string $state): void
+    {
+        $this->state = $state;
     }
 
     /**
@@ -656,15 +663,9 @@ final class Digest extends Base
     }
 
     /**
-     * @param bool|null $kpi_res_users_connected
-     */
-    public function setKpiResUsersConnected(?bool $kpi_res_users_connected): void
-    {
-        $this->kpi_res_users_connected = $kpi_res_users_connected;
-    }
-
-    /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("currency_id")
      */
     public function getCurrencyId(): ?OdooRelation
     {
@@ -681,6 +682,8 @@ final class Digest extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {
@@ -697,6 +700,8 @@ final class Digest extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("available_fields")
      */
     public function getAvailableFields(): ?string
     {
@@ -713,6 +718,8 @@ final class Digest extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("is_subscribed")
      */
     public function isIsSubscribed(): ?bool
     {
@@ -729,26 +736,12 @@ final class Digest extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("state")
      */
     public function getState(): ?string
     {
         return $this->state;
-    }
-
-    /**
-     * @param string|null $state
-     */
-    public function setState(?string $state): void
-    {
-        $this->state = $state;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function isKpiResUsersConnected(): ?bool
-    {
-        return $this->kpi_res_users_connected;
     }
 
     /**

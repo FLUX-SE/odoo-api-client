@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Snailmail\Letter\Missing\Required;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : snailmail.letter.missing.required.fields
@@ -163,6 +164,8 @@ final class Fields extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("partner_id")
      */
     public function getPartnerId(): ?OdooRelation
     {
@@ -187,6 +190,8 @@ final class Fields extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -203,6 +208,8 @@ final class Fields extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -219,6 +226,8 @@ final class Fields extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -235,6 +244,8 @@ final class Fields extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -251,6 +262,8 @@ final class Fields extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("country_id")
      */
     public function getCountryId(): ?OdooRelation
     {
@@ -259,6 +272,8 @@ final class Fields extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("state_id")
      */
     public function getStateId(): ?OdooRelation
     {
@@ -283,6 +298,8 @@ final class Fields extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("city")
      */
     public function getCity(): ?string
     {
@@ -299,6 +316,8 @@ final class Fields extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("zip")
      */
     public function getZip(): ?string
     {
@@ -315,6 +334,8 @@ final class Fields extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("street2")
      */
     public function getStreet2(): ?string
     {
@@ -331,6 +352,8 @@ final class Fields extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("street")
      */
     public function getStreet(): ?string
     {
@@ -347,6 +370,8 @@ final class Fields extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("letter_id")
      */
     public function getLetterId(): ?OdooRelation
     {

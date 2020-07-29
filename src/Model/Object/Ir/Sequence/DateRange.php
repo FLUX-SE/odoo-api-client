@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Sequence;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.sequence.date_range
@@ -167,6 +168,8 @@ final class DateRange extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -183,6 +186,8 @@ final class DateRange extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -199,6 +204,8 @@ final class DateRange extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -215,6 +222,8 @@ final class DateRange extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -239,6 +248,8 @@ final class DateRange extends Base
 
     /**
      * @return DateTimeInterface
+     *
+     * @SerializedName("date_from")
      */
     public function getDateFrom(): DateTimeInterface
     {
@@ -247,6 +258,8 @@ final class DateRange extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("number_next_actual")
      */
     public function getNumberNextActual(): ?int
     {
@@ -263,6 +276,8 @@ final class DateRange extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("number_next")
      */
     public function getNumberNext(): int
     {
@@ -279,6 +294,8 @@ final class DateRange extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("sequence_id")
      */
     public function getSequenceId(): OdooRelation
     {
@@ -295,6 +312,8 @@ final class DateRange extends Base
 
     /**
      * @return DateTimeInterface
+     *
+     * @SerializedName("date_to")
      */
     public function getDateTo(): DateTimeInterface
     {

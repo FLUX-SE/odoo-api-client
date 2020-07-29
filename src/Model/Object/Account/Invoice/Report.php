@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Invoice;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.invoice.report
@@ -361,6 +362,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("move_id")
      */
     public function getMoveId(): ?OdooRelation
     {
@@ -377,6 +380,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("invoice_partner_bank_id")
      */
     public function getInvoicePartnerBankId(): ?OdooRelation
     {
@@ -393,6 +398,8 @@ final class Report extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("nbr_lines")
      */
     public function getNbrLines(): ?int
     {
@@ -409,6 +416,8 @@ final class Report extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("residual")
      */
     public function getResidual(): ?float
     {
@@ -425,6 +434,8 @@ final class Report extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("amount_total")
      */
     public function getAmountTotal(): ?float
     {
@@ -441,6 +452,8 @@ final class Report extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("quantity")
      */
     public function getQuantity(): ?float
     {
@@ -457,6 +470,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("product_id")
      */
     public function getProductId(): ?OdooRelation
     {
@@ -465,6 +480,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("product_uom_id")
      */
     public function getProductUomId(): ?OdooRelation
     {
@@ -473,6 +490,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("invoice_payment_term_id")
      */
     public function getInvoicePaymentTermId(): ?OdooRelation
     {
@@ -489,6 +508,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("product_categ_id")
      */
     public function getProductCategId(): ?OdooRelation
     {
@@ -505,6 +526,8 @@ final class Report extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("invoice_date_due")
      */
     public function getInvoiceDateDue(): ?DateTimeInterface
     {
@@ -521,6 +544,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("account_id")
      */
     public function getAccountId(): ?OdooRelation
     {
@@ -537,6 +562,8 @@ final class Report extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("price_subtotal")
      */
     public function getPriceSubtotal(): ?float
     {
@@ -553,6 +580,8 @@ final class Report extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("price_average")
      */
     public function getPriceAverage(): ?float
     {
@@ -601,6 +630,8 @@ final class Report extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -617,6 +648,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("journal_id")
      */
     public function getJournalId(): ?OdooRelation
     {
@@ -633,6 +666,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {
@@ -649,6 +684,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("currency_id")
      */
     public function getCurrencyId(): ?OdooRelation
     {
@@ -665,6 +702,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("partner_id")
      */
     public function getPartnerId(): ?OdooRelation
     {
@@ -681,6 +720,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("commercial_partner_id")
      */
     public function getCommercialPartnerId(): ?OdooRelation
     {
@@ -689,6 +730,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("country_id")
      */
     public function getCountryId(): ?OdooRelation
     {
@@ -697,6 +740,8 @@ final class Report extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("invoice_date")
      */
     public function getInvoiceDate(): ?DateTimeInterface
     {
@@ -713,6 +758,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("invoice_user_id")
      */
     public function getInvoiceUserId(): ?OdooRelation
     {
@@ -729,6 +776,8 @@ final class Report extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("type")
      */
     public function getType(): ?string
     {
@@ -745,6 +794,8 @@ final class Report extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("state")
      */
     public function getState(): ?string
     {
@@ -761,6 +812,8 @@ final class Report extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("invoice_payment_state")
      */
     public function getInvoicePaymentState(): ?string
     {
@@ -777,6 +830,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("fiscal_position_id")
      */
     public function getFiscalPositionId(): ?OdooRelation
     {

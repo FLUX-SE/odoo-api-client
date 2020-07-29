@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir\DemoFailure;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.demo_failure.wizard
@@ -94,6 +95,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("failure_ids")
      */
     public function getFailureIds(): ?array
     {
@@ -155,6 +158,8 @@ final class Wizard extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("failures_count")
      */
     public function getFailuresCount(): ?int
     {
@@ -171,6 +176,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -187,6 +194,8 @@ final class Wizard extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -203,6 +212,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -219,6 +230,8 @@ final class Wizard extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {

@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Cash;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.cash.rounding
@@ -105,19 +106,6 @@ final class Rounding extends Base
     private $company_id;
 
     /**
-     * Loss Account
-     * ---
-     * Relation : many2one (account.account)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Account
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $loss_account_id;
-
-    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -205,11 +193,11 @@ final class Rounding extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation|null $company_id
      */
-    public function getLossAccountId(): ?OdooRelation
+    public function setCompanyId(?OdooRelation $company_id): void
     {
-        return $this->loss_account_id;
+        $this->company_id = $company_id;
     }
 
     /**
@@ -222,6 +210,8 @@ final class Rounding extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -238,6 +228,8 @@ final class Rounding extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -254,6 +246,8 @@ final class Rounding extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -270,6 +264,8 @@ final class Rounding extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -277,35 +273,23 @@ final class Rounding extends Base
     }
 
     /**
-     * @param OdooRelation|null $loss_account_id
-     */
-    public function setLossAccountId(?OdooRelation $loss_account_id): void
-    {
-        $this->loss_account_id = $loss_account_id;
-    }
-
-    /**
-     * @param OdooRelation|null $company_id
-     */
-    public function setCompanyId(?OdooRelation $company_id): void
-    {
-        $this->company_id = $company_id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {
         return $this->company_id;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("name")
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     /**
@@ -318,6 +302,8 @@ final class Rounding extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("rounding_method")
      */
     public function getRoundingMethod(): string
     {
@@ -334,6 +320,8 @@ final class Rounding extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("account_id")
      */
     public function getAccountId(): ?OdooRelation
     {
@@ -350,6 +338,8 @@ final class Rounding extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("strategy")
      */
     public function getStrategy(): string
     {
@@ -366,6 +356,8 @@ final class Rounding extends Base
 
     /**
      * @return float
+     *
+     * @SerializedName("rounding")
      */
     public function getRounding(): float
     {

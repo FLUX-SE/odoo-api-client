@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Tax\Adjustments;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : tax.adjustments.wizard
@@ -283,6 +284,8 @@ final class Wizard extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -299,6 +302,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -315,6 +320,8 @@ final class Wizard extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -331,6 +338,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -347,6 +356,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("country_id")
      */
     public function getCountryId(): ?OdooRelation
     {
@@ -363,6 +374,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_currency_id")
      */
     public function getCompanyCurrencyId(): ?OdooRelation
     {
@@ -371,6 +384,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("tax_report_line_id")
      */
     public function getTaxReportLineId(): OdooRelation
     {
@@ -379,6 +394,8 @@ final class Wizard extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("reason")
      */
     public function getReason(): string
     {
@@ -395,6 +412,8 @@ final class Wizard extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("adjustment_type")
      */
     public function getAdjustmentType(): string
     {
@@ -411,6 +430,8 @@ final class Wizard extends Base
 
     /**
      * @return float
+     *
+     * @SerializedName("amount")
      */
     public function getAmount(): float
     {
@@ -427,6 +448,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("credit_account_id")
      */
     public function getCreditAccountId(): OdooRelation
     {
@@ -443,6 +466,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("debit_account_id")
      */
     public function getDebitAccountId(): OdooRelation
     {
@@ -459,6 +484,8 @@ final class Wizard extends Base
 
     /**
      * @return DateTimeInterface
+     *
+     * @SerializedName("date")
      */
     public function getDate(): DateTimeInterface
     {
@@ -475,6 +502,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("journal_id")
      */
     public function getJournalId(): OdooRelation
     {

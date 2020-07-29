@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Tax\Repartition;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.tax.repartition.line
@@ -262,6 +263,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -270,6 +273,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("country_id")
      */
     public function getCountryId(): ?OdooRelation
     {
@@ -286,6 +291,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): OdooRelation
     {
@@ -302,6 +309,8 @@ final class Line extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): ?int
     {
@@ -326,6 +335,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("tax_id")
      */
     public function getTaxId(): ?OdooRelation
     {
@@ -334,6 +345,8 @@ final class Line extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -350,6 +363,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -366,6 +381,8 @@ final class Line extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -398,6 +415,8 @@ final class Line extends Base
 
     /**
      * @return float
+     *
+     * @SerializedName("factor_percent")
      */
     public function getFactorPercent(): float
     {
@@ -422,6 +441,8 @@ final class Line extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("factor")
      */
     public function getFactor(): ?float
     {
@@ -438,6 +459,8 @@ final class Line extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("repartition_type")
      */
     public function getRepartitionType(): string
     {
@@ -454,6 +477,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("account_id")
      */
     public function getAccountId(): ?OdooRelation
     {
@@ -462,6 +487,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("tag_ids")
      */
     public function getTagIds(): ?array
     {
@@ -470,6 +497,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("refund_tax_id")
      */
     public function getRefundTaxId(): ?OdooRelation
     {
@@ -531,6 +560,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("invoice_tax_id")
      */
     public function getInvoiceTaxId(): ?OdooRelation
     {

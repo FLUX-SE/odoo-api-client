@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Sms;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : sms.composer
@@ -315,6 +316,8 @@ final class Composer extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("number_field_name")
      */
     public function getNumberFieldName(): ?string
     {
@@ -331,6 +334,8 @@ final class Composer extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("partner_ids")
      */
     public function getPartnerIds(): ?array
     {
@@ -392,6 +397,8 @@ final class Composer extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("numbers")
      */
     public function getNumbers(): ?string
     {
@@ -408,6 +415,8 @@ final class Composer extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("sanitized_numbers")
      */
     public function getSanitizedNumbers(): ?string
     {
@@ -416,6 +425,8 @@ final class Composer extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("template_id")
      */
     public function getTemplateId(): ?OdooRelation
     {
@@ -424,6 +435,8 @@ final class Composer extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("recipient_invalid_count")
      */
     public function getRecipientInvalidCount(): ?int
     {
@@ -440,6 +453,8 @@ final class Composer extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("body")
      */
     public function getBody(): string
     {
@@ -456,6 +471,8 @@ final class Composer extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -472,6 +489,8 @@ final class Composer extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -488,6 +507,8 @@ final class Composer extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -504,6 +525,8 @@ final class Composer extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -536,6 +559,8 @@ final class Composer extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("composition_mode")
      */
     public function getCompositionMode(): string
     {
@@ -560,6 +585,8 @@ final class Composer extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("res_model")
      */
     public function getResModel(): ?string
     {
@@ -576,6 +603,8 @@ final class Composer extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("res_id")
      */
     public function getResId(): ?int
     {
@@ -592,6 +621,8 @@ final class Composer extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("res_ids")
      */
     public function getResIds(): ?string
     {
@@ -608,6 +639,8 @@ final class Composer extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("res_ids_count")
      */
     public function getResIdsCount(): ?int
     {
@@ -624,6 +657,8 @@ final class Composer extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("use_active_domain")
      */
     public function isUseActiveDomain(): ?bool
     {
@@ -632,6 +667,8 @@ final class Composer extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("active_domain")
      */
     public function getActiveDomain(): ?string
     {
@@ -640,6 +677,8 @@ final class Composer extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("recipient_count")
      */
     public function getRecipientCount(): ?int
     {
@@ -656,6 +695,8 @@ final class Composer extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("active_domain_count")
      */
     public function getActiveDomainCount(): ?int
     {
@@ -672,6 +713,8 @@ final class Composer extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("mass_keep_log")
      */
     public function isMassKeepLog(): ?bool
     {
@@ -688,6 +731,8 @@ final class Composer extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("mass_force_send")
      */
     public function isMassForceSend(): ?bool
     {
@@ -704,6 +749,8 @@ final class Composer extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("mass_use_blacklist")
      */
     public function isMassUseBlacklist(): ?bool
     {
@@ -720,6 +767,8 @@ final class Composer extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("recipient_description")
      */
     public function getRecipientDescription(): ?string
     {

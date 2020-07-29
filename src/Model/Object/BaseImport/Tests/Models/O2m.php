@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\BaseImport\Tests\Models;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : base_import.tests.models.o2m
@@ -97,6 +98,8 @@ final class O2m extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -113,6 +116,8 @@ final class O2m extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("value")
      */
     public function getValue(): ?array
     {
@@ -174,6 +179,8 @@ final class O2m extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -190,6 +197,8 @@ final class O2m extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -206,6 +215,8 @@ final class O2m extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -222,6 +233,8 @@ final class O2m extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {

@@ -6,6 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Invoice;
 
 use Flux\OdooApiClient\Model\Object\Mail\Compose\Message;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.invoice.send
@@ -174,6 +175,8 @@ final class Send extends Message
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("partner_id")
      */
     public function getPartnerId(): ?OdooRelation
     {
@@ -235,6 +238,8 @@ final class Send extends Message
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("invalid_invoice_ids")
      */
     public function getInvalidInvoiceIds(): ?array
     {
@@ -251,6 +256,8 @@ final class Send extends Message
 
     /**
      * @return int|null
+     *
+     * @SerializedName("invalid_addresses")
      */
     public function getInvalidAddresses(): ?int
     {
@@ -267,6 +274,8 @@ final class Send extends Message
 
     /**
      * @return float|null
+     *
+     * @SerializedName("snailmail_cost")
      */
     public function getSnailmailCost(): ?float
     {
@@ -283,6 +292,8 @@ final class Send extends Message
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("snailmail_is_letter")
      */
     public function isSnailmailIsLetter(): ?bool
     {
@@ -307,6 +318,8 @@ final class Send extends Message
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("is_email")
      */
     public function isIsEmail(): ?bool
     {
@@ -315,6 +328,8 @@ final class Send extends Message
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("composer_id")
      */
     public function getComposerId(): OdooRelation
     {
@@ -376,6 +391,8 @@ final class Send extends Message
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("invoice_ids")
      */
     public function getInvoiceIds(): ?array
     {
@@ -392,6 +409,8 @@ final class Send extends Message
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("printed")
      */
     public function isPrinted(): ?bool
     {
@@ -408,6 +427,8 @@ final class Send extends Message
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("is_print")
      */
     public function isIsPrint(): ?bool
     {
@@ -424,6 +445,8 @@ final class Send extends Message
 
     /**
      * @return string|null
+     *
+     * @SerializedName("invoice_without_email")
      */
     public function getInvoiceWithoutEmail(): ?string
     {

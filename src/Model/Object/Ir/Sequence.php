@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.sequence
@@ -302,6 +303,8 @@ final class Sequence extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("use_date_range")
      */
     public function isUseDateRange(): ?bool
     {
@@ -318,6 +321,8 @@ final class Sequence extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("date_range_ids")
      */
     public function getDateRangeIds(): ?array
     {
@@ -364,6 +369,8 @@ final class Sequence extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -388,6 +395,8 @@ final class Sequence extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -404,6 +413,8 @@ final class Sequence extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -420,6 +431,8 @@ final class Sequence extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -436,6 +449,8 @@ final class Sequence extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {
@@ -444,6 +459,8 @@ final class Sequence extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("padding")
      */
     public function getPadding(): int
     {
@@ -452,6 +469,8 @@ final class Sequence extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -460,6 +479,8 @@ final class Sequence extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("prefix")
      */
     public function getPrefix(): ?string
     {
@@ -476,6 +497,8 @@ final class Sequence extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("code")
      */
     public function getCode(): ?string
     {
@@ -492,6 +515,8 @@ final class Sequence extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("implementation")
      */
     public function getImplementation(): string
     {
@@ -508,6 +533,8 @@ final class Sequence extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active")
      */
     public function isActive(): ?bool
     {
@@ -540,6 +567,8 @@ final class Sequence extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("suffix")
      */
     public function getSuffix(): ?string
     {
@@ -556,6 +585,8 @@ final class Sequence extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("number_next")
      */
     public function getNumberNext(): int
     {
@@ -572,6 +603,8 @@ final class Sequence extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("number_next_actual")
      */
     public function getNumberNextActual(): ?int
     {
@@ -588,6 +621,8 @@ final class Sequence extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("number_increment")
      */
     public function getNumberIncrement(): int
     {

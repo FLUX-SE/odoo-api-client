@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Portal\Wizard;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : portal.wizard.user
@@ -147,6 +148,8 @@ final class User extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -163,6 +166,8 @@ final class User extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -179,6 +184,8 @@ final class User extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -195,6 +202,8 @@ final class User extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -219,6 +228,8 @@ final class User extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("wizard_id")
      */
     public function getWizardId(): OdooRelation
     {
@@ -227,6 +238,8 @@ final class User extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("user_id")
      */
     public function getUserId(): ?OdooRelation
     {
@@ -243,6 +256,8 @@ final class User extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("in_portal")
      */
     public function isInPortal(): ?bool
     {
@@ -259,6 +274,8 @@ final class User extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("email")
      */
     public function getEmail(): ?string
     {
@@ -275,6 +292,8 @@ final class User extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("partner_id")
      */
     public function getPartnerId(): OdooRelation
     {

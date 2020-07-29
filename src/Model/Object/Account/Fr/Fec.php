@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Fr;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.fr.fec
@@ -153,6 +154,8 @@ final class Fec extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -169,6 +172,8 @@ final class Fec extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -185,6 +190,8 @@ final class Fec extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -201,6 +208,8 @@ final class Fec extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -225,6 +234,8 @@ final class Fec extends Base
 
     /**
      * @return DateTimeInterface
+     *
+     * @SerializedName("date_from")
      */
     public function getDateFrom(): DateTimeInterface
     {
@@ -233,6 +244,8 @@ final class Fec extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("export_type")
      */
     public function getExportType(): string
     {
@@ -249,6 +262,8 @@ final class Fec extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("filename")
      */
     public function getFilename(): ?string
     {
@@ -265,6 +280,8 @@ final class Fec extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("fec_data")
      */
     public function getFecData(): ?string
     {
@@ -281,6 +298,8 @@ final class Fec extends Base
 
     /**
      * @return DateTimeInterface
+     *
+     * @SerializedName("date_to")
      */
     public function getDateTo(): DateTimeInterface
     {

@@ -13,9 +13,31 @@ use Flux\OdooApiClient\Model\Object\Base;
  */
 final class OdooRelation extends Base
 {
-    public function __construct(int $id, ?string $display_name = null)
-    {
+    /** @var BaseInterface|null */
+    private $embed_model;
+
+    /**
+     * @param int|null|false $id
+     * @param string|null $display_name
+     * @param BaseInterface|null $embed_model
+     */
+    public function __construct(
+        $id = null,
+        ?string $display_name = null,
+        ?BaseInterface $embed_model = null
+    ) {
         $this->id = $id;
         $this->display_name = $display_name;
+        $this->embed_model = $embed_model;
+    }
+
+    public function getEmbedModel(): ?BaseInterface
+    {
+        return $this->embed_model;
+    }
+
+    public function setEmbedModel(?BaseInterface $embed_model): void
+    {
+        $this->embed_model = $embed_model;
     }
 }

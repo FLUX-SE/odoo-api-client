@@ -6,6 +6,7 @@ namespace Flux\OdooApiClient\Model\Object;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\BaseInterface;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : base
@@ -23,7 +24,7 @@ class Base implements BaseInterface
      * Searchable : yes
      * Sortable : yes
      *
-     * @var int|null
+     * @var int|null|false
      */
     protected $id;
 
@@ -48,23 +49,27 @@ class Base implements BaseInterface
     protected $__last_update;
 
     /**
-     * @return int|null
+     * @return int|null|false
+     *
+     * @SerializedName("id")
      */
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
 
     /**
-     * @param int|null $id
+     * @param int|null|false $id
      */
-    public function setId(?int $id): void
+    public function setId($id): void
     {
         $this->id = $id;
     }
 
     /**
      * @return string|null
+     *
+     * @SerializedName("display_name")
      */
     public function getDisplayName(): ?string
     {
@@ -81,6 +86,8 @@ class Base implements BaseInterface
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("__last_update")
      */
     public function getLastUpdate(): ?DateTimeInterface
     {

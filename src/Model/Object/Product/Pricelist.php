@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Product;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : product.pricelist
@@ -207,6 +208,8 @@ final class Pricelist extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -223,6 +226,8 @@ final class Pricelist extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -239,6 +244,8 @@ final class Pricelist extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -255,6 +262,8 @@ final class Pricelist extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -271,6 +280,8 @@ final class Pricelist extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("discount_policy")
      */
     public function getDiscountPolicy(): ?string
     {
@@ -324,6 +335,8 @@ final class Pricelist extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("country_group_ids")
      */
     public function getCountryGroupIds(): ?array
     {
@@ -332,6 +345,8 @@ final class Pricelist extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -348,6 +363,8 @@ final class Pricelist extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): ?int
     {
@@ -364,6 +381,8 @@ final class Pricelist extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {
@@ -380,6 +399,8 @@ final class Pricelist extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("currency_id")
      */
     public function getCurrencyId(): OdooRelation
     {
@@ -441,6 +462,8 @@ final class Pricelist extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("item_ids")
      */
     public function getItemIds(): ?array
     {
@@ -457,6 +480,8 @@ final class Pricelist extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active")
      */
     public function isActive(): ?bool
     {

@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Mail\Compose;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : mail.compose.message
@@ -408,6 +409,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("template_id")
      */
     public function getTemplateId(): ?OdooRelation
     {
@@ -469,6 +472,8 @@ class Message extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("use_active_domain")
      */
     public function isUseActiveDomain(): ?bool
     {
@@ -485,6 +490,8 @@ class Message extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("active_domain")
      */
     public function getActiveDomain(): ?string
     {
@@ -501,6 +508,8 @@ class Message extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("notify")
      */
     public function isNotify(): ?bool
     {
@@ -517,6 +526,8 @@ class Message extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("auto_delete")
      */
     public function isAutoDelete(): ?bool
     {
@@ -533,6 +544,8 @@ class Message extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("auto_delete_message")
      */
     public function isAutoDeleteMessage(): ?bool
     {
@@ -565,6 +578,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("mail_server_id")
      */
     public function getMailServerId(): ?OdooRelation
     {
@@ -581,6 +596,8 @@ class Message extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("layout")
      */
     public function getLayout(): ?string
     {
@@ -597,6 +614,8 @@ class Message extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("add_sign")
      */
     public function isAddSign(): ?bool
     {
@@ -613,6 +632,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -629,6 +650,8 @@ class Message extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -645,6 +668,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -661,6 +686,8 @@ class Message extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -677,6 +704,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("partner_ids")
      */
     public function getPartnerIds(): ?array
     {
@@ -685,6 +714,8 @@ class Message extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("is_log")
      */
     public function isIsLog(): ?bool
     {
@@ -693,6 +724,8 @@ class Message extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("subject")
      */
     public function getSubject(): ?string
     {
@@ -701,6 +734,8 @@ class Message extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("model")
      */
     public function getModel(): ?string
     {
@@ -717,6 +752,8 @@ class Message extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("body")
      */
     public function getBody(): ?string
     {
@@ -733,6 +770,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("parent_id")
      */
     public function getParentId(): ?OdooRelation
     {
@@ -749,6 +788,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("attachment_ids")
      */
     public function getAttachmentIds(): ?array
     {
@@ -810,6 +851,8 @@ class Message extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("email_from")
      */
     public function getEmailFrom(): ?string
     {
@@ -826,6 +869,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("author_id")
      */
     public function getAuthorId(): ?OdooRelation
     {
@@ -858,6 +903,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("mail_activity_type_id")
      */
     public function getMailActivityTypeId(): ?OdooRelation
     {
@@ -866,6 +913,8 @@ class Message extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("no_auto_thread")
      */
     public function isNoAutoThread(): ?bool
     {
@@ -882,6 +931,8 @@ class Message extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("reply_to")
      */
     public function getReplyTo(): ?string
     {
@@ -898,6 +949,8 @@ class Message extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("composition_mode")
      */
     public function getCompositionMode(): ?string
     {
@@ -922,6 +975,8 @@ class Message extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("res_id")
      */
     public function getResId(): ?int
     {
@@ -930,6 +985,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("subtype_id")
      */
     public function getSubtypeId(): ?OdooRelation
     {
@@ -946,6 +1003,8 @@ class Message extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("message_type")
      */
     public function getMessageType(): string
     {
@@ -962,6 +1021,8 @@ class Message extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("record_name")
      */
     public function getRecordName(): ?string
     {

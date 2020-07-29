@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Mail;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : mail.message
@@ -559,6 +560,8 @@ class Message extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("moderation_status")
      */
     public function getModerationStatus(): ?string
     {
@@ -575,6 +578,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("mail_ids")
      */
     public function getMailIds(): ?array
     {
@@ -591,6 +596,8 @@ class Message extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("add_sign")
      */
     public function isAddSign(): ?bool
     {
@@ -607,6 +614,8 @@ class Message extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("email_layout_xmlid")
      */
     public function getEmailLayoutXmlid(): ?string
     {
@@ -623,6 +632,8 @@ class Message extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("need_moderation")
      */
     public function isNeedModeration(): ?bool
     {
@@ -639,6 +650,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("moderator_id")
      */
     public function getModeratorId(): ?OdooRelation
     {
@@ -679,6 +692,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("mail_server_id")
      */
     public function getMailServerId(): ?OdooRelation
     {
@@ -695,6 +710,8 @@ class Message extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("reply_to")
      */
     public function getReplyTo(): ?string
     {
@@ -711,6 +728,8 @@ class Message extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("message_id")
      */
     public function getMessageId(): ?string
     {
@@ -727,6 +746,8 @@ class Message extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("no_auto_thread")
      */
     public function isNoAutoThread(): ?bool
     {
@@ -743,6 +764,8 @@ class Message extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("starred")
      */
     public function isStarred(): ?bool
     {
@@ -825,6 +848,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("starred_partner_ids")
      */
     public function getStarredPartnerIds(): ?array
     {
@@ -833,6 +858,8 @@ class Message extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("message_type")
      */
     public function getMessageType(): string
     {
@@ -849,6 +876,8 @@ class Message extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -865,6 +894,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -881,6 +912,8 @@ class Message extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -897,6 +930,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -913,6 +948,8 @@ class Message extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("has_sms_error")
      */
     public function isHasSmsError(): ?bool
     {
@@ -944,6 +981,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("canned_response_ids")
      */
     public function getCannedResponseIds(): ?array
     {
@@ -990,6 +1029,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("letter_ids")
      */
     public function getLetterIds(): ?array
     {
@@ -1006,6 +1047,8 @@ class Message extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("snailmail_status")
      */
     public function getSnailmailStatus(): ?string
     {
@@ -1022,6 +1065,8 @@ class Message extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("snailmail_error")
      */
     public function isSnailmailError(): ?bool
     {
@@ -1106,6 +1151,8 @@ class Message extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("subject")
      */
     public function getSubject(): ?string
     {
@@ -1130,6 +1177,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("subtype_id")
      */
     public function getSubtypeId(): ?OdooRelation
     {
@@ -1146,6 +1195,8 @@ class Message extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("record_name")
      */
     public function getRecordName(): ?string
     {
@@ -1162,6 +1213,8 @@ class Message extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("res_id")
      */
     public function getResId(): ?int
     {
@@ -1178,6 +1231,8 @@ class Message extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("model")
      */
     public function getModel(): ?string
     {
@@ -1231,6 +1286,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("child_ids")
      */
     public function getChildIds(): ?array
     {
@@ -1255,6 +1312,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("parent_id")
      */
     public function getParentId(): ?OdooRelation
     {
@@ -1316,6 +1375,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("attachment_ids")
      */
     public function getAttachmentIds(): ?array
     {
@@ -1332,6 +1393,8 @@ class Message extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("body")
      */
     public function getBody(): ?string
     {
@@ -1348,6 +1411,8 @@ class Message extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("date")
      */
     public function getDate(): ?DateTimeInterface
     {
@@ -1364,6 +1429,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("mail_activity_type_id")
      */
     public function getMailActivityTypeId(): ?OdooRelation
     {
@@ -1372,6 +1439,8 @@ class Message extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("email_from")
      */
     public function getEmailFrom(): ?string
     {
@@ -1433,6 +1502,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("notification_ids")
      */
     public function getNotificationIds(): ?array
     {
@@ -1494,6 +1565,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("channel_ids")
      */
     public function getChannelIds(): ?array
     {
@@ -1510,6 +1583,8 @@ class Message extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("has_error")
      */
     public function isHasError(): ?bool
     {
@@ -1526,6 +1601,8 @@ class Message extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("needaction")
      */
     public function isNeedaction(): ?bool
     {
@@ -1580,6 +1657,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("notified_partner_ids")
      */
     public function getNotifiedPartnerIds(): ?array
     {
@@ -1641,6 +1720,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("partner_ids")
      */
     public function getPartnerIds(): ?array
     {
@@ -1657,6 +1738,8 @@ class Message extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("author_avatar")
      */
     public function getAuthorAvatar(): ?string
     {
@@ -1673,6 +1756,8 @@ class Message extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("author_id")
      */
     public function getAuthorId(): ?OdooRelation
     {

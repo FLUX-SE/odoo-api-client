@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Payment;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.payment.method
@@ -133,6 +134,8 @@ final class Method extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -149,6 +152,8 @@ final class Method extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("code")
      */
     public function getCode(): string
     {
@@ -165,6 +170,8 @@ final class Method extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("payment_type")
      */
     public function getPaymentType(): string
     {
@@ -181,6 +188,8 @@ final class Method extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -197,6 +206,8 @@ final class Method extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -213,6 +224,8 @@ final class Method extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -229,6 +242,8 @@ final class Method extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {

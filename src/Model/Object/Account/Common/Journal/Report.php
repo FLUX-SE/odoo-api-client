@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Common\Journal;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.common.journal.report
@@ -190,6 +191,8 @@ final class Report extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -206,6 +209,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -222,6 +227,8 @@ final class Report extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -238,6 +245,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -254,6 +263,8 @@ final class Report extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("target_move")
      */
     public function getTargetMove(): string
     {
@@ -262,6 +273,8 @@ final class Report extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("date_to")
      */
     public function getDateTo(): ?DateTimeInterface
     {
@@ -270,6 +283,8 @@ final class Report extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("amount_currency")
      */
     public function isAmountCurrency(): ?bool
     {
@@ -286,6 +301,8 @@ final class Report extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("date_from")
      */
     public function getDateFrom(): ?DateTimeInterface
     {
@@ -335,6 +352,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation[]
+     *
+     * @SerializedName("journal_ids")
      */
     public function getJournalIds(): array
     {
@@ -351,6 +370,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): OdooRelation
     {

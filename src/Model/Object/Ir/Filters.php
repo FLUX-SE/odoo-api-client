@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.filters
@@ -134,11 +135,9 @@ final class Filters extends Base
      *     -> ir.module.category (Application)
      *     -> account.asset (Asset/Revenue Recognition)
      *     -> web_editor.assets (Assets Utils)
-     *     -> stock.picking.responsible (Assign Responsible)
      *     -> ir.attachment (Attachment)
      *     -> product.attribute.value (Attribute Value)
      *     -> ir.autovacuum (Automatic Vacuum)
-     *     -> stock.backorder.confirmation (Backorder Confirmation)
      *     -> res.bank (Bank)
      *     -> res.partner.bank (Bank Accounts)
      *     -> account.bank.reconciliation.report (Bank Reconciliation Report)
@@ -147,9 +146,6 @@ final class Filters extends Base
      *     -> account.bank.statement.closebalance (Bank Statement Closing Balance)
      *     -> account.bank.statement.line (Bank Statement Line)
      *     -> account.setup.bank.manual.config (Bank setup manual config)
-     *     -> barcodes.barcode_events_mixin (Barcode Event Mixin)
-     *     -> barcode.nomenclature (Barcode Nomenclature)
-     *     -> barcode.rule (Barcode Rule)
      *     -> base (Base)
      *     -> base_import.import (Base Import)
      *     -> base_import.mapping (Base Import Mapping)
@@ -159,11 +155,8 @@ final class Filters extends Base
      *     -> account.cashbox.line (CashBox Line)
      *     -> account.change.lock.date (Change Lock Date)
      *     -> change.password.wizard (Change Password Wizard)
-     *     -> stock.change.product.qty (Change Product Quantity)
-     *     -> stock.change.standard.price (Change Standard Price)
      *     -> mail.moderation (Channel black/white list)
      *     -> account.coa.report (Chart of Account Report)
-     *     -> l10n_us_reports.check.register (Check Register Report)
      *     -> ir.actions.client (Client Action)
      *     -> account.common.journal.report (Common Journal Report)
      *     -> bus.bus (Communication Bus)
@@ -174,7 +167,6 @@ final class Filters extends Base
      *     -> res.config.installer (Config Installer)
      *     -> res.config.settings (Config Settings)
      *     -> ir.actions.todo (Configuration Wizards)
-     *     -> confirm.stock.sms (Confirm Stock SMS)
      *     -> account.consolidated.journal (Consolidated Journals Report)
      *     -> res.partner (Contact)
      *     -> res.country (Country)
@@ -193,9 +185,9 @@ final class Filters extends Base
      *     -> digest.digest (Digest)
      *     -> digest.tip (Digest Tips)
      *     -> mail.channel (Discussion Channel)
-     *     -> mail.resend.cancel (Dismiss notification for resend by model)
-     *     -> sms.cancel (Dismiss notification for resend by model)
      *     -> snailmail.letter.cancel (Dismiss notification for resend by model)
+     *     -> sms.cancel (Dismiss notification for resend by model)
+     *     -> mail.resend.cancel (Dismiss notification for resend by model)
      *     -> mail.followers (Document Followers)
      *     -> mail.address.mixin (Email Address Mixin)
      *     -> mail.alias (Email Aliases)
@@ -230,17 +222,12 @@ final class Filters extends Base
      *     -> ir.http (HTTP Routing)
      *     -> iap.account (IAP Account)
      *     -> image.mixin (Image Mixin)
-     *     -> stock.immediate.transfer (Immediate Transfer)
      *     -> account.bank.statement.import (Import Bank Statement)
      *     -> fetchmail.server (Incoming Mail Server)
      *     -> account.incoterms (Incoterms)
      *     -> res.partner.industry (Industry)
      *     -> base.language.install (Install Language)
      *     -> account.online.journal (Interface for Online Account Journal)
-     *     -> stock.inventory (Inventory)
-     *     -> stock.inventory.line (Inventory Line)
-     *     -> stock.location (Inventory Locations)
-     *     -> stock.location.route (Inventory Routes)
      *     -> mail.wizard.invite (Invite wizard)
      *     -> account.invoice.report (Invoices Statistics)
      *     -> account.journal (Journal)
@@ -253,7 +240,6 @@ final class Filters extends Base
      *     -> account.online.link.wizard (Link synchronized account to a journal)
      *     -> mail.channel.partner (Listeners of a Channel)
      *     -> ir.logging (Logging)
-     *     -> stock.production.lot (Lot/Serial)
      *     -> mail.blacklist (Mail Blacklist)
      *     -> mail.thread.blacklist (Mail Blacklist mixin)
      *     -> ir.mail_server (Mail Server)
@@ -265,7 +251,6 @@ final class Filters extends Base
      *     -> mail.message (Message)
      *     -> mail.notification (Message Notifications)
      *     -> mail.message.subtype (Message subtypes)
-     *     -> stock.warehouse.orderpoint (Minimum Inventory Rule)
      *     -> ir.model.access (Model Access)
      *     -> ir.model.constraint (Model Constraint)
      *     -> ir.model.data (Model Data)
@@ -279,7 +264,6 @@ final class Filters extends Base
      *     -> account.financial.year.op (Opening Balance of Financial Year)
      *     -> mail.mail (Outgoing Mails)
      *     -> sms.sms (Outgoing SMS)
-     *     -> stock.quant.package (Packages)
      *     -> report.paperformat (Paper Format Config)
      *     -> account.partial.reconcile (Partial Reconcile)
      *     -> res.partner.autocomplete.sync (Partner Autocomplete Sync)
@@ -300,19 +284,6 @@ final class Filters extends Base
      *     -> phone.blacklist (Phone Blacklist)
      *     -> mail.thread.phone (Phone Blacklist Mixin)
      *     -> phone.validation.mixin (Phone Validation Mixin)
-     *     -> stock.picking.type (Picking Type)
-     *     -> pos.category (Point of Sale Category)
-     *     -> pos.config (Point of Sale Configuration)
-     *     -> report.point_of_sale.report_saledetails (Point of Sale Details)
-     *     -> pos.details.wizard (Point of Sale Details Report)
-     *     -> report.point_of_sale.report_invoice (Point of Sale Invoice Report)
-     *     -> pos.make.payment (Point of Sale Make Payment Wizard)
-     *     -> pos.order.line (Point of Sale Order Lines)
-     *     -> pos.order (Point of Sale Orders)
-     *     -> report.pos.order (Point of Sale Orders Report)
-     *     -> pos.payment.method (Point of Sale Payment Methods)
-     *     -> pos.payment (Point of Sale Payments)
-     *     -> pos.session (Point of Sale Session)
      *     -> portal.mixin (Portal Mixin)
      *     -> portal.share (Portal Sharing)
      *     -> portal.wizard.user (Portal User Config)
@@ -320,16 +291,12 @@ final class Filters extends Base
      *     -> product.pricelist (Pricelist)
      *     -> product.pricelist.item (Pricelist Rule)
      *     -> print.prenumbered.checks (Print Pre-numbered Checks)
-     *     -> procurement.group (Procurement Group)
      *     -> product.product (Product)
      *     -> product.attribute (Product Attribute)
      *     -> product.category (Product Category)
-     *     -> stock.move.line (Product Moves (Stock Move Line))
      *     -> product.packaging (Product Packaging)
      *     -> report.product.report_pricelist (Product Price List Report)
      *     -> product.price_list (Product Price per Unit Based on Pricelist Version)
-     *     -> product.replenish (Product Replenish)
-     *     -> product.tic.category (Product TIC Category)
      *     -> product.template (Product Template)
      *     -> product.template.attribute.exclusion (Product Template Attribute Exclusion)
      *     -> product.template.attribute.line (Product Template Attribute Line)
@@ -338,8 +305,6 @@ final class Filters extends Base
      *     -> uom.category (Product UoM Categories)
      *     -> account.online.provider (Provider for online account synchronization)
      *     -> publisher_warranty.contract (Publisher Warranty Contract)
-     *     -> stock.putaway.rule (Putaway Rule)
-     *     -> stock.quant (Quants)
      *     -> ir.qweb (Qweb)
      *     -> ir.qweb.field (Qweb Field)
      *     -> ir.qweb.field.barcode (Qweb Field Barcode)
@@ -363,7 +328,6 @@ final class Filters extends Base
      *     -> ir.rule (Record Rule)
      *     -> account.payment.register (Register Payment)
      *     -> ir.model.relation (Relation Model)
-     *     -> product.removal (Removal Strategy)
      *     -> ir.actions.report (Report Action)
      *     -> report.layout (Report Layout)
      *     -> sms.resend.recipient (Resend Notification)
@@ -372,15 +336,11 @@ final class Filters extends Base
      *     -> resource.calendar.leaves (Resource Time Off Detail)
      *     -> resource.calendar (Resource Working Time)
      *     -> resource.resource (Resources)
-     *     -> stock.return.picking (Return Picking)
-     *     -> stock.return.picking.line (Return Picking Line)
-     *     -> stock.scheduler.compute (Run Scheduler Manually)
      *     -> sms.api (SMS API)
      *     -> sms.resend (SMS Resend)
      *     -> sms.template.preview (SMS Template Preview)
      *     -> sms.template (SMS Templates)
      *     -> ir.cron (Scheduled Actions)
-     *     -> stock.scrap (Scrap)
      *     -> account.asset.sell (Sell Asset)
      *     -> followup.send (Send Follow-ups)
      *     -> sms.composer (Send SMS Wizard)
@@ -389,20 +349,6 @@ final class Filters extends Base
      *     -> ir.actions.server (Server Action)
      *     -> ir.server.object.lines (Server Action value mapping)
      *     -> snailmail.letter (Snailmail Letter)
-     *     -> pos.pack.operation.lot (Specify product lot/serial number in pos order line)
-     *     -> stock.assign.serial (Stock Assign Serial Numbers)
-     *     -> stock.move (Stock Move)
-     *     -> stock.package.destination (Stock Package Destination)
-     *     -> stock.package_level (Stock Package Level)
-     *     -> stock.quantity.history (Stock Quantity History)
-     *     -> report.stock.quantity (Stock Quantity Report)
-     *     -> stock.report (Stock Report)
-     *     -> stock.rule (Stock Rule)
-     *     -> stock.rules.report (Stock Rules report)
-     *     -> stock.track.confirmation (Stock Track Confirmation)
-     *     -> stock.track.line (Stock Track Line)
-     *     -> stock.valuation.layer (Stock Valuation Layer)
-     *     -> report.stock.report_stock_rule (Stock rule report)
      *     -> product.supplierinfo (Supplier Pricelist)
      *     -> ir.config_parameter (System Parameter)
      *     -> account.tax (Tax)
@@ -431,12 +377,7 @@ final class Filters extends Base
      *     -> base_import.tests.models.o2m.child (Tests : Base Import Model, One to Many child)
      *     -> base_import.tests.models.complex (Tests: Base Import Model Complex)
      *     -> base_import.tests.models.float (Tests: Base Import Model Float)
-     *     -> closing.balance.confirm.wizard (This wizard is used to display a warning message if the manager wants
-     * to close a session with a too high difference between real and expected closing balance)
      *     -> web_tour.tour (Tours)
-     *     -> stock.traceability.report (Traceability Report)
-     *     -> stock.picking (Transfer)
-     *     -> stock.overprocessed.transfer (Transfer Over Processed Stock)
      *     -> ir.translation (Translation)
      *     -> _unknown (Unknown)
      *     -> base.module.update (Update Module)
@@ -449,9 +390,6 @@ final class Filters extends Base
      *     -> res.users.log (Users Log)
      *     -> validate.account.move (Validate Account Move)
      *     -> ir.ui.view (View)
-     *     -> stock.warehouse (Warehouse)
-     *     -> stock.warn.insufficient.qty (Warn Insufficient Quantity)
-     *     -> stock.warn.insufficient.qty.scrap (Warn Insufficient Scrap Quantity)
      *     -> web_editor.converter.test.sub (Web Editor Converter Subtest)
      *     -> web_editor.converter.test (Web Editor Converter Test)
      *     -> account.online.wizard (Wizard to link synchronized accounts to journal)
@@ -614,11 +552,9 @@ final class Filters extends Base
      *            -> ir.module.category (Application)
      *            -> account.asset (Asset/Revenue Recognition)
      *            -> web_editor.assets (Assets Utils)
-     *            -> stock.picking.responsible (Assign Responsible)
      *            -> ir.attachment (Attachment)
      *            -> product.attribute.value (Attribute Value)
      *            -> ir.autovacuum (Automatic Vacuum)
-     *            -> stock.backorder.confirmation (Backorder Confirmation)
      *            -> res.bank (Bank)
      *            -> res.partner.bank (Bank Accounts)
      *            -> account.bank.reconciliation.report (Bank Reconciliation Report)
@@ -627,9 +563,6 @@ final class Filters extends Base
      *            -> account.bank.statement.closebalance (Bank Statement Closing Balance)
      *            -> account.bank.statement.line (Bank Statement Line)
      *            -> account.setup.bank.manual.config (Bank setup manual config)
-     *            -> barcodes.barcode_events_mixin (Barcode Event Mixin)
-     *            -> barcode.nomenclature (Barcode Nomenclature)
-     *            -> barcode.rule (Barcode Rule)
      *            -> base (Base)
      *            -> base_import.import (Base Import)
      *            -> base_import.mapping (Base Import Mapping)
@@ -639,11 +572,8 @@ final class Filters extends Base
      *            -> account.cashbox.line (CashBox Line)
      *            -> account.change.lock.date (Change Lock Date)
      *            -> change.password.wizard (Change Password Wizard)
-     *            -> stock.change.product.qty (Change Product Quantity)
-     *            -> stock.change.standard.price (Change Standard Price)
      *            -> mail.moderation (Channel black/white list)
      *            -> account.coa.report (Chart of Account Report)
-     *            -> l10n_us_reports.check.register (Check Register Report)
      *            -> ir.actions.client (Client Action)
      *            -> account.common.journal.report (Common Journal Report)
      *            -> bus.bus (Communication Bus)
@@ -654,7 +584,6 @@ final class Filters extends Base
      *            -> res.config.installer (Config Installer)
      *            -> res.config.settings (Config Settings)
      *            -> ir.actions.todo (Configuration Wizards)
-     *            -> confirm.stock.sms (Confirm Stock SMS)
      *            -> account.consolidated.journal (Consolidated Journals Report)
      *            -> res.partner (Contact)
      *            -> res.country (Country)
@@ -673,9 +602,9 @@ final class Filters extends Base
      *            -> digest.digest (Digest)
      *            -> digest.tip (Digest Tips)
      *            -> mail.channel (Discussion Channel)
-     *            -> mail.resend.cancel (Dismiss notification for resend by model)
-     *            -> sms.cancel (Dismiss notification for resend by model)
      *            -> snailmail.letter.cancel (Dismiss notification for resend by model)
+     *            -> sms.cancel (Dismiss notification for resend by model)
+     *            -> mail.resend.cancel (Dismiss notification for resend by model)
      *            -> mail.followers (Document Followers)
      *            -> mail.address.mixin (Email Address Mixin)
      *            -> mail.alias (Email Aliases)
@@ -710,17 +639,12 @@ final class Filters extends Base
      *            -> ir.http (HTTP Routing)
      *            -> iap.account (IAP Account)
      *            -> image.mixin (Image Mixin)
-     *            -> stock.immediate.transfer (Immediate Transfer)
      *            -> account.bank.statement.import (Import Bank Statement)
      *            -> fetchmail.server (Incoming Mail Server)
      *            -> account.incoterms (Incoterms)
      *            -> res.partner.industry (Industry)
      *            -> base.language.install (Install Language)
      *            -> account.online.journal (Interface for Online Account Journal)
-     *            -> stock.inventory (Inventory)
-     *            -> stock.inventory.line (Inventory Line)
-     *            -> stock.location (Inventory Locations)
-     *            -> stock.location.route (Inventory Routes)
      *            -> mail.wizard.invite (Invite wizard)
      *            -> account.invoice.report (Invoices Statistics)
      *            -> account.journal (Journal)
@@ -733,7 +657,6 @@ final class Filters extends Base
      *            -> account.online.link.wizard (Link synchronized account to a journal)
      *            -> mail.channel.partner (Listeners of a Channel)
      *            -> ir.logging (Logging)
-     *            -> stock.production.lot (Lot/Serial)
      *            -> mail.blacklist (Mail Blacklist)
      *            -> mail.thread.blacklist (Mail Blacklist mixin)
      *            -> ir.mail_server (Mail Server)
@@ -745,7 +668,6 @@ final class Filters extends Base
      *            -> mail.message (Message)
      *            -> mail.notification (Message Notifications)
      *            -> mail.message.subtype (Message subtypes)
-     *            -> stock.warehouse.orderpoint (Minimum Inventory Rule)
      *            -> ir.model.access (Model Access)
      *            -> ir.model.constraint (Model Constraint)
      *            -> ir.model.data (Model Data)
@@ -759,7 +681,6 @@ final class Filters extends Base
      *            -> account.financial.year.op (Opening Balance of Financial Year)
      *            -> mail.mail (Outgoing Mails)
      *            -> sms.sms (Outgoing SMS)
-     *            -> stock.quant.package (Packages)
      *            -> report.paperformat (Paper Format Config)
      *            -> account.partial.reconcile (Partial Reconcile)
      *            -> res.partner.autocomplete.sync (Partner Autocomplete Sync)
@@ -780,19 +701,6 @@ final class Filters extends Base
      *            -> phone.blacklist (Phone Blacklist)
      *            -> mail.thread.phone (Phone Blacklist Mixin)
      *            -> phone.validation.mixin (Phone Validation Mixin)
-     *            -> stock.picking.type (Picking Type)
-     *            -> pos.category (Point of Sale Category)
-     *            -> pos.config (Point of Sale Configuration)
-     *            -> report.point_of_sale.report_saledetails (Point of Sale Details)
-     *            -> pos.details.wizard (Point of Sale Details Report)
-     *            -> report.point_of_sale.report_invoice (Point of Sale Invoice Report)
-     *            -> pos.make.payment (Point of Sale Make Payment Wizard)
-     *            -> pos.order.line (Point of Sale Order Lines)
-     *            -> pos.order (Point of Sale Orders)
-     *            -> report.pos.order (Point of Sale Orders Report)
-     *            -> pos.payment.method (Point of Sale Payment Methods)
-     *            -> pos.payment (Point of Sale Payments)
-     *            -> pos.session (Point of Sale Session)
      *            -> portal.mixin (Portal Mixin)
      *            -> portal.share (Portal Sharing)
      *            -> portal.wizard.user (Portal User Config)
@@ -800,16 +708,12 @@ final class Filters extends Base
      *            -> product.pricelist (Pricelist)
      *            -> product.pricelist.item (Pricelist Rule)
      *            -> print.prenumbered.checks (Print Pre-numbered Checks)
-     *            -> procurement.group (Procurement Group)
      *            -> product.product (Product)
      *            -> product.attribute (Product Attribute)
      *            -> product.category (Product Category)
-     *            -> stock.move.line (Product Moves (Stock Move Line))
      *            -> product.packaging (Product Packaging)
      *            -> report.product.report_pricelist (Product Price List Report)
      *            -> product.price_list (Product Price per Unit Based on Pricelist Version)
-     *            -> product.replenish (Product Replenish)
-     *            -> product.tic.category (Product TIC Category)
      *            -> product.template (Product Template)
      *            -> product.template.attribute.exclusion (Product Template Attribute Exclusion)
      *            -> product.template.attribute.line (Product Template Attribute Line)
@@ -818,8 +722,6 @@ final class Filters extends Base
      *            -> uom.category (Product UoM Categories)
      *            -> account.online.provider (Provider for online account synchronization)
      *            -> publisher_warranty.contract (Publisher Warranty Contract)
-     *            -> stock.putaway.rule (Putaway Rule)
-     *            -> stock.quant (Quants)
      *            -> ir.qweb (Qweb)
      *            -> ir.qweb.field (Qweb Field)
      *            -> ir.qweb.field.barcode (Qweb Field Barcode)
@@ -843,7 +745,6 @@ final class Filters extends Base
      *            -> ir.rule (Record Rule)
      *            -> account.payment.register (Register Payment)
      *            -> ir.model.relation (Relation Model)
-     *            -> product.removal (Removal Strategy)
      *            -> ir.actions.report (Report Action)
      *            -> report.layout (Report Layout)
      *            -> sms.resend.recipient (Resend Notification)
@@ -852,15 +753,11 @@ final class Filters extends Base
      *            -> resource.calendar.leaves (Resource Time Off Detail)
      *            -> resource.calendar (Resource Working Time)
      *            -> resource.resource (Resources)
-     *            -> stock.return.picking (Return Picking)
-     *            -> stock.return.picking.line (Return Picking Line)
-     *            -> stock.scheduler.compute (Run Scheduler Manually)
      *            -> sms.api (SMS API)
      *            -> sms.resend (SMS Resend)
      *            -> sms.template.preview (SMS Template Preview)
      *            -> sms.template (SMS Templates)
      *            -> ir.cron (Scheduled Actions)
-     *            -> stock.scrap (Scrap)
      *            -> account.asset.sell (Sell Asset)
      *            -> followup.send (Send Follow-ups)
      *            -> sms.composer (Send SMS Wizard)
@@ -869,20 +766,6 @@ final class Filters extends Base
      *            -> ir.actions.server (Server Action)
      *            -> ir.server.object.lines (Server Action value mapping)
      *            -> snailmail.letter (Snailmail Letter)
-     *            -> pos.pack.operation.lot (Specify product lot/serial number in pos order line)
-     *            -> stock.assign.serial (Stock Assign Serial Numbers)
-     *            -> stock.move (Stock Move)
-     *            -> stock.package.destination (Stock Package Destination)
-     *            -> stock.package_level (Stock Package Level)
-     *            -> stock.quantity.history (Stock Quantity History)
-     *            -> report.stock.quantity (Stock Quantity Report)
-     *            -> stock.report (Stock Report)
-     *            -> stock.rule (Stock Rule)
-     *            -> stock.rules.report (Stock Rules report)
-     *            -> stock.track.confirmation (Stock Track Confirmation)
-     *            -> stock.track.line (Stock Track Line)
-     *            -> stock.valuation.layer (Stock Valuation Layer)
-     *            -> report.stock.report_stock_rule (Stock rule report)
      *            -> product.supplierinfo (Supplier Pricelist)
      *            -> ir.config_parameter (System Parameter)
      *            -> account.tax (Tax)
@@ -911,12 +794,7 @@ final class Filters extends Base
      *            -> base_import.tests.models.o2m.child (Tests : Base Import Model, One to Many child)
      *            -> base_import.tests.models.complex (Tests: Base Import Model Complex)
      *            -> base_import.tests.models.float (Tests: Base Import Model Float)
-     *            -> closing.balance.confirm.wizard (This wizard is used to display a warning message if the manager wants
-     *        to close a session with a too high difference between real and expected closing balance)
      *            -> web_tour.tour (Tours)
-     *            -> stock.traceability.report (Traceability Report)
-     *            -> stock.picking (Transfer)
-     *            -> stock.overprocessed.transfer (Transfer Over Processed Stock)
      *            -> ir.translation (Translation)
      *            -> _unknown (Unknown)
      *            -> base.module.update (Update Module)
@@ -929,9 +807,6 @@ final class Filters extends Base
      *            -> res.users.log (Users Log)
      *            -> validate.account.move (Validate Account Move)
      *            -> ir.ui.view (View)
-     *            -> stock.warehouse (Warehouse)
-     *            -> stock.warn.insufficient.qty (Warn Insufficient Quantity)
-     *            -> stock.warn.insufficient.qty.scrap (Warn Insufficient Scrap Quantity)
      *            -> web_editor.converter.test.sub (Web Editor Converter Subtest)
      *            -> web_editor.converter.test (Web Editor Converter Test)
      *            -> account.online.wizard (Wizard to link synchronized accounts to journal)
@@ -956,6 +831,8 @@ final class Filters extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("action_id")
      */
     public function getActionId(): ?OdooRelation
     {
@@ -972,6 +849,8 @@ final class Filters extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -988,6 +867,8 @@ final class Filters extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -1004,6 +885,8 @@ final class Filters extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -1020,6 +903,8 @@ final class Filters extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -1036,6 +921,8 @@ final class Filters extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active")
      */
     public function isActive(): ?bool
     {
@@ -1060,6 +947,8 @@ final class Filters extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -1068,6 +957,8 @@ final class Filters extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("is_default")
      */
     public function isIsDefault(): ?bool
     {
@@ -1084,6 +975,8 @@ final class Filters extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("model_id")
      */
     public function getModelId(): string
     {
@@ -1100,6 +993,8 @@ final class Filters extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("sort")
      */
     public function getSort(): string
     {
@@ -1116,6 +1011,8 @@ final class Filters extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("context")
      */
     public function getContext(): string
     {
@@ -1132,6 +1029,8 @@ final class Filters extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("domain")
      */
     public function getDomain(): string
     {
@@ -1148,6 +1047,8 @@ final class Filters extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("user_id")
      */
     public function getUserId(): ?OdooRelation
     {

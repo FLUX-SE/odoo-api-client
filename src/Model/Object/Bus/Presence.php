@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Bus;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : bus.presence
@@ -87,6 +88,8 @@ final class Presence extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("user_id")
      */
     public function getUserId(): OdooRelation
     {
@@ -103,6 +106,8 @@ final class Presence extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("last_poll")
      */
     public function getLastPoll(): ?DateTimeInterface
     {
@@ -119,6 +124,8 @@ final class Presence extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("last_presence")
      */
     public function getLastPresence(): ?DateTimeInterface
     {
@@ -135,6 +142,8 @@ final class Presence extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("status")
      */
     public function getStatus(): ?string
     {

@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Server\Object_;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.server.object.lines
@@ -174,6 +175,8 @@ final class Lines extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -190,6 +193,8 @@ final class Lines extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -206,6 +211,8 @@ final class Lines extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -222,6 +229,8 @@ final class Lines extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -246,6 +255,8 @@ final class Lines extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("server_id")
      */
     public function getServerId(): ?OdooRelation
     {
@@ -254,6 +265,8 @@ final class Lines extends Base
 
     /**
      * @return mixed|null
+     *
+     * @SerializedName("resource_ref")
      */
     public function getResourceRef()
     {
@@ -270,6 +283,8 @@ final class Lines extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("evaluation_type")
      */
     public function getEvaluationType(): string
     {
@@ -286,6 +301,8 @@ final class Lines extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("value")
      */
     public function getValue(): string
     {
@@ -302,6 +319,8 @@ final class Lines extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("col1")
      */
     public function getCol1(): OdooRelation
     {

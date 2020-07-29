@@ -6,6 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.logging
@@ -213,6 +214,8 @@ final class Logging extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("line")
      */
     public function getLine(): string
     {
@@ -229,6 +232,8 @@ final class Logging extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("func")
      */
     public function getFunc(): string
     {
@@ -245,6 +250,8 @@ final class Logging extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("path")
      */
     public function getPath(): string
     {
@@ -261,6 +268,8 @@ final class Logging extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("message")
      */
     public function getMessage(): string
     {
@@ -277,6 +286,8 @@ final class Logging extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("level")
      */
     public function getLevel(): ?string
     {
@@ -285,6 +296,8 @@ final class Logging extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("dbname")
      */
     public function getDbname(): ?string
     {
@@ -293,6 +306,8 @@ final class Logging extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?int
     {
@@ -309,6 +324,8 @@ final class Logging extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("type")
      */
     public function getType(): string
     {
@@ -325,6 +342,8 @@ final class Logging extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -341,6 +360,8 @@ final class Logging extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -357,6 +378,8 @@ final class Logging extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?int
     {
@@ -373,6 +396,8 @@ final class Logging extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {

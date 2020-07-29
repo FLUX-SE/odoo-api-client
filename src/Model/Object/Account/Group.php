@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.group
@@ -144,6 +145,8 @@ final class Group extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -160,6 +163,8 @@ final class Group extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -176,6 +181,8 @@ final class Group extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -184,6 +191,8 @@ final class Group extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -192,6 +201,8 @@ final class Group extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("parent_id")
      */
     public function getParentId(): ?OdooRelation
     {
@@ -208,6 +219,8 @@ final class Group extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("code_prefix")
      */
     public function getCodePrefix(): ?string
     {
@@ -224,6 +237,8 @@ final class Group extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -240,6 +255,8 @@ final class Group extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("parent_path")
      */
     public function getParentPath(): ?string
     {

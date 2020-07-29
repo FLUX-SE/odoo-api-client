@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Report;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.report.manager
@@ -177,6 +178,8 @@ final class Manager extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -193,6 +196,8 @@ final class Manager extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -209,6 +214,8 @@ final class Manager extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -225,6 +232,8 @@ final class Manager extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -241,6 +250,8 @@ final class Manager extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("partner_id")
      */
     public function getPartnerId(): ?OdooRelation
     {
@@ -249,6 +260,8 @@ final class Manager extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("financial_report_id")
      */
     public function getFinancialReportId(): ?OdooRelation
     {
@@ -257,6 +270,8 @@ final class Manager extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("report_name")
      */
     public function getReportName(): string
     {
@@ -273,6 +288,8 @@ final class Manager extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {
@@ -334,6 +351,8 @@ final class Manager extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("footnotes_ids")
      */
     public function getFootnotesIds(): ?array
     {
@@ -350,6 +369,8 @@ final class Manager extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("summary")
      */
     public function getSummary(): ?string
     {

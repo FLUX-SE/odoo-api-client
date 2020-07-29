@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.default
@@ -150,6 +151,8 @@ final class Default_ extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -166,6 +169,8 @@ final class Default_ extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -182,6 +187,8 @@ final class Default_ extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -198,6 +205,8 @@ final class Default_ extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -222,6 +231,8 @@ final class Default_ extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("field_id")
      */
     public function getFieldId(): OdooRelation
     {
@@ -230,6 +241,8 @@ final class Default_ extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("json_value")
      */
     public function getJsonValue(): string
     {
@@ -246,6 +259,8 @@ final class Default_ extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("condition")
      */
     public function getCondition(): ?string
     {
@@ -262,6 +277,8 @@ final class Default_ extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {
@@ -278,6 +295,8 @@ final class Default_ extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("user_id")
      */
     public function getUserId(): ?OdooRelation
     {

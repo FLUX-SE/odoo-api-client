@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Mail;
 
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : mail.channel
@@ -618,6 +619,8 @@ final class Channel extends Alias
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_channel_ids")
      */
     public function getMessageChannelIds(): ?array
     {
@@ -679,6 +682,8 @@ final class Channel extends Alias
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_partner_ids")
      */
     public function getMessagePartnerIds(): ?array
     {
@@ -726,6 +731,8 @@ final class Channel extends Alias
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_ids")
      */
     public function getMessageIds(): ?array
     {
@@ -734,6 +741,8 @@ final class Channel extends Alias
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_follower_ids")
      */
     public function getMessageFollowerIds(): ?array
     {
@@ -750,6 +759,8 @@ final class Channel extends Alias
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_is_follower")
      */
     public function isMessageIsFollower(): ?bool
     {
@@ -766,6 +777,8 @@ final class Channel extends Alias
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("alias_id")
      */
     public function getAliasId(): OdooRelation
     {
@@ -782,6 +795,8 @@ final class Channel extends Alias
 
     /**
      * @return string|null
+     *
+     * @SerializedName("moderation_guidelines_msg")
      */
     public function getModerationGuidelinesMsg(): ?string
     {
@@ -798,6 +813,8 @@ final class Channel extends Alias
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("moderation_guidelines")
      */
     public function isModerationGuidelines(): ?bool
     {
@@ -814,6 +831,8 @@ final class Channel extends Alias
 
     /**
      * @return string|null
+     *
+     * @SerializedName("moderation_notify_msg")
      */
     public function getModerationNotifyMsg(): ?string
     {
@@ -877,6 +896,8 @@ final class Channel extends Alias
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_has_sms_error")
      */
     public function isMessageHasSmsError(): ?bool
     {
@@ -938,6 +959,8 @@ final class Channel extends Alias
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("website_message_ids")
      */
     public function getWebsiteMessageIds(): ?array
     {
@@ -954,6 +977,8 @@ final class Channel extends Alias
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("message_main_attachment_id")
      */
     public function getMessageMainAttachmentId(): ?OdooRelation
     {
@@ -970,6 +995,8 @@ final class Channel extends Alias
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_attachment_count")
      */
     public function getMessageAttachmentCount(): ?int
     {
@@ -978,6 +1005,8 @@ final class Channel extends Alias
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_has_error_counter")
      */
     public function getMessageHasErrorCounter(): ?int
     {
@@ -1008,6 +1037,8 @@ final class Channel extends Alias
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_has_error")
      */
     public function isMessageHasError(): ?bool
     {
@@ -1024,6 +1055,8 @@ final class Channel extends Alias
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_needaction_counter")
      */
     public function getMessageNeedactionCounter(): ?int
     {
@@ -1040,6 +1073,8 @@ final class Channel extends Alias
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_needaction")
      */
     public function isMessageNeedaction(): ?bool
     {
@@ -1056,6 +1091,8 @@ final class Channel extends Alias
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_unread_counter")
      */
     public function getMessageUnreadCounter(): ?int
     {
@@ -1072,6 +1109,8 @@ final class Channel extends Alias
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_unread")
      */
     public function isMessageUnread(): ?bool
     {
@@ -1111,6 +1150,8 @@ final class Channel extends Alias
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("moderation_notify")
      */
     public function isModerationNotify(): ?bool
     {
@@ -1119,6 +1160,8 @@ final class Channel extends Alias
 
     /**
      * @return int|null
+     *
+     * @SerializedName("moderation_count")
      */
     public function getModerationCount(): ?int
     {
@@ -1127,6 +1170,8 @@ final class Channel extends Alias
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -1187,6 +1232,8 @@ final class Channel extends Alias
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("channel_message_ids")
      */
     public function getChannelMessageIds(): ?array
     {
@@ -1248,6 +1295,8 @@ final class Channel extends Alias
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("channel_partner_ids")
      */
     public function getChannelPartnerIds(): ?array
     {
@@ -1295,6 +1344,8 @@ final class Channel extends Alias
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("is_member")
      */
     public function isIsMember(): ?bool
     {
@@ -1303,6 +1354,8 @@ final class Channel extends Alias
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("channel_last_seen_partner_ids")
      */
     public function getChannelLastSeenPartnerIds(): ?array
     {
@@ -1319,6 +1372,8 @@ final class Channel extends Alias
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("email_send")
      */
     public function isEmailSend(): ?bool
     {
@@ -1335,6 +1390,8 @@ final class Channel extends Alias
 
     /**
      * @return string|null
+     *
+     * @SerializedName("uuid")
      */
     public function getUuid(): ?string
     {
@@ -1351,6 +1408,8 @@ final class Channel extends Alias
 
     /**
      * @return string|null
+     *
+     * @SerializedName("description")
      */
     public function getDescription(): ?string
     {
@@ -1367,6 +1426,8 @@ final class Channel extends Alias
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("is_chat")
      */
     public function isIsChat(): ?bool
     {
@@ -1383,6 +1444,8 @@ final class Channel extends Alias
 
     /**
      * @return string|null
+     *
+     * @SerializedName("channel_type")
      */
     public function getChannelType(): ?string
     {
@@ -1483,6 +1546,8 @@ final class Channel extends Alias
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("moderation_ids")
      */
     public function getModerationIds(): ?array
     {
@@ -1499,6 +1564,8 @@ final class Channel extends Alias
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("is_moderator")
      */
     public function isIsModerator(): ?bool
     {
@@ -1560,6 +1627,8 @@ final class Channel extends Alias
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("moderator_ids")
      */
     public function getModeratorIds(): ?array
     {
@@ -1568,6 +1637,8 @@ final class Channel extends Alias
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("moderation")
      */
     public function isModeration(): ?bool
     {
@@ -1576,6 +1647,8 @@ final class Channel extends Alias
 
     /**
      * @return string
+     *
+     * @SerializedName("public")
      */
     public function getPublic(): string
     {
@@ -1592,6 +1665,8 @@ final class Channel extends Alias
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("is_subscribed")
      */
     public function isIsSubscribed(): ?bool
     {
@@ -1608,6 +1683,8 @@ final class Channel extends Alias
 
     /**
      * @return string|null
+     *
+     * @SerializedName("image_128")
      */
     public function getImage128(): ?string
     {
@@ -1669,6 +1746,8 @@ final class Channel extends Alias
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("group_ids")
      */
     public function getGroupIds(): ?array
     {
@@ -1685,6 +1764,8 @@ final class Channel extends Alias
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("group_public_id")
      */
     public function getGroupPublicId(): ?OdooRelation
     {

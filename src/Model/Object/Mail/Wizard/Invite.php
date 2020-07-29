@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Mail\Wizard;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : mail.wizard.invite
@@ -155,6 +156,8 @@ final class Invite extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("message")
      */
     public function getMessage(): ?string
     {
@@ -171,6 +174,8 @@ final class Invite extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -187,6 +192,8 @@ final class Invite extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -203,6 +210,8 @@ final class Invite extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -219,6 +228,8 @@ final class Invite extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -235,6 +246,8 @@ final class Invite extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("send_mail")
      */
     public function isSendMail(): ?bool
     {
@@ -266,6 +279,8 @@ final class Invite extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("res_model")
      */
     public function getResModel(): string
     {
@@ -312,6 +327,8 @@ final class Invite extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("channel_ids")
      */
     public function getChannelIds(): ?array
     {
@@ -373,6 +390,8 @@ final class Invite extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("partner_ids")
      */
     public function getPartnerIds(): ?array
     {
@@ -389,6 +408,8 @@ final class Invite extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("res_id")
      */
     public function getResId(): ?int
     {

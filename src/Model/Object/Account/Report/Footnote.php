@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Report;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.report.footnote
@@ -107,6 +108,8 @@ final class Footnote extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("text")
      */
     public function getText(): ?string
     {
@@ -123,6 +126,8 @@ final class Footnote extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("line")
      */
     public function getLine(): ?string
     {
@@ -139,6 +144,8 @@ final class Footnote extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("manager_id")
      */
     public function getManagerId(): ?OdooRelation
     {
@@ -155,6 +162,8 @@ final class Footnote extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -171,6 +180,8 @@ final class Footnote extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -187,6 +198,8 @@ final class Footnote extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -203,6 +216,8 @@ final class Footnote extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {

@@ -10,7 +10,7 @@ interface ModelManagerInterface
 {
     public function persist(BaseInterface $model): int;
 
-    public function delete(BaseInterface $model): void;
+    public function delete(BaseInterface $model): bool;
 
-    public function update(BaseInterface $model): BaseInterface;
+    public function update(BaseInterface $model): bool;
 }

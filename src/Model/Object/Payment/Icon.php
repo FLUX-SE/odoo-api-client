@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Payment;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : payment.icon
@@ -121,6 +122,8 @@ final class Icon extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -129,6 +132,8 @@ final class Icon extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -145,6 +150,8 @@ final class Icon extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -161,6 +168,8 @@ final class Icon extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -177,6 +186,8 @@ final class Icon extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -209,6 +220,8 @@ final class Icon extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("image_payment_form")
      */
     public function getImagePaymentForm(): ?string
     {
@@ -225,6 +238,8 @@ final class Icon extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("image")
      */
     public function getImage(): ?string
     {
@@ -286,6 +301,8 @@ final class Icon extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("acquirer_ids")
      */
     public function getAcquirerIds(): ?array
     {

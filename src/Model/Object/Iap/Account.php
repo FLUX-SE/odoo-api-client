@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Iap;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : iap.account
@@ -107,6 +108,8 @@ final class Account extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("service_name")
      */
     public function getServiceName(): ?string
     {
@@ -131,6 +134,8 @@ final class Account extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -147,6 +152,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -163,6 +170,8 @@ final class Account extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -171,6 +180,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -240,6 +251,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("company_ids")
      */
     public function getCompanyIds(): ?array
     {
@@ -256,6 +269,8 @@ final class Account extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("account_token")
      */
     public function getAccountToken(): ?string
     {

@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Mail\Tracking;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : mail.tracking.value
@@ -297,6 +298,8 @@ final class Value extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("new_value_char")
      */
     public function getNewValueChar(): ?string
     {
@@ -313,6 +316,8 @@ final class Value extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("new_value_text")
      */
     public function getNewValueText(): ?string
     {
@@ -329,6 +334,8 @@ final class Value extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("new_value_datetime")
      */
     public function getNewValueDatetime(): ?DateTimeInterface
     {
@@ -345,6 +352,8 @@ final class Value extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("mail_message_id")
      */
     public function getMailMessageId(): OdooRelation
     {
@@ -353,6 +362,8 @@ final class Value extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("tracking_sequence")
      */
     public function getTrackingSequence(): ?int
     {
@@ -377,6 +388,8 @@ final class Value extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -393,6 +406,8 @@ final class Value extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -409,6 +424,8 @@ final class Value extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -425,6 +442,8 @@ final class Value extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -441,6 +460,8 @@ final class Value extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("new_value_monetary")
      */
     public function getNewValueMonetary(): ?float
     {
@@ -449,6 +470,8 @@ final class Value extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("new_value_float")
      */
     public function getNewValueFloat(): ?float
     {
@@ -457,6 +480,8 @@ final class Value extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("field")
      */
     public function getField(): string
     {
@@ -465,6 +490,8 @@ final class Value extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("old_value_float")
      */
     public function getOldValueFloat(): ?float
     {
@@ -481,6 +508,8 @@ final class Value extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("field_desc")
      */
     public function getFieldDesc(): string
     {
@@ -497,6 +526,8 @@ final class Value extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("field_type")
      */
     public function getFieldType(): ?string
     {
@@ -513,6 +544,8 @@ final class Value extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("field_groups")
      */
     public function getFieldGroups(): ?string
     {
@@ -529,6 +562,8 @@ final class Value extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("old_value_integer")
      */
     public function getOldValueInteger(): ?int
     {
@@ -561,6 +596,8 @@ final class Value extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("old_value_monetary")
      */
     public function getOldValueMonetary(): ?float
     {
@@ -577,6 +614,8 @@ final class Value extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("old_value_char")
      */
     public function getOldValueChar(): ?string
     {
@@ -593,6 +632,8 @@ final class Value extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("old_value_text")
      */
     public function getOldValueText(): ?string
     {
@@ -609,6 +650,8 @@ final class Value extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("old_value_datetime")
      */
     public function getOldValueDatetime(): ?DateTimeInterface
     {
@@ -625,6 +668,8 @@ final class Value extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("new_value_integer")
      */
     public function getNewValueInteger(): ?int
     {

@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Res;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : res.country
@@ -288,6 +289,8 @@ final class Country extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name_position")
      */
     public function getNamePosition(): ?string
     {
@@ -304,6 +307,8 @@ final class Country extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("vat_label")
      */
     public function getVatLabel(): ?string
     {
@@ -312,6 +317,8 @@ final class Country extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -320,6 +327,8 @@ final class Country extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("state_ids")
      */
     public function getStateIds(): ?array
     {
@@ -336,6 +345,8 @@ final class Country extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -352,6 +363,8 @@ final class Country extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -368,6 +381,8 @@ final class Country extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -407,6 +422,8 @@ final class Country extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -415,6 +432,8 @@ final class Country extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("currency_id")
      */
     public function getCurrencyId(): ?OdooRelation
     {
@@ -431,6 +450,8 @@ final class Country extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("code")
      */
     public function getCode(): ?string
     {
@@ -447,6 +468,8 @@ final class Country extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("address_format")
      */
     public function getAddressFormat(): ?string
     {
@@ -463,6 +486,8 @@ final class Country extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("address_view_id")
      */
     public function getAddressViewId(): ?OdooRelation
     {
@@ -503,6 +528,8 @@ final class Country extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("image")
      */
     public function getImage(): ?string
     {
@@ -519,6 +546,8 @@ final class Country extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("phone_code")
      */
     public function getPhoneCode(): ?int
     {
@@ -535,6 +564,8 @@ final class Country extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("country_group_ids")
      */
     public function getCountryGroupIds(): ?array
     {

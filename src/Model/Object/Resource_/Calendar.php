@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Resource_;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : resource.calendar
@@ -1405,6 +1406,8 @@ final class Calendar extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("tz")
      */
     public function getTz(): string
     {
@@ -1421,6 +1424,8 @@ final class Calendar extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("two_weeks_calendar")
      */
     public function isTwoWeeksCalendar(): ?bool
     {
@@ -1437,6 +1442,8 @@ final class Calendar extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("two_weeks_explanation")
      */
     public function getTwoWeeksExplanation(): ?string
     {
@@ -1445,6 +1452,8 @@ final class Calendar extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -1476,6 +1485,8 @@ final class Calendar extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -1492,6 +1503,8 @@ final class Calendar extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -1508,6 +1521,8 @@ final class Calendar extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -1524,6 +1539,8 @@ final class Calendar extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("hours_per_day")
      */
     public function getHoursPerDay(): ?float
     {
@@ -1548,6 +1565,8 @@ final class Calendar extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -1580,6 +1599,8 @@ final class Calendar extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {
@@ -1596,6 +1617,8 @@ final class Calendar extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("attendance_ids")
      */
     public function getAttendanceIds(): ?array
     {
@@ -1655,6 +1678,8 @@ final class Calendar extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("leave_ids")
      */
     public function getLeaveIds(): ?array
     {
@@ -1716,6 +1741,8 @@ final class Calendar extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("global_leave_ids")
      */
     public function getGlobalLeaveIds(): ?array
     {

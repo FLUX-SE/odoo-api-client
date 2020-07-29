@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Account;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.account.type
@@ -187,6 +188,8 @@ final class Type extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -203,6 +206,8 @@ final class Type extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -219,6 +224,8 @@ final class Type extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -235,6 +242,8 @@ final class Type extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -259,6 +268,8 @@ final class Type extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -267,6 +278,8 @@ final class Type extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("note")
      */
     public function getNote(): ?string
     {
@@ -283,6 +296,8 @@ final class Type extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("internal_group")
      */
     public function getInternalGroup(): string
     {
@@ -299,6 +314,8 @@ final class Type extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("type")
      */
     public function getType(): string
     {
@@ -315,6 +332,8 @@ final class Type extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("include_initial_balance")
      */
     public function isIncludeInitialBalance(): ?bool
     {

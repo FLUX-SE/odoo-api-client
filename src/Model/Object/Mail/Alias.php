@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Mail;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : mail.alias
@@ -245,6 +246,8 @@ class Alias extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("alias_parent_thread_id")
      */
     public function getAliasParentThreadId(): ?int
     {
@@ -261,6 +264,8 @@ class Alias extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -277,6 +282,8 @@ class Alias extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -293,6 +300,8 @@ class Alias extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -309,6 +318,8 @@ class Alias extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -325,6 +336,8 @@ class Alias extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("alias_contact")
      */
     public function getAliasContact(): string
     {
@@ -349,6 +362,8 @@ class Alias extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("alias_name")
      */
     public function getAliasName(): ?string
     {
@@ -357,6 +372,8 @@ class Alias extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("alias_parent_model_id")
      */
     public function getAliasParentModelId(): ?OdooRelation
     {
@@ -373,6 +390,8 @@ class Alias extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("alias_domain")
      */
     public function getAliasDomain(): ?string
     {
@@ -389,6 +408,8 @@ class Alias extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("alias_force_thread_id")
      */
     public function getAliasForceThreadId(): ?int
     {
@@ -405,6 +426,8 @@ class Alias extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("alias_defaults")
      */
     public function getAliasDefaults(): string
     {
@@ -421,6 +444,8 @@ class Alias extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("alias_user_id")
      */
     public function getAliasUserId(): ?OdooRelation
     {
@@ -437,6 +462,8 @@ class Alias extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("alias_model_id")
      */
     public function getAliasModelId(): OdooRelation
     {

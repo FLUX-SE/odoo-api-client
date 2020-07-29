@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Asset;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : asset.modify
@@ -280,6 +281,8 @@ final class Modify extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("account_asset_counterpart_id")
      */
     public function getAccountAssetCounterpartId(): ?OdooRelation
     {
@@ -296,6 +299,8 @@ final class Modify extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("account_depreciation_id")
      */
     public function getAccountDepreciationId(): ?OdooRelation
     {
@@ -312,6 +317,8 @@ final class Modify extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("account_depreciation_expense_id")
      */
     public function getAccountDepreciationExpenseId(): ?OdooRelation
     {
@@ -320,6 +327,8 @@ final class Modify extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -344,6 +353,8 @@ final class Modify extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -360,6 +371,8 @@ final class Modify extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -376,6 +389,8 @@ final class Modify extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -392,6 +407,8 @@ final class Modify extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("account_asset_id")
      */
     public function getAccountAssetId(): ?OdooRelation
     {
@@ -400,6 +417,8 @@ final class Modify extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("gain_value")
      */
     public function isGainValue(): ?bool
     {
@@ -408,6 +427,8 @@ final class Modify extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -416,6 +437,8 @@ final class Modify extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("value_residual")
      */
     public function getValueResidual(): ?float
     {
@@ -432,6 +455,8 @@ final class Modify extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("asset_id")
      */
     public function getAssetId(): OdooRelation
     {
@@ -448,6 +473,8 @@ final class Modify extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("method_number")
      */
     public function getMethodNumber(): int
     {
@@ -464,6 +491,8 @@ final class Modify extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("method_period")
      */
     public function getMethodPeriod(): ?string
     {
@@ -496,6 +525,8 @@ final class Modify extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("salvage_value")
      */
     public function getSalvageValue(): ?float
     {
@@ -512,6 +543,8 @@ final class Modify extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("currency_id")
      */
     public function getCurrencyId(): ?OdooRelation
     {
@@ -528,6 +561,8 @@ final class Modify extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("date")
      */
     public function getDate(): ?DateTimeInterface
     {
@@ -544,6 +579,8 @@ final class Modify extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("need_date")
      */
     public function isNeedDate(): ?bool
     {

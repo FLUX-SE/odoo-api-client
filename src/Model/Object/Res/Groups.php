@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Res;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : res.groups
@@ -260,6 +261,8 @@ final class Groups extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("color")
      */
     public function getColor(): ?int
     {
@@ -276,6 +279,8 @@ final class Groups extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("full_name")
      */
     public function getFullName(): ?string
     {
@@ -292,6 +297,8 @@ final class Groups extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("share")
      */
     public function isShare(): ?bool
     {
@@ -308,6 +315,8 @@ final class Groups extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("implied_ids")
      */
     public function getImpliedIds(): ?array
     {
@@ -354,6 +363,8 @@ final class Groups extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("trans_implied_ids")
      */
     public function getTransImpliedIds(): ?array
     {
@@ -423,6 +434,8 @@ final class Groups extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -439,6 +452,8 @@ final class Groups extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -455,6 +470,8 @@ final class Groups extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -471,6 +488,8 @@ final class Groups extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -487,6 +506,8 @@ final class Groups extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("category_id")
      */
     public function getCategoryId(): ?OdooRelation
     {
@@ -495,6 +516,8 @@ final class Groups extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("comment")
      */
     public function getComment(): ?string
     {
@@ -503,6 +526,8 @@ final class Groups extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -511,6 +536,8 @@ final class Groups extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("rule_groups")
      */
     public function getRuleGroups(): ?array
     {
@@ -527,6 +554,8 @@ final class Groups extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("users")
      */
     public function getUsers(): ?array
     {
@@ -588,6 +617,8 @@ final class Groups extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("model_access")
      */
     public function getModelAccess(): ?array
     {
@@ -717,6 +748,8 @@ final class Groups extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("menu_access")
      */
     public function getMenuAccess(): ?array
     {
@@ -778,6 +811,8 @@ final class Groups extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("view_access")
      */
     public function getViewAccess(): ?array
     {

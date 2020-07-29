@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Financial\Year;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.financial.year.op
@@ -270,6 +271,8 @@ final class Op extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -286,6 +289,8 @@ final class Op extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -302,6 +307,8 @@ final class Op extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -318,6 +325,8 @@ final class Op extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -335,6 +344,8 @@ final class Op extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("account_tax_periodicity_journal_id")
      */
     public function getAccountTaxPeriodicityJournalId(): ?OdooRelation
     {
@@ -343,6 +354,8 @@ final class Op extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("account_tax_periodicity_reminder_day")
      */
     public function getAccountTaxPeriodicityReminderDay(): int
     {
@@ -351,6 +364,8 @@ final class Op extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): OdooRelation
     {
@@ -367,6 +382,8 @@ final class Op extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("account_tax_periodicity")
      */
     public function getAccountTaxPeriodicity(): string
     {
@@ -383,6 +400,8 @@ final class Op extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("fiscalyear_last_month")
      */
     public function getFiscalyearLastMonth(): string
     {
@@ -399,6 +418,8 @@ final class Op extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("fiscalyear_last_day")
      */
     public function getFiscalyearLastDay(): int
     {
@@ -415,6 +436,8 @@ final class Op extends Base
 
     /**
      * @return DateTimeInterface
+     *
+     * @SerializedName("opening_date")
      */
     public function getOpeningDate(): DateTimeInterface
     {
@@ -431,6 +454,8 @@ final class Op extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("opening_move_posted")
      */
     public function isOpeningMovePosted(): ?bool
     {

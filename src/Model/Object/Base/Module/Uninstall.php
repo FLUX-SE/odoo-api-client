@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Base\Module;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : base.module.uninstall
@@ -158,6 +159,8 @@ final class Uninstall extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -174,6 +177,8 @@ final class Uninstall extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -190,6 +195,8 @@ final class Uninstall extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -206,6 +213,8 @@ final class Uninstall extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -243,6 +252,8 @@ final class Uninstall extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("show_all")
      */
     public function isShowAll(): ?bool
     {
@@ -259,6 +270,8 @@ final class Uninstall extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("model_ids")
      */
     public function getModelIds(): ?array
     {
@@ -320,6 +333,8 @@ final class Uninstall extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("module_ids")
      */
     public function getModuleIds(): ?array
     {
@@ -336,6 +351,8 @@ final class Uninstall extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("module_id")
      */
     public function getModuleId(): OdooRelation
     {

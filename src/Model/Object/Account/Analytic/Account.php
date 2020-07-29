@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Analytic;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.analytic.account
@@ -404,6 +405,8 @@ final class Account extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_has_error_counter")
      */
     public function getMessageHasErrorCounter(): ?int
     {
@@ -420,6 +423,8 @@ final class Account extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_has_error")
      */
     public function isMessageHasError(): ?bool
     {
@@ -436,6 +441,8 @@ final class Account extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_needaction_counter")
      */
     public function getMessageNeedactionCounter(): ?int
     {
@@ -452,6 +459,8 @@ final class Account extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_needaction")
      */
     public function isMessageNeedaction(): ?bool
     {
@@ -460,6 +469,8 @@ final class Account extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_unread_counter")
      */
     public function getMessageUnreadCounter(): ?int
     {
@@ -468,6 +479,8 @@ final class Account extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("message_attachment_count")
      */
     public function getMessageAttachmentCount(): ?int
     {
@@ -484,6 +497,8 @@ final class Account extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_unread")
      */
     public function isMessageUnread(): ?bool
     {
@@ -545,6 +560,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_ids")
      */
     public function getMessageIds(): ?array
     {
@@ -585,6 +602,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -601,6 +620,8 @@ final class Account extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -617,6 +638,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -633,6 +656,8 @@ final class Account extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -657,6 +682,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("message_main_attachment_id")
      */
     public function getMessageMainAttachmentId(): ?OdooRelation
     {
@@ -665,6 +692,8 @@ final class Account extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_has_sms_error")
      */
     public function isMessageHasSmsError(): ?bool
     {
@@ -726,6 +755,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("website_message_ids")
      */
     public function getWebsiteMessageIds(): ?array
     {
@@ -771,6 +802,8 @@ final class Account extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -795,6 +828,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("partner_id")
      */
     public function getPartnerId(): ?OdooRelation
     {
@@ -811,6 +846,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {
@@ -864,6 +901,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("line_ids")
      */
     public function getLineIds(): ?array
     {
@@ -888,6 +927,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("group_id")
      */
     public function getGroupId(): ?OdooRelation
     {
@@ -904,6 +945,8 @@ final class Account extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active")
      */
     public function isActive(): ?bool
     {
@@ -920,6 +963,8 @@ final class Account extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("code")
      */
     public function getCode(): ?string
     {
@@ -936,6 +981,8 @@ final class Account extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("balance")
      */
     public function getBalance(): ?float
     {
@@ -944,6 +991,8 @@ final class Account extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("debit")
      */
     public function getDebit(): ?float
     {
@@ -976,6 +1025,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_channel_ids")
      */
     public function getMessageChannelIds(): ?array
     {
@@ -1037,6 +1088,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_partner_ids")
      */
     public function getMessagePartnerIds(): ?array
     {
@@ -1090,6 +1143,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_follower_ids")
      */
     public function getMessageFollowerIds(): ?array
     {
@@ -1106,6 +1161,8 @@ final class Account extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("message_is_follower")
      */
     public function isMessageIsFollower(): ?bool
     {
@@ -1122,6 +1179,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("currency_id")
      */
     public function getCurrencyId(): ?OdooRelation
     {
@@ -1138,6 +1197,8 @@ final class Account extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("credit")
      */
     public function getCredit(): ?float
     {

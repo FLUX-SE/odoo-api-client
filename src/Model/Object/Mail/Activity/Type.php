@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Mail\Activity;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : mail.activity.type
@@ -362,6 +363,8 @@ final class Type extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("default_description")
      */
     public function getDefaultDescription(): ?string
     {
@@ -370,6 +373,8 @@ final class Type extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("previous_type_ids")
      */
     public function getPreviousTypeIds(): ?array
     {
@@ -431,6 +436,8 @@ final class Type extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("mail_template_ids")
      */
     public function getMailTemplateIds(): ?array
     {
@@ -492,6 +499,8 @@ final class Type extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("default_user_id")
      */
     public function getDefaultUserId(): ?OdooRelation
     {
@@ -532,6 +541,8 @@ final class Type extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("initial_res_model_id")
      */
     public function getInitialResModelId(): ?OdooRelation
     {
@@ -548,6 +559,8 @@ final class Type extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("res_model_change")
      */
     public function isResModelChange(): ?bool
     {
@@ -564,6 +577,8 @@ final class Type extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("category")
      */
     public function getCategory(): ?string
     {
@@ -580,6 +595,8 @@ final class Type extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -596,6 +613,8 @@ final class Type extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -612,6 +631,8 @@ final class Type extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -657,6 +678,8 @@ final class Type extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -681,6 +704,8 @@ final class Type extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("summary")
      */
     public function getSummary(): ?string
     {
@@ -697,6 +722,8 @@ final class Type extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): ?int
     {
@@ -713,6 +740,8 @@ final class Type extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active")
      */
     public function isActive(): ?bool
     {
@@ -729,6 +758,8 @@ final class Type extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -745,6 +776,8 @@ final class Type extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("delay_count")
      */
     public function getDelayCount(): ?int
     {
@@ -761,6 +794,8 @@ final class Type extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("delay_unit")
      */
     public function getDelayUnit(): string
     {
@@ -769,6 +804,8 @@ final class Type extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("delay_from")
      */
     public function getDelayFrom(): string
     {
@@ -793,6 +830,8 @@ final class Type extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("icon")
      */
     public function getIcon(): ?string
     {
@@ -809,6 +848,8 @@ final class Type extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("decoration_type")
      */
     public function getDecorationType(): ?string
     {
@@ -825,6 +866,8 @@ final class Type extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("res_model_id")
      */
     public function getResModelId(): ?OdooRelation
     {
@@ -841,6 +884,8 @@ final class Type extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("default_next_type_id")
      */
     public function getDefaultNextTypeId(): ?OdooRelation
     {
@@ -857,6 +902,8 @@ final class Type extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("force_next")
      */
     public function isForceNext(): ?bool
     {
@@ -873,6 +920,8 @@ final class Type extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("next_type_ids")
      */
     public function getNextTypeIds(): ?array
     {

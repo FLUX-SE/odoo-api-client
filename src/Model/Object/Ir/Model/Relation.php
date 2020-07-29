@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Model;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.model.relation
@@ -134,6 +135,8 @@ final class Relation extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -150,6 +153,8 @@ final class Relation extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("model")
      */
     public function getModel(): OdooRelation
     {
@@ -166,6 +171,8 @@ final class Relation extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("module")
      */
     public function getModule(): OdooRelation
     {
@@ -182,6 +189,8 @@ final class Relation extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -198,6 +207,8 @@ final class Relation extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -214,6 +225,8 @@ final class Relation extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -230,6 +243,8 @@ final class Relation extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {

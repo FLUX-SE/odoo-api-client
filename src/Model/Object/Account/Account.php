@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.account
@@ -415,6 +416,8 @@ final class Account extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("can_create_asset")
      */
     public function isCanCreateAsset(): ?bool
     {
@@ -423,6 +426,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("group_id")
      */
     public function getGroupId(): ?OdooRelation
     {
@@ -439,6 +444,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("root_id")
      */
     public function getRootId(): ?OdooRelation
     {
@@ -455,6 +462,8 @@ final class Account extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("opening_debit")
      */
     public function getOpeningDebit(): ?float
     {
@@ -471,6 +480,8 @@ final class Account extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("opening_credit")
      */
     public function getOpeningCredit(): ?float
     {
@@ -487,6 +498,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("asset_model")
      */
     public function getAssetModel(): ?OdooRelation
     {
@@ -503,6 +516,8 @@ final class Account extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("create_asset")
      */
     public function getCreateAsset(): string
     {
@@ -543,6 +558,8 @@ final class Account extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("form_view_ref")
      */
     public function getFormViewRef(): ?string
     {
@@ -559,6 +576,8 @@ final class Account extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("asset_type")
      */
     public function getAssetType(): ?string
     {
@@ -575,6 +594,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -591,6 +612,8 @@ final class Account extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -607,6 +630,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -623,6 +648,8 @@ final class Account extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -668,6 +695,8 @@ final class Account extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -692,6 +721,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("currency_id")
      */
     public function getCurrencyId(): ?OdooRelation
     {
@@ -708,6 +739,8 @@ final class Account extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("code")
      */
     public function getCode(): string
     {
@@ -724,6 +757,8 @@ final class Account extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("deprecated")
      */
     public function isDeprecated(): ?bool
     {
@@ -740,6 +775,8 @@ final class Account extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("used")
      */
     public function isUsed(): ?bool
     {
@@ -756,6 +793,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("user_type_id")
      */
     public function getUserTypeId(): OdooRelation
     {
@@ -772,6 +811,8 @@ final class Account extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("internal_type")
      */
     public function getInternalType(): ?string
     {
@@ -780,6 +821,8 @@ final class Account extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("internal_group")
      */
     public function getInternalGroup(): ?string
     {
@@ -804,6 +847,8 @@ final class Account extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("reconcile")
      */
     public function isReconcile(): ?bool
     {
@@ -820,6 +865,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("tax_ids")
      */
     public function getTaxIds(): ?array
     {
@@ -881,6 +928,8 @@ final class Account extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("note")
      */
     public function getNote(): ?string
     {
@@ -897,6 +946,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): OdooRelation
     {
@@ -913,6 +964,8 @@ final class Account extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("tag_ids")
      */
     public function getTagIds(): ?array
     {

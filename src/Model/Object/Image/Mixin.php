@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Image;
 
 use Flux\OdooApiClient\Model\Object\Base;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : image.mixin
@@ -68,6 +69,8 @@ final class Mixin extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("image_1920")
      */
     public function getImage1920(): ?string
     {
@@ -84,6 +87,8 @@ final class Mixin extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("image_1024")
      */
     public function getImage1024(): ?string
     {
@@ -100,6 +105,8 @@ final class Mixin extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("image_512")
      */
     public function getImage512(): ?string
     {
@@ -116,6 +123,8 @@ final class Mixin extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("image_256")
      */
     public function getImage256(): ?string
     {
@@ -132,6 +141,8 @@ final class Mixin extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("image_128")
      */
     public function getImage128(): ?string
     {

@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\AccountFollowup\Followup;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account_followup.followup.line
@@ -281,6 +282,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("manual_action_type_id")
      */
     public function getManualActionTypeId(): ?OdooRelation
     {
@@ -297,6 +300,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("manual_action_responsible_id")
      */
     public function getManualActionResponsibleId(): ?OdooRelation
     {
@@ -313,6 +318,8 @@ final class Line extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("auto_execute")
      */
     public function isAutoExecute(): ?bool
     {
@@ -329,6 +336,8 @@ final class Line extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("send_letter")
      */
     public function isSendLetter(): ?bool
     {
@@ -337,6 +346,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -345,6 +356,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("manual_action_note")
      */
     public function getManualActionNote(): ?string
     {
@@ -361,6 +374,8 @@ final class Line extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -377,6 +392,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -393,6 +410,8 @@ final class Line extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -425,6 +444,8 @@ final class Line extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -433,6 +454,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("description")
      */
     public function getDescription(): ?string
     {
@@ -449,6 +472,8 @@ final class Line extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("delay")
      */
     public function getDelay(): int
     {
@@ -465,6 +490,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): OdooRelation
     {
@@ -481,6 +508,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("sms_description")
      */
     public function getSmsDescription(): ?string
     {
@@ -505,6 +534,8 @@ final class Line extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("manual_action")
      */
     public function isManualAction(): ?bool
     {
@@ -513,6 +544,8 @@ final class Line extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("send_email")
      */
     public function isSendEmail(): ?bool
     {
@@ -529,6 +562,8 @@ final class Line extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("print_letter")
      */
     public function isPrintLetter(): ?bool
     {
@@ -545,6 +580,8 @@ final class Line extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("send_sms")
      */
     public function isSendSms(): ?bool
     {
@@ -561,6 +598,8 @@ final class Line extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("join_invoices")
      */
     public function isJoinInvoices(): ?bool
     {

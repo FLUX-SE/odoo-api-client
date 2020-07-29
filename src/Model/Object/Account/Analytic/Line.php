@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Analytic;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.analytic.line
@@ -335,6 +336,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("code")
      */
     public function getCode(): ?string
     {
@@ -351,6 +354,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("group_id")
      */
     public function getGroupId(): ?OdooRelation
     {
@@ -367,6 +372,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("product_id")
      */
     public function getProductId(): ?OdooRelation
     {
@@ -383,6 +390,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("general_account_id")
      */
     public function getGeneralAccountId(): ?OdooRelation
     {
@@ -399,6 +408,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("move_id")
      */
     public function getMoveId(): ?OdooRelation
     {
@@ -431,6 +442,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("ref")
      */
     public function getRef(): ?string
     {
@@ -447,6 +460,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -463,6 +478,8 @@ final class Line extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -479,6 +496,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -495,6 +514,8 @@ final class Line extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -511,6 +532,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("currency_id")
      */
     public function getCurrencyId(): ?OdooRelation
     {
@@ -519,6 +542,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): OdooRelation
     {
@@ -527,6 +552,8 @@ final class Line extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -535,6 +562,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("product_uom_category_id")
      */
     public function getProductUomCategoryId(): ?OdooRelation
     {
@@ -551,6 +580,8 @@ final class Line extends Base
 
     /**
      * @return DateTimeInterface
+     *
+     * @SerializedName("date")
      */
     public function getDate(): DateTimeInterface
     {
@@ -567,6 +598,8 @@ final class Line extends Base
 
     /**
      * @return float
+     *
+     * @SerializedName("amount")
      */
     public function getAmount(): float
     {
@@ -583,6 +616,8 @@ final class Line extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("unit_amount")
      */
     public function getUnitAmount(): ?float
     {
@@ -599,6 +634,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("product_uom_id")
      */
     public function getProductUomId(): ?OdooRelation
     {
@@ -638,6 +675,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("account_id")
      */
     public function getAccountId(): OdooRelation
     {
@@ -654,6 +693,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("partner_id")
      */
     public function getPartnerId(): ?OdooRelation
     {
@@ -670,6 +711,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("user_id")
      */
     public function getUserId(): ?OdooRelation
     {
@@ -686,6 +729,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("tag_ids")
      */
     public function getTagIds(): ?array
     {

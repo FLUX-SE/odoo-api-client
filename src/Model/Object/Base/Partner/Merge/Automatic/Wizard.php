@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Base\Partner\Merge\Automatic;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : base.partner.merge.automatic.wizard
@@ -241,6 +242,8 @@ final class Wizard extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("maximum_group")
      */
     public function getMaximumGroup(): ?int
     {
@@ -280,6 +283,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("dst_partner_id")
      */
     public function getDstPartnerId(): ?OdooRelation
     {
@@ -296,6 +301,8 @@ final class Wizard extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("exclude_contact")
      */
     public function isExcludeContact(): ?bool
     {
@@ -312,6 +319,8 @@ final class Wizard extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("exclude_journal_item")
      */
     public function isExcludeJournalItem(): ?bool
     {
@@ -344,6 +353,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -360,6 +371,8 @@ final class Wizard extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -376,6 +389,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -392,6 +407,8 @@ final class Wizard extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -422,6 +439,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("partner_ids")
      */
     public function getPartnerIds(): ?array
     {
@@ -430,6 +449,8 @@ final class Wizard extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("group_by_email")
      */
     public function isGroupByEmail(): ?bool
     {
@@ -454,6 +475,8 @@ final class Wizard extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("group_by_name")
      */
     public function isGroupByName(): ?bool
     {
@@ -470,6 +493,8 @@ final class Wizard extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("group_by_is_company")
      */
     public function isGroupByIsCompany(): ?bool
     {
@@ -486,6 +511,8 @@ final class Wizard extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("group_by_vat")
      */
     public function isGroupByVat(): ?bool
     {
@@ -502,6 +529,8 @@ final class Wizard extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("group_by_parent_id")
      */
     public function isGroupByParentId(): ?bool
     {
@@ -510,6 +539,8 @@ final class Wizard extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("state")
      */
     public function getState(): string
     {
@@ -541,6 +572,8 @@ final class Wizard extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("number_group")
      */
     public function getNumberGroup(): ?int
     {
@@ -557,6 +590,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("current_line_id")
      */
     public function getCurrentLineId(): ?OdooRelation
     {
@@ -573,6 +608,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("line_ids")
      */
     public function getLineIds(): ?array
     {

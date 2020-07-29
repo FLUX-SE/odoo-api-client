@@ -37,35 +37,40 @@ final class ModelManager implements ModelManagerInterface
         return $this->recordOperations->create($model::getOdooModelName(), [$normalizedModel]);
     }
 
-    public function delete(BaseInterface $model): void
+    public function delete(BaseInterface $model): bool
     {
         if (null === $model->getId()) {
             throw new LogicException('The model id should not be null !');
         }
 
-        $this->recordOperations->unlink($model::getOdooModelName(), $model->getId());
+        if (false === $model->getId()) {
+            throw new LogicException('The model id should not be false !');
+        }
+
+        return $this->recordOperations->unlink($model::getOdooModelName(), [$model->getId()]);
     }
 
     /**
      * @param BaseInterface $model
      *
-     * @return BaseInterface
+     * @return bool
      * @throws ExceptionInterface
      */
-    public function update(BaseInterface $model): BaseInterface
+    public function update(BaseInterface $model): bool
     {
         if (null === $model->getId()) {
             throw new LogicException('The model id should not be null !');
         }
 
-        $normalizedModel = $this->serializer->normalize($model);
-        $savedNormalizedModel = $this->recordOperations->write(
+        if (false === $model->getId()) {
+            throw new LogicException('The model id should not be false !');
+        }
+
+        $normalizedModel = (array) $this->serializer->normalize($model);
+        return $this->recordOperations->write(
             $model::getOdooModelName(),
-            $model->getId(),
-            [$normalizedModel]
+            [$model->getId()],
+            $normalizedModel
         );
-        /** @var BaseInterface $denormalizeModel */
-        $denormalizeModel = $this->serializer->denormalize($savedNormalizedModel, get_class($model));
-        return $denormalizeModel;
     }
 }

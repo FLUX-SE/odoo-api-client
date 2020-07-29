@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Bank\Statement;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.bank.statement.line
@@ -336,19 +337,6 @@ final class Line extends Base
     private $online_partner_bank_account;
 
     /**
-     * POS statement
-     * ---
-     * Relation : many2one (pos.order)
-     * @see \Flux\OdooApiClient\Model\Object\Pos\Order
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $pos_statement_id;
-
-    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -419,11 +407,19 @@ final class Line extends Base
     }
 
     /**
-     * @return string|null
+     * @param string|null $unique_import_id
      */
-    public function getOnlineIdentifier(): ?string
+    public function setUniqueImportId(?string $unique_import_id): void
     {
-        return $this->online_identifier;
+        $this->unique_import_id = $unique_import_id;
+    }
+
+    /**
+     * @param OdooRelation[]|null $journal_entry_ids
+     */
+    public function setJournalEntryIds(?array $journal_entry_ids): void
+    {
+        $this->journal_entry_ids = $journal_entry_ids;
     }
 
     /**
@@ -473,6 +469,8 @@ final class Line extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("amount_currency")
      */
     public function getAmountCurrency(): ?float
     {
@@ -489,6 +487,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("currency_id")
      */
     public function getCurrencyId(): ?OdooRelation
     {
@@ -505,6 +505,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("state")
      */
     public function getState(): ?string
     {
@@ -521,6 +523,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("move_name")
      */
     public function getMoveName(): ?string
     {
@@ -537,6 +541,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("unique_import_id")
      */
     public function getUniqueImportId(): ?string
     {
@@ -544,11 +550,21 @@ final class Line extends Base
     }
 
     /**
-     * @param string|null $unique_import_id
+     * @return string|null
+     *
+     * @SerializedName("online_identifier")
      */
-    public function setUniqueImportId(?string $unique_import_id): void
+    public function getOnlineIdentifier(): ?string
     {
-        $this->unique_import_id = $unique_import_id;
+        return $this->online_identifier;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
     }
 
     /**
@@ -560,15 +576,9 @@ final class Line extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
-     */
-    public function getJournalEntryIds(): ?array
-    {
-        return $this->journal_entry_ids;
-    }
-
-    /**
      * @return string|null
+     *
+     * @SerializedName("online_partner_vendor_name")
      */
     public function getOnlinePartnerVendorName(): ?string
     {
@@ -585,6 +595,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("online_partner_bank_account")
      */
     public function getOnlinePartnerBankAccount(): ?string
     {
@@ -601,22 +613,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
-     */
-    public function getPosStatementId(): ?OdooRelation
-    {
-        return $this->pos_statement_id;
-    }
-
-    /**
-     * @param OdooRelation|null $pos_statement_id
-     */
-    public function setPosStatementId(?OdooRelation $pos_statement_id): void
-    {
-        $this->pos_statement_id = $pos_statement_id;
-    }
-
-    /**
-     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -633,6 +631,8 @@ final class Line extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -649,6 +649,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -665,6 +667,8 @@ final class Line extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -680,23 +684,29 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $journal_entry_ids
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("journal_entry_ids")
      */
-    public function setJournalEntryIds(?array $journal_entry_ids): void
+    public function getJournalEntryIds(): ?array
     {
-        $this->journal_entry_ids = $journal_entry_ids;
+        return $this->journal_entry_ids;
     }
 
     /**
-     * @param OdooRelation|null $company_id
+     * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
-    public function setCompanyId(?OdooRelation $company_id): void
+    public function getCompanyId(): ?OdooRelation
     {
-        $this->company_id = $company_id;
+        return $this->company_id;
     }
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -705,6 +715,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("account_id")
      */
     public function getAccountId(): ?OdooRelation
     {
@@ -721,6 +733,8 @@ final class Line extends Base
 
     /**
      * @return DateTimeInterface
+     *
+     * @SerializedName("date")
      */
     public function getDate(): DateTimeInterface
     {
@@ -737,6 +751,8 @@ final class Line extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("amount")
      */
     public function getAmount(): ?float
     {
@@ -753,6 +769,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("journal_currency_id")
      */
     public function getJournalCurrencyId(): ?OdooRelation
     {
@@ -769,6 +787,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("partner_id")
      */
     public function getPartnerId(): ?OdooRelation
     {
@@ -785,6 +805,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("account_number")
      */
     public function getAccountNumber(): ?string
     {
@@ -801,6 +823,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("bank_account_id")
      */
     public function getBankAccountId(): ?OdooRelation
     {
@@ -824,15 +848,17 @@ final class Line extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param int|null $sequence
      */
-    public function getCompanyId(): ?OdooRelation
+    public function setSequence(?int $sequence): void
     {
-        return $this->company_id;
+        $this->sequence = $sequence;
     }
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("statement_id")
      */
     public function getStatementId(): OdooRelation
     {
@@ -849,6 +875,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("journal_id")
      */
     public function getJournalId(): ?OdooRelation
     {
@@ -865,6 +893,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("partner_name")
      */
     public function getPartnerName(): ?string
     {
@@ -881,6 +911,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("ref")
      */
     public function getRef(): ?string
     {
@@ -897,6 +929,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("note")
      */
     public function getNote(): ?string
     {
@@ -913,6 +947,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("transaction_type")
      */
     public function getTransactionType(): ?string
     {
@@ -929,18 +965,12 @@ final class Line extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): ?int
     {
         return $this->sequence;
-    }
-
-    /**
-     * @param int|null $sequence
-     */
-    public function setSequence(?int $sequence): void
-    {
-        $this->sequence = $sequence;
     }
 
     /**

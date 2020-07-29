@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Module\Module;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.module.module.exclusion
@@ -129,6 +130,8 @@ final class Exclusion extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -153,6 +156,8 @@ final class Exclusion extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -169,6 +174,8 @@ final class Exclusion extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -185,6 +192,8 @@ final class Exclusion extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -193,6 +202,8 @@ final class Exclusion extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -217,6 +228,8 @@ final class Exclusion extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("state")
      */
     public function getState(): ?string
     {
@@ -233,6 +246,8 @@ final class Exclusion extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("exclusion_id")
      */
     public function getExclusionId(): ?OdooRelation
     {
@@ -249,6 +264,8 @@ final class Exclusion extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("module_id")
      */
     public function getModuleId(): ?OdooRelation
     {

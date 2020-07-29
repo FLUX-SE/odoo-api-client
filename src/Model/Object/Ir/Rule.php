@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.rule
@@ -215,6 +216,8 @@ final class Rule extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -231,6 +234,8 @@ final class Rule extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -247,6 +252,8 @@ final class Rule extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -263,6 +270,8 @@ final class Rule extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -279,6 +288,8 @@ final class Rule extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("global")
      */
     public function isGlobal(): ?bool
     {
@@ -295,6 +306,8 @@ final class Rule extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("perm_unlink")
      */
     public function isPermUnlink(): ?bool
     {
@@ -311,6 +324,8 @@ final class Rule extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("perm_create")
      */
     public function isPermCreate(): ?bool
     {
@@ -319,6 +334,8 @@ final class Rule extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("perm_write")
      */
     public function isPermWrite(): ?bool
     {
@@ -327,6 +344,8 @@ final class Rule extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -343,6 +362,8 @@ final class Rule extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("perm_read")
      */
     public function isPermRead(): ?bool
     {
@@ -359,6 +380,8 @@ final class Rule extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("domain_force")
      */
     public function getDomainForce(): ?string
     {
@@ -420,6 +443,8 @@ final class Rule extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("groups")
      */
     public function getGroups(): ?array
     {
@@ -436,6 +461,8 @@ final class Rule extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("model_id")
      */
     public function getModelId(): OdooRelation
     {
@@ -452,6 +479,8 @@ final class Rule extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active")
      */
     public function isActive(): ?bool
     {

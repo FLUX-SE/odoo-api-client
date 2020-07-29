@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Uom;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : uom.category
@@ -52,18 +53,6 @@ final class Category extends Base
      * @var string|null
      */
     private $measure_type;
-
-    /**
-     * Group Products in POS
-     * ---
-     * Check if you want to group products of this category in point of sale orders
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $is_pos_groupable;
 
     /**
      * Created by
@@ -124,6 +113,8 @@ final class Category extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -140,6 +131,8 @@ final class Category extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("measure_type")
      */
     public function getMeasureType(): ?string
     {
@@ -155,23 +148,9 @@ final class Category extends Base
     }
 
     /**
-     * @return bool|null
-     */
-    public function isIsPosGroupable(): ?bool
-    {
-        return $this->is_pos_groupable;
-    }
-
-    /**
-     * @param bool|null $is_pos_groupable
-     */
-    public function setIsPosGroupable(?bool $is_pos_groupable): void
-    {
-        $this->is_pos_groupable = $is_pos_groupable;
-    }
-
-    /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -188,6 +167,8 @@ final class Category extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -204,6 +185,8 @@ final class Category extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -220,6 +203,8 @@ final class Category extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {

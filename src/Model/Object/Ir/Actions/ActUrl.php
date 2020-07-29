@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Actions;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.actions.act_url
@@ -223,6 +224,8 @@ final class ActUrl extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("binding_type")
      */
     public function getBindingType(): string
     {
@@ -239,6 +242,8 @@ final class ActUrl extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -255,6 +260,8 @@ final class ActUrl extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -271,6 +278,8 @@ final class ActUrl extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -287,6 +296,8 @@ final class ActUrl extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -303,6 +314,8 @@ final class ActUrl extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("binding_view_types")
      */
     public function getBindingViewTypes(): ?string
     {
@@ -327,6 +340,8 @@ final class ActUrl extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -335,6 +350,8 @@ final class ActUrl extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("binding_model_id")
      */
     public function getBindingModelId(): ?OdooRelation
     {
@@ -351,6 +368,8 @@ final class ActUrl extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("help")
      */
     public function getHelp(): ?string
     {
@@ -367,6 +386,8 @@ final class ActUrl extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("xml_id")
      */
     public function getXmlId(): ?string
     {
@@ -383,6 +404,8 @@ final class ActUrl extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("target")
      */
     public function getTarget(): string
     {
@@ -399,6 +422,8 @@ final class ActUrl extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("url")
      */
     public function getUrl(): string
     {
@@ -415,6 +440,8 @@ final class ActUrl extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("type")
      */
     public function getType(): string
     {

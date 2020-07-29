@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Transfer;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.transfer.model
@@ -268,6 +269,8 @@ final class Model extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("state")
      */
     public function getState(): string
     {
@@ -329,6 +332,8 @@ final class Model extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("move_ids_count")
      */
     public function getMoveIdsCount(): ?int
     {
@@ -345,6 +350,8 @@ final class Model extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("total_percent")
      */
     public function getTotalPercent(): ?float
     {
@@ -384,6 +391,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -400,6 +409,8 @@ final class Model extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -416,6 +427,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -432,6 +445,8 @@ final class Model extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -448,6 +463,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("move_ids")
      */
     public function getMoveIds(): ?array
     {
@@ -472,6 +489,8 @@ final class Model extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -496,6 +515,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("journal_id")
      */
     public function getJournalId(): OdooRelation
     {
@@ -512,6 +533,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {
@@ -528,6 +551,8 @@ final class Model extends Base
 
     /**
      * @return DateTimeInterface
+     *
+     * @SerializedName("date_start")
      */
     public function getDateStart(): DateTimeInterface
     {
@@ -544,6 +569,8 @@ final class Model extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("date_stop")
      */
     public function getDateStop(): ?DateTimeInterface
     {
@@ -552,6 +579,8 @@ final class Model extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("frequency")
      */
     public function getFrequency(): string
     {
@@ -582,6 +611,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("account_ids")
      */
     public function getAccountIds(): ?array
     {
@@ -643,6 +674,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("line_ids")
      */
     public function getLineIds(): ?array
     {

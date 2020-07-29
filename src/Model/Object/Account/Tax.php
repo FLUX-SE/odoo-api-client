@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.tax
@@ -443,6 +444,8 @@ final class Tax extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("tax_exigibility")
      */
     public function getTaxExigibility(): ?string
     {
@@ -459,6 +462,8 @@ final class Tax extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("cash_basis_transition_account_id")
      */
     public function getCashBasisTransitionAccountId(): ?OdooRelation
     {
@@ -475,6 +480,8 @@ final class Tax extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("cash_basis_base_account_id")
      */
     public function getCashBasisBaseAccountId(): ?OdooRelation
     {
@@ -491,6 +498,8 @@ final class Tax extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("invoice_repartition_line_ids")
      */
     public function getInvoiceRepartitionLineIds(): ?array
     {
@@ -552,6 +561,8 @@ final class Tax extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("refund_repartition_line_ids")
      */
     public function getRefundRepartitionLineIds(): ?array
     {
@@ -574,6 +585,8 @@ final class Tax extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("hide_tax_exigibility")
      */
     public function isHideTaxExigibility(): ?bool
     {
@@ -613,6 +626,8 @@ final class Tax extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("country_id")
      */
     public function getCountryId(): ?OdooRelation
     {
@@ -629,6 +644,8 @@ final class Tax extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -645,6 +662,8 @@ final class Tax extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -661,6 +680,8 @@ final class Tax extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -677,6 +698,8 @@ final class Tax extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -709,6 +732,8 @@ final class Tax extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -741,6 +766,8 @@ final class Tax extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("type_tax_use")
      */
     public function getTypeTaxUse(): string
     {
@@ -757,6 +784,8 @@ final class Tax extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("amount_type")
      */
     public function getAmountType(): string
     {
@@ -773,6 +802,8 @@ final class Tax extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active")
      */
     public function isActive(): ?bool
     {
@@ -789,6 +820,8 @@ final class Tax extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): OdooRelation
     {
@@ -805,6 +838,8 @@ final class Tax extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("children_tax_ids")
      */
     public function getChildrenTaxIds(): ?array
     {
@@ -850,6 +885,8 @@ final class Tax extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("tax_group_id")
      */
     public function getTaxGroupId(): OdooRelation
     {
@@ -858,6 +895,8 @@ final class Tax extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): int
     {
@@ -874,6 +913,8 @@ final class Tax extends Base
 
     /**
      * @return float
+     *
+     * @SerializedName("amount")
      */
     public function getAmount(): float
     {
@@ -890,6 +931,8 @@ final class Tax extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("description")
      */
     public function getDescription(): ?string
     {
@@ -906,6 +949,8 @@ final class Tax extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("price_include")
      */
     public function isPriceInclude(): ?bool
     {
@@ -922,6 +967,8 @@ final class Tax extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("include_base_amount")
      */
     public function isIncludeBaseAmount(): ?bool
     {
@@ -938,6 +985,8 @@ final class Tax extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("analytic")
      */
     public function isAnalytic(): ?bool
     {

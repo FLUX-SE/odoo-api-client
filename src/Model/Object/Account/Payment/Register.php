@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Payment;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.payment.register
@@ -182,6 +183,8 @@ final class Register extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("group_payment")
      */
     public function isGroupPayment(): ?bool
     {
@@ -198,6 +201,8 @@ final class Register extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -214,6 +219,8 @@ final class Register extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -230,6 +237,8 @@ final class Register extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -246,6 +255,8 @@ final class Register extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -277,6 +288,8 @@ final class Register extends Base
 
     /**
      * @return DateTimeInterface
+     *
+     * @SerializedName("payment_date")
      */
     public function getPaymentDate(): DateTimeInterface
     {
@@ -323,6 +336,8 @@ final class Register extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("invoice_ids")
      */
     public function getInvoiceIds(): ?array
     {
@@ -339,6 +354,8 @@ final class Register extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("payment_method_id")
      */
     public function getPaymentMethodId(): OdooRelation
     {
@@ -355,6 +372,8 @@ final class Register extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("journal_id")
      */
     public function getJournalId(): OdooRelation
     {

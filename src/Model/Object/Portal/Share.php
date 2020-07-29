@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Portal;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : portal.share
@@ -176,6 +177,8 @@ final class Share extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -192,6 +195,8 @@ final class Share extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -208,6 +213,8 @@ final class Share extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -224,6 +231,8 @@ final class Share extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -240,6 +249,8 @@ final class Share extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("access_warning")
      */
     public function getAccessWarning(): ?string
     {
@@ -248,6 +259,8 @@ final class Share extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("share_link")
      */
     public function getShareLink(): ?string
     {
@@ -256,6 +269,8 @@ final class Share extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("res_model")
      */
     public function getResModel(): string
     {
@@ -272,6 +287,8 @@ final class Share extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("note")
      */
     public function getNote(): ?string
     {
@@ -321,6 +338,8 @@ final class Share extends Base
 
     /**
      * @return OdooRelation[]
+     *
+     * @SerializedName("partner_ids")
      */
     public function getPartnerIds(): array
     {
@@ -337,6 +356,8 @@ final class Share extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("res_id")
      */
     public function getResId(): int
     {

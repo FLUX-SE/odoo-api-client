@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Product\Template\Attribute;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : product.template.attribute.exclusion
@@ -127,6 +128,8 @@ final class Exclusion extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -143,6 +146,8 @@ final class Exclusion extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -159,6 +164,8 @@ final class Exclusion extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -175,6 +182,8 @@ final class Exclusion extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -206,6 +215,8 @@ final class Exclusion extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("product_template_attribute_value_id")
      */
     public function getProductTemplateAttributeValueId(): ?OdooRelation
     {
@@ -252,6 +263,8 @@ final class Exclusion extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("value_ids")
      */
     public function getValueIds(): ?array
     {
@@ -268,6 +281,8 @@ final class Exclusion extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("product_tmpl_id")
      */
     public function getProductTmplId(): OdooRelation
     {

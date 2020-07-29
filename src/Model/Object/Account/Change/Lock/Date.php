@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Change\Lock;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.change.lock.date
@@ -104,6 +105,8 @@ final class Date extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("period_lock_date")
      */
     public function getPeriodLockDate(): ?DateTimeInterface
     {
@@ -120,6 +123,8 @@ final class Date extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("fiscalyear_lock_date")
      */
     public function getFiscalyearLockDate(): ?DateTimeInterface
     {
@@ -136,6 +141,8 @@ final class Date extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("tax_lock_date")
      */
     public function getTaxLockDate(): ?DateTimeInterface
     {
@@ -152,6 +159,8 @@ final class Date extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -168,6 +177,8 @@ final class Date extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -184,6 +195,8 @@ final class Date extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -200,6 +213,8 @@ final class Date extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {

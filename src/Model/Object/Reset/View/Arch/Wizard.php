@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Reset\View\Arch;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : reset.view.arch.wizard
@@ -148,6 +149,8 @@ final class Wizard extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -164,6 +167,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -180,6 +185,8 @@ final class Wizard extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -188,6 +195,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -196,6 +205,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("view_id")
      */
     public function getViewId(): ?OdooRelation
     {
@@ -212,6 +223,8 @@ final class Wizard extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("reset_mode")
      */
     public function getResetMode(): string
     {
@@ -228,6 +241,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("arch_diff")
      */
     public function getArchDiff(): ?string
     {
@@ -244,6 +259,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("view_name")
      */
     public function getViewName(): ?string
     {

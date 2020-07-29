@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Base\Language;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : base.language.install
@@ -292,6 +293,8 @@ final class Install extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("lang")
      */
     public function getLang(): string
     {
@@ -308,6 +311,8 @@ final class Install extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("overwrite")
      */
     public function isOverwrite(): ?bool
     {
@@ -324,6 +329,8 @@ final class Install extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("state")
      */
     public function getState(): ?string
     {
@@ -340,6 +347,8 @@ final class Install extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -356,6 +365,8 @@ final class Install extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -372,6 +383,8 @@ final class Install extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -388,6 +401,8 @@ final class Install extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {

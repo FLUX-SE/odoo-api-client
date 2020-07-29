@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Model\Object\Portal;
 
 use Flux\OdooApiClient\Model\Object\Base;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : portal.mixin
@@ -50,6 +51,8 @@ final class Mixin extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("access_url")
      */
     public function getAccessUrl(): ?string
     {
@@ -66,6 +69,8 @@ final class Mixin extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("access_token")
      */
     public function getAccessToken(): ?string
     {
@@ -82,6 +87,8 @@ final class Mixin extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("access_warning")
      */
     public function getAccessWarning(): ?string
     {

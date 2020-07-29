@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Snailmail;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : snailmail.letter
@@ -406,6 +407,8 @@ final class Letter extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("reference")
      */
     public function getReference(): ?string
     {
@@ -422,6 +425,8 @@ final class Letter extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("message_id")
      */
     public function getMessageId(): ?OdooRelation
     {
@@ -438,6 +443,8 @@ final class Letter extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("street")
      */
     public function getStreet(): ?string
     {
@@ -454,6 +461,8 @@ final class Letter extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("street2")
      */
     public function getStreet2(): ?string
     {
@@ -470,6 +479,8 @@ final class Letter extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("zip")
      */
     public function getZip(): ?string
     {
@@ -486,6 +497,8 @@ final class Letter extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("city")
      */
     public function getCity(): ?string
     {
@@ -494,6 +507,8 @@ final class Letter extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("state_id")
      */
     public function getStateId(): ?OdooRelation
     {
@@ -502,6 +517,8 @@ final class Letter extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("info_msg")
      */
     public function getInfoMsg(): ?string
     {
@@ -518,6 +535,8 @@ final class Letter extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("country_id")
      */
     public function getCountryId(): ?OdooRelation
     {
@@ -534,6 +553,8 @@ final class Letter extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -550,6 +571,8 @@ final class Letter extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -566,6 +589,8 @@ final class Letter extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -582,6 +607,8 @@ final class Letter extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -614,6 +641,8 @@ final class Letter extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("user_id")
      */
     public function getUserId(): ?OdooRelation
     {
@@ -622,6 +651,8 @@ final class Letter extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("attachment_id")
      */
     public function getAttachmentId(): ?OdooRelation
     {
@@ -638,6 +669,8 @@ final class Letter extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("model")
      */
     public function getModel(): string
     {
@@ -654,6 +687,8 @@ final class Letter extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("res_id")
      */
     public function getResId(): int
     {
@@ -670,6 +705,8 @@ final class Letter extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("partner_id")
      */
     public function getPartnerId(): OdooRelation
     {
@@ -686,6 +723,8 @@ final class Letter extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): OdooRelation
     {
@@ -702,6 +741,8 @@ final class Letter extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("report_template")
      */
     public function getReportTemplate(): ?OdooRelation
     {
@@ -726,6 +767,8 @@ final class Letter extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("error_code")
      */
     public function getErrorCode(): ?string
     {
@@ -734,6 +777,8 @@ final class Letter extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("attachment_datas")
      */
     public function getAttachmentDatas(): ?string
     {
@@ -750,6 +795,8 @@ final class Letter extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("attachment_fname")
      */
     public function getAttachmentFname(): ?string
     {
@@ -766,6 +813,8 @@ final class Letter extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("color")
      */
     public function isColor(): ?bool
     {
@@ -782,6 +831,8 @@ final class Letter extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("cover")
      */
     public function isCover(): ?bool
     {
@@ -798,6 +849,8 @@ final class Letter extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("duplex")
      */
     public function isDuplex(): ?bool
     {
@@ -814,6 +867,8 @@ final class Letter extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("state")
      */
     public function getState(): string
     {

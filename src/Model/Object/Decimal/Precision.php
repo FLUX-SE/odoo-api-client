@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Decimal;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : decimal.precision
@@ -110,6 +111,8 @@ final class Precision extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -126,6 +129,8 @@ final class Precision extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("digits")
      */
     public function getDigits(): int
     {
@@ -142,6 +147,8 @@ final class Precision extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -158,6 +165,8 @@ final class Precision extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -174,6 +183,8 @@ final class Precision extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -190,6 +201,8 @@ final class Precision extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {

@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Financial\Html\Report;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.financial.html.report.line
@@ -316,6 +317,8 @@ final class Line extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("hide_if_empty")
      */
     public function isHideIfEmpty(): ?bool
     {
@@ -324,6 +327,8 @@ final class Line extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("green_on_positive")
      */
     public function isGreenOnPositive(): ?bool
     {
@@ -340,6 +345,8 @@ final class Line extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("level")
      */
     public function getLevel(): int
     {
@@ -356,6 +363,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("special_date_changer")
      */
     public function getSpecialDateChanger(): ?string
     {
@@ -372,6 +381,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("show_domain")
      */
     public function getShowDomain(): ?string
     {
@@ -388,6 +399,8 @@ final class Line extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("hide_if_zero")
      */
     public function isHideIfZero(): ?bool
     {
@@ -412,6 +425,8 @@ final class Line extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("print_on_new_page")
      */
     public function isPrintOnNewPage(): ?bool
     {
@@ -420,6 +435,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("action_id")
      */
     public function getActionId(): ?OdooRelation
     {
@@ -436,6 +453,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -452,6 +471,8 @@ final class Line extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -468,6 +489,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -484,6 +507,8 @@ final class Line extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -516,6 +541,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -548,6 +575,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("code")
      */
     public function getCode(): ?string
     {
@@ -564,6 +593,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("financial_report_id")
      */
     public function getFinancialReportId(): ?OdooRelation
     {
@@ -580,6 +611,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("parent_id")
      */
     public function getParentId(): ?OdooRelation
     {
@@ -596,6 +629,8 @@ final class Line extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("children_ids")
      */
     public function getChildrenIds(): ?array
     {
@@ -641,6 +676,8 @@ final class Line extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("figure_type")
      */
     public function getFigureType(): string
     {
@@ -649,6 +686,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("parent_path")
      */
     public function getParentPath(): ?string
     {
@@ -665,6 +704,8 @@ final class Line extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): ?int
     {
@@ -681,6 +722,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("domain")
      */
     public function getDomain(): ?string
     {
@@ -697,6 +740,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("formulas")
      */
     public function getFormulas(): ?string
     {
@@ -713,6 +758,8 @@ final class Line extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("groupby")
      */
     public function getGroupby(): ?string
     {

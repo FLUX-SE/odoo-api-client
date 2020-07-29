@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Tax;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.tax.template
@@ -432,6 +433,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("refund_repartition_line_ids")
      */
     public function getRefundRepartitionLineIds(): ?array
     {
@@ -493,6 +496,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("tax_group_id")
      */
     public function getTaxGroupId(): ?OdooRelation
     {
@@ -509,6 +514,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("tax_exigibility")
      */
     public function getTaxExigibility(): ?string
     {
@@ -517,6 +524,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("cash_basis_transition_account_id")
      */
     public function getCashBasisTransitionAccountId(): ?OdooRelation
     {
@@ -525,6 +534,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("invoice_repartition_line_ids")
      */
     public function getInvoiceRepartitionLineIds(): ?array
     {
@@ -541,6 +552,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("cash_basis_base_account_id")
      */
     public function getCashBasisBaseAccountId(): ?OdooRelation
     {
@@ -557,6 +570,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -573,6 +588,8 @@ final class Template extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -589,6 +606,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -605,6 +624,8 @@ final class Template extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -637,6 +658,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("chart_template_id")
      */
     public function getChartTemplateId(): OdooRelation
     {
@@ -667,6 +690,8 @@ final class Template extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -683,6 +708,8 @@ final class Template extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("type_tax_use")
      */
     public function getTypeTaxUse(): string
     {
@@ -699,6 +726,8 @@ final class Template extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("amount_type")
      */
     public function getAmountType(): string
     {
@@ -715,6 +744,8 @@ final class Template extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active")
      */
     public function isActive(): ?bool
     {
@@ -731,6 +762,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("children_tax_ids")
      */
     public function getChildrenTaxIds(): ?array
     {
@@ -763,6 +796,8 @@ final class Template extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("analytic")
      */
     public function isAnalytic(): ?bool
     {
@@ -786,6 +821,8 @@ final class Template extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): int
     {
@@ -802,6 +839,8 @@ final class Template extends Base
 
     /**
      * @return float
+     *
+     * @SerializedName("amount")
      */
     public function getAmount(): float
     {
@@ -818,6 +857,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("description")
      */
     public function getDescription(): ?string
     {
@@ -834,6 +875,8 @@ final class Template extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("price_include")
      */
     public function isPriceInclude(): ?bool
     {
@@ -850,6 +893,8 @@ final class Template extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("include_base_amount")
      */
     public function isIncludeBaseAmount(): ?bool
     {

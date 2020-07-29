@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Mail;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : mail.shortcode
@@ -154,6 +155,8 @@ final class Shortcode extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -170,6 +173,8 @@ final class Shortcode extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -186,6 +191,8 @@ final class Shortcode extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -194,6 +201,8 @@ final class Shortcode extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -202,6 +211,8 @@ final class Shortcode extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("source")
      */
     public function getSource(): string
     {
@@ -218,6 +229,8 @@ final class Shortcode extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("message_ids")
      */
     public function getMessageIds(): ?OdooRelation
     {
@@ -234,6 +247,8 @@ final class Shortcode extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("description")
      */
     public function getDescription(): ?string
     {
@@ -250,6 +265,8 @@ final class Shortcode extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("substitution")
      */
     public function getSubstitution(): string
     {

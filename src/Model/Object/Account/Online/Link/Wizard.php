@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Online\Link;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.online.link.wizard
@@ -174,6 +175,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("journal_id")
      */
     public function getJournalId(): ?OdooRelation
     {
@@ -198,6 +201,8 @@ final class Wizard extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -214,6 +219,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -230,6 +237,8 @@ final class Wizard extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -246,6 +255,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -262,6 +273,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("journal_statements_creation")
      */
     public function getJournalStatementsCreation(): ?string
     {
@@ -270,6 +283,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("account_number")
      */
     public function getAccountNumber(): ?string
     {
@@ -294,6 +309,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("account_online_wizard_id")
      */
     public function getAccountOnlineWizardId(): ?OdooRelation
     {
@@ -310,6 +327,8 @@ final class Wizard extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("balance")
      */
     public function getBalance(): ?float
     {
@@ -326,6 +345,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -342,6 +363,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("action")
      */
     public function getAction(): ?string
     {
@@ -358,6 +381,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("online_account_id")
      */
     public function getOnlineAccountId(): ?OdooRelation
     {

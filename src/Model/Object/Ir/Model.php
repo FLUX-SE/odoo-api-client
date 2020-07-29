@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.model
@@ -172,52 +173,6 @@ final class Model extends Base
     private $count;
 
     /**
-     * Created by
-     * ---
-     * Relation : many2one (res.users)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Users
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $create_uid;
-
-    /**
-     * Created on
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var DateTimeInterface|null
-     */
-    private $create_date;
-
-    /**
-     * Last Updated by
-     * ---
-     * Relation : many2one (res.users)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Users
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $write_uid;
-
-    /**
-     * Last Updated on
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var DateTimeInterface|null
-     */
-    private $write_date;
-
-    /**
      * Mail Thread
      * ---
      * Whether this model supports messages and notifications.
@@ -266,6 +221,52 @@ final class Model extends Base
     private $is_mail_thread_sms;
 
     /**
+     * Created by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $create_uid;
+
+    /**
+     * Created on
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var DateTimeInterface|null
+     */
+    private $create_date;
+
+    /**
+     * Last Updated by
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $write_uid;
+
+    /**
+     * Last Updated on
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var DateTimeInterface|null
+     */
+    private $write_date;
+
+    /**
      * @param string $name Model Description
      *        ---
      *        Searchable : yes
@@ -290,15 +291,19 @@ final class Model extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
+     * @return bool|null
+     *
+     * @SerializedName("is_mail_activity")
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function isIsMailActivity(): ?bool
     {
-        return $this->create_date;
+        return $this->is_mail_activity;
     }
 
     /**
      * @return string|null
+     *
+     * @SerializedName("modules")
      */
     public function getModules(): ?string
     {
@@ -315,6 +320,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("view_ids")
      */
     public function getViewIds(): ?array
     {
@@ -376,6 +383,8 @@ final class Model extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("count")
      */
     public function getCount(): ?int
     {
@@ -391,71 +400,9 @@ final class Model extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $create_uid
-     */
-    public function setCreateUid(?OdooRelation $create_uid): void
-    {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
      * @return bool|null
-     */
-    public function isTransient(): ?bool
-    {
-        return $this->transient;
-    }
-
-    /**
-     * @return OdooRelation|null
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $write_date
-     */
-    public function setWriteDate(?DateTimeInterface $write_date): void
-    {
-        $this->write_date = $write_date;
-    }
-
-    /**
-     * @return bool|null
+     *
+     * @SerializedName("is_mail_thread")
      */
     public function isIsMailThread(): ?bool
     {
@@ -471,14 +418,6 @@ final class Model extends Base
     }
 
     /**
-     * @return bool|null
-     */
-    public function isIsMailActivity(): ?bool
-    {
-        return $this->is_mail_activity;
-    }
-
-    /**
      * @param bool|null $is_mail_activity
      */
     public function setIsMailActivity(?bool $is_mail_activity): void
@@ -488,6 +427,18 @@ final class Model extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("transient")
+     */
+    public function isTransient(): ?bool
+    {
+        return $this->transient;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("is_mail_blacklist")
      */
     public function isIsMailBlacklist(): ?bool
     {
@@ -504,6 +455,8 @@ final class Model extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("is_mail_thread_sms")
      */
     public function isIsMailThreadSms(): ?bool
     {
@@ -516,6 +469,78 @@ final class Model extends Base
     public function setIsMailThreadSms(?bool $is_mail_thread_sms): void
     {
         $this->is_mail_thread_sms = $is_mail_thread_sms;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -543,6 +568,8 @@ final class Model extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -567,6 +594,8 @@ final class Model extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("model")
      */
     public function getModel(): string
     {
@@ -583,6 +612,8 @@ final class Model extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("info")
      */
     public function getInfo(): ?string
     {
@@ -599,6 +630,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation[]
+     *
+     * @SerializedName("field_id")
      */
     public function getFieldId(): array
     {
@@ -648,6 +681,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("inherited_model_ids")
      */
     public function getInheritedModelIds(): ?array
     {
@@ -717,6 +752,8 @@ final class Model extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("state")
      */
     public function getState(): ?string
     {
@@ -733,6 +770,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("access_ids")
      */
     public function getAccessIds(): ?array
     {
@@ -794,6 +833,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("rule_ids")
      */
     public function getRuleIds(): ?array
     {

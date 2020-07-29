@@ -6,6 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\Mail;
 
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : mail.followers
@@ -99,6 +100,8 @@ final class Followers extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("res_model")
      */
     public function getResModel(): string
     {
@@ -115,6 +118,8 @@ final class Followers extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("res_id")
      */
     public function getResId(): ?int
     {
@@ -131,6 +136,8 @@ final class Followers extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("partner_id")
      */
     public function getPartnerId(): ?OdooRelation
     {
@@ -147,6 +154,8 @@ final class Followers extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("channel_id")
      */
     public function getChannelId(): ?OdooRelation
     {
@@ -163,6 +172,8 @@ final class Followers extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("subtype_ids")
      */
     public function getSubtypeIds(): ?array
     {

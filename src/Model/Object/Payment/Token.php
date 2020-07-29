@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Payment;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : payment.token
@@ -221,6 +222,8 @@ final class Token extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -237,6 +240,8 @@ final class Token extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -253,6 +258,8 @@ final class Token extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -269,6 +276,8 @@ final class Token extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -285,6 +294,8 @@ final class Token extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("verified")
      */
     public function isVerified(): ?bool
     {
@@ -338,6 +349,8 @@ final class Token extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("payment_ids")
      */
     public function getPaymentIds(): ?array
     {
@@ -346,6 +359,8 @@ final class Token extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -362,6 +377,8 @@ final class Token extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active")
      */
     public function isActive(): ?bool
     {
@@ -378,6 +395,8 @@ final class Token extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("acquirer_ref")
      */
     public function getAcquirerRef(): string
     {
@@ -394,6 +413,8 @@ final class Token extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {
@@ -410,6 +431,8 @@ final class Token extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("acquirer_id")
      */
     public function getAcquirerId(): OdooRelation
     {
@@ -426,6 +449,8 @@ final class Token extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("partner_id")
      */
     public function getPartnerId(): OdooRelation
     {
@@ -442,6 +467,8 @@ final class Token extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("short_name")
      */
     public function getShortName(): ?string
     {

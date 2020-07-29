@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Payment;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : payment.transaction
@@ -531,6 +532,8 @@ final class Transaction extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("is_processed")
      */
     public function isIsProcessed(): ?bool
     {
@@ -547,6 +550,8 @@ final class Transaction extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("return_url")
      */
     public function getReturnUrl(): ?string
     {
@@ -563,6 +568,8 @@ final class Transaction extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("callback_hash")
      */
     public function getCallbackHash(): ?string
     {
@@ -571,6 +578,8 @@ final class Transaction extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("callback_method")
      */
     public function getCallbackMethod(): ?string
     {
@@ -595,6 +604,8 @@ final class Transaction extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("callback_res_id")
      */
     public function getCallbackResId(): ?int
     {
@@ -611,6 +622,8 @@ final class Transaction extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("callback_model_id")
      */
     public function getCallbackModelId(): ?OdooRelation
     {
@@ -627,6 +640,8 @@ final class Transaction extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("html_3ds")
      */
     public function getHtml3ds(): ?string
     {
@@ -643,6 +658,8 @@ final class Transaction extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("payment_token_id")
      */
     public function getPaymentTokenId(): ?OdooRelation
     {
@@ -651,6 +668,8 @@ final class Transaction extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("payment_id")
      */
     public function getPaymentId(): ?OdooRelation
     {
@@ -683,6 +702,8 @@ final class Transaction extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -699,6 +720,8 @@ final class Transaction extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -715,6 +738,8 @@ final class Transaction extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -723,6 +748,8 @@ final class Transaction extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -747,6 +774,8 @@ final class Transaction extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("invoice_ids_nbr")
      */
     public function getInvoiceIdsNbr(): ?int
     {
@@ -808,6 +837,8 @@ final class Transaction extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("invoice_ids")
      */
     public function getInvoiceIds(): ?array
     {
@@ -816,6 +847,8 @@ final class Transaction extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("partner_phone")
      */
     public function getPartnerPhone(): ?string
     {
@@ -824,6 +857,8 @@ final class Transaction extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("partner_country_id")
      */
     public function getPartnerCountryId(): OdooRelation
     {
@@ -832,6 +867,8 @@ final class Transaction extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("date")
      */
     public function getDate(): ?DateTimeInterface
     {
@@ -856,6 +893,8 @@ final class Transaction extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("fees")
      */
     public function getFees(): ?float
     {
@@ -872,6 +911,8 @@ final class Transaction extends Base
 
     /**
      * @return float
+     *
+     * @SerializedName("amount")
      */
     public function getAmount(): float
     {
@@ -888,6 +929,8 @@ final class Transaction extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("state_message")
      */
     public function getStateMessage(): ?string
     {
@@ -896,6 +939,8 @@ final class Transaction extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("state")
      */
     public function getState(): string
     {
@@ -920,6 +965,8 @@ final class Transaction extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("type")
      */
     public function getType(): string
     {
@@ -936,6 +983,8 @@ final class Transaction extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("provider")
      */
     public function getProvider(): ?string
     {
@@ -952,6 +1001,8 @@ final class Transaction extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("acquirer_id")
      */
     public function getAcquirerId(): OdooRelation
     {
@@ -968,6 +1019,8 @@ final class Transaction extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("currency_id")
      */
     public function getCurrencyId(): OdooRelation
     {
@@ -976,6 +1029,8 @@ final class Transaction extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("reference")
      */
     public function getReference(): string
     {
@@ -992,6 +1047,8 @@ final class Transaction extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("partner_email")
      */
     public function getPartnerEmail(): ?string
     {
@@ -1000,6 +1057,8 @@ final class Transaction extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("partner_city")
      */
     public function getPartnerCity(): ?string
     {
@@ -1016,6 +1075,8 @@ final class Transaction extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("partner_address")
      */
     public function getPartnerAddress(): ?string
     {
@@ -1032,6 +1093,8 @@ final class Transaction extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("partner_zip")
      */
     public function getPartnerZip(): ?string
     {
@@ -1064,6 +1127,8 @@ final class Transaction extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("partner_lang")
      */
     public function getPartnerLang(): ?string
     {
@@ -1080,6 +1145,8 @@ final class Transaction extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("partner_name")
      */
     public function getPartnerName(): ?string
     {
@@ -1096,6 +1163,8 @@ final class Transaction extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("partner_id")
      */
     public function getPartnerId(): ?OdooRelation
     {
@@ -1112,6 +1181,8 @@ final class Transaction extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("acquirer_reference")
      */
     public function getAcquirerReference(): ?string
     {

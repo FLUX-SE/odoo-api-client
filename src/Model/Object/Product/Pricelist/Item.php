@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Product\Pricelist;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : product.pricelist.item
@@ -443,6 +444,8 @@ final class Item extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active")
      */
     public function isActive(): ?bool
     {
@@ -459,6 +462,8 @@ final class Item extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("date_start")
      */
     public function getDateStart(): ?DateTimeInterface
     {
@@ -475,6 +480,8 @@ final class Item extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("date_end")
      */
     public function getDateEnd(): ?DateTimeInterface
     {
@@ -491,6 +498,8 @@ final class Item extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("compute_price")
      */
     public function getComputePrice(): string
     {
@@ -507,6 +516,8 @@ final class Item extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("fixed_price")
      */
     public function getFixedPrice(): ?float
     {
@@ -523,6 +534,8 @@ final class Item extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("percent_price")
      */
     public function getPercentPrice(): ?float
     {
@@ -531,6 +544,8 @@ final class Item extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -539,6 +554,8 @@ final class Item extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("currency_id")
      */
     public function getCurrencyId(): ?OdooRelation
     {
@@ -555,6 +572,8 @@ final class Item extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("price")
      */
     public function getPrice(): ?string
     {
@@ -571,6 +590,8 @@ final class Item extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -587,6 +608,8 @@ final class Item extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -603,6 +626,8 @@ final class Item extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -619,6 +644,8 @@ final class Item extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -651,6 +678,8 @@ final class Item extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("product_tmpl_id")
      */
     public function getProductTmplId(): ?OdooRelation
     {
@@ -659,6 +688,8 @@ final class Item extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("base_pricelist_id")
      */
     public function getBasePricelistId(): ?OdooRelation
     {
@@ -675,6 +706,8 @@ final class Item extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("product_id")
      */
     public function getProductId(): ?OdooRelation
     {
@@ -691,6 +724,8 @@ final class Item extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("categ_id")
      */
     public function getCategId(): ?OdooRelation
     {
@@ -707,6 +742,8 @@ final class Item extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("min_quantity")
      */
     public function getMinQuantity(): ?int
     {
@@ -723,6 +760,8 @@ final class Item extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("applied_on")
      */
     public function getAppliedOn(): string
     {
@@ -739,6 +778,8 @@ final class Item extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("base")
      */
     public function getBase(): string
     {
@@ -763,6 +804,8 @@ final class Item extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {
@@ -771,6 +814,8 @@ final class Item extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("pricelist_id")
      */
     public function getPricelistId(): OdooRelation
     {
@@ -787,6 +832,8 @@ final class Item extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("price_surcharge")
      */
     public function getPriceSurcharge(): ?float
     {
@@ -803,6 +850,8 @@ final class Item extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("price_discount")
      */
     public function getPriceDiscount(): ?float
     {
@@ -819,6 +868,8 @@ final class Item extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("price_round")
      */
     public function getPriceRound(): ?float
     {
@@ -835,6 +886,8 @@ final class Item extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("price_min_margin")
      */
     public function getPriceMinMargin(): ?float
     {
@@ -851,6 +904,8 @@ final class Item extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("price_max_margin")
      */
     public function getPriceMaxMargin(): ?float
     {

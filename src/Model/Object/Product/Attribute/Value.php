@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Product\Attribute;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : product.attribute.value
@@ -155,6 +156,8 @@ final class Value extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("is_used_on_products")
      */
     public function isIsUsedOnProducts(): ?bool
     {
@@ -171,6 +174,8 @@ final class Value extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -187,6 +192,8 @@ final class Value extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -203,6 +210,8 @@ final class Value extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -219,6 +228,8 @@ final class Value extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -250,6 +261,8 @@ final class Value extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -296,6 +309,8 @@ final class Value extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("pav_attribute_line_ids")
      */
     public function getPavAttributeLineIds(): ?array
     {
@@ -312,6 +327,8 @@ final class Value extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("attribute_id")
      */
     public function getAttributeId(): OdooRelation
     {
@@ -328,6 +345,8 @@ final class Value extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): ?int
     {

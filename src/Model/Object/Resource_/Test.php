@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Resource_;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : resource.test
@@ -746,6 +747,8 @@ final class Test extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -762,6 +765,8 @@ final class Test extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -778,6 +783,8 @@ final class Test extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -794,6 +801,8 @@ final class Test extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -818,6 +827,8 @@ final class Test extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -826,6 +837,8 @@ final class Test extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("tz")
      */
     public function getTz(): ?string
     {
@@ -842,6 +855,8 @@ final class Test extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("resource_calendar_id")
      */
     public function getResourceCalendarId(): ?OdooRelation
     {
@@ -858,6 +873,8 @@ final class Test extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {
@@ -874,6 +891,8 @@ final class Test extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("resource_id")
      */
     public function getResourceId(): OdooRelation
     {

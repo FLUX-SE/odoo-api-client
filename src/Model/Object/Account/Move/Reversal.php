@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Move;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.move.reversal
@@ -205,6 +206,8 @@ final class Reversal extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -221,6 +224,8 @@ final class Reversal extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -237,6 +242,8 @@ final class Reversal extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -253,6 +260,8 @@ final class Reversal extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -269,6 +278,8 @@ final class Reversal extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("move_type")
      */
     public function getMoveType(): ?string
     {
@@ -277,6 +288,8 @@ final class Reversal extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("currency_id")
      */
     public function getCurrencyId(): ?OdooRelation
     {
@@ -285,6 +298,8 @@ final class Reversal extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("move_id")
      */
     public function getMoveId(): ?OdooRelation
     {
@@ -301,6 +316,8 @@ final class Reversal extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("residual")
      */
     public function getResidual(): ?float
     {
@@ -317,6 +334,8 @@ final class Reversal extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("journal_id")
      */
     public function getJournalId(): ?OdooRelation
     {
@@ -333,6 +352,8 @@ final class Reversal extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("refund_method")
      */
     public function getRefundMethod(): string
     {
@@ -349,6 +370,8 @@ final class Reversal extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("reason")
      */
     public function getReason(): ?string
     {
@@ -365,6 +388,8 @@ final class Reversal extends Base
 
     /**
      * @return DateTimeInterface
+     *
+     * @SerializedName("date")
      */
     public function getDate(): DateTimeInterface
     {

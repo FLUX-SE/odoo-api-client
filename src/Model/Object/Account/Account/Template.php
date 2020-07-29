@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Account;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.account.template
@@ -318,6 +319,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("group_id")
      */
     public function getGroupId(): ?OdooRelation
     {
@@ -334,6 +337,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("root_id")
      */
     public function getRootId(): ?OdooRelation
     {
@@ -342,6 +347,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -366,6 +373,8 @@ final class Template extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -382,6 +391,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -398,6 +409,8 @@ final class Template extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -414,6 +427,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("tag_ids")
      */
     public function getTagIds(): ?array
     {
@@ -422,6 +437,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("chart_template_id")
      */
     public function getChartTemplateId(): ?OdooRelation
     {
@@ -430,6 +447,8 @@ final class Template extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -438,6 +457,8 @@ final class Template extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("reconcile")
      */
     public function isReconcile(): ?bool
     {
@@ -454,6 +475,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("currency_id")
      */
     public function getCurrencyId(): ?OdooRelation
     {
@@ -470,6 +493,8 @@ final class Template extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("code")
      */
     public function getCode(): string
     {
@@ -486,6 +511,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("user_type_id")
      */
     public function getUserTypeId(): OdooRelation
     {
@@ -518,6 +545,8 @@ final class Template extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("note")
      */
     public function getNote(): ?string
     {
@@ -534,6 +563,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("tax_ids")
      */
     public function getTaxIds(): ?array
     {
@@ -595,6 +626,8 @@ final class Template extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("nocreate")
      */
     public function isNocreate(): ?bool
     {

@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Model;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.model.access
@@ -198,6 +199,8 @@ final class Access extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -214,6 +217,8 @@ final class Access extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -230,6 +235,8 @@ final class Access extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -246,6 +253,8 @@ final class Access extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -262,6 +271,8 @@ final class Access extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("perm_unlink")
      */
     public function isPermUnlink(): ?bool
     {
@@ -270,6 +281,8 @@ final class Access extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("perm_create")
      */
     public function isPermCreate(): ?bool
     {
@@ -278,6 +291,8 @@ final class Access extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -294,6 +309,8 @@ final class Access extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("perm_write")
      */
     public function isPermWrite(): ?bool
     {
@@ -310,6 +327,8 @@ final class Access extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("perm_read")
      */
     public function isPermRead(): ?bool
     {
@@ -326,6 +345,8 @@ final class Access extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("group_id")
      */
     public function getGroupId(): ?OdooRelation
     {
@@ -342,6 +363,8 @@ final class Access extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("model_id")
      */
     public function getModelId(): OdooRelation
     {
@@ -358,6 +381,8 @@ final class Access extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active")
      */
     public function isActive(): ?bool
     {

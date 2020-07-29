@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Report;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : report.paperformat
@@ -302,6 +303,8 @@ final class Paperformat extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("dpi")
      */
     public function getDpi(): int
     {
@@ -318,6 +321,8 @@ final class Paperformat extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("report_ids")
      */
     public function getReportIds(): ?array
     {
@@ -379,6 +384,8 @@ final class Paperformat extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("print_page_width")
      */
     public function getPrintPageWidth(): ?float
     {
@@ -387,6 +394,8 @@ final class Paperformat extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("print_page_height")
      */
     public function getPrintPageHeight(): ?float
     {
@@ -395,6 +404,8 @@ final class Paperformat extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("header_spacing")
      */
     public function getHeaderSpacing(): ?int
     {
@@ -411,6 +422,8 @@ final class Paperformat extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -427,6 +440,8 @@ final class Paperformat extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -443,6 +458,8 @@ final class Paperformat extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -459,6 +476,8 @@ final class Paperformat extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -491,6 +510,8 @@ final class Paperformat extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -515,6 +536,8 @@ final class Paperformat extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("default")
      */
     public function isDefault(): ?bool
     {
@@ -531,6 +554,8 @@ final class Paperformat extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("format")
      */
     public function getFormat(): ?string
     {
@@ -547,6 +572,8 @@ final class Paperformat extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("margin_top")
      */
     public function getMarginTop(): ?float
     {
@@ -563,6 +590,8 @@ final class Paperformat extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("margin_bottom")
      */
     public function getMarginBottom(): ?float
     {
@@ -571,6 +600,8 @@ final class Paperformat extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("margin_left")
      */
     public function getMarginLeft(): ?float
     {
@@ -579,6 +610,8 @@ final class Paperformat extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("header_line")
      */
     public function isHeaderLine(): ?bool
     {
@@ -595,6 +628,8 @@ final class Paperformat extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("margin_right")
      */
     public function getMarginRight(): ?float
     {
@@ -611,6 +646,8 @@ final class Paperformat extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("page_height")
      */
     public function getPageHeight(): ?int
     {
@@ -627,6 +664,8 @@ final class Paperformat extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("page_width")
      */
     public function getPageWidth(): ?int
     {
@@ -643,6 +682,8 @@ final class Paperformat extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("orientation")
      */
     public function getOrientation(): ?string
     {

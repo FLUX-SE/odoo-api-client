@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Tax\Repartition\Line;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.tax.repartition.line.template
@@ -216,6 +217,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -239,6 +242,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("minus_report_line_ids")
      */
     public function getMinusReportLineIds(): ?array
     {
@@ -322,6 +327,8 @@ final class Template extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -338,6 +345,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -354,6 +363,8 @@ final class Template extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -394,6 +405,8 @@ final class Template extends Base
 
     /**
      * @return float
+     *
+     * @SerializedName("factor_percent")
      */
     public function getFactorPercent(): float
     {
@@ -418,6 +431,8 @@ final class Template extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("repartition_type")
      */
     public function getRepartitionType(): string
     {
@@ -434,6 +449,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("account_id")
      */
     public function getAccountId(): ?OdooRelation
     {
@@ -450,6 +467,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("invoice_tax_id")
      */
     public function getInvoiceTaxId(): ?OdooRelation
     {
@@ -458,6 +477,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("refund_tax_id")
      */
     public function getRefundTaxId(): ?OdooRelation
     {
@@ -466,6 +487,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("plus_report_line_ids")
      */
     public function getPlusReportLineIds(): ?array
     {
@@ -482,6 +505,8 @@ final class Template extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("tag_ids")
      */
     public function getTagIds(): ?array
     {

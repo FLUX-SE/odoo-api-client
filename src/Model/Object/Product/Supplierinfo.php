@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Product;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : product.supplierinfo
@@ -328,6 +329,8 @@ final class Supplierinfo extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("product_id")
      */
     public function getProductId(): ?OdooRelation
     {
@@ -344,6 +347,8 @@ final class Supplierinfo extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("product_tmpl_id")
      */
     public function getProductTmplId(): ?OdooRelation
     {
@@ -360,6 +365,8 @@ final class Supplierinfo extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("product_variant_count")
      */
     public function getProductVariantCount(): ?int
     {
@@ -376,6 +383,8 @@ final class Supplierinfo extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("delay")
      */
     public function getDelay(): int
     {
@@ -384,6 +393,8 @@ final class Supplierinfo extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -392,6 +403,8 @@ final class Supplierinfo extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("date_end")
      */
     public function getDateEnd(): ?DateTimeInterface
     {
@@ -408,6 +421,8 @@ final class Supplierinfo extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -424,6 +439,8 @@ final class Supplierinfo extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -440,6 +457,8 @@ final class Supplierinfo extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -472,6 +491,8 @@ final class Supplierinfo extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("name")
      */
     public function getName(): OdooRelation
     {
@@ -480,6 +501,8 @@ final class Supplierinfo extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("product_uom")
      */
     public function getProductUom(): ?OdooRelation
     {
@@ -496,6 +519,8 @@ final class Supplierinfo extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("product_name")
      */
     public function getProductName(): ?string
     {
@@ -512,6 +537,8 @@ final class Supplierinfo extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("product_code")
      */
     public function getProductCode(): ?string
     {
@@ -528,6 +555,8 @@ final class Supplierinfo extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): ?int
     {
@@ -552,6 +581,8 @@ final class Supplierinfo extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("date_start")
      */
     public function getDateStart(): ?DateTimeInterface
     {
@@ -560,6 +591,8 @@ final class Supplierinfo extends Base
 
     /**
      * @return float
+     *
+     * @SerializedName("min_qty")
      */
     public function getMinQty(): float
     {
@@ -576,6 +609,8 @@ final class Supplierinfo extends Base
 
     /**
      * @return float
+     *
+     * @SerializedName("price")
      */
     public function getPrice(): float
     {
@@ -592,6 +627,8 @@ final class Supplierinfo extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {
@@ -608,6 +645,8 @@ final class Supplierinfo extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("currency_id")
      */
     public function getCurrencyId(): OdooRelation
     {

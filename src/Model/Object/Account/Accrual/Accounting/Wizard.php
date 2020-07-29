@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Accrual\Accounting;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.accrual.accounting.wizard
@@ -244,6 +245,8 @@ final class Wizard extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -260,6 +263,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -276,6 +281,8 @@ final class Wizard extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -292,6 +299,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -308,6 +317,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_currency_id")
      */
     public function getCompanyCurrencyId(): ?OdooRelation
     {
@@ -324,6 +335,8 @@ final class Wizard extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("total_amount")
      */
     public function getTotalAmount(): ?float
     {
@@ -340,6 +353,8 @@ final class Wizard extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("percentage")
      */
     public function getPercentage(): ?float
     {
@@ -348,6 +363,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("revenue_accrual_account")
      */
     public function getRevenueAccrualAccount(): ?OdooRelation
     {
@@ -356,6 +373,8 @@ final class Wizard extends Base
 
     /**
      * @return DateTimeInterface
+     *
+     * @SerializedName("date")
      */
     public function getDate(): DateTimeInterface
     {
@@ -372,6 +391,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("expense_accrual_account")
      */
     public function getExpenseAccrualAccount(): ?OdooRelation
     {
@@ -388,6 +409,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("journal_id")
      */
     public function getJournalId(): OdooRelation
     {
@@ -449,6 +472,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("active_move_line_ids")
      */
     public function getActiveMoveLineIds(): ?array
     {
@@ -465,6 +490,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("account_type")
      */
     public function getAccountType(): ?string
     {
@@ -481,6 +508,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): OdooRelation
     {

@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Account;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.account.tag
@@ -183,6 +184,8 @@ final class Tag extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("tax_negate")
      */
     public function isTaxNegate(): ?bool
     {
@@ -199,6 +202,8 @@ final class Tag extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -215,6 +220,8 @@ final class Tag extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -231,6 +238,8 @@ final class Tag extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -247,6 +256,8 @@ final class Tag extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -263,6 +274,8 @@ final class Tag extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("country_id")
      */
     public function getCountryId(): ?OdooRelation
     {
@@ -294,6 +307,8 @@ final class Tag extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -340,6 +355,8 @@ final class Tag extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("tax_report_line_ids")
      */
     public function getTaxReportLineIds(): ?array
     {
@@ -356,6 +373,8 @@ final class Tag extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active")
      */
     public function isActive(): ?bool
     {
@@ -372,6 +391,8 @@ final class Tag extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("color")
      */
     public function getColor(): ?int
     {
@@ -388,6 +409,8 @@ final class Tag extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("applicability")
      */
     public function getApplicability(): string
     {

@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Analytic;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.analytic.distribution
@@ -163,6 +164,8 @@ final class Distribution extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -179,6 +182,8 @@ final class Distribution extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -195,6 +200,8 @@ final class Distribution extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -203,6 +210,8 @@ final class Distribution extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -211,6 +220,8 @@ final class Distribution extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("account_id")
      */
     public function getAccountId(): OdooRelation
     {
@@ -227,6 +238,8 @@ final class Distribution extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("tag_id")
      */
     public function getTagId(): OdooRelation
     {
@@ -243,6 +256,8 @@ final class Distribution extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -259,6 +274,8 @@ final class Distribution extends Base
 
     /**
      * @return float
+     *
+     * @SerializedName("percentage")
      */
     public function getPercentage(): float
     {

@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.property
@@ -235,6 +236,8 @@ final class Property extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("value_reference")
      */
     public function getValueReference(): ?string
     {
@@ -251,6 +254,8 @@ final class Property extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -267,6 +272,8 @@ final class Property extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -283,6 +290,8 @@ final class Property extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -299,6 +308,8 @@ final class Property extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -315,6 +326,8 @@ final class Property extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("type")
      */
     public function getType(): string
     {
@@ -331,6 +344,8 @@ final class Property extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("value_datetime")
      */
     public function getValueDatetime(): ?DateTimeInterface
     {
@@ -355,6 +370,8 @@ final class Property extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -363,6 +380,8 @@ final class Property extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("value_binary")
      */
     public function getValueBinary(): ?string
     {
@@ -379,6 +398,8 @@ final class Property extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("value_text")
      */
     public function getValueText(): ?string
     {
@@ -395,6 +416,8 @@ final class Property extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("value_integer")
      */
     public function getValueInteger(): ?int
     {
@@ -411,6 +434,8 @@ final class Property extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("value_float")
      */
     public function getValueFloat(): ?float
     {
@@ -427,6 +452,8 @@ final class Property extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("fields_id")
      */
     public function getFieldsId(): OdooRelation
     {
@@ -443,6 +470,8 @@ final class Property extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {
@@ -459,6 +488,8 @@ final class Property extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("res_id")
      */
     public function getResId(): ?string
     {

@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Product;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : product.price_list
@@ -164,6 +165,8 @@ final class PriceList2 extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -180,6 +183,8 @@ final class PriceList2 extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -196,6 +201,8 @@ final class PriceList2 extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -212,6 +219,8 @@ final class PriceList2 extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -220,6 +229,8 @@ final class PriceList2 extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("qty5")
      */
     public function getQty5(): ?int
     {
@@ -228,6 +239,8 @@ final class PriceList2 extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("price_list")
      */
     public function getPriceList(): OdooRelation
     {
@@ -244,6 +257,8 @@ final class PriceList2 extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("qty4")
      */
     public function getQty4(): ?int
     {
@@ -260,6 +275,8 @@ final class PriceList2 extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("qty3")
      */
     public function getQty3(): ?int
     {
@@ -276,6 +293,8 @@ final class PriceList2 extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("qty2")
      */
     public function getQty2(): ?int
     {
@@ -292,6 +311,8 @@ final class PriceList2 extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("qty1")
      */
     public function getQty1(): ?int
     {

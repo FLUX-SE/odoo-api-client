@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Mail\Resend;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : mail.resend.partner
@@ -167,6 +168,8 @@ final class Partner extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -183,6 +186,8 @@ final class Partner extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -199,6 +204,8 @@ final class Partner extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -215,6 +222,8 @@ final class Partner extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -223,6 +232,8 @@ final class Partner extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("message")
      */
     public function getMessage(): ?string
     {
@@ -231,6 +242,8 @@ final class Partner extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("partner_id")
      */
     public function getPartnerId(): OdooRelation
     {
@@ -247,6 +260,8 @@ final class Partner extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("resend_wizard_id")
      */
     public function getResendWizardId(): ?OdooRelation
     {
@@ -263,6 +278,8 @@ final class Partner extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("resend")
      */
     public function isResend(): ?bool
     {
@@ -279,6 +296,8 @@ final class Partner extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("email")
      */
     public function getEmail(): ?string
     {
@@ -295,6 +314,8 @@ final class Partner extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {

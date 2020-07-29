@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir\Module;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.module.module
@@ -413,6 +414,8 @@ final class Module extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("reports_by_module")
      */
     public function getReportsByModule(): ?string
     {
@@ -429,6 +432,8 @@ final class Module extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("menus_by_module")
      */
     public function getMenusByModule(): ?string
     {
@@ -445,6 +450,8 @@ final class Module extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("license")
      */
     public function getLicense(): ?string
     {
@@ -453,6 +460,8 @@ final class Module extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("demo")
      */
     public function isDemo(): ?bool
     {
@@ -477,6 +486,8 @@ final class Module extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("state")
      */
     public function getState(): ?string
     {
@@ -493,6 +504,8 @@ final class Module extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("auto_install")
      */
     public function isAutoInstall(): ?bool
     {
@@ -532,6 +545,8 @@ final class Module extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("views_by_module")
      */
     public function getViewsByModule(): ?string
     {
@@ -540,6 +555,8 @@ final class Module extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("application")
      */
     public function isApplication(): ?bool
     {
@@ -572,6 +589,8 @@ final class Module extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -588,6 +607,8 @@ final class Module extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -604,6 +625,8 @@ final class Module extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -612,6 +635,8 @@ final class Module extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -636,6 +661,8 @@ final class Module extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("to_buy")
      */
     public function isToBuy(): ?bool
     {
@@ -652,6 +679,8 @@ final class Module extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("icon_image")
      */
     public function getIconImage(): ?string
     {
@@ -668,6 +697,8 @@ final class Module extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("icon")
      */
     public function getIcon(): ?string
     {
@@ -690,6 +721,8 @@ final class Module extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("exclusion_ids")
      */
     public function getExclusionIds(): ?array
     {
@@ -698,6 +731,8 @@ final class Module extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -706,6 +741,8 @@ final class Module extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("description")
      */
     public function getDescription(): ?string
     {
@@ -714,6 +751,8 @@ final class Module extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("maintainer")
      */
     public function getMaintainer(): ?string
     {
@@ -730,6 +769,8 @@ final class Module extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("author")
      */
     public function getAuthor(): ?string
     {
@@ -746,6 +787,8 @@ final class Module extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("description_html")
      */
     public function getDescriptionHtml(): ?string
     {
@@ -770,6 +813,8 @@ final class Module extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("contributors")
      */
     public function getContributors(): ?string
     {
@@ -778,6 +823,8 @@ final class Module extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("summary")
      */
     public function getSummary(): ?string
     {
@@ -794,6 +841,8 @@ final class Module extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("shortdesc")
      */
     public function getShortdesc(): ?string
     {
@@ -810,6 +859,8 @@ final class Module extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("category_id")
      */
     public function getCategoryId(): ?OdooRelation
     {
@@ -903,6 +954,8 @@ final class Module extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("dependencies_id")
      */
     public function getDependenciesId(): ?array
     {
@@ -919,6 +972,8 @@ final class Module extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): ?int
     {
@@ -927,6 +982,8 @@ final class Module extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("url")
      */
     public function getUrl(): ?string
     {
@@ -935,6 +992,8 @@ final class Module extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("website")
      */
     public function getWebsite(): ?string
     {
@@ -951,6 +1010,8 @@ final class Module extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("published_version")
      */
     public function getPublishedVersion(): ?string
     {
@@ -967,6 +1028,8 @@ final class Module extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("latest_version")
      */
     public function getLatestVersion(): ?string
     {
@@ -983,6 +1046,8 @@ final class Module extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("installed_version")
      */
     public function getInstalledVersion(): ?string
     {

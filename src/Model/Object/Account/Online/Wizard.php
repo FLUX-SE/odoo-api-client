@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Online;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.online.wizard
@@ -166,6 +167,8 @@ final class Wizard extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("number_added")
      */
     public function getNumberAdded(): ?int
     {
@@ -198,6 +201,8 @@ final class Wizard extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -214,6 +219,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -230,6 +237,8 @@ final class Wizard extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -246,6 +255,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -262,6 +273,8 @@ final class Wizard extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("hide_table")
      */
     public function isHideTable(): ?bool
     {
@@ -315,6 +328,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("account_ids")
      */
     public function getAccountIds(): ?array
     {
@@ -331,6 +346,8 @@ final class Wizard extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("sync_date")
      */
     public function getSyncDate(): ?DateTimeInterface
     {
@@ -347,6 +364,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("message")
      */
     public function getMessage(): ?string
     {
@@ -363,6 +382,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("method")
      */
     public function getMethod(): ?string
     {
@@ -379,6 +400,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("status")
      */
     public function getStatus(): ?string
     {
@@ -395,6 +418,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("transactions")
      */
     public function getTransactions(): ?string
     {

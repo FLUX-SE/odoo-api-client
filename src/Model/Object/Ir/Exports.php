@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.exports
@@ -107,6 +108,8 @@ final class Exports extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -131,6 +134,8 @@ final class Exports extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -147,6 +152,8 @@ final class Exports extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -163,6 +170,8 @@ final class Exports extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -171,6 +180,8 @@ final class Exports extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -240,6 +251,8 @@ final class Exports extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("export_fields")
      */
     public function getExportFields(): ?array
     {
@@ -256,6 +269,8 @@ final class Exports extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("resource")
      */
     public function getResource(): ?string
     {

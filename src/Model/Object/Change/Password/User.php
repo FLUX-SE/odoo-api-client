@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Change\Password;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : change.password.user
@@ -150,6 +151,8 @@ final class User extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -166,6 +169,8 @@ final class User extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -182,6 +187,8 @@ final class User extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -190,6 +197,8 @@ final class User extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -198,6 +207,8 @@ final class User extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("wizard_id")
      */
     public function getWizardId(): OdooRelation
     {
@@ -214,6 +225,8 @@ final class User extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("new_passwd")
      */
     public function getNewPasswd(): ?string
     {
@@ -230,6 +243,8 @@ final class User extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("user_login")
      */
     public function getUserLogin(): ?string
     {
@@ -246,6 +261,8 @@ final class User extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("user_id")
      */
     public function getUserId(): OdooRelation
     {

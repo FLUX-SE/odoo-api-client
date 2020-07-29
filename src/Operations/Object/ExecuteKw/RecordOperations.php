@@ -17,30 +17,30 @@ final class RecordOperations extends AbstractOperations implements RecordOperati
         return $this->getObjectOperations()->deserializeInteger($response);
     }
 
-    public function write(string $modelName, int $id, array $model): array
+    public function write(string $modelName, array $ids, array $model): bool
     {
         $response = $this->getObjectOperations()->execute_kw(
             $modelName,
             __FUNCTION__,
             [
-                [$id],
+                $ids,
                 $model,
             ]
         );
 
-        return $this->getObjectOperations()->decode($response);
+        return $this->getObjectOperations()->deserializeBoolean($response);
     }
 
-    public function unlink(string $modelName, int $id): array
+    public function unlink(string $modelName, array $ids): bool
     {
         $response = $this->getObjectOperations()->execute_kw(
             $modelName,
             __FUNCTION__,
             [
-                [$id],
+                $ids,
             ]
         );
 
-        return $this->getObjectOperations()->decode($response);
+        return $this->getObjectOperations()->deserializeBoolean($response);
     }
 }

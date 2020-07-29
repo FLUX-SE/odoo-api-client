@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Mail;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : mail.activity
@@ -368,6 +369,8 @@ final class Activity extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("recommended_activity_type_id")
      */
     public function getRecommendedActivityTypeId(): ?OdooRelation
     {
@@ -384,6 +387,8 @@ final class Activity extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("previous_activity_type_id")
      */
     public function getPreviousActivityTypeId(): ?OdooRelation
     {
@@ -400,6 +405,8 @@ final class Activity extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("has_recommended_activities")
      */
     public function isHasRecommendedActivities(): ?bool
     {
@@ -416,6 +423,8 @@ final class Activity extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("mail_template_ids")
      */
     public function getMailTemplateIds(): ?array
     {
@@ -462,6 +471,8 @@ final class Activity extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("force_next")
      */
     public function isForceNext(): ?bool
     {
@@ -470,6 +481,8 @@ final class Activity extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("state")
      */
     public function getState(): ?string
     {
@@ -486,6 +499,8 @@ final class Activity extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("can_write")
      */
     public function isCanWrite(): ?bool
     {
@@ -502,6 +517,8 @@ final class Activity extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -518,6 +535,8 @@ final class Activity extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -534,6 +553,8 @@ final class Activity extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -550,6 +571,8 @@ final class Activity extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -582,6 +605,8 @@ final class Activity extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("res_model_id")
      */
     public function getResModelId(): OdooRelation
     {
@@ -606,6 +631,8 @@ final class Activity extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("res_model")
      */
     public function getResModel(): ?string
     {
@@ -622,6 +649,8 @@ final class Activity extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("res_id")
      */
     public function getResId(): int
     {
@@ -638,6 +667,8 @@ final class Activity extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("res_name")
      */
     public function getResName(): ?string
     {
@@ -654,6 +685,8 @@ final class Activity extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("activity_type_id")
      */
     public function getActivityTypeId(): ?OdooRelation
     {
@@ -670,6 +703,8 @@ final class Activity extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("activity_category")
      */
     public function getActivityCategory(): ?string
     {
@@ -678,6 +713,8 @@ final class Activity extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("activity_decoration")
      */
     public function getActivityDecoration(): ?string
     {
@@ -686,6 +723,8 @@ final class Activity extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("user_id")
      */
     public function getUserId(): OdooRelation
     {
@@ -702,6 +741,8 @@ final class Activity extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("icon")
      */
     public function getIcon(): ?string
     {
@@ -718,6 +759,8 @@ final class Activity extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("summary")
      */
     public function getSummary(): ?string
     {
@@ -734,6 +777,8 @@ final class Activity extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("note")
      */
     public function getNote(): ?string
     {
@@ -750,6 +795,8 @@ final class Activity extends Base
 
     /**
      * @return DateTimeInterface
+     *
+     * @SerializedName("date_deadline")
      */
     public function getDateDeadline(): DateTimeInterface
     {
@@ -766,6 +813,8 @@ final class Activity extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("automated")
      */
     public function isAutomated(): ?bool
     {

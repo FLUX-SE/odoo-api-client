@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Payment\Link;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : payment.link.wizard
@@ -211,6 +212,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("description")
      */
     public function getDescription(): ?string
     {
@@ -227,6 +230,8 @@ final class Wizard extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -243,6 +248,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -259,6 +266,8 @@ final class Wizard extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -275,6 +284,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -291,6 +302,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {
@@ -307,6 +320,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("access_token")
      */
     public function getAccessToken(): ?string
     {
@@ -331,6 +346,8 @@ final class Wizard extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("res_model")
      */
     public function getResModel(): string
     {
@@ -339,6 +356,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("link")
      */
     public function getLink(): ?string
     {
@@ -355,6 +374,8 @@ final class Wizard extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("partner_email")
      */
     public function getPartnerEmail(): ?string
     {
@@ -371,6 +392,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("partner_id")
      */
     public function getPartnerId(): ?OdooRelation
     {
@@ -387,6 +410,8 @@ final class Wizard extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("currency_id")
      */
     public function getCurrencyId(): ?OdooRelation
     {
@@ -403,6 +428,8 @@ final class Wizard extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("amount_max")
      */
     public function getAmountMax(): ?float
     {
@@ -419,6 +446,8 @@ final class Wizard extends Base
 
     /**
      * @return float
+     *
+     * @SerializedName("amount")
      */
     public function getAmount(): float
     {
@@ -435,6 +464,8 @@ final class Wizard extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("res_id")
      */
     public function getResId(): int
     {

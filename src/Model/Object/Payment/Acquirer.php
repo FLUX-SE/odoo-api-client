@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Payment;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : payment.acquirer
@@ -617,6 +618,8 @@ final class Acquirer extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("qr_code")
      */
     public function isQrCode(): ?bool
     {
@@ -625,6 +628,8 @@ final class Acquirer extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("image_128")
      */
     public function getImage128(): ?string
     {
@@ -641,6 +646,8 @@ final class Acquirer extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("module_to_buy")
      */
     public function isModuleToBuy(): ?bool
     {
@@ -657,6 +664,8 @@ final class Acquirer extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("module_state")
      */
     public function getModuleState(): ?string
     {
@@ -673,6 +682,8 @@ final class Acquirer extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("module_id")
      */
     public function getModuleId(): ?OdooRelation
     {
@@ -697,6 +708,8 @@ final class Acquirer extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("payment_icon_ids")
      */
     public function getPaymentIconIds(): ?array
     {
@@ -705,6 +718,8 @@ final class Acquirer extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("fees_int_var")
      */
     public function getFeesIntVar(): ?float
     {
@@ -721,6 +736,8 @@ final class Acquirer extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("fees_int_fixed")
      */
     public function getFeesIntFixed(): ?float
     {
@@ -737,6 +754,8 @@ final class Acquirer extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("fees_dom_var")
      */
     public function getFeesDomVar(): ?float
     {
@@ -753,6 +772,8 @@ final class Acquirer extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("fees_dom_fixed")
      */
     public function getFeesDomFixed(): ?float
     {
@@ -769,6 +790,8 @@ final class Acquirer extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("fees_active")
      */
     public function isFeesActive(): ?bool
     {
@@ -793,6 +816,8 @@ final class Acquirer extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("fees_implemented")
      */
     public function isFeesImplemented(): ?bool
     {
@@ -817,6 +842,8 @@ final class Acquirer extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -833,6 +860,8 @@ final class Acquirer extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -849,6 +878,8 @@ final class Acquirer extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -865,6 +896,8 @@ final class Acquirer extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -873,6 +906,8 @@ final class Acquirer extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("provider")
      */
     public function getProvider(): string
     {
@@ -948,6 +983,8 @@ final class Acquirer extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("inbound_payment_method_ids")
      */
     public function getInboundPaymentMethodIds(): ?array
     {
@@ -964,6 +1001,8 @@ final class Acquirer extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("payment_flow")
      */
     public function getPaymentFlow(): string
     {
@@ -1019,6 +1058,8 @@ final class Acquirer extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -1043,6 +1084,8 @@ final class Acquirer extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("capture_manually")
      */
     public function isCaptureManually(): ?bool
     {
@@ -1059,6 +1102,8 @@ final class Acquirer extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("state")
      */
     public function getState(): string
     {
@@ -1075,6 +1120,8 @@ final class Acquirer extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("registration_view_template_id")
      */
     public function getRegistrationViewTemplateId(): ?OdooRelation
     {
@@ -1091,6 +1138,8 @@ final class Acquirer extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("view_template_id")
      */
     public function getViewTemplateId(): ?OdooRelation
     {
@@ -1099,6 +1148,8 @@ final class Acquirer extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): OdooRelation
     {
@@ -1123,6 +1174,8 @@ final class Acquirer extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): ?int
     {
@@ -1139,6 +1192,8 @@ final class Acquirer extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("description")
      */
     public function getDescription(): ?string
     {
@@ -1155,6 +1210,8 @@ final class Acquirer extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("display_as")
      */
     public function getDisplayAs(): ?string
     {
@@ -1171,6 +1228,8 @@ final class Acquirer extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("color")
      */
     public function getColor(): ?int
     {
@@ -1187,6 +1246,8 @@ final class Acquirer extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("journal_id")
      */
     public function getJournalId(): ?OdooRelation
     {
@@ -1195,6 +1256,8 @@ final class Acquirer extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("check_validity")
      */
     public function isCheckValidity(): ?bool
     {
@@ -1203,6 +1266,8 @@ final class Acquirer extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("authorize_implemented")
      */
     public function isAuthorizeImplemented(): ?bool
     {
@@ -1227,6 +1292,8 @@ final class Acquirer extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("token_implemented")
      */
     public function isTokenImplemented(): ?bool
     {
@@ -1243,6 +1310,8 @@ final class Acquirer extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("save_token")
      */
     public function getSaveToken(): ?string
     {
@@ -1259,6 +1328,8 @@ final class Acquirer extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("cancel_msg")
      */
     public function getCancelMsg(): ?string
     {
@@ -1275,6 +1346,8 @@ final class Acquirer extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("done_msg")
      */
     public function getDoneMsg(): ?string
     {
@@ -1283,6 +1356,8 @@ final class Acquirer extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("pending_msg")
      */
     public function getPendingMsg(): ?string
     {
@@ -1307,6 +1382,8 @@ final class Acquirer extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("auth_msg")
      */
     public function getAuthMsg(): ?string
     {
@@ -1323,6 +1400,8 @@ final class Acquirer extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("pre_msg")
      */
     public function getPreMsg(): ?string
     {
@@ -1384,6 +1463,8 @@ final class Acquirer extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("country_ids")
      */
     public function getCountryIds(): ?array
     {

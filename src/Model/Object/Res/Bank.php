@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Res;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : res.bank
@@ -203,6 +204,8 @@ final class Bank extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("phone")
      */
     public function getPhone(): ?string
     {
@@ -219,6 +222,8 @@ final class Bank extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -235,6 +240,8 @@ final class Bank extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -251,6 +258,8 @@ final class Bank extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -267,6 +276,8 @@ final class Bank extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -283,6 +294,8 @@ final class Bank extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("bic")
      */
     public function getBic(): ?string
     {
@@ -299,6 +312,8 @@ final class Bank extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active")
      */
     public function isActive(): ?bool
     {
@@ -323,6 +338,8 @@ final class Bank extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -331,6 +348,8 @@ final class Bank extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("email")
      */
     public function getEmail(): ?string
     {
@@ -347,6 +366,8 @@ final class Bank extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("country")
      */
     public function getCountry(): ?OdooRelation
     {
@@ -363,6 +384,8 @@ final class Bank extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("state")
      */
     public function getState(): ?OdooRelation
     {
@@ -379,6 +402,8 @@ final class Bank extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("city")
      */
     public function getCity(): ?string
     {
@@ -395,6 +420,8 @@ final class Bank extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("zip")
      */
     public function getZip(): ?string
     {
@@ -411,6 +438,8 @@ final class Bank extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("street2")
      */
     public function getStreet2(): ?string
     {
@@ -427,6 +456,8 @@ final class Bank extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("street")
      */
     public function getStreet(): ?string
     {

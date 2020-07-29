@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Reconcile;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.reconcile.model
@@ -809,6 +810,8 @@ final class Model extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("second_label")
      */
     public function getSecondLabel(): ?string
     {
@@ -825,6 +828,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("second_journal_id")
      */
     public function getSecondJournalId(): ?OdooRelation
     {
@@ -841,6 +846,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("second_account_id")
      */
     public function getSecondAccountId(): ?OdooRelation
     {
@@ -857,6 +864,8 @@ final class Model extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("has_second_line")
      */
     public function isHasSecondLine(): ?bool
     {
@@ -918,6 +927,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("analytic_tag_ids")
      */
     public function getAnalyticTagIds(): ?array
     {
@@ -926,6 +937,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("analytic_account_id")
      */
     public function getAnalyticAccountId(): ?OdooRelation
     {
@@ -995,6 +1008,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("tax_ids")
      */
     public function getTaxIds(): ?array
     {
@@ -1011,6 +1026,8 @@ final class Model extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("decimal_separator")
      */
     public function getDecimalSeparator(): ?string
     {
@@ -1027,6 +1044,8 @@ final class Model extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("amount_from_label_regex")
      */
     public function getAmountFromLabelRegex(): ?string
     {
@@ -1043,6 +1062,8 @@ final class Model extends Base
 
     /**
      * @return float
+     *
+     * @SerializedName("amount")
      */
     public function getAmount(): float
     {
@@ -1059,6 +1080,8 @@ final class Model extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("force_tax_included")
      */
     public function isForceTaxIncluded(): ?bool
     {
@@ -1067,6 +1090,8 @@ final class Model extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("second_amount_type")
      */
     public function getSecondAmountType(): string
     {
@@ -1075,6 +1100,8 @@ final class Model extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("show_second_force_tax_included")
      */
     public function isShowSecondForceTaxIncluded(): ?bool
     {
@@ -1083,6 +1110,8 @@ final class Model extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("show_force_tax_included")
      */
     public function isShowForceTaxIncluded(): ?bool
     {
@@ -1107,6 +1136,8 @@ final class Model extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -1123,6 +1154,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -1139,6 +1172,8 @@ final class Model extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -1155,6 +1190,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -1171,6 +1208,8 @@ final class Model extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("number_entries")
      */
     public function getNumberEntries(): ?int
     {
@@ -1224,6 +1263,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("second_analytic_tag_ids")
      */
     public function getSecondAnalyticTagIds(): ?array
     {
@@ -1248,6 +1289,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("second_analytic_account_id")
      */
     public function getSecondAnalyticAccountId(): ?OdooRelation
     {
@@ -1309,6 +1352,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("second_tax_ids")
      */
     public function getSecondTaxIds(): ?array
     {
@@ -1325,6 +1370,8 @@ final class Model extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("second_amount_from_label_regex")
      */
     public function getSecondAmountFromLabelRegex(): ?string
     {
@@ -1341,6 +1388,8 @@ final class Model extends Base
 
     /**
      * @return float
+     *
+     * @SerializedName("second_amount")
      */
     public function getSecondAmount(): float
     {
@@ -1357,6 +1406,8 @@ final class Model extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("force_second_tax_included")
      */
     public function isForceSecondTaxIncluded(): ?bool
     {
@@ -1381,6 +1432,8 @@ final class Model extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -1413,6 +1466,8 @@ final class Model extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("match_label_param")
      */
     public function getMatchLabelParam(): ?string
     {
@@ -1429,6 +1484,8 @@ final class Model extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("match_label")
      */
     public function getMatchLabel(): ?string
     {
@@ -1445,6 +1502,8 @@ final class Model extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("match_amount_max")
      */
     public function getMatchAmountMax(): ?float
     {
@@ -1461,6 +1520,8 @@ final class Model extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("match_amount_min")
      */
     public function getMatchAmountMin(): ?float
     {
@@ -1477,6 +1538,8 @@ final class Model extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("match_amount")
      */
     public function getMatchAmount(): ?string
     {
@@ -1493,6 +1556,8 @@ final class Model extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("match_nature")
      */
     public function getMatchNature(): string
     {
@@ -1546,6 +1611,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("match_journal_ids")
      */
     public function getMatchJournalIds(): ?array
     {
@@ -1562,6 +1629,8 @@ final class Model extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("to_check")
      */
     public function isToCheck(): ?bool
     {
@@ -1578,6 +1647,8 @@ final class Model extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("auto_reconcile")
      */
     public function isAutoReconcile(): ?bool
     {
@@ -1594,6 +1665,8 @@ final class Model extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("rule_type")
      */
     public function getRuleType(): string
     {
@@ -1610,6 +1683,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): OdooRelation
     {
@@ -1626,6 +1701,8 @@ final class Model extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): int
     {
@@ -1642,6 +1719,8 @@ final class Model extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("match_note")
      */
     public function getMatchNote(): ?string
     {
@@ -1650,6 +1729,8 @@ final class Model extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("match_note_param")
      */
     public function getMatchNoteParam(): ?string
     {
@@ -1658,6 +1739,8 @@ final class Model extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("amount_type")
      */
     public function getAmountType(): string
     {
@@ -1688,6 +1771,8 @@ final class Model extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("label")
      */
     public function getLabel(): ?string
     {
@@ -1704,6 +1789,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("journal_id")
      */
     public function getJournalId(): ?OdooRelation
     {
@@ -1720,6 +1807,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("account_id")
      */
     public function getAccountId(): ?OdooRelation
     {
@@ -1781,6 +1870,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("match_partner_category_ids")
      */
     public function getMatchPartnerCategoryIds(): ?array
     {
@@ -1836,6 +1927,8 @@ final class Model extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("match_partner_ids")
      */
     public function getMatchPartnerIds(): ?array
     {
@@ -1852,6 +1945,8 @@ final class Model extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("match_partner")
      */
     public function isMatchPartner(): ?bool
     {
@@ -1868,6 +1963,8 @@ final class Model extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("match_total_amount_param")
      */
     public function getMatchTotalAmountParam(): ?float
     {
@@ -1884,6 +1981,8 @@ final class Model extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("match_total_amount")
      */
     public function isMatchTotalAmount(): ?bool
     {
@@ -1900,6 +1999,8 @@ final class Model extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("match_same_currency")
      */
     public function isMatchSameCurrency(): ?bool
     {
@@ -1916,6 +2017,8 @@ final class Model extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("match_transaction_type_param")
      */
     public function getMatchTransactionTypeParam(): ?string
     {
@@ -1932,6 +2035,8 @@ final class Model extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("match_transaction_type")
      */
     public function getMatchTransactionType(): ?string
     {

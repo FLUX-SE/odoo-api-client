@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Ir;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : ir.mail_server
@@ -220,6 +221,8 @@ final class MailServer extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("sequence")
      */
     public function getSequence(): ?int
     {
@@ -236,6 +239,8 @@ final class MailServer extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -252,6 +257,8 @@ final class MailServer extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -268,6 +275,8 @@ final class MailServer extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -284,6 +293,8 @@ final class MailServer extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -300,6 +311,8 @@ final class MailServer extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active")
      */
     public function isActive(): ?bool
     {
@@ -324,6 +337,8 @@ final class MailServer extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -332,6 +347,8 @@ final class MailServer extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("smtp_debug")
      */
     public function isSmtpDebug(): ?bool
     {
@@ -348,6 +365,8 @@ final class MailServer extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("smtp_encryption")
      */
     public function getSmtpEncryption(): string
     {
@@ -364,6 +383,8 @@ final class MailServer extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("smtp_pass")
      */
     public function getSmtpPass(): ?string
     {
@@ -380,6 +401,8 @@ final class MailServer extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("smtp_user")
      */
     public function getSmtpUser(): ?string
     {
@@ -396,6 +419,8 @@ final class MailServer extends Base
 
     /**
      * @return int
+     *
+     * @SerializedName("smtp_port")
      */
     public function getSmtpPort(): int
     {
@@ -412,6 +437,8 @@ final class MailServer extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("smtp_host")
      */
     public function getSmtpHost(): string
     {

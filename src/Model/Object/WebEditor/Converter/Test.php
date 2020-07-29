@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\WebEditor\Converter;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : web_editor.converter.test
@@ -194,6 +195,8 @@ final class Test extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("char")
      */
     public function getChar(): ?string
     {
@@ -202,6 +205,8 @@ final class Test extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("selection_str")
      */
     public function getSelectionStr(): ?string
     {
@@ -218,6 +223,8 @@ final class Test extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -234,6 +241,8 @@ final class Test extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -250,6 +259,8 @@ final class Test extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -266,6 +277,8 @@ final class Test extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -282,6 +295,8 @@ final class Test extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("text")
      */
     public function getText(): ?string
     {
@@ -298,6 +313,8 @@ final class Test extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("html")
      */
     public function getHtml(): ?string
     {
@@ -330,6 +347,8 @@ final class Test extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("datetime")
      */
     public function getDatetime(): ?DateTimeInterface
     {
@@ -346,6 +365,8 @@ final class Test extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("date")
      */
     public function getDate(): ?DateTimeInterface
     {
@@ -362,6 +383,8 @@ final class Test extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("binary")
      */
     public function getBinary(): ?string
     {
@@ -378,6 +401,8 @@ final class Test extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("many2one")
      */
     public function getMany2one(): ?OdooRelation
     {
@@ -394,6 +419,8 @@ final class Test extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("numeric")
      */
     public function getNumeric(): ?float
     {
@@ -410,6 +437,8 @@ final class Test extends Base
 
     /**
      * @return float|null
+     *
+     * @SerializedName("float")
      */
     public function getFloat(): ?float
     {
@@ -426,6 +455,8 @@ final class Test extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("integer")
      */
     public function getInteger(): ?int
     {

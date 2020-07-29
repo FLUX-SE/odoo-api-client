@@ -6,6 +6,7 @@ namespace Flux\OdooApiClient\Model\Object\WebTour;
 
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : web_tour.tour
@@ -61,6 +62,8 @@ final class Tour extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -77,6 +80,8 @@ final class Tour extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("user_id")
      */
     public function getUserId(): ?OdooRelation
     {

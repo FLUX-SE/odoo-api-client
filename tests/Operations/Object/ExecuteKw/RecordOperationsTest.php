@@ -6,20 +6,21 @@ namespace Tests\Flux\OdooApiClient\Operations\Object\ExecuteKw;
 
 use DateTime;
 use Flux\OdooApiClient\Manager\ModelManager;
-use Flux\OdooApiClient\Manager\ModelManagerInterface;
 use Flux\OdooApiClient\Model\Object\Account\Account;
+use Flux\OdooApiClient\Model\Object\Account\Journal;
+use Flux\OdooApiClient\Model\Object\Account\Move;
+use Flux\OdooApiClient\Model\Object\Account\Move\Line;
 use Flux\OdooApiClient\Model\Object\Product\Pricelist;
 use Flux\OdooApiClient\Model\Object\Product\Product;
 use Flux\OdooApiClient\Model\Object\Res\Company;
 use Flux\OdooApiClient\Model\Object\Res\Currency;
-use Flux\OdooApiClient\Model\Object\Sale\Order;
-use Flux\OdooApiClient\Model\Object\Sale\Order\Line;
 use Flux\OdooApiClient\Model\OdooRelation;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordOperations;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\SearchDomains\Criterion;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\SearchDomains\SearchDomains;
+use Http\Client\Common\Exception\ClientErrorException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 
@@ -31,7 +32,7 @@ class RecordOperationsTest extends TestCase
     private $recordListOperations;
     /** @var RecordOperations */
     private $recordOperations;
-    /** @var ModelManagerInterface */
+    /** @var ModelManager */
     private $modelManager;
 
     /**
@@ -84,6 +85,13 @@ class RecordOperationsTest extends TestCase
             $searchReadOptions
         )[0];
 
+        // 4 - retrieve the Journal
+        $journal = $this->recordListOperations->search_read(
+            Journal::getOdooModelName(),
+            null,
+            $searchReadOptions
+        )[0];
+
         // 4 - retrieve currency
         $searchDomains = new SearchDomains();
         $searchDomains->addCriterion(Criterion::equal('name', 'EUR'));
@@ -105,35 +113,29 @@ class RecordOperationsTest extends TestCase
         $product = count($products) === 0 ? null : $products[0];
 
         $partner = new OdooRelation($partner['id']);
-        $saleOrder = new Order(
-            'I00001',
+        $move = new Move(
+            'I00003',
             new DateTime(),
-            $partner,
-            $partner,
-            $partner,
-            new OdooRelation($priceList['id']),
+            'draft',
+            'out_invoice',
+            new OdooRelation($journal['id']),
             new OdooRelation($currency['id']),
-            new OdooRelation($company['id']),
+            'no_extract_requested'
         );
 
-        $orderId = $this->modelManager->persist($saleOrder);
-        $this->assertIsInt($orderId);
+        $line = new Line(new OdooRelation());
+        $line->setAccountId(new OdooRelation(false));
+        $line->setDisplayType('line_note');
+        $line->setName('test');
 
-        $line = new Line(
-            new OdooRelation($orderId),
-            'A description',
-            123.50,
-            1.0,
-            0
-        );
+        $move->addInvoiceLineIds(new OdooRelation(
+            0,
+            'virtual_1',
+            $line
+        ));
 
-        if (null !== $product) {
-            $line->setProductId(new OdooRelation($product['id']));
-        } else {
-            $line->setDisplayType('line_note');
-        }
+        $moveId = $this->modelManager->persist($move);
 
-        $lineId = $this->modelManager->persist($line);
-        $this->assertIsInt($lineId);
+        $this->assertIsInt($moveId);
     }
 }

@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Fetchmail;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : fetchmail.server
@@ -303,6 +304,8 @@ final class Server extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("priority")
      */
     public function getPriority(): ?int
     {
@@ -319,6 +322,8 @@ final class Server extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_ids")
      */
     public function getMessageIds(): ?array
     {
@@ -380,6 +385,8 @@ final class Server extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("configuration")
      */
     public function getConfiguration(): ?string
     {
@@ -388,6 +395,8 @@ final class Server extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("script")
      */
     public function getScript(): ?string
     {
@@ -412,6 +421,8 @@ final class Server extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -428,6 +439,8 @@ final class Server extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -444,6 +457,8 @@ final class Server extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -460,6 +475,8 @@ final class Server extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -476,6 +493,8 @@ final class Server extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("object_id")
      */
     public function getObjectId(): ?OdooRelation
     {
@@ -484,6 +503,8 @@ final class Server extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("password")
      */
     public function getPassword(): ?string
     {
@@ -492,6 +513,8 @@ final class Server extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("name")
      */
     public function getName(): string
     {
@@ -500,6 +523,8 @@ final class Server extends Base
 
     /**
      * @return string
+     *
+     * @SerializedName("server_type")
      */
     public function getServerType(): string
     {
@@ -516,6 +541,8 @@ final class Server extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("active")
      */
     public function isActive(): ?bool
     {
@@ -532,6 +559,8 @@ final class Server extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("state")
      */
     public function getState(): ?string
     {
@@ -548,6 +577,8 @@ final class Server extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("server")
      */
     public function getServer(): ?string
     {
@@ -564,6 +595,8 @@ final class Server extends Base
 
     /**
      * @return int|null
+     *
+     * @SerializedName("port")
      */
     public function getPort(): ?int
     {
@@ -596,6 +629,8 @@ final class Server extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("is_ssl")
      */
     public function isIsSsl(): ?bool
     {
@@ -612,6 +647,8 @@ final class Server extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("attach")
      */
     public function isAttach(): ?bool
     {
@@ -628,6 +665,8 @@ final class Server extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("original")
      */
     public function isOriginal(): ?bool
     {
@@ -644,6 +683,8 @@ final class Server extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("date")
      */
     public function getDate(): ?DateTimeInterface
     {
@@ -660,6 +701,8 @@ final class Server extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("user")
      */
     public function getUser(): ?string
     {

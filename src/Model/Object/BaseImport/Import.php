@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\BaseImport;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : base_import.import
@@ -113,6 +114,8 @@ final class Import extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("res_model")
      */
     public function getResModel(): ?string
     {
@@ -137,6 +140,8 @@ final class Import extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -153,6 +158,8 @@ final class Import extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -169,6 +176,8 @@ final class Import extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -177,6 +186,8 @@ final class Import extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -201,6 +212,8 @@ final class Import extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("file_type")
      */
     public function getFileType(): ?string
     {
@@ -217,6 +230,8 @@ final class Import extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("file_name")
      */
     public function getFileName(): ?string
     {
@@ -233,6 +248,8 @@ final class Import extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("file")
      */
     public function getFile(): ?string
     {

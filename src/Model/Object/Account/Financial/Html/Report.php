@@ -7,6 +7,7 @@ namespace Flux\OdooApiClient\Model\Object\Account\Financial\Html;
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * Odoo model : account.financial.html.report
@@ -247,6 +248,8 @@ final class Report extends Base
 
     /**
      * @return string|null
+     *
+     * @SerializedName("name")
      */
     public function getName(): ?string
     {
@@ -279,6 +282,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("parent_id")
      */
     public function getParentId(): ?OdooRelation
     {
@@ -295,6 +300,8 @@ final class Report extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("tax_report")
      */
     public function isTaxReport(): ?bool
     {
@@ -311,6 +318,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("applicable_filters_ids")
      */
     public function getApplicableFiltersIds(): ?array
     {
@@ -364,6 +373,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
     public function getCreateUid(): ?OdooRelation
     {
@@ -380,6 +391,8 @@ final class Report extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
      */
     public function getCreateDate(): ?DateTimeInterface
     {
@@ -396,6 +409,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
      */
     public function getWriteUid(): ?OdooRelation
     {
@@ -412,6 +427,8 @@ final class Report extends Base
 
     /**
      * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
      */
     public function getWriteDate(): ?DateTimeInterface
     {
@@ -428,6 +445,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("generated_menu_id")
      */
     public function getGeneratedMenuId(): ?OdooRelation
     {
@@ -436,6 +455,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
     public function getCompanyId(): ?OdooRelation
     {
@@ -460,6 +481,8 @@ final class Report extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("debit_credit")
      */
     public function isDebitCredit(): ?bool
     {
@@ -476,6 +499,8 @@ final class Report extends Base
 
     /**
      * @return OdooRelation[]|null
+     *
+     * @SerializedName("line_ids")
      */
     public function getLineIds(): ?array
     {
@@ -537,6 +562,8 @@ final class Report extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("date_range")
      */
     public function isDateRange(): ?bool
     {
@@ -545,6 +572,8 @@ final class Report extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("comparison")
      */
     public function isComparison(): ?bool
     {
@@ -569,6 +598,8 @@ final class Report extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("analytic")
      */
     public function isAnalytic(): ?bool
     {
@@ -585,6 +616,8 @@ final class Report extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("hierarchy_option")
      */
     public function isHierarchyOption(): ?bool
     {
@@ -601,6 +634,8 @@ final class Report extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("show_journal_filter")
      */
     public function isShowJournalFilter(): ?bool
     {
@@ -617,6 +652,8 @@ final class Report extends Base
 
     /**
      * @return bool|null
+     *
+     * @SerializedName("unfold_all_filter")
      */
     public function isUnfoldAllFilter(): ?bool
     {
