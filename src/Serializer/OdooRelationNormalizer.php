@@ -52,8 +52,8 @@ final class OdooRelationNormalizer implements NormalizerInterface, NormalizerAwa
             $childContext = (array) $context;
             unset($childContext['cache_key']);
             return [
-                $object->getId(),
-                $object->getDisplayName(),
+                $object->getCommand(),
+                $object->getCommandId(),
                 $this->normalizer->normalize($object->getEmbedModel(), $format, $childContext),
             ];
         }

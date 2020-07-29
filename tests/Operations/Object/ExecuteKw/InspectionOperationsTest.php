@@ -31,8 +31,6 @@ class InspectionOperationsTest extends TestCase
         $result = $this->inspectionOperations->fields_get('ir.model');
         $irModelFields = array_keys($result);
 
-        dump($result);
-
         foreach ([Partner::getOdooModelName(), Line::getOdooModelName(), Company::getOdooModelName()] as $modelName) {
             $fieldGetOptions = new FieldsGetOptions();
             $fieldGetOptions->setAttributes($irModelFields);

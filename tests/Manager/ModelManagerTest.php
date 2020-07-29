@@ -20,11 +20,6 @@ class ModelManagerTest extends TestCase
 {
     use ExecuteKwOperationsTrait;
 
-    /** @var RecordOperationsInterface */
-    private $recordOperations;
-    /** @var RecordListOperationsInterface */
-    private $recordListOperations;
-    /** @var ModelManager */
     private $modelManager;
     /** @var ModelListManager */
     private $modelListManager;
@@ -34,15 +29,17 @@ class ModelManagerTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->recordOperations = $this->buildExecuteKwOperations(RecordOperations::class);
+        /** @var RecordOperationsInterface $recordOperations */
+        $recordOperations = $this->buildExecuteKwOperations(RecordOperations::class);
         $this->modelManager = new ModelManager(
             $this->odooApiClientBuilder->buildSerializer(),
-            $this->recordOperations
+            $recordOperations
         );
-        $this->recordListOperations = $this->buildExecuteKwOperations(RecordListOperations::class);
+        /** @var RecordListOperationsInterface $recordListOperations */
+        $recordListOperations = $this->buildExecuteKwOperations(RecordListOperations::class);
         $this->modelListManager = new ModelListManager(
             $this->odooApiClientBuilder->buildSerializer(),
-            $this->recordListOperations
+            $recordListOperations
         );
     }
 

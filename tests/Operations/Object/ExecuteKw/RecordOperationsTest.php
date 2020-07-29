@@ -114,7 +114,7 @@ class RecordOperationsTest extends TestCase
 
         $partner = new OdooRelation($partner['id']);
         $move = new Move(
-            'I00003',
+            'TESTI00001',
             new DateTime(),
             'draft',
             'out_invoice',
@@ -128,11 +128,10 @@ class RecordOperationsTest extends TestCase
         $line->setDisplayType('line_note');
         $line->setName('test');
 
-        $move->addInvoiceLineIds(new OdooRelation(
-            0,
-            'virtual_1',
-            $line
-        ));
+        $relation = new OdooRelation();
+        $relation->setEmbedModel($line);
+
+        $move->addInvoiceLineIds($relation);
 
         $moveId = $this->modelManager->persist($move);
 
