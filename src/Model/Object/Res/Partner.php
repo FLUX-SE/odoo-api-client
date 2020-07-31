@@ -1159,6 +1159,54 @@ class Partner extends Base
     protected $im_status;
 
     /**
+     * Channels
+     * ---
+     * Relation : many2many (mail.channel)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Channel
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    protected $channel_ids;
+
+    /**
+     * Salesperson
+     * ---
+     * The internal user in charge of this contact.
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    protected $user_id;
+
+    /**
+     * Contact Address Complete
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    protected $contact_address_complete;
+
+    /**
+     * Image
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    protected $image_1920;
+
+    /**
      * Activities
      * ---
      * Relation : one2many (mail.activity -> res_id)
@@ -1192,32 +1240,6 @@ class Partner extends Base
     protected $activity_state;
 
     /**
-     * Responsible User
-     * ---
-     * Relation : many2one (res.users)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Users
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation|null
-     */
-    protected $activity_user_id;
-
-    /**
-     * Next Activity Type
-     * ---
-     * Relation : many2one (mail.activity.type)
-     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity\Type
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation|null
-     */
-    protected $activity_type_id;
-
-    /**
      * Next Activity Deadline
      * ---
      * Searchable : yes
@@ -1226,16 +1248,6 @@ class Partner extends Base
      * @var DateTimeInterface|null
      */
     protected $activity_date_deadline;
-
-    /**
-     * Next Activity Summary
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    protected $activity_summary;
 
     /**
      * Activity Exception Decoration
@@ -1264,6 +1276,138 @@ class Partner extends Base
      * @var string|null
      */
     protected $activity_exception_icon;
+
+    /**
+     * Medium-sized image
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    protected $image_medium;
+
+    /**
+     * Signup Token
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    protected $signup_token;
+
+    /**
+     * Signup Token Type
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    protected $signup_type;
+
+    /**
+     * Signup Expiration
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var DateTimeInterface|null
+     */
+    protected $signup_expiration;
+
+    /**
+     * Signup Token is Valid
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    protected $signup_valid;
+
+    /**
+     * Signup URL
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    protected $signup_url;
+
+    /**
+     * Company database ID
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var int|null
+     */
+    protected $partner_gid;
+
+    /**
+     * Additional info
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    protected $additional_info;
+
+    /**
+     * Pricelist
+     * ---
+     * This pricelist will be used, instead of the default one, for sales to the current partner
+     * ---
+     * Relation : many2one (product.pricelist)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Pricelist
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    protected $property_product_pricelist;
+
+    /**
+     * Blacklist
+     * ---
+     * If the email address is on the blacklist, the contact won't receive mass mailing anymore, from any list
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    protected $is_blacklisted;
+
+    /**
+     * Bounce
+     * ---
+     * Counter of the number of bounced emails for this contact
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var int|null
+     */
+    protected $message_bounce;
+
+    /**
+     * Normalized Email
+     * ---
+     * This field is used to search on email address as the primary email field can contain more than strictly an
+     * email address.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    protected $email_normalized;
 
     /**
      * Is Follower
@@ -1423,200 +1567,6 @@ class Partner extends Base
     protected $message_main_attachment_id;
 
     /**
-     * Normalized Email
-     * ---
-     * This field is used to search on email address as the primary email field can contain more than strictly an
-     * email address.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    protected $email_normalized;
-
-    /**
-     * Blacklist
-     * ---
-     * If the email address is on the blacklist, the contact won't receive mass mailing anymore, from any list
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    protected $is_blacklisted;
-
-    /**
-     * Bounce
-     * ---
-     * Counter of the number of bounced emails for this contact
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var int|null
-     */
-    protected $message_bounce;
-
-    /**
-     * Channels
-     * ---
-     * Relation : many2many (mail.channel)
-     * @see \Flux\OdooApiClient\Model\Object\Mail\Channel
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    protected $channel_ids;
-
-    /**
-     * Salesperson
-     * ---
-     * The internal user in charge of this contact.
-     * ---
-     * Relation : many2one (res.users)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Users
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    protected $user_id;
-
-    /**
-     * Contact Address Complete
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    protected $contact_address_complete;
-
-    /**
-     * Medium-sized image
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    protected $image_medium;
-
-    /**
-     * Signup Token
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    protected $signup_token;
-
-    /**
-     * Signup Token Type
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    protected $signup_type;
-
-    /**
-     * Signup Expiration
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var DateTimeInterface|null
-     */
-    protected $signup_expiration;
-
-    /**
-     * Signup Token is Valid
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    protected $signup_valid;
-
-    /**
-     * Signup URL
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    protected $signup_url;
-
-    /**
-     * Company database ID
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var int|null
-     */
-    protected $partner_gid;
-
-    /**
-     * Additional info
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    protected $additional_info;
-
-    /**
-     * Sanitized Number
-     * ---
-     * Field used to store sanitized phone number. Helps speeding up searches and comparisons.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    protected $phone_sanitized;
-
-    /**
-     * Phone Blacklisted
-     * ---
-     * If the email address is on the blacklist, the contact won't receive mass mailing anymore, from any list
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    protected $phone_blacklisted;
-
-    /**
-     * Pricelist
-     * ---
-     * This pricelist will be used, instead of the default one, for sales to the current partner
-     * ---
-     * Relation : many2one (product.pricelist)
-     * @see \Flux\OdooApiClient\Model\Object\Product\Pricelist
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var OdooRelation|null
-     */
-    protected $property_product_pricelist;
-
-    /**
      * Website Messages
      * ---
      * Website communication history
@@ -1642,6 +1592,30 @@ class Partner extends Base
      * @var bool|null
      */
     protected $message_has_sms_error;
+
+    /**
+     * Sanitized Number
+     * ---
+     * Field used to store sanitized phone number. Helps speeding up searches and comparisons.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    protected $phone_sanitized;
+
+    /**
+     * Phone Blacklisted
+     * ---
+     * If the email address is on the blacklist, the contact won't receive mass mailing anymore, from any list
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    protected $phone_blacklisted;
 
     /**
      * Total Receivable
@@ -1973,105 +1947,7 @@ class Partner extends Base
     protected $payment_token_count;
 
     /**
-     * SIRET
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    protected $siret;
-
-    /**
-     * Next Action Date
-     * ---
-     * The date before which no action should be taken.
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var DateTimeInterface|null
-     */
-    protected $payment_next_action_date;
-
-    /**
-     * Unreconciled Aml
-     * ---
-     * Relation : one2many (account.move.line -> partner_id)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Move\Line
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    protected $unreconciled_aml_ids;
-
-    /**
-     * Unpaid Invoices
-     * ---
-     * Relation : one2many (account.move)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Move
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    protected $unpaid_invoices;
-
-    /**
-     * Total Due
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var float|null
-     */
-    protected $total_due;
-
-    /**
-     * Total Overdue
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var float|null
-     */
-    protected $total_overdue;
-
-    /**
-     * Follow-up Status
-     * ---
-     * Selection : (default value, usually null)
-     *     -> in_need_of_action (In need of action)
-     *     -> with_overdue_invoices (With overdue invoices)
-     *     -> no_action_needed (No action needed)
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    protected $followup_status;
-
-    /**
-     * Follow-up Level
-     * ---
-     * Relation : many2one (account_followup.followup.line)
-     * @see \Flux\OdooApiClient\Model\Object\AccountFollowup\Followup\Line
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var OdooRelation|null
-     */
-    protected $followup_level;
-
-    /**
-     * Follow-up Responsible
-     * ---
-     * Optionally you can assign a user to this field, which will make him responsible for the action.
+     * Responsible User
      * ---
      * Relation : many2one (res.users)
      * @see \Flux\OdooApiClient\Model\Object\Res\Users
@@ -2081,17 +1957,40 @@ class Partner extends Base
      *
      * @var OdooRelation|null
      */
-    protected $payment_responsible_id;
+    protected $activity_user_id;
 
     /**
-     * Image
+     * Next Activity Type
+     * ---
+     * Relation : many2one (mail.activity.type)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity\Type
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    protected $activity_type_id;
+
+    /**
+     * Next Activity Summary
      * ---
      * Searchable : yes
      * Sortable : no
      *
      * @var string|null
      */
-    protected $image_1920;
+    protected $activity_summary;
+
+    /**
+     * SIRET
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    protected $siret;
 
     /**
      * Image 1024
@@ -2208,67 +2107,13 @@ class Partner extends Base
     }
 
     /**
-     * @return float|null
+     * @return OdooRelation[]|null
      *
-     * @SerializedName("credit")
+     * @SerializedName("website_message_ids")
      */
-    public function getCredit(): ?float
+    public function getWebsiteMessageIds(): ?array
     {
-        return $this->credit;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("total_invoiced")
-     */
-    public function getTotalInvoiced(): ?float
-    {
-        return $this->total_invoiced;
-    }
-
-    /**
-     * @param float|null $debit_limit
-     */
-    public function setDebitLimit(?float $debit_limit): void
-    {
-        $this->debit_limit = $debit_limit;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("debit_limit")
-     */
-    public function getDebitLimit(): ?float
-    {
-        return $this->debit_limit;
-    }
-
-    /**
-     * @param float|null $debit
-     */
-    public function setDebit(?float $debit): void
-    {
-        $this->debit = $debit;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("debit")
-     */
-    public function getDebit(): ?float
-    {
-        return $this->debit;
-    }
-
-    /**
-     * @param float|null $credit
-     */
-    public function setCredit(?float $credit): void
-    {
-        $this->credit = $credit;
+        return $this->website_message_ids;
     }
 
     /**
@@ -2277,16 +2122,6 @@ class Partner extends Base
     public function setMessageHasSmsError(?bool $message_has_sms_error): void
     {
         $this->message_has_sms_error = $message_has_sms_error;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("currency_id")
-     */
-    public function getCurrencyId(): ?OdooRelation
-    {
-        return $this->currency_id;
     }
 
     /**
@@ -2353,389 +2188,19 @@ class Partner extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("website_message_ids")
-     */
-    public function getWebsiteMessageIds(): ?array
-    {
-        return $this->website_message_ids;
-    }
-
-    /**
-     * @param OdooRelation|null $property_product_pricelist
-     */
-    public function setPropertyProductPricelist(?OdooRelation $property_product_pricelist): void
-    {
-        $this->property_product_pricelist = $property_product_pricelist;
-    }
-
-    /**
-     * @param float|null $total_invoiced
-     */
-    public function setTotalInvoiced(?float $total_invoiced): void
-    {
-        $this->total_invoiced = $total_invoiced;
-    }
-
-    /**
-     * @param OdooRelation|null $currency_id
-     */
-    public function setCurrencyId(?OdooRelation $currency_id): void
-    {
-        $this->currency_id = $currency_id;
-    }
-
-    /**
-     * @param bool|null $phone_blacklisted
-     */
-    public function setPhoneBlacklisted(?bool $phone_blacklisted): void
-    {
-        $this->phone_blacklisted = $phone_blacklisted;
-    }
-
-    /**
-     * @param OdooRelation|null $property_payment_term_id
-     */
-    public function setPropertyPaymentTermId(?OdooRelation $property_payment_term_id): void
-    {
-        $this->property_payment_term_id = $property_payment_term_id;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeRefCompanyIds(OdooRelation $item): void
-    {
-        if (null === $this->ref_company_ids) {
-            $this->ref_company_ids = [];
-        }
-
-        if ($this->hasRefCompanyIds($item)) {
-            $index = array_search($item, $this->ref_company_ids);
-            unset($this->ref_company_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addRefCompanyIds(OdooRelation $item): void
-    {
-        if ($this->hasRefCompanyIds($item)) {
-            return;
-        }
-
-        if (null === $this->ref_company_ids) {
-            $this->ref_company_ids = [];
-        }
-
-        $this->ref_company_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasRefCompanyIds(OdooRelation $item): bool
-    {
-        if (null === $this->ref_company_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->ref_company_ids);
-    }
-
-    /**
-     * @param OdooRelation[]|null $ref_company_ids
-     */
-    public function setRefCompanyIds(?array $ref_company_ids): void
-    {
-        $this->ref_company_ids = $ref_company_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("ref_company_ids")
-     */
-    public function getRefCompanyIds(): ?array
-    {
-        return $this->ref_company_ids;
-    }
-
-    /**
-     * @param OdooRelation|null $property_supplier_payment_term_id
-     */
-    public function setPropertySupplierPaymentTermId(?OdooRelation $property_supplier_payment_term_id): void
-    {
-        $this->property_supplier_payment_term_id = $property_supplier_payment_term_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("property_supplier_payment_term_id")
-     */
-    public function getPropertySupplierPaymentTermId(): ?OdooRelation
-    {
-        return $this->property_supplier_payment_term_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("property_payment_term_id")
-     */
-    public function getPropertyPaymentTermId(): ?OdooRelation
-    {
-        return $this->property_payment_term_id;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("journal_item_count")
-     */
-    public function getJournalItemCount(): ?int
-    {
-        return $this->journal_item_count;
-    }
-
-    /**
-     * @param OdooRelation|null $property_account_position_id
-     */
-    public function setPropertyAccountPositionId(?OdooRelation $property_account_position_id): void
-    {
-        $this->property_account_position_id = $property_account_position_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("property_account_position_id")
-     */
-    public function getPropertyAccountPositionId(): ?OdooRelation
-    {
-        return $this->property_account_position_id;
-    }
-
-    /**
-     * @param OdooRelation $property_account_receivable_id
-     */
-    public function setPropertyAccountReceivableId(OdooRelation $property_account_receivable_id): void
-    {
-        $this->property_account_receivable_id = $property_account_receivable_id;
-    }
-
-    /**
-     * @return OdooRelation
-     *
-     * @SerializedName("property_account_receivable_id")
-     */
-    public function getPropertyAccountReceivableId(): OdooRelation
-    {
-        return $this->property_account_receivable_id;
-    }
-
-    /**
-     * @param OdooRelation $property_account_payable_id
-     */
-    public function setPropertyAccountPayableId(OdooRelation $property_account_payable_id): void
-    {
-        $this->property_account_payable_id = $property_account_payable_id;
-    }
-
-    /**
-     * @return OdooRelation
-     *
-     * @SerializedName("property_account_payable_id")
-     */
-    public function getPropertyAccountPayableId(): OdooRelation
-    {
-        return $this->property_account_payable_id;
-    }
-
-    /**
-     * @param int|null $journal_item_count
-     */
-    public function setJournalItemCount(?int $journal_item_count): void
-    {
-        $this->journal_item_count = $journal_item_count;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("property_product_pricelist")
-     */
-    public function getPropertyProductPricelist(): ?OdooRelation
-    {
-        return $this->property_product_pricelist;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("phone_blacklisted")
-     */
-    public function isPhoneBlacklisted(): ?bool
-    {
-        return $this->phone_blacklisted;
-    }
-
-    /**
-     * @param bool|null $has_unreconciled_entries
-     */
-    public function setHasUnreconciledEntries(?bool $has_unreconciled_entries): void
-    {
-        $this->has_unreconciled_entries = $has_unreconciled_entries;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("message_bounce")
-     */
-    public function getMessageBounce(): ?int
-    {
-        return $this->message_bounce;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("user_id")
-     */
-    public function getUserId(): ?OdooRelation
-    {
-        return $this->user_id;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeChannelIds(OdooRelation $item): void
-    {
-        if (null === $this->channel_ids) {
-            $this->channel_ids = [];
-        }
-
-        if ($this->hasChannelIds($item)) {
-            $index = array_search($item, $this->channel_ids);
-            unset($this->channel_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addChannelIds(OdooRelation $item): void
-    {
-        if ($this->hasChannelIds($item)) {
-            return;
-        }
-
-        if (null === $this->channel_ids) {
-            $this->channel_ids = [];
-        }
-
-        $this->channel_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasChannelIds(OdooRelation $item): bool
-    {
-        if (null === $this->channel_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->channel_ids);
-    }
-
-    /**
-     * @param OdooRelation[]|null $channel_ids
-     */
-    public function setChannelIds(?array $channel_ids): void
-    {
-        $this->channel_ids = $channel_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("channel_ids")
-     */
-    public function getChannelIds(): ?array
-    {
-        return $this->channel_ids;
-    }
-
-    /**
-     * @param int|null $message_bounce
-     */
-    public function setMessageBounce(?int $message_bounce): void
-    {
-        $this->message_bounce = $message_bounce;
-    }
-
-    /**
-     * @param bool|null $is_blacklisted
-     */
-    public function setIsBlacklisted(?bool $is_blacklisted): void
-    {
-        $this->is_blacklisted = $is_blacklisted;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("contact_address_complete")
-     */
-    public function getContactAddressComplete(): ?string
-    {
-        return $this->contact_address_complete;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("is_blacklisted")
-     */
-    public function isIsBlacklisted(): ?bool
-    {
-        return $this->is_blacklisted;
-    }
-
-    /**
-     * @param string|null $email_normalized
-     */
-    public function setEmailNormalized(?string $email_normalized): void
-    {
-        $this->email_normalized = $email_normalized;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("email_normalized")
-     */
-    public function getEmailNormalized(): ?string
-    {
-        return $this->email_normalized;
-    }
-
-    /**
      * @param OdooRelation|null $message_main_attachment_id
      */
     public function setMessageMainAttachmentId(?OdooRelation $message_main_attachment_id): void
     {
         $this->message_main_attachment_id = $message_main_attachment_id;
+    }
+
+    /**
+     * @param string|null $phone_sanitized
+     */
+    public function setPhoneSanitized(?string $phone_sanitized): void
+    {
+        $this->phone_sanitized = $phone_sanitized;
     }
 
     /**
@@ -2767,201 +2232,11 @@ class Partner extends Base
     }
 
     /**
-     * @param OdooRelation|null $user_id
+     * @param int|null $message_has_error_counter
      */
-    public function setUserId(?OdooRelation $user_id): void
+    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
     {
-        $this->user_id = $user_id;
-    }
-
-    /**
-     * @param string|null $contact_address_complete
-     */
-    public function setContactAddressComplete(?string $contact_address_complete): void
-    {
-        $this->contact_address_complete = $contact_address_complete;
-    }
-
-    /**
-     * @param string|null $phone_sanitized
-     */
-    public function setPhoneSanitized(?string $phone_sanitized): void
-    {
-        $this->phone_sanitized = $phone_sanitized;
-    }
-
-    /**
-     * @param bool|null $signup_valid
-     */
-    public function setSignupValid(?bool $signup_valid): void
-    {
-        $this->signup_valid = $signup_valid;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("phone_sanitized")
-     */
-    public function getPhoneSanitized(): ?string
-    {
-        return $this->phone_sanitized;
-    }
-
-    /**
-     * @param string|null $additional_info
-     */
-    public function setAdditionalInfo(?string $additional_info): void
-    {
-        $this->additional_info = $additional_info;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("additional_info")
-     */
-    public function getAdditionalInfo(): ?string
-    {
-        return $this->additional_info;
-    }
-
-    /**
-     * @param int|null $partner_gid
-     */
-    public function setPartnerGid(?int $partner_gid): void
-    {
-        $this->partner_gid = $partner_gid;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("partner_gid")
-     */
-    public function getPartnerGid(): ?int
-    {
-        return $this->partner_gid;
-    }
-
-    /**
-     * @param string|null $signup_url
-     */
-    public function setSignupUrl(?string $signup_url): void
-    {
-        $this->signup_url = $signup_url;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("signup_url")
-     */
-    public function getSignupUrl(): ?string
-    {
-        return $this->signup_url;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("signup_valid")
-     */
-    public function isSignupValid(): ?bool
-    {
-        return $this->signup_valid;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("image_medium")
-     */
-    public function getImageMedium(): ?string
-    {
-        return $this->image_medium;
-    }
-
-    /**
-     * @param DateTimeInterface|null $signup_expiration
-     */
-    public function setSignupExpiration(?DateTimeInterface $signup_expiration): void
-    {
-        $this->signup_expiration = $signup_expiration;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("signup_expiration")
-     */
-    public function getSignupExpiration(): ?DateTimeInterface
-    {
-        return $this->signup_expiration;
-    }
-
-    /**
-     * @param string|null $signup_type
-     */
-    public function setSignupType(?string $signup_type): void
-    {
-        $this->signup_type = $signup_type;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("signup_type")
-     */
-    public function getSignupType(): ?string
-    {
-        return $this->signup_type;
-    }
-
-    /**
-     * @param string|null $signup_token
-     */
-    public function setSignupToken(?string $signup_token): void
-    {
-        $this->signup_token = $signup_token;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("signup_token")
-     */
-    public function getSignupToken(): ?string
-    {
-        return $this->signup_token;
-    }
-
-    /**
-     * @param string|null $image_medium
-     */
-    public function setImageMedium(?string $image_medium): void
-    {
-        $this->image_medium = $image_medium;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("has_unreconciled_entries")
-     */
-    public function isHasUnreconciledEntries(): ?bool
-    {
-        return $this->has_unreconciled_entries;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("last_time_entries_checked")
-     */
-    public function getLastTimeEntriesChecked(): ?DateTimeInterface
-    {
-        return $this->last_time_entries_checked;
+        $this->message_has_error_counter = $message_has_error_counter;
     }
 
     /**
@@ -2975,787 +2250,6 @@ class Partner extends Base
     }
 
     /**
-     * @param float|null $total_due
-     */
-    public function setTotalDue(?float $total_due): void
-    {
-        $this->total_due = $total_due;
-    }
-
-    /**
-     * @param OdooRelation|null $followup_level
-     */
-    public function setFollowupLevel(?OdooRelation $followup_level): void
-    {
-        $this->followup_level = $followup_level;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("followup_level")
-     */
-    public function getFollowupLevel(): ?OdooRelation
-    {
-        return $this->followup_level;
-    }
-
-    /**
-     * @param string|null $followup_status
-     */
-    public function setFollowupStatus(?string $followup_status): void
-    {
-        $this->followup_status = $followup_status;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("followup_status")
-     */
-    public function getFollowupStatus(): ?string
-    {
-        return $this->followup_status;
-    }
-
-    /**
-     * @param float|null $total_overdue
-     */
-    public function setTotalOverdue(?float $total_overdue): void
-    {
-        $this->total_overdue = $total_overdue;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("total_overdue")
-     */
-    public function getTotalOverdue(): ?float
-    {
-        return $this->total_overdue;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("total_due")
-     */
-    public function getTotalDue(): ?float
-    {
-        return $this->total_due;
-    }
-
-    /**
-     * @param OdooRelation|null $payment_responsible_id
-     */
-    public function setPaymentResponsibleId(?OdooRelation $payment_responsible_id): void
-    {
-        $this->payment_responsible_id = $payment_responsible_id;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeUnpaidInvoices(OdooRelation $item): void
-    {
-        if (null === $this->unpaid_invoices) {
-            $this->unpaid_invoices = [];
-        }
-
-        if ($this->hasUnpaidInvoices($item)) {
-            $index = array_search($item, $this->unpaid_invoices);
-            unset($this->unpaid_invoices[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addUnpaidInvoices(OdooRelation $item): void
-    {
-        if ($this->hasUnpaidInvoices($item)) {
-            return;
-        }
-
-        if (null === $this->unpaid_invoices) {
-            $this->unpaid_invoices = [];
-        }
-
-        $this->unpaid_invoices[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasUnpaidInvoices(OdooRelation $item): bool
-    {
-        if (null === $this->unpaid_invoices) {
-            return false;
-        }
-
-        return in_array($item, $this->unpaid_invoices);
-    }
-
-    /**
-     * @param OdooRelation[]|null $unpaid_invoices
-     */
-    public function setUnpaidInvoices(?array $unpaid_invoices): void
-    {
-        $this->unpaid_invoices = $unpaid_invoices;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("unpaid_invoices")
-     */
-    public function getUnpaidInvoices(): ?array
-    {
-        return $this->unpaid_invoices;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeUnreconciledAmlIds(OdooRelation $item): void
-    {
-        if (null === $this->unreconciled_aml_ids) {
-            $this->unreconciled_aml_ids = [];
-        }
-
-        if ($this->hasUnreconciledAmlIds($item)) {
-            $index = array_search($item, $this->unreconciled_aml_ids);
-            unset($this->unreconciled_aml_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addUnreconciledAmlIds(OdooRelation $item): void
-    {
-        if ($this->hasUnreconciledAmlIds($item)) {
-            return;
-        }
-
-        if (null === $this->unreconciled_aml_ids) {
-            $this->unreconciled_aml_ids = [];
-        }
-
-        $this->unreconciled_aml_ids[] = $item;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("payment_responsible_id")
-     */
-    public function getPaymentResponsibleId(): ?OdooRelation
-    {
-        return $this->payment_responsible_id;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("image_1920")
-     */
-    public function getImage1920(): ?string
-    {
-        return $this->image_1920;
-    }
-
-    /**
-     * @param OdooRelation[]|null $unreconciled_aml_ids
-     */
-    public function setUnreconciledAmlIds(?array $unreconciled_aml_ids): void
-    {
-        $this->unreconciled_aml_ids = $unreconciled_aml_ids;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
-     */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param DateTimeInterface|null $write_date
-     */
-    public function setWriteDate(?DateTimeInterface $write_date): void
-    {
-        $this->write_date = $write_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("write_date")
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("write_uid")
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("create_date")
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @param OdooRelation|null $create_uid
-     */
-    public function setCreateUid(?OdooRelation $create_uid): void
-    {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @param string|null $image_128
-     */
-    public function setImage128(?string $image_128): void
-    {
-        $this->image_128 = $image_128;
-    }
-
-    /**
-     * @param string|null $image_1920
-     */
-    public function setImage1920(?string $image_1920): void
-    {
-        $this->image_1920 = $image_1920;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("image_128")
-     */
-    public function getImage128(): ?string
-    {
-        return $this->image_128;
-    }
-
-    /**
-     * @param string|null $image_256
-     */
-    public function setImage256(?string $image_256): void
-    {
-        $this->image_256 = $image_256;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("image_256")
-     */
-    public function getImage256(): ?string
-    {
-        return $this->image_256;
-    }
-
-    /**
-     * @param string|null $image_512
-     */
-    public function setImage512(?string $image_512): void
-    {
-        $this->image_512 = $image_512;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("image_512")
-     */
-    public function getImage512(): ?string
-    {
-        return $this->image_512;
-    }
-
-    /**
-     * @param string|null $image_1024
-     */
-    public function setImage1024(?string $image_1024): void
-    {
-        $this->image_1024 = $image_1024;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("image_1024")
-     */
-    public function getImage1024(): ?string
-    {
-        return $this->image_1024;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasUnreconciledAmlIds(OdooRelation $item): bool
-    {
-        if (null === $this->unreconciled_aml_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->unreconciled_aml_ids);
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("unreconciled_aml_ids")
-     */
-    public function getUnreconciledAmlIds(): ?array
-    {
-        return $this->unreconciled_aml_ids;
-    }
-
-    /**
-     * @param DateTimeInterface|null $last_time_entries_checked
-     */
-    public function setLastTimeEntriesChecked(?DateTimeInterface $last_time_entries_checked): void
-    {
-        $this->last_time_entries_checked = $last_time_entries_checked;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addContractIds(OdooRelation $item): void
-    {
-        if ($this->hasContractIds($item)) {
-            return;
-        }
-
-        if (null === $this->contract_ids) {
-            $this->contract_ids = [];
-        }
-
-        $this->contract_ids[] = $item;
-    }
-
-    /**
-     * @param string|null $invoice_warn
-     */
-    public function setInvoiceWarn(?string $invoice_warn): void
-    {
-        $this->invoice_warn = $invoice_warn;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("invoice_warn")
-     */
-    public function getInvoiceWarn(): ?string
-    {
-        return $this->invoice_warn;
-    }
-
-    /**
-     * @param string|null $trust
-     */
-    public function setTrust(?string $trust): void
-    {
-        $this->trust = $trust;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("trust")
-     */
-    public function getTrust(): ?string
-    {
-        return $this->trust;
-    }
-
-    /**
-     * @param int|null $bank_account_count
-     */
-    public function setBankAccountCount(?int $bank_account_count): void
-    {
-        $this->bank_account_count = $bank_account_count;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("bank_account_count")
-     */
-    public function getBankAccountCount(): ?int
-    {
-        return $this->bank_account_count;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeContractIds(OdooRelation $item): void
-    {
-        if (null === $this->contract_ids) {
-            $this->contract_ids = [];
-        }
-
-        if ($this->hasContractIds($item)) {
-            $index = array_search($item, $this->contract_ids);
-            unset($this->contract_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasContractIds(OdooRelation $item): bool
-    {
-        if (null === $this->contract_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->contract_ids);
-    }
-
-    /**
-     * @param string|null $invoice_warn_msg
-     */
-    public function setInvoiceWarnMsg(?string $invoice_warn_msg): void
-    {
-        $this->invoice_warn_msg = $invoice_warn_msg;
-    }
-
-    /**
-     * @param OdooRelation[]|null $contract_ids
-     */
-    public function setContractIds(?array $contract_ids): void
-    {
-        $this->contract_ids = $contract_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("contract_ids")
-     */
-    public function getContractIds(): ?array
-    {
-        return $this->contract_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeInvoiceIds(OdooRelation $item): void
-    {
-        if (null === $this->invoice_ids) {
-            $this->invoice_ids = [];
-        }
-
-        if ($this->hasInvoiceIds($item)) {
-            $index = array_search($item, $this->invoice_ids);
-            unset($this->invoice_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addInvoiceIds(OdooRelation $item): void
-    {
-        if ($this->hasInvoiceIds($item)) {
-            return;
-        }
-
-        if (null === $this->invoice_ids) {
-            $this->invoice_ids = [];
-        }
-
-        $this->invoice_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasInvoiceIds(OdooRelation $item): bool
-    {
-        if (null === $this->invoice_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->invoice_ids);
-    }
-
-    /**
-     * @param OdooRelation[]|null $invoice_ids
-     */
-    public function setInvoiceIds(?array $invoice_ids): void
-    {
-        $this->invoice_ids = $invoice_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("invoice_ids")
-     */
-    public function getInvoiceIds(): ?array
-    {
-        return $this->invoice_ids;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("invoice_warn_msg")
-     */
-    public function getInvoiceWarnMsg(): ?string
-    {
-        return $this->invoice_warn_msg;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("supplier_rank")
-     */
-    public function getSupplierRank(): ?int
-    {
-        return $this->supplier_rank;
-    }
-
-    /**
-     * @param DateTimeInterface|null $payment_next_action_date
-     */
-    public function setPaymentNextActionDate(?DateTimeInterface $payment_next_action_date): void
-    {
-        $this->payment_next_action_date = $payment_next_action_date;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasPaymentTokenIds(OdooRelation $item): bool
-    {
-        if (null === $this->payment_token_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->payment_token_ids);
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("payment_next_action_date")
-     */
-    public function getPaymentNextActionDate(): ?DateTimeInterface
-    {
-        return $this->payment_next_action_date;
-    }
-
-    /**
-     * @param string|null $siret
-     */
-    public function setSiret(?string $siret): void
-    {
-        $this->siret = $siret;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("siret")
-     */
-    public function getSiret(): ?string
-    {
-        return $this->siret;
-    }
-
-    /**
-     * @param int|null $payment_token_count
-     */
-    public function setPaymentTokenCount(?int $payment_token_count): void
-    {
-        $this->payment_token_count = $payment_token_count;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("payment_token_count")
-     */
-    public function getPaymentTokenCount(): ?int
-    {
-        return $this->payment_token_count;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removePaymentTokenIds(OdooRelation $item): void
-    {
-        if (null === $this->payment_token_ids) {
-            $this->payment_token_ids = [];
-        }
-
-        if ($this->hasPaymentTokenIds($item)) {
-            $index = array_search($item, $this->payment_token_ids);
-            unset($this->payment_token_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addPaymentTokenIds(OdooRelation $item): void
-    {
-        if ($this->hasPaymentTokenIds($item)) {
-            return;
-        }
-
-        if (null === $this->payment_token_ids) {
-            $this->payment_token_ids = [];
-        }
-
-        $this->payment_token_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation[]|null $payment_token_ids
-     */
-    public function setPaymentTokenIds(?array $payment_token_ids): void
-    {
-        $this->payment_token_ids = $payment_token_ids;
-    }
-
-    /**
-     * @param int|null $supplier_rank
-     */
-    public function setSupplierRank(?int $supplier_rank): void
-    {
-        $this->supplier_rank = $supplier_rank;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("payment_token_ids")
-     */
-    public function getPaymentTokenIds(): ?array
-    {
-        return $this->payment_token_ids;
-    }
-
-    /**
-     * @param string|null $online_partner_bank_account
-     */
-    public function setOnlinePartnerBankAccount(?string $online_partner_bank_account): void
-    {
-        $this->online_partner_bank_account = $online_partner_bank_account;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("online_partner_bank_account")
-     */
-    public function getOnlinePartnerBankAccount(): ?string
-    {
-        return $this->online_partner_bank_account;
-    }
-
-    /**
-     * @param string|null $online_partner_vendor_name
-     */
-    public function setOnlinePartnerVendorName(?string $online_partner_vendor_name): void
-    {
-        $this->online_partner_vendor_name = $online_partner_vendor_name;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("online_partner_vendor_name")
-     */
-    public function getOnlinePartnerVendorName(): ?string
-    {
-        return $this->online_partner_vendor_name;
-    }
-
-    /**
-     * @param int|null $customer_rank
-     */
-    public function setCustomerRank(?int $customer_rank): void
-    {
-        $this->customer_rank = $customer_rank;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("customer_rank")
-     */
-    public function getCustomerRank(): ?int
-    {
-        return $this->customer_rank;
-    }
-
-    /**
-     * @param int|null $message_has_error_counter
-     */
-    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
-    {
-        $this->message_has_error_counter = $message_has_error_counter;
-    }
-
-    /**
      * @param bool|null $message_has_error
      */
     public function setMessageHasError(?bool $message_has_error): void
@@ -3766,766 +2260,163 @@ class Partner extends Base
     /**
      * @return string|null
      *
-     * @SerializedName("name")
+     * @SerializedName("phone_sanitized")
      */
-    public function getName(): ?string
+    public function getPhoneSanitized(): ?string
     {
-        return $this->name;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("function")
-     */
-    public function getFunction(): ?string
-    {
-        return $this->function;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("street2")
-     */
-    public function getStreet2(): ?string
-    {
-        return $this->street2;
-    }
-
-    /**
-     * @param string|null $street
-     */
-    public function setStreet(?string $street): void
-    {
-        $this->street = $street;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("street")
-     */
-    public function getStreet(): ?string
-    {
-        return $this->street;
-    }
-
-    /**
-     * @param string|null $type
-     */
-    public function setType(?string $type): void
-    {
-        $this->type = $type;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("type")
-     */
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param string|null $function
-     */
-    public function setFunction(?string $function): void
-    {
-        $this->function = $function;
-    }
-
-    /**
-     * @param bool|null $employee
-     */
-    public function setEmployee(?bool $employee): void
-    {
-        $this->employee = $employee;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("zip")
-     */
-    public function getZip(): ?string
-    {
-        return $this->zip;
+        return $this->phone_sanitized;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("employee")
+     * @SerializedName("phone_blacklisted")
      */
-    public function isEmployee(): ?bool
+    public function isPhoneBlacklisted(): ?bool
     {
-        return $this->employee;
+        return $this->phone_blacklisted;
     }
 
     /**
-     * @param bool|null $active
+     * @param int|null $message_needaction_counter
      */
-    public function setActive(?bool $active): void
+    public function setMessageNeedactionCounter(?int $message_needaction_counter): void
     {
-        $this->active = $active;
+        $this->message_needaction_counter = $message_needaction_counter;
     }
 
     /**
-     * @return bool|null
+     * @param float|null $total_invoiced
+     */
+    public function setTotalInvoiced(?float $total_invoiced): void
+    {
+        $this->total_invoiced = $total_invoiced;
+    }
+
+    /**
+     * @param OdooRelation $property_account_payable_id
+     */
+    public function setPropertyAccountPayableId(OdooRelation $property_account_payable_id): void
+    {
+        $this->property_account_payable_id = $property_account_payable_id;
+    }
+
+    /**
+     * @return OdooRelation
      *
-     * @SerializedName("active")
+     * @SerializedName("property_account_payable_id")
      */
-    public function isActive(): ?bool
+    public function getPropertyAccountPayableId(): OdooRelation
     {
-        return $this->active;
+        return $this->property_account_payable_id;
     }
 
     /**
-     * @param float|null $credit_limit
+     * @param int|null $journal_item_count
      */
-    public function setCreditLimit(?float $credit_limit): void
+    public function setJournalItemCount(?int $journal_item_count): void
     {
-        $this->credit_limit = $credit_limit;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("credit_limit")
-     */
-    public function getCreditLimit(): ?float
-    {
-        return $this->credit_limit;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeCategoryId(OdooRelation $item): void
-    {
-        if (null === $this->category_id) {
-            $this->category_id = [];
-        }
-
-        if ($this->hasCategoryId($item)) {
-            $index = array_search($item, $this->category_id);
-            unset($this->category_id[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addCategoryId(OdooRelation $item): void
-    {
-        if ($this->hasCategoryId($item)) {
-            return;
-        }
-
-        if (null === $this->category_id) {
-            $this->category_id = [];
-        }
-
-        $this->category_id[] = $item;
-    }
-
-    /**
-     * @param string|null $street2
-     */
-    public function setStreet2(?string $street2): void
-    {
-        $this->street2 = $street2;
-    }
-
-    /**
-     * @param string|null $zip
-     */
-    public function setZip(?string $zip): void
-    {
-        $this->zip = $zip;
-    }
-
-    /**
-     * @param OdooRelation[]|null $category_id
-     */
-    public function setCategoryId(?array $category_id): void
-    {
-        $this->category_id = $category_id;
-    }
-
-    /**
-     * @param float|null $partner_longitude
-     */
-    public function setPartnerLongitude(?float $partner_longitude): void
-    {
-        $this->partner_longitude = $partner_longitude;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("mobile")
-     */
-    public function getMobile(): ?string
-    {
-        return $this->mobile;
-    }
-
-    /**
-     * @param string|null $phone
-     */
-    public function setPhone(?string $phone): void
-    {
-        $this->phone = $phone;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("phone")
-     */
-    public function getPhone(): ?string
-    {
-        return $this->phone;
-    }
-
-    /**
-     * @param string|null $email_formatted
-     */
-    public function setEmailFormatted(?string $email_formatted): void
-    {
-        $this->email_formatted = $email_formatted;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("email_formatted")
-     */
-    public function getEmailFormatted(): ?string
-    {
-        return $this->email_formatted;
-    }
-
-    /**
-     * @param string|null $email
-     */
-    public function setEmail(?string $email): void
-    {
-        $this->email = $email;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("email")
-     */
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("partner_longitude")
-     */
-    public function getPartnerLongitude(): ?float
-    {
-        return $this->partner_longitude;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("city")
-     */
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    /**
-     * @param float|null $partner_latitude
-     */
-    public function setPartnerLatitude(?float $partner_latitude): void
-    {
-        $this->partner_latitude = $partner_latitude;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("partner_latitude")
-     */
-    public function getPartnerLatitude(): ?float
-    {
-        return $this->partner_latitude;
-    }
-
-    /**
-     * @param OdooRelation|null $country_id
-     */
-    public function setCountryId(?OdooRelation $country_id): void
-    {
-        $this->country_id = $country_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("country_id")
-     */
-    public function getCountryId(): ?OdooRelation
-    {
-        return $this->country_id;
-    }
-
-    /**
-     * @param OdooRelation|null $state_id
-     */
-    public function setStateId(?OdooRelation $state_id): void
-    {
-        $this->state_id = $state_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("state_id")
-     */
-    public function getStateId(): ?OdooRelation
-    {
-        return $this->state_id;
-    }
-
-    /**
-     * @param string|null $city
-     */
-    public function setCity(?string $city): void
-    {
-        $this->city = $city;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasCategoryId(OdooRelation $item): bool
-    {
-        if (null === $this->category_id) {
-            return false;
-        }
-
-        return in_array($item, $this->category_id);
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("category_id")
-     */
-    public function getCategoryId(): ?array
-    {
-        return $this->category_id;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("is_company")
-     */
-    public function isIsCompany(): ?bool
-    {
-        return $this->is_company;
-    }
-
-    /**
-     * @param string|null $parent_name
-     */
-    public function setParentName(?string $parent_name): void
-    {
-        $this->parent_name = $parent_name;
-    }
-
-    /**
-     * @param string|null $ref
-     */
-    public function setRef(?string $ref): void
-    {
-        $this->ref = $ref;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("ref")
-     */
-    public function getRef(): ?string
-    {
-        return $this->ref;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeChildIds(OdooRelation $item): void
-    {
-        if (null === $this->child_ids) {
-            $this->child_ids = [];
-        }
-
-        if ($this->hasChildIds($item)) {
-            $index = array_search($item, $this->child_ids);
-            unset($this->child_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addChildIds(OdooRelation $item): void
-    {
-        if ($this->hasChildIds($item)) {
-            return;
-        }
-
-        if (null === $this->child_ids) {
-            $this->child_ids = [];
-        }
-
-        $this->child_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasChildIds(OdooRelation $item): bool
-    {
-        if (null === $this->child_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->child_ids);
-    }
-
-    /**
-     * @param OdooRelation[]|null $child_ids
-     */
-    public function setChildIds(?array $child_ids): void
-    {
-        $this->child_ids = $child_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("child_ids")
-     */
-    public function getChildIds(): ?array
-    {
-        return $this->child_ids;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("parent_name")
-     */
-    public function getParentName(): ?string
-    {
-        return $this->parent_name;
-    }
-
-    /**
-     * @param string|null $lang
-     */
-    public function setLang(?string $lang): void
-    {
-        $this->lang = $lang;
-    }
-
-    /**
-     * @param OdooRelation|null $parent_id
-     */
-    public function setParentId(?OdooRelation $parent_id): void
-    {
-        $this->parent_id = $parent_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("parent_id")
-     */
-    public function getParentId(): ?OdooRelation
-    {
-        return $this->parent_id;
-    }
-
-    /**
-     * @param OdooRelation|null $title
-     */
-    public function setTitle(?OdooRelation $title): void
-    {
-        $this->title = $title;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("title")
-     */
-    public function getTitle(): ?OdooRelation
-    {
-        return $this->title;
-    }
-
-    /**
-     * @param DateTimeInterface|null $date
-     */
-    public function setDate(?DateTimeInterface $date): void
-    {
-        $this->date = $date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("date")
-     */
-    public function getDate(): ?DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    /**
-     * @param string|null $name
-     */
-    public function setName(?string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("lang")
-     */
-    public function getLang(): ?string
-    {
-        return $this->lang;
+        $this->journal_item_count = $journal_item_count;
     }
 
     /**
      * @return int|null
      *
-     * @SerializedName("active_lang_count")
+     * @SerializedName("journal_item_count")
      */
-    public function getActiveLangCount(): ?int
+    public function getJournalItemCount(): ?int
     {
-        return $this->active_lang_count;
+        return $this->journal_item_count;
     }
 
     /**
-     * @param string|null $comment
+     * @param OdooRelation|null $currency_id
      */
-    public function setComment(?string $comment): void
+    public function setCurrencyId(?OdooRelation $currency_id): void
     {
-        $this->comment = $comment;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("bank_ids")
-     */
-    public function getBankIds(): ?array
-    {
-        return $this->bank_ids;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("comment")
-     */
-    public function getComment(): ?string
-    {
-        return $this->comment;
-    }
-
-    /**
-     * @param string|null $website
-     */
-    public function setWebsite(?string $website): void
-    {
-        $this->website = $website;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("website")
-     */
-    public function getWebsite(): ?string
-    {
-        return $this->website;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeBankIds(OdooRelation $item): void
-    {
-        if (null === $this->bank_ids) {
-            $this->bank_ids = [];
-        }
-
-        if ($this->hasBankIds($item)) {
-            $index = array_search($item, $this->bank_ids);
-            unset($this->bank_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addBankIds(OdooRelation $item): void
-    {
-        if ($this->hasBankIds($item)) {
-            return;
-        }
-
-        if (null === $this->bank_ids) {
-            $this->bank_ids = [];
-        }
-
-        $this->bank_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasBankIds(OdooRelation $item): bool
-    {
-        if (null === $this->bank_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->bank_ids);
-    }
-
-    /**
-     * @param OdooRelation[]|null $bank_ids
-     */
-    public function setBankIds(?array $bank_ids): void
-    {
-        $this->bank_ids = $bank_ids;
-    }
-
-    /**
-     * @param OdooRelation|null $same_vat_partner_id
-     */
-    public function setSameVatPartnerId(?OdooRelation $same_vat_partner_id): void
-    {
-        $this->same_vat_partner_id = $same_vat_partner_id;
-    }
-
-    /**
-     * @param int|null $active_lang_count
-     */
-    public function setActiveLangCount(?int $active_lang_count): void
-    {
-        $this->active_lang_count = $active_lang_count;
+        $this->currency_id = $currency_id;
     }
 
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("same_vat_partner_id")
+     * @SerializedName("currency_id")
      */
-    public function getSameVatPartnerId(): ?OdooRelation
+    public function getCurrencyId(): ?OdooRelation
     {
-        return $this->same_vat_partner_id;
+        return $this->currency_id;
     }
 
     /**
-     * @param string|null $vat
-     */
-    public function setVat(?string $vat): void
-    {
-        $this->vat = $vat;
-    }
-
-    /**
-     * @return string|null
+     * @return float|null
      *
-     * @SerializedName("vat")
+     * @SerializedName("total_invoiced")
      */
-    public function getVat(): ?string
+    public function getTotalInvoiced(): ?float
     {
-        return $this->vat;
+        return $this->total_invoiced;
     }
 
     /**
-     * @param string|null $tz_offset
+     * @param bool|null $phone_blacklisted
      */
-    public function setTzOffset(?string $tz_offset): void
+    public function setPhoneBlacklisted(?bool $phone_blacklisted): void
     {
-        $this->tz_offset = $tz_offset;
+        $this->phone_blacklisted = $phone_blacklisted;
     }
 
     /**
-     * @return string|null
+     * @param float|null $debit_limit
+     */
+    public function setDebitLimit(?float $debit_limit): void
+    {
+        $this->debit_limit = $debit_limit;
+    }
+
+    /**
+     * @return float|null
      *
-     * @SerializedName("tz_offset")
+     * @SerializedName("debit_limit")
      */
-    public function getTzOffset(): ?string
+    public function getDebitLimit(): ?float
     {
-        return $this->tz_offset;
+        return $this->debit_limit;
     }
 
     /**
-     * @param string|null $tz
+     * @param float|null $debit
      */
-    public function setTz(?string $tz): void
+    public function setDebit(?float $debit): void
     {
-        $this->tz = $tz;
+        $this->debit = $debit;
     }
 
     /**
-     * @return string|null
+     * @return float|null
      *
-     * @SerializedName("tz")
+     * @SerializedName("debit")
      */
-    public function getTz(): ?string
+    public function getDebit(): ?float
     {
-        return $this->tz;
+        return $this->debit;
     }
 
     /**
-     * @param string|null $mobile
+     * @param float|null $credit
      */
-    public function setMobile(?string $mobile): void
+    public function setCredit(?float $credit): void
     {
-        $this->mobile = $mobile;
+        $this->credit = $credit;
     }
 
     /**
-     * @param bool|null $is_company
+     * @return float|null
+     *
+     * @SerializedName("credit")
      */
-    public function setIsCompany(?bool $is_company): void
+    public function getCredit(): ?float
     {
-        $this->is_company = $is_company;
+        return $this->credit;
     }
 
     /**
@@ -4539,33 +2430,29 @@ class Partner extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $message_follower_ids
-     */
-    public function setMessageFollowerIds(?array $message_follower_ids): void
-    {
-        $this->message_follower_ids = $message_follower_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
+     * @return int|null
      *
-     * @return bool
+     * @SerializedName("message_needaction_counter")
      */
-    public function hasMessagePartnerIds(OdooRelation $item): bool
+    public function getMessageNeedactionCounter(): ?int
     {
-        if (null === $this->message_partner_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_partner_ids);
+        return $this->message_needaction_counter;
     }
 
     /**
-     * @param OdooRelation[]|null $message_partner_ids
+     * @param OdooRelation $property_account_receivable_id
      */
-    public function setMessagePartnerIds(?array $message_partner_ids): void
+    public function setPropertyAccountReceivableId(OdooRelation $property_account_receivable_id): void
     {
-        $this->message_partner_ids = $message_partner_ids;
+        $this->property_account_receivable_id = $property_account_receivable_id;
+    }
+
+    /**
+     * @param bool|null $message_is_follower
+     */
+    public function setMessageIsFollower(?bool $message_is_follower): void
+    {
+        $this->message_is_follower = $message_is_follower;
     }
 
     /**
@@ -4624,6 +2511,14 @@ class Partner extends Base
     }
 
     /**
+     * @param OdooRelation[]|null $message_follower_ids
+     */
+    public function setMessageFollowerIds(?array $message_follower_ids): void
+    {
+        $this->message_follower_ids = $message_follower_ids;
+    }
+
+    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("message_follower_ids")
@@ -4631,29 +2526,6 @@ class Partner extends Base
     public function getMessageFollowerIds(): ?array
     {
         return $this->message_follower_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMessagePartnerIds(OdooRelation $item): void
-    {
-        if (null === $this->message_partner_ids) {
-            $this->message_partner_ids = [];
-        }
-
-        if ($this->hasMessagePartnerIds($item)) {
-            $index = array_search($item, $this->message_partner_ids);
-            unset($this->message_partner_ids[$index]);
-        }
-    }
-
-    /**
-     * @param bool|null $message_is_follower
-     */
-    public function setMessageIsFollower(?bool $message_is_follower): void
-    {
-        $this->message_is_follower = $message_is_follower;
     }
 
     /**
@@ -4667,47 +2539,79 @@ class Partner extends Base
     }
 
     /**
-     * @param string|null $activity_exception_icon
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setActivityExceptionIcon(?string $activity_exception_icon): void
+    public function hasMessagePartnerIds(OdooRelation $item): bool
     {
-        $this->activity_exception_icon = $activity_exception_icon;
+        if (null === $this->message_partner_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_partner_ids);
+    }
+
+    /**
+     * @param string|null $email_normalized
+     */
+    public function setEmailNormalized(?string $email_normalized): void
+    {
+        $this->email_normalized = $email_normalized;
     }
 
     /**
      * @return string|null
      *
-     * @SerializedName("activity_exception_icon")
+     * @SerializedName("email_normalized")
      */
-    public function getActivityExceptionIcon(): ?string
+    public function getEmailNormalized(): ?string
     {
-        return $this->activity_exception_icon;
+        return $this->email_normalized;
     }
 
     /**
-     * @param string|null $activity_exception_decoration
+     * @param int|null $message_bounce
      */
-    public function setActivityExceptionDecoration(?string $activity_exception_decoration): void
+    public function setMessageBounce(?int $message_bounce): void
     {
-        $this->activity_exception_decoration = $activity_exception_decoration;
+        $this->message_bounce = $message_bounce;
     }
 
     /**
-     * @return string|null
+     * @return int|null
      *
-     * @SerializedName("activity_exception_decoration")
+     * @SerializedName("message_bounce")
      */
-    public function getActivityExceptionDecoration(): ?string
+    public function getMessageBounce(): ?int
     {
-        return $this->activity_exception_decoration;
+        return $this->message_bounce;
     }
 
     /**
-     * @param string|null $activity_summary
+     * @param bool|null $is_blacklisted
      */
-    public function setActivitySummary(?string $activity_summary): void
+    public function setIsBlacklisted(?bool $is_blacklisted): void
     {
-        $this->activity_summary = $activity_summary;
+        $this->is_blacklisted = $is_blacklisted;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("is_blacklisted")
+     */
+    public function isIsBlacklisted(): ?bool
+    {
+        return $this->is_blacklisted;
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_partner_ids
+     */
+    public function setMessagePartnerIds(?array $message_partner_ids): void
+    {
+        $this->message_partner_ids = $message_partner_ids;
     }
 
     /**
@@ -4727,57 +2631,27 @@ class Partner extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("message_channel_ids")
-     */
-    public function getMessageChannelIds(): ?array
-    {
-        return $this->message_channel_ids;
-    }
-
-    /**
-     * @param DateTimeInterface|null $activity_date_deadline
-     */
-    public function setActivityDateDeadline(?DateTimeInterface $activity_date_deadline): void
-    {
-        $this->activity_date_deadline = $activity_date_deadline;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("message_unread")
-     */
-    public function isMessageUnread(): ?bool
-    {
-        return $this->message_unread;
-    }
-
-    /**
-     * @param int|null $message_needaction_counter
-     */
-    public function setMessageNeedactionCounter(?int $message_needaction_counter): void
-    {
-        $this->message_needaction_counter = $message_needaction_counter;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("message_needaction_counter")
-     */
-    public function getMessageNeedactionCounter(): ?int
-    {
-        return $this->message_needaction_counter;
-    }
-
-    /**
      * @param bool|null $message_needaction
      */
     public function setMessageNeedaction(?bool $message_needaction): void
     {
         $this->message_needaction = $message_needaction;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMessageIds(OdooRelation $item): void
+    {
+        if ($this->hasMessageIds($item)) {
+            return;
+        }
+
+        if (null === $this->message_ids) {
+            $this->message_ids = [];
+        }
+
+        $this->message_ids[] = $item;
     }
 
     /**
@@ -4817,6 +2691,16 @@ class Partner extends Base
     }
 
     /**
+     * @return bool|null
+     *
+     * @SerializedName("message_unread")
+     */
+    public function isMessageUnread(): ?bool
+    {
+        return $this->message_unread;
+    }
+
+    /**
      * @param OdooRelation $item
      */
     public function removeMessageIds(OdooRelation $item): void
@@ -4832,30 +2716,6 @@ class Partner extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $message_channel_ids
-     */
-    public function setMessageChannelIds(?array $message_channel_ids): void
-    {
-        $this->message_channel_ids = $message_channel_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addMessageIds(OdooRelation $item): void
-    {
-        if ($this->hasMessageIds($item)) {
-            return;
-        }
-
-        if (null === $this->message_ids) {
-            $this->message_ids = [];
-        }
-
-        $this->message_ids[] = $item;
-    }
-
-    /**
      * @param OdooRelation $item
      *
      * @return bool
@@ -4867,6 +2727,21 @@ class Partner extends Base
         }
 
         return in_array($item, $this->message_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMessagePartnerIds(OdooRelation $item): void
+    {
+        if (null === $this->message_partner_ids) {
+            $this->message_partner_ids = [];
+        }
+
+        if ($this->hasMessagePartnerIds($item)) {
+            $index = array_search($item, $this->message_partner_ids);
+            unset($this->message_partner_ids[$index]);
+        }
     }
 
     /**
@@ -4933,6 +2808,64 @@ class Partner extends Base
     }
 
     /**
+     * @param OdooRelation[]|null $message_channel_ids
+     */
+    public function setMessageChannelIds(?array $message_channel_ids): void
+    {
+        $this->message_channel_ids = $message_channel_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_channel_ids")
+     */
+    public function getMessageChannelIds(): ?array
+    {
+        return $this->message_channel_ids;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("property_account_receivable_id")
+     */
+    public function getPropertyAccountReceivableId(): OdooRelation
+    {
+        return $this->property_account_receivable_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("property_account_position_id")
+     */
+    public function getPropertyAccountPositionId(): ?OdooRelation
+    {
+        return $this->property_account_position_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("property_product_pricelist")
+     */
+    public function getPropertyProductPricelist(): ?OdooRelation
+    {
+        return $this->property_product_pricelist;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("payment_token_count")
+     */
+    public function getPaymentTokenCount(): ?int
+    {
+        return $this->payment_token_count;
+    }
+
+    /**
      * @return string|null
      *
      * @SerializedName("activity_summary")
@@ -4943,234 +2876,11 @@ class Partner extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("activity_date_deadline")
-     */
-    public function getActivityDateDeadline(): ?DateTimeInterface
-    {
-        return $this->activity_date_deadline;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("industry_id")
-     */
-    public function getIndustryId(): ?OdooRelation
-    {
-        return $this->industry_id;
-    }
-
-    /**
-     * @param OdooRelation[]|null $user_ids
-     */
-    public function setUserIds(?array $user_ids): void
-    {
-        $this->user_ids = $user_ids;
-    }
-
-    /**
-     * @param string|null $contact_address
-     */
-    public function setContactAddress(?string $contact_address): void
-    {
-        $this->contact_address = $contact_address;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("contact_address")
-     */
-    public function getContactAddress(): ?string
-    {
-        return $this->contact_address;
-    }
-
-    /**
-     * @param bool|null $partner_share
-     */
-    public function setPartnerShare(?bool $partner_share): void
-    {
-        $this->partner_share = $partner_share;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("partner_share")
-     */
-    public function isPartnerShare(): ?bool
-    {
-        return $this->partner_share;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeUserIds(OdooRelation $item): void
-    {
-        if (null === $this->user_ids) {
-            $this->user_ids = [];
-        }
-
-        if ($this->hasUserIds($item)) {
-            $index = array_search($item, $this->user_ids);
-            unset($this->user_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addUserIds(OdooRelation $item): void
-    {
-        if ($this->hasUserIds($item)) {
-            return;
-        }
-
-        if (null === $this->user_ids) {
-            $this->user_ids = [];
-        }
-
-        $this->user_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasUserIds(OdooRelation $item): bool
-    {
-        if (null === $this->user_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->user_ids);
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("user_ids")
-     */
-    public function getUserIds(): ?array
-    {
-        return $this->user_ids;
-    }
-
-    /**
-     * @param OdooRelation|null $commercial_partner_id
-     */
-    public function setCommercialPartnerId(?OdooRelation $commercial_partner_id): void
-    {
-        $this->commercial_partner_id = $commercial_partner_id;
-    }
-
-    /**
-     * @param int|null $color
-     */
-    public function setColor(?int $color): void
-    {
-        $this->color = $color;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("color")
-     */
-    public function getColor(): ?int
-    {
-        return $this->color;
-    }
-
-    /**
-     * @param OdooRelation|null $company_id
-     */
-    public function setCompanyId(?OdooRelation $company_id): void
-    {
-        $this->company_id = $company_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("company_id")
-     */
-    public function getCompanyId(): ?OdooRelation
-    {
-        return $this->company_id;
-    }
-
-    /**
-     * @param string|null $company_type
-     */
-    public function setCompanyType(?string $company_type): void
-    {
-        $this->company_type = $company_type;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("company_type")
-     */
-    public function getCompanyType(): ?string
-    {
-        return $this->company_type;
-    }
-
-    /**
-     * @param OdooRelation|null $industry_id
-     */
-    public function setIndustryId(?OdooRelation $industry_id): void
-    {
-        $this->industry_id = $industry_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("commercial_partner_id")
-     */
-    public function getCommercialPartnerId(): ?OdooRelation
-    {
-        return $this->commercial_partner_id;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("commercial_company_name")
-     */
-    public function getCommercialCompanyName(): ?string
-    {
-        return $this->commercial_company_name;
-    }
-
-    /**
      * @param OdooRelation|null $activity_type_id
      */
     public function setActivityTypeId(?OdooRelation $activity_type_id): void
     {
         $this->activity_type_id = $activity_type_id;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasActivityIds(OdooRelation $item): bool
-    {
-        if (null === $this->activity_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->activity_ids);
     }
 
     /**
@@ -5199,6 +2909,1415 @@ class Partner extends Base
     public function getActivityUserId(): ?OdooRelation
     {
         return $this->activity_user_id;
+    }
+
+    /**
+     * @param int|null $payment_token_count
+     */
+    public function setPaymentTokenCount(?int $payment_token_count): void
+    {
+        $this->payment_token_count = $payment_token_count;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removePaymentTokenIds(OdooRelation $item): void
+    {
+        if (null === $this->payment_token_ids) {
+            $this->payment_token_ids = [];
+        }
+
+        if ($this->hasPaymentTokenIds($item)) {
+            $index = array_search($item, $this->payment_token_ids);
+            unset($this->payment_token_ids[$index]);
+        }
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("siret")
+     */
+    public function getSiret(): ?string
+    {
+        return $this->siret;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addPaymentTokenIds(OdooRelation $item): void
+    {
+        if ($this->hasPaymentTokenIds($item)) {
+            return;
+        }
+
+        if (null === $this->payment_token_ids) {
+            $this->payment_token_ids = [];
+        }
+
+        $this->payment_token_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasPaymentTokenIds(OdooRelation $item): bool
+    {
+        if (null === $this->payment_token_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->payment_token_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $payment_token_ids
+     */
+    public function setPaymentTokenIds(?array $payment_token_ids): void
+    {
+        $this->payment_token_ids = $payment_token_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("payment_token_ids")
+     */
+    public function getPaymentTokenIds(): ?array
+    {
+        return $this->payment_token_ids;
+    }
+
+    /**
+     * @param string|null $online_partner_bank_account
+     */
+    public function setOnlinePartnerBankAccount(?string $online_partner_bank_account): void
+    {
+        $this->online_partner_bank_account = $online_partner_bank_account;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("online_partner_bank_account")
+     */
+    public function getOnlinePartnerBankAccount(): ?string
+    {
+        return $this->online_partner_bank_account;
+    }
+
+    /**
+     * @param string|null $activity_summary
+     */
+    public function setActivitySummary(?string $activity_summary): void
+    {
+        $this->activity_summary = $activity_summary;
+    }
+
+    /**
+     * @param string|null $siret
+     */
+    public function setSiret(?string $siret): void
+    {
+        $this->siret = $siret;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("online_partner_vendor_name")
+     */
+    public function getOnlinePartnerVendorName(): ?string
+    {
+        return $this->online_partner_vendor_name;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("image_1024")
+     */
+    public function getImage1024(): ?string
+    {
+        return $this->image_1024;
+    }
+
+    /**
+     * @param string|null $image_128
+     */
+    public function setImage128(?string $image_128): void
+    {
+        $this->image_128 = $image_128;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("image_128")
+     */
+    public function getImage128(): ?string
+    {
+        return $this->image_128;
+    }
+
+    /**
+     * @param string|null $image_256
+     */
+    public function setImage256(?string $image_256): void
+    {
+        $this->image_256 = $image_256;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("image_256")
+     */
+    public function getImage256(): ?string
+    {
+        return $this->image_256;
+    }
+
+    /**
+     * @param string|null $image_512
+     */
+    public function setImage512(?string $image_512): void
+    {
+        $this->image_512 = $image_512;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("image_512")
+     */
+    public function getImage512(): ?string
+    {
+        return $this->image_512;
+    }
+
+    /**
+     * @param string|null $image_1024
+     */
+    public function setImage1024(?string $image_1024): void
+    {
+        $this->image_1024 = $image_1024;
+    }
+
+    /**
+     * @param string|null $online_partner_vendor_name
+     */
+    public function setOnlinePartnerVendorName(?string $online_partner_vendor_name): void
+    {
+        $this->online_partner_vendor_name = $online_partner_vendor_name;
+    }
+
+    /**
+     * @param int|null $customer_rank
+     */
+    public function setCustomerRank(?int $customer_rank): void
+    {
+        $this->customer_rank = $customer_rank;
+    }
+
+    /**
+     * @param OdooRelation|null $property_account_position_id
+     */
+    public function setPropertyAccountPositionId(?OdooRelation $property_account_position_id): void
+    {
+        $this->property_account_position_id = $property_account_position_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addRefCompanyIds(OdooRelation $item): void
+    {
+        if ($this->hasRefCompanyIds($item)) {
+            return;
+        }
+
+        if (null === $this->ref_company_ids) {
+            $this->ref_company_ids = [];
+        }
+
+        $this->ref_company_ids[] = $item;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("invoice_ids")
+     */
+    public function getInvoiceIds(): ?array
+    {
+        return $this->invoice_ids;
+    }
+
+    /**
+     * @param DateTimeInterface|null $last_time_entries_checked
+     */
+    public function setLastTimeEntriesChecked(?DateTimeInterface $last_time_entries_checked): void
+    {
+        $this->last_time_entries_checked = $last_time_entries_checked;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("last_time_entries_checked")
+     */
+    public function getLastTimeEntriesChecked(): ?DateTimeInterface
+    {
+        return $this->last_time_entries_checked;
+    }
+
+    /**
+     * @param bool|null $has_unreconciled_entries
+     */
+    public function setHasUnreconciledEntries(?bool $has_unreconciled_entries): void
+    {
+        $this->has_unreconciled_entries = $has_unreconciled_entries;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("has_unreconciled_entries")
+     */
+    public function isHasUnreconciledEntries(): ?bool
+    {
+        return $this->has_unreconciled_entries;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeRefCompanyIds(OdooRelation $item): void
+    {
+        if (null === $this->ref_company_ids) {
+            $this->ref_company_ids = [];
+        }
+
+        if ($this->hasRefCompanyIds($item)) {
+            $index = array_search($item, $this->ref_company_ids);
+            unset($this->ref_company_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasRefCompanyIds(OdooRelation $item): bool
+    {
+        if (null === $this->ref_company_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->ref_company_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasInvoiceIds(OdooRelation $item): bool
+    {
+        if (null === $this->invoice_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->invoice_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $ref_company_ids
+     */
+    public function setRefCompanyIds(?array $ref_company_ids): void
+    {
+        $this->ref_company_ids = $ref_company_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("ref_company_ids")
+     */
+    public function getRefCompanyIds(): ?array
+    {
+        return $this->ref_company_ids;
+    }
+
+    /**
+     * @param OdooRelation|null $property_supplier_payment_term_id
+     */
+    public function setPropertySupplierPaymentTermId(?OdooRelation $property_supplier_payment_term_id): void
+    {
+        $this->property_supplier_payment_term_id = $property_supplier_payment_term_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("property_supplier_payment_term_id")
+     */
+    public function getPropertySupplierPaymentTermId(): ?OdooRelation
+    {
+        return $this->property_supplier_payment_term_id;
+    }
+
+    /**
+     * @param OdooRelation|null $property_payment_term_id
+     */
+    public function setPropertyPaymentTermId(?OdooRelation $property_payment_term_id): void
+    {
+        $this->property_payment_term_id = $property_payment_term_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("property_payment_term_id")
+     */
+    public function getPropertyPaymentTermId(): ?OdooRelation
+    {
+        return $this->property_payment_term_id;
+    }
+
+    /**
+     * @param OdooRelation[]|null $invoice_ids
+     */
+    public function setInvoiceIds(?array $invoice_ids): void
+    {
+        $this->invoice_ids = $invoice_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addInvoiceIds(OdooRelation $item): void
+    {
+        if ($this->hasInvoiceIds($item)) {
+            return;
+        }
+
+        if (null === $this->invoice_ids) {
+            $this->invoice_ids = [];
+        }
+
+        $this->invoice_ids[] = $item;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("customer_rank")
+     */
+    public function getCustomerRank(): ?int
+    {
+        return $this->customer_rank;
+    }
+
+    /**
+     * @param string|null $trust
+     */
+    public function setTrust(?string $trust): void
+    {
+        $this->trust = $trust;
+    }
+
+    /**
+     * @param int|null $supplier_rank
+     */
+    public function setSupplierRank(?int $supplier_rank): void
+    {
+        $this->supplier_rank = $supplier_rank;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("supplier_rank")
+     */
+    public function getSupplierRank(): ?int
+    {
+        return $this->supplier_rank;
+    }
+
+    /**
+     * @param string|null $invoice_warn_msg
+     */
+    public function setInvoiceWarnMsg(?string $invoice_warn_msg): void
+    {
+        $this->invoice_warn_msg = $invoice_warn_msg;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("invoice_warn_msg")
+     */
+    public function getInvoiceWarnMsg(): ?string
+    {
+        return $this->invoice_warn_msg;
+    }
+
+    /**
+     * @param string|null $invoice_warn
+     */
+    public function setInvoiceWarn(?string $invoice_warn): void
+    {
+        $this->invoice_warn = $invoice_warn;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("invoice_warn")
+     */
+    public function getInvoiceWarn(): ?string
+    {
+        return $this->invoice_warn;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("trust")
+     */
+    public function getTrust(): ?string
+    {
+        return $this->trust;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeInvoiceIds(OdooRelation $item): void
+    {
+        if (null === $this->invoice_ids) {
+            $this->invoice_ids = [];
+        }
+
+        if ($this->hasInvoiceIds($item)) {
+            $index = array_search($item, $this->invoice_ids);
+            unset($this->invoice_ids[$index]);
+        }
+    }
+
+    /**
+     * @param int|null $bank_account_count
+     */
+    public function setBankAccountCount(?int $bank_account_count): void
+    {
+        $this->bank_account_count = $bank_account_count;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("bank_account_count")
+     */
+    public function getBankAccountCount(): ?int
+    {
+        return $this->bank_account_count;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeContractIds(OdooRelation $item): void
+    {
+        if (null === $this->contract_ids) {
+            $this->contract_ids = [];
+        }
+
+        if ($this->hasContractIds($item)) {
+            $index = array_search($item, $this->contract_ids);
+            unset($this->contract_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addContractIds(OdooRelation $item): void
+    {
+        if ($this->hasContractIds($item)) {
+            return;
+        }
+
+        if (null === $this->contract_ids) {
+            $this->contract_ids = [];
+        }
+
+        $this->contract_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasContractIds(OdooRelation $item): bool
+    {
+        if (null === $this->contract_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->contract_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $contract_ids
+     */
+    public function setContractIds(?array $contract_ids): void
+    {
+        $this->contract_ids = $contract_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("contract_ids")
+     */
+    public function getContractIds(): ?array
+    {
+        return $this->contract_ids;
+    }
+
+    /**
+     * @param OdooRelation|null $property_product_pricelist
+     */
+    public function setPropertyProductPricelist(?OdooRelation $property_product_pricelist): void
+    {
+        $this->property_product_pricelist = $property_product_pricelist;
+    }
+
+    /**
+     * @param string|null $additional_info
+     */
+    public function setAdditionalInfo(?string $additional_info): void
+    {
+        $this->additional_info = $additional_info;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("name")
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("active")
+     */
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("type")
+     */
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string|null $function
+     */
+    public function setFunction(?string $function): void
+    {
+        $this->function = $function;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("function")
+     */
+    public function getFunction(): ?string
+    {
+        return $this->function;
+    }
+
+    /**
+     * @param bool|null $employee
+     */
+    public function setEmployee(?bool $employee): void
+    {
+        $this->employee = $employee;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("employee")
+     */
+    public function isEmployee(): ?bool
+    {
+        return $this->employee;
+    }
+
+    /**
+     * @param bool|null $active
+     */
+    public function setActive(?bool $active): void
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @param float|null $credit_limit
+     */
+    public function setCreditLimit(?float $credit_limit): void
+    {
+        $this->credit_limit = $credit_limit;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("street")
+     */
+    public function getStreet(): ?string
+    {
+        return $this->street;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("credit_limit")
+     */
+    public function getCreditLimit(): ?float
+    {
+        return $this->credit_limit;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeCategoryId(OdooRelation $item): void
+    {
+        if (null === $this->category_id) {
+            $this->category_id = [];
+        }
+
+        if ($this->hasCategoryId($item)) {
+            $index = array_search($item, $this->category_id);
+            unset($this->category_id[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addCategoryId(OdooRelation $item): void
+    {
+        if ($this->hasCategoryId($item)) {
+            return;
+        }
+
+        if (null === $this->category_id) {
+            $this->category_id = [];
+        }
+
+        $this->category_id[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasCategoryId(OdooRelation $item): bool
+    {
+        if (null === $this->category_id) {
+            return false;
+        }
+
+        return in_array($item, $this->category_id);
+    }
+
+    /**
+     * @param OdooRelation[]|null $category_id
+     */
+    public function setCategoryId(?array $category_id): void
+    {
+        $this->category_id = $category_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("category_id")
+     */
+    public function getCategoryId(): ?array
+    {
+        return $this->category_id;
+    }
+
+    /**
+     * @param string|null $type
+     */
+    public function setType(?string $type): void
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @param string|null $street
+     */
+    public function setStreet(?string $street): void
+    {
+        $this->street = $street;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("comment")
+     */
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("country_id")
+     */
+    public function getCountryId(): ?OdooRelation
+    {
+        return $this->country_id;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("email")
+     */
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param float|null $partner_longitude
+     */
+    public function setPartnerLongitude(?float $partner_longitude): void
+    {
+        $this->partner_longitude = $partner_longitude;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("partner_longitude")
+     */
+    public function getPartnerLongitude(): ?float
+    {
+        return $this->partner_longitude;
+    }
+
+    /**
+     * @param float|null $partner_latitude
+     */
+    public function setPartnerLatitude(?float $partner_latitude): void
+    {
+        $this->partner_latitude = $partner_latitude;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("partner_latitude")
+     */
+    public function getPartnerLatitude(): ?float
+    {
+        return $this->partner_latitude;
+    }
+
+    /**
+     * @param OdooRelation|null $country_id
+     */
+    public function setCountryId(?OdooRelation $country_id): void
+    {
+        $this->country_id = $country_id;
+    }
+
+    /**
+     * @param OdooRelation|null $state_id
+     */
+    public function setStateId(?OdooRelation $state_id): void
+    {
+        $this->state_id = $state_id;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("street2")
+     */
+    public function getStreet2(): ?string
+    {
+        return $this->street2;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("state_id")
+     */
+    public function getStateId(): ?OdooRelation
+    {
+        return $this->state_id;
+    }
+
+    /**
+     * @param string|null $city
+     */
+    public function setCity(?string $city): void
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("city")
+     */
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param string|null $zip
+     */
+    public function setZip(?string $zip): void
+    {
+        $this->zip = $zip;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("zip")
+     */
+    public function getZip(): ?string
+    {
+        return $this->zip;
+    }
+
+    /**
+     * @param string|null $street2
+     */
+    public function setStreet2(?string $street2): void
+    {
+        $this->street2 = $street2;
+    }
+
+    /**
+     * @param string|null $comment
+     */
+    public function setComment(?string $comment): void
+    {
+        $this->comment = $comment;
+    }
+
+    /**
+     * @param string|null $website
+     */
+    public function setWebsite(?string $website): void
+    {
+        $this->website = $website;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("email_formatted")
+     */
+    public function getEmailFormatted(): ?string
+    {
+        return $this->email_formatted;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("parent_name")
+     */
+    public function getParentName(): ?string
+    {
+        return $this->parent_name;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeChildIds(OdooRelation $item): void
+    {
+        if (null === $this->child_ids) {
+            $this->child_ids = [];
+        }
+
+        if ($this->hasChildIds($item)) {
+            $index = array_search($item, $this->child_ids);
+            unset($this->child_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addChildIds(OdooRelation $item): void
+    {
+        if ($this->hasChildIds($item)) {
+            return;
+        }
+
+        if (null === $this->child_ids) {
+            $this->child_ids = [];
+        }
+
+        $this->child_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasChildIds(OdooRelation $item): bool
+    {
+        if (null === $this->child_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->child_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $child_ids
+     */
+    public function setChildIds(?array $child_ids): void
+    {
+        $this->child_ids = $child_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("child_ids")
+     */
+    public function getChildIds(): ?array
+    {
+        return $this->child_ids;
+    }
+
+    /**
+     * @param string|null $parent_name
+     */
+    public function setParentName(?string $parent_name): void
+    {
+        $this->parent_name = $parent_name;
+    }
+
+    /**
+     * @param OdooRelation|null $parent_id
+     */
+    public function setParentId(?OdooRelation $parent_id): void
+    {
+        $this->parent_id = $parent_id;
+    }
+
+    /**
+     * @param string|null $ref
+     */
+    public function setRef(?string $ref): void
+    {
+        $this->ref = $ref;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("parent_id")
+     */
+    public function getParentId(): ?OdooRelation
+    {
+        return $this->parent_id;
+    }
+
+    /**
+     * @param OdooRelation|null $title
+     */
+    public function setTitle(?OdooRelation $title): void
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("title")
+     */
+    public function getTitle(): ?OdooRelation
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param DateTimeInterface|null $date
+     */
+    public function setDate(?DateTimeInterface $date): void
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("date")
+     */
+    public function getDate(): ?DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param string|null $name
+     */
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("ref")
+     */
+    public function getRef(): ?string
+    {
+        return $this->ref;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("lang")
+     */
+    public function getLang(): ?string
+    {
+        return $this->lang;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("website")
+     */
+    public function getWebsite(): ?string
+    {
+        return $this->website;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("same_vat_partner_id")
+     */
+    public function getSameVatPartnerId(): ?OdooRelation
+    {
+        return $this->same_vat_partner_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeBankIds(OdooRelation $item): void
+    {
+        if (null === $this->bank_ids) {
+            $this->bank_ids = [];
+        }
+
+        if ($this->hasBankIds($item)) {
+            $index = array_search($item, $this->bank_ids);
+            unset($this->bank_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addBankIds(OdooRelation $item): void
+    {
+        if ($this->hasBankIds($item)) {
+            return;
+        }
+
+        if (null === $this->bank_ids) {
+            $this->bank_ids = [];
+        }
+
+        $this->bank_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasBankIds(OdooRelation $item): bool
+    {
+        if (null === $this->bank_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->bank_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $bank_ids
+     */
+    public function setBankIds(?array $bank_ids): void
+    {
+        $this->bank_ids = $bank_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("bank_ids")
+     */
+    public function getBankIds(): ?array
+    {
+        return $this->bank_ids;
+    }
+
+    /**
+     * @param OdooRelation|null $same_vat_partner_id
+     */
+    public function setSameVatPartnerId(?OdooRelation $same_vat_partner_id): void
+    {
+        $this->same_vat_partner_id = $same_vat_partner_id;
+    }
+
+    /**
+     * @param string|null $vat
+     */
+    public function setVat(?string $vat): void
+    {
+        $this->vat = $vat;
+    }
+
+    /**
+     * @param string|null $lang
+     */
+    public function setLang(?string $lang): void
+    {
+        $this->lang = $lang;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("vat")
+     */
+    public function getVat(): ?string
+    {
+        return $this->vat;
+    }
+
+    /**
+     * @param string|null $tz_offset
+     */
+    public function setTzOffset(?string $tz_offset): void
+    {
+        $this->tz_offset = $tz_offset;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("tz_offset")
+     */
+    public function getTzOffset(): ?string
+    {
+        return $this->tz_offset;
+    }
+
+    /**
+     * @param string|null $tz
+     */
+    public function setTz(?string $tz): void
+    {
+        $this->tz = $tz;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("tz")
+     */
+    public function getTz(): ?string
+    {
+        return $this->tz;
+    }
+
+    /**
+     * @param int|null $active_lang_count
+     */
+    public function setActiveLangCount(?int $active_lang_count): void
+    {
+        $this->active_lang_count = $active_lang_count;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("active_lang_count")
+     */
+    public function getActiveLangCount(): ?int
+    {
+        return $this->active_lang_count;
+    }
+
+    /**
+     * @param string|null $email
+     */
+    public function setEmail(?string $email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @param string|null $email_formatted
+     */
+    public function setEmailFormatted(?string $email_formatted): void
+    {
+        $this->email_formatted = $email_formatted;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("additional_info")
+     */
+    public function getAdditionalInfo(): ?string
+    {
+        return $this->additional_info;
+    }
+
+    /**
+     * @param OdooRelation[]|null $activity_ids
+     */
+    public function setActivityIds(?array $activity_ids): void
+    {
+        $this->activity_ids = $activity_ids;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("activity_date_deadline")
+     */
+    public function getActivityDateDeadline(): ?DateTimeInterface
+    {
+        return $this->activity_date_deadline;
     }
 
     /**
@@ -5251,19 +4370,17 @@ class Partner extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $activity_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setActivityIds(?array $activity_ids): void
+    public function hasActivityIds(OdooRelation $item): bool
     {
-        $this->activity_ids = $activity_ids;
-    }
+        if (null === $this->activity_ids) {
+            return false;
+        }
 
-    /**
-     * @param string|null $commercial_company_name
-     */
-    public function setCommercialCompanyName(?string $commercial_company_name): void
-    {
-        $this->commercial_company_name = $commercial_company_name;
+        return in_array($item, $this->activity_ids);
     }
 
     /**
@@ -5274,6 +4391,477 @@ class Partner extends Base
     public function getActivityIds(): ?array
     {
         return $this->activity_ids;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("activity_exception_decoration")
+     */
+    public function getActivityExceptionDecoration(): ?string
+    {
+        return $this->activity_exception_decoration;
+    }
+
+    /**
+     * @param string|null $image_1920
+     */
+    public function setImage1920(?string $image_1920): void
+    {
+        $this->image_1920 = $image_1920;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("image_1920")
+     */
+    public function getImage1920(): ?string
+    {
+        return $this->image_1920;
+    }
+
+    /**
+     * @param string|null $contact_address_complete
+     */
+    public function setContactAddressComplete(?string $contact_address_complete): void
+    {
+        $this->contact_address_complete = $contact_address_complete;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("contact_address_complete")
+     */
+    public function getContactAddressComplete(): ?string
+    {
+        return $this->contact_address_complete;
+    }
+
+    /**
+     * @param OdooRelation|null $user_id
+     */
+    public function setUserId(?OdooRelation $user_id): void
+    {
+        $this->user_id = $user_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("user_id")
+     */
+    public function getUserId(): ?OdooRelation
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $activity_date_deadline
+     */
+    public function setActivityDateDeadline(?DateTimeInterface $activity_date_deadline): void
+    {
+        $this->activity_date_deadline = $activity_date_deadline;
+    }
+
+    /**
+     * @param string|null $activity_exception_decoration
+     */
+    public function setActivityExceptionDecoration(?string $activity_exception_decoration): void
+    {
+        $this->activity_exception_decoration = $activity_exception_decoration;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addChannelIds(OdooRelation $item): void
+    {
+        if ($this->hasChannelIds($item)) {
+            return;
+        }
+
+        if (null === $this->channel_ids) {
+            $this->channel_ids = [];
+        }
+
+        $this->channel_ids[] = $item;
+    }
+
+    /**
+     * @param DateTimeInterface|null $signup_expiration
+     */
+    public function setSignupExpiration(?DateTimeInterface $signup_expiration): void
+    {
+        $this->signup_expiration = $signup_expiration;
+    }
+
+    /**
+     * @param int|null $partner_gid
+     */
+    public function setPartnerGid(?int $partner_gid): void
+    {
+        $this->partner_gid = $partner_gid;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("partner_gid")
+     */
+    public function getPartnerGid(): ?int
+    {
+        return $this->partner_gid;
+    }
+
+    /**
+     * @param string|null $signup_url
+     */
+    public function setSignupUrl(?string $signup_url): void
+    {
+        $this->signup_url = $signup_url;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("signup_url")
+     */
+    public function getSignupUrl(): ?string
+    {
+        return $this->signup_url;
+    }
+
+    /**
+     * @param bool|null $signup_valid
+     */
+    public function setSignupValid(?bool $signup_valid): void
+    {
+        $this->signup_valid = $signup_valid;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("signup_valid")
+     */
+    public function isSignupValid(): ?bool
+    {
+        return $this->signup_valid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("signup_expiration")
+     */
+    public function getSignupExpiration(): ?DateTimeInterface
+    {
+        return $this->signup_expiration;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("activity_exception_icon")
+     */
+    public function getActivityExceptionIcon(): ?string
+    {
+        return $this->activity_exception_icon;
+    }
+
+    /**
+     * @param string|null $signup_type
+     */
+    public function setSignupType(?string $signup_type): void
+    {
+        $this->signup_type = $signup_type;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("signup_type")
+     */
+    public function getSignupType(): ?string
+    {
+        return $this->signup_type;
+    }
+
+    /**
+     * @param string|null $signup_token
+     */
+    public function setSignupToken(?string $signup_token): void
+    {
+        $this->signup_token = $signup_token;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("signup_token")
+     */
+    public function getSignupToken(): ?string
+    {
+        return $this->signup_token;
+    }
+
+    /**
+     * @param string|null $image_medium
+     */
+    public function setImageMedium(?string $image_medium): void
+    {
+        $this->image_medium = $image_medium;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("image_medium")
+     */
+    public function getImageMedium(): ?string
+    {
+        return $this->image_medium;
+    }
+
+    /**
+     * @param string|null $activity_exception_icon
+     */
+    public function setActivityExceptionIcon(?string $activity_exception_icon): void
+    {
+        $this->activity_exception_icon = $activity_exception_icon;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeChannelIds(OdooRelation $item): void
+    {
+        if (null === $this->channel_ids) {
+            $this->channel_ids = [];
+        }
+
+        if ($this->hasChannelIds($item)) {
+            $index = array_search($item, $this->channel_ids);
+            unset($this->channel_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasChannelIds(OdooRelation $item): bool
+    {
+        if (null === $this->channel_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->channel_ids);
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("phone")
+     */
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("company_type")
+     */
+    public function getCompanyType(): ?string
+    {
+        return $this->company_type;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("user_ids")
+     */
+    public function getUserIds(): ?array
+    {
+        return $this->user_ids;
+    }
+
+    /**
+     * @param int|null $color
+     */
+    public function setColor(?int $color): void
+    {
+        $this->color = $color;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("color")
+     */
+    public function getColor(): ?int
+    {
+        return $this->color;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param string|null $company_type
+     */
+    public function setCompanyType(?string $company_type): void
+    {
+        $this->company_type = $company_type;
+    }
+
+    /**
+     * @param OdooRelation|null $industry_id
+     */
+    public function setIndustryId(?OdooRelation $industry_id): void
+    {
+        $this->industry_id = $industry_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasUserIds(OdooRelation $item): bool
+    {
+        if (null === $this->user_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->user_ids);
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("industry_id")
+     */
+    public function getIndustryId(): ?OdooRelation
+    {
+        return $this->industry_id;
+    }
+
+    /**
+     * @param bool|null $is_company
+     */
+    public function setIsCompany(?bool $is_company): void
+    {
+        $this->is_company = $is_company;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("is_company")
+     */
+    public function isIsCompany(): ?bool
+    {
+        return $this->is_company;
+    }
+
+    /**
+     * @param string|null $mobile
+     */
+    public function setMobile(?string $mobile): void
+    {
+        $this->mobile = $mobile;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("mobile")
+     */
+    public function getMobile(): ?string
+    {
+        return $this->mobile;
+    }
+
+    /**
+     * @param string|null $phone
+     */
+    public function setPhone(?string $phone): void
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @param OdooRelation[]|null $user_ids
+     */
+    public function setUserIds(?array $user_ids): void
+    {
+        $this->user_ids = $user_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addUserIds(OdooRelation $item): void
+    {
+        if ($this->hasUserIds($item)) {
+            return;
+        }
+
+        if (null === $this->user_ids) {
+            $this->user_ids = [];
+        }
+
+        $this->user_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation[]|null $channel_ids
+     */
+    public function setChannelIds(?array $channel_ids): void
+    {
+        $this->channel_ids = $channel_ids;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("company_name")
+     */
+    public function getCompanyName(): ?string
+    {
+        return $this->company_name;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("channel_ids")
+     */
+    public function getChannelIds(): ?array
+    {
+        return $this->channel_ids;
     }
 
     /**
@@ -5321,13 +4909,90 @@ class Partner extends Base
     }
 
     /**
+     * @param string|null $commercial_company_name
+     */
+    public function setCommercialCompanyName(?string $commercial_company_name): void
+    {
+        $this->commercial_company_name = $commercial_company_name;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeUserIds(OdooRelation $item): void
+    {
+        if (null === $this->user_ids) {
+            $this->user_ids = [];
+        }
+
+        if ($this->hasUserIds($item)) {
+            $index = array_search($item, $this->user_ids);
+            unset($this->user_ids[$index]);
+        }
+    }
+
+    /**
      * @return string|null
      *
-     * @SerializedName("company_name")
+     * @SerializedName("commercial_company_name")
      */
-    public function getCompanyName(): ?string
+    public function getCommercialCompanyName(): ?string
     {
-        return $this->company_name;
+        return $this->commercial_company_name;
+    }
+
+    /**
+     * @param OdooRelation|null $commercial_partner_id
+     */
+    public function setCommercialPartnerId(?OdooRelation $commercial_partner_id): void
+    {
+        $this->commercial_partner_id = $commercial_partner_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("commercial_partner_id")
+     */
+    public function getCommercialPartnerId(): ?OdooRelation
+    {
+        return $this->commercial_partner_id;
+    }
+
+    /**
+     * @param string|null $contact_address
+     */
+    public function setContactAddress(?string $contact_address): void
+    {
+        $this->contact_address = $contact_address;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("contact_address")
+     */
+    public function getContactAddress(): ?string
+    {
+        return $this->contact_address;
+    }
+
+    /**
+     * @param bool|null $partner_share
+     */
+    public function setPartnerShare(?bool $partner_share): void
+    {
+        $this->partner_share = $partner_share;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("partner_share")
+     */
+    public function isPartnerShare(): ?bool
+    {
+        return $this->partner_share;
     }
 
     /**

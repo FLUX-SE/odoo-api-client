@@ -209,26 +209,6 @@ final class Digest extends Base
     private $kpi_account_total_revenue_value;
 
     /**
-     * Bank & Cash Moves
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $kpi_account_bank_cash;
-
-    /**
-     * Kpi Account Bank Cash Value
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var float|null
-     */
-    private $kpi_account_bank_cash_value;
-
-    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -304,13 +284,29 @@ final class Digest extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("kpi_account_bank_cash")
+     * @param bool|null $kpi_account_total_revenue
      */
-    public function isKpiAccountBankCash(): ?bool
+    public function setKpiAccountTotalRevenue(?bool $kpi_account_total_revenue): void
     {
-        return $this->kpi_account_bank_cash;
+        $this->kpi_account_total_revenue = $kpi_account_total_revenue;
+    }
+
+    /**
+     * @param bool|null $kpi_res_users_connected
+     */
+    public function setKpiResUsersConnected(?bool $kpi_res_users_connected): void
+    {
+        $this->kpi_res_users_connected = $kpi_res_users_connected;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("kpi_res_users_connected_value")
+     */
+    public function getKpiResUsersConnectedValue(): ?int
+    {
+        return $this->kpi_res_users_connected_value;
     }
 
     /**
@@ -368,14 +364,6 @@ final class Digest extends Base
     }
 
     /**
-     * @param bool|null $kpi_account_total_revenue
-     */
-    public function setKpiAccountTotalRevenue(?bool $kpi_account_total_revenue): void
-    {
-        $this->kpi_account_total_revenue = $kpi_account_total_revenue;
-    }
-
-    /**
      * @return float|null
      *
      * @SerializedName("kpi_account_total_revenue_value")
@@ -386,45 +374,19 @@ final class Digest extends Base
     }
 
     /**
+     * @param string|null $state
+     */
+    public function setState(?string $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
      * @param float|null $kpi_account_total_revenue_value
      */
     public function setKpiAccountTotalRevenueValue(?float $kpi_account_total_revenue_value): void
     {
         $this->kpi_account_total_revenue_value = $kpi_account_total_revenue_value;
-    }
-
-    /**
-     * @param bool|null $kpi_account_bank_cash
-     */
-    public function setKpiAccountBankCash(?bool $kpi_account_bank_cash): void
-    {
-        $this->kpi_account_bank_cash = $kpi_account_bank_cash;
-    }
-
-    /**
-     * @param bool|null $kpi_res_users_connected
-     */
-    public function setKpiResUsersConnected(?bool $kpi_res_users_connected): void
-    {
-        $this->kpi_res_users_connected = $kpi_res_users_connected;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("kpi_account_bank_cash_value")
-     */
-    public function getKpiAccountBankCashValue(): ?float
-    {
-        return $this->kpi_account_bank_cash_value;
-    }
-
-    /**
-     * @param float|null $kpi_account_bank_cash_value
-     */
-    public function setKpiAccountBankCashValue(?float $kpi_account_bank_cash_value): void
-    {
-        $this->kpi_account_bank_cash_value = $kpi_account_bank_cash_value;
     }
 
     /**
@@ -500,16 +462,6 @@ final class Digest extends Base
     }
 
     /**
-     * @return int|null
-     *
-     * @SerializedName("kpi_res_users_connected_value")
-     */
-    public function getKpiResUsersConnectedValue(): ?int
-    {
-        return $this->kpi_res_users_connected_value;
-    }
-
-    /**
      * @return bool|null
      *
      * @SerializedName("kpi_res_users_connected")
@@ -517,6 +469,16 @@ final class Digest extends Base
     public function isKpiResUsersConnected(): ?bool
     {
         return $this->kpi_res_users_connected;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("state")
+     */
+    public function getState(): ?string
+    {
+        return $this->state;
     }
 
     /**
@@ -530,11 +492,13 @@ final class Digest extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $next_run_date
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("next_run_date")
      */
-    public function setNextRunDate(?DateTimeInterface $next_run_date): void
+    public function getNextRunDate(): ?DateTimeInterface
     {
-        $this->next_run_date = $next_run_date;
+        return $this->next_run_date;
     }
 
     /**
@@ -627,13 +591,19 @@ final class Digest extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("next_run_date")
+     * @param DateTimeInterface|null $next_run_date
      */
-    public function getNextRunDate(): ?DateTimeInterface
+    public function setNextRunDate(?DateTimeInterface $next_run_date): void
     {
-        return $this->next_run_date;
+        $this->next_run_date = $next_run_date;
+    }
+
+    /**
+     * @param bool|null $is_subscribed
+     */
+    public function setIsSubscribed(?bool $is_subscribed): void
+    {
+        $this->is_subscribed = $is_subscribed;
     }
 
     /**
@@ -644,14 +614,6 @@ final class Digest extends Base
     public function getTemplateId(): OdooRelation
     {
         return $this->template_id;
-    }
-
-    /**
-     * @param string|null $state
-     */
-    public function setState(?string $state): void
-    {
-        $this->state = $state;
     }
 
     /**
@@ -724,24 +686,6 @@ final class Digest extends Base
     public function isIsSubscribed(): ?bool
     {
         return $this->is_subscribed;
-    }
-
-    /**
-     * @param bool|null $is_subscribed
-     */
-    public function setIsSubscribed(?bool $is_subscribed): void
-    {
-        $this->is_subscribed = $is_subscribed;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("state")
-     */
-    public function getState(): ?string
-    {
-        return $this->state;
     }
 
     /**

@@ -214,6 +214,23 @@ final class Type extends Base
     private $previous_type_ids;
 
     /**
+     * Action to Perform
+     * ---
+     * Actions may trigger specific behavior like opening calendar view or automatically mark as done when a document
+     * is uploaded
+     * ---
+     * Selection : (default value, usually null)
+     *     -> default (None)
+     *     -> upload_file (Upload Document)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $category;
+
+    /**
      * Email templates
      * ---
      * Relation : many2many (mail.template)
@@ -275,24 +292,6 @@ final class Type extends Base
      * @var bool|null
      */
     private $res_model_change;
-
-    /**
-     * Action to Perform
-     * ---
-     * Actions may trigger specific behavior like opening calendar view or automatically mark as done when a document
-     * is uploaded
-     * ---
-     * Selection : (default value, usually null)
-     *     -> default (None)
-     *     -> upload_file (Upload Document)
-     *     -> tax_report (Tax report)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $category;
 
     /**
      * Created on
@@ -362,13 +361,13 @@ final class Type extends Base
     }
 
     /**
-     * @return string|null
+     * @return OdooRelation|null
      *
-     * @SerializedName("default_description")
+     * @SerializedName("default_user_id")
      */
-    public function getDefaultDescription(): ?string
+    public function getDefaultUserId(): ?OdooRelation
     {
-        return $this->default_description;
+        return $this->default_user_id;
     }
 
     /**
@@ -435,6 +434,24 @@ final class Type extends Base
     }
 
     /**
+     * @return string|null
+     *
+     * @SerializedName("category")
+     */
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param string|null $category
+     */
+    public function setCategory(?string $category): void
+    {
+        $this->category = $category;
+    }
+
+    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("mail_template_ids")
@@ -498,29 +515,11 @@ final class Type extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("default_user_id")
-     */
-    public function getDefaultUserId(): ?OdooRelation
-    {
-        return $this->default_user_id;
-    }
-
-    /**
      * @param OdooRelation|null $default_user_id
      */
     public function setDefaultUserId(?OdooRelation $default_user_id): void
     {
         $this->default_user_id = $default_user_id;
-    }
-
-    /**
-     * @param string|null $default_description
-     */
-    public function setDefaultDescription(?string $default_description): void
-    {
-        $this->default_description = $default_description;
     }
 
     /**
@@ -537,6 +536,24 @@ final class Type extends Base
         }
 
         $this->next_type_ids[] = $item;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("default_description")
+     */
+    public function getDefaultDescription(): ?string
+    {
+        return $this->default_description;
+    }
+
+    /**
+     * @param string|null $default_description
+     */
+    public function setDefaultDescription(?string $default_description): void
+    {
+        $this->default_description = $default_description;
     }
 
     /**
@@ -573,24 +590,6 @@ final class Type extends Base
     public function setResModelChange(?bool $res_model_change): void
     {
         $this->res_model_change = $res_model_change;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("category")
-     */
-    public function getCategory(): ?string
-    {
-        return $this->category;
-    }
-
-    /**
-     * @param string|null $category
-     */
-    public function setCategory(?string $category): void
-    {
-        $this->category = $category;
     }
 
     /**

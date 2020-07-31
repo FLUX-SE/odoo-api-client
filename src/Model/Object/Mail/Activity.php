@@ -90,7 +90,6 @@ final class Activity extends Base
      * Selection : (default value, usually null)
      *     -> default (None)
      *     -> upload_file (Upload Document)
-     *     -> tax_report (Tax report)
      * ---
      * Searchable : yes
      * Sortable : no

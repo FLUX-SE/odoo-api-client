@@ -212,6 +212,14 @@ final class Cron extends Server
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $binding_type Binding Type
+     *        ---
+     *        Selection : (default value, usually null)
+     *            -> action (Action)
+     *            -> report (Report)
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $state Action To Do
      *        ---
      *        Type of server action. The following values are available:
@@ -235,14 +243,6 @@ final class Cron extends Server
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param string $binding_type Binding Type
-     *        ---
-     *        Selection : (default value, usually null)
-     *            -> action (Action)
-     *            -> report (Report)
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
      */
     public function __construct(
         OdooRelation $ir_actions_server_id,
@@ -253,8 +253,8 @@ final class Cron extends Server
         string $usage,
         OdooRelation $model_id,
         string $activity_user_type,
-        string $state,
-        string $binding_type
+        string $binding_type,
+        string $state
     ) {
         $this->ir_actions_server_id = $ir_actions_server_id;
         $this->user_id = $user_id;
@@ -265,8 +265,8 @@ final class Cron extends Server
             $usage,
             $model_id,
             $activity_user_type,
-            $state,
-            $binding_type
+            $binding_type,
+            $state
         );
     }
 

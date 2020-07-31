@@ -1079,111 +1079,92 @@ final class Settings extends Base
     private $use_invoice_terms;
 
     /**
-     * Fiscalyear Last Day
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var int
-     */
-    private $fiscalyear_last_day;
-
-    /**
-     * Fiscalyear Last Month
+     * Processing Option
      * ---
      * Selection : (default value, usually null)
-     *     -> 1 (January)
-     *     -> 2 (February)
-     *     -> 3 (March)
-     *     -> 4 (April)
-     *     -> 5 (May)
-     *     -> 6 (June)
-     *     -> 7 (July)
-     *     -> 8 (August)
-     *     -> 9 (September)
-     *     -> 10 (October)
-     *     -> 11 (November)
-     *     -> 12 (December)
+     *     -> no_send (Do not digitalize bills)
+     *     -> manual_send (Digitalize bills on demand only)
+     *     -> auto_send (Digitalize all bills automatically)
      * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var string
+     * @var string|null
      */
-    private $fiscalyear_last_month;
+    private $extract_show_ocr_option_selection;
 
     /**
-     * Lock Date for Non-Advisers
-     * ---
-     * Only users with the 'Adviser' role can edit accounts prior to and inclusive of this date. Use it for period
-     * locking inside an open fiscal year, for example.
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var DateTimeInterface|null
-     */
-    private $period_lock_date;
-
-    /**
-     * Lock Date for All Users
-     * ---
-     * No users, including Advisers, can edit accounts prior to and inclusive of this date. Use it for fiscal year
-     * locking for example.
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var DateTimeInterface|null
-     */
-    private $fiscalyear_lock_date;
-
-    /**
-     * Tax Lock Date
-     * ---
-     * No users can edit journal entries related to a tax prior and inclusive of this date.
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var DateTimeInterface|null
-     */
-    private $tax_lock_date;
-
-    /**
-     * Anglo-Saxon Accounting
+     * OCR Single Invoice Line Per Tax
      * ---
      * Searchable : yes
      * Sortable : no
      *
      * @var bool|null
      */
-    private $use_anglo_saxon;
+    private $extract_single_line_per_tax;
 
     /**
-     * Account Predictive Bills
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $module_account_predictive_bills;
-
-    /**
-     * Transfer Account
-     * ---
-     * Intermediary account used when moving money from a liquidity account to another
-     * ---
-     * Relation : many2one (account.account)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * Verify VAT Numbers
      * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var OdooRelation|null
+     * @var bool|null
      */
-    private $transfer_account_id;
+    private $vat_check_vies;
+
+    /**
+     * Interval Unit
+     * ---
+     * Selection : (default value, usually null)
+     *     -> manually (Manually)
+     *     -> daily (Daily)
+     *     -> weekly (Weekly)
+     *     -> monthly (Monthly)
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $currency_interval_unit;
+
+    /**
+     * Service Provider
+     * ---
+     * Selection : (default value, usually null)
+     *     -> ecb (European Central Bank)
+     *     -> fta (Federal Tax Administration (Switzerland))
+     *     -> banxico (Mexican Bank)
+     *     -> boc (Bank Of Canada)
+     *     -> xe_com (xe.com)
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $currency_provider;
+
+    /**
+     * Next Execution Date
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var DateTimeInterface|null
+     */
+    private $currency_next_execution_date;
+
+    /**
+     * Send by Post
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $invoice_is_snailmail;
 
     /**
      * Company Country code
@@ -1279,145 +1260,6 @@ final class Settings extends Base
     private $account_check_printing_margin_right;
 
     /**
-     * Processing Option
-     * ---
-     * Selection : (default value, usually null)
-     *     -> no_send (Do not digitalize bills)
-     *     -> manual_send (Digitalize bills on demand only)
-     *     -> auto_send (Digitalize all bills automatically)
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $extract_show_ocr_option_selection;
-
-    /**
-     * OCR Single Invoice Line Per Tax
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $extract_single_line_per_tax;
-
-    /**
-     * Verify VAT Numbers
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $vat_check_vies;
-
-    /**
-     * Interval Unit
-     * ---
-     * Selection : (default value, usually null)
-     *     -> manually (Manually)
-     *     -> daily (Daily)
-     *     -> weekly (Weekly)
-     *     -> monthly (Monthly)
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $currency_interval_unit;
-
-    /**
-     * Service Provider
-     * ---
-     * Selection : (default value, usually null)
-     *     -> ecb (European Central Bank)
-     *     -> fta (Federal Tax Administration (Switzerland))
-     *     -> banxico (Mexican Bank)
-     *     -> boc (Bank Of Canada)
-     *     -> xe_com (xe.com)
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $currency_provider;
-
-    /**
-     * Next Execution Date
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var DateTimeInterface|null
-     */
-    private $currency_next_execution_date;
-
-    /**
-     * Send by Post
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $invoice_is_snailmail;
-
-    /**
-     * Add totals below sections
-     * ---
-     * When ticked, totals and subtotals appear below the sections of the report.
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $totals_below_sections;
-
-    /**
-     * Periodicity
-     * ---
-     * Periodicity
-     * ---
-     * Selection : (default value, usually null)
-     *     -> trimester (trimester)
-     *     -> monthly (monthly)
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string
-     */
-    private $account_tax_periodicity;
-
-    /**
-     * Reminder
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var int
-     */
-    private $account_tax_periodicity_reminder_day;
-
-    /**
-     * Journal
-     * ---
-     * Relation : many2one (account.journal)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation|null
-     */
-    private $account_tax_periodicity_journal_id;
-
-    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -1488,67 +1330,161 @@ final class Settings extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param int $fiscalyear_last_day Fiscalyear Last Day
-     *        ---
-     *        Searchable : yes
-     *        Sortable : no
-     * @param string $fiscalyear_last_month Fiscalyear Last Month
-     *        ---
-     *        Selection : (default value, usually null)
-     *            -> 1 (January)
-     *            -> 2 (February)
-     *            -> 3 (March)
-     *            -> 4 (April)
-     *            -> 5 (May)
-     *            -> 6 (June)
-     *            -> 7 (July)
-     *            -> 8 (August)
-     *            -> 9 (September)
-     *            -> 10 (October)
-     *            -> 11 (November)
-     *            -> 12 (December)
-     *        ---
-     *        Searchable : yes
-     *        Sortable : no
-     * @param string $account_tax_periodicity Periodicity
-     *        ---
-     *        Periodicity
-     *        ---
-     *        Selection : (default value, usually null)
-     *            -> trimester (trimester)
-     *            -> monthly (monthly)
-     *        ---
-     *        Searchable : yes
-     *        Sortable : no
-     * @param int $account_tax_periodicity_reminder_day Reminder
-     *        ---
-     *        Searchable : yes
-     *        Sortable : no
      */
     public function __construct(
         OdooRelation $company_id,
         OdooRelation $currency_id,
-        string $show_line_subtotals_tax_selection,
-        int $fiscalyear_last_day,
-        string $fiscalyear_last_month,
-        string $account_tax_periodicity,
-        int $account_tax_periodicity_reminder_day
+        string $show_line_subtotals_tax_selection
     ) {
         $this->company_id = $company_id;
         $this->currency_id = $currency_id;
         $this->show_line_subtotals_tax_selection = $show_line_subtotals_tax_selection;
-        $this->fiscalyear_last_day = $fiscalyear_last_day;
-        $this->fiscalyear_last_month = $fiscalyear_last_month;
-        $this->account_tax_periodicity = $account_tax_periodicity;
-        $this->account_tax_periodicity_reminder_day = $account_tax_periodicity_reminder_day;
     }
 
     /**
-     * @param bool|null $module_snailmail_account
+     * @return bool|null
+     *
+     * @SerializedName("module_account_bank_statement_import_csv")
      */
-    public function setModuleSnailmailAccount(?bool $module_snailmail_account): void
+    public function isModuleAccountBankStatementImportCsv(): ?bool
     {
-        $this->module_snailmail_account = $module_snailmail_account;
+        return $this->module_account_bank_statement_import_csv;
+    }
+
+    /**
+     * @param bool|null $module_account_sepa
+     */
+    public function setModuleAccountSepa(?bool $module_account_sepa): void
+    {
+        $this->module_account_sepa = $module_account_sepa;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_account_sepa_direct_debit")
+     */
+    public function isModuleAccountSepaDirectDebit(): ?bool
+    {
+        return $this->module_account_sepa_direct_debit;
+    }
+
+    /**
+     * @param bool|null $module_account_sepa_direct_debit
+     */
+    public function setModuleAccountSepaDirectDebit(?bool $module_account_sepa_direct_debit): void
+    {
+        $this->module_account_sepa_direct_debit = $module_account_sepa_direct_debit;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_account_plaid")
+     */
+    public function isModuleAccountPlaid(): ?bool
+    {
+        return $this->module_account_plaid;
+    }
+
+    /**
+     * @param bool|null $module_account_plaid
+     */
+    public function setModuleAccountPlaid(?bool $module_account_plaid): void
+    {
+        $this->module_account_plaid = $module_account_plaid;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_account_yodlee")
+     */
+    public function isModuleAccountYodlee(): ?bool
+    {
+        return $this->module_account_yodlee;
+    }
+
+    /**
+     * @param bool|null $module_account_yodlee
+     */
+    public function setModuleAccountYodlee(?bool $module_account_yodlee): void
+    {
+        $this->module_account_yodlee = $module_account_yodlee;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_account_bank_statement_import_qif")
+     */
+    public function isModuleAccountBankStatementImportQif(): ?bool
+    {
+        return $this->module_account_bank_statement_import_qif;
+    }
+
+    /**
+     * @param bool|null $module_account_bank_statement_import_qif
+     */
+    public function setModuleAccountBankStatementImportQif(
+        ?bool $module_account_bank_statement_import_qif
+    ): void {
+        $this->module_account_bank_statement_import_qif = $module_account_bank_statement_import_qif;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_account_bank_statement_import_ofx")
+     */
+    public function isModuleAccountBankStatementImportOfx(): ?bool
+    {
+        return $this->module_account_bank_statement_import_ofx;
+    }
+
+    /**
+     * @param bool|null $module_account_bank_statement_import_ofx
+     */
+    public function setModuleAccountBankStatementImportOfx(
+        ?bool $module_account_bank_statement_import_ofx
+    ): void {
+        $this->module_account_bank_statement_import_ofx = $module_account_bank_statement_import_ofx;
+    }
+
+    /**
+     * @param bool|null $module_account_bank_statement_import_csv
+     */
+    public function setModuleAccountBankStatementImportCsv(
+        ?bool $module_account_bank_statement_import_csv
+    ): void {
+        $this->module_account_bank_statement_import_csv = $module_account_bank_statement_import_csv;
+    }
+
+    /**
+     * @param bool|null $module_account_batch_payment
+     */
+    public function setModuleAccountBatchPayment(?bool $module_account_batch_payment): void
+    {
+        $this->module_account_batch_payment = $module_account_batch_payment;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_account_bank_statement_import_camt")
+     */
+    public function isModuleAccountBankStatementImportCamt(): ?bool
+    {
+        return $this->module_account_bank_statement_import_camt;
+    }
+
+    /**
+     * @param bool|null $module_account_bank_statement_import_camt
+     */
+    public function setModuleAccountBankStatementImportCamt(
+        ?bool $module_account_bank_statement_import_camt
+    ): void {
+        $this->module_account_bank_statement_import_camt = $module_account_bank_statement_import_camt;
     }
 
     /**
@@ -1644,11 +1580,21 @@ final class Settings extends Base
     /**
      * @return bool|null
      *
-     * @SerializedName("module_account_invoice_extract")
+     * @SerializedName("module_account_sepa")
      */
-    public function isModuleAccountInvoiceExtract(): ?bool
+    public function isModuleAccountSepa(): ?bool
     {
-        return $this->module_account_invoice_extract;
+        return $this->module_account_sepa;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_account_batch_payment")
+     */
+    public function isModuleAccountBatchPayment(): ?bool
+    {
+        return $this->module_account_batch_payment;
     }
 
     /**
@@ -1660,184 +1606,111 @@ final class Settings extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("module_snailmail_account")
+     * @param bool|null $group_fiscal_year
      */
-    public function isModuleSnailmailAccount(): ?bool
+    public function setGroupFiscalYear(?bool $group_fiscal_year): void
     {
-        return $this->module_snailmail_account;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("tax_exigibility")
-     */
-    public function isTaxExigibility(): ?bool
-    {
-        return $this->tax_exigibility;
+        $this->group_fiscal_year = $group_fiscal_year;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("module_account_bank_statement_import_camt")
+     * @SerializedName("module_account_accountant")
      */
-    public function isModuleAccountBankStatementImportCamt(): ?bool
+    public function isModuleAccountAccountant(): ?bool
     {
-        return $this->module_account_bank_statement_import_camt;
+        return $this->module_account_accountant;
     }
 
     /**
-     * @param bool|null $tax_exigibility
+     * @param bool|null $module_account_accountant
      */
-    public function setTaxExigibility(?bool $tax_exigibility): void
+    public function setModuleAccountAccountant(?bool $module_account_accountant): void
     {
-        $this->tax_exigibility = $tax_exigibility;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("tax_cash_basis_journal_id")
-     */
-    public function getTaxCashBasisJournalId(): ?OdooRelation
-    {
-        return $this->tax_cash_basis_journal_id;
-    }
-
-    /**
-     * @param OdooRelation|null $tax_cash_basis_journal_id
-     */
-    public function setTaxCashBasisJournalId(?OdooRelation $tax_cash_basis_journal_id): void
-    {
-        $this->tax_cash_basis_journal_id = $tax_cash_basis_journal_id;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("account_bank_reconciliation_start")
-     */
-    public function getAccountBankReconciliationStart(): ?DateTimeInterface
-    {
-        return $this->account_bank_reconciliation_start;
-    }
-
-    /**
-     * @param DateTimeInterface|null $account_bank_reconciliation_start
-     */
-    public function setAccountBankReconciliationStart(
-        ?DateTimeInterface $account_bank_reconciliation_start
-    ): void {
-        $this->account_bank_reconciliation_start = $account_bank_reconciliation_start;
+        $this->module_account_accountant = $module_account_accountant;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("qr_code")
+     * @SerializedName("group_analytic_accounting")
      */
-    public function isQrCode(): ?bool
+    public function isGroupAnalyticAccounting(): ?bool
     {
-        return $this->qr_code;
+        return $this->group_analytic_accounting;
     }
 
     /**
-     * @param bool|null $qr_code
+     * @param bool|null $group_analytic_accounting
      */
-    public function setQrCode(?bool $qr_code): void
+    public function setGroupAnalyticAccounting(?bool $group_analytic_accounting): void
     {
-        $this->qr_code = $qr_code;
+        $this->group_analytic_accounting = $group_analytic_accounting;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("invoice_is_print")
+     * @SerializedName("group_analytic_tags")
      */
-    public function isInvoiceIsPrint(): ?bool
+    public function isGroupAnalyticTags(): ?bool
     {
-        return $this->invoice_is_print;
+        return $this->group_analytic_tags;
     }
 
     /**
-     * @param bool|null $invoice_is_print
+     * @param bool|null $group_analytic_tags
      */
-    public function setInvoiceIsPrint(?bool $invoice_is_print): void
+    public function setGroupAnalyticTags(?bool $group_analytic_tags): void
     {
-        $this->invoice_is_print = $invoice_is_print;
+        $this->group_analytic_tags = $group_analytic_tags;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("invoice_is_email")
+     * @SerializedName("group_warning_account")
      */
-    public function isInvoiceIsEmail(): ?bool
+    public function isGroupWarningAccount(): ?bool
     {
-        return $this->invoice_is_email;
+        return $this->group_warning_account;
     }
 
     /**
-     * @param bool|null $invoice_is_email
+     * @param bool|null $group_warning_account
      */
-    public function setInvoiceIsEmail(?bool $invoice_is_email): void
+    public function setGroupWarningAccount(?bool $group_warning_account): void
     {
-        $this->invoice_is_email = $invoice_is_email;
+        $this->group_warning_account = $group_warning_account;
     }
 
     /**
-     * @return OdooRelation|null
+     * @return bool|null
      *
-     * @SerializedName("incoterm_id")
+     * @SerializedName("group_cash_rounding")
      */
-    public function getIncotermId(): ?OdooRelation
+    public function isGroupCashRounding(): ?bool
     {
-        return $this->incoterm_id;
+        return $this->group_cash_rounding;
     }
 
     /**
-     * @param OdooRelation|null $incoterm_id
+     * @param bool|null $group_cash_rounding
      */
-    public function setIncotermId(?OdooRelation $incoterm_id): void
+    public function setGroupCashRounding(?bool $group_cash_rounding): void
     {
-        $this->incoterm_id = $incoterm_id;
+        $this->group_cash_rounding = $group_cash_rounding;
     }
 
     /**
-     * @param bool|null $module_account_bank_statement_import_camt
+     * @return bool|null
+     *
+     * @SerializedName("group_fiscal_year")
      */
-    public function setModuleAccountBankStatementImportCamt(
-        ?bool $module_account_bank_statement_import_camt
-    ): void {
-        $this->module_account_bank_statement_import_camt = $module_account_bank_statement_import_camt;
-    }
-
-    /**
-     * @param bool|null $module_account_bank_statement_import_csv
-     */
-    public function setModuleAccountBankStatementImportCsv(
-        ?bool $module_account_bank_statement_import_csv
-    ): void {
-        $this->module_account_bank_statement_import_csv = $module_account_bank_statement_import_csv;
-    }
-
-    /**
-     * @param string|null $invoice_terms
-     */
-    public function setInvoiceTerms(?string $invoice_terms): void
+    public function isGroupFiscalYear(): ?bool
     {
-        $this->invoice_terms = $invoice_terms;
-    }
-
-    /**
-     * @param bool|null $module_account_check_printing
-     */
-    public function setModuleAccountCheckPrinting(?bool $module_account_check_printing): void
-    {
-        $this->module_account_check_printing = $module_account_check_printing;
+        return $this->group_fiscal_year;
     }
 
     /**
@@ -1848,6 +1721,14 @@ final class Settings extends Base
     public function isGroupShowLineSubtotalsTaxExcluded(): ?bool
     {
         return $this->group_show_line_subtotals_tax_excluded;
+    }
+
+    /**
+     * @param bool|null $module_account_check_printing
+     */
+    public function setModuleAccountCheckPrinting(?bool $module_account_check_printing): void
+    {
+        $this->module_account_check_printing = $module_account_check_printing;
     }
 
     /**
@@ -1963,259 +1844,41 @@ final class Settings extends Base
     /**
      * @return bool|null
      *
-     * @SerializedName("module_account_batch_payment")
+     * @SerializedName("module_account_invoice_extract")
      */
-    public function isModuleAccountBatchPayment(): ?bool
+    public function isModuleAccountInvoiceExtract(): ?bool
     {
-        return $this->module_account_batch_payment;
+        return $this->module_account_invoice_extract;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("module_account_bank_statement_import_csv")
+     * @SerializedName("module_snailmail_account")
      */
-    public function isModuleAccountBankStatementImportCsv(): ?bool
+    public function isModuleSnailmailAccount(): ?bool
     {
-        return $this->module_account_bank_statement_import_csv;
-    }
-
-    /**
-     * @param bool|null $module_account_batch_payment
-     */
-    public function setModuleAccountBatchPayment(?bool $module_account_batch_payment): void
-    {
-        $this->module_account_batch_payment = $module_account_batch_payment;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_account_sepa")
-     */
-    public function isModuleAccountSepa(): ?bool
-    {
-        return $this->module_account_sepa;
-    }
-
-    /**
-     * @param bool|null $module_account_sepa
-     */
-    public function setModuleAccountSepa(?bool $module_account_sepa): void
-    {
-        $this->module_account_sepa = $module_account_sepa;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_account_sepa_direct_debit")
-     */
-    public function isModuleAccountSepaDirectDebit(): ?bool
-    {
-        return $this->module_account_sepa_direct_debit;
-    }
-
-    /**
-     * @param bool|null $module_account_sepa_direct_debit
-     */
-    public function setModuleAccountSepaDirectDebit(?bool $module_account_sepa_direct_debit): void
-    {
-        $this->module_account_sepa_direct_debit = $module_account_sepa_direct_debit;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_account_plaid")
-     */
-    public function isModuleAccountPlaid(): ?bool
-    {
-        return $this->module_account_plaid;
-    }
-
-    /**
-     * @param bool|null $module_account_plaid
-     */
-    public function setModuleAccountPlaid(?bool $module_account_plaid): void
-    {
-        $this->module_account_plaid = $module_account_plaid;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_account_yodlee")
-     */
-    public function isModuleAccountYodlee(): ?bool
-    {
-        return $this->module_account_yodlee;
-    }
-
-    /**
-     * @param bool|null $module_account_yodlee
-     */
-    public function setModuleAccountYodlee(?bool $module_account_yodlee): void
-    {
-        $this->module_account_yodlee = $module_account_yodlee;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_account_bank_statement_import_qif")
-     */
-    public function isModuleAccountBankStatementImportQif(): ?bool
-    {
-        return $this->module_account_bank_statement_import_qif;
-    }
-
-    /**
-     * @param bool|null $module_account_bank_statement_import_qif
-     */
-    public function setModuleAccountBankStatementImportQif(
-        ?bool $module_account_bank_statement_import_qif
-    ): void {
-        $this->module_account_bank_statement_import_qif = $module_account_bank_statement_import_qif;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_account_bank_statement_import_ofx")
-     */
-    public function isModuleAccountBankStatementImportOfx(): ?bool
-    {
-        return $this->module_account_bank_statement_import_ofx;
-    }
-
-    /**
-     * @param bool|null $module_account_bank_statement_import_ofx
-     */
-    public function setModuleAccountBankStatementImportOfx(
-        ?bool $module_account_bank_statement_import_ofx
-    ): void {
-        $this->module_account_bank_statement_import_ofx = $module_account_bank_statement_import_ofx;
+        return $this->module_snailmail_account;
     }
 
     /**
      * @return string|null
      *
-     * @SerializedName("invoice_terms")
+     * @SerializedName("tax_calculation_rounding_method")
      */
-    public function getInvoiceTerms(): ?string
+    public function getTaxCalculationRoundingMethod(): ?string
     {
-        return $this->invoice_terms;
+        return $this->tax_calculation_rounding_method;
     }
 
     /**
-     * @return bool|null
+     * @return float|null
      *
-     * @SerializedName("use_invoice_terms")
+     * @SerializedName("account_check_printing_margin_top")
      */
-    public function isUseInvoiceTerms(): ?bool
+    public function getAccountCheckPrintingMarginTop(): ?float
     {
-        return $this->use_invoice_terms;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("group_fiscal_year")
-     */
-    public function isGroupFiscalYear(): ?bool
-    {
-        return $this->group_fiscal_year;
-    }
-
-    /**
-     * @param bool|null $totals_below_sections
-     */
-    public function setTotalsBelowSections(?bool $totals_below_sections): void
-    {
-        $this->totals_below_sections = $totals_below_sections;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("extract_single_line_per_tax")
-     */
-    public function isExtractSingleLinePerTax(): ?bool
-    {
-        return $this->extract_single_line_per_tax;
-    }
-
-    /**
-     * @param bool|null $extract_single_line_per_tax
-     */
-    public function setExtractSingleLinePerTax(?bool $extract_single_line_per_tax): void
-    {
-        $this->extract_single_line_per_tax = $extract_single_line_per_tax;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("vat_check_vies")
-     */
-    public function isVatCheckVies(): ?bool
-    {
-        return $this->vat_check_vies;
-    }
-
-    /**
-     * @param bool|null $vat_check_vies
-     */
-    public function setVatCheckVies(?bool $vat_check_vies): void
-    {
-        $this->vat_check_vies = $vat_check_vies;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("currency_interval_unit")
-     */
-    public function getCurrencyIntervalUnit(): ?string
-    {
-        return $this->currency_interval_unit;
-    }
-
-    /**
-     * @param string|null $currency_interval_unit
-     */
-    public function setCurrencyIntervalUnit(?string $currency_interval_unit): void
-    {
-        $this->currency_interval_unit = $currency_interval_unit;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("currency_provider")
-     */
-    public function getCurrencyProvider(): ?string
-    {
-        return $this->currency_provider;
-    }
-
-    /**
-     * @param string|null $currency_provider
-     */
-    public function setCurrencyProvider(?string $currency_provider): void
-    {
-        $this->currency_provider = $currency_provider;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("currency_next_execution_date")
-     */
-    public function getCurrencyNextExecutionDate(): ?DateTimeInterface
-    {
-        return $this->currency_next_execution_date;
+        return $this->account_check_printing_margin_top;
     }
 
     /**
@@ -2242,331 +1905,6 @@ final class Settings extends Base
     public function setInvoiceIsSnailmail(?bool $invoice_is_snailmail): void
     {
         $this->invoice_is_snailmail = $invoice_is_snailmail;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("totals_below_sections")
-     */
-    public function isTotalsBelowSections(): ?bool
-    {
-        return $this->totals_below_sections;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("account_tax_periodicity")
-     */
-    public function getAccountTaxPeriodicity(): string
-    {
-        return $this->account_tax_periodicity;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("extract_show_ocr_option_selection")
-     */
-    public function getExtractShowOcrOptionSelection(): ?string
-    {
-        return $this->extract_show_ocr_option_selection;
-    }
-
-    /**
-     * @param string $account_tax_periodicity
-     */
-    public function setAccountTaxPeriodicity(string $account_tax_periodicity): void
-    {
-        $this->account_tax_periodicity = $account_tax_periodicity;
-    }
-
-    /**
-     * @return int
-     *
-     * @SerializedName("account_tax_periodicity_reminder_day")
-     */
-    public function getAccountTaxPeriodicityReminderDay(): int
-    {
-        return $this->account_tax_periodicity_reminder_day;
-    }
-
-    /**
-     * @param int $account_tax_periodicity_reminder_day
-     */
-    public function setAccountTaxPeriodicityReminderDay(int $account_tax_periodicity_reminder_day): void
-    {
-        $this->account_tax_periodicity_reminder_day = $account_tax_periodicity_reminder_day;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("account_tax_periodicity_journal_id")
-     */
-    public function getAccountTaxPeriodicityJournalId(): ?OdooRelation
-    {
-        return $this->account_tax_periodicity_journal_id;
-    }
-
-    /**
-     * @param OdooRelation|null $account_tax_periodicity_journal_id
-     */
-    public function setAccountTaxPeriodicityJournalId(
-        ?OdooRelation $account_tax_periodicity_journal_id
-    ): void {
-        $this->account_tax_periodicity_journal_id = $account_tax_periodicity_journal_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
-     */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $create_uid
-     */
-    public function setCreateUid(?OdooRelation $create_uid): void
-    {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("create_date")
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("write_uid")
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("write_date")
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $write_date
-     */
-    public function setWriteDate(?DateTimeInterface $write_date): void
-    {
-        $this->write_date = $write_date;
-    }
-
-    /**
-     * @param string|null $extract_show_ocr_option_selection
-     */
-    public function setExtractShowOcrOptionSelection(?string $extract_show_ocr_option_selection): void
-    {
-        $this->extract_show_ocr_option_selection = $extract_show_ocr_option_selection;
-    }
-
-    /**
-     * @param float|null $account_check_printing_margin_right
-     */
-    public function setAccountCheckPrintingMarginRight(?float $account_check_printing_margin_right): void
-    {
-        $this->account_check_printing_margin_right = $account_check_printing_margin_right;
-    }
-
-    /**
-     * @param bool|null $use_invoice_terms
-     */
-    public function setUseInvoiceTerms(?bool $use_invoice_terms): void
-    {
-        $this->use_invoice_terms = $use_invoice_terms;
-    }
-
-    /**
-     * @param bool|null $module_account_predictive_bills
-     */
-    public function setModuleAccountPredictiveBills(?bool $module_account_predictive_bills): void
-    {
-        $this->module_account_predictive_bills = $module_account_predictive_bills;
-    }
-
-    /**
-     * @return int
-     *
-     * @SerializedName("fiscalyear_last_day")
-     */
-    public function getFiscalyearLastDay(): int
-    {
-        return $this->fiscalyear_last_day;
-    }
-
-    /**
-     * @param int $fiscalyear_last_day
-     */
-    public function setFiscalyearLastDay(int $fiscalyear_last_day): void
-    {
-        $this->fiscalyear_last_day = $fiscalyear_last_day;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("fiscalyear_last_month")
-     */
-    public function getFiscalyearLastMonth(): string
-    {
-        return $this->fiscalyear_last_month;
-    }
-
-    /**
-     * @param string $fiscalyear_last_month
-     */
-    public function setFiscalyearLastMonth(string $fiscalyear_last_month): void
-    {
-        $this->fiscalyear_last_month = $fiscalyear_last_month;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("period_lock_date")
-     */
-    public function getPeriodLockDate(): ?DateTimeInterface
-    {
-        return $this->period_lock_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $period_lock_date
-     */
-    public function setPeriodLockDate(?DateTimeInterface $period_lock_date): void
-    {
-        $this->period_lock_date = $period_lock_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("fiscalyear_lock_date")
-     */
-    public function getFiscalyearLockDate(): ?DateTimeInterface
-    {
-        return $this->fiscalyear_lock_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $fiscalyear_lock_date
-     */
-    public function setFiscalyearLockDate(?DateTimeInterface $fiscalyear_lock_date): void
-    {
-        $this->fiscalyear_lock_date = $fiscalyear_lock_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("tax_lock_date")
-     */
-    public function getTaxLockDate(): ?DateTimeInterface
-    {
-        return $this->tax_lock_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $tax_lock_date
-     */
-    public function setTaxLockDate(?DateTimeInterface $tax_lock_date): void
-    {
-        $this->tax_lock_date = $tax_lock_date;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("use_anglo_saxon")
-     */
-    public function isUseAngloSaxon(): ?bool
-    {
-        return $this->use_anglo_saxon;
-    }
-
-    /**
-     * @param bool|null $use_anglo_saxon
-     */
-    public function setUseAngloSaxon(?bool $use_anglo_saxon): void
-    {
-        $this->use_anglo_saxon = $use_anglo_saxon;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_account_predictive_bills")
-     */
-    public function isModuleAccountPredictiveBills(): ?bool
-    {
-        return $this->module_account_predictive_bills;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("transfer_account_id")
-     */
-    public function getTransferAccountId(): ?OdooRelation
-    {
-        return $this->transfer_account_id;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("account_check_printing_margin_right")
-     */
-    public function getAccountCheckPrintingMarginRight(): ?float
-    {
-        return $this->account_check_printing_margin_right;
-    }
-
-    /**
-     * @param OdooRelation|null $transfer_account_id
-     */
-    public function setTransferAccountId(?OdooRelation $transfer_account_id): void
-    {
-        $this->transfer_account_id = $transfer_account_id;
     }
 
     /**
@@ -2642,21 +1980,19 @@ final class Settings extends Base
     }
 
     /**
-     * @return float|null
-     *
-     * @SerializedName("account_check_printing_margin_top")
-     */
-    public function getAccountCheckPrintingMarginTop(): ?float
-    {
-        return $this->account_check_printing_margin_top;
-    }
-
-    /**
      * @param float|null $account_check_printing_margin_top
      */
     public function setAccountCheckPrintingMarginTop(?float $account_check_printing_margin_top): void
     {
         $this->account_check_printing_margin_top = $account_check_printing_margin_top;
+    }
+
+    /**
+     * @param string|null $currency_provider
+     */
+    public function setCurrencyProvider(?string $currency_provider): void
+    {
+        $this->currency_provider = $currency_provider;
     }
 
     /**
@@ -2678,19 +2014,372 @@ final class Settings extends Base
     }
 
     /**
-     * @param bool|null $group_fiscal_year
+     * @return float|null
+     *
+     * @SerializedName("account_check_printing_margin_right")
      */
-    public function setGroupFiscalYear(?bool $group_fiscal_year): void
+    public function getAccountCheckPrintingMarginRight(): ?float
     {
-        $this->group_fiscal_year = $group_fiscal_year;
+        return $this->account_check_printing_margin_right;
     }
 
     /**
-     * @param bool|null $group_cash_rounding
+     * @param float|null $account_check_printing_margin_right
      */
-    public function setGroupCashRounding(?bool $group_cash_rounding): void
+    public function setAccountCheckPrintingMarginRight(?float $account_check_printing_margin_right): void
     {
-        $this->group_cash_rounding = $group_cash_rounding;
+        $this->account_check_printing_margin_right = $account_check_printing_margin_right;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("currency_next_execution_date")
+     */
+    public function getCurrencyNextExecutionDate(): ?DateTimeInterface
+    {
+        return $this->currency_next_execution_date;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("currency_provider")
+     */
+    public function getCurrencyProvider(): ?string
+    {
+        return $this->currency_provider;
+    }
+
+    /**
+     * @param bool|null $module_snailmail_account
+     */
+    public function setModuleSnailmailAccount(?bool $module_snailmail_account): void
+    {
+        $this->module_snailmail_account = $module_snailmail_account;
+    }
+
+    /**
+     * @param bool|null $invoice_is_email
+     */
+    public function setInvoiceIsEmail(?bool $invoice_is_email): void
+    {
+        $this->invoice_is_email = $invoice_is_email;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("tax_exigibility")
+     */
+    public function isTaxExigibility(): ?bool
+    {
+        return $this->tax_exigibility;
+    }
+
+    /**
+     * @param bool|null $tax_exigibility
+     */
+    public function setTaxExigibility(?bool $tax_exigibility): void
+    {
+        $this->tax_exigibility = $tax_exigibility;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("tax_cash_basis_journal_id")
+     */
+    public function getTaxCashBasisJournalId(): ?OdooRelation
+    {
+        return $this->tax_cash_basis_journal_id;
+    }
+
+    /**
+     * @param OdooRelation|null $tax_cash_basis_journal_id
+     */
+    public function setTaxCashBasisJournalId(?OdooRelation $tax_cash_basis_journal_id): void
+    {
+        $this->tax_cash_basis_journal_id = $tax_cash_basis_journal_id;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("account_bank_reconciliation_start")
+     */
+    public function getAccountBankReconciliationStart(): ?DateTimeInterface
+    {
+        return $this->account_bank_reconciliation_start;
+    }
+
+    /**
+     * @param DateTimeInterface|null $account_bank_reconciliation_start
+     */
+    public function setAccountBankReconciliationStart(
+        ?DateTimeInterface $account_bank_reconciliation_start
+    ): void {
+        $this->account_bank_reconciliation_start = $account_bank_reconciliation_start;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("qr_code")
+     */
+    public function isQrCode(): ?bool
+    {
+        return $this->qr_code;
+    }
+
+    /**
+     * @param bool|null $qr_code
+     */
+    public function setQrCode(?bool $qr_code): void
+    {
+        $this->qr_code = $qr_code;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("invoice_is_print")
+     */
+    public function isInvoiceIsPrint(): ?bool
+    {
+        return $this->invoice_is_print;
+    }
+
+    /**
+     * @param bool|null $invoice_is_print
+     */
+    public function setInvoiceIsPrint(?bool $invoice_is_print): void
+    {
+        $this->invoice_is_print = $invoice_is_print;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("invoice_is_email")
+     */
+    public function isInvoiceIsEmail(): ?bool
+    {
+        return $this->invoice_is_email;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("incoterm_id")
+     */
+    public function getIncotermId(): ?OdooRelation
+    {
+        return $this->incoterm_id;
+    }
+
+    /**
+     * @param string|null $currency_interval_unit
+     */
+    public function setCurrencyIntervalUnit(?string $currency_interval_unit): void
+    {
+        $this->currency_interval_unit = $currency_interval_unit;
+    }
+
+    /**
+     * @param OdooRelation|null $incoterm_id
+     */
+    public function setIncotermId(?OdooRelation $incoterm_id): void
+    {
+        $this->incoterm_id = $incoterm_id;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("invoice_terms")
+     */
+    public function getInvoiceTerms(): ?string
+    {
+        return $this->invoice_terms;
+    }
+
+    /**
+     * @param string|null $invoice_terms
+     */
+    public function setInvoiceTerms(?string $invoice_terms): void
+    {
+        $this->invoice_terms = $invoice_terms;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("use_invoice_terms")
+     */
+    public function isUseInvoiceTerms(): ?bool
+    {
+        return $this->use_invoice_terms;
+    }
+
+    /**
+     * @param bool|null $use_invoice_terms
+     */
+    public function setUseInvoiceTerms(?bool $use_invoice_terms): void
+    {
+        $this->use_invoice_terms = $use_invoice_terms;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("extract_show_ocr_option_selection")
+     */
+    public function getExtractShowOcrOptionSelection(): ?string
+    {
+        return $this->extract_show_ocr_option_selection;
+    }
+
+    /**
+     * @param string|null $extract_show_ocr_option_selection
+     */
+    public function setExtractShowOcrOptionSelection(?string $extract_show_ocr_option_selection): void
+    {
+        $this->extract_show_ocr_option_selection = $extract_show_ocr_option_selection;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("extract_single_line_per_tax")
+     */
+    public function isExtractSingleLinePerTax(): ?bool
+    {
+        return $this->extract_single_line_per_tax;
+    }
+
+    /**
+     * @param bool|null $extract_single_line_per_tax
+     */
+    public function setExtractSingleLinePerTax(?bool $extract_single_line_per_tax): void
+    {
+        $this->extract_single_line_per_tax = $extract_single_line_per_tax;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("vat_check_vies")
+     */
+    public function isVatCheckVies(): ?bool
+    {
+        return $this->vat_check_vies;
+    }
+
+    /**
+     * @param bool|null $vat_check_vies
+     */
+    public function setVatCheckVies(?bool $vat_check_vies): void
+    {
+        $this->vat_check_vies = $vat_check_vies;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("currency_interval_unit")
+     */
+    public function getCurrencyIntervalUnit(): ?string
+    {
+        return $this->currency_interval_unit;
+    }
+
+    /**
+     * @param string|null $tax_calculation_rounding_method
+     */
+    public function setTaxCalculationRoundingMethod(?string $tax_calculation_rounding_method): void
+    {
+        $this->tax_calculation_rounding_method = $tax_calculation_rounding_method;
+    }
+
+    /**
+     * @param OdooRelation|null $purchase_tax_id
+     */
+    public function setPurchaseTaxId(?OdooRelation $purchase_tax_id): void
+    {
+        $this->purchase_tax_id = $purchase_tax_id;
     }
 
     /**
@@ -2704,13 +2393,39 @@ final class Settings extends Base
     }
 
     /**
-     * @return int|null
-     *
-     * @SerializedName("language_count")
+     * @param bool|null $show_effect
      */
-    public function getLanguageCount(): ?int
+    public function setShowEffect(?bool $show_effect): void
     {
-        return $this->language_count;
+        $this->show_effect = $show_effect;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_base_geolocalize")
+     */
+    public function isModuleBaseGeolocalize(): ?bool
+    {
+        return $this->module_base_geolocalize;
+    }
+
+    /**
+     * @param bool|null $module_base_geolocalize
+     */
+    public function setModuleBaseGeolocalize(?bool $module_base_geolocalize): void
+    {
+        $this->module_base_geolocalize = $module_base_geolocalize;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("report_footer")
+     */
+    public function getReportFooter(): ?string
+    {
+        return $this->report_footer;
     }
 
     /**
@@ -2786,14 +2501,6 @@ final class Settings extends Base
     }
 
     /**
-     * @param bool|null $show_effect
-     */
-    public function setShowEffect(?bool $show_effect): void
-    {
-        $this->show_effect = $show_effect;
-    }
-
-    /**
      * @return int|null
      *
      * @SerializedName("company_count")
@@ -2801,6 +2508,16 @@ final class Settings extends Base
     public function getCompanyCount(): ?int
     {
         return $this->company_count;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_partner_autocomplete")
+     */
+    public function isModulePartnerAutocomplete(): ?bool
+    {
+        return $this->module_partner_autocomplete;
     }
 
     /**
@@ -2830,19 +2547,21 @@ final class Settings extends Base
     }
 
     /**
+     * @return int|null
+     *
+     * @SerializedName("language_count")
+     */
+    public function getLanguageCount(): ?int
+    {
+        return $this->language_count;
+    }
+
+    /**
      * @param int|null $language_count
      */
     public function setLanguageCount(?int $language_count): void
     {
         $this->language_count = $language_count;
-    }
-
-    /**
-     * @param bool|null $module_base_geolocalize
-     */
-    public function setModuleBaseGeolocalize(?bool $module_base_geolocalize): void
-    {
-        $this->module_base_geolocalize = $module_base_geolocalize;
     }
 
     /**
@@ -2910,11 +2629,19 @@ final class Settings extends Base
     }
 
     /**
-     * @param string|null $alias_domain
+     * @param bool|null $module_partner_autocomplete
      */
-    public function setAliasDomain(?string $alias_domain): void
+    public function setModulePartnerAutocomplete(?bool $module_partner_autocomplete): void
     {
-        $this->alias_domain = $alias_domain;
+        $this->module_partner_autocomplete = $module_partner_autocomplete;
+    }
+
+    /**
+     * @param bool|null $module_web_unsplash
+     */
+    public function setModuleWebUnsplash(?bool $module_web_unsplash): void
+    {
+        $this->module_web_unsplash = $module_web_unsplash;
     }
 
     /**
@@ -2928,79 +2655,13 @@ final class Settings extends Base
     }
 
     /**
-     * @param string|null $map_box_token
-     */
-    public function setMapBoxToken(?string $map_box_token): void
-    {
-        $this->map_box_token = $map_box_token;
-    }
-
-    /**
      * @return bool|null
      *
-     * @SerializedName("module_ocn_client")
+     * @SerializedName("module_google_spreadsheet")
      */
-    public function isModuleOcnClient(): ?bool
+    public function isModuleGoogleSpreadsheet(): ?bool
     {
-        return $this->module_ocn_client;
-    }
-
-    /**
-     * @param bool|null $module_ocn_client
-     */
-    public function setModuleOcnClient(?bool $module_ocn_client): void
-    {
-        $this->module_ocn_client = $module_ocn_client;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("unsplash_access_key")
-     */
-    public function getUnsplashAccessKey(): ?string
-    {
-        return $this->unsplash_access_key;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("report_footer")
-     */
-    public function getReportFooter(): ?string
-    {
-        return $this->report_footer;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_base_geolocalize")
-     */
-    public function isModuleBaseGeolocalize(): ?bool
-    {
-        return $this->module_base_geolocalize;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("auth_signup_reset_password")
-     */
-    public function isAuthSignupResetPassword(): ?bool
-    {
-        return $this->auth_signup_reset_password;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_auth_oauth")
-     */
-    public function isModuleAuthOauth(): ?bool
-    {
-        return $this->module_auth_oauth;
+        return $this->module_google_spreadsheet;
     }
 
     /**
@@ -3102,16 +2763,6 @@ final class Settings extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("module_google_spreadsheet")
-     */
-    public function isModuleGoogleSpreadsheet(): ?bool
-    {
-        return $this->module_google_spreadsheet;
-    }
-
-    /**
      * @param bool|null $module_google_spreadsheet
      */
     public function setModuleGoogleSpreadsheet(?bool $module_google_spreadsheet): void
@@ -3120,19 +2771,31 @@ final class Settings extends Base
     }
 
     /**
+     * @return bool|null
+     *
+     * @SerializedName("module_web_unsplash")
+     */
+    public function isModuleWebUnsplash(): ?bool
+    {
+        return $this->module_web_unsplash;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_auth_oauth")
+     */
+    public function isModuleAuthOauth(): ?bool
+    {
+        return $this->module_auth_oauth;
+    }
+
+    /**
      * @param bool|null $module_auth_oauth
      */
     public function setModuleAuthOauth(?bool $module_auth_oauth): void
     {
         $this->module_auth_oauth = $module_auth_oauth;
-    }
-
-    /**
-     * @param bool|null $module_partner_autocomplete
-     */
-    public function setModulePartnerAutocomplete(?bool $module_partner_autocomplete): void
-    {
-        $this->module_partner_autocomplete = $module_partner_autocomplete;
     }
 
     /**
@@ -3226,65 +2889,119 @@ final class Settings extends Base
     }
 
     /**
+     * @param string|null $alias_domain
+     */
+    public function setAliasDomain(?string $alias_domain): void
+    {
+        $this->alias_domain = $alias_domain;
+    }
+
+    /**
+     * @param string|null $map_box_token
+     */
+    public function setMapBoxToken(?string $map_box_token): void
+    {
+        $this->map_box_token = $map_box_token;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("purchase_tax_id")
+     */
+    public function getPurchaseTaxId(): ?OdooRelation
+    {
+        return $this->purchase_tax_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("digest_id")
+     */
+    public function getDigestId(): ?OdooRelation
+    {
+        return $this->digest_id;
+    }
+
+    /**
+     * @param string|null $product_weight_in_lbs
+     */
+    public function setProductWeightInLbs(?string $product_weight_in_lbs): void
+    {
+        $this->product_weight_in_lbs = $product_weight_in_lbs;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("product_volume_volume_in_cubic_feet")
+     */
+    public function getProductVolumeVolumeInCubicFeet(): ?string
+    {
+        return $this->product_volume_volume_in_cubic_feet;
+    }
+
+    /**
+     * @param string|null $product_volume_volume_in_cubic_feet
+     */
+    public function setProductVolumeVolumeInCubicFeet(?string $product_volume_volume_in_cubic_feet): void
+    {
+        $this->product_volume_volume_in_cubic_feet = $product_volume_volume_in_cubic_feet;
+    }
+
+    /**
      * @return bool|null
      *
-     * @SerializedName("module_web_unsplash")
+     * @SerializedName("snailmail_color")
      */
-    public function isModuleWebUnsplash(): ?bool
+    public function isSnailmailColor(): ?bool
     {
-        return $this->module_web_unsplash;
+        return $this->snailmail_color;
     }
 
     /**
-     * @param bool|null $module_web_unsplash
+     * @param bool|null $snailmail_color
      */
-    public function setModuleWebUnsplash(?bool $module_web_unsplash): void
+    public function setSnailmailColor(?bool $snailmail_color): void
     {
-        $this->module_web_unsplash = $module_web_unsplash;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_partner_autocomplete")
-     */
-    public function isModulePartnerAutocomplete(): ?bool
-    {
-        return $this->module_partner_autocomplete;
-    }
-
-    /**
-     * @param string|null $unsplash_access_key
-     */
-    public function setUnsplashAccessKey(?string $unsplash_access_key): void
-    {
-        $this->unsplash_access_key = $unsplash_access_key;
-    }
-
-    /**
-     * @param bool|null $auth_signup_reset_password
-     */
-    public function setAuthSignupResetPassword(?bool $auth_signup_reset_password): void
-    {
-        $this->auth_signup_reset_password = $auth_signup_reset_password;
+        $this->snailmail_color = $snailmail_color;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("group_cash_rounding")
+     * @SerializedName("snailmail_cover")
      */
-    public function isGroupCashRounding(): ?bool
+    public function isSnailmailCover(): ?bool
     {
-        return $this->group_cash_rounding;
+        return $this->snailmail_cover;
     }
 
     /**
-     * @param OdooRelation|null $chart_template_id
+     * @param bool|null $snailmail_cover
      */
-    public function setChartTemplateId(?OdooRelation $chart_template_id): void
+    public function setSnailmailCover(?bool $snailmail_cover): void
     {
-        $this->chart_template_id = $chart_template_id;
+        $this->snailmail_cover = $snailmail_cover;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("snailmail_duplex")
+     */
+    public function isSnailmailDuplex(): ?bool
+    {
+        return $this->snailmail_duplex;
+    }
+
+    /**
+     * @param bool|null $snailmail_duplex
+     */
+    public function setSnailmailDuplex(?bool $snailmail_duplex): void
+    {
+        $this->snailmail_duplex = $snailmail_duplex;
     }
 
     /**
@@ -3306,21 +3023,19 @@ final class Settings extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("digest_id")
-     */
-    public function getDigestId(): ?OdooRelation
-    {
-        return $this->digest_id;
-    }
-
-    /**
      * @param OdooRelation|null $digest_id
      */
     public function setDigestId(?OdooRelation $digest_id): void
     {
         $this->digest_id = $digest_id;
+    }
+
+    /**
+     * @param string|null $product_pricelist_setting
+     */
+    public function setProductPricelistSetting(?string $product_pricelist_setting): void
+    {
+        $this->product_pricelist_setting = $product_pricelist_setting;
     }
 
     /**
@@ -3406,6 +3121,14 @@ final class Settings extends Base
     }
 
     /**
+     * @param OdooRelation|null $chart_template_id
+     */
+    public function setChartTemplateId(?OdooRelation $chart_template_id): void
+    {
+        $this->chart_template_id = $chart_template_id;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("sale_tax_id")
@@ -3413,16 +3136,6 @@ final class Settings extends Base
     public function getSaleTaxId(): ?OdooRelation
     {
         return $this->sale_tax_id;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("snailmail_duplex")
-     */
-    public function isSnailmailDuplex(): ?bool
-    {
-        return $this->snailmail_duplex;
     }
 
     /**
@@ -3434,127 +3147,85 @@ final class Settings extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @return string|null
      *
-     * @SerializedName("purchase_tax_id")
+     * @SerializedName("product_weight_in_lbs")
      */
-    public function getPurchaseTaxId(): ?OdooRelation
+    public function getProductWeightInLbs(): ?string
     {
-        return $this->purchase_tax_id;
-    }
-
-    /**
-     * @param OdooRelation|null $purchase_tax_id
-     */
-    public function setPurchaseTaxId(?OdooRelation $purchase_tax_id): void
-    {
-        $this->purchase_tax_id = $purchase_tax_id;
+        return $this->product_weight_in_lbs;
     }
 
     /**
      * @return string|null
      *
-     * @SerializedName("tax_calculation_rounding_method")
+     * @SerializedName("product_pricelist_setting")
      */
-    public function getTaxCalculationRoundingMethod(): ?string
+    public function getProductPricelistSetting(): ?string
     {
-        return $this->tax_calculation_rounding_method;
-    }
-
-    /**
-     * @param string|null $tax_calculation_rounding_method
-     */
-    public function setTaxCalculationRoundingMethod(?string $tax_calculation_rounding_method): void
-    {
-        $this->tax_calculation_rounding_method = $tax_calculation_rounding_method;
+        return $this->product_pricelist_setting;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("module_account_accountant")
+     * @SerializedName("module_ocn_client")
      */
-    public function isModuleAccountAccountant(): ?bool
+    public function isModuleOcnClient(): ?bool
     {
-        return $this->module_account_accountant;
+        return $this->module_ocn_client;
     }
 
     /**
-     * @param bool|null $module_account_accountant
+     * @param bool|null $group_discount_per_so_line
      */
-    public function setModuleAccountAccountant(?bool $module_account_accountant): void
+    public function setGroupDiscountPerSoLine(?bool $group_discount_per_so_line): void
     {
-        $this->module_account_accountant = $module_account_accountant;
+        $this->group_discount_per_so_line = $group_discount_per_so_line;
+    }
+
+    /**
+     * @param bool|null $module_ocn_client
+     */
+    public function setModuleOcnClient(?bool $module_ocn_client): void
+    {
+        $this->module_ocn_client = $module_ocn_client;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("unsplash_access_key")
+     */
+    public function getUnsplashAccessKey(): ?string
+    {
+        return $this->unsplash_access_key;
+    }
+
+    /**
+     * @param string|null $unsplash_access_key
+     */
+    public function setUnsplashAccessKey(?string $unsplash_access_key): void
+    {
+        $this->unsplash_access_key = $unsplash_access_key;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("group_analytic_accounting")
+     * @SerializedName("auth_signup_reset_password")
      */
-    public function isGroupAnalyticAccounting(): ?bool
+    public function isAuthSignupResetPassword(): ?bool
     {
-        return $this->group_analytic_accounting;
+        return $this->auth_signup_reset_password;
     }
 
     /**
-     * @param bool|null $group_analytic_accounting
+     * @param bool|null $auth_signup_reset_password
      */
-    public function setGroupAnalyticAccounting(?bool $group_analytic_accounting): void
+    public function setAuthSignupResetPassword(?bool $auth_signup_reset_password): void
     {
-        $this->group_analytic_accounting = $group_analytic_accounting;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("group_analytic_tags")
-     */
-    public function isGroupAnalyticTags(): ?bool
-    {
-        return $this->group_analytic_tags;
-    }
-
-    /**
-     * @param bool|null $group_analytic_tags
-     */
-    public function setGroupAnalyticTags(?bool $group_analytic_tags): void
-    {
-        $this->group_analytic_tags = $group_analytic_tags;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("group_warning_account")
-     */
-    public function isGroupWarningAccount(): ?bool
-    {
-        return $this->group_warning_account;
-    }
-
-    /**
-     * @param bool|null $group_warning_account
-     */
-    public function setGroupWarningAccount(?bool $group_warning_account): void
-    {
-        $this->group_warning_account = $group_warning_account;
-    }
-
-    /**
-     * @param bool|null $snailmail_duplex
-     */
-    public function setSnailmailDuplex(?bool $snailmail_duplex): void
-    {
-        $this->snailmail_duplex = $snailmail_duplex;
-    }
-
-    /**
-     * @param bool|null $snailmail_cover
-     */
-    public function setSnailmailCover(?bool $snailmail_cover): void
-    {
-        $this->snailmail_cover = $snailmail_cover;
+        $this->auth_signup_reset_password = $auth_signup_reset_password;
     }
 
     /**
@@ -3565,16 +3236,6 @@ final class Settings extends Base
     public function getAuthSignupUninvited(): ?string
     {
         return $this->auth_signup_uninvited;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_sale_product_matrix")
-     */
-    public function isModuleSaleProductMatrix(): ?bool
-    {
-        return $this->module_sale_product_matrix;
     }
 
     /**
@@ -3633,14 +3294,6 @@ final class Settings extends Base
     }
 
     /**
-     * @param bool|null $group_discount_per_so_line
-     */
-    public function setGroupDiscountPerSoLine(?bool $group_discount_per_so_line): void
-    {
-        $this->group_discount_per_so_line = $group_discount_per_so_line;
-    }
-
-    /**
      * @return bool|null
      *
      * @SerializedName("group_uom")
@@ -3648,6 +3301,14 @@ final class Settings extends Base
     public function isGroupUom(): ?bool
     {
         return $this->group_uom;
+    }
+
+    /**
+     * @param bool|null $group_sale_pricelist
+     */
+    public function setGroupSalePricelist(?bool $group_sale_pricelist): void
+    {
+        $this->group_sale_pricelist = $group_sale_pricelist;
     }
 
     /**
@@ -3695,21 +3356,21 @@ final class Settings extends Base
     }
 
     /**
+     * @return bool|null
+     *
+     * @SerializedName("module_sale_product_matrix")
+     */
+    public function isModuleSaleProductMatrix(): ?bool
+    {
+        return $this->module_sale_product_matrix;
+    }
+
+    /**
      * @param bool|null $module_sale_product_matrix
      */
     public function setModuleSaleProductMatrix(?bool $module_sale_product_matrix): void
     {
         $this->module_sale_product_matrix = $module_sale_product_matrix;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("snailmail_cover")
-     */
-    public function isSnailmailCover(): ?bool
-    {
-        return $this->snailmail_cover;
     }
 
     /**
@@ -3756,86 +3417,6 @@ final class Settings extends Base
     public function isGroupSalePricelist(): ?bool
     {
         return $this->group_sale_pricelist;
-    }
-
-    /**
-     * @param bool|null $group_sale_pricelist
-     */
-    public function setGroupSalePricelist(?bool $group_sale_pricelist): void
-    {
-        $this->group_sale_pricelist = $group_sale_pricelist;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("product_pricelist_setting")
-     */
-    public function getProductPricelistSetting(): ?string
-    {
-        return $this->product_pricelist_setting;
-    }
-
-    /**
-     * @param string|null $product_pricelist_setting
-     */
-    public function setProductPricelistSetting(?string $product_pricelist_setting): void
-    {
-        $this->product_pricelist_setting = $product_pricelist_setting;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("product_weight_in_lbs")
-     */
-    public function getProductWeightInLbs(): ?string
-    {
-        return $this->product_weight_in_lbs;
-    }
-
-    /**
-     * @param string|null $product_weight_in_lbs
-     */
-    public function setProductWeightInLbs(?string $product_weight_in_lbs): void
-    {
-        $this->product_weight_in_lbs = $product_weight_in_lbs;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("product_volume_volume_in_cubic_feet")
-     */
-    public function getProductVolumeVolumeInCubicFeet(): ?string
-    {
-        return $this->product_volume_volume_in_cubic_feet;
-    }
-
-    /**
-     * @param string|null $product_volume_volume_in_cubic_feet
-     */
-    public function setProductVolumeVolumeInCubicFeet(?string $product_volume_volume_in_cubic_feet): void
-    {
-        $this->product_volume_volume_in_cubic_feet = $product_volume_volume_in_cubic_feet;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("snailmail_color")
-     */
-    public function isSnailmailColor(): ?bool
-    {
-        return $this->snailmail_color;
-    }
-
-    /**
-     * @param bool|null $snailmail_color
-     */
-    public function setSnailmailColor(?bool $snailmail_color): void
-    {
-        $this->snailmail_color = $snailmail_color;
     }
 
     /**

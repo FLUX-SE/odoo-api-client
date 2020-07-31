@@ -468,6 +468,16 @@ final class Users extends Partner
     private $in_group_55;
 
     /**
+     * Show Full Accounting Features
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $in_group_60;
+
+    /**
      * Tax display B2B
      * ---
      * Show line subtotals without taxes (B2B)
@@ -507,20 +517,19 @@ final class Users extends Partner
     private $sel_groups_2_3;
 
     /**
-     * Accounting
+     * Invoicing
      * ---
      * Selection : (default value, usually null)
      *     ->  ()
      *     -> 57 (Billing)
-     *     -> 60 (Accountant)
-     *     -> 61 (Advisor)
+     *     -> 61 (Billing Administrator)
      * ---
      * Searchable : no
      * Sortable : no
      *
      * @var string|null
      */
-    private $sel_groups_57_60_61;
+    private $sel_groups_57_61;
 
     /**
      * User types
@@ -664,13 +673,21 @@ final class Users extends Partner
     }
 
     /**
+     * @param bool|null $in_group_53
+     */
+    public function setInGroup53(?bool $in_group_53): void
+    {
+        $this->in_group_53 = $in_group_53;
+    }
+
+    /**
      * @return bool|null
      *
-     * @SerializedName("in_group_53")
+     * @SerializedName("in_group_56")
      */
-    public function isInGroup53(): ?bool
+    public function isInGroup56(): ?bool
     {
-        return $this->in_group_53;
+        return $this->in_group_56;
     }
 
     /**
@@ -764,11 +781,23 @@ final class Users extends Partner
     }
 
     /**
-     * @param bool|null $in_group_53
+     * @return bool|null
+     *
+     * @SerializedName("in_group_53")
      */
-    public function setInGroup53(?bool $in_group_53): void
+    public function isInGroup53(): ?bool
     {
-        $this->in_group_53 = $in_group_53;
+        return $this->in_group_53;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("in_group_49")
+     */
+    public function isInGroup49(): ?bool
+    {
+        return $this->in_group_49;
     }
 
     /**
@@ -777,14 +806,6 @@ final class Users extends Partner
     public function setInGroup62(?bool $in_group_62): void
     {
         $this->in_group_62 = $in_group_62;
-    }
-
-    /**
-     * @param bool|null $in_group_56
-     */
-    public function setInGroup56(?bool $in_group_56): void
-    {
-        $this->in_group_56 = $in_group_56;
     }
 
     /**
@@ -897,39 +918,29 @@ final class Users extends Partner
     }
 
     /**
-     * @param int|null $moderation_counter
+     * @param bool|null $in_group_56
      */
-    public function setModerationCounter(?int $moderation_counter): void
+    public function setInGroup56(?bool $in_group_56): void
     {
-        $this->moderation_counter = $moderation_counter;
+        $this->in_group_56 = $in_group_56;
     }
 
     /**
-     * @return bool|null
+     * @param bool|null $in_group_49
+     */
+    public function setInGroup49(?bool $in_group_49): void
+    {
+        $this->in_group_49 = $in_group_49;
+    }
+
+    /**
+     * @return int|null
      *
-     * @SerializedName("in_group_56")
+     * @SerializedName("moderation_counter")
      */
-    public function isInGroup56(): ?bool
+    public function getModerationCounter(): ?int
     {
-        return $this->in_group_56;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("in_group_49")
-     */
-    public function isInGroup49(): ?bool
-    {
-        return $this->in_group_49;
-    }
-
-    /**
-     * @param bool|null $is_moderator
-     */
-    public function setIsModerator(?bool $is_moderator): void
-    {
-        $this->is_moderator = $is_moderator;
+        return $this->moderation_counter;
     }
 
     /**
@@ -1041,29 +1052,31 @@ final class Users extends Partner
     }
 
     /**
-     * @param string|null $sel_groups_57_60_61
+     * @param string|null $sel_groups_57_61
      */
-    public function setSelGroups576061(?string $sel_groups_57_60_61): void
+    public function setSelGroups5761(?string $sel_groups_57_61): void
     {
-        $this->sel_groups_57_60_61 = $sel_groups_57_60_61;
+        $this->sel_groups_57_61 = $sel_groups_57_61;
     }
 
     /**
-     * @param bool|null $in_group_49
+     * @return bool|null
+     *
+     * @SerializedName("in_group_54")
      */
-    public function setInGroup49(?bool $in_group_49): void
+    public function isInGroup54(): ?bool
     {
-        $this->in_group_49 = $in_group_49;
+        return $this->in_group_54;
     }
 
     /**
      * @return string|null
      *
-     * @SerializedName("sel_groups_57_60_61")
+     * @SerializedName("sel_groups_57_61")
      */
-    public function getSelGroups576061(): ?string
+    public function getSelGroups5761(): ?string
     {
-        return $this->sel_groups_57_60_61;
+        return $this->sel_groups_57_61;
     }
 
     /**
@@ -1121,6 +1134,24 @@ final class Users extends Partner
     }
 
     /**
+     * @param bool|null $in_group_60
+     */
+    public function setInGroup60(?bool $in_group_60): void
+    {
+        $this->in_group_60 = $in_group_60;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("in_group_60")
+     */
+    public function isInGroup60(): ?bool
+    {
+        return $this->in_group_60;
+    }
+
+    /**
      * @param bool|null $in_group_55
      */
     public function setInGroup55(?bool $in_group_55): void
@@ -1147,33 +1178,19 @@ final class Users extends Partner
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("in_group_54")
+     * @param int|null $moderation_counter
      */
-    public function isInGroup54(): ?bool
+    public function setModerationCounter(?int $moderation_counter): void
     {
-        return $this->in_group_54;
+        $this->moderation_counter = $moderation_counter;
     }
 
     /**
-     * @return int|null
-     *
-     * @SerializedName("moderation_counter")
+     * @param bool|null $is_moderator
      */
-    public function getModerationCounter(): ?int
+    public function setIsModerator(?bool $is_moderator): void
     {
-        return $this->moderation_counter;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("is_moderator")
-     */
-    public function isIsModerator(): ?bool
-    {
-        return $this->is_moderator;
+        $this->is_moderator = $is_moderator;
     }
 
     /**
@@ -1465,21 +1482,29 @@ final class Users extends Partner
     }
 
     /**
+     * @return bool|null
+     *
+     * @SerializedName("is_moderator")
+     */
+    public function isIsModerator(): ?bool
+    {
+        return $this->is_moderator;
+    }
+
+    /**
+     * @param OdooRelation[]|null $resource_ids
+     */
+    public function setResourceIds(?array $resource_ids): void
+    {
+        $this->resource_ids = $resource_ids;
+    }
+
+    /**
      * @param string $notification_type
      */
     public function setNotificationType(string $notification_type): void
     {
         $this->notification_type = $notification_type;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("resource_ids")
-     */
-    public function getResourceIds(): ?array
-    {
-        return $this->resource_ids;
     }
 
     /**
@@ -1592,19 +1617,13 @@ final class Users extends Partner
     }
 
     /**
-     * @param OdooRelation[]|null $resource_ids
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("resource_ids")
      */
-    public function setResourceIds(?array $resource_ids): void
+    public function getResourceIds(): ?array
     {
-        $this->resource_ids = $resource_ids;
-    }
-
-    /**
-     * @param int|null $groups_count
-     */
-    public function setGroupsCount(?int $groups_count): void
-    {
-        $this->groups_count = $groups_count;
+        return $this->resource_ids;
     }
 
     /**
@@ -1615,6 +1634,14 @@ final class Users extends Partner
     public function getCompaniesCount(): ?int
     {
         return $this->companies_count;
+    }
+
+    /**
+     * @param int|null $groups_count
+     */
+    public function setGroupsCount(?int $groups_count): void
+    {
+        $this->groups_count = $groups_count;
     }
 
     /**
