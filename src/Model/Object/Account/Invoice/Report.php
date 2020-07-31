@@ -146,7 +146,7 @@ final class Report extends Base
     /**
      * Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> out_invoice (Customer Invoice)
      *     -> in_invoice (Vendor Bill)
      *     -> out_refund (Customer Credit Note)
@@ -162,7 +162,7 @@ final class Report extends Base
     /**
      * Invoice Status
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> draft (Draft)
      *     -> posted (Open)
      *     -> cancel (Cancelled)
@@ -177,7 +177,7 @@ final class Report extends Base
     /**
      * Payment Status
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> not_paid (Not Paid)
      *     -> in_payment (In Payment)
      *     -> paid (paid)

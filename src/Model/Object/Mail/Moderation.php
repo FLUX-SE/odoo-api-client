@@ -40,7 +40,7 @@ final class Moderation extends Base
     /**
      * Status
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> allow (Always Allow)
      *     -> ban (Permanent Ban)
      * ---
@@ -117,7 +117,7 @@ final class Moderation extends Base
      *        Sortable : yes
      * @param string $status Status
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> allow (Always Allow)
      *            -> ban (Permanent Ban)
      *        ---

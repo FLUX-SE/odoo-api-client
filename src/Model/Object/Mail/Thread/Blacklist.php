@@ -46,19 +46,6 @@ final class Blacklist extends Base
     private $message_bounce;
 
     /**
-     * Normalized Email
-     * ---
-     * This field is used to search on email address as the primary email field can contain more than strictly an
-     * email address.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $email_normalized;
-
-    /**
      * Is Follower
      * ---
      * Searchable : yes
@@ -243,6 +230,19 @@ final class Blacklist extends Base
     private $message_has_sms_error;
 
     /**
+     * Normalized Email
+     * ---
+     * This field is used to search on email address as the primary email field can contain more than strictly an
+     * email address.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $email_normalized;
+
+    /**
      * @return bool|null
      *
      * @SerializedName("is_blacklisted")
@@ -253,29 +253,11 @@ final class Blacklist extends Base
     }
 
     /**
-     * @param int|null $message_has_error_counter
+     * @param int|null $message_attachment_count
      */
-    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
+    public function setMessageAttachmentCount(?int $message_attachment_count): void
     {
-        $this->message_has_error_counter = $message_has_error_counter;
-    }
-
-    /**
-     * @param bool|null $message_unread
-     */
-    public function setMessageUnread(?bool $message_unread): void
-    {
-        $this->message_unread = $message_unread;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("message_unread_counter")
-     */
-    public function getMessageUnreadCounter(): ?int
-    {
-        return $this->message_unread_counter;
+        $this->message_attachment_count = $message_attachment_count;
     }
 
     /**
@@ -351,6 +333,14 @@ final class Blacklist extends Base
     }
 
     /**
+     * @param int|null $message_has_error_counter
+     */
+    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
+    {
+        $this->message_has_error_counter = $message_has_error_counter;
+    }
+
+    /**
      * @return int|null
      *
      * @SerializedName("message_attachment_count")
@@ -361,29 +351,6 @@ final class Blacklist extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     */
-    public function removeMessageIds(OdooRelation $item): void
-    {
-        if (null === $this->message_ids) {
-            $this->message_ids = [];
-        }
-
-        if ($this->hasMessageIds($item)) {
-            $index = array_search($item, $this->message_ids);
-            unset($this->message_ids[$index]);
-        }
-    }
-
-    /**
-     * @param int|null $message_attachment_count
-     */
-    public function setMessageAttachmentCount(?int $message_attachment_count): void
-    {
-        $this->message_attachment_count = $message_attachment_count;
-    }
-
-    /**
      * @return OdooRelation|null
      *
      * @SerializedName("message_main_attachment_id")
@@ -391,6 +358,14 @@ final class Blacklist extends Base
     public function getMessageMainAttachmentId(): ?OdooRelation
     {
         return $this->message_main_attachment_id;
+    }
+
+    /**
+     * @param bool|null $message_unread
+     */
+    public function setMessageUnread(?bool $message_unread): void
+    {
+        $this->message_unread = $message_unread;
     }
 
     /**
@@ -483,6 +458,34 @@ final class Blacklist extends Base
     }
 
     /**
+     * @return string|null
+     *
+     * @SerializedName("email_normalized")
+     */
+    public function getEmailNormalized(): ?string
+    {
+        return $this->email_normalized;
+    }
+
+    /**
+     * @param string|null $email_normalized
+     */
+    public function setEmailNormalized(?string $email_normalized): void
+    {
+        $this->email_normalized = $email_normalized;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("message_unread_counter")
+     */
+    public function getMessageUnreadCounter(): ?int
+    {
+        return $this->message_unread_counter;
+    }
+
+    /**
      * @return bool|null
      *
      * @SerializedName("message_unread")
@@ -490,22 +493,6 @@ final class Blacklist extends Base
     public function isMessageUnread(): ?bool
     {
         return $this->message_unread;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addMessageIds(OdooRelation $item): void
-    {
-        if ($this->hasMessageIds($item)) {
-            return;
-        }
-
-        if (null === $this->message_ids) {
-            $this->message_ids = [];
-        }
-
-        $this->message_ids[] = $item;
     }
 
     /**
@@ -517,18 +504,11 @@ final class Blacklist extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @param OdooRelation[]|null $message_partner_ids
      */
-    public function removeMessageFollowerIds(OdooRelation $item): void
+    public function setMessagePartnerIds(?array $message_partner_ids): void
     {
-        if (null === $this->message_follower_ids) {
-            $this->message_follower_ids = [];
-        }
-
-        if ($this->hasMessageFollowerIds($item)) {
-            $index = array_search($item, $this->message_follower_ids);
-            unset($this->message_follower_ids[$index]);
-        }
+        $this->message_partner_ids = $message_partner_ids;
     }
 
     /**
@@ -547,24 +527,6 @@ final class Blacklist extends Base
     public function setMessageBounce(?int $message_bounce): void
     {
         $this->message_bounce = $message_bounce;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("email_normalized")
-     */
-    public function getEmailNormalized(): ?string
-    {
-        return $this->email_normalized;
-    }
-
-    /**
-     * @param string|null $email_normalized
-     */
-    public function setEmailNormalized(?string $email_normalized): void
-    {
-        $this->email_normalized = $email_normalized;
     }
 
     /**
@@ -634,6 +596,21 @@ final class Blacklist extends Base
     }
 
     /**
+     * @param OdooRelation $item
+     */
+    public function removeMessageFollowerIds(OdooRelation $item): void
+    {
+        if (null === $this->message_follower_ids) {
+            $this->message_follower_ids = [];
+        }
+
+        if ($this->hasMessageFollowerIds($item)) {
+            $index = array_search($item, $this->message_follower_ids);
+            unset($this->message_follower_ids[$index]);
+        }
+    }
+
+    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("message_partner_ids")
@@ -648,28 +625,6 @@ final class Blacklist extends Base
      *
      * @return bool
      */
-    public function hasMessageIds(OdooRelation $item): bool
-    {
-        if (null === $this->message_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_ids);
-    }
-
-    /**
-     * @param OdooRelation[]|null $message_partner_ids
-     */
-    public function setMessagePartnerIds(?array $message_partner_ids): void
-    {
-        $this->message_partner_ids = $message_partner_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
     public function hasMessagePartnerIds(OdooRelation $item): bool
     {
         if (null === $this->message_partner_ids) {
@@ -677,6 +632,21 @@ final class Blacklist extends Base
         }
 
         return in_array($item, $this->message_partner_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMessageIds(OdooRelation $item): void
+    {
+        if (null === $this->message_ids) {
+            $this->message_ids = [];
+        }
+
+        if ($this->hasMessageIds($item)) {
+            $index = array_search($item, $this->message_ids);
+            unset($this->message_ids[$index]);
+        }
     }
 
     /**
@@ -789,6 +759,36 @@ final class Blacklist extends Base
     public function setMessageIds(?array $message_ids): void
     {
         $this->message_ids = $message_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMessageIds(OdooRelation $item): bool
+    {
+        if (null === $this->message_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMessageIds(OdooRelation $item): void
+    {
+        if ($this->hasMessageIds($item)) {
+            return;
+        }
+
+        if (null === $this->message_ids) {
+            $this->message_ids = [];
+        }
+
+        $this->message_ids[] = $item;
     }
 
     /**

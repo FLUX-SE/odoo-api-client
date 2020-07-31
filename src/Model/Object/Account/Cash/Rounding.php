@@ -51,7 +51,7 @@ final class Rounding extends Base
      * ---
      * Specify which way will be used to round the invoice amount to the rounding precision
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> biggest_tax (Modify tax amount)
      *     -> add_invoice_line (Add a rounding line)
      * ---
@@ -80,7 +80,7 @@ final class Rounding extends Base
      * ---
      * The tie-breaking rule used for float rounding operations
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> UP (UP)
      *     -> DOWN (DOWN)
      *     -> HALF-UP (HALF-UP)
@@ -166,7 +166,7 @@ final class Rounding extends Base
      *        ---
      *        Specify which way will be used to round the invoice amount to the rounding precision
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> biggest_tax (Modify tax amount)
      *            -> add_invoice_line (Add a rounding line)
      *        ---
@@ -176,7 +176,7 @@ final class Rounding extends Base
      *        ---
      *        The tie-breaking rule used for float rounding operations
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> UP (UP)
      *            -> DOWN (DOWN)
      *            -> HALF-UP (HALF-UP)

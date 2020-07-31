@@ -159,7 +159,7 @@ final class Acquirer extends Base
      *                           acquirer. Watch out, test and production modes require
      *                           different credentials.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> disabled (Disabled)
      *     -> enabled (Enabled)
      *     -> test (Test Mode)
@@ -295,7 +295,7 @@ final class Acquirer extends Base
      * purchase. If you manage subscriptions (recurring invoicing), you need it to automatically charge the customer
      * when you issue an invoice.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> none (Never)
      *     -> ask (Let the customer decide)
      *     -> always (Always)
@@ -413,7 +413,7 @@ final class Acquirer extends Base
     /**
      * Installation State
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> uninstallable (Uninstallable)
      *     -> uninstalled (Not Installed)
      *     -> installed (Installed)
@@ -466,7 +466,7 @@ final class Acquirer extends Base
      * ---
      * Note: Subscriptions does not take this field in account, it uses server to server by default.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> form (Redirection to the acquirer website)
      *     -> s2s (Payment from Odoo)
      * ---
@@ -500,7 +500,7 @@ final class Acquirer extends Base
     /**
      * Provider
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> manual (Custom Payment Form)
      *     -> transfer (Manual Payment)
      * ---
@@ -576,7 +576,7 @@ final class Acquirer extends Base
      *                                  acquirer. Watch out, test and production modes require
      *                                  different credentials.
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> disabled (Disabled)
      *            -> enabled (Enabled)
      *            -> test (Test Mode)
@@ -587,7 +587,7 @@ final class Acquirer extends Base
      *        ---
      *        Note: Subscriptions does not take this field in account, it uses server to server by default.
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> form (Redirection to the acquirer website)
      *            -> s2s (Payment from Odoo)
      *        ---
@@ -595,7 +595,7 @@ final class Acquirer extends Base
      *        Sortable : yes
      * @param string $provider Provider
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> manual (Custom Payment Form)
      *            -> transfer (Manual Payment)
      *        ---

@@ -61,7 +61,7 @@ final class Mixin extends Base
      * Today: Activity date is today
      * Planned: Future activities.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> overdue (Overdue)
      *     -> today (Today)
      *     -> planned (Planned)
@@ -124,7 +124,7 @@ final class Mixin extends Base
      * ---
      * Type of the exception activity on record.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> warning (Alert)
      *     -> danger (Error)
      * ---

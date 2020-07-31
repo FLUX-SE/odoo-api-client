@@ -76,7 +76,7 @@ final class Op extends Base
      * ---
      * The last day of the month will be used if the chosen day doesn't exist.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> 1 (January)
      *     -> 2 (February)
      *     -> 3 (March)
@@ -167,7 +167,7 @@ final class Op extends Base
      *        ---
      *        The last day of the month will be used if the chosen day doesn't exist.
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> 1 (January)
      *            -> 2 (February)
      *            -> 3 (March)

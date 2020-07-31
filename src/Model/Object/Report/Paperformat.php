@@ -52,7 +52,7 @@ final class Paperformat extends Base
      * ---
      * Select Proper Paper size
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> A0 (A0  5   841 x 1189 mm)
      *     -> A1 (A1  6   594 x 841 mm)
      *     -> A2 (A2  7   420 x 594 mm)
@@ -155,7 +155,7 @@ final class Paperformat extends Base
     /**
      * Orientation
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> Landscape (Landscape)
      *     -> Portrait (Portrait)
      * ---

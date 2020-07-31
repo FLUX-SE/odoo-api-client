@@ -53,7 +53,7 @@ final class Digest extends Base
     /**
      * Periodicity
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> weekly (Weekly)
      *     -> monthly (Monthly)
      *     -> quarterly (Quarterly)
@@ -137,7 +137,7 @@ final class Digest extends Base
     /**
      * Status
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> activated (Activated)
      *     -> deactivated (Deactivated)
      * ---
@@ -261,7 +261,7 @@ final class Digest extends Base
      *        Sortable : yes
      * @param string $periodicity Periodicity
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> weekly (Weekly)
      *            -> monthly (Monthly)
      *            -> quarterly (Quarterly)

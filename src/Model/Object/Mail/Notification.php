@@ -66,7 +66,7 @@ final class Notification extends Base
     /**
      * Email Status
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> ready (Ready to Send)
      *     -> sent (Sent)
      *     -> bounce (Bounced)
@@ -116,7 +116,7 @@ final class Notification extends Base
     /**
      * Notification Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> inbox (Inbox)
      *     -> email (Email)
      *     -> sms (SMS)
@@ -154,7 +154,7 @@ final class Notification extends Base
     /**
      * Failure type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> SMTP (Connection failed (outgoing mail server problem))
      *     -> RECIPIENT (Invalid email address)
      *     -> BOUNCE (Email address rejected by destination)
@@ -181,7 +181,7 @@ final class Notification extends Base
      *        Sortable : yes
      * @param string $notification_type Notification Type
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> inbox (Inbox)
      *            -> email (Email)
      *            -> sms (SMS)

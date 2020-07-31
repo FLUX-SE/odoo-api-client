@@ -79,7 +79,7 @@ final class Logging extends Base
     /**
      * Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> client (Client)
      *     -> server (Server)
      * ---
@@ -157,7 +157,7 @@ final class Logging extends Base
      *        Sortable : yes
      * @param string $type Type
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> client (Client)
      *            -> server (Server)
      *        ---

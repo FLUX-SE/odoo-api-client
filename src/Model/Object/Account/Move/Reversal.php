@@ -58,7 +58,7 @@ final class Reversal extends Base
      * Choose how you want to credit this invoice. You cannot "modify" nor "cancel" if the invoice is already
      * reconciled.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> refund (Partial Refund)
      *     -> cancel (Full Refund)
      *     -> modify (Full refund and new draft invoice)
@@ -174,7 +174,7 @@ final class Reversal extends Base
      *        Choose how you want to credit this invoice. You cannot "modify" nor "cancel" if the invoice is already
      *        reconciled.
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> refund (Partial Refund)
      *            -> cancel (Full Refund)
      *            -> modify (Full refund and new draft invoice)

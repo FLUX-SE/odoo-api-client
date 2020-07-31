@@ -27,7 +27,7 @@ final class Composer extends Base
     /**
      * Composition Mode
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> numbers (Send to numbers)
      *     -> comment (Post on a document)
      *     -> mass (Send SMS in batch)
@@ -288,7 +288,7 @@ final class Composer extends Base
     /**
      * @param string $composition_mode Composition Mode
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> numbers (Send to numbers)
      *            -> comment (Post on a document)
      *            -> mass (Send SMS in batch)

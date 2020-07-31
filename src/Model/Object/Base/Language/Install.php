@@ -27,7 +27,7 @@ final class Install extends Base
     /**
      * Language
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> sq_AL (Albanian / Shqip)
      *     -> am_ET (Amharic / አምሃርኛ)
      *     -> ar_SY (Arabic (Syria) / الْعَرَبيّة)
@@ -136,7 +136,7 @@ final class Install extends Base
     /**
      * Status
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> init (init)
      *     -> done (done)
      * ---
@@ -196,7 +196,7 @@ final class Install extends Base
     /**
      * @param string $lang Language
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> sq_AL (Albanian / Shqip)
      *            -> am_ET (Amharic / አምሃርኛ)
      *            -> ar_SY (Arabic (Syria) / الْعَرَبيّة)

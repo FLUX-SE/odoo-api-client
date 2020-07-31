@@ -27,7 +27,7 @@ final class Preview extends Base
     /**
      * Sample Document
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -67,7 +67,7 @@ final class Preview extends Base
     /**
      * Template Preview Language
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> en_US (English (US))
      * ---
      * Searchable : yes

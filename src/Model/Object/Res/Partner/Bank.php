@@ -32,7 +32,7 @@ class Bank extends Base
      * ---
      * Bank account type: Normal or IBAN. Inferred from the bank account number.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> bank (Normal)
      *     -> iban (IBAN)
      * ---

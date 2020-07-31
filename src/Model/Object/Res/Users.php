@@ -270,7 +270,7 @@ final class Users extends Partner
      * - followers: only followers of the related document or members of following channels
      *
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> everyone (Everyone)
      *     -> partners (Authenticated Partners)
      *     -> followers (Followers only)
@@ -289,7 +289,7 @@ final class Users extends Partner
      * - Handle by Emails: notifications are sent to your email address
      * - Handle in Odoo: notifications appear in your Odoo Inbox
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> email (Handle by Emails)
      *     -> inbox (Handle in Odoo)
      * ---
@@ -346,7 +346,7 @@ final class Users extends Partner
     /**
      * Status
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> new (Never Connected)
      *     -> active (Confirmed)
      * ---
@@ -504,7 +504,7 @@ final class Users extends Partner
     /**
      * Administration
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     ->  ()
      *     -> 2 (Access Rights)
      *     -> 3 (Settings)
@@ -519,7 +519,7 @@ final class Users extends Partner
     /**
      * Invoicing
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     ->  ()
      *     -> 57 (Billing)
      *     -> 61 (Billing Administrator)
@@ -539,7 +539,7 @@ final class Users extends Partner
      * Public: Public users have specific access rights (such as record rules and restricted menus).
      *                                 They usually do not belong to the usual Odoo groups.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> 1 (Internal User)
      *     -> 8 (Portal)
      *     -> 9 (Public)
@@ -632,7 +632,7 @@ final class Users extends Partner
      *        - Handle by Emails: notifications are sent to your email address
      *        - Handle in Odoo: notifications appear in your Odoo Inbox
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> email (Handle by Emails)
      *            -> inbox (Handle in Odoo)
      *        ---

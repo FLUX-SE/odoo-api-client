@@ -80,7 +80,7 @@ final class Cron extends Server
     /**
      * Interval Unit
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> minutes (Minutes)
      *     -> hours (Hours)
      *     -> days (Days)
@@ -186,7 +186,7 @@ final class Cron extends Server
      *        Sortable : yes
      * @param string $usage Usage
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> ir_actions_server (Server Action)
      *            -> ir_cron (Scheduled Action)
      *        ---
@@ -206,17 +206,9 @@ final class Cron extends Server
      *        Use 'Specific User' to always assign the same user on the next activity. Use 'Generic User From Record' to
      *        specify the field name of the user to choose on the record.
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> specific (Specific User)
      *            -> generic (Generic User From Record)
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
-     * @param string $binding_type Binding Type
-     *        ---
-     *        Selection : (default value, usually null)
-     *            -> action (Action)
-     *            -> report (Report)
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -231,7 +223,7 @@ final class Cron extends Server
      *        - 'Add Followers': add followers to a record (Discuss)
      *        - 'Create Next Activity': create an activity (Discuss)
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> code (Execute Python Code)
      *            -> object_create (Create a new Record)
      *            -> object_write (Update the Record)
@@ -240,6 +232,14 @@ final class Cron extends Server
      *            -> followers (Add Followers)
      *            -> next_activity (Create Next Activity)
      *            -> sms (Send SMS Text Message)
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $binding_type Binding Type
+     *        ---
+     *        Selection :
+     *            -> action (Action)
+     *            -> report (Report)
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -253,8 +253,8 @@ final class Cron extends Server
         string $usage,
         OdooRelation $model_id,
         string $activity_user_type,
-        string $binding_type,
-        string $state
+        string $state,
+        string $binding_type
     ) {
         $this->ir_actions_server_id = $ir_actions_server_id;
         $this->user_id = $user_id;
@@ -265,8 +265,8 @@ final class Cron extends Server
             $usage,
             $model_id,
             $activity_user_type,
-            $binding_type,
-            $state
+            $state,
+            $binding_type
         );
     }
 

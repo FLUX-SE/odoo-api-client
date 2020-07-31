@@ -58,7 +58,7 @@ final class Transaction extends Base
     /**
      * Provider
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> manual (Custom Payment Form)
      *     -> transfer (Manual Payment)
      * ---
@@ -72,7 +72,7 @@ final class Transaction extends Base
     /**
      * Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> validation (Validation of the bank card)
      *     -> server2server (Server To Server)
      *     -> form (Form)
@@ -88,7 +88,7 @@ final class Transaction extends Base
     /**
      * Status
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> draft (Draft)
      *     -> pending (Pending)
      *     -> authorized (Authorized)
@@ -200,7 +200,7 @@ final class Transaction extends Base
     /**
      * Language
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> en_US (English (US))
      * ---
      * Searchable : yes
@@ -451,7 +451,7 @@ final class Transaction extends Base
      *        Sortable : yes
      * @param string $type Type
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> validation (Validation of the bank card)
      *            -> server2server (Server To Server)
      *            -> form (Form)
@@ -461,7 +461,7 @@ final class Transaction extends Base
      *        Sortable : yes
      * @param string $state Status
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> draft (Draft)
      *            -> pending (Pending)
      *            -> authorized (Authorized)

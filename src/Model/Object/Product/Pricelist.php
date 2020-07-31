@@ -114,7 +114,7 @@ final class Pricelist extends Base
     /**
      * Discount Policy
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> with_discount (Discount included in the price)
      *     -> without_discount (Show public price & discount to the customer)
      * ---

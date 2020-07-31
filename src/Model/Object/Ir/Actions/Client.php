@@ -63,7 +63,7 @@ final class Client extends Base
     /**
      * Target Window
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> current (Current Window)
      *     -> new (New Window)
      *     -> fullscreen (Full Screen)
@@ -162,7 +162,7 @@ final class Client extends Base
     /**
      * Binding Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> action (Action)
      *     -> report (Report)
      * ---
@@ -253,7 +253,7 @@ final class Client extends Base
      *        Sortable : yes
      * @param string $binding_type Binding Type
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> action (Action)
      *            -> report (Report)
      *        ---

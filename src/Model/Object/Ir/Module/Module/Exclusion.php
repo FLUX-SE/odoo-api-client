@@ -66,7 +66,7 @@ final class Exclusion extends Base
     /**
      * Status
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> uninstallable (Uninstallable)
      *     -> uninstalled (Not Installed)
      *     -> installed (Installed)

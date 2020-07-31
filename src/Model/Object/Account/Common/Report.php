@@ -73,7 +73,7 @@ final class Report extends Base
     /**
      * Target Moves
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> posted (All Posted Entries)
      *     -> all (All Entries)
      * ---
@@ -147,7 +147,7 @@ final class Report extends Base
      *        Sortable : no
      * @param string $target_move Target Moves
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> posted (All Posted Entries)
      *            -> all (All Entries)
      *        ---

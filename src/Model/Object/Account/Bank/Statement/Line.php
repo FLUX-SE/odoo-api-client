@@ -267,7 +267,7 @@ final class Line extends Base
     /**
      * Status
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> open (New)
      *     -> confirm (Validated)
      * ---

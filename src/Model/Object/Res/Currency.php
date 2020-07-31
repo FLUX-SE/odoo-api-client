@@ -111,7 +111,7 @@ final class Currency extends Base
      * ---
      * Determines where the currency symbol should be placed after or before the amount.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> after (After Amount)
      *     -> before (Before Amount)
      * ---

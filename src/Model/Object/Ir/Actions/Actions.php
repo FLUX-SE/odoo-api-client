@@ -87,7 +87,7 @@ final class Actions extends Base
     /**
      * Binding Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> action (Action)
      *     -> report (Report)
      * ---
@@ -165,7 +165,7 @@ final class Actions extends Base
      *        Sortable : yes
      * @param string $binding_type Binding Type
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> action (Action)
      *            -> report (Report)
      *        ---

@@ -42,7 +42,7 @@ final class Server extends Base
     /**
      * Status
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> draft (Not Confirmed)
      *     -> done (Confirmed)
      * ---
@@ -78,7 +78,7 @@ final class Server extends Base
     /**
      * Server Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> pop (POP Server)
      *     -> imap (IMAP Server)
      *     -> local (Local Server)
@@ -272,7 +272,7 @@ final class Server extends Base
      *        Sortable : yes
      * @param string $server_type Server Type
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> pop (POP Server)
      *            -> imap (IMAP Server)
      *            -> local (Local Server)

@@ -96,7 +96,7 @@ final class Wizard extends Base
     /**
      * Adjustment Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> debit (Applied on debit journal item)
      *     -> credit (Applied on credit journal item)
      * ---
@@ -230,7 +230,7 @@ final class Wizard extends Base
      *        Sortable : yes
      * @param string $adjustment_type Adjustment Type
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> debit (Applied on debit journal item)
      *            -> credit (Applied on credit journal item)
      *        ---

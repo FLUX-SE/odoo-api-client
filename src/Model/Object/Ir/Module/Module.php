@@ -222,7 +222,7 @@ final class Module extends Base
     /**
      * Status
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> uninstallable (Uninstallable)
      *     -> uninstalled (Not Installed)
      *     -> installed (Installed)
@@ -250,7 +250,7 @@ final class Module extends Base
     /**
      * License
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> GPL-2 (GPL Version 2)
      *     -> GPL-2 or any later version (GPL-2 or later version)
      *     -> GPL-3 (GPL Version 3)

@@ -107,7 +107,7 @@ final class Uom extends Base
     /**
      * Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> bigger (Bigger than the reference Unit of Measure)
      *     -> reference (Reference Unit of Measure for this category)
      *     -> smaller (Smaller than the reference Unit of Measure)
@@ -122,7 +122,7 @@ final class Uom extends Base
     /**
      * Type of measurement category
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> unit (Default Units)
      *     -> weight (Default Weight)
      *     -> working_time (Default Working Time)
@@ -220,7 +220,7 @@ final class Uom extends Base
      *        Sortable : yes
      * @param string $uom_type Type
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> bigger (Bigger than the reference Unit of Measure)
      *            -> reference (Reference Unit of Measure for this category)
      *            -> smaller (Smaller than the reference Unit of Measure)

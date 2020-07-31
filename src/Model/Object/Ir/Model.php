@@ -88,7 +88,7 @@ final class Model extends Base
     /**
      * Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> manual (Custom Object)
      *     -> base (Base Object)
      * ---

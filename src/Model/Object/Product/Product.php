@@ -171,7 +171,7 @@ final class Product extends Template
      *        A consumable product is a product for which stock is not managed.
      *        A service is a non-material product you provide.
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> consu (Consumable)
      *            -> service (Service)
      *        ---

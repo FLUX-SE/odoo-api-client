@@ -27,7 +27,7 @@ final class Wizard extends Base
     /**
      * Payment Method
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> paypal (PayPal)
      *     -> stripe (Credit card (via Stripe))
      *     -> other (Other payment acquirer)
@@ -43,7 +43,7 @@ final class Wizard extends Base
     /**
      * Paypal User Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> new_user (I don't have a Paypal account)
      *     -> existing_user (I have a Paypal account)
      * ---

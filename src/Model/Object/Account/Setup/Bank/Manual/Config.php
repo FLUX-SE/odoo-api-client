@@ -84,7 +84,7 @@ final class Config extends Bank
     /**
      * Account Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> bank (Normal)
      *     -> iban (IBAN)
      * ---

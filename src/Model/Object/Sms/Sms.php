@@ -76,7 +76,7 @@ final class Sms extends Base
     /**
      * SMS Status
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> outgoing (In Queue)
      *     -> sent (Sent)
      *     -> error (Error)
@@ -92,7 +92,7 @@ final class Sms extends Base
     /**
      * Error Code
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> sms_number_missing (Missing Number)
      *     -> sms_number_format (Wrong Number Format)
      *     -> sms_credit (Insufficient Credit)
@@ -156,7 +156,7 @@ final class Sms extends Base
     /**
      * @param string $state SMS Status
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> outgoing (In Queue)
      *            -> sent (Sent)
      *            -> error (Error)

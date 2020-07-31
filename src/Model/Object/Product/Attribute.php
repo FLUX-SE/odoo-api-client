@@ -85,7 +85,7 @@ final class Attribute extends Base
      *                 Note: the variants creation mode cannot be changed once the attribute is used on at least one
      * product.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> always (Instantly)
      *     -> dynamic (Dynamically)
      *     -> no_variant (Never)
@@ -180,7 +180,7 @@ final class Attribute extends Base
      *                        Note: the variants creation mode cannot be changed once the attribute is used on at least one
      *        product.
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> always (Instantly)
      *            -> dynamic (Dynamically)
      *            -> no_variant (Never)

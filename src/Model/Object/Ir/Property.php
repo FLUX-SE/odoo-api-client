@@ -138,7 +138,7 @@ final class Property extends Base
     /**
      * Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> char (Char)
      *     -> float (Float)
      *     -> boolean (Boolean)
@@ -213,7 +213,7 @@ final class Property extends Base
      *        Sortable : yes
      * @param string $type Type
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> char (Char)
      *            -> float (Float)
      *            -> boolean (Boolean)

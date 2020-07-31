@@ -40,7 +40,7 @@ final class Attendance extends Base
     /**
      * Day of Week
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> 0 (Monday)
      *     -> 1 (Tuesday)
      *     -> 2 (Wednesday)
@@ -115,7 +115,7 @@ final class Attendance extends Base
     /**
      * Day Period
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> morning (Morning)
      *     -> afternoon (Afternoon)
      * ---
@@ -142,7 +142,7 @@ final class Attendance extends Base
     /**
      * Week Even/Odd
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> 1 (Odd week)
      *     -> 0 (Even week)
      * ---
@@ -168,7 +168,7 @@ final class Attendance extends Base
      * ---
      * Technical field for UX purpose.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> line_section (Section)
      * ---
      * Searchable : yes
@@ -243,7 +243,7 @@ final class Attendance extends Base
      *        Sortable : yes
      * @param string $dayofweek Day of Week
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> 0 (Monday)
      *            -> 1 (Tuesday)
      *            -> 2 (Wednesday)
@@ -274,7 +274,7 @@ final class Attendance extends Base
      *        Sortable : yes
      * @param string $day_period Day Period
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> morning (Morning)
      *            -> afternoon (Afternoon)
      *        ---

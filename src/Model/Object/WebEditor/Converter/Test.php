@@ -114,7 +114,7 @@ final class Test extends Base
      * Lorsqu'un pancake prend l'avion à destination de Toronto et qu'il fait une escale technique à St Claude, on
      * dit:
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> A (Qu'il n'est pas arrivé à Toronto)
      *     -> B (Qu'il était supposé arriver à Toronto)
      *     -> C (Qu'est-ce qu'il fout ce maudit pancake, tabernacle ?)

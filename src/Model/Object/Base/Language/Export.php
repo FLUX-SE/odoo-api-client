@@ -37,7 +37,7 @@ final class Export extends Base
     /**
      * Language
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> __new__ (New Language (Empty translation template))
      *     -> en_US (English (US))
      * ---
@@ -51,7 +51,7 @@ final class Export extends Base
     /**
      * File Format
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> csv (CSV File)
      *     -> po (PO File)
      *     -> tgz (TGZ Archive)
@@ -89,7 +89,7 @@ final class Export extends Base
     /**
      * State
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> choose (choose)
      *     -> get (get)
      * ---
@@ -149,7 +149,7 @@ final class Export extends Base
     /**
      * @param string $lang Language
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> __new__ (New Language (Empty translation template))
      *            -> en_US (English (US))
      *        ---
@@ -157,7 +157,7 @@ final class Export extends Base
      *        Sortable : yes
      * @param string $format File Format
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> csv (CSV File)
      *            -> po (PO File)
      *            -> tgz (TGZ Archive)

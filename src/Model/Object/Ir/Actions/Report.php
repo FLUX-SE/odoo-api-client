@@ -50,7 +50,7 @@ final class Report extends Base
     /**
      * Binding Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> action (Action)
      *     -> report (Report)
      * ---
@@ -91,7 +91,7 @@ final class Report extends Base
      * will be opened directly in your browser PDF means the report will be rendered using Wkhtmltopdf and downloaded
      * by the user.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> qweb-html (HTML)
      *     -> qweb-pdf (PDF)
      *     -> qweb-text (Text)
@@ -310,7 +310,7 @@ final class Report extends Base
      *        Sortable : yes
      * @param string $binding_type Binding Type
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> action (Action)
      *            -> report (Report)
      *        ---
@@ -326,7 +326,7 @@ final class Report extends Base
      *        will be opened directly in your browser PDF means the report will be rendered using Wkhtmltopdf and downloaded
      *        by the user.
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> qweb-html (HTML)
      *            -> qweb-pdf (PDF)
      *            -> qweb-text (Text)

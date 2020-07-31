@@ -112,7 +112,7 @@ final class Attachment extends Base
      * ---
      * You can either upload a file from your computer or copy/paste an internet link to your file.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> url (URL)
      *     -> binary (File)
      * ---
@@ -318,7 +318,7 @@ final class Attachment extends Base
      *        ---
      *        You can either upload a file from your computer or copy/paste an internet link to your file.
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> url (URL)
      *            -> binary (File)
      *        ---

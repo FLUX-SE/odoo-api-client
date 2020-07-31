@@ -28,6 +28,290 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 final class Statement extends Base
 {
     /**
+     * Reference
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $name;
+
+    /**
+     * External Reference
+     * ---
+     * Used to hold the reference of the external mean that created this statement (name of imported file, reference
+     * of online synchronization...)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $reference;
+
+    /**
+     * Date
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var DateTimeInterface
+     */
+    private $date;
+
+    /**
+     * Closed On
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var DateTimeInterface|null
+     */
+    private $date_done;
+
+    /**
+     * Starting Balance
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var float|null
+     */
+    private $balance_start;
+
+    /**
+     * Ending Balance
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var float|null
+     */
+    private $balance_end_real;
+
+    /**
+     * Accounting Date
+     * ---
+     * If set, the accounting entries created during the bank statement reconciliation process will be created at
+     * this date.
+     * This is useful if the accounting period in which the entries should normally be booked is already closed.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var DateTimeInterface|null
+     */
+    private $accounting_date;
+
+    /**
+     * Status
+     * ---
+     * Selection :
+     *     -> open (New)
+     *     -> confirm (Validated)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    private $state;
+
+    /**
+     * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $currency_id;
+
+    /**
+     * Journal
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation
+     */
+    private $journal_id;
+
+    /**
+     * Type
+     * ---
+     * Technical field used for usability purposes
+     * ---
+     * Selection :
+     *     -> sale (Sales)
+     *     -> purchase (Purchase)
+     *     -> cash (Cash)
+     *     -> bank (Bank)
+     *     -> general (Miscellaneous)
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $journal_type;
+
+    /**
+     * Company
+     * ---
+     * Company related to this journal
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $company_id;
+
+    /**
+     * Transactions Subtotal
+     * ---
+     * Total of transaction lines.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var float|null
+     */
+    private $total_entry_encoding;
+
+    /**
+     * Computed Balance
+     * ---
+     * Balance as calculated based on Opening Balance and transaction lines
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var float|null
+     */
+    private $balance_end;
+
+    /**
+     * Difference
+     * ---
+     * Difference between the computed ending balance and the specified ending balance.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var float|null
+     */
+    private $difference;
+
+    /**
+     * Statement lines
+     * ---
+     * Relation : one2many (account.bank.statement.line -> statement_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Bank\Statement\Line
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $line_ids;
+
+    /**
+     * Entry lines
+     * ---
+     * Relation : one2many (account.move.line -> statement_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move\Line
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $move_line_ids;
+
+    /**
+     * Move Line Count
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    private $move_line_count;
+
+    /**
+     * All Lines Reconciled
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $all_lines_reconciled;
+
+    /**
+     * Responsible
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $user_id;
+
+    /**
+     * Starting Cashbox
+     * ---
+     * Relation : many2one (account.bank.statement.cashbox)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Bank\Statement\Cashbox
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $cashbox_start_id;
+
+    /**
+     * Ending Cashbox
+     * ---
+     * Relation : many2one (account.bank.statement.cashbox)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Bank\Statement\Cashbox
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $cashbox_end_id;
+
+    /**
+     * Is zero
+     * ---
+     * Check if difference is zero.
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $is_difference_zero;
+
+    /**
      * Is Follower
      * ---
      * Searchable : yes
@@ -212,290 +496,6 @@ final class Statement extends Base
     private $message_has_sms_error;
 
     /**
-     * Reference
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $name;
-
-    /**
-     * External Reference
-     * ---
-     * Used to hold the reference of the external mean that created this statement (name of imported file, reference
-     * of online synchronization...)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $reference;
-
-    /**
-     * Date
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var DateTimeInterface
-     */
-    private $date;
-
-    /**
-     * Closed On
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var DateTimeInterface|null
-     */
-    private $date_done;
-
-    /**
-     * Starting Balance
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var float|null
-     */
-    private $balance_start;
-
-    /**
-     * Ending Balance
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var float|null
-     */
-    private $balance_end_real;
-
-    /**
-     * Accounting Date
-     * ---
-     * If set, the accounting entries created during the bank statement reconciliation process will be created at
-     * this date.
-     * This is useful if the accounting period in which the entries should normally be booked is already closed.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var DateTimeInterface|null
-     */
-    private $accounting_date;
-
-    /**
-     * Status
-     * ---
-     * Selection : (default value, usually null)
-     *     -> open (New)
-     *     -> confirm (Validated)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string
-     */
-    private $state;
-
-    /**
-     * Currency
-     * ---
-     * Relation : many2one (res.currency)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var OdooRelation|null
-     */
-    private $currency_id;
-
-    /**
-     * Journal
-     * ---
-     * Relation : many2one (account.journal)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation
-     */
-    private $journal_id;
-
-    /**
-     * Type
-     * ---
-     * Technical field used for usability purposes
-     * ---
-     * Selection : (default value, usually null)
-     *     -> sale (Sales)
-     *     -> purchase (Purchase)
-     *     -> cash (Cash)
-     *     -> bank (Bank)
-     *     -> general (Miscellaneous)
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $journal_type;
-
-    /**
-     * Company
-     * ---
-     * Company related to this journal
-     * ---
-     * Relation : many2one (res.company)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Company
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $company_id;
-
-    /**
-     * Transactions Subtotal
-     * ---
-     * Total of transaction lines.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var float|null
-     */
-    private $total_entry_encoding;
-
-    /**
-     * Computed Balance
-     * ---
-     * Balance as calculated based on Opening Balance and transaction lines
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var float|null
-     */
-    private $balance_end;
-
-    /**
-     * Difference
-     * ---
-     * Difference between the computed ending balance and the specified ending balance.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var float|null
-     */
-    private $difference;
-
-    /**
-     * Statement lines
-     * ---
-     * Relation : one2many (account.bank.statement.line -> statement_id)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Bank\Statement\Line
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $line_ids;
-
-    /**
-     * Entry lines
-     * ---
-     * Relation : one2many (account.move.line -> statement_id)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Move\Line
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $move_line_ids;
-
-    /**
-     * Move Line Count
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var int|null
-     */
-    private $move_line_count;
-
-    /**
-     * All Lines Reconciled
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $all_lines_reconciled;
-
-    /**
-     * Responsible
-     * ---
-     * Relation : many2one (res.users)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Users
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $user_id;
-
-    /**
-     * Starting Cashbox
-     * ---
-     * Relation : many2one (account.bank.statement.cashbox)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Bank\Statement\Cashbox
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $cashbox_start_id;
-
-    /**
-     * Ending Cashbox
-     * ---
-     * Relation : many2one (account.bank.statement.cashbox)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Bank\Statement\Cashbox
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $cashbox_end_id;
-
-    /**
-     * Is zero
-     * ---
-     * Check if difference is zero.
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $is_difference_zero;
-
-    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -548,7 +548,7 @@ final class Statement extends Base
      *        Sortable : yes
      * @param string $state Status
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> open (New)
      *            -> confirm (Validated)
      *        ---
@@ -570,533 +570,37 @@ final class Statement extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("company_id")
-     */
-    public function getCompanyId(): ?OdooRelation
-    {
-        return $this->company_id;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasLineIds(OdooRelation $item): bool
-    {
-        if (null === $this->line_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->line_ids);
-    }
-
-    /**
-     * @param OdooRelation[]|null $line_ids
-     */
-    public function setLineIds(?array $line_ids): void
-    {
-        $this->line_ids = $line_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("line_ids")
-     */
-    public function getLineIds(): ?array
-    {
-        return $this->line_ids;
-    }
-
-    /**
-     * @param float|null $difference
-     */
-    public function setDifference(?float $difference): void
-    {
-        $this->difference = $difference;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("difference")
-     */
-    public function getDifference(): ?float
-    {
-        return $this->difference;
-    }
-
-    /**
-     * @param float|null $balance_end
-     */
-    public function setBalanceEnd(?float $balance_end): void
-    {
-        $this->balance_end = $balance_end;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("balance_end")
-     */
-    public function getBalanceEnd(): ?float
-    {
-        return $this->balance_end;
-    }
-
-    /**
-     * @param float|null $total_entry_encoding
-     */
-    public function setTotalEntryEncoding(?float $total_entry_encoding): void
-    {
-        $this->total_entry_encoding = $total_entry_encoding;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("total_entry_encoding")
-     */
-    public function getTotalEntryEncoding(): ?float
-    {
-        return $this->total_entry_encoding;
-    }
-
-    /**
-     * @param OdooRelation|null $company_id
-     */
-    public function setCompanyId(?OdooRelation $company_id): void
-    {
-        $this->company_id = $company_id;
-    }
-
-    /**
-     * @param string|null $journal_type
-     */
-    public function setJournalType(?string $journal_type): void
-    {
-        $this->journal_type = $journal_type;
-    }
-
-    /**
      * @param OdooRelation $item
      */
-    public function removeLineIds(OdooRelation $item): void
+    public function addMessageChannelIds(OdooRelation $item): void
     {
-        if (null === $this->line_ids) {
-            $this->line_ids = [];
-        }
-
-        if ($this->hasLineIds($item)) {
-            $index = array_search($item, $this->line_ids);
-            unset($this->line_ids[$index]);
-        }
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("journal_type")
-     */
-    public function getJournalType(): ?string
-    {
-        return $this->journal_type;
-    }
-
-    /**
-     * @param OdooRelation $journal_id
-     */
-    public function setJournalId(OdooRelation $journal_id): void
-    {
-        $this->journal_id = $journal_id;
-    }
-
-    /**
-     * @return OdooRelation
-     *
-     * @SerializedName("journal_id")
-     */
-    public function getJournalId(): OdooRelation
-    {
-        return $this->journal_id;
-    }
-
-    /**
-     * @param OdooRelation|null $currency_id
-     */
-    public function setCurrencyId(?OdooRelation $currency_id): void
-    {
-        $this->currency_id = $currency_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("currency_id")
-     */
-    public function getCurrencyId(): ?OdooRelation
-    {
-        return $this->currency_id;
-    }
-
-    /**
-     * @param string $state
-     */
-    public function setState(string $state): void
-    {
-        $this->state = $state;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("state")
-     */
-    public function getState(): string
-    {
-        return $this->state;
-    }
-
-    /**
-     * @param DateTimeInterface|null $accounting_date
-     */
-    public function setAccountingDate(?DateTimeInterface $accounting_date): void
-    {
-        $this->accounting_date = $accounting_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("accounting_date")
-     */
-    public function getAccountingDate(): ?DateTimeInterface
-    {
-        return $this->accounting_date;
-    }
-
-    /**
-     * @param float|null $balance_end_real
-     */
-    public function setBalanceEndReal(?float $balance_end_real): void
-    {
-        $this->balance_end_real = $balance_end_real;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("balance_end_real")
-     */
-    public function getBalanceEndReal(): ?float
-    {
-        return $this->balance_end_real;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addLineIds(OdooRelation $item): void
-    {
-        if ($this->hasLineIds($item)) {
+        if ($this->hasMessageChannelIds($item)) {
             return;
         }
 
-        if (null === $this->line_ids) {
-            $this->line_ids = [];
+        if (null === $this->message_channel_ids) {
+            $this->message_channel_ids = [];
         }
 
-        $this->line_ids[] = $item;
+        $this->message_channel_ids[] = $item;
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("move_line_ids")
+     * @param int|null $message_unread_counter
      */
-    public function getMoveLineIds(): ?array
+    public function setMessageUnreadCounter(?int $message_unread_counter): void
     {
-        return $this->move_line_ids;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("balance_start")
-     */
-    public function getBalanceStart(): ?float
-    {
-        return $this->balance_start;
-    }
-
-    /**
-     * @param OdooRelation|null $cashbox_end_id
-     */
-    public function setCashboxEndId(?OdooRelation $cashbox_end_id): void
-    {
-        $this->cashbox_end_id = $cashbox_end_id;
-    }
-
-    /**
-     * @param DateTimeInterface|null $write_date
-     */
-    public function setWriteDate(?DateTimeInterface $write_date): void
-    {
-        $this->write_date = $write_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("write_date")
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("write_uid")
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("create_date")
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @param OdooRelation|null $create_uid
-     */
-    public function setCreateUid(?OdooRelation $create_uid): void
-    {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
-     */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param bool|null $is_difference_zero
-     */
-    public function setIsDifferenceZero(?bool $is_difference_zero): void
-    {
-        $this->is_difference_zero = $is_difference_zero;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("is_difference_zero")
-     */
-    public function isIsDifferenceZero(): ?bool
-    {
-        return $this->is_difference_zero;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("cashbox_end_id")
-     */
-    public function getCashboxEndId(): ?OdooRelation
-    {
-        return $this->cashbox_end_id;
-    }
-
-    /**
-     * @param OdooRelation[]|null $move_line_ids
-     */
-    public function setMoveLineIds(?array $move_line_ids): void
-    {
-        $this->move_line_ids = $move_line_ids;
-    }
-
-    /**
-     * @param OdooRelation|null $cashbox_start_id
-     */
-    public function setCashboxStartId(?OdooRelation $cashbox_start_id): void
-    {
-        $this->cashbox_start_id = $cashbox_start_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("cashbox_start_id")
-     */
-    public function getCashboxStartId(): ?OdooRelation
-    {
-        return $this->cashbox_start_id;
-    }
-
-    /**
-     * @param OdooRelation|null $user_id
-     */
-    public function setUserId(?OdooRelation $user_id): void
-    {
-        $this->user_id = $user_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("user_id")
-     */
-    public function getUserId(): ?OdooRelation
-    {
-        return $this->user_id;
-    }
-
-    /**
-     * @param bool|null $all_lines_reconciled
-     */
-    public function setAllLinesReconciled(?bool $all_lines_reconciled): void
-    {
-        $this->all_lines_reconciled = $all_lines_reconciled;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("all_lines_reconciled")
-     */
-    public function isAllLinesReconciled(): ?bool
-    {
-        return $this->all_lines_reconciled;
-    }
-
-    /**
-     * @param int|null $move_line_count
-     */
-    public function setMoveLineCount(?int $move_line_count): void
-    {
-        $this->move_line_count = $move_line_count;
+        $this->message_unread_counter = $message_unread_counter;
     }
 
     /**
      * @return int|null
      *
-     * @SerializedName("move_line_count")
+     * @SerializedName("message_unread_counter")
      */
-    public function getMoveLineCount(): ?int
+    public function getMessageUnreadCounter(): ?int
     {
-        return $this->move_line_count;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMoveLineIds(OdooRelation $item): void
-    {
-        if (null === $this->move_line_ids) {
-            $this->move_line_ids = [];
-        }
-
-        if ($this->hasMoveLineIds($item)) {
-            $index = array_search($item, $this->move_line_ids);
-            unset($this->move_line_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addMoveLineIds(OdooRelation $item): void
-    {
-        if ($this->hasMoveLineIds($item)) {
-            return;
-        }
-
-        if (null === $this->move_line_ids) {
-            $this->move_line_ids = [];
-        }
-
-        $this->move_line_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasMoveLineIds(OdooRelation $item): bool
-    {
-        if (null === $this->move_line_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->move_line_ids);
-    }
-
-    /**
-     * @param float|null $balance_start
-     */
-    public function setBalanceStart(?float $balance_start): void
-    {
-        $this->balance_start = $balance_start;
-    }
-
-    /**
-     * @param DateTimeInterface|null $date_done
-     */
-    public function setDateDone(?DateTimeInterface $date_done): void
-    {
-        $this->date_done = $date_done;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("message_is_follower")
-     */
-    public function isMessageIsFollower(): ?bool
-    {
-        return $this->message_is_follower;
-    }
-
-    /**
-     * @param OdooRelation[]|null $message_channel_ids
-     */
-    public function setMessageChannelIds(?array $message_channel_ids): void
-    {
-        $this->message_channel_ids = $message_channel_ids;
+        return $this->message_unread_counter;
     }
 
     /**
@@ -1197,22 +701,6 @@ final class Statement extends Base
 
     /**
      * @param OdooRelation $item
-     */
-    public function addMessageChannelIds(OdooRelation $item): void
-    {
-        if ($this->hasMessageChannelIds($item)) {
-            return;
-        }
-
-        if (null === $this->message_channel_ids) {
-            $this->message_channel_ids = [];
-        }
-
-        $this->message_channel_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
      *
      * @return bool
      */
@@ -1226,6 +714,22 @@ final class Statement extends Base
     }
 
     /**
+     * @param bool|null $message_needaction
+     */
+    public function setMessageNeedaction(?bool $message_needaction): void
+    {
+        $this->message_needaction = $message_needaction;
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_channel_ids
+     */
+    public function setMessageChannelIds(?array $message_channel_ids): void
+    {
+        $this->message_channel_ids = $message_channel_ids;
+    }
+
+    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("message_channel_ids")
@@ -1233,14 +737,6 @@ final class Statement extends Base
     public function getMessageChannelIds(): ?array
     {
         return $this->message_channel_ids;
-    }
-
-    /**
-     * @param int|null $message_unread_counter
-     */
-    public function setMessageUnreadCounter(?int $message_unread_counter): void
-    {
-        $this->message_unread_counter = $message_unread_counter;
     }
 
     /**
@@ -1360,13 +856,23 @@ final class Statement extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @return bool|null
      *
-     * @SerializedName("message_follower_ids")
+     * @SerializedName("message_needaction")
      */
-    public function getMessageFollowerIds(): ?array
+    public function isMessageNeedaction(): ?bool
     {
-        return $this->message_follower_ids;
+        return $this->message_needaction;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("message_needaction_counter")
+     */
+    public function getMessageNeedactionCounter(): ?int
+    {
+        return $this->message_needaction_counter;
     }
 
     /**
@@ -1378,101 +884,90 @@ final class Statement extends Base
     }
 
     /**
-     * @return int|null
-     *
-     * @SerializedName("message_unread_counter")
+     * @param OdooRelation $item
      */
-    public function getMessageUnreadCounter(): ?int
+    public function removeWebsiteMessageIds(OdooRelation $item): void
     {
-        return $this->message_unread_counter;
+        if (null === $this->website_message_ids) {
+            $this->website_message_ids = [];
+        }
+
+        if ($this->hasWebsiteMessageIds($item)) {
+            $index = array_search($item, $this->website_message_ids);
+            unset($this->website_message_ids[$index]);
+        }
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("message_needaction")
+     * @param DateTimeInterface|null $write_date
      */
-    public function isMessageNeedaction(): ?bool
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->message_needaction;
+        $this->write_date = $write_date;
     }
 
     /**
      * @return DateTimeInterface|null
      *
-     * @SerializedName("date_done")
+     * @SerializedName("write_date")
      */
-    public function getDateDone(): ?DateTimeInterface
+    public function getWriteDate(): ?DateTimeInterface
     {
-        return $this->date_done;
+        return $this->write_date;
     }
 
     /**
-     * @param OdooRelation $item
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
      *
-     * @return bool
+     * @SerializedName("write_uid")
      */
-    public function hasWebsiteMessageIds(OdooRelation $item): bool
+    public function getWriteUid(): ?OdooRelation
     {
-        if (null === $this->website_message_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->website_message_ids);
+        return $this->write_uid;
     }
 
     /**
-     * @param DateTimeInterface $date
+     * @param DateTimeInterface|null $create_date
      */
-    public function setDate(DateTimeInterface $date): void
+    public function setCreateDate(?DateTimeInterface $create_date): void
     {
-        $this->date = $date;
+        $this->create_date = $create_date;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return DateTimeInterface|null
      *
-     * @SerializedName("date")
+     * @SerializedName("create_date")
      */
-    public function getDate(): DateTimeInterface
+    public function getCreateDate(): ?DateTimeInterface
     {
-        return $this->date;
+        return $this->create_date;
     }
 
     /**
-     * @param string|null $reference
+     * @param OdooRelation|null $create_uid
      */
-    public function setReference(?string $reference): void
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        $this->reference = $reference;
+        $this->create_uid = $create_uid;
     }
 
     /**
-     * @return string|null
+     * @return OdooRelation|null
      *
-     * @SerializedName("reference")
+     * @SerializedName("create_uid")
      */
-    public function getReference(): ?string
+    public function getCreateUid(): ?OdooRelation
     {
-        return $this->reference;
-    }
-
-    /**
-     * @param string|null $name
-     */
-    public function setName(?string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("name")
-     */
-    public function getName(): ?string
-    {
-        return $this->name;
+        return $this->create_uid;
     }
 
     /**
@@ -1496,21 +991,6 @@ final class Statement extends Base
     /**
      * @param OdooRelation $item
      */
-    public function removeWebsiteMessageIds(OdooRelation $item): void
-    {
-        if (null === $this->website_message_ids) {
-            $this->website_message_ids = [];
-        }
-
-        if ($this->hasWebsiteMessageIds($item)) {
-            $index = array_search($item, $this->website_message_ids);
-            unset($this->website_message_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
     public function addWebsiteMessageIds(OdooRelation $item): void
     {
         if ($this->hasWebsiteMessageIds($item)) {
@@ -1525,19 +1005,33 @@ final class Statement extends Base
     }
 
     /**
+     * @param int|null $message_needaction_counter
+     */
+    public function setMessageNeedactionCounter(?int $message_needaction_counter): void
+    {
+        $this->message_needaction_counter = $message_needaction_counter;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasWebsiteMessageIds(OdooRelation $item): bool
+    {
+        if (null === $this->website_message_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->website_message_ids);
+    }
+
+    /**
      * @param OdooRelation[]|null $website_message_ids
      */
     public function setWebsiteMessageIds(?array $website_message_ids): void
     {
         $this->website_message_ids = $website_message_ids;
-    }
-
-    /**
-     * @param bool|null $message_needaction
-     */
-    public function setMessageNeedaction(?bool $message_needaction): void
-    {
-        $this->message_needaction = $message_needaction;
     }
 
     /**
@@ -1623,21 +1117,527 @@ final class Statement extends Base
     }
 
     /**
-     * @param int|null $message_needaction_counter
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_follower_ids")
      */
-    public function setMessageNeedactionCounter(?int $message_needaction_counter): void
+    public function getMessageFollowerIds(): ?array
     {
-        $this->message_needaction_counter = $message_needaction_counter;
+        return $this->message_follower_ids;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("message_is_follower")
+     */
+    public function isMessageIsFollower(): ?bool
+    {
+        return $this->message_is_follower;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("name")
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param DateTimeInterface|null $accounting_date
+     */
+    public function setAccountingDate(?DateTimeInterface $accounting_date): void
+    {
+        $this->accounting_date = $accounting_date;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param string|null $journal_type
+     */
+    public function setJournalType(?string $journal_type): void
+    {
+        $this->journal_type = $journal_type;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("journal_type")
+     */
+    public function getJournalType(): ?string
+    {
+        return $this->journal_type;
+    }
+
+    /**
+     * @param OdooRelation $journal_id
+     */
+    public function setJournalId(OdooRelation $journal_id): void
+    {
+        $this->journal_id = $journal_id;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("journal_id")
+     */
+    public function getJournalId(): OdooRelation
+    {
+        return $this->journal_id;
+    }
+
+    /**
+     * @param OdooRelation|null $currency_id
+     */
+    public function setCurrencyId(?OdooRelation $currency_id): void
+    {
+        $this->currency_id = $currency_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("currency_id")
+     */
+    public function getCurrencyId(): ?OdooRelation
+    {
+        return $this->currency_id;
+    }
+
+    /**
+     * @param string $state
+     */
+    public function setState(string $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("state")
+     */
+    public function getState(): string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("accounting_date")
+     */
+    public function getAccountingDate(): ?DateTimeInterface
+    {
+        return $this->accounting_date;
+    }
+
+    /**
+     * @param float|null $total_entry_encoding
+     */
+    public function setTotalEntryEncoding(?float $total_entry_encoding): void
+    {
+        $this->total_entry_encoding = $total_entry_encoding;
+    }
+
+    /**
+     * @param float|null $balance_end_real
+     */
+    public function setBalanceEndReal(?float $balance_end_real): void
+    {
+        $this->balance_end_real = $balance_end_real;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("balance_end_real")
+     */
+    public function getBalanceEndReal(): ?float
+    {
+        return $this->balance_end_real;
+    }
+
+    /**
+     * @param float|null $balance_start
+     */
+    public function setBalanceStart(?float $balance_start): void
+    {
+        $this->balance_start = $balance_start;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("balance_start")
+     */
+    public function getBalanceStart(): ?float
+    {
+        return $this->balance_start;
+    }
+
+    /**
+     * @param DateTimeInterface|null $date_done
+     */
+    public function setDateDone(?DateTimeInterface $date_done): void
+    {
+        $this->date_done = $date_done;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("date_done")
+     */
+    public function getDateDone(): ?DateTimeInterface
+    {
+        return $this->date_done;
+    }
+
+    /**
+     * @param DateTimeInterface $date
+     */
+    public function setDate(DateTimeInterface $date): void
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @return DateTimeInterface
+     *
+     * @SerializedName("date")
+     */
+    public function getDate(): DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param string|null $reference
+     */
+    public function setReference(?string $reference): void
+    {
+        $this->reference = $reference;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("reference")
+     */
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+
+    /**
+     * @param string|null $name
+     */
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("total_entry_encoding")
+     */
+    public function getTotalEntryEncoding(): ?float
+    {
+        return $this->total_entry_encoding;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("balance_end")
+     */
+    public function getBalanceEnd(): ?float
+    {
+        return $this->balance_end;
+    }
+
+    /**
+     * @param bool|null $is_difference_zero
+     */
+    public function setIsDifferenceZero(?bool $is_difference_zero): void
+    {
+        $this->is_difference_zero = $is_difference_zero;
     }
 
     /**
      * @return int|null
      *
-     * @SerializedName("message_needaction_counter")
+     * @SerializedName("move_line_count")
      */
-    public function getMessageNeedactionCounter(): ?int
+    public function getMoveLineCount(): ?int
     {
-        return $this->message_needaction_counter;
+        return $this->move_line_count;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("is_difference_zero")
+     */
+    public function isIsDifferenceZero(): ?bool
+    {
+        return $this->is_difference_zero;
+    }
+
+    /**
+     * @param OdooRelation|null $cashbox_end_id
+     */
+    public function setCashboxEndId(?OdooRelation $cashbox_end_id): void
+    {
+        $this->cashbox_end_id = $cashbox_end_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("cashbox_end_id")
+     */
+    public function getCashboxEndId(): ?OdooRelation
+    {
+        return $this->cashbox_end_id;
+    }
+
+    /**
+     * @param OdooRelation|null $cashbox_start_id
+     */
+    public function setCashboxStartId(?OdooRelation $cashbox_start_id): void
+    {
+        $this->cashbox_start_id = $cashbox_start_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("cashbox_start_id")
+     */
+    public function getCashboxStartId(): ?OdooRelation
+    {
+        return $this->cashbox_start_id;
+    }
+
+    /**
+     * @param OdooRelation|null $user_id
+     */
+    public function setUserId(?OdooRelation $user_id): void
+    {
+        $this->user_id = $user_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("user_id")
+     */
+    public function getUserId(): ?OdooRelation
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @param bool|null $all_lines_reconciled
+     */
+    public function setAllLinesReconciled(?bool $all_lines_reconciled): void
+    {
+        $this->all_lines_reconciled = $all_lines_reconciled;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("all_lines_reconciled")
+     */
+    public function isAllLinesReconciled(): ?bool
+    {
+        return $this->all_lines_reconciled;
+    }
+
+    /**
+     * @param int|null $move_line_count
+     */
+    public function setMoveLineCount(?int $move_line_count): void
+    {
+        $this->move_line_count = $move_line_count;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMoveLineIds(OdooRelation $item): void
+    {
+        if (null === $this->move_line_ids) {
+            $this->move_line_ids = [];
+        }
+
+        if ($this->hasMoveLineIds($item)) {
+            $index = array_search($item, $this->move_line_ids);
+            unset($this->move_line_ids[$index]);
+        }
+    }
+
+    /**
+     * @param float|null $balance_end
+     */
+    public function setBalanceEnd(?float $balance_end): void
+    {
+        $this->balance_end = $balance_end;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMoveLineIds(OdooRelation $item): void
+    {
+        if ($this->hasMoveLineIds($item)) {
+            return;
+        }
+
+        if (null === $this->move_line_ids) {
+            $this->move_line_ids = [];
+        }
+
+        $this->move_line_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMoveLineIds(OdooRelation $item): bool
+    {
+        if (null === $this->move_line_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->move_line_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $move_line_ids
+     */
+    public function setMoveLineIds(?array $move_line_ids): void
+    {
+        $this->move_line_ids = $move_line_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("move_line_ids")
+     */
+    public function getMoveLineIds(): ?array
+    {
+        return $this->move_line_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeLineIds(OdooRelation $item): void
+    {
+        if (null === $this->line_ids) {
+            $this->line_ids = [];
+        }
+
+        if ($this->hasLineIds($item)) {
+            $index = array_search($item, $this->line_ids);
+            unset($this->line_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addLineIds(OdooRelation $item): void
+    {
+        if ($this->hasLineIds($item)) {
+            return;
+        }
+
+        if (null === $this->line_ids) {
+            $this->line_ids = [];
+        }
+
+        $this->line_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasLineIds(OdooRelation $item): bool
+    {
+        if (null === $this->line_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->line_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $line_ids
+     */
+    public function setLineIds(?array $line_ids): void
+    {
+        $this->line_ids = $line_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("line_ids")
+     */
+    public function getLineIds(): ?array
+    {
+        return $this->line_ids;
+    }
+
+    /**
+     * @param float|null $difference
+     */
+    public function setDifference(?float $difference): void
+    {
+        $this->difference = $difference;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("difference")
+     */
+    public function getDifference(): ?float
+    {
+        return $this->difference;
     }
 
     /**

@@ -160,7 +160,7 @@ final class Send extends Message
      *        Message type: email for email message, notification for system message, comment for other messages such as
      *        user replies
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> comment (Comment)
      *            -> notification (System notification)
      *        ---

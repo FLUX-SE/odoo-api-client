@@ -47,7 +47,7 @@ final class Update extends Base
     /**
      * Status
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> init (init)
      *     -> done (done)
      * ---

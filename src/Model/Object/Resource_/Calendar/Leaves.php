@@ -104,7 +104,7 @@ final class Leaves extends Base
      * ---
      * Whether this should be computed as a time off or as work time (eg: formation)
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> leave (Time Off)
      *     -> other (Other)
      * ---

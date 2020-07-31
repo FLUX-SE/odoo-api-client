@@ -152,7 +152,7 @@ final class Country extends Base
      * ---
      * Determines where the customer/company name should be placed, i.e. after or before the address.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> before (Before Address)
      *     -> after (After Address)
      * ---

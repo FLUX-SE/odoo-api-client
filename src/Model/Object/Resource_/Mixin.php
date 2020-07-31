@@ -64,7 +64,7 @@ final class Mixin extends Base
      * ---
      * This field is used in order to define in which timezone the resources will work.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> Africa/Abidjan (Africa/Abidjan)
      *     -> Africa/Accra (Africa/Accra)
      *     -> Africa/Addis_Ababa (Africa/Addis_Ababa)

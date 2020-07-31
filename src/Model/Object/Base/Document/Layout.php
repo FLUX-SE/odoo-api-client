@@ -105,7 +105,7 @@ final class Layout extends Base
     /**
      * Font
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> Lato (Lato)
      *     -> Roboto (Roboto)
      *     -> Open_Sans (Open Sans)

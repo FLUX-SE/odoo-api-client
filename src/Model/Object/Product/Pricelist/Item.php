@@ -92,7 +92,7 @@ final class Item extends Base
      * ---
      * Pricelist Item applicable on selected option
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> 3_global (All Products)
      *     -> 2_product_category (Product Category)
      *     -> 1_product (Product)
@@ -113,7 +113,7 @@ final class Item extends Base
      * Cost Price : The base price will be the cost price.
      * Other Pricelist : Computation of the base price based on another Pricelist.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> list_price (Sales Price)
      *     -> standard_price (Cost)
      *     -> pricelist (Other Pricelist)
@@ -276,7 +276,7 @@ final class Item extends Base
     /**
      * Compute Price
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> fixed (Fixed Price)
      *     -> percentage (Percentage (discount))
      *     -> formula (Formula)
@@ -383,7 +383,7 @@ final class Item extends Base
      *        ---
      *        Pricelist Item applicable on selected option
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> 3_global (All Products)
      *            -> 2_product_category (Product Category)
      *            -> 1_product (Product)
@@ -398,7 +398,7 @@ final class Item extends Base
      *        Cost Price : The base price will be the cost price.
      *        Other Pricelist : Computation of the base price based on another Pricelist.
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> list_price (Sales Price)
      *            -> standard_price (Cost)
      *            -> pricelist (Other Pricelist)
@@ -414,7 +414,7 @@ final class Item extends Base
      *        Sortable : yes
      * @param string $compute_price Compute Price
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> fixed (Fixed Price)
      *            -> percentage (Percentage (discount))
      *            -> formula (Formula)

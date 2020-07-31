@@ -111,7 +111,7 @@ final class ActWindow extends Base
     /**
      * Target Window
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> current (Current Window)
      *     -> new (New Window)
      *     -> inline (Inline Edit)
@@ -274,7 +274,7 @@ final class ActWindow extends Base
     /**
      * Binding Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> action (Action)
      *     -> report (Report)
      * ---
@@ -370,7 +370,7 @@ final class ActWindow extends Base
      *        Sortable : yes
      * @param string $binding_type Binding Type
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> action (Action)
      *            -> report (Report)
      *        ---

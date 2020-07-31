@@ -60,7 +60,7 @@ final class ActUrl extends Base
     /**
      * Action Target
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> new (New Window)
      *     -> self (This Window)
      * ---
@@ -111,7 +111,7 @@ final class ActUrl extends Base
     /**
      * Binding Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> action (Action)
      *     -> report (Report)
      * ---
@@ -193,7 +193,7 @@ final class ActUrl extends Base
      *        Sortable : yes
      * @param string $target Action Target
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> new (New Window)
      *            -> self (This Window)
      *        ---
@@ -201,7 +201,7 @@ final class ActUrl extends Base
      *        Sortable : yes
      * @param string $binding_type Binding Type
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> action (Action)
      *            -> report (Report)
      *        ---

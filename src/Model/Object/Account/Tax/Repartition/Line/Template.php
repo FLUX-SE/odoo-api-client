@@ -44,7 +44,7 @@ final class Template extends Base
      * ---
      * Base on which the factor will be applied.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> base (Base)
      *     -> tax (of tax)
      * ---
@@ -202,7 +202,7 @@ final class Template extends Base
      *        ---
      *        Base on which the factor will be applied.
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> base (Base)
      *            -> tax (of tax)
      *        ---

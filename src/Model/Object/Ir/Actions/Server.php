@@ -42,7 +42,7 @@ class Server extends Base
     /**
      * Usage
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> ir_actions_server (Server Action)
      *     -> ir_cron (Scheduled Action)
      * ---
@@ -271,7 +271,7 @@ class Server extends Base
     /**
      * Due type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> days (Days)
      *     -> weeks (Weeks)
      *     -> months (Months)
@@ -289,7 +289,7 @@ class Server extends Base
      * Use 'Specific User' to always assign the same user on the next activity. Use 'Generic User From Record' to
      * specify the field name of the user to choose on the record.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> specific (Specific User)
      *     -> generic (Generic User From Record)
      * ---
@@ -324,6 +324,58 @@ class Server extends Base
      * @var string|null
      */
     protected $activity_user_field_name;
+
+    /**
+     * Action To Do
+     * ---
+     * Type of server action. The following values are available:
+     * - 'Execute Python Code': a block of python code that will be executed
+     * - 'Create': create a new record with new values
+     * - 'Update a Record': update the values of a record
+     * - 'Execute several actions': define an action that triggers several other server actions
+     * - 'Send Email': automatically send an email (Discuss)
+     * - 'Add Followers': add followers to a record (Discuss)
+     * - 'Create Next Activity': create an activity (Discuss)
+     * ---
+     * Selection :
+     *     -> code (Execute Python Code)
+     *     -> object_create (Create a new Record)
+     *     -> object_write (Update the Record)
+     *     -> multi (Execute several actions)
+     *     -> email (Send Email)
+     *     -> followers (Add Followers)
+     *     -> next_activity (Create Next Activity)
+     *     -> sms (Send SMS Text Message)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    protected $state;
+
+    /**
+     * SMS Template
+     * ---
+     * Relation : many2one (sms.template)
+     * @see \Flux\OdooApiClient\Model\Object\Sms\Template
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    protected $sms_template_id;
+
+    /**
+     * Log a note
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    protected $sms_mass_keep_log;
 
     /**
      * External ID
@@ -365,7 +417,7 @@ class Server extends Base
     /**
      * Binding Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> action (Action)
      *     -> report (Report)
      * ---
@@ -385,58 +437,6 @@ class Server extends Base
      * @var string|null
      */
     protected $binding_view_types;
-
-    /**
-     * Action To Do
-     * ---
-     * Type of server action. The following values are available:
-     * - 'Execute Python Code': a block of python code that will be executed
-     * - 'Create': create a new record with new values
-     * - 'Update a Record': update the values of a record
-     * - 'Execute several actions': define an action that triggers several other server actions
-     * - 'Send Email': automatically send an email (Discuss)
-     * - 'Add Followers': add followers to a record (Discuss)
-     * - 'Create Next Activity': create an activity (Discuss)
-     * ---
-     * Selection : (default value, usually null)
-     *     -> code (Execute Python Code)
-     *     -> object_create (Create a new Record)
-     *     -> object_write (Update the Record)
-     *     -> multi (Execute several actions)
-     *     -> email (Send Email)
-     *     -> followers (Add Followers)
-     *     -> next_activity (Create Next Activity)
-     *     -> sms (Send SMS Text Message)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string
-     */
-    protected $state;
-
-    /**
-     * SMS Template
-     * ---
-     * Relation : many2one (sms.template)
-     * @see \Flux\OdooApiClient\Model\Object\Sms\Template
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    protected $sms_template_id;
-
-    /**
-     * Log a note
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    protected $sms_mass_keep_log;
 
     /**
      * Created by
@@ -495,7 +495,7 @@ class Server extends Base
      *        Sortable : yes
      * @param string $usage Usage
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> ir_actions_server (Server Action)
      *            -> ir_cron (Scheduled Action)
      *        ---
@@ -515,17 +515,9 @@ class Server extends Base
      *        Use 'Specific User' to always assign the same user on the next activity. Use 'Generic User From Record' to
      *        specify the field name of the user to choose on the record.
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> specific (Specific User)
      *            -> generic (Generic User From Record)
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
-     * @param string $binding_type Binding Type
-     *        ---
-     *        Selection : (default value, usually null)
-     *            -> action (Action)
-     *            -> report (Report)
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -540,7 +532,7 @@ class Server extends Base
      *        - 'Add Followers': add followers to a record (Discuss)
      *        - 'Create Next Activity': create an activity (Discuss)
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> code (Execute Python Code)
      *            -> object_create (Create a new Record)
      *            -> object_write (Update the Record)
@@ -552,6 +544,14 @@ class Server extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $binding_type Binding Type
+     *        ---
+     *        Selection :
+     *            -> action (Action)
+     *            -> report (Report)
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         string $name,
@@ -559,16 +559,16 @@ class Server extends Base
         string $usage,
         OdooRelation $model_id,
         string $activity_user_type,
-        string $binding_type,
-        string $state
+        string $state,
+        string $binding_type
     ) {
         $this->name = $name;
         $this->type = $type;
         $this->usage = $usage;
         $this->model_id = $model_id;
         $this->activity_user_type = $activity_user_type;
-        $this->binding_type = $binding_type;
         $this->state = $state;
+        $this->binding_type = $binding_type;
     }
 
     /**
@@ -582,13 +582,13 @@ class Server extends Base
     }
 
     /**
-     * @return string|null
+     * @return string
      *
-     * @SerializedName("xml_id")
+     * @SerializedName("state")
      */
-    public function getXmlId(): ?string
+    public function getState(): string
     {
-        return $this->xml_id;
+        return $this->state;
     }
 
     /**
@@ -662,13 +662,13 @@ class Server extends Base
     }
 
     /**
-     * @return string|null
+     * @return OdooRelation|null
      *
-     * @SerializedName("help")
+     * @SerializedName("sms_template_id")
      */
-    public function getHelp(): ?string
+    public function getSmsTemplateId(): ?OdooRelation
     {
-        return $this->help;
+        return $this->sms_template_id;
     }
 
     /**
@@ -744,19 +744,19 @@ class Server extends Base
     }
 
     /**
-     * @param string|null $xml_id
+     * @param string $state
      */
-    public function setXmlId(?string $xml_id): void
+    public function setState(string $state): void
     {
-        $this->xml_id = $xml_id;
+        $this->state = $state;
     }
 
     /**
-     * @param string|null $help
+     * @param OdooRelation|null $sms_template_id
      */
-    public function setHelp(?string $help): void
+    public function setSmsTemplateId(?OdooRelation $sms_template_id): void
     {
-        $this->help = $help;
+        $this->sms_template_id = $sms_template_id;
     }
 
     /**
@@ -775,11 +775,11 @@ class Server extends Base
     }
 
     /**
-     * @param bool|null $sms_mass_keep_log
+     * @param string|null $binding_view_types
      */
-    public function setSmsMassKeepLog(?bool $sms_mass_keep_log): void
+    public function setBindingViewTypes(?string $binding_view_types): void
     {
-        $this->sms_mass_keep_log = $sms_mass_keep_log;
+        $this->binding_view_types = $binding_view_types;
     }
 
     /**
@@ -855,70 +855,6 @@ class Server extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("sms_mass_keep_log")
-     */
-    public function isSmsMassKeepLog(): ?bool
-    {
-        return $this->sms_mass_keep_log;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("binding_model_id")
-     */
-    public function getBindingModelId(): ?OdooRelation
-    {
-        return $this->binding_model_id;
-    }
-
-    /**
-     * @param OdooRelation|null $sms_template_id
-     */
-    public function setSmsTemplateId(?OdooRelation $sms_template_id): void
-    {
-        $this->sms_template_id = $sms_template_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("sms_template_id")
-     */
-    public function getSmsTemplateId(): ?OdooRelation
-    {
-        return $this->sms_template_id;
-    }
-
-    /**
-     * @param string $state
-     */
-    public function setState(string $state): void
-    {
-        $this->state = $state;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("state")
-     */
-    public function getState(): string
-    {
-        return $this->state;
-    }
-
-    /**
-     * @param string|null $binding_view_types
-     */
-    public function setBindingViewTypes(?string $binding_view_types): void
-    {
-        $this->binding_view_types = $binding_view_types;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("binding_view_types")
@@ -926,6 +862,16 @@ class Server extends Base
     public function getBindingViewTypes(): ?string
     {
         return $this->binding_view_types;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("sms_mass_keep_log")
+     */
+    public function isSmsMassKeepLog(): ?bool
+    {
+        return $this->sms_mass_keep_log;
     }
 
     /**
@@ -952,6 +898,60 @@ class Server extends Base
     public function setBindingModelId(?OdooRelation $binding_model_id): void
     {
         $this->binding_model_id = $binding_model_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("binding_model_id")
+     */
+    public function getBindingModelId(): ?OdooRelation
+    {
+        return $this->binding_model_id;
+    }
+
+    /**
+     * @param string|null $help
+     */
+    public function setHelp(?string $help): void
+    {
+        $this->help = $help;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("help")
+     */
+    public function getHelp(): ?string
+    {
+        return $this->help;
+    }
+
+    /**
+     * @param string|null $xml_id
+     */
+    public function setXmlId(?string $xml_id): void
+    {
+        $this->xml_id = $xml_id;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("xml_id")
+     */
+    public function getXmlId(): ?string
+    {
+        return $this->xml_id;
+    }
+
+    /**
+     * @param bool|null $sms_mass_keep_log
+     */
+    public function setSmsMassKeepLog(?bool $sms_mass_keep_log): void
+    {
+        $this->sms_mass_keep_log = $sms_mass_keep_log;
     }
 
     /**

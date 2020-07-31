@@ -67,7 +67,7 @@ final class Fec extends Base
     /**
      * Export Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> official (Official FEC report (posted entries only))
      *     -> nonofficial (Non-official FEC report (posted and unposted entries))
      * ---
@@ -135,7 +135,7 @@ final class Fec extends Base
      *        Sortable : yes
      * @param string $export_type Export Type
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> official (Official FEC report (posted entries only))
      *            -> nonofficial (Non-official FEC report (posted and unposted entries))
      *        ---

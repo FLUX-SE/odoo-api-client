@@ -146,7 +146,7 @@ class Alias extends Base
      * - followers: only followers of the related document or members of following channels
      *
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> everyone (Everyone)
      *     -> partners (Authenticated Partners)
      *     -> followers (Followers only)
@@ -229,7 +229,7 @@ class Alias extends Base
      *        - followers: only followers of the related document or members of following channels
      *
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> everyone (Everyone)
      *            -> partners (Authenticated Partners)
      *            -> followers (Followers only)

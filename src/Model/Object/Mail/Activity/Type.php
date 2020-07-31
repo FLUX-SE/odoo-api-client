@@ -92,7 +92,7 @@ final class Type extends Base
      * ---
      * Unit of delay
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> days (days)
      *     -> weeks (weeks)
      *     -> months (months)
@@ -109,7 +109,7 @@ final class Type extends Base
      * ---
      * Type of delay
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> current_date (after validation date)
      *     -> previous_activity (after previous activity deadline)
      * ---
@@ -137,7 +137,7 @@ final class Type extends Base
      * ---
      * Change the background color of the related activities of this type.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> warning (Alert)
      *     -> danger (Error)
      * ---
@@ -219,7 +219,7 @@ final class Type extends Base
      * Actions may trigger specific behavior like opening calendar view or automatically mark as done when a document
      * is uploaded
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> default (None)
      *     -> upload_file (Upload Document)
      * ---
@@ -335,7 +335,7 @@ final class Type extends Base
      *        ---
      *        Unit of delay
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> days (days)
      *            -> weeks (weeks)
      *            -> months (months)
@@ -346,7 +346,7 @@ final class Type extends Base
      *        ---
      *        Type of delay
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> current_date (after validation date)
      *            -> previous_activity (after previous activity deadline)
      *        ---

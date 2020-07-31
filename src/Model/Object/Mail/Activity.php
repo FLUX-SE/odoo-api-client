@@ -87,7 +87,7 @@ final class Activity extends Base
      * Actions may trigger specific behavior like opening calendar view or automatically mark as done when a document
      * is uploaded
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> default (None)
      *     -> upload_file (Upload Document)
      * ---
@@ -103,7 +103,7 @@ final class Activity extends Base
      * ---
      * Change the background color of the related activities of this type.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> warning (Alert)
      *     -> danger (Error)
      * ---
@@ -184,7 +184,7 @@ final class Activity extends Base
     /**
      * State
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> overdue (Overdue)
      *     -> today (Today)
      *     -> planned (Planned)

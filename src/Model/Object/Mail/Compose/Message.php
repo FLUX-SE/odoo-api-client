@@ -140,7 +140,7 @@ class Message extends Base
      * Message type: email for email message, notification for system message, comment for other messages such as
      * user replies
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> comment (Comment)
      *     -> notification (System notification)
      * ---
@@ -180,7 +180,7 @@ class Message extends Base
     /**
      * Composition mode
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> comment (Post on a document)
      *     -> mass_mail (Email Mass Mailing)
      *     -> mass_post (Post on Multiple Documents)
@@ -395,7 +395,7 @@ class Message extends Base
      *        Message type: email for email message, notification for system message, comment for other messages such as
      *        user replies
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> comment (Comment)
      *            -> notification (System notification)
      *        ---

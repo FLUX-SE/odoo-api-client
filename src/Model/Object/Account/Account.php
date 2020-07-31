@@ -104,7 +104,7 @@ final class Account extends Base
      * The 'Internal Type' is used for features available on different types of accounts: liquidity type is for cash
      * or bank accounts, payable/receivable is for vendor/customer accounts.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> other (Regular)
      *     -> receivable (Receivable)
      *     -> payable (Payable)
@@ -122,7 +122,7 @@ final class Account extends Base
      * ---
      * The 'Internal Group' is used to filter accounts based on the internal group set on the account type.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> equity (Equity)
      *     -> asset (Asset)
      *     -> liability (Liability)

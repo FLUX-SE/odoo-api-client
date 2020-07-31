@@ -40,7 +40,7 @@ final class Category extends Base
     /**
      * Type of Measure
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> unit (Default Units)
      *     -> weight (Default Weight)
      *     -> working_time (Default Working Time)

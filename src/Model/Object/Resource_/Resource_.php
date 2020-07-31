@@ -65,7 +65,7 @@ final class Resource_ extends Base
     /**
      * Resource Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> user (Human)
      *     -> material (Material)
      * ---
@@ -125,7 +125,7 @@ final class Resource_ extends Base
      * ---
      * This field is used in order to define in which timezone the resources will work.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> Africa/Abidjan (Africa/Abidjan)
      *     -> Africa/Accra (Africa/Accra)
      *     -> Africa/Addis_Ababa (Africa/Addis_Ababa)
@@ -780,7 +780,7 @@ final class Resource_ extends Base
      *        Sortable : yes
      * @param string $resource_type Resource Type
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> user (Human)
      *            -> material (Material)
      *        ---
@@ -807,7 +807,7 @@ final class Resource_ extends Base
      *        ---
      *        This field is used in order to define in which timezone the resources will work.
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> Africa/Abidjan (Africa/Abidjan)
      *            -> Africa/Accra (Africa/Accra)
      *            -> Africa/Addis_Ababa (Africa/Addis_Ababa)

@@ -31,7 +31,7 @@ final class Channel extends Alias
     /**
      * Channel Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> chat (Chat Discussion)
      *     -> channel (Channel)
      * ---
@@ -136,7 +136,7 @@ final class Channel extends Alias
      * ---
      * This group is visible by non members. Invisible groups can add members through the invite button.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> public (Everyone)
      *     -> private (Invited people only)
      *     -> groups (Selected group of users)
@@ -505,7 +505,7 @@ final class Channel extends Alias
      *        ---
      *        This group is visible by non members. Invisible groups can add members through the invite button.
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> public (Everyone)
      *            -> private (Invited people only)
      *            -> groups (Selected group of users)
@@ -543,7 +543,7 @@ final class Channel extends Alias
      *        - followers: only followers of the related document or members of following channels
      *
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> everyone (Everyone)
      *            -> partners (Authenticated Partners)
      *            -> followers (Followers only)

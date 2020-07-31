@@ -57,7 +57,7 @@ final class Wizard extends Base
      * ---
      * You might want to try a soft reset first.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> soft (Restore previous version (soft reset).)
      *     -> hard (Reset to file version (hard reset).)
      * ---
@@ -119,7 +119,7 @@ final class Wizard extends Base
      *        ---
      *        You might want to try a soft reset first.
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> soft (Restore previous version (soft reset).)
      *            -> hard (Reset to file version (hard reset).)
      *        ---

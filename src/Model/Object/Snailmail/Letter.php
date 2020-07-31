@@ -169,7 +169,7 @@ final class Letter extends Base
      * If the letter is correctly sent, the status goes in 'Sent',
      * If not, it will got in state 'Error' and the error message will be displayed in the field 'Error Message'.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> pending (In Queue)
      *     -> sent (Sent)
      *     -> error (Error)
@@ -185,7 +185,7 @@ final class Letter extends Base
     /**
      * Error
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> MISSING_REQUIRED_FIELDS (MISSING_REQUIRED_FIELDS)
      *     -> CREDIT_ERROR (CREDIT_ERROR)
      *     -> TRIAL_ERROR (TRIAL_ERROR)
@@ -374,7 +374,7 @@ final class Letter extends Base
      *        If the letter is correctly sent, the status goes in 'Sent',
      *        If not, it will got in state 'Error' and the error message will be displayed in the field 'Error Message'.
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> pending (In Queue)
      *            -> sent (Sent)
      *            -> error (Error)

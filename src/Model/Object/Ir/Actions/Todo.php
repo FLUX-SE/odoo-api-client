@@ -45,7 +45,7 @@ final class Todo extends Base
     /**
      * Status
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> open (To Do)
      *     -> done (Done)
      * ---
@@ -122,7 +122,7 @@ final class Todo extends Base
      *        Sortable : yes
      * @param string $state Status
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> open (To Do)
      *            -> done (Done)
      *        ---

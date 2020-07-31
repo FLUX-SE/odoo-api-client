@@ -343,7 +343,7 @@ class Message extends Base
     /**
      * Moderation Status
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> pending_moderation (Pending Moderation)
      *     -> accepted (Accepted)
      *     -> rejected (Rejected)
@@ -463,7 +463,7 @@ class Message extends Base
      * Message type: email for email message, notification for system message, comment for other messages such as
      * user replies
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> email (Email)
      *     -> comment (Comment)
      *     -> notification (System notification)
@@ -542,7 +542,7 @@ class Message extends Base
      *        Message type: email for email message, notification for system message, comment for other messages such as
      *        user replies
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> email (Email)
      *            -> comment (Comment)
      *            -> notification (System notification)

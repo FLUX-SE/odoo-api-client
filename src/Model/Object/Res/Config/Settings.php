@@ -360,7 +360,7 @@ final class Settings extends Base
     /**
      * Customer Account
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> b2b (On invitation)
      *     -> b2c (Free sign up)
      * ---
@@ -483,7 +483,7 @@ final class Settings extends Base
      * Multiple prices: Pricelists with fixed price rules by product,
      * Advanced rules: enables advanced price rules for pricelists.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> basic (Multiple prices per product)
      *     -> advanced (Advanced price rules (discounts, formulas))
      * ---
@@ -497,7 +497,7 @@ final class Settings extends Base
     /**
      * Weight unit of measure
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> 0 (Kilogram)
      *     -> 1 (Pound)
      * ---
@@ -511,7 +511,7 @@ final class Settings extends Base
     /**
      * Volume unit of measure
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> 0 (Cubic Meters)
      *     -> 1 (Cubic Feet)
      * ---
@@ -667,7 +667,7 @@ final class Settings extends Base
     /**
      * Tax calculation rounding method
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> round_per_line (Round per Line)
      *     -> round_globally (Round Globally)
      * ---
@@ -761,7 +761,7 @@ final class Settings extends Base
     /**
      * Line Subtotals Tax Display
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> tax_excluded (Tax-Excluded)
      *     -> tax_included (Tax-Included)
      * ---
@@ -1079,94 +1079,6 @@ final class Settings extends Base
     private $use_invoice_terms;
 
     /**
-     * Processing Option
-     * ---
-     * Selection : (default value, usually null)
-     *     -> no_send (Do not digitalize bills)
-     *     -> manual_send (Digitalize bills on demand only)
-     *     -> auto_send (Digitalize all bills automatically)
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $extract_show_ocr_option_selection;
-
-    /**
-     * OCR Single Invoice Line Per Tax
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $extract_single_line_per_tax;
-
-    /**
-     * Verify VAT Numbers
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $vat_check_vies;
-
-    /**
-     * Interval Unit
-     * ---
-     * Selection : (default value, usually null)
-     *     -> manually (Manually)
-     *     -> daily (Daily)
-     *     -> weekly (Weekly)
-     *     -> monthly (Monthly)
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $currency_interval_unit;
-
-    /**
-     * Service Provider
-     * ---
-     * Selection : (default value, usually null)
-     *     -> ecb (European Central Bank)
-     *     -> fta (Federal Tax Administration (Switzerland))
-     *     -> banxico (Mexican Bank)
-     *     -> boc (Bank Of Canada)
-     *     -> xe_com (xe.com)
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $currency_provider;
-
-    /**
-     * Next Execution Date
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var DateTimeInterface|null
-     */
-    private $currency_next_execution_date;
-
-    /**
-     * Send by Post
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $invoice_is_snailmail;
-
-    /**
      * Company Country code
      * ---
      * The ISO country code in two chars.
@@ -1185,7 +1097,7 @@ final class Settings extends Base
      * Select the format corresponding to the check paper you will be printing your checks on.
      * In order to disable the printing feature, select 'None'.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> disabled (None)
      *     -> action_print_check_top (check on top)
      *     -> action_print_check_middle (check in middle)
@@ -1260,6 +1172,94 @@ final class Settings extends Base
     private $account_check_printing_margin_right;
 
     /**
+     * Processing Option
+     * ---
+     * Selection :
+     *     -> no_send (Do not digitalize bills)
+     *     -> manual_send (Digitalize bills on demand only)
+     *     -> auto_send (Digitalize all bills automatically)
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $extract_show_ocr_option_selection;
+
+    /**
+     * OCR Single Invoice Line Per Tax
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $extract_single_line_per_tax;
+
+    /**
+     * Verify VAT Numbers
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $vat_check_vies;
+
+    /**
+     * Interval Unit
+     * ---
+     * Selection :
+     *     -> manually (Manually)
+     *     -> daily (Daily)
+     *     -> weekly (Weekly)
+     *     -> monthly (Monthly)
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $currency_interval_unit;
+
+    /**
+     * Service Provider
+     * ---
+     * Selection :
+     *     -> ecb (European Central Bank)
+     *     -> fta (Federal Tax Administration (Switzerland))
+     *     -> banxico (Mexican Bank)
+     *     -> boc (Bank Of Canada)
+     *     -> xe_com (xe.com)
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $currency_provider;
+
+    /**
+     * Next Execution Date
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var DateTimeInterface|null
+     */
+    private $currency_next_execution_date;
+
+    /**
+     * Send by Post
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $invoice_is_snailmail;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -1324,7 +1324,7 @@ final class Settings extends Base
      *        Sortable : no
      * @param string $show_line_subtotals_tax_selection Line Subtotals Tax Display
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> tax_excluded (Tax-Excluded)
      *            -> tax_included (Tax-Included)
      *        ---
@@ -1872,137 +1872,13 @@ final class Settings extends Base
     }
 
     /**
-     * @return float|null
-     *
-     * @SerializedName("account_check_printing_margin_top")
-     */
-    public function getAccountCheckPrintingMarginTop(): ?float
-    {
-        return $this->account_check_printing_margin_top;
-    }
-
-    /**
-     * @param DateTimeInterface|null $currency_next_execution_date
-     */
-    public function setCurrencyNextExecutionDate(?DateTimeInterface $currency_next_execution_date): void
-    {
-        $this->currency_next_execution_date = $currency_next_execution_date;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("invoice_is_snailmail")
-     */
-    public function isInvoiceIsSnailmail(): ?bool
-    {
-        return $this->invoice_is_snailmail;
-    }
-
-    /**
-     * @param bool|null $invoice_is_snailmail
-     */
-    public function setInvoiceIsSnailmail(?bool $invoice_is_snailmail): void
-    {
-        $this->invoice_is_snailmail = $invoice_is_snailmail;
-    }
-
-    /**
      * @return string|null
      *
-     * @SerializedName("country_code")
+     * @SerializedName("currency_provider")
      */
-    public function getCountryCode(): ?string
+    public function getCurrencyProvider(): ?string
     {
-        return $this->country_code;
-    }
-
-    /**
-     * @param string|null $country_code
-     */
-    public function setCountryCode(?string $country_code): void
-    {
-        $this->country_code = $country_code;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("account_check_printing_layout")
-     */
-    public function getAccountCheckPrintingLayout(): ?string
-    {
-        return $this->account_check_printing_layout;
-    }
-
-    /**
-     * @param string|null $account_check_printing_layout
-     */
-    public function setAccountCheckPrintingLayout(?string $account_check_printing_layout): void
-    {
-        $this->account_check_printing_layout = $account_check_printing_layout;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("account_check_printing_date_label")
-     */
-    public function isAccountCheckPrintingDateLabel(): ?bool
-    {
-        return $this->account_check_printing_date_label;
-    }
-
-    /**
-     * @param bool|null $account_check_printing_date_label
-     */
-    public function setAccountCheckPrintingDateLabel(?bool $account_check_printing_date_label): void
-    {
-        $this->account_check_printing_date_label = $account_check_printing_date_label;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("account_check_printing_multi_stub")
-     */
-    public function isAccountCheckPrintingMultiStub(): ?bool
-    {
-        return $this->account_check_printing_multi_stub;
-    }
-
-    /**
-     * @param bool|null $account_check_printing_multi_stub
-     */
-    public function setAccountCheckPrintingMultiStub(?bool $account_check_printing_multi_stub): void
-    {
-        $this->account_check_printing_multi_stub = $account_check_printing_multi_stub;
-    }
-
-    /**
-     * @param float|null $account_check_printing_margin_top
-     */
-    public function setAccountCheckPrintingMarginTop(?float $account_check_printing_margin_top): void
-    {
-        $this->account_check_printing_margin_top = $account_check_printing_margin_top;
-    }
-
-    /**
-     * @param string|null $currency_provider
-     */
-    public function setCurrencyProvider(?string $currency_provider): void
-    {
-        $this->currency_provider = $currency_provider;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("account_check_printing_margin_left")
-     */
-    public function getAccountCheckPrintingMarginLeft(): ?float
-    {
-        return $this->account_check_printing_margin_left;
+        return $this->currency_provider;
     }
 
     /**
@@ -2029,6 +1905,130 @@ final class Settings extends Base
     public function setAccountCheckPrintingMarginRight(?float $account_check_printing_margin_right): void
     {
         $this->account_check_printing_margin_right = $account_check_printing_margin_right;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("extract_show_ocr_option_selection")
+     */
+    public function getExtractShowOcrOptionSelection(): ?string
+    {
+        return $this->extract_show_ocr_option_selection;
+    }
+
+    /**
+     * @param string|null $extract_show_ocr_option_selection
+     */
+    public function setExtractShowOcrOptionSelection(?string $extract_show_ocr_option_selection): void
+    {
+        $this->extract_show_ocr_option_selection = $extract_show_ocr_option_selection;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("extract_single_line_per_tax")
+     */
+    public function isExtractSingleLinePerTax(): ?bool
+    {
+        return $this->extract_single_line_per_tax;
+    }
+
+    /**
+     * @param bool|null $extract_single_line_per_tax
+     */
+    public function setExtractSingleLinePerTax(?bool $extract_single_line_per_tax): void
+    {
+        $this->extract_single_line_per_tax = $extract_single_line_per_tax;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("vat_check_vies")
+     */
+    public function isVatCheckVies(): ?bool
+    {
+        return $this->vat_check_vies;
+    }
+
+    /**
+     * @param bool|null $vat_check_vies
+     */
+    public function setVatCheckVies(?bool $vat_check_vies): void
+    {
+        $this->vat_check_vies = $vat_check_vies;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("currency_interval_unit")
+     */
+    public function getCurrencyIntervalUnit(): ?string
+    {
+        return $this->currency_interval_unit;
+    }
+
+    /**
+     * @param string|null $currency_interval_unit
+     */
+    public function setCurrencyIntervalUnit(?string $currency_interval_unit): void
+    {
+        $this->currency_interval_unit = $currency_interval_unit;
+    }
+
+    /**
+     * @param string|null $currency_provider
+     */
+    public function setCurrencyProvider(?string $currency_provider): void
+    {
+        $this->currency_provider = $currency_provider;
+    }
+
+    /**
+     * @param float|null $account_check_printing_margin_top
+     */
+    public function setAccountCheckPrintingMarginTop(?float $account_check_printing_margin_top): void
+    {
+        $this->account_check_printing_margin_top = $account_check_printing_margin_top;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("currency_next_execution_date")
+     */
+    public function getCurrencyNextExecutionDate(): ?DateTimeInterface
+    {
+        return $this->currency_next_execution_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $currency_next_execution_date
+     */
+    public function setCurrencyNextExecutionDate(?DateTimeInterface $currency_next_execution_date): void
+    {
+        $this->currency_next_execution_date = $currency_next_execution_date;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("invoice_is_snailmail")
+     */
+    public function isInvoiceIsSnailmail(): ?bool
+    {
+        return $this->invoice_is_snailmail;
+    }
+
+    /**
+     * @param bool|null $invoice_is_snailmail
+     */
+    public function setInvoiceIsSnailmail(?bool $invoice_is_snailmail): void
+    {
+        $this->invoice_is_snailmail = $invoice_is_snailmail;
     }
 
     /**
@@ -2104,23 +2104,23 @@ final class Settings extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
+     * @return float|null
      *
-     * @SerializedName("currency_next_execution_date")
+     * @SerializedName("account_check_printing_margin_left")
      */
-    public function getCurrencyNextExecutionDate(): ?DateTimeInterface
+    public function getAccountCheckPrintingMarginLeft(): ?float
     {
-        return $this->currency_next_execution_date;
+        return $this->account_check_printing_margin_left;
     }
 
     /**
-     * @return string|null
+     * @return float|null
      *
-     * @SerializedName("currency_provider")
+     * @SerializedName("account_check_printing_margin_top")
      */
-    public function getCurrencyProvider(): ?string
+    public function getAccountCheckPrintingMarginTop(): ?float
     {
-        return $this->currency_provider;
+        return $this->account_check_printing_margin_top;
     }
 
     /**
@@ -2251,11 +2251,11 @@ final class Settings extends Base
     }
 
     /**
-     * @param string|null $currency_interval_unit
+     * @param bool|null $account_check_printing_multi_stub
      */
-    public function setCurrencyIntervalUnit(?string $currency_interval_unit): void
+    public function setAccountCheckPrintingMultiStub(?bool $account_check_printing_multi_stub): void
     {
-        $this->currency_interval_unit = $currency_interval_unit;
+        $this->account_check_printing_multi_stub = $account_check_printing_multi_stub;
     }
 
     /**
@@ -2305,65 +2305,65 @@ final class Settings extends Base
     /**
      * @return string|null
      *
-     * @SerializedName("extract_show_ocr_option_selection")
+     * @SerializedName("country_code")
      */
-    public function getExtractShowOcrOptionSelection(): ?string
+    public function getCountryCode(): ?string
     {
-        return $this->extract_show_ocr_option_selection;
+        return $this->country_code;
     }
 
     /**
-     * @param string|null $extract_show_ocr_option_selection
+     * @param string|null $country_code
      */
-    public function setExtractShowOcrOptionSelection(?string $extract_show_ocr_option_selection): void
+    public function setCountryCode(?string $country_code): void
     {
-        $this->extract_show_ocr_option_selection = $extract_show_ocr_option_selection;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("extract_single_line_per_tax")
-     */
-    public function isExtractSingleLinePerTax(): ?bool
-    {
-        return $this->extract_single_line_per_tax;
-    }
-
-    /**
-     * @param bool|null $extract_single_line_per_tax
-     */
-    public function setExtractSingleLinePerTax(?bool $extract_single_line_per_tax): void
-    {
-        $this->extract_single_line_per_tax = $extract_single_line_per_tax;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("vat_check_vies")
-     */
-    public function isVatCheckVies(): ?bool
-    {
-        return $this->vat_check_vies;
-    }
-
-    /**
-     * @param bool|null $vat_check_vies
-     */
-    public function setVatCheckVies(?bool $vat_check_vies): void
-    {
-        $this->vat_check_vies = $vat_check_vies;
+        $this->country_code = $country_code;
     }
 
     /**
      * @return string|null
      *
-     * @SerializedName("currency_interval_unit")
+     * @SerializedName("account_check_printing_layout")
      */
-    public function getCurrencyIntervalUnit(): ?string
+    public function getAccountCheckPrintingLayout(): ?string
     {
-        return $this->currency_interval_unit;
+        return $this->account_check_printing_layout;
+    }
+
+    /**
+     * @param string|null $account_check_printing_layout
+     */
+    public function setAccountCheckPrintingLayout(?string $account_check_printing_layout): void
+    {
+        $this->account_check_printing_layout = $account_check_printing_layout;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("account_check_printing_date_label")
+     */
+    public function isAccountCheckPrintingDateLabel(): ?bool
+    {
+        return $this->account_check_printing_date_label;
+    }
+
+    /**
+     * @param bool|null $account_check_printing_date_label
+     */
+    public function setAccountCheckPrintingDateLabel(?bool $account_check_printing_date_label): void
+    {
+        $this->account_check_printing_date_label = $account_check_printing_date_label;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("account_check_printing_multi_stub")
+     */
+    public function isAccountCheckPrintingMultiStub(): ?bool
+    {
+        return $this->account_check_printing_multi_stub;
     }
 
     /**

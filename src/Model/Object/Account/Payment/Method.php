@@ -50,7 +50,7 @@ final class Method extends Base
     /**
      * Payment Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> inbound (Inbound)
      *     -> outbound (Outbound)
      * ---
@@ -118,7 +118,7 @@ final class Method extends Base
      *        Sortable : yes
      * @param string $payment_type Payment Type
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> inbound (Inbound)
      *            -> outbound (Outbound)
      *        ---

@@ -27,7 +27,7 @@ final class Journal extends Base
     /**
      * Entries Sorted by
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> date (Date)
      *     -> move_name (Journal Entry Number)
      * ---
@@ -99,7 +99,7 @@ final class Journal extends Base
     /**
      * Target Moves
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> posted (All Posted Entries)
      *     -> all (All Entries)
      * ---
@@ -159,7 +159,7 @@ final class Journal extends Base
     /**
      * @param string $sort_selection Entries Sorted by
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> date (Date)
      *            -> move_name (Journal Entry Number)
      *        ---
@@ -181,7 +181,7 @@ final class Journal extends Base
      *        Sortable : yes
      * @param string $target_move Target Moves
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> posted (All Posted Entries)
      *            -> all (All Entries)
      *        ---

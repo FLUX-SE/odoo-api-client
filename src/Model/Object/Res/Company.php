@@ -331,7 +331,7 @@ final class Company extends Base
     /**
      * State of the onboarding company step
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> not_done (Not done)
      *     -> just_done (Just done)
      *     -> done (Done)
@@ -358,7 +358,7 @@ final class Company extends Base
     /**
      * Font
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> Lato (Lato)
      *     -> Roboto (Roboto)
      *     -> Open_Sans (Open Sans)
@@ -482,7 +482,7 @@ final class Company extends Base
     /**
      * Fiscalyear Last Month
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> 1 (January)
      *     -> 2 (February)
      *     -> 3 (March)
@@ -679,7 +679,7 @@ final class Company extends Base
     /**
      * Tax Calculation Rounding Method
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> round_per_line (Round per Line)
      *     -> round_globally (Round Globally)
      * ---
@@ -911,7 +911,7 @@ final class Company extends Base
     /**
      * State of the onboarding bank data step
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> not_done (Not done)
      *     -> just_done (Just done)
      *     -> done (Done)
@@ -926,7 +926,7 @@ final class Company extends Base
     /**
      * State of the onboarding fiscal year step
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> not_done (Not done)
      *     -> just_done (Just done)
      *     -> done (Done)
@@ -941,7 +941,7 @@ final class Company extends Base
     /**
      * State of the onboarding charts of account step
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> not_done (Not done)
      *     -> just_done (Just done)
      *     -> done (Done)
@@ -956,7 +956,7 @@ final class Company extends Base
     /**
      * State of the onboarding invoice layout step
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> not_done (Not done)
      *     -> just_done (Just done)
      *     -> done (Done)
@@ -971,7 +971,7 @@ final class Company extends Base
     /**
      * State of the onboarding sample invoice step
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> not_done (Not done)
      *     -> just_done (Just done)
      *     -> done (Done)
@@ -986,7 +986,7 @@ final class Company extends Base
     /**
      * State of the onboarding sale tax step
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> not_done (Not done)
      *     -> just_done (Just done)
      *     -> done (Done)
@@ -1001,7 +1001,7 @@ final class Company extends Base
     /**
      * State of the account invoice onboarding panel
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> not_done (Not done)
      *     -> just_done (Just done)
      *     -> done (Done)
@@ -1017,7 +1017,7 @@ final class Company extends Base
     /**
      * State of the account dashboard onboarding panel
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> not_done (Not done)
      *     -> just_done (Just done)
      *     -> done (Done)
@@ -1099,9 +1099,89 @@ final class Company extends Base
     private $accrual_default_journal_id;
 
     /**
+     * Check Layout
+     * ---
+     * Select the format corresponding to the check paper you will be printing your checks on.
+     * In order to disable the printing feature, select 'None'.
+     * ---
+     * Selection :
+     *     -> disabled (None)
+     *     -> action_print_check_top (check on top)
+     *     -> action_print_check_middle (check in middle)
+     *     -> action_print_check_bottom (check on bottom)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    private $account_check_printing_layout;
+
+    /**
+     * Print Date Label
+     * ---
+     * This option allows you to print the date label on the check as per CPA. Disable this if your pre-printed check
+     * includes the date label.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $account_check_printing_date_label;
+
+    /**
+     * Multi-Pages Check Stub
+     * ---
+     * This option allows you to print check details (stub) on multiple pages if they don't fit on a single page.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $account_check_printing_multi_stub;
+
+    /**
+     * Check Top Margin
+     * ---
+     * Adjust the margins of generated checks to make it fit your printer's settings.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var float|null
+     */
+    private $account_check_printing_margin_top;
+
+    /**
+     * Check Left Margin
+     * ---
+     * Adjust the margins of generated checks to make it fit your printer's settings.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var float|null
+     */
+    private $account_check_printing_margin_left;
+
+    /**
+     * Right Margin
+     * ---
+     * Adjust the margins of generated checks to make it fit your printer's settings.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var float|null
+     */
+    private $account_check_printing_margin_right;
+
+    /**
      * Send mode on invoices attachments
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> no_send (Do not digitalize bills)
      *     -> manual_send (Digitalize bills on demand only)
      *     -> auto_send (Digitalize all bills automatically)
@@ -1136,7 +1216,7 @@ final class Company extends Base
     /**
      * Interval Unit
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> manually (Manually)
      *     -> daily (Daily)
      *     -> weekly (Weekly)
@@ -1162,7 +1242,7 @@ final class Company extends Base
     /**
      * Service Provider
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> ecb (European Central Bank)
      *     -> fta (Federal Tax Administration (Switzerland))
      *     -> banxico (Mexican Bank)
@@ -1179,7 +1259,7 @@ final class Company extends Base
     /**
      * State of the onboarding payment acquirer step
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> not_done (Not done)
      *     -> just_done (Just done)
      *     -> done (Done)
@@ -1194,7 +1274,7 @@ final class Company extends Base
     /**
      * Selected onboarding payment method
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> paypal (PayPal)
      *     -> stripe (Stripe)
      *     -> manual (Manual)
@@ -1291,86 +1371,6 @@ final class Company extends Base
     private $ape;
 
     /**
-     * Check Layout
-     * ---
-     * Select the format corresponding to the check paper you will be printing your checks on.
-     * In order to disable the printing feature, select 'None'.
-     * ---
-     * Selection : (default value, usually null)
-     *     -> disabled (None)
-     *     -> action_print_check_top (check on top)
-     *     -> action_print_check_middle (check in middle)
-     *     -> action_print_check_bottom (check on bottom)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string
-     */
-    private $account_check_printing_layout;
-
-    /**
-     * Print Date Label
-     * ---
-     * This option allows you to print the date label on the check as per CPA. Disable this if your pre-printed check
-     * includes the date label.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $account_check_printing_date_label;
-
-    /**
-     * Multi-Pages Check Stub
-     * ---
-     * This option allows you to print check details (stub) on multiple pages if they don't fit on a single page.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $account_check_printing_multi_stub;
-
-    /**
-     * Check Top Margin
-     * ---
-     * Adjust the margins of generated checks to make it fit your printer's settings.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var float|null
-     */
-    private $account_check_printing_margin_top;
-
-    /**
-     * Check Left Margin
-     * ---
-     * Adjust the margins of generated checks to make it fit your printer's settings.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var float|null
-     */
-    private $account_check_printing_margin_left;
-
-    /**
-     * Right Margin
-     * ---
-     * Adjust the margins of generated checks to make it fit your printer's settings.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var float|null
-     */
-    private $account_check_printing_margin_right;
-
-    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -1441,7 +1441,7 @@ final class Company extends Base
      *        Sortable : yes
      * @param string $fiscalyear_last_month Fiscalyear Last Month
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> 1 (January)
      *            -> 2 (February)
      *            -> 3 (March)
@@ -1457,9 +1457,22 @@ final class Company extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $account_check_printing_layout Check Layout
+     *        ---
+     *        Select the format corresponding to the check paper you will be printing your checks on.
+     *        In order to disable the printing feature, select 'None'.
+     *        ---
+     *        Selection :
+     *            -> disabled (None)
+     *            -> action_print_check_top (check on top)
+     *            -> action_print_check_middle (check in middle)
+     *            -> action_print_check_bottom (check on bottom)
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $extract_show_ocr_option_selection Send mode on invoices attachments
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> no_send (Do not digitalize bills)
      *            -> manual_send (Digitalize bills on demand only)
      *            -> auto_send (Digitalize all bills automatically)
@@ -1470,19 +1483,6 @@ final class Company extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param string $account_check_printing_layout Check Layout
-     *        ---
-     *        Select the format corresponding to the check paper you will be printing your checks on.
-     *        In order to disable the printing feature, select 'None'.
-     *        ---
-     *        Selection : (default value, usually null)
-     *            -> disabled (None)
-     *            -> action_print_check_top (check on top)
-     *            -> action_print_check_middle (check in middle)
-     *            -> action_print_check_bottom (check on bottom)
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
      */
     public function __construct(
         string $name,
@@ -1490,18 +1490,18 @@ final class Company extends Base
         OdooRelation $currency_id,
         int $fiscalyear_last_day,
         string $fiscalyear_last_month,
+        string $account_check_printing_layout,
         string $extract_show_ocr_option_selection,
-        bool $extract_single_line_per_tax,
-        string $account_check_printing_layout
+        bool $extract_single_line_per_tax
     ) {
         $this->name = $name;
         $this->partner_id = $partner_id;
         $this->currency_id = $currency_id;
         $this->fiscalyear_last_day = $fiscalyear_last_day;
         $this->fiscalyear_last_month = $fiscalyear_last_month;
+        $this->account_check_printing_layout = $account_check_printing_layout;
         $this->extract_show_ocr_option_selection = $extract_show_ocr_option_selection;
         $this->extract_single_line_per_tax = $extract_single_line_per_tax;
-        $this->account_check_printing_layout = $account_check_printing_layout;
     }
 
     /**
@@ -2071,16 +2071,6 @@ final class Company extends Base
     }
 
     /**
-     * @return float|null
-     *
-     * @SerializedName("account_check_printing_margin_top")
-     */
-    public function getAccountCheckPrintingMarginTop(): ?float
-    {
-        return $this->account_check_printing_margin_top;
-    }
-
-    /**
      * @return OdooRelation|null
      *
      * @SerializedName("l10n_fr_closing_sequence_id")
@@ -2091,11 +2081,129 @@ final class Company extends Base
     }
 
     /**
+     * @return string|null
+     *
+     * @SerializedName("payment_onboarding_payment_method")
+     */
+    public function getPaymentOnboardingPaymentMethod(): ?string
+    {
+        return $this->payment_onboarding_payment_method;
+    }
+
+    /**
+     * @param string|null $payment_onboarding_payment_method
+     */
+    public function setPaymentOnboardingPaymentMethod(?string $payment_onboarding_payment_method): void
+    {
+        $this->payment_onboarding_payment_method = $payment_onboarding_payment_method;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("invoice_is_snailmail")
+     */
+    public function isInvoiceIsSnailmail(): ?bool
+    {
+        return $this->invoice_is_snailmail;
+    }
+
+    /**
+     * @param bool|null $invoice_is_snailmail
+     */
+    public function setInvoiceIsSnailmail(?bool $invoice_is_snailmail): void
+    {
+        $this->invoice_is_snailmail = $invoice_is_snailmail;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("yodlee_access_token")
+     */
+    public function getYodleeAccessToken(): ?string
+    {
+        return $this->yodlee_access_token;
+    }
+
+    /**
+     * @param string|null $yodlee_access_token
+     */
+    public function setYodleeAccessToken(?string $yodlee_access_token): void
+    {
+        $this->yodlee_access_token = $yodlee_access_token;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("yodlee_user_login")
+     */
+    public function getYodleeUserLogin(): ?string
+    {
+        return $this->yodlee_user_login;
+    }
+
+    /**
+     * @param string|null $yodlee_user_login
+     */
+    public function setYodleeUserLogin(?string $yodlee_user_login): void
+    {
+        $this->yodlee_user_login = $yodlee_user_login;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("yodlee_user_password")
+     */
+    public function getYodleeUserPassword(): ?string
+    {
+        return $this->yodlee_user_password;
+    }
+
+    /**
+     * @param string|null $yodlee_user_password
+     */
+    public function setYodleeUserPassword(?string $yodlee_user_password): void
+    {
+        $this->yodlee_user_password = $yodlee_user_password;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("yodlee_user_access_token")
+     */
+    public function getYodleeUserAccessToken(): ?string
+    {
+        return $this->yodlee_user_access_token;
+    }
+
+    /**
+     * @param string|null $yodlee_user_access_token
+     */
+    public function setYodleeUserAccessToken(?string $yodlee_user_access_token): void
+    {
+        $this->yodlee_user_access_token = $yodlee_user_access_token;
+    }
+
+    /**
      * @param OdooRelation|null $l10n_fr_closing_sequence_id
      */
     public function setL10nFrClosingSequenceId(?OdooRelation $l10n_fr_closing_sequence_id): void
     {
         $this->l10n_fr_closing_sequence_id = $l10n_fr_closing_sequence_id;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("payment_acquirer_onboarding_state")
+     */
+    public function getPaymentAcquirerOnboardingState(): ?string
+    {
+        return $this->payment_acquirer_onboarding_state;
     }
 
     /**
@@ -2132,114 +2240,6 @@ final class Company extends Base
     public function setApe(?string $ape): void
     {
         $this->ape = $ape;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("account_check_printing_layout")
-     */
-    public function getAccountCheckPrintingLayout(): string
-    {
-        return $this->account_check_printing_layout;
-    }
-
-    /**
-     * @param string $account_check_printing_layout
-     */
-    public function setAccountCheckPrintingLayout(string $account_check_printing_layout): void
-    {
-        $this->account_check_printing_layout = $account_check_printing_layout;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("account_check_printing_date_label")
-     */
-    public function isAccountCheckPrintingDateLabel(): ?bool
-    {
-        return $this->account_check_printing_date_label;
-    }
-
-    /**
-     * @param bool|null $account_check_printing_date_label
-     */
-    public function setAccountCheckPrintingDateLabel(?bool $account_check_printing_date_label): void
-    {
-        $this->account_check_printing_date_label = $account_check_printing_date_label;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("account_check_printing_multi_stub")
-     */
-    public function isAccountCheckPrintingMultiStub(): ?bool
-    {
-        return $this->account_check_printing_multi_stub;
-    }
-
-    /**
-     * @param bool|null $account_check_printing_multi_stub
-     */
-    public function setAccountCheckPrintingMultiStub(?bool $account_check_printing_multi_stub): void
-    {
-        $this->account_check_printing_multi_stub = $account_check_printing_multi_stub;
-    }
-
-    /**
-     * @param float|null $account_check_printing_margin_top
-     */
-    public function setAccountCheckPrintingMarginTop(?float $account_check_printing_margin_top): void
-    {
-        $this->account_check_printing_margin_top = $account_check_printing_margin_top;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("yodlee_user_access_token")
-     */
-    public function getYodleeUserAccessToken(): ?string
-    {
-        return $this->yodlee_user_access_token;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("account_check_printing_margin_left")
-     */
-    public function getAccountCheckPrintingMarginLeft(): ?float
-    {
-        return $this->account_check_printing_margin_left;
-    }
-
-    /**
-     * @param float|null $account_check_printing_margin_left
-     */
-    public function setAccountCheckPrintingMarginLeft(?float $account_check_printing_margin_left): void
-    {
-        $this->account_check_printing_margin_left = $account_check_printing_margin_left;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("account_check_printing_margin_right")
-     */
-    public function getAccountCheckPrintingMarginRight(): ?float
-    {
-        return $this->account_check_printing_margin_right;
-    }
-
-    /**
-     * @param float|null $account_check_printing_margin_right
-     */
-    public function setAccountCheckPrintingMarginRight(?float $account_check_printing_margin_right): void
-    {
-        $this->account_check_printing_margin_right = $account_check_printing_margin_right;
     }
 
     /**
@@ -2315,19 +2315,19 @@ final class Company extends Base
     }
 
     /**
-     * @param string|null $yodlee_user_access_token
+     * @param string|null $payment_acquirer_onboarding_state
      */
-    public function setYodleeUserAccessToken(?string $yodlee_user_access_token): void
+    public function setPaymentAcquirerOnboardingState(?string $payment_acquirer_onboarding_state): void
     {
-        $this->yodlee_user_access_token = $yodlee_user_access_token;
+        $this->payment_acquirer_onboarding_state = $payment_acquirer_onboarding_state;
     }
 
     /**
-     * @param string|null $yodlee_user_password
+     * @param string|null $currency_provider
      */
-    public function setYodleeUserPassword(?string $yodlee_user_password): void
+    public function setCurrencyProvider(?string $currency_provider): void
     {
-        $this->yodlee_user_password = $yodlee_user_password;
+        $this->currency_provider = $currency_provider;
     }
 
     /**
@@ -2339,13 +2339,13 @@ final class Company extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
+     * @return float|null
      *
-     * @SerializedName("currency_next_execution_date")
+     * @SerializedName("account_check_printing_margin_left")
      */
-    public function getCurrencyNextExecutionDate(): ?DateTimeInterface
+    public function getAccountCheckPrintingMarginLeft(): ?float
     {
-        return $this->currency_next_execution_date;
+        return $this->account_check_printing_margin_left;
     }
 
     /**
@@ -2382,6 +2382,114 @@ final class Company extends Base
     public function setAccrualDefaultJournalId(?OdooRelation $accrual_default_journal_id): void
     {
         $this->accrual_default_journal_id = $accrual_default_journal_id;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("account_check_printing_layout")
+     */
+    public function getAccountCheckPrintingLayout(): string
+    {
+        return $this->account_check_printing_layout;
+    }
+
+    /**
+     * @param string $account_check_printing_layout
+     */
+    public function setAccountCheckPrintingLayout(string $account_check_printing_layout): void
+    {
+        $this->account_check_printing_layout = $account_check_printing_layout;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("account_check_printing_date_label")
+     */
+    public function isAccountCheckPrintingDateLabel(): ?bool
+    {
+        return $this->account_check_printing_date_label;
+    }
+
+    /**
+     * @param bool|null $account_check_printing_date_label
+     */
+    public function setAccountCheckPrintingDateLabel(?bool $account_check_printing_date_label): void
+    {
+        $this->account_check_printing_date_label = $account_check_printing_date_label;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("account_check_printing_multi_stub")
+     */
+    public function isAccountCheckPrintingMultiStub(): ?bool
+    {
+        return $this->account_check_printing_multi_stub;
+    }
+
+    /**
+     * @param bool|null $account_check_printing_multi_stub
+     */
+    public function setAccountCheckPrintingMultiStub(?bool $account_check_printing_multi_stub): void
+    {
+        $this->account_check_printing_multi_stub = $account_check_printing_multi_stub;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("account_check_printing_margin_top")
+     */
+    public function getAccountCheckPrintingMarginTop(): ?float
+    {
+        return $this->account_check_printing_margin_top;
+    }
+
+    /**
+     * @param float|null $account_check_printing_margin_top
+     */
+    public function setAccountCheckPrintingMarginTop(?float $account_check_printing_margin_top): void
+    {
+        $this->account_check_printing_margin_top = $account_check_printing_margin_top;
+    }
+
+    /**
+     * @param float|null $account_check_printing_margin_left
+     */
+    public function setAccountCheckPrintingMarginLeft(?float $account_check_printing_margin_left): void
+    {
+        $this->account_check_printing_margin_left = $account_check_printing_margin_left;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("currency_provider")
+     */
+    public function getCurrencyProvider(): ?string
+    {
+        return $this->currency_provider;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("account_check_printing_margin_right")
+     */
+    public function getAccountCheckPrintingMarginRight(): ?float
+    {
+        return $this->account_check_printing_margin_right;
+    }
+
+    /**
+     * @param float|null $account_check_printing_margin_right
+     */
+    public function setAccountCheckPrintingMarginRight(?float $account_check_printing_margin_right): void
+    {
+        $this->account_check_printing_margin_right = $account_check_printing_margin_right;
     }
 
     /**
@@ -2457,129 +2565,21 @@ final class Company extends Base
     }
 
     /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("currency_next_execution_date")
+     */
+    public function getCurrencyNextExecutionDate(): ?DateTimeInterface
+    {
+        return $this->currency_next_execution_date;
+    }
+
+    /**
      * @param DateTimeInterface|null $currency_next_execution_date
      */
     public function setCurrencyNextExecutionDate(?DateTimeInterface $currency_next_execution_date): void
     {
         $this->currency_next_execution_date = $currency_next_execution_date;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("yodlee_user_password")
-     */
-    public function getYodleeUserPassword(): ?string
-    {
-        return $this->yodlee_user_password;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("currency_provider")
-     */
-    public function getCurrencyProvider(): ?string
-    {
-        return $this->currency_provider;
-    }
-
-    /**
-     * @param string|null $currency_provider
-     */
-    public function setCurrencyProvider(?string $currency_provider): void
-    {
-        $this->currency_provider = $currency_provider;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("payment_acquirer_onboarding_state")
-     */
-    public function getPaymentAcquirerOnboardingState(): ?string
-    {
-        return $this->payment_acquirer_onboarding_state;
-    }
-
-    /**
-     * @param string|null $payment_acquirer_onboarding_state
-     */
-    public function setPaymentAcquirerOnboardingState(?string $payment_acquirer_onboarding_state): void
-    {
-        $this->payment_acquirer_onboarding_state = $payment_acquirer_onboarding_state;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("payment_onboarding_payment_method")
-     */
-    public function getPaymentOnboardingPaymentMethod(): ?string
-    {
-        return $this->payment_onboarding_payment_method;
-    }
-
-    /**
-     * @param string|null $payment_onboarding_payment_method
-     */
-    public function setPaymentOnboardingPaymentMethod(?string $payment_onboarding_payment_method): void
-    {
-        $this->payment_onboarding_payment_method = $payment_onboarding_payment_method;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("invoice_is_snailmail")
-     */
-    public function isInvoiceIsSnailmail(): ?bool
-    {
-        return $this->invoice_is_snailmail;
-    }
-
-    /**
-     * @param bool|null $invoice_is_snailmail
-     */
-    public function setInvoiceIsSnailmail(?bool $invoice_is_snailmail): void
-    {
-        $this->invoice_is_snailmail = $invoice_is_snailmail;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("yodlee_access_token")
-     */
-    public function getYodleeAccessToken(): ?string
-    {
-        return $this->yodlee_access_token;
-    }
-
-    /**
-     * @param string|null $yodlee_access_token
-     */
-    public function setYodleeAccessToken(?string $yodlee_access_token): void
-    {
-        $this->yodlee_access_token = $yodlee_access_token;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("yodlee_user_login")
-     */
-    public function getYodleeUserLogin(): ?string
-    {
-        return $this->yodlee_user_login;
-    }
-
-    /**
-     * @param string|null $yodlee_user_login
-     */
-    public function setYodleeUserLogin(?string $yodlee_user_login): void
-    {
-        $this->yodlee_user_login = $yodlee_user_login;
     }
 
     /**

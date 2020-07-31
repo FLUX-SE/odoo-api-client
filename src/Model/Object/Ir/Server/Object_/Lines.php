@@ -71,7 +71,7 @@ final class Lines extends Base
     /**
      * Evaluation Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> value (Value)
      *     -> reference (Reference)
      *     -> equation (Python expression)
@@ -158,7 +158,7 @@ final class Lines extends Base
      *        Sortable : yes
      * @param string $evaluation_type Evaluation Type
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> value (Value)
      *            -> reference (Reference)
      *            -> equation (Python expression)

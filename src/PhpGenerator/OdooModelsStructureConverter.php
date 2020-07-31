@@ -302,7 +302,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
 
         if ($fieldInfo['type'] === 'selection') {
             $description[] = '---';
-            $description[] = 'Selection : (default value, usually null)';
+            $description[] = 'Selection :';
             $description = array_merge(
                 $description,
                 OdooModelsStructureConverterHelper::prettyGetSelection($fieldInfo['selection'])

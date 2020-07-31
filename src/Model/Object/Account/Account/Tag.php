@@ -40,7 +40,7 @@ final class Tag extends Base
     /**
      * Applicability
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> accounts (Accounts)
      *     -> taxes (Taxes)
      * ---
@@ -169,7 +169,7 @@ final class Tag extends Base
      *        Sortable : yes
      * @param string $applicability Applicability
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> accounts (Accounts)
      *            -> taxes (Taxes)
      *        ---

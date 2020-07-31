@@ -53,7 +53,7 @@ final class Wizard extends Base
     /**
      * Action
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> create (Create new journal)
      *     -> link (Link to existing journal)
      *     -> drop (Do not link)
@@ -113,7 +113,7 @@ final class Wizard extends Base
     /**
      * Synchronization frequency
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> none (Create one statement per synchronization)
      *     -> day (Create daily statements)
      *     -> week (Create weekly statements)

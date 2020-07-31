@@ -78,7 +78,7 @@ final class View extends Base
     /**
      * View Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> tree (Tree)
      *     -> form (Form)
      *     -> graph (Graph)
@@ -148,7 +148,7 @@ final class View extends Base
     /**
      * @param string $view_mode View Type
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> tree (Tree)
      *            -> form (Form)
      *            -> graph (Graph)

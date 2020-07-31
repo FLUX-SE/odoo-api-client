@@ -56,7 +56,7 @@ final class Template extends Base
      * Determines where the tax is selectable. Note : 'None' means a tax can't be used by itself, however it can
      * still be used in a group.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> sale (Sales)
      *     -> purchase (Purchases)
      *     -> none (None)
@@ -71,7 +71,7 @@ final class Template extends Base
     /**
      * Tax Computation
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> group (Group of Taxes)
      *     -> fixed (Fixed)
      *     -> percent (Percentage of Price)
@@ -227,7 +227,7 @@ final class Template extends Base
      * Based on Invoice: the tax is due as soon as the invoice is validated.
      * Based on Payment: the tax is due as soon as the payment of the invoice is received.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> on_invoice (Based on Invoice)
      *     -> on_payment (Based on Payment)
      * ---
@@ -334,7 +334,7 @@ final class Template extends Base
      *        Determines where the tax is selectable. Note : 'None' means a tax can't be used by itself, however it can
      *        still be used in a group.
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> sale (Sales)
      *            -> purchase (Purchases)
      *            -> none (None)
@@ -343,7 +343,7 @@ final class Template extends Base
      *        Sortable : yes
      * @param string $amount_type Tax Computation
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> group (Group of Taxes)
      *            -> fixed (Fixed)
      *            -> percent (Percentage of Price)

@@ -40,7 +40,7 @@ final class Preview extends Base
     /**
      * Template Preview Language
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> en_US (English (US))
      * ---
      * Searchable : yes

@@ -85,7 +85,7 @@ final class Filters extends Base
     /**
      * Model
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> res.groups (Access Groups)
      *     -> account.account (Account)
      *     -> account.cash.rounding (Account Cash Rounding)
@@ -473,7 +473,7 @@ final class Filters extends Base
      *        Sortable : yes
      * @param string $model_id Model
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> res.groups (Access Groups)
      *            -> account.account (Account)
      *            -> account.cash.rounding (Account Cash Rounding)

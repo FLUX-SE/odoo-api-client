@@ -86,7 +86,7 @@ final class Lang extends Base
     /**
      * Direction
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> ltr (Left-to-Right)
      *     -> rtl (Right-to-Left)
      * ---
@@ -120,7 +120,7 @@ final class Lang extends Base
     /**
      * First Day of Week
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> 1 (Monday)
      *     -> 2 (Tuesday)
      *     -> 3 (Wednesday)
@@ -235,7 +235,7 @@ final class Lang extends Base
      *        Sortable : yes
      * @param string $direction Direction
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> ltr (Left-to-Right)
      *            -> rtl (Right-to-Left)
      *        ---
@@ -251,7 +251,7 @@ final class Lang extends Base
      *        Sortable : yes
      * @param string $week_start First Day of Week
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> 1 (Monday)
      *            -> 2 (Tuesday)
      *            -> 3 (Wednesday)

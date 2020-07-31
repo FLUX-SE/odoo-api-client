@@ -117,7 +117,7 @@ final class Mail extends Message
     /**
      * Status
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> outgoing (Outgoing)
      *     -> sent (Sent)
      *     -> received (Received)
@@ -195,7 +195,7 @@ final class Mail extends Message
      *        Message type: email for email message, notification for system message, comment for other messages such as
      *        user replies
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> email (Email)
      *            -> comment (Comment)
      *            -> notification (System notification)

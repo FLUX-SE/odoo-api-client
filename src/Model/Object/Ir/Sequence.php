@@ -51,7 +51,7 @@ final class Sequence extends Base
      * number upon assignation, there can still be gaps in the sequence if records are deleted. The 'no gap'
      * implementation is slower than the standard one.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> standard (Standard)
      *     -> no_gap (No gap)
      * ---
@@ -239,7 +239,7 @@ final class Sequence extends Base
      *        number upon assignation, there can still be gaps in the sequence if records are deleted. The 'no gap'
      *        implementation is slower than the standard one.
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> standard (Standard)
      *            -> no_gap (No gap)
      *        ---

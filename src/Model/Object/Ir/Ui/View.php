@@ -247,7 +247,7 @@ final class View extends Base
      * actual arch.
      *
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> primary (Base view)
      *     -> extension (Extension View)
      * ---
@@ -276,7 +276,7 @@ final class View extends Base
     /**
      * View Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> tree (Tree)
      *     -> form (Form)
      *     -> graph (Graph)
@@ -367,7 +367,7 @@ final class View extends Base
      *        actual arch.
      *
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> primary (Base view)
      *            -> extension (Extension View)
      *        ---

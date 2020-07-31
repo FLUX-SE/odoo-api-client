@@ -63,7 +63,7 @@ final class Recipient extends Base
     /**
      * Failure type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> SMTP (Connection failed (outgoing mail server problem))
      *     -> RECIPIENT (Invalid email address)
      *     -> BOUNCE (Email address rejected by destination)

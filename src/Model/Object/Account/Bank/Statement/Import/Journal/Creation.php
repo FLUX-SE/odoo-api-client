@@ -61,7 +61,7 @@ final class Creation extends Journal
      *        Select 'Cash' or 'Bank' for journals that are used in customer or vendor payments.
      *        Select 'General' for miscellaneous operations journals.
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> sale (Sales)
      *            -> purchase (Purchase)
      *            -> cash (Cash)
@@ -84,7 +84,7 @@ final class Creation extends Journal
      *        You can set here the default communication that will appear on customer invoices, once validated, to help the
      *        customer to refer to that particular invoice when making the payment.
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> none (Free)
      *            -> partner (Based on Customer)
      *            -> invoice (Based on Invoice)
@@ -95,7 +95,7 @@ final class Creation extends Journal
      *        ---
      *        You can choose different models for each type of reference. The default one is the Odoo reference.
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> odoo (Odoo)
      *            -> euro (European)
      *        ---

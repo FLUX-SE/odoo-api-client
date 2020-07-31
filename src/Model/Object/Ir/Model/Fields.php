@@ -134,7 +134,7 @@ final class Fields extends Base
     /**
      * Field Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> binary (binary)
      *     -> boolean (boolean)
      *     -> char (char)
@@ -274,7 +274,7 @@ final class Fields extends Base
     /**
      * Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> manual (Custom Field)
      *     -> base (Base Field)
      * ---
@@ -290,7 +290,7 @@ final class Fields extends Base
      * ---
      * On delete property for many2one fields
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> cascade (Cascade)
      *     -> set null (Set NULL)
      *     -> restrict (Restrict)
@@ -515,7 +515,7 @@ final class Fields extends Base
      *        Sortable : yes
      * @param string $ttype Field Type
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> binary (binary)
      *            -> boolean (boolean)
      *            -> char (char)
@@ -537,7 +537,7 @@ final class Fields extends Base
      *        Sortable : yes
      * @param string $state Type
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> manual (Custom Field)
      *            -> base (Base Field)
      *        ---

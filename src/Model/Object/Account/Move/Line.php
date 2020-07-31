@@ -75,7 +75,7 @@ final class Line extends Base
     /**
      * Status
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> draft (Draft)
      *     -> posted (Posted)
      *     -> cancel (Cancelled)
@@ -162,7 +162,7 @@ final class Line extends Base
      * The 'Internal Type' is used for features available on different types of accounts: liquidity type is for cash
      * or bank accounts, payable/receivable is for vendor/customer accounts.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> other (Regular)
      *     -> receivable (Receivable)
      *     -> payable (Payable)
@@ -682,7 +682,7 @@ final class Line extends Base
      * ---
      * Technical field for UX purpose.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> line_section (Section)
      *     -> line_note (Note)
      * ---

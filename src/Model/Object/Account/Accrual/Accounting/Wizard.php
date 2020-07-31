@@ -50,7 +50,7 @@ final class Wizard extends Base
     /**
      * Account Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> income (Revenue)
      *     -> expense (Expense)
      * ---

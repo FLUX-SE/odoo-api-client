@@ -60,7 +60,7 @@ final class Presence extends Base
     /**
      * IM Status
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> online (Online)
      *     -> away (Away)
      *     -> offline (Offline)

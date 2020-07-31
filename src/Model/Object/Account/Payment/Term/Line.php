@@ -32,7 +32,7 @@ final class Line extends Base
      * ---
      * Select here the kind of valuation related to this payment terms line.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> balance (Balance)
      *     -> percent (Percent)
      *     -> fixed (Fixed Amount)
@@ -83,7 +83,7 @@ final class Line extends Base
     /**
      * Options
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> day_after_invoice_date (days after the invoice date)
      *     -> day_following_month (of the following month)
      *     -> day_current_month (of the current month)
@@ -171,7 +171,7 @@ final class Line extends Base
      *        ---
      *        Select here the kind of valuation related to this payment terms line.
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> balance (Balance)
      *            -> percent (Percent)
      *            -> fixed (Fixed Amount)
@@ -184,7 +184,7 @@ final class Line extends Base
      *        Sortable : yes
      * @param string $option Options
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> day_after_invoice_date (days after the invoice date)
      *            -> day_following_month (of the following month)
      *            -> day_current_month (of the current month)

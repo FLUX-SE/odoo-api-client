@@ -85,7 +85,7 @@ final class MailServer extends Base
      * - TLS (STARTTLS): TLS encryption is requested at start of SMTP session (Recommended)
      * - SSL/TLS: SMTP sessions are encrypted with SSL/TLS through a dedicated port (default: 465)
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> none (None)
      *     -> starttls (TLS (STARTTLS))
      *     -> ssl (SSL/TLS)
@@ -203,7 +203,7 @@ final class MailServer extends Base
      *        - TLS (STARTTLS): TLS encryption is requested at start of SMTP session (Recommended)
      *        - SSL/TLS: SMTP sessions are encrypted with SSL/TLS through a dedicated port (default: 465)
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> none (None)
      *            -> starttls (TLS (STARTTLS))
      *            -> ssl (SSL/TLS)

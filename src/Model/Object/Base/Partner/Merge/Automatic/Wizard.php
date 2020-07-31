@@ -74,7 +74,7 @@ final class Wizard extends Base
     /**
      * State
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> option (Option)
      *     -> selection (Selection)
      *     -> finished (Finished)
@@ -227,7 +227,7 @@ final class Wizard extends Base
     /**
      * @param string $state State
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> option (Option)
      *            -> selection (Selection)
      *            -> finished (Finished)

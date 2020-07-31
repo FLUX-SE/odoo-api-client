@@ -48,7 +48,7 @@ final class Translation extends Base
     /**
      * Language
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> en_US (English (US))
      * ---
      * Searchable : yes
@@ -61,7 +61,7 @@ final class Translation extends Base
     /**
      * Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> model (Model Field)
      *     -> model_terms (Structured Model Field)
      *     -> code (Code)
@@ -110,7 +110,7 @@ final class Translation extends Base
      * ---
      * Automatically set to let administators find new terms that might need to be translated
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> to_translate (To Translate)
      *     -> inprogress (Translation in Progress)
      *     -> translated (Translated)

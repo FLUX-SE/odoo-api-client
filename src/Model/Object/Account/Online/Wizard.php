@@ -47,7 +47,7 @@ final class Wizard extends Base
     /**
      * Status
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> success (Success)
      *     -> failed (Failed)
      *     -> cancelled (Cancelled)
@@ -62,7 +62,7 @@ final class Wizard extends Base
     /**
      * Method
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> add (add)
      *     -> edit (edit)
      *     -> refresh (refresh)

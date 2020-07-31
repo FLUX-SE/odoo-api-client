@@ -102,7 +102,7 @@ final class Partner extends Base
     /**
      * Conversation Fold State
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> open (Open)
      *     -> folded (Folded)
      *     -> closed (Closed)

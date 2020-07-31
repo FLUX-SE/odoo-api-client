@@ -27,7 +27,7 @@ final class Translations extends Base
     /**
      * Language
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> en_US (English (US))
      * ---
      * Searchable : yes
@@ -86,7 +86,7 @@ final class Translations extends Base
     /**
      * @param string $lang Language
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> en_US (English (US))
      *        ---
      *        Searchable : yes

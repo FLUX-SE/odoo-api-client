@@ -63,7 +63,7 @@ final class Model extends Base
     /**
      * Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> writeoff_button (Manually create a write-off on clicked button.)
      *     -> writeoff_suggestion (Suggest counterpart values.)
      *     -> invoice_matching (Match existing invoices/bills.)
@@ -122,7 +122,7 @@ final class Model extends Base
      *                 * Amount Paid: Only applied when paying an amount.
      *                 * Amount Paid/Received: Applied in both cases.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> amount_received (Amount Received)
      *     -> amount_paid (Amount Paid)
      *     -> both (Amount Paid/Received)
@@ -140,7 +140,7 @@ final class Model extends Base
      * The reconciliation model will only be applied when the amount being lower than, greater than or between
      * specified amount(s).
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> lower (Is Lower Than)
      *     -> greater (Is Greater Than)
      *     -> between (Is Between)
@@ -180,7 +180,7 @@ final class Model extends Base
      *                 * Not Contains: Negation of "Contains".
      *                 * Match Regex: Define your own regular expression.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> contains (Contains)
      *     -> not_contains (Not Contains)
      *     -> match_regex (Match Regex)
@@ -210,7 +210,7 @@ final class Model extends Base
      *                 * Not Contains: Negation of "Contains".
      *                 * Match Regex: Define your own regular expression.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> contains (Contains)
      *     -> not_contains (Not Contains)
      *     -> match_regex (Match Regex)
@@ -240,7 +240,7 @@ final class Model extends Base
      *                 * Not Contains: Negation of "Contains".
      *                 * Match Regex: Define your own regular expression.
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> contains (Contains)
      *     -> not_contains (Not Contains)
      *     -> match_regex (Match Regex)
@@ -381,7 +381,7 @@ final class Model extends Base
     /**
      * Amount Type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> fixed (Fixed)
      *     -> percentage (Percentage of balance)
      *     -> regex (From label)
@@ -547,7 +547,7 @@ final class Model extends Base
     /**
      * Second Amount type
      * ---
-     * Selection : (default value, usually null)
+     * Selection :
      *     -> fixed (Fixed)
      *     -> percentage (Percentage of balance)
      *     -> regex (From label)
@@ -718,7 +718,7 @@ final class Model extends Base
      *        Sortable : yes
      * @param string $rule_type Type
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> writeoff_button (Manually create a write-off on clicked button.)
      *            -> writeoff_suggestion (Suggest counterpart values.)
      *            -> invoice_matching (Match existing invoices/bills.)
@@ -732,7 +732,7 @@ final class Model extends Base
      *                        * Amount Paid: Only applied when paying an amount.
      *                        * Amount Paid/Received: Applied in both cases.
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> amount_received (Amount Received)
      *            -> amount_paid (Amount Paid)
      *            -> both (Amount Paid/Received)
@@ -741,7 +741,7 @@ final class Model extends Base
      *        Sortable : yes
      * @param string $amount_type Amount Type
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> fixed (Fixed)
      *            -> percentage (Percentage of balance)
      *            -> regex (From label)
@@ -756,7 +756,7 @@ final class Model extends Base
      *        Sortable : yes
      * @param string $second_amount_type Second Amount type
      *        ---
-     *        Selection : (default value, usually null)
+     *        Selection :
      *            -> fixed (Fixed)
      *            -> percentage (Percentage of balance)
      *            -> regex (From label)
