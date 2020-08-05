@@ -66,8 +66,8 @@ $loader = require_once( __DIR__.'/vendor/autoload.php');
 use Flux\OdooApiClient\Builder\OdooApiClientBuilder;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\SearchDomains\Criterion;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\SearchDomains\SearchDomains;
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
 
 $host = 'https://myapp.odoo.com';
 $database = 'myapp';
@@ -119,8 +119,8 @@ $loader = require_once( __DIR__.'/vendor/autoload.php');
 use Flux\OdooApiClient\Builder\OdooApiClientBuilder;
 use Flux\OdooApiClient\Model\Object\Res\Partner;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\SearchDomains\Criterion;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\SearchDomains\SearchDomains;
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
 
 $host = 'https://myapp.odoo.com';
 $database = 'myapp';

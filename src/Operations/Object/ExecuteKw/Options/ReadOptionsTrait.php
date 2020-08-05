@@ -4,38 +4,44 @@ declare(strict_types=1);
 
 namespace Flux\OdooApiClient\Operations\Object\ExecuteKw\Options;
 
+use LogicException;
+
 trait ReadOptionsTrait
 {
-    /** @var string[] */
-    private $fields = [];
+    abstract public function addOption(string $name, $option): void;
 
-    protected function getOptionsMap(): array
+    abstract public function getOption(string $name);
+
+    public function __construct()
     {
-        return [
-            'fields' => 'getFields',
-        ];
+        $this->setFields([]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFields(): array
     {
-        return $this->fields;
+        $fields = $this->getOption(ReadOptionsInterface::FIELD_NAME_FIELDS);
+
+        if (is_array($fields)) {
+            return $fields;
+        }
+
+        throw new LogicException(sprintf(
+            'The fields should be an array "%s" retrieved !',
+            gettype($fields)
+        ));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setFields(array $fields): void
     {
-        $this->fields = $fields;
+        $this->addOption(ReadOptionsInterface::FIELD_NAME_FIELDS, $fields);
     }
 
     public function addField(string $field): bool
     {
         if (false === $this->hasField($field)) {
-            $this->fields[] = $field;
+            $fields = $this->getFields();
+            $fields[] = $field;
+            $this->setFields($fields);
 
             return true;
         }
@@ -45,9 +51,11 @@ trait ReadOptionsTrait
 
     public function removeField(string $field): bool
     {
-        $index = array_search($field, $this->fields);
+        $fields = $this->getFields();
+        $index = array_search($field, $fields);
         if (false !== $index) {
-            unset($this->fields[$index]);
+            unset($fields[$index]);
+            $this->setFields($fields);
 
             return true;
         }
@@ -57,6 +65,6 @@ trait ReadOptionsTrait
 
     public function hasField(string $field): bool
     {
-        return in_array($field, $this->fields);
+        return in_array($field, $this->getFields());
     }
 }

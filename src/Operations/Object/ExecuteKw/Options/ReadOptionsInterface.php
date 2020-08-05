@@ -6,6 +6,8 @@ namespace Flux\OdooApiClient\Operations\Object\ExecuteKw\Options;
 
 interface ReadOptionsInterface extends OptionsInterface
 {
+    public const FIELD_NAME_FIELDS = 'fields';
+
     public function removeField(string $field): bool;
 
     public function hasField(string $field): bool;

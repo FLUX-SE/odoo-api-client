@@ -7,17 +7,15 @@ namespace Flux\OdooApiClient\Operations\Object\ExecuteKw\Options;
 final class SearchReadOptions extends AbstractOptions implements SearchReadOptionsInterface
 {
     use SearchOptionsTrait {
-        SearchOptionsTrait::getOptionsMap as private _searchGetOptionsMap;
+        SearchOptionsTrait::__construct as private _searchGetConstruct;
     }
     use ReadOptionsTrait {
-        ReadOptionsTrait::getOptionsMap as private _readGetOptionsMap;
+        ReadOptionsTrait::__construct as private _readGetConstruct;
     }
 
-    protected function getOptionsMap(): array
+    public function __construct()
     {
-        return array_merge(
-            $this->_searchGetOptionsMap(),
-            $this->_readGetOptionsMap()
-        );
+        $this->_searchGetConstruct();
+        $this->_readGetConstruct();
     }
 }

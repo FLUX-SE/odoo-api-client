@@ -4,51 +4,75 @@ declare(strict_types=1);
 
 namespace Flux\OdooApiClient\Operations\Object\ExecuteKw\Options;
 
+use LogicException;
+
 trait SearchOptionsTrait
 {
-    /** @var int */
-    private $offset = 0;
-    /** @var int|null */
-    private $limit = null;
-    /** @var string|null */
-    private $order = null;
+    abstract public function addOption(string $name, $option): void;
 
-    protected function getOptionsMap(): array
+    abstract public function getOption(string $name);
+
+    public function __construct()
     {
-        return [
-            'offset' => 'getOffset',
-            'limit' => 'getLimit',
-            'order' => 'getOrder',
-        ];
+        $this->setOffset(0);
+        $this->setOrder(null);
+        $this->setLimit(null);
     }
 
     public function getOffset(): int
     {
-        return $this->offset;
+        $offset = $this->getOption(SearchOptionsInterface::FIELD_NAME_OFFSET);
+
+        if (is_int($offset)) {
+            return $offset;
+        }
+
+        throw new LogicException(sprintf(
+            'The offset should be an integer "%s" retrieved !',
+            gettype($offset)
+        ));
     }
 
     public function setOffset(int $offset): void
     {
-        $this->offset = $offset;
+        $this->addOption(SearchOptionsInterface::FIELD_NAME_OFFSET, $offset);
     }
 
     public function getLimit(): ?int
     {
-        return $this->limit;
+        $limit = $this->getOption(SearchOptionsInterface::FIELD_NAME_LIMIT);
+
+        if (is_int($limit) || null === $limit) {
+            return $limit;
+        }
+
+        throw new LogicException(sprintf(
+            'The limit should be an integer or null "%s" retrieved !',
+            gettype($limit)
+        ));
     }
 
     public function setLimit(?int $limit): void
     {
-        $this->limit = $limit;
+        $this->addOption(SearchOptionsInterface::FIELD_NAME_LIMIT, $limit);
     }
 
     public function getOrder(): ?string
     {
-        return $this->order;
+        $order = $this->getOption(SearchOptionsInterface::FIELD_NAME_ORDER);
+
+        if (is_string($order) || null === $order) {
+            return $order;
+        }
+
+        throw new LogicException(sprintf(
+            'The order should be an integer or null "%s" retrieved !',
+            gettype($order)
+        ));
     }
 
     public function setOrder(?string $order): void
     {
-        $this->order = $order;
+        $this->addOption(SearchOptionsInterface::FIELD_NAME_ORDER, $order);
     }
 }

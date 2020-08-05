@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Operations\Object\ExecuteKw\SearchDomains;
+namespace Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments;
 
-interface SearchDomainsInterface
+interface SearchDomainsInterface extends ArgumentsInterface
 {
     /** @var string */
     public const LOGIC_AND = '&';
@@ -13,13 +13,11 @@ interface SearchDomainsInterface
     /** @var string */
     public const LOGIC_OR = '|';
 
-    public function toArray(): array;
-
     public function addCriterion(CriterionInterface $c1): SearchDomainsInterface;
 
     public function addAndCriteria(CriterionInterface $c1, CriterionInterface $c2): SearchDomainsInterface;
 
     public function addOrCriteria(CriterionInterface $c1, CriterionInterface $c2): SearchDomainsInterface;
 
-    public function addNotCriteria(CriterionInterface $c1): SearchDomainsInterface;
+    public function addNotCriterion(CriterionInterface $c1): SearchDomainsInterface;
 }

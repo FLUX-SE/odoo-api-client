@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Manager;
 
 use Flux\OdooApiClient\Model\BaseInterface;
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomainsInterface;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptionsInterface;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterface;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\SearchDomains\SearchDomainsInterface;
 use LogicException;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Serializer;

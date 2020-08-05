@@ -7,12 +7,12 @@ use Flux\OdooApiClient\Manager\ModelManager;
 use Flux\OdooApiClient\Model\Object\Account\Account;
 use Flux\OdooApiClient\Model\Object\Res\Partner;
 use Flux\OdooApiClient\Model\OdooRelation;
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterface;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordOperations;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordOperationsInterface;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\SearchDomains\Criterion;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\SearchDomains\SearchDomains;
 use PHPUnit\Framework\TestCase;
 use Tests\Flux\OdooApiClient\Operations\Object\ExecuteKw\ExecuteKwOperationsTrait;
 

@@ -4,36 +4,37 @@ declare(strict_types=1);
 
 namespace Flux\OdooApiClient\Operations\Object\ExecuteKw;
 
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\ArgumentsInterface;
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomainsInterface;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\OptionsInterface;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\ReadOptionsInterface;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchOptionsInterface;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptionsInterface;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\SearchDomains\SearchDomainsInterface;
 use Psr\Http\Message\ResponseInterface;
 
 final class RecordListOperations extends AbstractOperations implements RecordListOperationsInterface
 {
-    private function execute_kw(
-        string $methodName,
+    public function execute_kw(
         string $modelName,
-        ?SearchDomainsInterface $searchDomains = null,
-        ?OptionsInterface $mixedOptions = null
+        string $methodName,
+        ?ArgumentsInterface $arguments = null,
+        ?OptionsInterface $options = null
     ): ResponseInterface {
-        $arguments = [];
-        if (null !== $searchDomains) {
-            $arguments = $searchDomains->toArray();
+        $rawArguments = [];
+        if (null !== $arguments) {
+            $rawArguments = $arguments->toArray();
         }
 
-        $options = [];
-        if (null !== $mixedOptions) {
-            $options = $mixedOptions->toArray();
+        $rawOptions = [];
+        if (null !== $options) {
+            $rawOptions = $options->toArray();
         }
 
         return $this->getObjectOperations()->execute_kw(
             $modelName,
             $methodName,
-            [$arguments],
-            $options
+            [$rawArguments],
+            $rawOptions
         );
     }
 
@@ -43,8 +44,8 @@ final class RecordListOperations extends AbstractOperations implements RecordLis
         ?SearchOptionsInterface $searchOptions = null
     ): array {
         $response = $this->execute_kw(
-            __FUNCTION__,
             $modelName,
+            __FUNCTION__,
             $searchDomains,
             $searchOptions
         );
@@ -56,8 +57,8 @@ final class RecordListOperations extends AbstractOperations implements RecordLis
         ?SearchDomainsInterface $searchDomains = null
     ): int {
         $response = $this->execute_kw(
-            __FUNCTION__,
             $modelName,
+            __FUNCTION__,
             $searchDomains
         );
         return $this->getObjectOperations()->deserializeInteger($response);
@@ -88,8 +89,8 @@ final class RecordListOperations extends AbstractOperations implements RecordLis
         ?SearchReadOptionsInterface $searchReadOptions = null
     ): array {
         $response = $this->execute_kw(
-            __FUNCTION__,
             $modelName,
+            __FUNCTION__,
             $searchDomains,
             $searchReadOptions
         );

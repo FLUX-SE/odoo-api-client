@@ -6,6 +6,8 @@ namespace Flux\OdooApiClient\Operations\Object\ExecuteKw\Options;
 
 interface FieldsGetOptionsInterface extends OptionsInterface
 {
+    public const FIELD_NAME_ATTRIBUTES = 'attributes';
+
     public function removeAttribute(string $attribute): bool;
 
     /**
