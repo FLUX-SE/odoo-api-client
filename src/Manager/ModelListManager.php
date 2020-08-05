@@ -109,4 +109,14 @@ final class ModelListManager implements ModelListManagerInterface
 
         return call_user_func($callable);
     }
+
+    public function getRecordListOperations(): RecordListOperationsInterface
+    {
+        return $this->recordListOperations;
+    }
+
+    public function getSerializer(): Serializer
+    {
+        return $this->serializer;
+    }
 }

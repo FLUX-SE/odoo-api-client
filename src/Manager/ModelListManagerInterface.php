@@ -7,6 +7,8 @@ namespace Flux\OdooApiClient\Manager;
 use Flux\OdooApiClient\Model\BaseInterface;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomainsInterface;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptionsInterface;
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterface;
+use Symfony\Component\Serializer\Serializer;
 
 interface ModelListManagerInterface
 {
@@ -26,4 +28,8 @@ interface ModelListManagerInterface
         ?SearchDomainsInterface $searchDomains = null,
         ?SearchReadOptionsInterface $searchReadOptions = null
     ): array;
+
+    public function getRecordListOperations(): RecordListOperationsInterface;
+
+    public function getSerializer(): Serializer;
 }

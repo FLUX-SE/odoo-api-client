@@ -73,4 +73,14 @@ final class ModelManager implements ModelManagerInterface
             $normalizedModel
         );
     }
+
+    public function getRecordOperations(): RecordOperationsInterface
+    {
+        return $this->recordOperations;
+    }
+
+    public function getSerializer(): Serializer
+    {
+        return $this->serializer;
+    }
 }
