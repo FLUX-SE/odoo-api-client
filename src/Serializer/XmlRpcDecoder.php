@@ -44,9 +44,6 @@ final class XmlRpcDecoder implements ContextAwareDecoderInterface
 
         $encoding = $context[self::CTX_XMLRPC_ENCODING] ?? $this->defaultContext[self::CTX_XMLRPC_ENCODING];
 
-        return xmlrpc_decode(
-            $data,
-            $encoding
-        );
+        return xmlrpc_decode($data, $encoding);
     }
 }

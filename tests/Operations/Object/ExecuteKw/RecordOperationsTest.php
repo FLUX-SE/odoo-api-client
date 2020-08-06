@@ -10,6 +10,7 @@ use Flux\OdooApiClient\Model\Object\Account\Account;
 use Flux\OdooApiClient\Model\Object\Account\Journal;
 use Flux\OdooApiClient\Model\Object\Account\Move;
 use Flux\OdooApiClient\Model\Object\Account\Move\Line;
+use Flux\OdooApiClient\Model\Object\Account\Tax;
 use Flux\OdooApiClient\Model\Object\Product\Pricelist;
 use Flux\OdooApiClient\Model\Object\Product\Product;
 use Flux\OdooApiClient\Model\Object\Res\Company;
@@ -73,6 +74,14 @@ class RecordOperationsTest extends TestCase
             $searchReadOptions
         )[0];
 
+        $searchDomains = new SearchDomains();
+        $searchDomains->addCriterion(Criterion::equal('code', '707100'));
+        $account = $this->recordListOperations->search_read(
+            Account::getOdooModelName(),
+            $searchDomains,
+            $searchReadOptions
+        )[0];
+
         // 2 - create or retrieve Partner
         $partner = [
             'id' => 7,
@@ -112,6 +121,14 @@ class RecordOperationsTest extends TestCase
         );
         $product = count($products) === 0 ? null : $products[0];
 
+        $searchDomains = new SearchDomains();
+        $searchDomains->addCriterion(Criterion::equal_like('description', '% 20_'));
+        $tax = $this->recordListOperations->search_read(
+            Tax::getOdooModelName(),
+            null,
+            $searchReadOptions
+        )[0];
+
         $partner = new OdooRelation($partner['id']);
         $move = new Move(
             'TESTI00001',
@@ -124,14 +141,25 @@ class RecordOperationsTest extends TestCase
         );
 
         $line = new Line(new OdooRelation());
-        $line->setAccountId(new OdooRelation(false));
-        $line->setDisplayType('line_note');
-        $line->setName('test');
-
+        $line->setAccountId(new OdooRelation($account['id']));
+        $line->setQuantity(2);
+        $line->setPriceUnit(10);
+        $line->setCredit(20);
+        $line->addTaxIds(new OdooRelation($tax['id']));
+        $line->setProductId(new OdooRelation($product['id'] ?? null));
+        $line->setName('test article');
+        $line->setDiscount(100);
         $relation = new OdooRelation();
         $relation->setEmbedModel($line);
-
         $move->addInvoiceLineIds($relation);
+
+        $line2 = new Line(new OdooRelation());
+        $line2->setAccountId(new OdooRelation(false));
+        $line2->setDisplayType('line_note');
+        $line2->setName('test');
+        $relation2 = new OdooRelation();
+        $relation2->setEmbedModel($line2);
+        $move->addInvoiceLineIds($relation2);
 
         $moveId = $this->modelManager->persist($move);
 
