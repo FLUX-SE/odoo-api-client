@@ -72,9 +72,12 @@ class ModelManagerTest extends TestCase
         $result = $this->modelManager->update($savedPartner);
         $this->assertTrue($result);
 
+        /** @var Partner|null $updatedPartner */
         $updatedPartner = $this->modelListManager->find(Partner::class, $partnerId);
 
         $this->assertInstanceOf(Partner::class, $updatedPartner);
+        // test a null field to be null not empty string
+        $this->assertNull($updatedPartner->getParentName());
         $this->assertEquals($savedPartner->getComment(), $updatedPartner->getComment());
 
         $result = $this->modelManager->delete($updatedPartner);

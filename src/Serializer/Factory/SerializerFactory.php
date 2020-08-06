@@ -6,11 +6,14 @@ namespace Flux\OdooApiClient\Serializer\Factory;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Flux\OdooApiClient\Serializer\NullOdooRelationDenormalizer;
+use Flux\OdooApiClient\Serializer\OdooNormalizer;
 use Flux\OdooApiClient\Serializer\OdooRelationDenormalizer;
 use Flux\OdooApiClient\Serializer\OdooRelationNormalizer;
 use Flux\OdooApiClient\Serializer\OdooRelationsDenormalizer;
 use Flux\OdooApiClient\Serializer\XmlRpcDecoder;
 use Flux\OdooApiClient\Serializer\XmlRpcEncoder;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\Extractor\SerializerExtractor;
@@ -19,9 +22,9 @@ use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
+use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
 final class SerializerFactory implements SerializerFactoryInterface
@@ -66,10 +69,7 @@ final class SerializerFactory implements SerializerFactoryInterface
         ];
     }
 
-    /**
-     * @return ObjectNormalizer
-     */
-    public function setupObjectNormalizer(): ObjectNormalizer
+    public function setupObjectNormalizer(): OdooNormalizer
     {
         $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
         $metadataAwareNameConverter = new MetadataAwareNameConverter(
@@ -77,7 +77,7 @@ final class SerializerFactory implements SerializerFactoryInterface
             new CamelCaseToSnakeCaseNameConverter()
         );
 
-        return new ObjectNormalizer(
+        return new OdooNormalizer(
             $classMetadataFactory,
             $metadataAwareNameConverter,
             null,
@@ -104,10 +104,10 @@ final class SerializerFactory implements SerializerFactoryInterface
             null,
             [
                 // => array to model
-                ObjectNormalizer::DISABLE_TYPE_ENFORCEMENT => true,
+                AbstractObjectNormalizer::DISABLE_TYPE_ENFORCEMENT => true,
                 // => model to array
-                ObjectNormalizer::SKIP_NULL_VALUES => true,
-                ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+                AbstractObjectNormalizer::SKIP_NULL_VALUES => true,
+                AbstractObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
                     return $object->getId() ?? 0;
                 }
             ],
