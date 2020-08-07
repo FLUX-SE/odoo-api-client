@@ -211,7 +211,7 @@ final class Payment extends Base
      * When encoding the bank statement in Odoo, you are suggested to reconcile the transaction with the batch
      * deposit.To enable batch deposit, module account_batch_payment must be installed.
      * SEPA Credit Transfer: Pay bill from a SEPA Credit Transfer file you submit to your bank. To enable sepa credit
-     * transfer, module account_sepa must be installed 
+     * transfer, module account_sepa must be installed
      * ---
      * Relation : many2one (account.payment.method)
      * @see \Flux\OdooApiClient\Model\Object\Account\Payment\Method
@@ -855,7 +855,7 @@ final class Payment extends Base
      *        When encoding the bank statement in Odoo, you are suggested to reconcile the transaction with the batch
      *        deposit.To enable batch deposit, module account_batch_payment must be installed.
      *        SEPA Credit Transfer: Pay bill from a SEPA Credit Transfer file you submit to your bank. To enable sepa credit
-     *        transfer, module account_sepa must be installed 
+     *        transfer, module account_sepa must be installed
      *        ---
      *        Relation : many2one (account.payment.method)
      *        @see \Flux\OdooApiClient\Model\Object\Account\Payment\Method

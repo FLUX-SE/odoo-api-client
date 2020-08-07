@@ -109,7 +109,7 @@ final class View extends Base
      * Arch Filename
      * ---
      * File from where the view originates.
-     *                                                                                                               
+     *
      * Useful to (hard) reset broken views or to read arch from file in dev-xml mode.
      * ---
      * Searchable : yes
@@ -133,7 +133,7 @@ final class View extends Base
      * Previous View Architecture
      * ---
      * This field will save the current `arch_db` before writing on it.
-     *                                                                                                               
+     *
      * Useful to (soft) reset a broken view.
      * ---
      * Searchable : yes
@@ -264,7 +264,7 @@ final class View extends Base
      * If this view is inherited,
      * * if True, the view always extends its parent
      * * if False, the view currently does not extend its parent but can be enabled
-     *                   
+     *
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -358,7 +358,7 @@ final class View extends Base
      * @param string $mode View inheritance mode
      *        ---
      *        Only applies if this view inherits from an other one (inherit_id is not False/Null).
-     *       
+     *
      *        * if extension (default), if this view is requested the closest primary view
      *        is looked up (via inherit_id), then all views inheriting from it with this
      *        view's model are applied
@@ -366,7 +366,7 @@ final class View extends Base
      *        different model than this one), then this view's inheritance specs
      *        (<xpath/>) are applied, and the result is used as if it were this view's
      *        actual arch.
-     *       
+     *
      *        ---
      *        Selection :
      *            -> primary (Base view)

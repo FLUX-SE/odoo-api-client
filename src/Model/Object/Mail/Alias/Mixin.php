@@ -63,7 +63,7 @@ final class Mixin extends Alias
      *        - everyone: everyone can post
      *        - partners: only authenticated partners
      *        - followers: only followers of the related document or members of following channels
-     *       
+     *
      *        ---
      *        Selection :
      *            -> everyone (Everyone)

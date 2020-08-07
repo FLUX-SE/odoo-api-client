@@ -109,7 +109,7 @@ final class Option extends Base
     private $discount;
 
     /**
-     * Unit of Measure 
+     * Unit of Measure
      * ---
      * Relation : many2one (uom.uom)
      * @see \Flux\OdooApiClient\Model\Object\Uom\Uom
@@ -221,7 +221,7 @@ final class Option extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param OdooRelation $uom_id Unit of Measure 
+     * @param OdooRelation $uom_id Unit of Measure
      *        ---
      *        Relation : many2one (uom.uom)
      *        @see \Flux\OdooApiClient\Model\Object\Uom\Uom

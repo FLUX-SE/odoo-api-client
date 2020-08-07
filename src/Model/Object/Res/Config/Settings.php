@@ -1067,7 +1067,7 @@ final class Settings extends Base
     /**
      * Company Country code
      * ---
-     * The ISO country code in two chars. 
+     * The ISO country code in two chars.
      * You can use this field for quick search.
      * ---
      * Searchable : yes

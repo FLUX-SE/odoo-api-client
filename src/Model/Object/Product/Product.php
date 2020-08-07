@@ -237,12 +237,12 @@ final class Product extends Template
     ) {
         $this->product_tmpl_id = $product_tmpl_id;
         parent::__construct(
-            $name, 
-            $type, 
-            $categ_id, 
-            $uom_id, 
-            $uom_po_id, 
-            $product_variant_ids, 
+            $name,
+            $type,
+            $categ_id,
+            $uom_id,
+            $uom_po_id,
+            $product_variant_ids,
             $sale_line_warn
         );
     }

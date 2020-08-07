@@ -42,7 +42,7 @@ final class Country extends Base
     /**
      * Country Code
      * ---
-     * The ISO country code in two chars. 
+     * The ISO country code in two chars.
      * You can use this field for quick search.
      * ---
      * Searchable : yes
