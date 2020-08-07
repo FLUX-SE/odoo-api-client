@@ -24,14 +24,17 @@ final class OdooRelation extends Base
     public const COMMAND_ADD_REMOVE_ALL = 5;
     public const COMMAND_REPLACE_ALL = 6;
 
-    /** @var int */
-    private $command = self::COMMAND_ADD;
+    /** @var int|null */
+    private $command;
 
-    /** @var int */
-    private $commandId = 0;
+    /** @var int|null */
+    private $commandId;
 
     /** @var BaseInterface|null */
     private $embed_model;
+
+    /** @var int[] */
+    private $replace_ids = [];
 
     /**
      * @param int|null|false $id
@@ -68,23 +71,39 @@ final class OdooRelation extends Base
         $this->commandId = $this->getId();
     }
 
-    public function getCommand(): int
+    public function getCommand(): ?int
     {
         return $this->command;
     }
 
-    public function setCommand(int $command): void
+    public function setCommand(?int $command): void
     {
         $this->command = $command;
     }
 
-    public function getCommandId(): int
+    public function getCommandId(): ?int
     {
         return $this->commandId;
     }
 
-    public function setCommandId(int $commandId): void
+    public function setCommandId(?int $commandId): void
     {
         $this->commandId = $commandId;
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getReplaceIds(): array
+    {
+        return $this->replace_ids;
+    }
+
+    /**
+     * @param int[] $replace_ids
+     */
+    public function setReplaceIds(array $replace_ids): void
+    {
+        $this->replace_ids = $replace_ids;
     }
 }

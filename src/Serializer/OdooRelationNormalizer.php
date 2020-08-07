@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Flux\OdooApiClient\Serializer;
 
+use Flux\OdooApiClient\Model\BaseInterface;
 use Flux\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
@@ -48,16 +49,56 @@ final class OdooRelationNormalizer implements NormalizerInterface, NormalizerAwa
      */
     private function buildOdooRelation(OdooRelation $object, ?string $format = null, array $context = [])
     {
-        if (null !== $object->getEmbedModel()) {
-            $childContext = (array) $context;
-            unset($childContext['cache_key']);
-            return [
-                $object->getCommand(),
-                $object->getCommandId(),
-                $this->normalizer->normalize($object->getEmbedModel(), $format, $childContext),
-            ];
+        if (null === $object->getCommand()) {
+            return $object->getId();
         }
 
-        return $object->getId();
+        $secondParam = $this->buildSecondParam($object);
+        $thirdParam = $this->buildThirdParam($object);
+
+        if ($thirdParam instanceof BaseInterface) {
+            $childContext = (array) $context;
+            unset($childContext['cache_key']);
+            $thirdParam = $this->normalizer->normalize($thirdParam, $format, $childContext);
+        }
+
+        return [
+            $object->getCommand(),
+            $secondParam,
+            $thirdParam
+        ];
+    }
+
+    private function buildSecondParam(OdooRelation $object): ?int
+    {
+        if (in_array($object->getCommand(), [
+            OdooRelation::COMMAND_ADD,
+            OdooRelation::COMMAND_ADD_REMOVE_ALL,
+            OdooRelation::COMMAND_REPLACE_ALL,
+        ])) {
+            return 0;
+        } else {
+            return $object->getCommandId();
+        }
+    }
+
+    /**
+     * @param OdooRelation $object
+     * @return null|BaseInterface|int[]|int $data
+     */
+    private function buildThirdParam(OdooRelation $object)
+    {
+        if (in_array($object->getCommand(), [
+            OdooRelation::COMMAND_ADD,
+            OdooRelation::COMMAND_UPDATE
+        ])) {
+            return $object->getEmbedModel();
+        }
+
+        if ($object->getCommand() === OdooRelation::COMMAND_REPLACE_ALL) {
+            return $object->getReplaceIds();
+        }
+
+        return 0;
     }
 }

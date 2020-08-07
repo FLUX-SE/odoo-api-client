@@ -51,7 +51,7 @@ class ModelManagerTest extends TestCase
         $propertyAccountPayableId = $this->modelListManager->findOneBy(Account::class, $searchDomains1);
 
         $searchDomains2 = new SearchDomains();
-        $searchDomains2->addCriterion(Criterion::equal('code', '411100'));
+        $searchDomains2->addCriterion(Criterion::equal('code', '401100'));
         /** @var Account|null $propertyAccountReceivableId */
         $propertyAccountReceivableId = $this->modelListManager->findOneBy(Account::class, $searchDomains2);
 
