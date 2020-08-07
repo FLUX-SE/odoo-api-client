@@ -150,7 +150,7 @@ class RecordOperationsTest extends TestCase
         $line->setName('test article');
         $line->setDiscount(100);
         $relation = new OdooRelation();
-        $relation->setEmbedModel($line);
+        $relation->buildAdd($line);
         $move->addInvoiceLineIds($relation);
 
         $line2 = new Line(new OdooRelation());
@@ -158,7 +158,7 @@ class RecordOperationsTest extends TestCase
         $line2->setDisplayType('line_note');
         $line2->setName('test');
         $relation2 = new OdooRelation();
-        $relation2->setEmbedModel($line2);
+        $relation2->buildAdd($line2);
         $move->addInvoiceLineIds($relation2);
 
         $moveId = $this->modelManager->persist($move);

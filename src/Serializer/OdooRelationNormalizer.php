@@ -73,7 +73,7 @@ final class OdooRelationNormalizer implements NormalizerInterface, NormalizerAwa
     {
         if (in_array($object->getCommand(), [
             OdooRelation::COMMAND_ADD,
-            OdooRelation::COMMAND_ADD_REMOVE_ALL,
+            OdooRelation::COMMAND_REMOVE_ALL,
             OdooRelation::COMMAND_REPLACE_ALL,
         ])) {
             return 0;

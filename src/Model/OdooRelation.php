@@ -21,7 +21,7 @@ final class OdooRelation extends Base
     public const COMMAND_REMOVE_ID_CASCADE = 2;
     public const COMMAND_REMOVE_ID = 3;
     public const COMMAND_ADD_EXISTING = 4;
-    public const COMMAND_ADD_REMOVE_ALL = 5;
+    public const COMMAND_REMOVE_ALL = 5;
     public const COMMAND_REPLACE_ALL = 6;
 
     /** @var int|null */
@@ -56,19 +56,6 @@ final class OdooRelation extends Base
     public function setEmbedModel(?BaseInterface $embed_model): void
     {
         $this->embed_model = $embed_model;
-
-        if (null === $this->getId()) {
-            $this->command = self::COMMAND_ADD;
-            return;
-        }
-
-        if (false === $this->getId()) {
-            $this->command = self::COMMAND_ADD;
-            return;
-        }
-
-        $this->command = self::COMMAND_UPDATE;
-        $this->commandId = $this->getId();
     }
 
     public function getCommand(): ?int
@@ -105,5 +92,64 @@ final class OdooRelation extends Base
     public function setReplaceIds(array $replace_ids): void
     {
         $this->replace_ids = $replace_ids;
+    }
+
+    public function buildAdd(BaseInterface $embed_model): void
+    {
+        $this->command = self::COMMAND_ADD;
+        $this->commandId = 0;
+        $this->embed_model = $embed_model;
+        $this->replace_ids = [];
+    }
+
+    public function buildUpdate(int $id, BaseInterface $embed_model): void
+    {
+        $this->command = self::COMMAND_UPDATE;
+        $this->commandId = $id;
+        $this->embed_model = $embed_model;
+        $this->replace_ids = [];
+    }
+
+    public function buildRemoveIdCascade(int $id): void
+    {
+        $this->command = self::COMMAND_REMOVE_ID_CASCADE;
+        $this->commandId = $id;
+        $this->embed_model = null;
+        $this->replace_ids = [];
+    }
+
+    public function buildRemoveId(int $id): void
+    {
+        $this->command = self::COMMAND_REMOVE_ID;
+        $this->commandId = $id;
+        $this->embed_model = null;
+        $this->replace_ids = [];
+    }
+
+    public function buildAddExisting(int $id): void
+    {
+        $this->command = self::COMMAND_ADD_EXISTING;
+        $this->commandId = $id;
+        $this->embed_model = null;
+        $this->replace_ids = [];
+    }
+
+    public function buildRemoveAll(): void
+    {
+        $this->command = self::COMMAND_REMOVE_ALL;
+        $this->commandId = 0;
+        $this->embed_model = null;
+        $this->replace_ids = [];
+    }
+
+    /**
+     * @param int[] $ids
+     */
+    public function buildReplaceAll(array $ids): void
+    {
+        $this->command = self::COMMAND_REPLACE_ALL;
+        $this->commandId = 0;
+        $this->embed_model = null;
+        $this->replace_ids = $ids;
     }
 }
