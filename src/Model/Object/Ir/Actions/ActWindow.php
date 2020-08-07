@@ -172,7 +172,7 @@ final class ActWindow extends Base
      * Searchable : no
      * Sortable : no
      *
-     * @var string|null
+     * @var array|null
      */
     private $views;
 
@@ -394,13 +394,33 @@ final class ActWindow extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("binding_model_id")
+     * @param string|null $help
      */
-    public function getBindingModelId(): ?OdooRelation
+    public function setHelp(?string $help): void
     {
-        return $this->binding_model_id;
+        $this->help = $help;
+    }
+
+    /**
+     * @param OdooRelation[]|null $groups_id
+     */
+    public function setGroupsId(?array $groups_id): void
+    {
+        $this->groups_id = $groups_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasGroupsId(OdooRelation $item): bool
+    {
+        if (null === $this->groups_id) {
+            return false;
+        }
+
+        return in_array($item, $this->groups_id);
     }
 
     /**
@@ -517,11 +537,21 @@ final class ActWindow extends Base
     }
 
     /**
-     * @param string|null $help
+     * @return OdooRelation|null
+     *
+     * @SerializedName("binding_model_id")
      */
-    public function setHelp(?string $help): void
+    public function getBindingModelId(): ?OdooRelation
     {
-        $this->help = $help;
+        return $this->binding_model_id;
+    }
+
+    /**
+     * @param int|null $limit
+     */
+    public function setLimit(?int $limit): void
+    {
+        $this->limit = $limit;
     }
 
     /**
@@ -530,14 +560,6 @@ final class ActWindow extends Base
     public function setBindingModelId(?OdooRelation $binding_model_id): void
     {
         $this->binding_model_id = $binding_model_id;
-    }
-
-    /**
-     * @param OdooRelation[]|null $groups_id
-     */
-    public function setGroupsId(?array $groups_id): void
-    {
-        $this->groups_id = $groups_id;
     }
 
     /**
@@ -649,20 +671,6 @@ final class ActWindow extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasGroupsId(OdooRelation $item): bool
-    {
-        if (null === $this->groups_id) {
-            return false;
-        }
-
-        return in_array($item, $this->groups_id);
-    }
-
-    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("groups_id")
@@ -670,6 +678,16 @@ final class ActWindow extends Base
     public function getGroupsId(): ?array
     {
         return $this->groups_id;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("limit")
+     */
+    public function getLimit(): ?int
+    {
+        return $this->limit;
     }
 
     /**
@@ -683,11 +701,13 @@ final class ActWindow extends Base
     }
 
     /**
-     * @param string $res_model
+     * @return string|null
+     *
+     * @SerializedName("target")
      */
-    public function setResModel(string $res_model): void
+    public function getTarget(): ?string
     {
-        $this->res_model = $res_model;
+        return $this->target;
     }
 
     /**
@@ -799,21 +819,11 @@ final class ActWindow extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("target")
+     * @param string $res_model
      */
-    public function getTarget(): ?string
+    public function setResModel(string $res_model): void
     {
-        return $this->target;
-    }
-
-    /**
-     * @param int|null $limit
-     */
-    public function setLimit(?int $limit): void
-    {
-        $this->limit = $limit;
+        $this->res_model = $res_model;
     }
 
     /**
@@ -822,6 +832,21 @@ final class ActWindow extends Base
     public function setTarget(?string $target): void
     {
         $this->target = $target;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeViews($item): void
+    {
+        if (null === $this->views) {
+            $this->views = [];
+        }
+
+        if ($this->hasViews($item)) {
+            $index = array_search($item, $this->views);
+            unset($this->views[$index]);
+        }
     }
 
     /**
@@ -924,31 +949,51 @@ final class ActWindow extends Base
     }
 
     /**
-     * @return string|null
+     * @return array|null
      *
      * @SerializedName("views")
      */
-    public function getViews(): ?string
+    public function getViews(): ?array
     {
         return $this->views;
     }
 
     /**
-     * @param string|null $views
+     * @param array|null $views
      */
-    public function setViews(?string $views): void
+    public function setViews(?array $views): void
     {
         $this->views = $views;
     }
 
     /**
-     * @return int|null
+     * @param mixed $item
      *
-     * @SerializedName("limit")
+     * @return bool
      */
-    public function getLimit(): ?int
+    public function hasViews($item): bool
     {
-        return $this->limit;
+        if (null === $this->views) {
+            return false;
+        }
+
+        return in_array($item, $this->views);
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addViews($item): void
+    {
+        if ($this->hasViews($item)) {
+            return;
+        }
+
+        if (null === $this->views) {
+            $this->views = [];
+        }
+
+        $this->views[] = $item;
     }
 
     /**

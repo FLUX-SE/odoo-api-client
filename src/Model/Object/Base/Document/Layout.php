@@ -38,7 +38,7 @@ final class Layout extends Base
      * Searchable : yes
      * Sortable : no
      *
-     * @var string|null
+     * @var array|null
      */
     private $logo;
 
@@ -48,7 +48,7 @@ final class Layout extends Base
      * Searchable : yes
      * Sortable : no
      *
-     * @var string|null
+     * @var array|null
      */
     private $preview_logo;
 
@@ -254,11 +254,37 @@ final class Layout extends Base
     }
 
     /**
-     * @param string|null $preview
+     * @param OdooRelation|null $report_layout_id
      */
-    public function setPreview(?string $preview): void
+    public function setReportLayoutId(?OdooRelation $report_layout_id): void
     {
-        $this->preview = $preview;
+        $this->report_layout_id = $report_layout_id;
+    }
+
+    /**
+     * @param string|null $secondary_color
+     */
+    public function setSecondaryColor(?string $secondary_color): void
+    {
+        $this->secondary_color = $secondary_color;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("custom_colors")
+     */
+    public function isCustomColors(): ?bool
+    {
+        return $this->custom_colors;
+    }
+
+    /**
+     * @param bool|null $custom_colors
+     */
+    public function setCustomColors(?bool $custom_colors): void
+    {
+        $this->custom_colors = $custom_colors;
     }
 
     /**
@@ -308,14 +334,6 @@ final class Layout extends Base
     }
 
     /**
-     * @param OdooRelation|null $report_layout_id
-     */
-    public function setReportLayoutId(?OdooRelation $report_layout_id): void
-    {
-        $this->report_layout_id = $report_layout_id;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("preview")
@@ -326,6 +344,22 @@ final class Layout extends Base
     }
 
     /**
+     * @param string|null $primary_color
+     */
+    public function setPrimaryColor(?string $primary_color): void
+    {
+        $this->primary_color = $primary_color;
+    }
+
+    /**
+     * @param string|null $preview
+     */
+    public function setPreview(?string $preview): void
+    {
+        $this->preview = $preview;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("create_uid")
@@ -333,16 +367,6 @@ final class Layout extends Base
     public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("custom_colors")
-     */
-    public function isCustomColors(): ?bool
-    {
-        return $this->custom_colors;
     }
 
     /**
@@ -408,19 +432,23 @@ final class Layout extends Base
     }
 
     /**
-     * @param bool|null $custom_colors
+     * @return string|null
+     *
+     * @SerializedName("secondary_color")
      */
-    public function setCustomColors(?bool $custom_colors): void
+    public function getSecondaryColor(): ?string
     {
-        $this->custom_colors = $custom_colors;
+        return $this->secondary_color;
     }
 
     /**
-     * @param string|null $secondary_color
+     * @return string|null
+     *
+     * @SerializedName("primary_color")
      */
-    public function setSecondaryColor(?string $secondary_color): void
+    public function getPrimaryColor(): ?string
     {
-        $this->secondary_color = $secondary_color;
+        return $this->primary_color;
     }
 
     /**
@@ -434,13 +462,19 @@ final class Layout extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("report_footer")
+     * @param mixed $item
      */
-    public function getReportFooter(): ?string
+    public function addPreviewLogo($item): void
     {
-        return $this->report_footer;
+        if ($this->hasPreviewLogo($item)) {
+            return;
+        }
+
+        if (null === $this->preview_logo) {
+            $this->preview_logo = [];
+        }
+
+        $this->preview_logo[] = $item;
     }
 
     /**
@@ -452,39 +486,121 @@ final class Layout extends Base
     }
 
     /**
-     * @return string|null
+     * @return array|null
      *
      * @SerializedName("logo")
      */
-    public function getLogo(): ?string
+    public function getLogo(): ?array
     {
         return $this->logo;
     }
 
     /**
-     * @param string|null $logo
+     * @param array|null $logo
      */
-    public function setLogo(?string $logo): void
+    public function setLogo(?array $logo): void
     {
         $this->logo = $logo;
     }
 
     /**
-     * @return string|null
+     * @param mixed $item
+     *
+     * @return bool
+     */
+    public function hasLogo($item): bool
+    {
+        if (null === $this->logo) {
+            return false;
+        }
+
+        return in_array($item, $this->logo);
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addLogo($item): void
+    {
+        if ($this->hasLogo($item)) {
+            return;
+        }
+
+        if (null === $this->logo) {
+            $this->logo = [];
+        }
+
+        $this->logo[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeLogo($item): void
+    {
+        if (null === $this->logo) {
+            $this->logo = [];
+        }
+
+        if ($this->hasLogo($item)) {
+            $index = array_search($item, $this->logo);
+            unset($this->logo[$index]);
+        }
+    }
+
+    /**
+     * @return array|null
      *
      * @SerializedName("preview_logo")
      */
-    public function getPreviewLogo(): ?string
+    public function getPreviewLogo(): ?array
     {
         return $this->preview_logo;
     }
 
     /**
-     * @param string|null $preview_logo
+     * @param array|null $preview_logo
      */
-    public function setPreviewLogo(?string $preview_logo): void
+    public function setPreviewLogo(?array $preview_logo): void
     {
         $this->preview_logo = $preview_logo;
+    }
+
+    /**
+     * @param mixed $item
+     *
+     * @return bool
+     */
+    public function hasPreviewLogo($item): bool
+    {
+        if (null === $this->preview_logo) {
+            return false;
+        }
+
+        return in_array($item, $this->preview_logo);
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removePreviewLogo($item): void
+    {
+        if (null === $this->preview_logo) {
+            $this->preview_logo = [];
+        }
+
+        if ($this->hasPreviewLogo($item)) {
+            $index = array_search($item, $this->preview_logo);
+            unset($this->preview_logo[$index]);
+        }
+    }
+
+    /**
+     * @param string|null $font
+     */
+    public function setFont(?string $font): void
+    {
+        $this->font = $font;
     }
 
     /**
@@ -506,21 +622,21 @@ final class Layout extends Base
     }
 
     /**
+     * @return string|null
+     *
+     * @SerializedName("report_footer")
+     */
+    public function getReportFooter(): ?string
+    {
+        return $this->report_footer;
+    }
+
+    /**
      * @param string|null $report_footer
      */
     public function setReportFooter(?string $report_footer): void
     {
         $this->report_footer = $report_footer;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("secondary_color")
-     */
-    public function getSecondaryColor(): ?string
-    {
-        return $this->secondary_color;
     }
 
     /**
@@ -567,32 +683,6 @@ final class Layout extends Base
     public function getFont(): ?string
     {
         return $this->font;
-    }
-
-    /**
-     * @param string|null $font
-     */
-    public function setFont(?string $font): void
-    {
-        $this->font = $font;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("primary_color")
-     */
-    public function getPrimaryColor(): ?string
-    {
-        return $this->primary_color;
-    }
-
-    /**
-     * @param string|null $primary_color
-     */
-    public function setPrimaryColor(?string $primary_color): void
-    {
-        $this->primary_color = $primary_color;
     }
 
     /**

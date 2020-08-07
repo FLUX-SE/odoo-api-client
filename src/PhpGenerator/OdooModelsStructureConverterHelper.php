@@ -28,6 +28,8 @@ final class OdooModelsStructureConverterHelper
                 $phpTypes[] = 'bool';
                 break;
             case 'binary':
+                $phpTypes[] = 'array';
+                break;
             case 'char':
             case 'html':
             case 'text':

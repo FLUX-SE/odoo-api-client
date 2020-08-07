@@ -82,7 +82,7 @@ final class Export extends Base
      * Searchable : yes
      * Sortable : yes
      *
-     * @var string|null
+     * @var array|null
      */
     private $data;
 
@@ -172,11 +172,19 @@ final class Export extends Base
     }
 
     /**
-     * @param string|null $data
+     * @param mixed $item
      */
-    public function setData(?string $data): void
+    public function addData($item): void
     {
-        $this->data = $data;
+        if ($this->hasData($item)) {
+            return;
+        }
+
+        if (null === $this->data) {
+            $this->data = [];
+        }
+
+        $this->data[] = $item;
     }
 
     /**
@@ -270,13 +278,32 @@ final class Export extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("data")
+     * @param mixed $item
      */
-    public function getData(): ?string
+    public function removeData($item): void
     {
-        return $this->data;
+        if (null === $this->data) {
+            $this->data = [];
+        }
+
+        if ($this->hasData($item)) {
+            $index = array_search($item, $this->data);
+            unset($this->data[$index]);
+        }
+    }
+
+    /**
+     * @param mixed $item
+     *
+     * @return bool
+     */
+    public function hasData($item): bool
+    {
+        if (null === $this->data) {
+            return false;
+        }
+
+        return in_array($item, $this->data);
     }
 
     /**
@@ -287,6 +314,24 @@ final class Export extends Base
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    /**
+     * @param array|null $data
+     */
+    public function setData(?array $data): void
+    {
+        $this->data = $data;
+    }
+
+    /**
+     * @return array|null
+     *
+     * @SerializedName("data")
+     */
+    public function getData(): ?array
+    {
+        return $this->data;
     }
 
     /**

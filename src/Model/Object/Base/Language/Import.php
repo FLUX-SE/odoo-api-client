@@ -52,7 +52,7 @@ final class Import extends Base
      * Searchable : yes
      * Sortable : yes
      *
-     * @var string
+     * @var array
      */
     private $data;
 
@@ -136,7 +136,7 @@ final class Import extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param string $data File
+     * @param array $data File
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -145,7 +145,7 @@ final class Import extends Base
      *        Searchable : yes
      *        Sortable : yes
      */
-    public function __construct(string $name, string $code, string $data, string $filename)
+    public function __construct(string $name, string $code, array $data, string $filename)
     {
         $this->name = $name;
         $this->code = $code;
@@ -154,13 +154,13 @@ final class Import extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @return bool|null
      *
-     * @SerializedName("create_uid")
+     * @SerializedName("overwrite")
      */
-    public function getCreateUid(): ?OdooRelation
+    public function isOverwrite(): ?bool
     {
-        return $this->create_uid;
+        return $this->overwrite;
     }
 
     /**
@@ -226,31 +226,21 @@ final class Import extends Base
     }
 
     /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
      * @param bool|null $overwrite
      */
     public function setOverwrite(?bool $overwrite): void
     {
         $this->overwrite = $overwrite;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("name")
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("overwrite")
-     */
-    public function isOverwrite(): ?bool
-    {
-        return $this->overwrite;
     }
 
     /**
@@ -264,6 +254,16 @@ final class Import extends Base
     /**
      * @return string
      *
+     * @SerializedName("name")
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     *
      * @SerializedName("filename")
      */
     public function getFilename(): string
@@ -272,19 +272,52 @@ final class Import extends Base
     }
 
     /**
-     * @param string $data
+     * @param mixed $item
      */
-    public function setData(string $data): void
+    public function removeData($item): void
+    {
+        if ($this->hasData($item)) {
+            $index = array_search($item, $this->data);
+            unset($this->data[$index]);
+        }
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addData($item): void
+    {
+        if ($this->hasData($item)) {
+            return;
+        }
+
+        $this->data[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     *
+     * @return bool
+     */
+    public function hasData($item): bool
+    {
+        return in_array($item, $this->data);
+    }
+
+    /**
+     * @param array $data
+     */
+    public function setData(array $data): void
     {
         $this->data = $data;
     }
 
     /**
-     * @return string
+     * @return array
      *
      * @SerializedName("data")
      */
-    public function getData(): string
+    public function getData(): array
     {
         return $this->data;
     }

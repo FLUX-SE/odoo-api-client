@@ -42,7 +42,7 @@ final class Import extends Base
      * Searchable : yes
      * Sortable : yes
      *
-     * @var string|null
+     * @var array|null
      */
     private $file;
 
@@ -123,11 +123,13 @@ final class Import extends Base
     }
 
     /**
-     * @param OdooRelation|null $create_uid
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
-    public function setCreateUid(?OdooRelation $create_uid): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->create_uid = $create_uid;
+        return $this->create_uid;
     }
 
     /**
@@ -185,21 +187,11 @@ final class Import extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param string|null $res_model
-     */
-    public function setResModel(?string $res_model): void
-    {
-        $this->res_model = $res_model;
+        $this->create_uid = $create_uid;
     }
 
     /**
@@ -208,6 +200,14 @@ final class Import extends Base
     public function setFileType(?string $file_type): void
     {
         $this->file_type = $file_type;
+    }
+
+    /**
+     * @param string|null $res_model
+     */
+    public function setResModel(?string $res_model): void
+    {
+        $this->res_model = $res_model;
     }
 
     /**
@@ -239,19 +239,64 @@ final class Import extends Base
     }
 
     /**
-     * @param string|null $file
+     * @param mixed $item
      */
-    public function setFile(?string $file): void
+    public function removeFile($item): void
+    {
+        if (null === $this->file) {
+            $this->file = [];
+        }
+
+        if ($this->hasFile($item)) {
+            $index = array_search($item, $this->file);
+            unset($this->file[$index]);
+        }
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addFile($item): void
+    {
+        if ($this->hasFile($item)) {
+            return;
+        }
+
+        if (null === $this->file) {
+            $this->file = [];
+        }
+
+        $this->file[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     *
+     * @return bool
+     */
+    public function hasFile($item): bool
+    {
+        if (null === $this->file) {
+            return false;
+        }
+
+        return in_array($item, $this->file);
+    }
+
+    /**
+     * @param array|null $file
+     */
+    public function setFile(?array $file): void
     {
         $this->file = $file;
     }
 
     /**
-     * @return string|null
+     * @return array|null
      *
      * @SerializedName("file")
      */
-    public function getFile(): ?string
+    public function getFile(): ?array
     {
         return $this->file;
     }

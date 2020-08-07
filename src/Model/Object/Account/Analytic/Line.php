@@ -247,6 +247,19 @@ final class Line extends Base
     private $ref;
 
     /**
+     * Sales Order Item
+     * ---
+     * Relation : many2one (sale.order.line)
+     * @see \Flux\OdooApiClient\Model\Object\Sale\Order\Line
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $so_line;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -337,19 +350,11 @@ final class Line extends Base
     /**
      * @return string|null
      *
-     * @SerializedName("code")
+     * @SerializedName("ref")
      */
-    public function getCode(): ?string
+    public function getRef(): ?string
     {
-        return $this->code;
-    }
-
-    /**
-     * @param OdooRelation|null $currency_id
-     */
-    public function setCurrencyId(?OdooRelation $currency_id): void
-    {
-        $this->currency_id = $currency_id;
+        return $this->ref;
     }
 
     /**
@@ -425,6 +430,16 @@ final class Line extends Base
     }
 
     /**
+     * @return string|null
+     *
+     * @SerializedName("code")
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    /**
      * @param string|null $code
      */
     public function setCode(?string $code): void
@@ -433,29 +448,39 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation $company_id
-     */
-    public function setCompanyId(OdooRelation $company_id): void
-    {
-        $this->company_id = $company_id;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("ref")
-     */
-    public function getRef(): ?string
-    {
-        return $this->ref;
-    }
-
-    /**
      * @param string|null $ref
      */
     public function setRef(?string $ref): void
     {
         $this->ref = $ref;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("currency_id")
+     */
+    public function getCurrencyId(): ?OdooRelation
+    {
+        return $this->currency_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("so_line")
+     */
+    public function getSoLine(): ?OdooRelation
+    {
+        return $this->so_line;
+    }
+
+    /**
+     * @param OdooRelation|null $so_line
+     */
+    public function setSoLine(?OdooRelation $so_line): void
+    {
+        $this->so_line = $so_line;
     }
 
     /**
@@ -531,23 +556,19 @@ final class Line extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("currency_id")
+     * @param OdooRelation|null $currency_id
      */
-    public function getCurrencyId(): ?OdooRelation
+    public function setCurrencyId(?OdooRelation $currency_id): void
     {
-        return $this->currency_id;
+        $this->currency_id = $currency_id;
     }
 
     /**
-     * @return OdooRelation
-     *
-     * @SerializedName("company_id")
+     * @param OdooRelation $company_id
      */
-    public function getCompanyId(): OdooRelation
+    public function setCompanyId(OdooRelation $company_id): void
     {
-        return $this->company_id;
+        $this->company_id = $company_id;
     }
 
     /**
@@ -561,13 +582,11 @@ final class Line extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("product_uom_category_id")
+     * @param OdooRelation|null $product_uom_category_id
      */
-    public function getProductUomCategoryId(): ?OdooRelation
+    public function setProductUomCategoryId(?OdooRelation $product_uom_category_id): void
     {
-        return $this->product_uom_category_id;
+        $this->product_uom_category_id = $product_uom_category_id;
     }
 
     /**
@@ -651,26 +670,13 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation|null $product_uom_category_id
+     * @return OdooRelation|null
+     *
+     * @SerializedName("product_uom_category_id")
      */
-    public function setProductUomCategoryId(?OdooRelation $product_uom_category_id): void
+    public function getProductUomCategoryId(): ?OdooRelation
     {
-        $this->product_uom_category_id = $product_uom_category_id;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeTagIds(OdooRelation $item): void
-    {
-        if (null === $this->tag_ids) {
-            $this->tag_ids = [];
-        }
-
-        if ($this->hasTagIds($item)) {
-            $index = array_search($item, $this->tag_ids);
-            unset($this->tag_ids[$index]);
-        }
+        return $this->product_uom_category_id;
     }
 
     /**
@@ -681,6 +687,16 @@ final class Line extends Base
     public function getAccountId(): OdooRelation
     {
         return $this->account_id;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("company_id")
+     */
+    public function getCompanyId(): OdooRelation
+    {
+        return $this->company_id;
     }
 
     /**
@@ -773,6 +789,21 @@ final class Line extends Base
         }
 
         $this->tag_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeTagIds(OdooRelation $item): void
+    {
+        if (null === $this->tag_ids) {
+            $this->tag_ids = [];
+        }
+
+        if ($this->hasTagIds($item)) {
+            $index = array_search($item, $this->tag_ids);
+            unset($this->tag_ids[$index]);
+        }
     }
 
     /**

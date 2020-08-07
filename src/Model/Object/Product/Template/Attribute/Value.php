@@ -134,6 +134,48 @@ final class Value extends Base
     private $ptav_product_variant_ids;
 
     /**
+     * HTML Color Index
+     * ---
+     * Here you can set a specific HTML color index (e.g. #ff0000) to display the color if the attribute type is
+     * 'Color'.
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $html_color;
+
+    /**
+     * Is custom value
+     * ---
+     * Allow users to input custom values for this attribute value
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $is_custom;
+
+    /**
+     * Display Type
+     * ---
+     * The display type used in the Product Configurator.
+     * ---
+     * Selection :
+     *     -> radio (Radio)
+     *     -> select (Select)
+     *     -> color (Color)
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $display_type;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -202,100 +244,11 @@ final class Value extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("attribute_id")
+     * @param string|null $display_type
      */
-    public function getAttributeId(): ?OdooRelation
+    public function setDisplayType(?string $display_type): void
     {
-        return $this->attribute_id;
-    }
-
-    /**
-     * @param DateTimeInterface|null $write_date
-     */
-    public function setWriteDate(?DateTimeInterface $write_date): void
-    {
-        $this->write_date = $write_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("write_date")
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("write_uid")
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("create_date")
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @param OdooRelation|null $create_uid
-     */
-    public function setCreateUid(?OdooRelation $create_uid): void
-    {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
-     */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removePtavProductVariantIds(OdooRelation $item): void
-    {
-        if (null === $this->ptav_product_variant_ids) {
-            $this->ptav_product_variant_ids = [];
-        }
-
-        if ($this->hasPtavProductVariantIds($item)) {
-            $index = array_search($item, $this->ptav_product_variant_ids);
-            unset($this->ptav_product_variant_ids[$index]);
-        }
+        $this->display_type = $display_type;
     }
 
     /**
@@ -316,6 +269,147 @@ final class Value extends Base
 
     /**
      * @param OdooRelation $item
+     */
+    public function removePtavProductVariantIds(OdooRelation $item): void
+    {
+        if (null === $this->ptav_product_variant_ids) {
+            $this->ptav_product_variant_ids = [];
+        }
+
+        if ($this->hasPtavProductVariantIds($item)) {
+            $index = array_search($item, $this->ptav_product_variant_ids);
+            unset($this->ptav_product_variant_ids[$index]);
+        }
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("html_color")
+     */
+    public function getHtmlColor(): ?string
+    {
+        return $this->html_color;
+    }
+
+    /**
+     * @param string|null $html_color
+     */
+    public function setHtmlColor(?string $html_color): void
+    {
+        $this->html_color = $html_color;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("is_custom")
+     */
+    public function isIsCustom(): ?bool
+    {
+        return $this->is_custom;
+    }
+
+    /**
+     * @param bool|null $is_custom
+     */
+    public function setIsCustom(?bool $is_custom): void
+    {
+        $this->is_custom = $is_custom;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("display_type")
+     */
+    public function getDisplayType(): ?string
+    {
+        return $this->display_type;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation[]|null $ptav_product_variant_ids
+     */
+    public function setPtavProductVariantIds(?array $ptav_product_variant_ids): void
+    {
+        $this->ptav_product_variant_ids = $ptav_product_variant_ids;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
+    }
+
+    /**
+     * @param OdooRelation $item
      *
      * @return bool
      */
@@ -329,14 +423,6 @@ final class Value extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $ptav_product_variant_ids
-     */
-    public function setPtavProductVariantIds(?array $ptav_product_variant_ids): void
-    {
-        $this->ptav_product_variant_ids = $ptav_product_variant_ids;
-    }
-
-    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("ptav_product_variant_ids")
@@ -344,22 +430,6 @@ final class Value extends Base
     public function getPtavProductVariantIds(): ?array
     {
         return $this->ptav_product_variant_ids;
-    }
-
-    /**
-     * @param OdooRelation|null $attribute_id
-     */
-    public function setAttributeId(?OdooRelation $attribute_id): void
-    {
-        $this->attribute_id = $attribute_id;
-    }
-
-    /**
-     * @param OdooRelation|null $product_tmpl_id
-     */
-    public function setProductTmplId(?OdooRelation $product_tmpl_id): void
-    {
-        $this->product_tmpl_id = $product_tmpl_id;
     }
 
     /**
@@ -373,11 +443,13 @@ final class Value extends Base
     }
 
     /**
-     * @param OdooRelation $attribute_line_id
+     * @return float|null
+     *
+     * @SerializedName("price_extra")
      */
-    public function setAttributeLineId(OdooRelation $attribute_line_id): void
+    public function getPriceExtra(): ?float
     {
-        $this->attribute_line_id = $attribute_line_id;
+        return $this->price_extra;
     }
 
     /**
@@ -435,23 +507,11 @@ final class Value extends Base
     }
 
     /**
-     * @return float|null
-     *
-     * @SerializedName("price_extra")
+     * @param OdooRelation $attribute_line_id
      */
-    public function getPriceExtra(): ?float
+    public function setAttributeLineId(OdooRelation $attribute_line_id): void
     {
-        return $this->price_extra;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("product_tmpl_id")
-     */
-    public function getProductTmplId(): ?OdooRelation
-    {
-        return $this->product_tmpl_id;
+        $this->attribute_line_id = $attribute_line_id;
     }
 
     /**
@@ -460,6 +520,14 @@ final class Value extends Base
     public function setPriceExtra(?float $price_extra): void
     {
         $this->price_extra = $price_extra;
+    }
+
+    /**
+     * @param OdooRelation|null $attribute_id
+     */
+    public function setAttributeId(?OdooRelation $attribute_id): void
+    {
+        $this->attribute_id = $attribute_id;
     }
 
     /**
@@ -523,6 +591,34 @@ final class Value extends Base
             $index = array_search($item, $this->exclude_for);
             unset($this->exclude_for[$index]);
         }
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("product_tmpl_id")
+     */
+    public function getProductTmplId(): ?OdooRelation
+    {
+        return $this->product_tmpl_id;
+    }
+
+    /**
+     * @param OdooRelation|null $product_tmpl_id
+     */
+    public function setProductTmplId(?OdooRelation $product_tmpl_id): void
+    {
+        $this->product_tmpl_id = $product_tmpl_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("attribute_id")
+     */
+    public function getAttributeId(): ?OdooRelation
+    {
+        return $this->attribute_id;
     }
 
     /**

@@ -99,7 +99,7 @@ final class Product extends Template
      * Searchable : yes
      * Sortable : no
      *
-     * @var string|null
+     * @var array|null
      */
     private $image_variant_1920;
 
@@ -109,7 +109,7 @@ final class Product extends Template
      * Searchable : yes
      * Sortable : no
      *
-     * @var string|null
+     * @var array|null
      */
     private $image_variant_1024;
 
@@ -119,7 +119,7 @@ final class Product extends Template
      * Searchable : yes
      * Sortable : no
      *
-     * @var string|null
+     * @var array|null
      */
     private $image_variant_512;
 
@@ -129,7 +129,7 @@ final class Product extends Template
      * Searchable : yes
      * Sortable : no
      *
-     * @var string|null
+     * @var array|null
      */
     private $image_variant_256;
 
@@ -139,7 +139,7 @@ final class Product extends Template
      * Searchable : yes
      * Sortable : no
      *
-     * @var string|null
+     * @var array|null
      */
     private $image_variant_128;
 
@@ -212,6 +212,18 @@ final class Product extends Template
      *        ---
      *        Searchable : yes
      *        Sortable : no
+     * @param string $sale_line_warn Sales Order Line
+     *        ---
+     *        Selecting the "Warning" option will notify user with the message, Selecting "Blocking Message" will throw an
+     *        exception with the message and block the flow. The Message has to be written in the next field.
+     *        ---
+     *        Selection :
+     *            -> no-message (No Message)
+     *            -> warning (Warning)
+     *            -> block (Blocking Message)
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         OdooRelation $product_tmpl_id,
@@ -220,33 +232,237 @@ final class Product extends Template
         OdooRelation $categ_id,
         OdooRelation $uom_id,
         OdooRelation $uom_po_id,
-        array $product_variant_ids
+        array $product_variant_ids,
+        string $sale_line_warn
     ) {
         $this->product_tmpl_id = $product_tmpl_id;
         parent::__construct(
-            $name,
-            $type,
-            $categ_id,
-            $uom_id,
-            $uom_po_id,
-            $product_variant_ids
+            $name, 
+            $type, 
+            $categ_id, 
+            $uom_id, 
+            $uom_po_id, 
+            $product_variant_ids, 
+            $sale_line_warn
         );
     }
 
     /**
-     * @param string|null $combination_indices
+     * @param mixed $item
+     *
+     * @return bool
      */
-    public function setCombinationIndices(?string $combination_indices): void
+    public function hasImageVariant256($item): bool
     {
-        $this->combination_indices = $combination_indices;
+        if (null === $this->image_variant_256) {
+            return false;
+        }
+
+        return in_array($item, $this->image_variant_256);
     }
 
     /**
-     * @param bool|null $can_image_variant_1024_be_zoomed
+     * @param mixed $item
      */
-    public function setCanImageVariant1024BeZoomed(?bool $can_image_variant_1024_be_zoomed): void
+    public function removeImageVariant1024($item): void
     {
-        $this->can_image_variant_1024_be_zoomed = $can_image_variant_1024_be_zoomed;
+        if (null === $this->image_variant_1024) {
+            $this->image_variant_1024 = [];
+        }
+
+        if ($this->hasImageVariant1024($item)) {
+            $index = array_search($item, $this->image_variant_1024);
+            unset($this->image_variant_1024[$index]);
+        }
+    }
+
+    /**
+     * @return array|null
+     *
+     * @SerializedName("image_variant_512")
+     */
+    public function getImageVariant512(): ?array
+    {
+        return $this->image_variant_512;
+    }
+
+    /**
+     * @param array|null $image_variant_512
+     */
+    public function setImageVariant512(?array $image_variant_512): void
+    {
+        $this->image_variant_512 = $image_variant_512;
+    }
+
+    /**
+     * @param mixed $item
+     *
+     * @return bool
+     */
+    public function hasImageVariant512($item): bool
+    {
+        if (null === $this->image_variant_512) {
+            return false;
+        }
+
+        return in_array($item, $this->image_variant_512);
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addImageVariant512($item): void
+    {
+        if ($this->hasImageVariant512($item)) {
+            return;
+        }
+
+        if (null === $this->image_variant_512) {
+            $this->image_variant_512 = [];
+        }
+
+        $this->image_variant_512[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeImageVariant512($item): void
+    {
+        if (null === $this->image_variant_512) {
+            $this->image_variant_512 = [];
+        }
+
+        if ($this->hasImageVariant512($item)) {
+            $index = array_search($item, $this->image_variant_512);
+            unset($this->image_variant_512[$index]);
+        }
+    }
+
+    /**
+     * @return array|null
+     *
+     * @SerializedName("image_variant_256")
+     */
+    public function getImageVariant256(): ?array
+    {
+        return $this->image_variant_256;
+    }
+
+    /**
+     * @param array|null $image_variant_256
+     */
+    public function setImageVariant256(?array $image_variant_256): void
+    {
+        $this->image_variant_256 = $image_variant_256;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addImageVariant256($item): void
+    {
+        if ($this->hasImageVariant256($item)) {
+            return;
+        }
+
+        if (null === $this->image_variant_256) {
+            $this->image_variant_256 = [];
+        }
+
+        $this->image_variant_256[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     *
+     * @return bool
+     */
+    public function hasImageVariant1024($item): bool
+    {
+        if (null === $this->image_variant_1024) {
+            return false;
+        }
+
+        return in_array($item, $this->image_variant_1024);
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeImageVariant256($item): void
+    {
+        if (null === $this->image_variant_256) {
+            $this->image_variant_256 = [];
+        }
+
+        if ($this->hasImageVariant256($item)) {
+            $index = array_search($item, $this->image_variant_256);
+            unset($this->image_variant_256[$index]);
+        }
+    }
+
+    /**
+     * @return array|null
+     *
+     * @SerializedName("image_variant_128")
+     */
+    public function getImageVariant128(): ?array
+    {
+        return $this->image_variant_128;
+    }
+
+    /**
+     * @param array|null $image_variant_128
+     */
+    public function setImageVariant128(?array $image_variant_128): void
+    {
+        $this->image_variant_128 = $image_variant_128;
+    }
+
+    /**
+     * @param mixed $item
+     *
+     * @return bool
+     */
+    public function hasImageVariant128($item): bool
+    {
+        if (null === $this->image_variant_128) {
+            return false;
+        }
+
+        return in_array($item, $this->image_variant_128);
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addImageVariant128($item): void
+    {
+        if ($this->hasImageVariant128($item)) {
+            return;
+        }
+
+        if (null === $this->image_variant_128) {
+            $this->image_variant_128 = [];
+        }
+
+        $this->image_variant_128[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeImageVariant128($item): void
+    {
+        if (null === $this->image_variant_128) {
+            $this->image_variant_128 = [];
+        }
+
+        if ($this->hasImageVariant128($item)) {
+            $index = array_search($item, $this->image_variant_128);
+            unset($this->image_variant_128[$index]);
+        }
     }
 
     /**
@@ -260,103 +476,35 @@ final class Product extends Template
     }
 
     /**
-     * @param string|null $image_variant_128
+     * @param bool|null $can_image_variant_1024_be_zoomed
      */
-    public function setImageVariant128(?string $image_variant_128): void
+    public function setCanImageVariant1024BeZoomed(?bool $can_image_variant_1024_be_zoomed): void
     {
-        $this->image_variant_128 = $image_variant_128;
+        $this->can_image_variant_1024_be_zoomed = $can_image_variant_1024_be_zoomed;
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("image_variant_128")
+     * @param mixed $item
      */
-    public function getImageVariant128(): ?string
+    public function addImageVariant1024($item): void
     {
-        return $this->image_variant_128;
+        if ($this->hasImageVariant1024($item)) {
+            return;
+        }
+
+        if (null === $this->image_variant_1024) {
+            $this->image_variant_1024 = [];
+        }
+
+        $this->image_variant_1024[] = $item;
     }
 
     /**
-     * @param string|null $image_variant_256
+     * @param array|null $image_variant_1024
      */
-    public function setImageVariant256(?string $image_variant_256): void
-    {
-        $this->image_variant_256 = $image_variant_256;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("image_variant_256")
-     */
-    public function getImageVariant256(): ?string
-    {
-        return $this->image_variant_256;
-    }
-
-    /**
-     * @param string|null $image_variant_512
-     */
-    public function setImageVariant512(?string $image_variant_512): void
-    {
-        $this->image_variant_512 = $image_variant_512;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("image_variant_512")
-     */
-    public function getImageVariant512(): ?string
-    {
-        return $this->image_variant_512;
-    }
-
-    /**
-     * @param string|null $image_variant_1024
-     */
-    public function setImageVariant1024(?string $image_variant_1024): void
+    public function setImageVariant1024(?array $image_variant_1024): void
     {
         $this->image_variant_1024 = $image_variant_1024;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("image_variant_1024")
-     */
-    public function getImageVariant1024(): ?string
-    {
-        return $this->image_variant_1024;
-    }
-
-    /**
-     * @param string|null $image_variant_1920
-     */
-    public function setImageVariant1920(?string $image_variant_1920): void
-    {
-        $this->image_variant_1920 = $image_variant_1920;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("image_variant_1920")
-     */
-    public function getImageVariant1920(): ?string
-    {
-        return $this->image_variant_1920;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("combination_indices")
-     */
-    public function getCombinationIndices(): ?string
-    {
-        return $this->combination_indices;
     }
 
     /**
@@ -370,18 +518,107 @@ final class Product extends Template
     }
 
     /**
-     * @param OdooRelation $item
+     * @param OdooRelation[]|null $product_template_attribute_value_ids
      */
-    public function removeProductTemplateAttributeValueIds(OdooRelation $item): void
+    public function setProductTemplateAttributeValueIds(?array $product_template_attribute_value_ids): void
+    {
+        $this->product_template_attribute_value_ids = $product_template_attribute_value_ids;
+    }
+
+    /**
+     * @param float|null $price_extra
+     */
+    public function setPriceExtra(?float $price_extra): void
+    {
+        $this->price_extra = $price_extra;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("code")
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string|null $code
+     */
+    public function setCode(?string $code): void
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("partner_ref")
+     */
+    public function getPartnerRef(): ?string
+    {
+        return $this->partner_ref;
+    }
+
+    /**
+     * @param string|null $partner_ref
+     */
+    public function setPartnerRef(?string $partner_ref): void
+    {
+        $this->partner_ref = $partner_ref;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("product_tmpl_id")
+     */
+    public function getProductTmplId(): OdooRelation
+    {
+        return $this->product_tmpl_id;
+    }
+
+    /**
+     * @param OdooRelation $product_tmpl_id
+     */
+    public function setProductTmplId(OdooRelation $product_tmpl_id): void
+    {
+        $this->product_tmpl_id = $product_tmpl_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("product_template_attribute_value_ids")
+     */
+    public function getProductTemplateAttributeValueIds(): ?array
+    {
+        return $this->product_template_attribute_value_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasProductTemplateAttributeValueIds(OdooRelation $item): bool
     {
         if (null === $this->product_template_attribute_value_ids) {
-            $this->product_template_attribute_value_ids = [];
+            return false;
         }
 
-        if ($this->hasProductTemplateAttributeValueIds($item)) {
-            $index = array_search($item, $this->product_template_attribute_value_ids);
-            unset($this->product_template_attribute_value_ids[$index]);
-        }
+        return in_array($item, $this->product_template_attribute_value_ids);
+    }
+
+    /**
+     * @return array|null
+     *
+     * @SerializedName("image_variant_1024")
+     */
+    public function getImageVariant1024(): ?array
+    {
+        return $this->image_variant_1024;
     }
 
     /**
@@ -402,96 +639,98 @@ final class Product extends Template
 
     /**
      * @param OdooRelation $item
+     */
+    public function removeProductTemplateAttributeValueIds(OdooRelation $item): void
+    {
+        if (null === $this->product_template_attribute_value_ids) {
+            $this->product_template_attribute_value_ids = [];
+        }
+
+        if ($this->hasProductTemplateAttributeValueIds($item)) {
+            $index = array_search($item, $this->product_template_attribute_value_ids);
+            unset($this->product_template_attribute_value_ids[$index]);
+        }
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("combination_indices")
+     */
+    public function getCombinationIndices(): ?string
+    {
+        return $this->combination_indices;
+    }
+
+    /**
+     * @param string|null $combination_indices
+     */
+    public function setCombinationIndices(?string $combination_indices): void
+    {
+        $this->combination_indices = $combination_indices;
+    }
+
+    /**
+     * @return array|null
+     *
+     * @SerializedName("image_variant_1920")
+     */
+    public function getImageVariant1920(): ?array
+    {
+        return $this->image_variant_1920;
+    }
+
+    /**
+     * @param array|null $image_variant_1920
+     */
+    public function setImageVariant1920(?array $image_variant_1920): void
+    {
+        $this->image_variant_1920 = $image_variant_1920;
+    }
+
+    /**
+     * @param mixed $item
      *
      * @return bool
      */
-    public function hasProductTemplateAttributeValueIds(OdooRelation $item): bool
+    public function hasImageVariant1920($item): bool
     {
-        if (null === $this->product_template_attribute_value_ids) {
+        if (null === $this->image_variant_1920) {
             return false;
         }
 
-        return in_array($item, $this->product_template_attribute_value_ids);
+        return in_array($item, $this->image_variant_1920);
     }
 
     /**
-     * @param OdooRelation[]|null $product_template_attribute_value_ids
+     * @param mixed $item
      */
-    public function setProductTemplateAttributeValueIds(?array $product_template_attribute_value_ids): void
+    public function addImageVariant1920($item): void
     {
-        $this->product_template_attribute_value_ids = $product_template_attribute_value_ids;
+        if ($this->hasImageVariant1920($item)) {
+            return;
+        }
+
+        if (null === $this->image_variant_1920) {
+            $this->image_variant_1920 = [];
+        }
+
+        $this->image_variant_1920[] = $item;
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("product_template_attribute_value_ids")
+     * @param mixed $item
      */
-    public function getProductTemplateAttributeValueIds(): ?array
+    public function removeImageVariant1920($item): void
     {
-        return $this->product_template_attribute_value_ids;
-    }
+        if (null === $this->image_variant_1920) {
+            $this->image_variant_1920 = [];
+        }
 
-    /**
-     * @param OdooRelation $product_tmpl_id
-     */
-    public function setProductTmplId(OdooRelation $product_tmpl_id): void
-    {
-        $this->product_tmpl_id = $product_tmpl_id;
-    }
-
-    /**
-     * @return OdooRelation
-     *
-     * @SerializedName("product_tmpl_id")
-     */
-    public function getProductTmplId(): OdooRelation
-    {
-        return $this->product_tmpl_id;
-    }
-
-    /**
-     * @param string|null $partner_ref
-     */
-    public function setPartnerRef(?string $partner_ref): void
-    {
-        $this->partner_ref = $partner_ref;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("partner_ref")
-     */
-    public function getPartnerRef(): ?string
-    {
-        return $this->partner_ref;
-    }
-
-    /**
-     * @param string|null $code
-     */
-    public function setCode(?string $code): void
-    {
-        $this->code = $code;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("code")
-     */
-    public function getCode(): ?string
-    {
-        return $this->code;
-    }
-
-    /**
-     * @param float|null $price_extra
-     */
-    public function setPriceExtra(?float $price_extra): void
-    {
-        $this->price_extra = $price_extra;
+        if ($this->hasImageVariant1920($item)) {
+            $index = array_search($item, $this->image_variant_1920);
+            unset($this->image_variant_1920[$index]);
+        }
     }
 
     /**

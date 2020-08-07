@@ -86,7 +86,7 @@ final class Test extends Base
      * Searchable : yes
      * Sortable : yes
      *
-     * @var string|null
+     * @var array|null
      */
     private $binary;
 
@@ -204,13 +204,11 @@ final class Test extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("selection_str")
+     * @param DateTimeInterface|null $datetime
      */
-    public function getSelectionStr(): ?string
+    public function setDatetime(?DateTimeInterface $datetime): void
     {
-        return $this->selection_str;
+        $this->datetime = $datetime;
     }
 
     /**
@@ -330,19 +328,13 @@ final class Test extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $datetime
+     * @return string|null
+     *
+     * @SerializedName("selection_str")
      */
-    public function setDatetime(?DateTimeInterface $datetime): void
+    public function getSelectionStr(): ?string
     {
-        $this->datetime = $datetime;
-    }
-
-    /**
-     * @param string|null $char
-     */
-    public function setChar(?string $char): void
-    {
-        $this->char = $char;
+        return $this->selection_str;
     }
 
     /**
@@ -356,47 +348,11 @@ final class Test extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $date
+     * @param string|null $char
      */
-    public function setDate(?DateTimeInterface $date): void
+    public function setChar(?string $char): void
     {
-        $this->date = $date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("date")
-     */
-    public function getDate(): ?DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    /**
-     * @param string|null $binary
-     */
-    public function setBinary(?string $binary): void
-    {
-        $this->binary = $binary;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("binary")
-     */
-    public function getBinary(): ?string
-    {
-        return $this->binary;
-    }
-
-    /**
-     * @param OdooRelation|null $many2one
-     */
-    public function setMany2one(?OdooRelation $many2one): void
-    {
-        $this->many2one = $many2one;
+        $this->char = $char;
     }
 
     /**
@@ -410,29 +366,21 @@ final class Test extends Base
     }
 
     /**
-     * @param float|null $numeric
-     */
-    public function setNumeric(?float $numeric): void
-    {
-        $this->numeric = $numeric;
-    }
-
-    /**
-     * @return float|null
+     * @return int|null
      *
-     * @SerializedName("numeric")
+     * @SerializedName("integer")
      */
-    public function getNumeric(): ?float
+    public function getInteger(): ?int
     {
-        return $this->numeric;
+        return $this->integer;
     }
 
     /**
-     * @param float|null $float
+     * @param int|null $integer
      */
-    public function setFloat(?float $float): void
+    public function setInteger(?int $integer): void
     {
-        $this->float = $float;
+        $this->integer = $integer;
     }
 
     /**
@@ -446,21 +394,118 @@ final class Test extends Base
     }
 
     /**
-     * @param int|null $integer
+     * @param float|null $float
      */
-    public function setInteger(?int $integer): void
+    public function setFloat(?float $float): void
     {
-        $this->integer = $integer;
+        $this->float = $float;
     }
 
     /**
-     * @return int|null
+     * @return float|null
      *
-     * @SerializedName("integer")
+     * @SerializedName("numeric")
      */
-    public function getInteger(): ?int
+    public function getNumeric(): ?float
     {
-        return $this->integer;
+        return $this->numeric;
+    }
+
+    /**
+     * @param float|null $numeric
+     */
+    public function setNumeric(?float $numeric): void
+    {
+        $this->numeric = $numeric;
+    }
+
+    /**
+     * @param OdooRelation|null $many2one
+     */
+    public function setMany2one(?OdooRelation $many2one): void
+    {
+        $this->many2one = $many2one;
+    }
+
+    /**
+     * @param DateTimeInterface|null $date
+     */
+    public function setDate(?DateTimeInterface $date): void
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @return array|null
+     *
+     * @SerializedName("binary")
+     */
+    public function getBinary(): ?array
+    {
+        return $this->binary;
+    }
+
+    /**
+     * @param array|null $binary
+     */
+    public function setBinary(?array $binary): void
+    {
+        $this->binary = $binary;
+    }
+
+    /**
+     * @param mixed $item
+     *
+     * @return bool
+     */
+    public function hasBinary($item): bool
+    {
+        if (null === $this->binary) {
+            return false;
+        }
+
+        return in_array($item, $this->binary);
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addBinary($item): void
+    {
+        if ($this->hasBinary($item)) {
+            return;
+        }
+
+        if (null === $this->binary) {
+            $this->binary = [];
+        }
+
+        $this->binary[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeBinary($item): void
+    {
+        if (null === $this->binary) {
+            $this->binary = [];
+        }
+
+        if ($this->hasBinary($item)) {
+            $index = array_search($item, $this->binary);
+            unset($this->binary[$index]);
+        }
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("date")
+     */
+    public function getDate(): ?DateTimeInterface
+    {
+        return $this->date;
     }
 
     /**

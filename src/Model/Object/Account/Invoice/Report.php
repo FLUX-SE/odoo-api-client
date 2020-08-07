@@ -361,6 +361,19 @@ final class Report extends Base
     private $price_average;
 
     /**
+     * Sales Team
+     * ---
+     * Relation : many2one (crm.team)
+     * @see \Flux\OdooApiClient\Model\Object\Crm\Team
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $team_id;
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("move_id")
@@ -371,21 +384,13 @@ final class Report extends Base
     }
 
     /**
-     * @param OdooRelation|null $product_id
-     */
-    public function setProductId(?OdooRelation $product_id): void
-    {
-        $this->product_id = $product_id;
-    }
-
-    /**
      * @return OdooRelation|null
      *
-     * @SerializedName("invoice_partner_bank_id")
+     * @SerializedName("product_uom_id")
      */
-    public function getInvoicePartnerBankId(): ?OdooRelation
+    public function getProductUomId(): ?OdooRelation
     {
-        return $this->invoice_partner_bank_id;
+        return $this->product_uom_id;
     }
 
     /**
@@ -479,23 +484,11 @@ final class Report extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("product_uom_id")
+     * @param OdooRelation|null $product_id
      */
-    public function getProductUomId(): ?OdooRelation
+    public function setProductId(?OdooRelation $product_id): void
     {
-        return $this->product_uom_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("invoice_payment_term_id")
-     */
-    public function getInvoicePaymentTermId(): ?OdooRelation
-    {
-        return $this->invoice_payment_term_id;
+        $this->product_id = $product_id;
     }
 
     /**
@@ -504,6 +497,14 @@ final class Report extends Base
     public function setProductUomId(?OdooRelation $product_uom_id): void
     {
         $this->product_uom_id = $product_uom_id;
+    }
+
+    /**
+     * @param OdooRelation|null $invoice_payment_term_id
+     */
+    public function setInvoicePaymentTermId(?OdooRelation $invoice_payment_term_id): void
+    {
+        $this->invoice_payment_term_id = $invoice_payment_term_id;
     }
 
     /**
@@ -597,19 +598,41 @@ final class Report extends Base
     }
 
     /**
-     * @param OdooRelation|null $invoice_payment_term_id
+     * @return OdooRelation|null
+     *
+     * @SerializedName("team_id")
      */
-    public function setInvoicePaymentTermId(?OdooRelation $invoice_payment_term_id): void
+    public function getTeamId(): ?OdooRelation
     {
-        $this->invoice_payment_term_id = $invoice_payment_term_id;
+        return $this->team_id;
     }
 
     /**
-     * @param DateTimeInterface|null $invoice_date
+     * @param OdooRelation|null $team_id
      */
-    public function setInvoiceDate(?DateTimeInterface $invoice_date): void
+    public function setTeamId(?OdooRelation $team_id): void
     {
-        $this->invoice_date = $invoice_date;
+        $this->team_id = $team_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("invoice_partner_bank_id")
+     */
+    public function getInvoicePartnerBankId(): ?OdooRelation
+    {
+        return $this->invoice_partner_bank_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("invoice_payment_term_id")
+     */
+    public function getInvoicePaymentTermId(): ?OdooRelation
+    {
+        return $this->invoice_payment_term_id;
     }
 
     /**
@@ -739,13 +762,11 @@ final class Report extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("invoice_date")
+     * @param DateTimeInterface|null $invoice_date
      */
-    public function getInvoiceDate(): ?DateTimeInterface
+    public function setInvoiceDate(?DateTimeInterface $invoice_date): void
     {
-        return $this->invoice_date;
+        $this->invoice_date = $invoice_date;
     }
 
     /**
@@ -844,6 +865,16 @@ final class Report extends Base
     public function setFiscalPositionId(?OdooRelation $fiscal_position_id): void
     {
         $this->fiscal_position_id = $fiscal_position_id;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("invoice_date")
+     */
+    public function getInvoiceDate(): ?DateTimeInterface
+    {
+        return $this->invoice_date;
     }
 
     /**

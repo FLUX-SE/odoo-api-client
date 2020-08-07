@@ -118,7 +118,7 @@ final class Letter extends Base
      * Searchable : no
      * Sortable : no
      *
-     * @var string|null
+     * @var array|null
      */
     private $attachment_datas;
 
@@ -398,11 +398,31 @@ final class Letter extends Base
     }
 
     /**
-     * @param string|null $city
+     * @return string|null
+     *
+     * @SerializedName("city")
      */
-    public function setCity(?string $city): void
+    public function getCity(): ?string
     {
-        $this->city = $city;
+        return $this->city;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("info_msg")
+     */
+    public function getInfoMsg(): ?string
+    {
+        return $this->info_msg;
+    }
+
+    /**
+     * @param string|null $info_msg
+     */
+    public function setInfoMsg(?string $info_msg): void
+    {
+        $this->info_msg = $info_msg;
     }
 
     /**
@@ -496,13 +516,21 @@ final class Letter extends Base
     }
 
     /**
+     * @param string|null $city
+     */
+    public function setCity(?string $city): void
+    {
+        $this->city = $city;
+    }
+
+    /**
      * @return string|null
      *
-     * @SerializedName("city")
+     * @SerializedName("error_code")
      */
-    public function getCity(): ?string
+    public function getErrorCode(): ?string
     {
-        return $this->city;
+        return $this->error_code;
     }
 
     /**
@@ -513,16 +541,6 @@ final class Letter extends Base
     public function getStateId(): ?OdooRelation
     {
         return $this->state_id;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("info_msg")
-     */
-    public function getInfoMsg(): ?string
-    {
-        return $this->info_msg;
     }
 
     /**
@@ -624,19 +642,19 @@ final class Letter extends Base
     }
 
     /**
-     * @param string|null $info_msg
-     */
-    public function setInfoMsg(?string $info_msg): void
-    {
-        $this->info_msg = $info_msg;
-    }
-
-    /**
      * @param string|null $error_code
      */
     public function setErrorCode(?string $error_code): void
     {
         $this->error_code = $error_code;
+    }
+
+    /**
+     * @param string $state
+     */
+    public function setState(string $state): void
+    {
+        $this->state = $state;
     }
 
     /**
@@ -650,13 +668,11 @@ final class Letter extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("attachment_id")
+     * @param OdooRelation|null $attachment_id
      */
-    public function getAttachmentId(): ?OdooRelation
+    public function setAttachmentId(?OdooRelation $attachment_id): void
     {
-        return $this->attachment_id;
+        $this->attachment_id = $attachment_id;
     }
 
     /**
@@ -758,39 +774,86 @@ final class Letter extends Base
     }
 
     /**
-     * @param OdooRelation|null $attachment_id
-     */
-    public function setAttachmentId(?OdooRelation $attachment_id): void
-    {
-        $this->attachment_id = $attachment_id;
-    }
-
-    /**
-     * @return string|null
+     * @return OdooRelation|null
      *
-     * @SerializedName("error_code")
+     * @SerializedName("attachment_id")
      */
-    public function getErrorCode(): ?string
+    public function getAttachmentId(): ?OdooRelation
     {
-        return $this->error_code;
+        return $this->attachment_id;
     }
 
     /**
-     * @return string|null
+     * @return array|null
      *
      * @SerializedName("attachment_datas")
      */
-    public function getAttachmentDatas(): ?string
+    public function getAttachmentDatas(): ?array
     {
         return $this->attachment_datas;
     }
 
     /**
-     * @param string|null $attachment_datas
+     * @return string
+     *
+     * @SerializedName("state")
      */
-    public function setAttachmentDatas(?string $attachment_datas): void
+    public function getState(): string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param array|null $attachment_datas
+     */
+    public function setAttachmentDatas(?array $attachment_datas): void
     {
         $this->attachment_datas = $attachment_datas;
+    }
+
+    /**
+     * @param mixed $item
+     *
+     * @return bool
+     */
+    public function hasAttachmentDatas($item): bool
+    {
+        if (null === $this->attachment_datas) {
+            return false;
+        }
+
+        return in_array($item, $this->attachment_datas);
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addAttachmentDatas($item): void
+    {
+        if ($this->hasAttachmentDatas($item)) {
+            return;
+        }
+
+        if (null === $this->attachment_datas) {
+            $this->attachment_datas = [];
+        }
+
+        $this->attachment_datas[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function removeAttachmentDatas($item): void
+    {
+        if (null === $this->attachment_datas) {
+            $this->attachment_datas = [];
+        }
+
+        if ($this->hasAttachmentDatas($item)) {
+            $index = array_search($item, $this->attachment_datas);
+            unset($this->attachment_datas[$index]);
+        }
     }
 
     /**
@@ -863,24 +926,6 @@ final class Letter extends Base
     public function setDuplex(?bool $duplex): void
     {
         $this->duplex = $duplex;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("state")
-     */
-    public function getState(): string
-    {
-        return $this->state;
-    }
-
-    /**
-     * @param string $state
-     */
-    public function setState(string $state): void
-    {
-        $this->state = $state;
     }
 
     /**

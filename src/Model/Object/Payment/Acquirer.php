@@ -444,7 +444,7 @@ final class Acquirer extends Base
      * Searchable : yes
      * Sortable : no
      *
-     * @var string|null
+     * @var array|null
      */
     private $image_128;
 
@@ -510,6 +510,23 @@ final class Acquirer extends Base
      * @var string
      */
     private $provider;
+
+    /**
+     * Communication
+     * ---
+     * You can set here the communication type that will appear on sales orders.The communication will be given to
+     * the customer when they choose the payment method.
+     * ---
+     * Selection :
+     *     -> so_name (Based on Document Reference)
+     *     -> partner (Based on Customer ID)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $so_reference_type;
 
     /**
      * Created by
@@ -617,21 +634,72 @@ final class Acquirer extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("qr_code")
+     * @param OdooRelation|null $module_id
      */
-    public function isQrCode(): ?bool
+    public function setModuleId(?OdooRelation $module_id): void
     {
-        return $this->qr_code;
+        $this->module_id = $module_id;
     }
 
     /**
-     * @return string|null
+     * @param mixed $item
+     */
+    public function removeImage128($item): void
+    {
+        if (null === $this->image_128) {
+            $this->image_128 = [];
+        }
+
+        if ($this->hasImage128($item)) {
+            $index = array_search($item, $this->image_128);
+            unset($this->image_128[$index]);
+        }
+    }
+
+    /**
+     * @param mixed $item
+     */
+    public function addImage128($item): void
+    {
+        if ($this->hasImage128($item)) {
+            return;
+        }
+
+        if (null === $this->image_128) {
+            $this->image_128 = [];
+        }
+
+        $this->image_128[] = $item;
+    }
+
+    /**
+     * @param mixed $item
+     *
+     * @return bool
+     */
+    public function hasImage128($item): bool
+    {
+        if (null === $this->image_128) {
+            return false;
+        }
+
+        return in_array($item, $this->image_128);
+    }
+
+    /**
+     * @param array|null $image_128
+     */
+    public function setImage128(?array $image_128): void
+    {
+        $this->image_128 = $image_128;
+    }
+
+    /**
+     * @return array|null
      *
      * @SerializedName("image_128")
      */
-    public function getImage128(): ?string
+    public function getImage128(): ?array
     {
         return $this->image_128;
     }
@@ -673,14 +741,6 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param OdooRelation|null $module_id
-     */
-    public function setModuleId(?OdooRelation $module_id): void
-    {
-        $this->module_id = $module_id;
-    }
-
-    /**
      * @return OdooRelation|null
      *
      * @SerializedName("module_id")
@@ -688,6 +748,14 @@ final class Acquirer extends Base
     public function getModuleId(): ?OdooRelation
     {
         return $this->module_id;
+    }
+
+    /**
+     * @param OdooRelation[]|null $payment_icon_ids
+     */
+    public function setPaymentIconIds(?array $payment_icon_ids): void
+    {
+        $this->payment_icon_ids = $payment_icon_ids;
     }
 
     /**
@@ -699,21 +767,21 @@ final class Acquirer extends Base
     }
 
     /**
+     * @return bool|null
+     *
+     * @SerializedName("qr_code")
+     */
+    public function isQrCode(): ?bool
+    {
+        return $this->qr_code;
+    }
+
+    /**
      * @param float|null $fees_int_var
      */
     public function setFeesIntVar(?float $fees_int_var): void
     {
         $this->fees_int_var = $fees_int_var;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("payment_icon_ids")
-     */
-    public function getPaymentIconIds(): ?array
-    {
-        return $this->payment_icon_ids;
     }
 
     /**
@@ -771,13 +839,27 @@ final class Acquirer extends Base
     }
 
     /**
-     * @return float|null
+     * @return OdooRelation[]|null
      *
-     * @SerializedName("fees_dom_fixed")
+     * @SerializedName("payment_icon_ids")
      */
-    public function getFeesDomFixed(): ?float
+    public function getPaymentIconIds(): ?array
     {
-        return $this->fees_dom_fixed;
+        return $this->payment_icon_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasPaymentIconIds(OdooRelation $item): bool
+    {
+        if (null === $this->payment_icon_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->payment_icon_ids);
     }
 
     /**
@@ -789,47 +871,13 @@ final class Acquirer extends Base
     }
 
     /**
-     * @return bool|null
+     * @return string|null
      *
-     * @SerializedName("fees_active")
+     * @SerializedName("so_reference_type")
      */
-    public function isFeesActive(): ?bool
+    public function getSoReferenceType(): ?string
     {
-        return $this->fees_active;
-    }
-
-    /**
-     * @param string|null $image_128
-     */
-    public function setImage128(?string $image_128): void
-    {
-        $this->image_128 = $image_128;
-    }
-
-    /**
-     * @param OdooRelation[]|null $payment_icon_ids
-     */
-    public function setPaymentIconIds(?array $payment_icon_ids): void
-    {
-        $this->payment_icon_ids = $payment_icon_ids;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("fees_implemented")
-     */
-    public function isFeesImplemented(): ?bool
-    {
-        return $this->fees_implemented;
-    }
-
-    /**
-     * @param string $provider
-     */
-    public function setProvider(string $provider): void
-    {
-        $this->provider = $provider;
+        return $this->so_reference_type;
     }
 
     /**
@@ -905,6 +953,38 @@ final class Acquirer extends Base
     }
 
     /**
+     * @param string|null $so_reference_type
+     */
+    public function setSoReferenceType(?string $so_reference_type): void
+    {
+        $this->so_reference_type = $so_reference_type;
+    }
+
+    /**
+     * @param string $provider
+     */
+    public function setProvider(string $provider): void
+    {
+        $this->provider = $provider;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addPaymentIconIds(OdooRelation $item): void
+    {
+        if ($this->hasPaymentIconIds($item)) {
+            return;
+        }
+
+        if (null === $this->payment_icon_ids) {
+            $this->payment_icon_ids = [];
+        }
+
+        $this->payment_icon_ids[] = $item;
+    }
+
+    /**
      * @return string
      *
      * @SerializedName("provider")
@@ -912,20 +992,6 @@ final class Acquirer extends Base
     public function getProvider(): string
     {
         return $this->provider;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasPaymentIconIds(OdooRelation $item): bool
-    {
-        if (null === $this->payment_icon_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->payment_icon_ids);
     }
 
     /**
@@ -1025,35 +1091,23 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return float|null
+     *
+     * @SerializedName("fees_dom_fixed")
      */
-    public function addPaymentIconIds(OdooRelation $item): void
+    public function getFeesDomFixed(): ?float
     {
-        if ($this->hasPaymentIconIds($item)) {
-            return;
-        }
-
-        if (null === $this->payment_icon_ids) {
-            $this->payment_icon_ids = [];
-        }
-
-        $this->payment_icon_ids[] = $item;
+        return $this->fees_dom_fixed;
     }
 
     /**
-     * @param bool|null $fees_implemented
+     * @return bool|null
+     *
+     * @SerializedName("fees_active")
      */
-    public function setFeesImplemented(?bool $fees_implemented): void
+    public function isFeesActive(): ?bool
     {
-        $this->fees_implemented = $fees_implemented;
-    }
-
-    /**
-     * @param bool|null $authorize_implemented
-     */
-    public function setAuthorizeImplemented(?bool $authorize_implemented): void
-    {
-        $this->authorize_implemented = $authorize_implemented;
+        return $this->fees_active;
     }
 
     /**
@@ -1072,6 +1126,16 @@ final class Acquirer extends Base
     public function setCompanyId(OdooRelation $company_id): void
     {
         $this->company_id = $company_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("journal_id")
+     */
+    public function getJournalId(): ?OdooRelation
+    {
+        return $this->journal_id;
     }
 
     /**
@@ -1157,11 +1221,13 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param OdooRelation|null $journal_id
+     * @return bool|null
+     *
+     * @SerializedName("check_validity")
      */
-    public function setJournalId(?OdooRelation $journal_id): void
+    public function isCheckValidity(): ?bool
     {
-        $this->journal_id = $journal_id;
+        return $this->check_validity;
     }
 
     /**
@@ -1245,23 +1311,53 @@ final class Acquirer extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("journal_id")
+     * @param OdooRelation|null $journal_id
      */
-    public function getJournalId(): ?OdooRelation
+    public function setJournalId(?OdooRelation $journal_id): void
     {
-        return $this->journal_id;
+        $this->journal_id = $journal_id;
+    }
+
+    /**
+     * @param bool|null $check_validity
+     */
+    public function setCheckValidity(?bool $check_validity): void
+    {
+        $this->check_validity = $check_validity;
+    }
+
+    /**
+     * @param bool|null $fees_implemented
+     */
+    public function setFeesImplemented(?bool $fees_implemented): void
+    {
+        $this->fees_implemented = $fees_implemented;
+    }
+
+    /**
+     * @param string|null $done_msg
+     */
+    public function setDoneMsg(?string $done_msg): void
+    {
+        $this->done_msg = $done_msg;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("check_validity")
+     * @SerializedName("fees_implemented")
      */
-    public function isCheckValidity(): ?bool
+    public function isFeesImplemented(): ?bool
     {
-        return $this->check_validity;
+        return $this->fees_implemented;
+    }
+
+    /**
+     * @param bool|null $authorize_implemented
+     */
+    public function setAuthorizeImplemented(?bool $authorize_implemented): void
+    {
+        $this->authorize_implemented = $authorize_implemented;
     }
 
     /**
@@ -1272,14 +1368,6 @@ final class Acquirer extends Base
     public function isAuthorizeImplemented(): ?bool
     {
         return $this->authorize_implemented;
-    }
-
-    /**
-     * @param string|null $pending_msg
-     */
-    public function setPendingMsg(?string $pending_msg): void
-    {
-        $this->pending_msg = $pending_msg;
     }
 
     /**
@@ -1337,14 +1425,6 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param string|null $done_msg
-     */
-    public function setDoneMsg(?string $done_msg): void
-    {
-        $this->done_msg = $done_msg;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("done_msg")
@@ -1355,6 +1435,24 @@ final class Acquirer extends Base
     }
 
     /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("country_ids")
+     */
+    public function getCountryIds(): ?array
+    {
+        return $this->country_ids;
+    }
+
+    /**
+     * @param string|null $pending_msg
+     */
+    public function setPendingMsg(?string $pending_msg): void
+    {
+        $this->pending_msg = $pending_msg;
+    }
+
+    /**
      * @return string|null
      *
      * @SerializedName("pending_msg")
@@ -1362,14 +1460,6 @@ final class Acquirer extends Base
     public function getPendingMsg(): ?string
     {
         return $this->pending_msg;
-    }
-
-    /**
-     * @param bool|null $check_validity
-     */
-    public function setCheckValidity(?bool $check_validity): void
-    {
-        $this->check_validity = $check_validity;
     }
 
     /**
@@ -1459,16 +1549,6 @@ final class Acquirer extends Base
     public function setCountryIds(?array $country_ids): void
     {
         $this->country_ids = $country_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("country_ids")
-     */
-    public function getCountryIds(): ?array
-    {
-        return $this->country_ids;
     }
 
     /**
