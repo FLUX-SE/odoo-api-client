@@ -111,7 +111,7 @@ final class Property extends Base
      * Searchable : yes
      * Sortable : yes
      *
-     * @var array|null
+     * @var mixed|null
      */
     private $value_binary;
 
@@ -235,16 +235,6 @@ final class Property extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
-     */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("value_reference")
@@ -255,107 +245,11 @@ final class Property extends Base
     }
 
     /**
-     * @param string|null $value_reference
+     * @param DateTimeInterface|null $write_date
      */
-    public function setValueReference(?string $value_reference): void
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        $this->value_reference = $value_reference;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("value_datetime")
-     */
-    public function getValueDatetime(): ?DateTimeInterface
-    {
-        return $this->value_datetime;
-    }
-
-    /**
-     * @param DateTimeInterface|null $value_datetime
-     */
-    public function setValueDatetime(?DateTimeInterface $value_datetime): void
-    {
-        $this->value_datetime = $value_datetime;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("type")
-     */
-    public function getType(): string
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param string $type
-     */
-    public function setType(string $type): void
-    {
-        $this->type = $type;
-    }
-
-    /**
-     * @param OdooRelation|null $create_uid
-     */
-    public function setCreateUid(?OdooRelation $create_uid): void
-    {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addValueBinary($item): void
-    {
-        if ($this->hasValueBinary($item)) {
-            return;
-        }
-
-        if (null === $this->value_binary) {
-            $this->value_binary = [];
-        }
-
-        $this->value_binary[] = $item;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("create_date")
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("write_uid")
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
+        $this->write_date = $write_date;
     }
 
     /**
@@ -369,40 +263,109 @@ final class Property extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @param OdooRelation|null $write_uid
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function setWriteUid(?OdooRelation $write_uid): void
     {
-        $this->write_date = $write_date;
+        $this->write_uid = $write_uid;
     }
 
     /**
-     * @param mixed $item
-     */
-    public function removeValueBinary($item): void
-    {
-        if (null === $this->value_binary) {
-            $this->value_binary = [];
-        }
-
-        if ($this->hasValueBinary($item)) {
-            $index = array_search($item, $this->value_binary);
-            unset($this->value_binary[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
+     * @return OdooRelation|null
      *
-     * @return bool
+     * @SerializedName("write_uid")
      */
-    public function hasValueBinary($item): bool
+    public function getWriteUid(): ?OdooRelation
     {
-        if (null === $this->value_binary) {
-            return false;
-        }
+        return $this->write_uid;
+    }
 
-        return in_array($item, $this->value_binary);
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType(string $type): void
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("type")
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param DateTimeInterface|null $value_datetime
+     */
+    public function setValueDatetime(?DateTimeInterface $value_datetime): void
+    {
+        $this->value_datetime = $value_datetime;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("value_datetime")
+     */
+    public function getValueDatetime(): ?DateTimeInterface
+    {
+        return $this->value_datetime;
+    }
+
+    /**
+     * @param string|null $value_reference
+     */
+    public function setValueReference(?string $value_reference): void
+    {
+        $this->value_reference = $value_reference;
+    }
+
+    /**
+     * @param mixed|null $value_binary
+     */
+    public function setValueBinary($value_binary): void
+    {
+        $this->value_binary = $value_binary;
     }
 
     /**
@@ -416,109 +379,21 @@ final class Property extends Base
     }
 
     /**
-     * @param OdooRelation $fields_id
-     */
-    public function setFieldsId(OdooRelation $fields_id): void
-    {
-        $this->fields_id = $fields_id;
-    }
-
-    /**
-     * @param string|null $name
-     */
-    public function setName(?string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return string|null
+     * @return mixed|null
      *
-     * @SerializedName("res_id")
+     * @SerializedName("value_binary")
      */
-    public function getResId(): ?string
+    public function getValueBinary()
     {
-        return $this->res_id;
+        return $this->value_binary;
     }
 
     /**
-     * @param string|null $res_id
+     * @param string|null $value_text
      */
-    public function setResId(?string $res_id): void
+    public function setValueText(?string $value_text): void
     {
-        $this->res_id = $res_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("company_id")
-     */
-    public function getCompanyId(): ?OdooRelation
-    {
-        return $this->company_id;
-    }
-
-    /**
-     * @param OdooRelation|null $company_id
-     */
-    public function setCompanyId(?OdooRelation $company_id): void
-    {
-        $this->company_id = $company_id;
-    }
-
-    /**
-     * @return OdooRelation
-     *
-     * @SerializedName("fields_id")
-     */
-    public function getFieldsId(): OdooRelation
-    {
-        return $this->fields_id;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("value_float")
-     */
-    public function getValueFloat(): ?float
-    {
-        return $this->value_float;
-    }
-
-    /**
-     * @param array|null $value_binary
-     */
-    public function setValueBinary(?array $value_binary): void
-    {
-        $this->value_binary = $value_binary;
-    }
-
-    /**
-     * @param float|null $value_float
-     */
-    public function setValueFloat(?float $value_float): void
-    {
-        $this->value_float = $value_float;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("value_integer")
-     */
-    public function getValueInteger(): ?int
-    {
-        return $this->value_integer;
-    }
-
-    /**
-     * @param int|null $value_integer
-     */
-    public function setValueInteger(?int $value_integer): void
-    {
-        $this->value_integer = $value_integer;
+        $this->value_text = $value_text;
     }
 
     /**
@@ -532,21 +407,101 @@ final class Property extends Base
     }
 
     /**
-     * @param string|null $value_text
+     * @param int|null $value_integer
      */
-    public function setValueText(?string $value_text): void
+    public function setValueInteger(?int $value_integer): void
     {
-        $this->value_text = $value_text;
+        $this->value_integer = $value_integer;
     }
 
     /**
-     * @return array|null
+     * @return int|null
      *
-     * @SerializedName("value_binary")
+     * @SerializedName("value_integer")
      */
-    public function getValueBinary(): ?array
+    public function getValueInteger(): ?int
     {
-        return $this->value_binary;
+        return $this->value_integer;
+    }
+
+    /**
+     * @param float|null $value_float
+     */
+    public function setValueFloat(?float $value_float): void
+    {
+        $this->value_float = $value_float;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("value_float")
+     */
+    public function getValueFloat(): ?float
+    {
+        return $this->value_float;
+    }
+
+    /**
+     * @param OdooRelation $fields_id
+     */
+    public function setFieldsId(OdooRelation $fields_id): void
+    {
+        $this->fields_id = $fields_id;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("fields_id")
+     */
+    public function getFieldsId(): OdooRelation
+    {
+        return $this->fields_id;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param string|null $res_id
+     */
+    public function setResId(?string $res_id): void
+    {
+        $this->res_id = $res_id;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("res_id")
+     */
+    public function getResId(): ?string
+    {
+        return $this->res_id;
+    }
+
+    /**
+     * @param string|null $name
+     */
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
     }
 
     /**

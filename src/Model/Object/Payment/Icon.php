@@ -60,7 +60,7 @@ final class Icon extends Base
      * Searchable : yes
      * Sortable : no
      *
-     * @var array|null
+     * @var mixed|null
      */
     private $image;
 
@@ -70,7 +70,7 @@ final class Icon extends Base
      * Searchable : yes
      * Sortable : no
      *
-     * @var array|null
+     * @var mixed|null
      */
     private $image_payment_form;
 
@@ -131,17 +131,13 @@ final class Icon extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return OdooRelation|null
      *
-     * @return bool
+     * @SerializedName("create_uid")
      */
-    public function hasImagePaymentForm($item): bool
+    public function getCreateUid(): ?OdooRelation
     {
-        if (null === $this->image_payment_form) {
-            return false;
-        }
-
-        return in_array($item, $this->image_payment_form);
+        return $this->create_uid;
     }
 
     /**
@@ -207,50 +203,9 @@ final class Icon extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
+     * @param mixed|null $image_payment_form
      */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeImagePaymentForm($item): void
-    {
-        if (null === $this->image_payment_form) {
-            $this->image_payment_form = [];
-        }
-
-        if ($this->hasImagePaymentForm($item)) {
-            $index = array_search($item, $this->image_payment_form);
-            unset($this->image_payment_form[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addImagePaymentForm($item): void
-    {
-        if ($this->hasImagePaymentForm($item)) {
-            return;
-        }
-
-        if (null === $this->image_payment_form) {
-            $this->image_payment_form = [];
-        }
-
-        $this->image_payment_form[] = $item;
-    }
-
-    /**
-     * @param array|null $image_payment_form
-     */
-    public function setImagePaymentForm(?array $image_payment_form): void
+    public function setImagePaymentForm($image_payment_form): void
     {
         $this->image_payment_form = $image_payment_form;
     }
@@ -264,74 +219,29 @@ final class Icon extends Base
     }
 
     /**
-     * @return array|null
+     * @return mixed|null
      *
      * @SerializedName("image_payment_form")
      */
-    public function getImagePaymentForm(): ?array
+    public function getImagePaymentForm()
     {
         return $this->image_payment_form;
     }
 
     /**
-     * @param mixed $item
+     * @param mixed|null $image
      */
-    public function removeImage($item): void
-    {
-        if (null === $this->image) {
-            $this->image = [];
-        }
-
-        if ($this->hasImage($item)) {
-            $index = array_search($item, $this->image);
-            unset($this->image[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addImage($item): void
-    {
-        if ($this->hasImage($item)) {
-            return;
-        }
-
-        if (null === $this->image) {
-            $this->image = [];
-        }
-
-        $this->image[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     *
-     * @return bool
-     */
-    public function hasImage($item): bool
-    {
-        if (null === $this->image) {
-            return false;
-        }
-
-        return in_array($item, $this->image);
-    }
-
-    /**
-     * @param array|null $image
-     */
-    public function setImage(?array $image): void
+    public function setImage($image): void
     {
         $this->image = $image;
     }
 
     /**
-     * @return array|null
+     * @return mixed|null
      *
      * @SerializedName("image")
      */
-    public function getImage(): ?array
+    public function getImage()
     {
         return $this->image;
     }

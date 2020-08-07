@@ -159,7 +159,7 @@ final class Attachment extends Base
      * Searchable : no
      * Sortable : no
      *
-     * @var array|null
+     * @var mixed|null
      */
     private $datas;
 
@@ -169,7 +169,7 @@ final class Attachment extends Base
      * Searchable : yes
      * Sortable : yes
      *
-     * @var array|null
+     * @var mixed|null
      */
     private $db_datas;
 
@@ -332,41 +332,11 @@ final class Attachment extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("image_src")
+     * @param string|null $image_src
      */
-    public function getImageSrc(): ?string
+    public function setImageSrc(?string $image_src): void
     {
-        return $this->image_src;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("store_fname")
-     */
-    public function getStoreFname(): ?string
-    {
-        return $this->store_fname;
-    }
-
-    /**
-     * @param string|null $store_fname
-     */
-    public function setStoreFname(?string $store_fname): void
-    {
-        $this->store_fname = $store_fname;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("file_size")
-     */
-    public function getFileSize(): ?int
-    {
-        return $this->file_size;
+        $this->image_src = $image_src;
     }
 
     /**
@@ -450,27 +420,13 @@ final class Attachment extends Base
     }
 
     /**
-     * @param string|null $image_src
+     * @return string|null
+     *
+     * @SerializedName("image_src")
      */
-    public function setImageSrc(?string $image_src): void
+    public function getImageSrc(): ?string
     {
-        $this->image_src = $image_src;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addDbDatas($item): void
-    {
-        if ($this->hasDbDatas($item)) {
-            return;
-        }
-
-        if (null === $this->db_datas) {
-            $this->db_datas = [];
-        }
-
-        $this->db_datas[] = $item;
+        return $this->image_src;
     }
 
     /**
@@ -481,6 +437,14 @@ final class Attachment extends Base
     public function getImageWidth(): ?int
     {
         return $this->image_width;
+    }
+
+    /**
+     * @param string|null $store_fname
+     */
+    public function setStoreFname(?string $store_fname): void
+    {
+        $this->store_fname = $store_fname;
     }
 
     /**
@@ -582,32 +546,23 @@ final class Attachment extends Base
     }
 
     /**
-     * @param mixed $item
+     * @return int|null
+     *
+     * @SerializedName("file_size")
      */
-    public function removeDbDatas($item): void
+    public function getFileSize(): ?int
     {
-        if (null === $this->db_datas) {
-            $this->db_datas = [];
-        }
-
-        if ($this->hasDbDatas($item)) {
-            $index = array_search($item, $this->db_datas);
-            unset($this->db_datas[$index]);
-        }
+        return $this->file_size;
     }
 
     /**
-     * @param mixed $item
+     * @return string|null
      *
-     * @return bool
+     * @SerializedName("store_fname")
      */
-    public function hasDbDatas($item): bool
+    public function getStoreFname(): ?string
     {
-        if (null === $this->db_datas) {
-            return false;
-        }
-
-        return in_array($item, $this->db_datas);
+        return $this->store_fname;
     }
 
     /**
@@ -621,11 +576,13 @@ final class Attachment extends Base
     }
 
     /**
-     * @param OdooRelation|null $company_id
+     * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
-    public function setCompanyId(?OdooRelation $company_id): void
+    public function getCompanyId(): ?OdooRelation
     {
-        $this->company_id = $company_id;
+        return $this->company_id;
     }
 
     /**
@@ -727,13 +684,19 @@ final class Attachment extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("company_id")
+     * @param OdooRelation|null $company_id
      */
-    public function getCompanyId(): ?OdooRelation
+    public function setCompanyId(?OdooRelation $company_id): void
     {
-        return $this->company_id;
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @param mixed|null $db_datas
+     */
+    public function setDbDatas($db_datas): void
+    {
+        $this->db_datas = $db_datas;
     }
 
     /**
@@ -744,14 +707,6 @@ final class Attachment extends Base
     public function getType(): string
     {
         return $this->type;
-    }
-
-    /**
-     * @param array|null $db_datas
-     */
-    public function setDbDatas(?array $db_datas): void
-    {
-        $this->db_datas = $db_datas;
     }
 
     /**
@@ -817,74 +772,29 @@ final class Attachment extends Base
     }
 
     /**
-     * @return array|null
+     * @return mixed|null
      *
      * @SerializedName("datas")
      */
-    public function getDatas(): ?array
+    public function getDatas()
     {
         return $this->datas;
     }
 
     /**
-     * @param array|null $datas
+     * @param mixed|null $datas
      */
-    public function setDatas(?array $datas): void
+    public function setDatas($datas): void
     {
         $this->datas = $datas;
     }
 
     /**
-     * @param mixed $item
-     *
-     * @return bool
-     */
-    public function hasDatas($item): bool
-    {
-        if (null === $this->datas) {
-            return false;
-        }
-
-        return in_array($item, $this->datas);
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addDatas($item): void
-    {
-        if ($this->hasDatas($item)) {
-            return;
-        }
-
-        if (null === $this->datas) {
-            $this->datas = [];
-        }
-
-        $this->datas[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeDatas($item): void
-    {
-        if (null === $this->datas) {
-            $this->datas = [];
-        }
-
-        if ($this->hasDatas($item)) {
-            $index = array_search($item, $this->datas);
-            unset($this->datas[$index]);
-        }
-    }
-
-    /**
-     * @return array|null
+     * @return mixed|null
      *
      * @SerializedName("db_datas")
      */
-    public function getDbDatas(): ?array
+    public function getDbDatas()
     {
         return $this->db_datas;
     }

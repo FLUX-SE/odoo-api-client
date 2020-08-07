@@ -145,7 +145,7 @@ final class Menu extends Base
      * Searchable : yes
      * Sortable : no
      *
-     * @var array|null
+     * @var mixed|null
      */
     private $web_icon_data;
 
@@ -207,19 +207,19 @@ final class Menu extends Base
     }
 
     /**
-     * @param mixed $item
+     * @param mixed|null $web_icon_data
      */
-    public function addWebIconData($item): void
+    public function setWebIconData($web_icon_data): void
     {
-        if ($this->hasWebIconData($item)) {
-            return;
-        }
+        $this->web_icon_data = $web_icon_data;
+    }
 
-        if (null === $this->web_icon_data) {
-            $this->web_icon_data = [];
-        }
-
-        $this->web_icon_data[] = $item;
+    /**
+     * @param string|null $complete_name
+     */
+    public function setCompleteName(?string $complete_name): void
+    {
+        $this->complete_name = $complete_name;
     }
 
     /**
@@ -259,60 +259,13 @@ final class Menu extends Base
     }
 
     /**
-     * @return array|null
+     * @return mixed|null
      *
      * @SerializedName("web_icon_data")
      */
-    public function getWebIconData(): ?array
+    public function getWebIconData()
     {
         return $this->web_icon_data;
-    }
-
-    /**
-     * @param array|null $web_icon_data
-     */
-    public function setWebIconData(?array $web_icon_data): void
-    {
-        $this->web_icon_data = $web_icon_data;
-    }
-
-    /**
-     * @param mixed $item
-     *
-     * @return bool
-     */
-    public function hasWebIconData($item): bool
-    {
-        if (null === $this->web_icon_data) {
-            return false;
-        }
-
-        return in_array($item, $this->web_icon_data);
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeWebIconData($item): void
-    {
-        if (null === $this->web_icon_data) {
-            $this->web_icon_data = [];
-        }
-
-        if ($this->hasWebIconData($item)) {
-            $index = array_search($item, $this->web_icon_data);
-            unset($this->web_icon_data[$index]);
-        }
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("complete_name")
-     */
-    public function getCompleteName(): ?string
-    {
-        return $this->complete_name;
     }
 
     /**
@@ -323,6 +276,21 @@ final class Menu extends Base
     public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeGroupsId(OdooRelation $item): void
+    {
+        if (null === $this->groups_id) {
+            $this->groups_id = [];
+        }
+
+        if ($this->hasGroupsId($item)) {
+            $index = array_search($item, $this->groups_id);
+            unset($this->groups_id[$index]);
+        }
     }
 
     /**
@@ -388,26 +356,29 @@ final class Menu extends Base
     }
 
     /**
-     * @param string|null $complete_name
+     * @return string|null
+     *
+     * @SerializedName("complete_name")
      */
-    public function setCompleteName(?string $complete_name): void
+    public function getCompleteName(): ?string
     {
-        $this->complete_name = $complete_name;
+        return $this->complete_name;
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function removeGroupsId(OdooRelation $item): void
+    public function addGroupsId(OdooRelation $item): void
     {
+        if ($this->hasGroupsId($item)) {
+            return;
+        }
+
         if (null === $this->groups_id) {
             $this->groups_id = [];
         }
 
-        if ($this->hasGroupsId($item)) {
-            $index = array_search($item, $this->groups_id);
-            unset($this->groups_id[$index]);
-        }
+        $this->groups_id[] = $item;
     }
 
     /**
@@ -514,18 +485,16 @@ final class Menu extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function addGroupsId(OdooRelation $item): void
+    public function hasGroupsId(OdooRelation $item): bool
     {
-        if ($this->hasGroupsId($item)) {
-            return;
-        }
-
         if (null === $this->groups_id) {
-            $this->groups_id = [];
+            return false;
         }
 
-        $this->groups_id[] = $item;
+        return in_array($item, $this->groups_id);
     }
 
     /**
@@ -595,20 +564,6 @@ final class Menu extends Base
     public function setGroupsId(?array $groups_id): void
     {
         $this->groups_id = $groups_id;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasGroupsId(OdooRelation $item): bool
-    {
-        if (null === $this->groups_id) {
-            return false;
-        }
-
-        return in_array($item, $this->groups_id);
     }
 
     /**

@@ -50,7 +50,7 @@ final class Fec extends Base
      * Searchable : yes
      * Sortable : yes
      *
-     * @var array|null
+     * @var mixed|null
      */
     private $fec_data;
 
@@ -153,13 +153,13 @@ final class Fec extends Base
     }
 
     /**
-     * @return string
+     * @return OdooRelation|null
      *
-     * @SerializedName("export_type")
+     * @SerializedName("create_uid")
      */
-    public function getExportType(): string
+    public function getCreateUid(): ?OdooRelation
     {
-        return $this->export_type;
+        return $this->create_uid;
     }
 
     /**
@@ -225,29 +225,11 @@ final class Fec extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
-     */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
-    }
-
-    /**
      * @param string $export_type
      */
     public function setExportType(string $export_type): void
     {
         $this->export_type = $export_type;
-    }
-
-    /**
-     * @param string|null $filename
-     */
-    public function setFilename(?string $filename): void
-    {
-        $this->filename = $filename;
     }
 
     /**
@@ -261,6 +243,24 @@ final class Fec extends Base
     }
 
     /**
+     * @return string
+     *
+     * @SerializedName("export_type")
+     */
+    public function getExportType(): string
+    {
+        return $this->export_type;
+    }
+
+    /**
+     * @param string|null $filename
+     */
+    public function setFilename(?string $filename): void
+    {
+        $this->filename = $filename;
+    }
+
+    /**
      * @return string|null
      *
      * @SerializedName("filename")
@@ -271,64 +271,19 @@ final class Fec extends Base
     }
 
     /**
-     * @param mixed $item
+     * @param mixed|null $fec_data
      */
-    public function removeFecData($item): void
-    {
-        if (null === $this->fec_data) {
-            $this->fec_data = [];
-        }
-
-        if ($this->hasFecData($item)) {
-            $index = array_search($item, $this->fec_data);
-            unset($this->fec_data[$index]);
-        }
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addFecData($item): void
-    {
-        if ($this->hasFecData($item)) {
-            return;
-        }
-
-        if (null === $this->fec_data) {
-            $this->fec_data = [];
-        }
-
-        $this->fec_data[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     *
-     * @return bool
-     */
-    public function hasFecData($item): bool
-    {
-        if (null === $this->fec_data) {
-            return false;
-        }
-
-        return in_array($item, $this->fec_data);
-    }
-
-    /**
-     * @param array|null $fec_data
-     */
-    public function setFecData(?array $fec_data): void
+    public function setFecData($fec_data): void
     {
         $this->fec_data = $fec_data;
     }
 
     /**
-     * @return array|null
+     * @return mixed|null
      *
      * @SerializedName("fec_data")
      */
-    public function getFecData(): ?array
+    public function getFecData()
     {
         return $this->fec_data;
     }

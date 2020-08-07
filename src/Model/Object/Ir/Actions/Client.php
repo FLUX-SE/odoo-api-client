@@ -108,7 +108,7 @@ final class Client extends Base
      * Searchable : no
      * Sortable : no
      *
-     * @var array|null
+     * @var mixed|null
      */
     private $params;
 
@@ -118,7 +118,7 @@ final class Client extends Base
      * Searchable : yes
      * Sortable : yes
      *
-     * @var array|null
+     * @var mixed|null
      */
     private $params_store;
 
@@ -275,39 +275,13 @@ final class Client extends Base
     }
 
     /**
-     * @return string|null
+     * @return OdooRelation|null
      *
-     * @SerializedName("binding_view_types")
+     * @SerializedName("create_uid")
      */
-    public function getBindingViewTypes(): ?string
+    public function getCreateUid(): ?OdooRelation
     {
-        return $this->binding_view_types;
-    }
-
-    /**
-     * @param string|null $xml_id
-     */
-    public function setXmlId(?string $xml_id): void
-    {
-        $this->xml_id = $xml_id;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("help")
-     */
-    public function getHelp(): ?string
-    {
-        return $this->help;
-    }
-
-    /**
-     * @param string|null $help
-     */
-    public function setHelp(?string $help): void
-    {
-        $this->help = $help;
+        return $this->create_uid;
     }
 
     /**
@@ -347,6 +321,16 @@ final class Client extends Base
     }
 
     /**
+     * @return string|null
+     *
+     * @SerializedName("binding_view_types")
+     */
+    public function getBindingViewTypes(): ?string
+    {
+        return $this->binding_view_types;
+    }
+
+    /**
      * @param string|null $binding_view_types
      */
     public function setBindingViewTypes(?string $binding_view_types): void
@@ -355,36 +339,21 @@ final class Client extends Base
     }
 
     /**
-     * @param mixed $item
-     */
-    public function removeParamsStore($item): void
-    {
-        if (null === $this->params_store) {
-            $this->params_store = [];
-        }
-
-        if ($this->hasParamsStore($item)) {
-            $index = array_search($item, $this->params_store);
-            unset($this->params_store[$index]);
-        }
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
-     */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
-    }
-
-    /**
      * @param OdooRelation|null $create_uid
      */
     public function setCreateUid(?OdooRelation $create_uid): void
     {
         $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("help")
+     */
+    public function getHelp(): ?string
+    {
+        return $this->help;
     }
 
     /**
@@ -442,29 +411,19 @@ final class Client extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("xml_id")
+     * @param string|null $help
      */
-    public function getXmlId(): ?string
+    public function setHelp(?string $help): void
     {
-        return $this->xml_id;
+        $this->help = $help;
     }
 
     /**
-     * @param mixed $item
+     * @param string|null $xml_id
      */
-    public function addParamsStore($item): void
+    public function setXmlId(?string $xml_id): void
     {
-        if ($this->hasParamsStore($item)) {
-            return;
-        }
-
-        if (null === $this->params_store) {
-            $this->params_store = [];
-        }
-
-        $this->params_store[] = $item;
+        $this->xml_id = $xml_id;
     }
 
     /**
@@ -478,11 +437,11 @@ final class Client extends Base
     }
 
     /**
-     * @param string|null $res_model
+     * @param string|null $target
      */
-    public function setResModel(?string $res_model): void
+    public function setTarget(?string $target): void
     {
-        $this->res_model = $res_model;
+        $this->target = $target;
     }
 
     /**
@@ -540,14 +499,6 @@ final class Client extends Base
     }
 
     /**
-     * @param string|null $target
-     */
-    public function setTarget(?string $target): void
-    {
-        $this->target = $target;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("res_model")
@@ -555,6 +506,24 @@ final class Client extends Base
     public function getResModel(): ?string
     {
         return $this->res_model;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("xml_id")
+     */
+    public function getXmlId(): ?string
+    {
+        return $this->xml_id;
+    }
+
+    /**
+     * @param string|null $res_model
+     */
+    public function setResModel(?string $res_model): void
+    {
+        $this->res_model = $res_model;
     }
 
     /**
@@ -568,20 +537,6 @@ final class Client extends Base
     }
 
     /**
-     * @param mixed $item
-     *
-     * @return bool
-     */
-    public function hasParamsStore($item): bool
-    {
-        if (null === $this->params_store) {
-            return false;
-        }
-
-        return in_array($item, $this->params_store);
-    }
-
-    /**
      * @param string $context
      */
     public function setContext(string $context): void
@@ -590,82 +545,37 @@ final class Client extends Base
     }
 
     /**
-     * @return array|null
+     * @return mixed|null
      *
      * @SerializedName("params")
      */
-    public function getParams(): ?array
+    public function getParams()
     {
         return $this->params;
     }
 
     /**
-     * @param array|null $params
+     * @param mixed|null $params
      */
-    public function setParams(?array $params): void
+    public function setParams($params): void
     {
         $this->params = $params;
     }
 
     /**
-     * @param mixed $item
-     *
-     * @return bool
-     */
-    public function hasParams($item): bool
-    {
-        if (null === $this->params) {
-            return false;
-        }
-
-        return in_array($item, $this->params);
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addParams($item): void
-    {
-        if ($this->hasParams($item)) {
-            return;
-        }
-
-        if (null === $this->params) {
-            $this->params = [];
-        }
-
-        $this->params[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeParams($item): void
-    {
-        if (null === $this->params) {
-            $this->params = [];
-        }
-
-        if ($this->hasParams($item)) {
-            $index = array_search($item, $this->params);
-            unset($this->params[$index]);
-        }
-    }
-
-    /**
-     * @return array|null
+     * @return mixed|null
      *
      * @SerializedName("params_store")
      */
-    public function getParamsStore(): ?array
+    public function getParamsStore()
     {
         return $this->params_store;
     }
 
     /**
-     * @param array|null $params_store
+     * @param mixed|null $params_store
      */
-    public function setParamsStore(?array $params_store): void
+    public function setParamsStore($params_store): void
     {
         $this->params_store = $params_store;
     }

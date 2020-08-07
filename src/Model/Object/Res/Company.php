@@ -118,7 +118,7 @@ final class Company extends Base
      * Searchable : yes
      * Sortable : no
      *
-     * @var array|null
+     * @var mixed|null
      */
     private $logo;
 
@@ -128,7 +128,7 @@ final class Company extends Base
      * Searchable : yes
      * Sortable : yes
      *
-     * @var array|null
+     * @var mixed|null
      */
     private $logo_web;
 
@@ -351,7 +351,7 @@ final class Company extends Base
      * Searchable : yes
      * Sortable : no
      *
-     * @var array|null
+     * @var mixed|null
      */
     private $favicon;
 
@@ -1598,39 +1598,11 @@ final class Company extends Base
     }
 
     /**
-     * @param string|null $account_onboarding_sale_tax_state
+     * @param string|null $account_invoice_onboarding_state
      */
-    public function setAccountOnboardingSaleTaxState(?string $account_onboarding_sale_tax_state): void
+    public function setAccountInvoiceOnboardingState(?string $account_invoice_onboarding_state): void
     {
-        $this->account_onboarding_sale_tax_state = $account_onboarding_sale_tax_state;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("account_opening_date")
-     */
-    public function getAccountOpeningDate(): ?DateTimeInterface
-    {
-        return $this->account_opening_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $account_opening_date
-     */
-    public function setAccountOpeningDate(?DateTimeInterface $account_opening_date): void
-    {
-        $this->account_opening_date = $account_opening_date;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("account_setup_bank_data_state")
-     */
-    public function getAccountSetupBankDataState(): ?string
-    {
-        return $this->account_setup_bank_data_state;
+        $this->account_invoice_onboarding_state = $account_invoice_onboarding_state;
     }
 
     /**
@@ -1726,6 +1698,14 @@ final class Company extends Base
     }
 
     /**
+     * @param string|null $account_onboarding_sale_tax_state
+     */
+    public function setAccountOnboardingSaleTaxState(?string $account_onboarding_sale_tax_state): void
+    {
+        $this->account_onboarding_sale_tax_state = $account_onboarding_sale_tax_state;
+    }
+
+    /**
      * @return string|null
      *
      * @SerializedName("account_invoice_onboarding_state")
@@ -1736,24 +1716,6 @@ final class Company extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("account_opening_journal_id")
-     */
-    public function getAccountOpeningJournalId(): ?OdooRelation
-    {
-        return $this->account_opening_journal_id;
-    }
-
-    /**
-     * @param string|null $account_invoice_onboarding_state
-     */
-    public function setAccountInvoiceOnboardingState(?string $account_invoice_onboarding_state): void
-    {
-        $this->account_invoice_onboarding_state = $account_invoice_onboarding_state;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("account_dashboard_onboarding_state")
@@ -1761,6 +1723,14 @@ final class Company extends Base
     public function getAccountDashboardOnboardingState(): ?string
     {
         return $this->account_dashboard_onboarding_state;
+    }
+
+    /**
+     * @param DateTimeInterface|null $account_opening_date
+     */
+    public function setAccountOpeningDate(?DateTimeInterface $account_opening_date): void
+    {
+        $this->account_opening_date = $account_opening_date;
     }
 
     /**
@@ -1863,19 +1833,13 @@ final class Company extends Base
     }
 
     /**
-     * @param OdooRelation|null $account_opening_journal_id
+     * @return string
+     *
+     * @SerializedName("account_check_printing_layout")
      */
-    public function setAccountOpeningJournalId(?OdooRelation $account_opening_journal_id): void
+    public function getAccountCheckPrintingLayout(): string
     {
-        $this->account_opening_journal_id = $account_opening_journal_id;
-    }
-
-    /**
-     * @param OdooRelation|null $account_opening_move_id
-     */
-    public function setAccountOpeningMoveId(?OdooRelation $account_opening_move_id): void
-    {
-        $this->account_opening_move_id = $account_opening_move_id;
+        return $this->account_check_printing_layout;
     }
 
     /**
@@ -1887,49 +1851,41 @@ final class Company extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $bank_journal_ids
-     */
-    public function setBankJournalIds(?array $bank_journal_ids): void
-    {
-        $this->bank_journal_ids = $bank_journal_ids;
-    }
-
-    /**
-     * @return OdooRelation|null
+     * @return string|null
      *
-     * @SerializedName("income_currency_exchange_account_id")
+     * @SerializedName("account_setup_bank_data_state")
      */
-    public function getIncomeCurrencyExchangeAccountId(): ?OdooRelation
+    public function getAccountSetupBankDataState(): ?string
     {
-        return $this->income_currency_exchange_account_id;
+        return $this->account_setup_bank_data_state;
     }
 
     /**
-     * @param OdooRelation|null $income_currency_exchange_account_id
-     */
-    public function setIncomeCurrencyExchangeAccountId(
-        ?OdooRelation $income_currency_exchange_account_id
-    ): void {
-        $this->income_currency_exchange_account_id = $income_currency_exchange_account_id;
-    }
-
-    /**
-     * @return OdooRelation|null
+     * @return DateTimeInterface|null
      *
-     * @SerializedName("expense_currency_exchange_account_id")
+     * @SerializedName("account_opening_date")
      */
-    public function getExpenseCurrencyExchangeAccountId(): ?OdooRelation
+    public function getAccountOpeningDate(): ?DateTimeInterface
     {
-        return $this->expense_currency_exchange_account_id;
+        return $this->account_opening_date;
     }
 
     /**
-     * @param OdooRelation|null $expense_currency_exchange_account_id
+     * @param bool|null $account_check_printing_date_label
      */
-    public function setExpenseCurrencyExchangeAccountId(
-        ?OdooRelation $expense_currency_exchange_account_id
-    ): void {
-        $this->expense_currency_exchange_account_id = $expense_currency_exchange_account_id;
+    public function setAccountCheckPrintingDateLabel(?bool $account_check_printing_date_label): void
+    {
+        $this->account_check_printing_date_label = $account_check_printing_date_label;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("tax_exigibility")
+     */
+    public function isTaxExigibility(): ?bool
+    {
+        return $this->tax_exigibility;
     }
 
     /**
@@ -2018,6 +1974,14 @@ final class Company extends Base
     }
 
     /**
+     * @param OdooRelation[]|null $bank_journal_ids
+     */
+    public function setBankJournalIds(?array $bank_journal_ids): void
+    {
+        $this->bank_journal_ids = $bank_journal_ids;
+    }
+
+    /**
      * @param OdooRelation $item
      *
      * @return bool
@@ -2029,16 +1993,6 @@ final class Company extends Base
         }
 
         return in_array($item, $this->bank_journal_ids);
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("account_opening_move_id")
-     */
-    public function getAccountOpeningMoveId(): ?OdooRelation
-    {
-        return $this->account_opening_move_id;
     }
 
     /**
@@ -2073,21 +2027,19 @@ final class Company extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("tax_exigibility")
-     */
-    public function isTaxExigibility(): ?bool
-    {
-        return $this->tax_exigibility;
-    }
-
-    /**
      * @param bool|null $tax_exigibility
      */
     public function setTaxExigibility(?bool $tax_exigibility): void
     {
         $this->tax_exigibility = $tax_exigibility;
+    }
+
+    /**
+     * @param OdooRelation|null $account_opening_journal_id
+     */
+    public function setAccountOpeningJournalId(?OdooRelation $account_opening_journal_id): void
+    {
+        $this->account_opening_journal_id = $account_opening_journal_id;
     }
 
     /**
@@ -2182,13 +2134,31 @@ final class Company extends Base
     }
 
     /**
-     * @return string
+     * @return OdooRelation|null
      *
-     * @SerializedName("account_check_printing_layout")
+     * @SerializedName("account_opening_move_id")
      */
-    public function getAccountCheckPrintingLayout(): string
+    public function getAccountOpeningMoveId(): ?OdooRelation
     {
-        return $this->account_check_printing_layout;
+        return $this->account_opening_move_id;
+    }
+
+    /**
+     * @param OdooRelation|null $account_opening_move_id
+     */
+    public function setAccountOpeningMoveId(?OdooRelation $account_opening_move_id): void
+    {
+        $this->account_opening_move_id = $account_opening_move_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("account_opening_journal_id")
+     */
+    public function getAccountOpeningJournalId(): ?OdooRelation
+    {
+        return $this->account_opening_journal_id;
     }
 
     /**
@@ -2202,31 +2172,31 @@ final class Company extends Base
     }
 
     /**
+     * @return bool|null
+     *
+     * @SerializedName("account_check_printing_multi_stub")
+     */
+    public function isAccountCheckPrintingMultiStub(): ?bool
+    {
+        return $this->account_check_printing_multi_stub;
+    }
+
+    /**
      * @return OdooRelation|null
      *
-     * @SerializedName("currency_exchange_journal_id")
+     * @SerializedName("expense_currency_exchange_account_id")
      */
-    public function getCurrencyExchangeJournalId(): ?OdooRelation
+    public function getExpenseCurrencyExchangeAccountId(): ?OdooRelation
     {
-        return $this->currency_exchange_journal_id;
+        return $this->expense_currency_exchange_account_id;
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("sale_quotation_onboarding_state")
+     * @param string|null $sale_quotation_onboarding_state
      */
-    public function getSaleQuotationOnboardingState(): ?string
+    public function setSaleQuotationOnboardingState(?string $sale_quotation_onboarding_state): void
     {
-        return $this->sale_quotation_onboarding_state;
-    }
-
-    /**
-     * @param string|null $yodlee_user_access_token
-     */
-    public function setYodleeUserAccessToken(?string $yodlee_user_access_token): void
-    {
-        $this->yodlee_user_access_token = $yodlee_user_access_token;
+        $this->sale_quotation_onboarding_state = $sale_quotation_onboarding_state;
     }
 
     /**
@@ -2338,19 +2308,13 @@ final class Company extends Base
     }
 
     /**
-     * @param string|null $sale_quotation_onboarding_state
+     * @return string|null
+     *
+     * @SerializedName("sale_quotation_onboarding_state")
      */
-    public function setSaleQuotationOnboardingState(?string $sale_quotation_onboarding_state): void
+    public function getSaleQuotationOnboardingState(): ?string
     {
-        $this->sale_quotation_onboarding_state = $sale_quotation_onboarding_state;
-    }
-
-    /**
-     * @param string|null $yodlee_user_password
-     */
-    public function setYodleeUserPassword(?string $yodlee_user_password): void
-    {
-        $this->yodlee_user_password = $yodlee_user_password;
+        return $this->sale_quotation_onboarding_state;
     }
 
     /**
@@ -2361,6 +2325,16 @@ final class Company extends Base
     public function getSaleOnboardingOrderConfirmationState(): ?string
     {
         return $this->sale_onboarding_order_confirmation_state;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("yodlee_user_access_token")
+     */
+    public function getYodleeUserAccessToken(): ?string
+    {
+        return $this->yodlee_user_access_token;
     }
 
     /**
@@ -2482,49 +2456,19 @@ final class Company extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("yodlee_user_access_token")
+     * @param string|null $yodlee_user_access_token
      */
-    public function getYodleeUserAccessToken(): ?string
+    public function setYodleeUserAccessToken(?string $yodlee_user_access_token): void
     {
-        return $this->yodlee_user_access_token;
+        $this->yodlee_user_access_token = $yodlee_user_access_token;
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("yodlee_user_password")
+     * @param string|null $yodlee_user_password
      */
-    public function getYodleeUserPassword(): ?string
+    public function setYodleeUserPassword(?string $yodlee_user_password): void
     {
-        return $this->yodlee_user_password;
-    }
-
-    /**
-     * @param bool|null $account_check_printing_date_label
-     */
-    public function setAccountCheckPrintingDateLabel(?bool $account_check_printing_date_label): void
-    {
-        $this->account_check_printing_date_label = $account_check_printing_date_label;
-    }
-
-    /**
-     * @param bool|null $vat_check_vies
-     */
-    public function setVatCheckVies(?bool $vat_check_vies): void
-    {
-        $this->vat_check_vies = $vat_check_vies;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("account_check_printing_multi_stub")
-     */
-    public function isAccountCheckPrintingMultiStub(): ?bool
-    {
-        return $this->account_check_printing_multi_stub;
+        $this->yodlee_user_password = $yodlee_user_password;
     }
 
     /**
@@ -2533,6 +2477,14 @@ final class Company extends Base
     public function setAccountCheckPrintingMultiStub(?bool $account_check_printing_multi_stub): void
     {
         $this->account_check_printing_multi_stub = $account_check_printing_multi_stub;
+    }
+
+    /**
+     * @param string|null $currency_interval_unit
+     */
+    public function setCurrencyIntervalUnit(?string $currency_interval_unit): void
+    {
+        $this->currency_interval_unit = $currency_interval_unit;
     }
 
     /**
@@ -2636,6 +2588,14 @@ final class Company extends Base
     }
 
     /**
+     * @param bool|null $vat_check_vies
+     */
+    public function setVatCheckVies(?bool $vat_check_vies): void
+    {
+        $this->vat_check_vies = $vat_check_vies;
+    }
+
+    /**
      * @return string|null
      *
      * @SerializedName("currency_interval_unit")
@@ -2646,22 +2606,6 @@ final class Company extends Base
     }
 
     /**
-     * @param string|null $yodlee_user_login
-     */
-    public function setYodleeUserLogin(?string $yodlee_user_login): void
-    {
-        $this->yodlee_user_login = $yodlee_user_login;
-    }
-
-    /**
-     * @param string|null $currency_interval_unit
-     */
-    public function setCurrencyIntervalUnit(?string $currency_interval_unit): void
-    {
-        $this->currency_interval_unit = $currency_interval_unit;
-    }
-
-    /**
      * @return DateTimeInterface|null
      *
      * @SerializedName("currency_next_execution_date")
@@ -2669,6 +2613,16 @@ final class Company extends Base
     public function getCurrencyNextExecutionDate(): ?DateTimeInterface
     {
         return $this->currency_next_execution_date;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("yodlee_user_password")
+     */
+    public function getYodleeUserPassword(): ?string
+    {
+        return $this->yodlee_user_password;
     }
 
     /**
@@ -2780,19 +2734,29 @@ final class Company extends Base
     }
 
     /**
-     * @param OdooRelation|null $currency_exchange_journal_id
+     * @param string|null $yodlee_user_login
      */
-    public function setCurrencyExchangeJournalId(?OdooRelation $currency_exchange_journal_id): void
+    public function setYodleeUserLogin(?string $yodlee_user_login): void
     {
-        $this->currency_exchange_journal_id = $currency_exchange_journal_id;
+        $this->yodlee_user_login = $yodlee_user_login;
     }
 
     /**
-     * @param string|null $tax_calculation_rounding_method
+     * @param OdooRelation|null $expense_currency_exchange_account_id
      */
-    public function setTaxCalculationRoundingMethod(?string $tax_calculation_rounding_method): void
-    {
-        $this->tax_calculation_rounding_method = $tax_calculation_rounding_method;
+    public function setExpenseCurrencyExchangeAccountId(
+        ?OdooRelation $expense_currency_exchange_account_id
+    ): void {
+        $this->expense_currency_exchange_account_id = $expense_currency_exchange_account_id;
+    }
+
+    /**
+     * @param OdooRelation|null $income_currency_exchange_account_id
+     */
+    public function setIncomeCurrencyExchangeAccountId(
+        ?OdooRelation $income_currency_exchange_account_id
+    ): void {
+        $this->income_currency_exchange_account_id = $income_currency_exchange_account_id;
     }
 
     /**
@@ -2806,57 +2770,13 @@ final class Company extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $bank_ids
-     */
-    public function setBankIds(?array $bank_ids): void
-    {
-        $this->bank_ids = $bank_ids;
-    }
-
-    /**
-     * @return string|null
+     * @return OdooRelation|null
      *
-     * @SerializedName("account_no")
+     * @SerializedName("country_id")
      */
-    public function getAccountNo(): ?string
+    public function getCountryId(): ?OdooRelation
     {
-        return $this->account_no;
-    }
-
-    /**
-     * @param string|null $account_no
-     */
-    public function setAccountNo(?string $account_no): void
-    {
-        $this->account_no = $account_no;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("street")
-     */
-    public function getStreet(): ?string
-    {
-        return $this->street;
-    }
-
-    /**
-     * @param string|null $street
-     */
-    public function setStreet(?string $street): void
-    {
-        $this->street = $street;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("street2")
-     */
-    public function getStreet2(): ?string
-    {
-        return $this->street2;
+        return $this->country_id;
     }
 
     /**
@@ -2932,6 +2852,14 @@ final class Company extends Base
     }
 
     /**
+     * @param OdooRelation[]|null $bank_ids
+     */
+    public function setBankIds(?array $bank_ids): void
+    {
+        $this->bank_ids = $bank_ids;
+    }
+
+    /**
      * @param OdooRelation $item
      *
      * @return bool
@@ -2943,22 +2871,6 @@ final class Company extends Base
         }
 
         return in_array($item, $this->bank_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addUserIds(OdooRelation $item): void
-    {
-        if ($this->hasUserIds($item)) {
-            return;
-        }
-
-        if (null === $this->user_ids) {
-            $this->user_ids = [];
-        }
-
-        $this->user_ids[] = $item;
     }
 
     /**
@@ -2993,21 +2905,19 @@ final class Company extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("country_id")
-     */
-    public function getCountryId(): ?OdooRelation
-    {
-        return $this->country_id;
-    }
-
-    /**
      * @param OdooRelation|null $country_id
      */
     public function setCountryId(?OdooRelation $country_id): void
     {
         $this->country_id = $country_id;
+    }
+
+    /**
+     * @param string|null $street
+     */
+    public function setStreet(?string $street): void
+    {
+        $this->street = $street;
     }
 
     /**
@@ -3101,32 +3011,13 @@ final class Company extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     */
-    public function removeUserIds(OdooRelation $item): void
-    {
-        if (null === $this->user_ids) {
-            $this->user_ids = [];
-        }
-
-        if ($this->hasUserIds($item)) {
-            $index = array_search($item, $this->user_ids);
-            unset($this->user_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
+     * @return OdooRelation|null
      *
-     * @return bool
+     * @SerializedName("paperformat_id")
      */
-    public function hasUserIds(OdooRelation $item): bool
+    public function getPaperformatId(): ?OdooRelation
     {
-        if (null === $this->user_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->user_ids);
+        return $this->paperformat_id;
     }
 
     /**
@@ -3135,6 +3026,46 @@ final class Company extends Base
     public function setPaperformatId(?OdooRelation $paperformat_id): void
     {
         $this->paperformat_id = $paperformat_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("external_report_layout_id")
+     */
+    public function getExternalReportLayoutId(): ?OdooRelation
+    {
+        return $this->external_report_layout_id;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("street2")
+     */
+    public function getStreet2(): ?string
+    {
+        return $this->street2;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("street")
+     */
+    public function getStreet(): ?string
+    {
+        return $this->street;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("base_onboarding_company_state")
+     */
+    public function getBaseOnboardingCompanyState(): ?string
+    {
+        return $this->base_onboarding_company_state;
     }
 
     /**
@@ -3291,11 +3222,11 @@ final class Company extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $user_ids
+     * @param string|null $account_no
      */
-    public function setUserIds(?array $user_ids): void
+    public function setAccountNo(?string $account_no): void
     {
-        $this->user_ids = $user_ids;
+        $this->account_no = $account_no;
     }
 
     /**
@@ -3307,129 +3238,39 @@ final class Company extends Base
     }
 
     /**
-     * @return array|null
+     * @return mixed|null
      *
      * @SerializedName("logo")
      */
-    public function getLogo(): ?array
+    public function getLogo()
     {
         return $this->logo;
     }
 
     /**
-     * @param array|null $logo
+     * @param mixed|null $logo
      */
-    public function setLogo(?array $logo): void
+    public function setLogo($logo): void
     {
         $this->logo = $logo;
     }
 
     /**
-     * @param mixed $item
-     *
-     * @return bool
-     */
-    public function hasLogo($item): bool
-    {
-        if (null === $this->logo) {
-            return false;
-        }
-
-        return in_array($item, $this->logo);
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addLogo($item): void
-    {
-        if ($this->hasLogo($item)) {
-            return;
-        }
-
-        if (null === $this->logo) {
-            $this->logo = [];
-        }
-
-        $this->logo[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeLogo($item): void
-    {
-        if (null === $this->logo) {
-            $this->logo = [];
-        }
-
-        if ($this->hasLogo($item)) {
-            $index = array_search($item, $this->logo);
-            unset($this->logo[$index]);
-        }
-    }
-
-    /**
-     * @return array|null
+     * @return mixed|null
      *
      * @SerializedName("logo_web")
      */
-    public function getLogoWeb(): ?array
+    public function getLogoWeb()
     {
         return $this->logo_web;
     }
 
     /**
-     * @param array|null $logo_web
+     * @param mixed|null $logo_web
      */
-    public function setLogoWeb(?array $logo_web): void
+    public function setLogoWeb($logo_web): void
     {
         $this->logo_web = $logo_web;
-    }
-
-    /**
-     * @param mixed $item
-     *
-     * @return bool
-     */
-    public function hasLogoWeb($item): bool
-    {
-        if (null === $this->logo_web) {
-            return false;
-        }
-
-        return in_array($item, $this->logo_web);
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addLogoWeb($item): void
-    {
-        if ($this->hasLogoWeb($item)) {
-            return;
-        }
-
-        if (null === $this->logo_web) {
-            $this->logo_web = [];
-        }
-
-        $this->logo_web[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeLogoWeb($item): void
-    {
-        if (null === $this->logo_web) {
-            $this->logo_web = [];
-        }
-
-        if ($this->hasLogoWeb($item)) {
-            $index = array_search($item, $this->logo_web);
-            unset($this->logo_web[$index]);
-        }
     }
 
     /**
@@ -3461,87 +3302,101 @@ final class Company extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("paperformat_id")
+     * @param OdooRelation[]|null $user_ids
      */
-    public function getPaperformatId(): ?OdooRelation
+    public function setUserIds(?array $user_ids): void
     {
-        return $this->paperformat_id;
+        $this->user_ids = $user_ids;
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation $item
      *
-     * @SerializedName("external_report_layout_id")
+     * @return bool
      */
-    public function getExternalReportLayoutId(): ?OdooRelation
+    public function hasUserIds(OdooRelation $item): bool
     {
-        return $this->external_report_layout_id;
+        if (null === $this->user_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->user_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addUserIds(OdooRelation $item): void
+    {
+        if ($this->hasUserIds($item)) {
+            return;
+        }
+
+        if (null === $this->user_ids) {
+            $this->user_ids = [];
+        }
+
+        $this->user_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeUserIds(OdooRelation $item): void
+    {
+        if (null === $this->user_ids) {
+            $this->user_ids = [];
+        }
+
+        if ($this->hasUserIds($item)) {
+            $index = array_search($item, $this->user_ids);
+            unset($this->user_ids[$index]);
+        }
     }
 
     /**
      * @return string|null
      *
-     * @SerializedName("tax_calculation_rounding_method")
+     * @SerializedName("account_no")
      */
-    public function getTaxCalculationRoundingMethod(): ?string
+    public function getAccountNo(): ?string
     {
-        return $this->tax_calculation_rounding_method;
+        return $this->account_no;
     }
 
     /**
-     * @return string|null
+     * @param OdooRelation|null $external_report_layout_id
+     */
+    public function setExternalReportLayoutId(?OdooRelation $external_report_layout_id): void
+    {
+        $this->external_report_layout_id = $external_report_layout_id;
+    }
+
+    /**
+     * @param string|null $base_onboarding_company_state
+     */
+    public function setBaseOnboardingCompanyState(?string $base_onboarding_company_state): void
+    {
+        $this->base_onboarding_company_state = $base_onboarding_company_state;
+    }
+
+    /**
+     * @return OdooRelation|null
      *
-     * @SerializedName("bank_account_code_prefix")
+     * @SerializedName("income_currency_exchange_account_id")
      */
-    public function getBankAccountCodePrefix(): ?string
+    public function getIncomeCurrencyExchangeAccountId(): ?OdooRelation
     {
-        return $this->bank_account_code_prefix;
+        return $this->income_currency_exchange_account_id;
     }
 
     /**
-     * @param string $fiscalyear_last_month
+     * @param OdooRelation|null $default_cash_difference_income_account_id
      */
-    public function setFiscalyearLastMonth(string $fiscalyear_last_month): void
-    {
-        $this->fiscalyear_last_month = $fiscalyear_last_month;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("period_lock_date")
-     */
-    public function getPeriodLockDate(): ?DateTimeInterface
-    {
-        return $this->period_lock_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $period_lock_date
-     */
-    public function setPeriodLockDate(?DateTimeInterface $period_lock_date): void
-    {
-        $this->period_lock_date = $period_lock_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("fiscalyear_lock_date")
-     */
-    public function getFiscalyearLockDate(): ?DateTimeInterface
-    {
-        return $this->fiscalyear_lock_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $fiscalyear_lock_date
-     */
-    public function setFiscalyearLockDate(?DateTimeInterface $fiscalyear_lock_date): void
-    {
-        $this->fiscalyear_lock_date = $fiscalyear_lock_date;
+    public function setDefaultCashDifferenceIncomeAccountId(
+        ?OdooRelation $default_cash_difference_income_account_id
+    ): void {
+        $this->default_cash_difference_income_account_id = $default_cash_difference_income_account_id;
     }
 
     /**
@@ -3617,19 +3472,21 @@ final class Company extends Base
     }
 
     /**
+     * @return string|null
+     *
+     * @SerializedName("bank_account_code_prefix")
+     */
+    public function getBankAccountCodePrefix(): ?string
+    {
+        return $this->bank_account_code_prefix;
+    }
+
+    /**
      * @param string|null $bank_account_code_prefix
      */
     public function setBankAccountCodePrefix(?string $bank_account_code_prefix): void
     {
         $this->bank_account_code_prefix = $bank_account_code_prefix;
-    }
-
-    /**
-     * @param int $fiscalyear_last_day
-     */
-    public function setFiscalyearLastDay(int $fiscalyear_last_day): void
-    {
-        $this->fiscalyear_last_day = $fiscalyear_last_day;
     }
 
     /**
@@ -3661,15 +3518,6 @@ final class Company extends Base
     }
 
     /**
-     * @param OdooRelation|null $default_cash_difference_income_account_id
-     */
-    public function setDefaultCashDifferenceIncomeAccountId(
-        ?OdooRelation $default_cash_difference_income_account_id
-    ): void {
-        $this->default_cash_difference_income_account_id = $default_cash_difference_income_account_id;
-    }
-
-    /**
      * @return OdooRelation|null
      *
      * @SerializedName("default_cash_difference_expense_account_id")
@@ -3677,6 +3525,16 @@ final class Company extends Base
     public function getDefaultCashDifferenceExpenseAccountId(): ?OdooRelation
     {
         return $this->default_cash_difference_expense_account_id;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("fiscalyear_lock_date")
+     */
+    public function getFiscalyearLockDate(): ?DateTimeInterface
+    {
+        return $this->fiscalyear_lock_date;
     }
 
     /**
@@ -3761,122 +3619,81 @@ final class Company extends Base
     }
 
     /**
-     * @return string
-     *
-     * @SerializedName("fiscalyear_last_month")
-     */
-    public function getFiscalyearLastMonth(): string
-    {
-        return $this->fiscalyear_last_month;
-    }
-
-    /**
-     * @return int
-     *
-     * @SerializedName("fiscalyear_last_day")
-     */
-    public function getFiscalyearLastDay(): int
-    {
-        return $this->fiscalyear_last_day;
-    }
-
-    /**
-     * @param OdooRelation|null $external_report_layout_id
-     */
-    public function setExternalReportLayoutId(?OdooRelation $external_report_layout_id): void
-    {
-        $this->external_report_layout_id = $external_report_layout_id;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("resource_calendar_ids")
-     */
-    public function getResourceCalendarIds(): ?array
-    {
-        return $this->resource_calendar_ids;
-    }
-
-    /**
      * @return string|null
      *
-     * @SerializedName("base_onboarding_company_state")
+     * @SerializedName("tax_calculation_rounding_method")
      */
-    public function getBaseOnboardingCompanyState(): ?string
+    public function getTaxCalculationRoundingMethod(): ?string
     {
-        return $this->base_onboarding_company_state;
+        return $this->tax_calculation_rounding_method;
     }
 
     /**
-     * @param string|null $base_onboarding_company_state
+     * @param string|null $tax_calculation_rounding_method
      */
-    public function setBaseOnboardingCompanyState(?string $base_onboarding_company_state): void
+    public function setTaxCalculationRoundingMethod(?string $tax_calculation_rounding_method): void
     {
-        $this->base_onboarding_company_state = $base_onboarding_company_state;
+        $this->tax_calculation_rounding_method = $tax_calculation_rounding_method;
     }
 
     /**
-     * @return array|null
+     * @return OdooRelation|null
+     *
+     * @SerializedName("currency_exchange_journal_id")
+     */
+    public function getCurrencyExchangeJournalId(): ?OdooRelation
+    {
+        return $this->currency_exchange_journal_id;
+    }
+
+    /**
+     * @param OdooRelation|null $currency_exchange_journal_id
+     */
+    public function setCurrencyExchangeJournalId(?OdooRelation $currency_exchange_journal_id): void
+    {
+        $this->currency_exchange_journal_id = $currency_exchange_journal_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $fiscalyear_lock_date
+     */
+    public function setFiscalyearLockDate(?DateTimeInterface $fiscalyear_lock_date): void
+    {
+        $this->fiscalyear_lock_date = $fiscalyear_lock_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $period_lock_date
+     */
+    public function setPeriodLockDate(?DateTimeInterface $period_lock_date): void
+    {
+        $this->period_lock_date = $period_lock_date;
+    }
+
+    /**
+     * @return mixed|null
      *
      * @SerializedName("favicon")
      */
-    public function getFavicon(): ?array
+    public function getFavicon()
     {
         return $this->favicon;
     }
 
     /**
-     * @param array|null $favicon
+     * @param OdooRelation|null $resource_calendar_id
      */
-    public function setFavicon(?array $favicon): void
+    public function setResourceCalendarId(?OdooRelation $resource_calendar_id): void
+    {
+        $this->resource_calendar_id = $resource_calendar_id;
+    }
+
+    /**
+     * @param mixed|null $favicon
+     */
+    public function setFavicon($favicon): void
     {
         $this->favicon = $favicon;
-    }
-
-    /**
-     * @param mixed $item
-     *
-     * @return bool
-     */
-    public function hasFavicon($item): bool
-    {
-        if (null === $this->favicon) {
-            return false;
-        }
-
-        return in_array($item, $this->favicon);
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function addFavicon($item): void
-    {
-        if ($this->hasFavicon($item)) {
-            return;
-        }
-
-        if (null === $this->favicon) {
-            $this->favicon = [];
-        }
-
-        $this->favicon[] = $item;
-    }
-
-    /**
-     * @param mixed $item
-     */
-    public function removeFavicon($item): void
-    {
-        if (null === $this->favicon) {
-            $this->favicon = [];
-        }
-
-        if ($this->hasFavicon($item)) {
-            $index = array_search($item, $this->favicon);
-            unset($this->favicon[$index]);
-        }
     }
 
     /**
@@ -3934,19 +3751,21 @@ final class Company extends Base
     }
 
     /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("resource_calendar_ids")
+     */
+    public function getResourceCalendarIds(): ?array
+    {
+        return $this->resource_calendar_ids;
+    }
+
+    /**
      * @param OdooRelation[]|null $resource_calendar_ids
      */
     public function setResourceCalendarIds(?array $resource_calendar_ids): void
     {
         $this->resource_calendar_ids = $resource_calendar_ids;
-    }
-
-    /**
-     * @param bool|null $snailmail_duplex
-     */
-    public function setSnailmailDuplex(?bool $snailmail_duplex): void
-    {
-        $this->snailmail_duplex = $snailmail_duplex;
     }
 
     /**
@@ -4005,14 +3824,6 @@ final class Company extends Base
     }
 
     /**
-     * @param OdooRelation|null $resource_calendar_id
-     */
-    public function setResourceCalendarId(?OdooRelation $resource_calendar_id): void
-    {
-        $this->resource_calendar_id = $resource_calendar_id;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("catchall")
@@ -4020,6 +3831,16 @@ final class Company extends Base
     public function getCatchall(): ?string
     {
         return $this->catchall;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("period_lock_date")
+     */
+    public function getPeriodLockDate(): ?DateTimeInterface
+    {
+        return $this->period_lock_date;
     }
 
     /**
@@ -4092,6 +3913,50 @@ final class Company extends Base
     public function isSnailmailDuplex(): ?bool
     {
         return $this->snailmail_duplex;
+    }
+
+    /**
+     * @param bool|null $snailmail_duplex
+     */
+    public function setSnailmailDuplex(?bool $snailmail_duplex): void
+    {
+        $this->snailmail_duplex = $snailmail_duplex;
+    }
+
+    /**
+     * @return int
+     *
+     * @SerializedName("fiscalyear_last_day")
+     */
+    public function getFiscalyearLastDay(): int
+    {
+        return $this->fiscalyear_last_day;
+    }
+
+    /**
+     * @param int $fiscalyear_last_day
+     */
+    public function setFiscalyearLastDay(int $fiscalyear_last_day): void
+    {
+        $this->fiscalyear_last_day = $fiscalyear_last_day;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("fiscalyear_last_month")
+     */
+    public function getFiscalyearLastMonth(): string
+    {
+        return $this->fiscalyear_last_month;
+    }
+
+    /**
+     * @param string $fiscalyear_last_month
+     */
+    public function setFiscalyearLastMonth(string $fiscalyear_last_month): void
+    {
+        $this->fiscalyear_last_month = $fiscalyear_last_month;
     }
 
     /**

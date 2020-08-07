@@ -27,9 +27,6 @@ final class OdooModelsStructureConverterHelper
             case 'boolean':
                 $phpTypes[] = 'bool';
                 break;
-            case 'binary':
-                $phpTypes[] = 'array';
-                break;
             case 'char':
             case 'html':
             case 'text':
@@ -51,6 +48,7 @@ final class OdooModelsStructureConverterHelper
             case 'one2many':
                 $phpTypes[] = OdooRelation::class . '[]';
                 break;
+            case 'binary':
             default:
                 $phpTypes[] = 'mixed';
                 break;
