@@ -110,7 +110,7 @@ final class SerializerFactory implements SerializerFactoryInterface
                 AbstractObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
                     return $object->getId() ?? 0;
                 }
-            ],
+            ]
         );
     }
 
