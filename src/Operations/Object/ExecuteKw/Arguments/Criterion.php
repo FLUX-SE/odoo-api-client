@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments;
 
+use DateTimeInterface;
+
 final class Criterion implements CriterionInterface
 {
     /** @var string[] */
@@ -11,6 +13,10 @@ final class Criterion implements CriterionInterface
 
     private function __construct(array $criterion)
     {
+        $value = $criterion[2] ?? null;
+        if ($value instanceof DateTimeInterface) {
+            $criterion[2] = $value->format(DateTimeInterface::ISO8601);
+        }
         $this->criterion = $criterion;
     }
 
