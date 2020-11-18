@@ -14,8 +14,10 @@ https://www.odoo.com/documentation/master/webservices/odoo.html
 Install using Composer :
 
 ```
-$ composer require flux-se/odoo-api-client
+$ composer require flux-se/odoo-api-client php-http/guzzle6-adapter http-interop/http-factory-guzzle
 ```
+> `php-http/guzzle6-adapter` and `http-interop/http-factory-guzzle` are 2 requirements which can be chosen among
+> [php-http/client-implementation](https://packagist.org/providers/php-http/client-implementation) and [psr/http-factory-implementation](https://packagist.org/providers/psr/http-factory-implementation)
 
 ## Introduction
 
