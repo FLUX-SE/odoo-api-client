@@ -28,18 +28,6 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 final class Line extends Base
 {
     /**
-     * Name
-     * ---
-     * Complete name for this report line, to be used in report.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string
-     */
-    private $name;
-
-    /**
      * Tags
      * ---
      * Tax tags populating this line
@@ -136,19 +124,6 @@ final class Line extends Base
     private $parent_path;
 
     /**
-     * Tag Name
-     * ---
-     * Short name for the tax grid corresponding to this report line. Leave empty if this report line should not
-     * correspond to any such grid.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $tag_name;
-
-    /**
      * Code
      * ---
      * Optional unique code to refer to this line in total formulas
@@ -174,6 +149,31 @@ final class Line extends Base
      * @var string|null
      */
     private $formula;
+
+    /**
+     * Name
+     * ---
+     * Complete name for this report line, to be used in report.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    private $name;
+
+    /**
+     * Tag Name
+     * ---
+     * Short name for the tax grid corresponding to this report line. Leave empty if this report line should not
+     * correspond to any such grid.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $tag_name;
 
     /**
      * Created by
@@ -222,12 +222,6 @@ final class Line extends Base
     private $write_date;
 
     /**
-     * @param string $name Name
-     *        ---
-     *        Complete name for this report line, to be used in report.
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
      * @param OdooRelation $country_id Country
      *        ---
      *        Country for which this line is available.
@@ -244,38 +238,18 @@ final class Line extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $name Name
+     *        ---
+     *        Complete name for this report line, to be used in report.
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(string $name, OdooRelation $country_id, int $sequence)
+    public function __construct(OdooRelation $country_id, int $sequence, string $name)
     {
-        $this->name = $name;
         $this->country_id = $country_id;
         $this->sequence = $sequence;
-    }
-
-    /**
-     * @param string|null $formula
-     */
-    public function setFormula(?string $formula): void
-    {
-        $this->formula = $formula;
-    }
-
-    /**
-     * @param string|null $parent_path
-     */
-    public function setParentPath(?string $parent_path): void
-    {
-        $this->parent_path = $parent_path;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("tag_name")
-     */
-    public function getTagName(): ?string
-    {
-        return $this->tag_name;
+        $this->name = $name;
     }
 
     /**
@@ -284,16 +258,6 @@ final class Line extends Base
     public function setTagName(?string $tag_name): void
     {
         $this->tag_name = $tag_name;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("code")
-     */
-    public function getCode(): ?string
-    {
-        return $this->code;
     }
 
     /**
@@ -315,6 +279,42 @@ final class Line extends Base
     }
 
     /**
+     * @param string|null $formula
+     */
+    public function setFormula(?string $formula): void
+    {
+        $this->formula = $formula;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("name")
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("tag_name")
+     */
+    public function getTagName(): ?string
+    {
+        return $this->tag_name;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("create_uid")
@@ -325,11 +325,11 @@ final class Line extends Base
     }
 
     /**
-     * @param int $sequence
+     * @param string|null $parent_path
      */
-    public function setSequence(int $sequence): void
+    public function setParentPath(?string $parent_path): void
     {
-        $this->sequence = $sequence;
+        $this->parent_path = $parent_path;
     }
 
     /**
@@ -397,47 +397,21 @@ final class Line extends Base
     /**
      * @return string|null
      *
+     * @SerializedName("code")
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @return string|null
+     *
      * @SerializedName("parent_path")
      */
     public function getParentPath(): ?string
     {
         return $this->parent_path;
-    }
-
-    /**
-     * @return int
-     *
-     * @SerializedName("sequence")
-     */
-    public function getSequence(): int
-    {
-        return $this->sequence;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("name")
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param OdooRelation $country_id
-     */
-    public function setCountryId(OdooRelation $country_id): void
-    {
-        $this->country_id = $country_id;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
     }
 
     /**
@@ -448,6 +422,14 @@ final class Line extends Base
     public function getTagIds(): ?array
     {
         return $this->tag_ids;
+    }
+
+    /**
+     * @param OdooRelation|null $report_action_id
+     */
+    public function setReportActionId(?OdooRelation $report_action_id): void
+    {
+        $this->report_action_id = $report_action_id;
     }
 
     /**
@@ -514,6 +496,14 @@ final class Line extends Base
     }
 
     /**
+     * @param OdooRelation $country_id
+     */
+    public function setCountryId(OdooRelation $country_id): void
+    {
+        $this->country_id = $country_id;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("report_action_id")
@@ -524,22 +514,6 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation|null $parent_id
-     */
-    public function setParentId(?OdooRelation $parent_id): void
-    {
-        $this->parent_id = $parent_id;
-    }
-
-    /**
-     * @param OdooRelation|null $report_action_id
-     */
-    public function setReportActionId(?OdooRelation $report_action_id): void
-    {
-        $this->report_action_id = $report_action_id;
-    }
-
-    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("children_line_ids")
@@ -547,6 +521,14 @@ final class Line extends Base
     public function getChildrenLineIds(): ?array
     {
         return $this->children_line_ids;
+    }
+
+    /**
+     * @param int $sequence
+     */
+    public function setSequence(int $sequence): void
+    {
+        $this->sequence = $sequence;
     }
 
     /**
@@ -610,6 +592,24 @@ final class Line extends Base
     public function getParentId(): ?OdooRelation
     {
         return $this->parent_id;
+    }
+
+    /**
+     * @param OdooRelation|null $parent_id
+     */
+    public function setParentId(?OdooRelation $parent_id): void
+    {
+        $this->parent_id = $parent_id;
+    }
+
+    /**
+     * @return int
+     *
+     * @SerializedName("sequence")
+     */
+    public function getSequence(): int
+    {
+        return $this->sequence;
     }
 
     /**

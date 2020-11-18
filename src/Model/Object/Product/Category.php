@@ -96,6 +96,60 @@ final class Category extends Base
     private $product_count;
 
     /**
+     * Routes
+     * ---
+     * Relation : many2many (stock.location.route)
+     * @see \Flux\OdooApiClient\Model\Object\Stock\Location\Route
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $route_ids;
+
+    /**
+     * Force Removal Strategy
+     * ---
+     * Set a specific removal strategy that will be used regardless of the source location for this product category
+     * ---
+     * Relation : many2one (product.removal)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Removal
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $removal_strategy_id;
+
+    /**
+     * Total routes
+     * ---
+     * Relation : many2many (stock.location.route)
+     * @see \Flux\OdooApiClient\Model\Object\Stock\Location\Route
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $total_route_ids;
+
+    /**
+     * Putaway Rules
+     * ---
+     * Relation : one2many (stock.putaway.rule -> category_id)
+     * @see \Flux\OdooApiClient\Model\Object\Stock\Putaway\Rule
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $putaway_rule_ids;
+
+    /**
      * Income Account
      * ---
      * This account will be used when validating a customer invoice.
@@ -126,6 +180,131 @@ final class Category extends Base
      * @var OdooRelation|null
      */
     private $property_account_expense_categ_id;
+
+    /**
+     * Price Difference Account
+     * ---
+     * This account will be used to value price difference between purchase price and accounting cost.
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $property_account_creditor_price_difference_categ;
+
+    /**
+     * Inventory Valuation
+     * ---
+     * Manual: The accounting entries to value the inventory are not posted automatically.
+     *                 Automated: An accounting entry is automatically created to value the inventory when a product
+     * enters or leaves the company.
+     *
+     * ---
+     * Selection :
+     *     -> manual_periodic (Manual)
+     *     -> real_time (Automated)
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string
+     */
+    private $property_valuation;
+
+    /**
+     * Costing Method
+     * ---
+     * Standard Price: The products are valued at their standard cost defined on the product.
+     *                 Average Cost (AVCO): The products are valued at weighted average cost.
+     *                 First In First Out (FIFO): The products are valued supposing those that enter the company
+     * first will also leave it first.
+     *
+     * ---
+     * Selection :
+     *     -> standard (Standard Price)
+     *     -> fifo (First In First Out (FIFO))
+     *     -> average (Average Cost (AVCO))
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string
+     */
+    private $property_cost_method;
+
+    /**
+     * Stock Journal
+     * ---
+     * When doing automated inventory valuation, this is the Accounting Journal in which entries will be
+     * automatically posted when stock moves are processed.
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $property_stock_journal;
+
+    /**
+     * Stock Input Account
+     * ---
+     * When doing automated inventory valuation, counterpart journal items for all incoming stock moves will be
+     * posted in this account,
+     *                                 unless there is a specific valuation account set on the source location. This
+     * is the default value for all products in this category.
+     *                                 It can also directly be set on each product.
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $property_stock_account_input_categ_id;
+
+    /**
+     * Stock Output Account
+     * ---
+     * When doing automated inventory valuation, counterpart journal items for all outgoing stock moves will be
+     * posted in this account,
+     *                                 unless there is a specific valuation account set on the destination location.
+     * This is the default value for all products in this category.
+     *                                 It can also directly be set on each product.
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $property_stock_account_output_categ_id;
+
+    /**
+     * Stock Valuation Account
+     * ---
+     * When automated inventory valuation is enabled on a product, this account will hold the current value of the
+     * products.
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $property_stock_valuation_account_id;
 
     /**
      * Created by
@@ -178,116 +357,50 @@ final class Category extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $property_valuation Inventory Valuation
+     *        ---
+     *        Manual: The accounting entries to value the inventory are not posted automatically.
+     *                        Automated: An accounting entry is automatically created to value the inventory when a product
+     *        enters or leaves the company.
+     *
+     *        ---
+     *        Selection :
+     *            -> manual_periodic (Manual)
+     *            -> real_time (Automated)
+     *        ---
+     *        Searchable : yes
+     *        Sortable : no
+     * @param string $property_cost_method Costing Method
+     *        ---
+     *        Standard Price: The products are valued at their standard cost defined on the product.
+     *                        Average Cost (AVCO): The products are valued at weighted average cost.
+     *                        First In First Out (FIFO): The products are valued supposing those that enter the company
+     *        first will also leave it first.
+     *
+     *        ---
+     *        Selection :
+     *            -> standard (Standard Price)
+     *            -> fifo (First In First Out (FIFO))
+     *            -> average (Average Cost (AVCO))
+     *        ---
+     *        Searchable : yes
+     *        Sortable : no
      */
-    public function __construct(string $name)
+    public function __construct(string $name, string $property_valuation, string $property_cost_method)
     {
         $this->name = $name;
-    }
-
-    /**
-     * @param int|null $product_count
-     */
-    public function setProductCount(?int $product_count): void
-    {
-        $this->product_count = $product_count;
-    }
-
-    /**
-     * @param DateTimeInterface|null $write_date
-     */
-    public function setWriteDate(?DateTimeInterface $write_date): void
-    {
-        $this->write_date = $write_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("write_date")
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
+        $this->property_valuation = $property_valuation;
+        $this->property_cost_method = $property_cost_method;
     }
 
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("write_uid")
+     * @SerializedName("property_stock_account_input_categ_id")
      */
-    public function getWriteUid(): ?OdooRelation
+    public function getPropertyStockAccountInputCategId(): ?OdooRelation
     {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("create_date")
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @param OdooRelation|null $create_uid
-     */
-    public function setCreateUid(?OdooRelation $create_uid): void
-    {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
-     */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $property_account_expense_categ_id
-     */
-    public function setPropertyAccountExpenseCategId(?OdooRelation $property_account_expense_categ_id): void
-    {
-        $this->property_account_expense_categ_id = $property_account_expense_categ_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("property_account_expense_categ_id")
-     */
-    public function getPropertyAccountExpenseCategId(): ?OdooRelation
-    {
-        return $this->property_account_expense_categ_id;
-    }
-
-    /**
-     * @param OdooRelation|null $property_account_income_categ_id
-     */
-    public function setPropertyAccountIncomeCategId(?OdooRelation $property_account_income_categ_id): void
-    {
-        $this->property_account_income_categ_id = $property_account_income_categ_id;
+        return $this->property_stock_account_input_categ_id;
     }
 
     /**
@@ -301,13 +414,266 @@ final class Category extends Base
     }
 
     /**
-     * @return int|null
-     *
-     * @SerializedName("product_count")
+     * @param OdooRelation|null $property_account_income_categ_id
      */
-    public function getProductCount(): ?int
+    public function setPropertyAccountIncomeCategId(?OdooRelation $property_account_income_categ_id): void
     {
-        return $this->product_count;
+        $this->property_account_income_categ_id = $property_account_income_categ_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("property_account_expense_categ_id")
+     */
+    public function getPropertyAccountExpenseCategId(): ?OdooRelation
+    {
+        return $this->property_account_expense_categ_id;
+    }
+
+    /**
+     * @param OdooRelation|null $property_account_expense_categ_id
+     */
+    public function setPropertyAccountExpenseCategId(?OdooRelation $property_account_expense_categ_id): void
+    {
+        $this->property_account_expense_categ_id = $property_account_expense_categ_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("property_account_creditor_price_difference_categ")
+     */
+    public function getPropertyAccountCreditorPriceDifferenceCateg(): ?OdooRelation
+    {
+        return $this->property_account_creditor_price_difference_categ;
+    }
+
+    /**
+     * @param OdooRelation|null $property_account_creditor_price_difference_categ
+     */
+    public function setPropertyAccountCreditorPriceDifferenceCateg(
+        ?OdooRelation $property_account_creditor_price_difference_categ
+    ): void {
+        $this->property_account_creditor_price_difference_categ = $property_account_creditor_price_difference_categ;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("property_valuation")
+     */
+    public function getPropertyValuation(): string
+    {
+        return $this->property_valuation;
+    }
+
+    /**
+     * @param string $property_valuation
+     */
+    public function setPropertyValuation(string $property_valuation): void
+    {
+        $this->property_valuation = $property_valuation;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("property_cost_method")
+     */
+    public function getPropertyCostMethod(): string
+    {
+        return $this->property_cost_method;
+    }
+
+    /**
+     * @param string $property_cost_method
+     */
+    public function setPropertyCostMethod(string $property_cost_method): void
+    {
+        $this->property_cost_method = $property_cost_method;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("property_stock_journal")
+     */
+    public function getPropertyStockJournal(): ?OdooRelation
+    {
+        return $this->property_stock_journal;
+    }
+
+    /**
+     * @param OdooRelation|null $property_stock_journal
+     */
+    public function setPropertyStockJournal(?OdooRelation $property_stock_journal): void
+    {
+        $this->property_stock_journal = $property_stock_journal;
+    }
+
+    /**
+     * @param OdooRelation|null $property_stock_account_input_categ_id
+     */
+    public function setPropertyStockAccountInputCategId(
+        ?OdooRelation $property_stock_account_input_categ_id
+    ): void {
+        $this->property_stock_account_input_categ_id = $property_stock_account_input_categ_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addPutawayRuleIds(OdooRelation $item): void
+    {
+        if ($this->hasPutawayRuleIds($item)) {
+            return;
+        }
+
+        if (null === $this->putaway_rule_ids) {
+            $this->putaway_rule_ids = [];
+        }
+
+        $this->putaway_rule_ids[] = $item;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("property_stock_account_output_categ_id")
+     */
+    public function getPropertyStockAccountOutputCategId(): ?OdooRelation
+    {
+        return $this->property_stock_account_output_categ_id;
+    }
+
+    /**
+     * @param OdooRelation|null $property_stock_account_output_categ_id
+     */
+    public function setPropertyStockAccountOutputCategId(
+        ?OdooRelation $property_stock_account_output_categ_id
+    ): void {
+        $this->property_stock_account_output_categ_id = $property_stock_account_output_categ_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("property_stock_valuation_account_id")
+     */
+    public function getPropertyStockValuationAccountId(): ?OdooRelation
+    {
+        return $this->property_stock_valuation_account_id;
+    }
+
+    /**
+     * @param OdooRelation|null $property_stock_valuation_account_id
+     */
+    public function setPropertyStockValuationAccountId(
+        ?OdooRelation $property_stock_valuation_account_id
+    ): void {
+        $this->property_stock_valuation_account_id = $property_stock_valuation_account_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removePutawayRuleIds(OdooRelation $item): void
+    {
+        if (null === $this->putaway_rule_ids) {
+            $this->putaway_rule_ids = [];
+        }
+
+        if ($this->hasPutawayRuleIds($item)) {
+            $index = array_search($item, $this->putaway_rule_ids);
+            unset($this->putaway_rule_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasPutawayRuleIds(OdooRelation $item): bool
+    {
+        if (null === $this->putaway_rule_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->putaway_rule_ids);
     }
 
     /**
@@ -321,18 +687,107 @@ final class Category extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return int|null
+     *
+     * @SerializedName("product_count")
      */
-    public function removeChildId(OdooRelation $item): void
+    public function getProductCount(): ?int
+    {
+        return $this->product_count;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("complete_name")
+     */
+    public function getCompleteName(): ?string
+    {
+        return $this->complete_name;
+    }
+
+    /**
+     * @param string|null $complete_name
+     */
+    public function setCompleteName(?string $complete_name): void
+    {
+        $this->complete_name = $complete_name;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("parent_id")
+     */
+    public function getParentId(): ?OdooRelation
+    {
+        return $this->parent_id;
+    }
+
+    /**
+     * @param OdooRelation|null $parent_id
+     */
+    public function setParentId(?OdooRelation $parent_id): void
+    {
+        $this->parent_id = $parent_id;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("parent_path")
+     */
+    public function getParentPath(): ?string
+    {
+        return $this->parent_path;
+    }
+
+    /**
+     * @param string|null $parent_path
+     */
+    public function setParentPath(?string $parent_path): void
+    {
+        $this->parent_path = $parent_path;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("child_id")
+     */
+    public function getChildId(): ?array
+    {
+        return $this->child_id;
+    }
+
+    /**
+     * @param OdooRelation[]|null $child_id
+     */
+    public function setChildId(?array $child_id): void
+    {
+        $this->child_id = $child_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasChildId(OdooRelation $item): bool
     {
         if (null === $this->child_id) {
-            $this->child_id = [];
+            return false;
         }
 
-        if ($this->hasChildId($item)) {
-            $index = array_search($item, $this->child_id);
-            unset($this->child_id[$index]);
-        }
+        return in_array($item, $this->child_id);
     }
 
     /**
@@ -353,96 +808,187 @@ final class Category extends Base
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasChildId(OdooRelation $item): bool
+    public function removeChildId(OdooRelation $item): void
     {
         if (null === $this->child_id) {
-            return false;
+            $this->child_id = [];
         }
 
-        return in_array($item, $this->child_id);
+        if ($this->hasChildId($item)) {
+            $index = array_search($item, $this->child_id);
+            unset($this->child_id[$index]);
+        }
     }
 
     /**
-     * @param OdooRelation[]|null $child_id
+     * @param int|null $product_count
      */
-    public function setChildId(?array $child_id): void
+    public function setProductCount(?int $product_count): void
     {
-        $this->child_id = $child_id;
+        $this->product_count = $product_count;
+    }
+
+    /**
+     * @param OdooRelation[]|null $putaway_rule_ids
+     */
+    public function setPutawayRuleIds(?array $putaway_rule_ids): void
+    {
+        $this->putaway_rule_ids = $putaway_rule_ids;
     }
 
     /**
      * @return OdooRelation[]|null
      *
-     * @SerializedName("child_id")
+     * @SerializedName("route_ids")
      */
-    public function getChildId(): ?array
+    public function getRouteIds(): ?array
     {
-        return $this->child_id;
+        return $this->route_ids;
     }
 
     /**
-     * @param string|null $parent_path
+     * @param OdooRelation[]|null $route_ids
      */
-    public function setParentPath(?string $parent_path): void
+    public function setRouteIds(?array $route_ids): void
     {
-        $this->parent_path = $parent_path;
+        $this->route_ids = $route_ids;
     }
 
     /**
-     * @return string|null
+     * @param OdooRelation $item
      *
-     * @SerializedName("parent_path")
+     * @return bool
      */
-    public function getParentPath(): ?string
+    public function hasRouteIds(OdooRelation $item): bool
     {
-        return $this->parent_path;
+        if (null === $this->route_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->route_ids);
     }
 
     /**
-     * @param OdooRelation|null $parent_id
+     * @param OdooRelation $item
      */
-    public function setParentId(?OdooRelation $parent_id): void
+    public function addRouteIds(OdooRelation $item): void
     {
-        $this->parent_id = $parent_id;
+        if ($this->hasRouteIds($item)) {
+            return;
+        }
+
+        if (null === $this->route_ids) {
+            $this->route_ids = [];
+        }
+
+        $this->route_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeRouteIds(OdooRelation $item): void
+    {
+        if (null === $this->route_ids) {
+            $this->route_ids = [];
+        }
+
+        if ($this->hasRouteIds($item)) {
+            $index = array_search($item, $this->route_ids);
+            unset($this->route_ids[$index]);
+        }
     }
 
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("parent_id")
+     * @SerializedName("removal_strategy_id")
      */
-    public function getParentId(): ?OdooRelation
+    public function getRemovalStrategyId(): ?OdooRelation
     {
-        return $this->parent_id;
+        return $this->removal_strategy_id;
     }
 
     /**
-     * @param string|null $complete_name
+     * @param OdooRelation|null $removal_strategy_id
      */
-    public function setCompleteName(?string $complete_name): void
+    public function setRemovalStrategyId(?OdooRelation $removal_strategy_id): void
     {
-        $this->complete_name = $complete_name;
+        $this->removal_strategy_id = $removal_strategy_id;
     }
 
     /**
-     * @return string|null
+     * @return OdooRelation[]|null
      *
-     * @SerializedName("complete_name")
+     * @SerializedName("total_route_ids")
      */
-    public function getCompleteName(): ?string
+    public function getTotalRouteIds(): ?array
     {
-        return $this->complete_name;
+        return $this->total_route_ids;
     }
 
     /**
-     * @param string $name
+     * @param OdooRelation[]|null $total_route_ids
      */
-    public function setName(string $name): void
+    public function setTotalRouteIds(?array $total_route_ids): void
     {
-        $this->name = $name;
+        $this->total_route_ids = $total_route_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasTotalRouteIds(OdooRelation $item): bool
+    {
+        if (null === $this->total_route_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->total_route_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addTotalRouteIds(OdooRelation $item): void
+    {
+        if ($this->hasTotalRouteIds($item)) {
+            return;
+        }
+
+        if (null === $this->total_route_ids) {
+            $this->total_route_ids = [];
+        }
+
+        $this->total_route_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeTotalRouteIds(OdooRelation $item): void
+    {
+        if (null === $this->total_route_ids) {
+            $this->total_route_ids = [];
+        }
+
+        if ($this->hasTotalRouteIds($item)) {
+            $index = array_search($item, $this->total_route_ids);
+            unset($this->total_route_ids[$index]);
+        }
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("putaway_rule_ids")
+     */
+    public function getPutawayRuleIds(): ?array
+    {
+        return $this->putaway_rule_ids;
     }
 
     /**

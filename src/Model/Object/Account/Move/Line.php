@@ -15,15 +15,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  * Name : account.move.line
  * ---
  * Info :
- * Main super-class for regular database-persisted Odoo models.
- *
- *         Odoo models are created by inheriting from this class::
- *
- *                 class user(Model):
- *                         ...
- *
- *         The system will later instantiate the class once per database (on
- *         which the class' module is installed).
+ * Override AccountInvoice_line to add the link to the purchase order line it is related to
  */
 final class Line extends Base
 {
@@ -734,6 +726,119 @@ final class Line extends Base
     private $always_set_currency_id;
 
     /**
+     * Move Attachment
+     * ---
+     * Relation : one2many (ir.attachment)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $move_attachment_ids;
+
+    /**
+     * Expense
+     * ---
+     * Expense where the move line come from
+     * ---
+     * Relation : many2one (hr.expense)
+     * @see \Flux\OdooApiClient\Model\Object\Hr\Expense
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $expense_id;
+
+    /**
+     * Purchase Order Line
+     * ---
+     * Relation : many2one (purchase.order.line)
+     * @see \Flux\OdooApiClient\Model\Object\Purchase\Order\Line
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $purchase_line_id;
+
+    /**
+     * Is Anglo Saxon Line
+     * ---
+     * Technical field used to retrieve the anglo-saxon lines.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $is_anglo_saxon_line;
+
+    /**
+     * Predict From Name
+     * ---
+     * Technical field used to know on which lines the prediction must be done.
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $predict_from_name;
+
+    /**
+     * Predict Override Default Account
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $predict_override_default_account;
+
+    /**
+     * Expected Payment Date
+     * ---
+     * Expected payment date as manually set through the customer statement (e.g: if you had the customer on the
+     * phone and want to remember the date he promised he would pay)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var DateTimeInterface|null
+     */
+    private $expected_pay_date;
+
+    /**
+     * Internal Note
+     * ---
+     * Note you can set through the customer statement about a receivable journal item
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $internal_note;
+
+    /**
+     * Next Action Date
+     * ---
+     * Date where the next action should be taken for a receivable item. Usually, automatically set when sending
+     * reminders through the customer statement.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var DateTimeInterface|null
+     */
+    private $next_action_date;
+
+    /**
      * Sales Order Lines
      * ---
      * Relation : many2many (sale.order.line)
@@ -745,6 +850,57 @@ final class Line extends Base
      * @var OdooRelation[]|null
      */
     private $sale_line_ids;
+
+    /**
+     * Asset Linked
+     * ---
+     * Asset created from this Journal Item
+     * ---
+     * Relation : many2one (account.asset)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Asset
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $asset_id;
+
+    /**
+     * Follow-up Level
+     * ---
+     * Relation : many2one (account_followup.followup.line)
+     * @see \Flux\OdooApiClient\Model\Object\AccountFollowup\Followup\Line
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $followup_line_id;
+
+    /**
+     * Latest Follow-up
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var DateTimeInterface|null
+     */
+    private $followup_date;
+
+    /**
+     * Reconciliation Invoice
+     * ---
+     * Relation : one2many (account.move -> document_request_line_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $reconciliation_invoice_id;
 
     /**
      * Created by
@@ -809,11 +965,269 @@ final class Line extends Base
     }
 
     /**
+     * @param bool|null $recompute_tax_line
+     */
+    public function setRecomputeTaxLine(?bool $recompute_tax_line): void
+    {
+        $this->recompute_tax_line = $recompute_tax_line;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("analytic_account_id")
+     */
+    public function getAnalyticAccountId(): ?OdooRelation
+    {
+        return $this->analytic_account_id;
+    }
+
+    /**
+     * @param OdooRelation|null $analytic_account_id
+     */
+    public function setAnalyticAccountId(?OdooRelation $analytic_account_id): void
+    {
+        $this->analytic_account_id = $analytic_account_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("analytic_tag_ids")
+     */
+    public function getAnalyticTagIds(): ?array
+    {
+        return $this->analytic_tag_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $analytic_tag_ids
+     */
+    public function setAnalyticTagIds(?array $analytic_tag_ids): void
+    {
+        $this->analytic_tag_ids = $analytic_tag_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasAnalyticTagIds(OdooRelation $item): bool
+    {
+        if (null === $this->analytic_tag_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->analytic_tag_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addAnalyticTagIds(OdooRelation $item): void
+    {
+        if ($this->hasAnalyticTagIds($item)) {
+            return;
+        }
+
+        if (null === $this->analytic_tag_ids) {
+            $this->analytic_tag_ids = [];
+        }
+
+        $this->analytic_tag_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeAnalyticTagIds(OdooRelation $item): void
+    {
+        if (null === $this->analytic_tag_ids) {
+            $this->analytic_tag_ids = [];
+        }
+
+        if ($this->hasAnalyticTagIds($item)) {
+            $index = array_search($item, $this->analytic_tag_ids);
+            unset($this->analytic_tag_ids[$index]);
+        }
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("recompute_tax_line")
+     */
+    public function isRecomputeTaxLine(): ?bool
+    {
+        return $this->recompute_tax_line;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("display_type")
+     */
+    public function getDisplayType(): ?string
+    {
+        return $this->display_type;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addAnalyticLineIds(OdooRelation $item): void
+    {
+        if ($this->hasAnalyticLineIds($item)) {
+            return;
+        }
+
+        if (null === $this->analytic_line_ids) {
+            $this->analytic_line_ids = [];
+        }
+
+        $this->analytic_line_ids[] = $item;
+    }
+
+    /**
+     * @param string|null $display_type
+     */
+    public function setDisplayType(?string $display_type): void
+    {
+        $this->display_type = $display_type;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("is_rounding_line")
+     */
+    public function isIsRoundingLine(): ?bool
+    {
+        return $this->is_rounding_line;
+    }
+
+    /**
+     * @param bool|null $is_rounding_line
+     */
+    public function setIsRoundingLine(?bool $is_rounding_line): void
+    {
+        $this->is_rounding_line = $is_rounding_line;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("exclude_from_invoice_tab")
+     */
+    public function isExcludeFromInvoiceTab(): ?bool
+    {
+        return $this->exclude_from_invoice_tab;
+    }
+
+    /**
+     * @param bool|null $exclude_from_invoice_tab
+     */
+    public function setExcludeFromInvoiceTab(?bool $exclude_from_invoice_tab): void
+    {
+        $this->exclude_from_invoice_tab = $exclude_from_invoice_tab;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("always_set_currency_id")
+     */
+    public function getAlwaysSetCurrencyId(): ?OdooRelation
+    {
+        return $this->always_set_currency_id;
+    }
+
+    /**
+     * @param OdooRelation|null $always_set_currency_id
+     */
+    public function setAlwaysSetCurrencyId(?OdooRelation $always_set_currency_id): void
+    {
+        $this->always_set_currency_id = $always_set_currency_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("move_attachment_ids")
+     */
+    public function getMoveAttachmentIds(): ?array
+    {
+        return $this->move_attachment_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeAnalyticLineIds(OdooRelation $item): void
+    {
+        if (null === $this->analytic_line_ids) {
+            $this->analytic_line_ids = [];
+        }
+
+        if ($this->hasAnalyticLineIds($item)) {
+            $index = array_search($item, $this->analytic_line_ids);
+            unset($this->analytic_line_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasAnalyticLineIds(OdooRelation $item): bool
+    {
+        if (null === $this->analytic_line_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->analytic_line_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMoveAttachmentIds(OdooRelation $item): bool
+    {
+        if (null === $this->move_attachment_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->move_attachment_ids);
+    }
+
+    /**
      * @param OdooRelation[]|null $matched_debit_ids
      */
     public function setMatchedDebitIds(?array $matched_debit_ids): void
     {
         $this->matched_debit_ids = $matched_debit_ids;
+    }
+
+    /**
+     * @param string|null $tax_audit
+     */
+    public function setTaxAudit(?string $tax_audit): void
+    {
+        $this->tax_audit = $tax_audit;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("amount_residual")
+     */
+    public function getAmountResidual(): ?float
+    {
+        return $this->amount_residual;
     }
 
     /**
@@ -885,11 +1299,11 @@ final class Line extends Base
     }
 
     /**
-     * @param string|null $tax_audit
+     * @param OdooRelation[]|null $analytic_line_ids
      */
-    public function setTaxAudit(?string $tax_audit): void
+    public function setAnalyticLineIds(?array $analytic_line_ids): void
     {
-        $this->tax_audit = $tax_audit;
+        $this->analytic_line_ids = $analytic_line_ids;
     }
 
     /**
@@ -972,23 +1386,18 @@ final class Line extends Base
     }
 
     /**
-     * @return float|null
-     *
-     * @SerializedName("amount_residual")
+     * @param OdooRelation $item
      */
-    public function getAmountResidual(): ?float
+    public function removeMatchedCreditIds(OdooRelation $item): void
     {
-        return $this->amount_residual;
-    }
+        if (null === $this->matched_credit_ids) {
+            $this->matched_credit_ids = [];
+        }
 
-    /**
-     * @return string|null
-     *
-     * @SerializedName("tax_audit")
-     */
-    public function getTaxAudit(): ?string
-    {
-        return $this->tax_audit;
+        if ($this->hasMatchedCreditIds($item)) {
+            $index = array_search($item, $this->matched_credit_ids);
+            unset($this->matched_credit_ids[$index]);
+        }
     }
 
     /**
@@ -1002,75 +1411,27 @@ final class Line extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("tax_exigible")
+     * @param OdooRelation[]|null $move_attachment_ids
      */
-    public function isTaxExigible(): ?bool
+    public function setMoveAttachmentIds(?array $move_attachment_ids): void
     {
-        return $this->tax_exigible;
+        $this->move_attachment_ids = $move_attachment_ids;
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("tax_line_id")
+     * @param OdooRelation $item
      */
-    public function getTaxLineId(): ?OdooRelation
+    public function addMoveAttachmentIds(OdooRelation $item): void
     {
-        return $this->tax_line_id;
-    }
+        if ($this->hasMoveAttachmentIds($item)) {
+            return;
+        }
 
-    /**
-     * @param OdooRelation|null $tax_line_id
-     */
-    public function setTaxLineId(?OdooRelation $tax_line_id): void
-    {
-        $this->tax_line_id = $tax_line_id;
-    }
+        if (null === $this->move_attachment_ids) {
+            $this->move_attachment_ids = [];
+        }
 
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("tax_group_id")
-     */
-    public function getTaxGroupId(): ?OdooRelation
-    {
-        return $this->tax_group_id;
-    }
-
-    /**
-     * @param OdooRelation|null $tax_group_id
-     */
-    public function setTaxGroupId(?OdooRelation $tax_group_id): void
-    {
-        $this->tax_group_id = $tax_group_id;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("tax_base_amount")
-     */
-    public function getTaxBaseAmount(): ?float
-    {
-        return $this->tax_base_amount;
-    }
-
-    /**
-     * @param float|null $tax_base_amount
-     */
-    public function setTaxBaseAmount(?float $tax_base_amount): void
-    {
-        $this->tax_base_amount = $tax_base_amount;
-    }
-
-    /**
-     * @param bool|null $tax_exigible
-     */
-    public function setTaxExigible(?bool $tax_exigible): void
-    {
-        $this->tax_exigible = $tax_exigible;
+        $this->move_attachment_ids[] = $item;
     }
 
     /**
@@ -1089,39 +1450,81 @@ final class Line extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("tax_repartition_line_id")
+     * @param OdooRelation $item
      */
-    public function getTaxRepartitionLineId(): ?OdooRelation
+    public function addReconciliationInvoiceId(OdooRelation $item): void
     {
-        return $this->tax_repartition_line_id;
+        if ($this->hasReconciliationInvoiceId($item)) {
+            return;
+        }
+
+        if (null === $this->reconciliation_invoice_id) {
+            $this->reconciliation_invoice_id = [];
+        }
+
+        $this->reconciliation_invoice_id[] = $item;
     }
 
     /**
-     * @param OdooRelation|null $tax_repartition_line_id
+     * @param OdooRelation|null $asset_id
      */
-    public function setTaxRepartitionLineId(?OdooRelation $tax_repartition_line_id): void
+    public function setAssetId(?OdooRelation $asset_id): void
     {
-        $this->tax_repartition_line_id = $tax_repartition_line_id;
+        $this->asset_id = $asset_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("followup_line_id")
+     */
+    public function getFollowupLineId(): ?OdooRelation
+    {
+        return $this->followup_line_id;
+    }
+
+    /**
+     * @param OdooRelation|null $followup_line_id
+     */
+    public function setFollowupLineId(?OdooRelation $followup_line_id): void
+    {
+        $this->followup_line_id = $followup_line_id;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("followup_date")
+     */
+    public function getFollowupDate(): ?DateTimeInterface
+    {
+        return $this->followup_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $followup_date
+     */
+    public function setFollowupDate(?DateTimeInterface $followup_date): void
+    {
+        $this->followup_date = $followup_date;
     }
 
     /**
      * @return OdooRelation[]|null
      *
-     * @SerializedName("tag_ids")
+     * @SerializedName("reconciliation_invoice_id")
      */
-    public function getTagIds(): ?array
+    public function getReconciliationInvoiceId(): ?array
     {
-        return $this->tag_ids;
+        return $this->reconciliation_invoice_id;
     }
 
     /**
-     * @param OdooRelation[]|null $tag_ids
+     * @param OdooRelation[]|null $reconciliation_invoice_id
      */
-    public function setTagIds(?array $tag_ids): void
+    public function setReconciliationInvoiceId(?array $reconciliation_invoice_id): void
     {
-        $this->tag_ids = $tag_ids;
+        $this->reconciliation_invoice_id = $reconciliation_invoice_id;
     }
 
     /**
@@ -1129,134 +1532,28 @@ final class Line extends Base
      *
      * @return bool
      */
-    public function hasTagIds(OdooRelation $item): bool
+    public function hasReconciliationInvoiceId(OdooRelation $item): bool
     {
-        if (null === $this->tag_ids) {
+        if (null === $this->reconciliation_invoice_id) {
             return false;
         }
 
-        return in_array($item, $this->tag_ids);
+        return in_array($item, $this->reconciliation_invoice_id);
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function addTagIds(OdooRelation $item): void
+    public function removeReconciliationInvoiceId(OdooRelation $item): void
     {
-        if ($this->hasTagIds($item)) {
-            return;
+        if (null === $this->reconciliation_invoice_id) {
+            $this->reconciliation_invoice_id = [];
         }
 
-        if (null === $this->tag_ids) {
-            $this->tag_ids = [];
+        if ($this->hasReconciliationInvoiceId($item)) {
+            $index = array_search($item, $this->reconciliation_invoice_id);
+            unset($this->reconciliation_invoice_id[$index]);
         }
-
-        $this->tag_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMatchedCreditIds(OdooRelation $item): void
-    {
-        if (null === $this->matched_credit_ids) {
-            $this->matched_credit_ids = [];
-        }
-
-        if ($this->hasMatchedCreditIds($item)) {
-            $index = array_search($item, $this->matched_credit_ids);
-            unset($this->matched_credit_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation[]|null $analytic_line_ids
-     */
-    public function setAnalyticLineIds(?array $analytic_line_ids): void
-    {
-        $this->analytic_line_ids = $analytic_line_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addTaxIds(OdooRelation $item): void
-    {
-        if ($this->hasTaxIds($item)) {
-            return;
-        }
-
-        if (null === $this->tax_ids) {
-            $this->tax_ids = [];
-        }
-
-        $this->tax_ids[] = $item;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
-     */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $always_set_currency_id
-     */
-    public function setAlwaysSetCurrencyId(?OdooRelation $always_set_currency_id): void
-    {
-        $this->always_set_currency_id = $always_set_currency_id;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("sale_line_ids")
-     */
-    public function getSaleLineIds(): ?array
-    {
-        return $this->sale_line_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $sale_line_ids
-     */
-    public function setSaleLineIds(?array $sale_line_ids): void
-    {
-        $this->sale_line_ids = $sale_line_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasSaleLineIds(OdooRelation $item): bool
-    {
-        if (null === $this->sale_line_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->sale_line_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addSaleLineIds(OdooRelation $item): void
-    {
-        if ($this->hasSaleLineIds($item)) {
-            return;
-        }
-
-        if (null === $this->sale_line_ids) {
-            $this->sale_line_ids = [];
-        }
-
-        $this->sale_line_ids[] = $item;
     }
 
     /**
@@ -1275,19 +1572,21 @@ final class Line extends Base
     }
 
     /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
      * @param OdooRelation|null $create_uid
      */
     public function setCreateUid(?OdooRelation $create_uid): void
     {
         $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @param bool|null $exclude_from_invoice_tab
-     */
-    public function setExcludeFromInvoiceTab(?bool $exclude_from_invoice_tab): void
-    {
-        $this->exclude_from_invoice_tab = $exclude_from_invoice_tab;
     }
 
     /**
@@ -1347,216 +1646,132 @@ final class Line extends Base
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("always_set_currency_id")
+     * @SerializedName("asset_id")
      */
-    public function getAlwaysSetCurrencyId(): ?OdooRelation
+    public function getAssetId(): ?OdooRelation
     {
-        return $this->always_set_currency_id;
+        return $this->asset_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addSaleLineIds(OdooRelation $item): void
+    {
+        if ($this->hasSaleLineIds($item)) {
+            return;
+        }
+
+        if (null === $this->sale_line_ids) {
+            $this->sale_line_ids = [];
+        }
+
+        $this->sale_line_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMoveAttachmentIds(OdooRelation $item): void
+    {
+        if (null === $this->move_attachment_ids) {
+            $this->move_attachment_ids = [];
+        }
+
+        if ($this->hasMoveAttachmentIds($item)) {
+            $index = array_search($item, $this->move_attachment_ids);
+            unset($this->move_attachment_ids[$index]);
+        }
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("exclude_from_invoice_tab")
+     * @SerializedName("predict_override_default_account")
      */
-    public function isExcludeFromInvoiceTab(): ?bool
+    public function isPredictOverrideDefaultAccount(): ?bool
     {
-        return $this->exclude_from_invoice_tab;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasAnalyticLineIds(OdooRelation $item): bool
-    {
-        if (null === $this->analytic_line_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->analytic_line_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasAnalyticTagIds(OdooRelation $item): bool
-    {
-        if (null === $this->analytic_tag_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->analytic_tag_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addAnalyticLineIds(OdooRelation $item): void
-    {
-        if ($this->hasAnalyticLineIds($item)) {
-            return;
-        }
-
-        if (null === $this->analytic_line_ids) {
-            $this->analytic_line_ids = [];
-        }
-
-        $this->analytic_line_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeAnalyticLineIds(OdooRelation $item): void
-    {
-        if (null === $this->analytic_line_ids) {
-            $this->analytic_line_ids = [];
-        }
-
-        if ($this->hasAnalyticLineIds($item)) {
-            $index = array_search($item, $this->analytic_line_ids);
-            unset($this->analytic_line_ids[$index]);
-        }
+        return $this->predict_override_default_account;
     }
 
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("analytic_account_id")
+     * @SerializedName("expense_id")
      */
-    public function getAnalyticAccountId(): ?OdooRelation
+    public function getExpenseId(): ?OdooRelation
     {
-        return $this->analytic_account_id;
+        return $this->expense_id;
     }
 
     /**
-     * @param OdooRelation|null $analytic_account_id
+     * @param OdooRelation|null $expense_id
      */
-    public function setAnalyticAccountId(?OdooRelation $analytic_account_id): void
+    public function setExpenseId(?OdooRelation $expense_id): void
     {
-        $this->analytic_account_id = $analytic_account_id;
+        $this->expense_id = $expense_id;
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @return OdooRelation|null
      *
-     * @SerializedName("analytic_tag_ids")
+     * @SerializedName("purchase_line_id")
      */
-    public function getAnalyticTagIds(): ?array
+    public function getPurchaseLineId(): ?OdooRelation
     {
-        return $this->analytic_tag_ids;
+        return $this->purchase_line_id;
     }
 
     /**
-     * @param OdooRelation[]|null $analytic_tag_ids
+     * @param OdooRelation|null $purchase_line_id
      */
-    public function setAnalyticTagIds(?array $analytic_tag_ids): void
+    public function setPurchaseLineId(?OdooRelation $purchase_line_id): void
     {
-        $this->analytic_tag_ids = $analytic_tag_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addAnalyticTagIds(OdooRelation $item): void
-    {
-        if ($this->hasAnalyticTagIds($item)) {
-            return;
-        }
-
-        if (null === $this->analytic_tag_ids) {
-            $this->analytic_tag_ids = [];
-        }
-
-        $this->analytic_tag_ids[] = $item;
-    }
-
-    /**
-     * @param bool|null $is_rounding_line
-     */
-    public function setIsRoundingLine(?bool $is_rounding_line): void
-    {
-        $this->is_rounding_line = $is_rounding_line;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeAnalyticTagIds(OdooRelation $item): void
-    {
-        if (null === $this->analytic_tag_ids) {
-            $this->analytic_tag_ids = [];
-        }
-
-        if ($this->hasAnalyticTagIds($item)) {
-            $index = array_search($item, $this->analytic_tag_ids);
-            unset($this->analytic_tag_ids[$index]);
-        }
+        $this->purchase_line_id = $purchase_line_id;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("recompute_tax_line")
+     * @SerializedName("is_anglo_saxon_line")
      */
-    public function isRecomputeTaxLine(): ?bool
+    public function isIsAngloSaxonLine(): ?bool
     {
-        return $this->recompute_tax_line;
+        return $this->is_anglo_saxon_line;
     }
 
     /**
-     * @param bool|null $recompute_tax_line
+     * @param bool|null $is_anglo_saxon_line
      */
-    public function setRecomputeTaxLine(?bool $recompute_tax_line): void
+    public function setIsAngloSaxonLine(?bool $is_anglo_saxon_line): void
     {
-        $this->recompute_tax_line = $recompute_tax_line;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("display_type")
-     */
-    public function getDisplayType(): ?string
-    {
-        return $this->display_type;
-    }
-
-    /**
-     * @param string|null $display_type
-     */
-    public function setDisplayType(?string $display_type): void
-    {
-        $this->display_type = $display_type;
+        $this->is_anglo_saxon_line = $is_anglo_saxon_line;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("is_rounding_line")
+     * @SerializedName("predict_from_name")
      */
-    public function isIsRoundingLine(): ?bool
+    public function isPredictFromName(): ?bool
     {
-        return $this->is_rounding_line;
+        return $this->predict_from_name;
     }
 
     /**
-     * @param OdooRelation $item
+     * @param bool|null $predict_from_name
      */
-    public function removeTaxIds(OdooRelation $item): void
+    public function setPredictFromName(?bool $predict_from_name): void
     {
-        if (null === $this->tax_ids) {
-            $this->tax_ids = [];
-        }
+        $this->predict_from_name = $predict_from_name;
+    }
 
-        if ($this->hasTaxIds($item)) {
-            $index = array_search($item, $this->tax_ids);
-            unset($this->tax_ids[$index]);
-        }
+    /**
+     * @param bool|null $predict_override_default_account
+     */
+    public function setPredictOverrideDefaultAccount(?bool $predict_override_default_account): void
+    {
+        $this->predict_override_default_account = $predict_override_default_account;
     }
 
     /**
@@ -1564,13 +1779,111 @@ final class Line extends Base
      *
      * @return bool
      */
-    public function hasTaxIds(OdooRelation $item): bool
+    public function hasSaleLineIds(OdooRelation $item): bool
     {
-        if (null === $this->tax_ids) {
+        if (null === $this->sale_line_ids) {
             return false;
         }
 
-        return in_array($item, $this->tax_ids);
+        return in_array($item, $this->sale_line_ids);
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("expected_pay_date")
+     */
+    public function getExpectedPayDate(): ?DateTimeInterface
+    {
+        return $this->expected_pay_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $expected_pay_date
+     */
+    public function setExpectedPayDate(?DateTimeInterface $expected_pay_date): void
+    {
+        $this->expected_pay_date = $expected_pay_date;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("internal_note")
+     */
+    public function getInternalNote(): ?string
+    {
+        return $this->internal_note;
+    }
+
+    /**
+     * @param string|null $internal_note
+     */
+    public function setInternalNote(?string $internal_note): void
+    {
+        $this->internal_note = $internal_note;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("next_action_date")
+     */
+    public function getNextActionDate(): ?DateTimeInterface
+    {
+        return $this->next_action_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $next_action_date
+     */
+    public function setNextActionDate(?DateTimeInterface $next_action_date): void
+    {
+        $this->next_action_date = $next_action_date;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("sale_line_ids")
+     */
+    public function getSaleLineIds(): ?array
+    {
+        return $this->sale_line_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $sale_line_ids
+     */
+    public function setSaleLineIds(?array $sale_line_ids): void
+    {
+        $this->sale_line_ids = $sale_line_ids;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("tax_audit")
+     */
+    public function getTaxAudit(): ?string
+    {
+        return $this->tax_audit;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addTagIds(OdooRelation $item): void
+    {
+        if ($this->hasTagIds($item)) {
+            return;
+        }
+
+        if (null === $this->tag_ids) {
+            $this->tag_ids = [];
+        }
+
+        $this->tag_ids[] = $item;
     }
 
     /**
@@ -1584,47 +1897,11 @@ final class Line extends Base
     }
 
     /**
-     * @param int|null $sequence
+     * @param float|null $price_unit
      */
-    public function setSequence(?int $sequence): void
+    public function setPriceUnit(?float $price_unit): void
     {
-        $this->sequence = $sequence;
-    }
-
-    /**
-     * @param OdooRelation|null $account_id
-     */
-    public function setAccountId(?OdooRelation $account_id): void
-    {
-        $this->account_id = $account_id;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("account_internal_type")
-     */
-    public function getAccountInternalType(): ?string
-    {
-        return $this->account_internal_type;
-    }
-
-    /**
-     * @param string|null $account_internal_type
-     */
-    public function setAccountInternalType(?string $account_internal_type): void
-    {
-        $this->account_internal_type = $account_internal_type;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("account_root_id")
-     */
-    public function getAccountRootId(): ?OdooRelation
-    {
-        return $this->account_root_id;
+        $this->price_unit = $price_unit;
     }
 
     /**
@@ -1646,6 +1923,14 @@ final class Line extends Base
     }
 
     /**
+     * @param int|null $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
      * @return string|null
      *
      * @SerializedName("name")
@@ -1653,14 +1938,6 @@ final class Line extends Base
     public function getName(): ?string
     {
         return $this->name;
-    }
-
-    /**
-     * @param OdooRelation|null $country_id
-     */
-    public function setCountryId(?OdooRelation $country_id): void
-    {
-        $this->country_id = $country_id;
     }
 
     /**
@@ -1700,14 +1977,6 @@ final class Line extends Base
     }
 
     /**
-     * @param float|null $price_unit
-     */
-    public function setPriceUnit(?float $price_unit): void
-    {
-        $this->price_unit = $price_unit;
-    }
-
-    /**
      * @return float|null
      *
      * @SerializedName("discount")
@@ -1718,23 +1987,19 @@ final class Line extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("account_id")
+     * @param string|null $account_internal_type
      */
-    public function getAccountId(): ?OdooRelation
+    public function setAccountInternalType(?string $account_internal_type): void
     {
-        return $this->account_id;
+        $this->account_internal_type = $account_internal_type;
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("country_id")
+     * @param float|null $discount
      */
-    public function getCountryId(): ?OdooRelation
+    public function setDiscount(?float $discount): void
     {
-        return $this->country_id;
+        $this->discount = $discount;
     }
 
     /**
@@ -1748,11 +2013,95 @@ final class Line extends Base
     }
 
     /**
-     * @param string|null $ref
+     * @param float|null $debit
      */
-    public function setRef(?string $ref): void
+    public function setDebit(?float $debit): void
     {
-        $this->ref = $ref;
+        $this->debit = $debit;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("credit")
+     */
+    public function getCredit(): ?float
+    {
+        return $this->credit;
+    }
+
+    /**
+     * @param float|null $credit
+     */
+    public function setCredit(?float $credit): void
+    {
+        $this->credit = $credit;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("balance")
+     */
+    public function getBalance(): ?float
+    {
+        return $this->balance;
+    }
+
+    /**
+     * @param float|null $balance
+     */
+    public function setBalance(?float $balance): void
+    {
+        $this->balance = $balance;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("amount_currency")
+     */
+    public function getAmountCurrency(): ?float
+    {
+        return $this->amount_currency;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("account_root_id")
+     */
+    public function getAccountRootId(): ?OdooRelation
+    {
+        return $this->account_root_id;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("account_internal_type")
+     */
+    public function getAccountInternalType(): ?string
+    {
+        return $this->account_internal_type;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("price_subtotal")
+     */
+    public function getPriceSubtotal(): ?float
+    {
+        return $this->price_subtotal;
+    }
+
+    /**
+     * @param string|null $parent_state
+     */
+    public function setParentState(?string $parent_state): void
+    {
+        $this->parent_state = $parent_state;
     }
 
     /**
@@ -1810,6 +2159,14 @@ final class Line extends Base
     }
 
     /**
+     * @param string|null $ref
+     */
+    public function setRef(?string $ref): void
+    {
+        $this->ref = $ref;
+    }
+
+    /**
      * @return string|null
      *
      * @SerializedName("parent_state")
@@ -1820,22 +2177,6 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation|null $company_currency_id
-     */
-    public function setCompanyCurrencyId(?OdooRelation $company_currency_id): void
-    {
-        $this->company_currency_id = $company_currency_id;
-    }
-
-    /**
-     * @param string|null $parent_state
-     */
-    public function setParentState(?string $parent_state): void
-    {
-        $this->parent_state = $parent_state;
-    }
-
-    /**
      * @return OdooRelation|null
      *
      * @SerializedName("journal_id")
@@ -1843,6 +2184,14 @@ final class Line extends Base
     public function getJournalId(): ?OdooRelation
     {
         return $this->journal_id;
+    }
+
+    /**
+     * @param OdooRelation|null $account_id
+     */
+    public function setAccountId(?OdooRelation $account_id): void
+    {
+        $this->account_id = $account_id;
     }
 
     /**
@@ -1882,19 +2231,97 @@ final class Line extends Base
     }
 
     /**
-     * @param float|null $discount
+     * @param OdooRelation|null $company_currency_id
      */
-    public function setDiscount(?float $discount): void
+    public function setCompanyCurrencyId(?OdooRelation $company_currency_id): void
     {
-        $this->discount = $discount;
+        $this->company_currency_id = $company_currency_id;
     }
 
     /**
-     * @param float|null $debit
+     * @return OdooRelation|null
+     *
+     * @SerializedName("country_id")
      */
-    public function setDebit(?float $debit): void
+    public function getCountryId(): ?OdooRelation
     {
-        $this->debit = $debit;
+        return $this->country_id;
+    }
+
+    /**
+     * @param OdooRelation|null $country_id
+     */
+    public function setCountryId(?OdooRelation $country_id): void
+    {
+        $this->country_id = $country_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("account_id")
+     */
+    public function getAccountId(): ?OdooRelation
+    {
+        return $this->account_id;
+    }
+
+    /**
+     * @param float|null $amount_currency
+     */
+    public function setAmountCurrency(?float $amount_currency): void
+    {
+        $this->amount_currency = $amount_currency;
+    }
+
+    /**
+     * @param float|null $price_subtotal
+     */
+    public function setPriceSubtotal(?float $price_subtotal): void
+    {
+        $this->price_subtotal = $price_subtotal;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasTagIds(OdooRelation $item): bool
+    {
+        if (null === $this->tag_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->tag_ids);
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("tax_group_id")
+     */
+    public function getTaxGroupId(): ?OdooRelation
+    {
+        return $this->tax_group_id;
+    }
+
+    /**
+     * @param OdooRelation|null $statement_id
+     */
+    public function setStatementId(?OdooRelation $statement_id): void
+    {
+        $this->statement_id = $statement_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("tax_ids")
+     */
+    public function getTaxIds(): ?array
+    {
+        return $this->tax_ids;
     }
 
     /**
@@ -1906,11 +2333,282 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation|null $reconcile_model_id
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setReconcileModelId(?OdooRelation $reconcile_model_id): void
+    public function hasTaxIds(OdooRelation $item): bool
     {
-        $this->reconcile_model_id = $reconcile_model_id;
+        if (null === $this->tax_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->tax_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addTaxIds(OdooRelation $item): void
+    {
+        if ($this->hasTaxIds($item)) {
+            return;
+        }
+
+        if (null === $this->tax_ids) {
+            $this->tax_ids = [];
+        }
+
+        $this->tax_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeTaxIds(OdooRelation $item): void
+    {
+        if (null === $this->tax_ids) {
+            $this->tax_ids = [];
+        }
+
+        if ($this->hasTaxIds($item)) {
+            $index = array_search($item, $this->tax_ids);
+            unset($this->tax_ids[$index]);
+        }
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("tax_line_id")
+     */
+    public function getTaxLineId(): ?OdooRelation
+    {
+        return $this->tax_line_id;
+    }
+
+    /**
+     * @param OdooRelation|null $tax_line_id
+     */
+    public function setTaxLineId(?OdooRelation $tax_line_id): void
+    {
+        $this->tax_line_id = $tax_line_id;
+    }
+
+    /**
+     * @param OdooRelation|null $tax_group_id
+     */
+    public function setTaxGroupId(?OdooRelation $tax_group_id): void
+    {
+        $this->tax_group_id = $tax_group_id;
+    }
+
+    /**
+     * @param OdooRelation|null $statement_line_id
+     */
+    public function setStatementLineId(?OdooRelation $statement_line_id): void
+    {
+        $this->statement_line_id = $statement_line_id;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("tax_base_amount")
+     */
+    public function getTaxBaseAmount(): ?float
+    {
+        return $this->tax_base_amount;
+    }
+
+    /**
+     * @param float|null $tax_base_amount
+     */
+    public function setTaxBaseAmount(?float $tax_base_amount): void
+    {
+        $this->tax_base_amount = $tax_base_amount;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("tax_exigible")
+     */
+    public function isTaxExigible(): ?bool
+    {
+        return $this->tax_exigible;
+    }
+
+    /**
+     * @param bool|null $tax_exigible
+     */
+    public function setTaxExigible(?bool $tax_exigible): void
+    {
+        $this->tax_exigible = $tax_exigible;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("tax_repartition_line_id")
+     */
+    public function getTaxRepartitionLineId(): ?OdooRelation
+    {
+        return $this->tax_repartition_line_id;
+    }
+
+    /**
+     * @param OdooRelation|null $tax_repartition_line_id
+     */
+    public function setTaxRepartitionLineId(?OdooRelation $tax_repartition_line_id): void
+    {
+        $this->tax_repartition_line_id = $tax_repartition_line_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("tag_ids")
+     */
+    public function getTagIds(): ?array
+    {
+        return $this->tag_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $tag_ids
+     */
+    public function setTagIds(?array $tag_ids): void
+    {
+        $this->tag_ids = $tag_ids;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("statement_id")
+     */
+    public function getStatementId(): ?OdooRelation
+    {
+        return $this->statement_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("statement_line_id")
+     */
+    public function getStatementLineId(): ?OdooRelation
+    {
+        return $this->statement_line_id;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("price_total")
+     */
+    public function getPriceTotal(): ?float
+    {
+        return $this->price_total;
+    }
+
+    /**
+     * @param OdooRelation|null $currency_id
+     */
+    public function setCurrencyId(?OdooRelation $currency_id): void
+    {
+        $this->currency_id = $currency_id;
+    }
+
+    /**
+     * @param float|null $price_total
+     */
+    public function setPriceTotal(?float $price_total): void
+    {
+        $this->price_total = $price_total;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("reconciled")
+     */
+    public function isReconciled(): ?bool
+    {
+        return $this->reconciled;
+    }
+
+    /**
+     * @param bool|null $reconciled
+     */
+    public function setReconciled(?bool $reconciled): void
+    {
+        $this->reconciled = $reconciled;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("blocked")
+     */
+    public function isBlocked(): ?bool
+    {
+        return $this->blocked;
+    }
+
+    /**
+     * @param bool|null $blocked
+     */
+    public function setBlocked(?bool $blocked): void
+    {
+        $this->blocked = $blocked;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("date_maturity")
+     */
+    public function getDateMaturity(): ?DateTimeInterface
+    {
+        return $this->date_maturity;
+    }
+
+    /**
+     * @param DateTimeInterface|null $date_maturity
+     */
+    public function setDateMaturity(?DateTimeInterface $date_maturity): void
+    {
+        $this->date_maturity = $date_maturity;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("currency_id")
+     */
+    public function getCurrencyId(): ?OdooRelation
+    {
+        return $this->currency_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("partner_id")
+     */
+    public function getPartnerId(): ?OdooRelation
+    {
+        return $this->partner_id;
+    }
+
+    /**
+     * @param OdooRelation|null $payment_id
+     */
+    public function setPaymentId(?OdooRelation $payment_id): void
+    {
+        $this->payment_id = $payment_id;
     }
 
     /**
@@ -1968,6 +2666,14 @@ final class Line extends Base
     }
 
     /**
+     * @param OdooRelation|null $reconcile_model_id
+     */
+    public function setReconcileModelId(?OdooRelation $reconcile_model_id): void
+    {
+        $this->reconcile_model_id = $reconcile_model_id;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("payment_id")
@@ -1975,232 +2681,6 @@ final class Line extends Base
     public function getPaymentId(): ?OdooRelation
     {
         return $this->payment_id;
-    }
-
-    /**
-     * @param OdooRelation|null $currency_id
-     */
-    public function setCurrencyId(?OdooRelation $currency_id): void
-    {
-        $this->currency_id = $currency_id;
-    }
-
-    /**
-     * @param OdooRelation|null $payment_id
-     */
-    public function setPaymentId(?OdooRelation $payment_id): void
-    {
-        $this->payment_id = $payment_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("statement_line_id")
-     */
-    public function getStatementLineId(): ?OdooRelation
-    {
-        return $this->statement_line_id;
-    }
-
-    /**
-     * @param OdooRelation|null $statement_line_id
-     */
-    public function setStatementLineId(?OdooRelation $statement_line_id): void
-    {
-        $this->statement_line_id = $statement_line_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("statement_id")
-     */
-    public function getStatementId(): ?OdooRelation
-    {
-        return $this->statement_id;
-    }
-
-    /**
-     * @param OdooRelation|null $statement_id
-     */
-    public function setStatementId(?OdooRelation $statement_id): void
-    {
-        $this->statement_id = $statement_id;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("tax_ids")
-     */
-    public function getTaxIds(): ?array
-    {
-        return $this->tax_ids;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("partner_id")
-     */
-    public function getPartnerId(): ?OdooRelation
-    {
-        return $this->partner_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("currency_id")
-     */
-    public function getCurrencyId(): ?OdooRelation
-    {
-        return $this->currency_id;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("credit")
-     */
-    public function getCredit(): ?float
-    {
-        return $this->credit;
-    }
-
-    /**
-     * @param float|null $price_subtotal
-     */
-    public function setPriceSubtotal(?float $price_subtotal): void
-    {
-        $this->price_subtotal = $price_subtotal;
-    }
-
-    /**
-     * @param float|null $credit
-     */
-    public function setCredit(?float $credit): void
-    {
-        $this->credit = $credit;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("balance")
-     */
-    public function getBalance(): ?float
-    {
-        return $this->balance;
-    }
-
-    /**
-     * @param float|null $balance
-     */
-    public function setBalance(?float $balance): void
-    {
-        $this->balance = $balance;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("amount_currency")
-     */
-    public function getAmountCurrency(): ?float
-    {
-        return $this->amount_currency;
-    }
-
-    /**
-     * @param float|null $amount_currency
-     */
-    public function setAmountCurrency(?float $amount_currency): void
-    {
-        $this->amount_currency = $amount_currency;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("price_subtotal")
-     */
-    public function getPriceSubtotal(): ?float
-    {
-        return $this->price_subtotal;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("price_total")
-     */
-    public function getPriceTotal(): ?float
-    {
-        return $this->price_total;
-    }
-
-    /**
-     * @param DateTimeInterface|null $date_maturity
-     */
-    public function setDateMaturity(?DateTimeInterface $date_maturity): void
-    {
-        $this->date_maturity = $date_maturity;
-    }
-
-    /**
-     * @param float|null $price_total
-     */
-    public function setPriceTotal(?float $price_total): void
-    {
-        $this->price_total = $price_total;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("reconciled")
-     */
-    public function isReconciled(): ?bool
-    {
-        return $this->reconciled;
-    }
-
-    /**
-     * @param bool|null $reconciled
-     */
-    public function setReconciled(?bool $reconciled): void
-    {
-        $this->reconciled = $reconciled;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("blocked")
-     */
-    public function isBlocked(): ?bool
-    {
-        return $this->blocked;
-    }
-
-    /**
-     * @param bool|null $blocked
-     */
-    public function setBlocked(?bool $blocked): void
-    {
-        $this->blocked = $blocked;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("date_maturity")
-     */
-    public function getDateMaturity(): ?DateTimeInterface
-    {
-        return $this->date_maturity;
     }
 
     /**

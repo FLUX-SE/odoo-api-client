@@ -15,7 +15,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  * Info :
  * The base model, which is implicitly inherited by all models.
  */
-final class Mixin extends Base
+abstract class Mixin extends Base
 {
     /**
      * Image
@@ -25,7 +25,7 @@ final class Mixin extends Base
      *
      * @var mixed|null
      */
-    private $image_1920;
+    protected $image_1920;
 
     /**
      * Image 1024
@@ -35,7 +35,7 @@ final class Mixin extends Base
      *
      * @var mixed|null
      */
-    private $image_1024;
+    protected $image_1024;
 
     /**
      * Image 512
@@ -45,7 +45,7 @@ final class Mixin extends Base
      *
      * @var mixed|null
      */
-    private $image_512;
+    protected $image_512;
 
     /**
      * Image 256
@@ -55,7 +55,7 @@ final class Mixin extends Base
      *
      * @var mixed|null
      */
-    private $image_256;
+    protected $image_256;
 
     /**
      * Image 128
@@ -65,7 +65,7 @@ final class Mixin extends Base
      *
      * @var mixed|null
      */
-    private $image_128;
+    protected $image_128;
 
     /**
      * @return mixed|null

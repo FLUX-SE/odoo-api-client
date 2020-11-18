@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *         field that are mandatory to use the blacklist mixin. Mail Thread capabilities
  *         are required for this mixin.
  */
-final class Blacklist extends Base
+abstract class Blacklist extends Base
 {
     /**
      * Blacklist
@@ -31,7 +31,7 @@ final class Blacklist extends Base
      *
      * @var bool|null
      */
-    private $is_blacklisted;
+    protected $is_blacklisted;
 
     /**
      * Bounce
@@ -43,7 +43,7 @@ final class Blacklist extends Base
      *
      * @var int|null
      */
-    private $message_bounce;
+    protected $message_bounce;
 
     /**
      * Is Follower
@@ -53,7 +53,7 @@ final class Blacklist extends Base
      *
      * @var bool|null
      */
-    private $message_is_follower;
+    protected $message_is_follower;
 
     /**
      * Followers
@@ -66,7 +66,7 @@ final class Blacklist extends Base
      *
      * @var OdooRelation[]|null
      */
-    private $message_follower_ids;
+    protected $message_follower_ids;
 
     /**
      * Followers (Partners)
@@ -79,7 +79,7 @@ final class Blacklist extends Base
      *
      * @var OdooRelation[]|null
      */
-    private $message_partner_ids;
+    protected $message_partner_ids;
 
     /**
      * Followers (Channels)
@@ -92,7 +92,7 @@ final class Blacklist extends Base
      *
      * @var OdooRelation[]|null
      */
-    private $message_channel_ids;
+    protected $message_channel_ids;
 
     /**
      * Messages
@@ -105,7 +105,7 @@ final class Blacklist extends Base
      *
      * @var OdooRelation[]|null
      */
-    private $message_ids;
+    protected $message_ids;
 
     /**
      * Unread Messages
@@ -117,7 +117,7 @@ final class Blacklist extends Base
      *
      * @var bool|null
      */
-    private $message_unread;
+    protected $message_unread;
 
     /**
      * Unread Messages Counter
@@ -129,7 +129,7 @@ final class Blacklist extends Base
      *
      * @var int|null
      */
-    private $message_unread_counter;
+    protected $message_unread_counter;
 
     /**
      * Action Needed
@@ -141,7 +141,7 @@ final class Blacklist extends Base
      *
      * @var bool|null
      */
-    private $message_needaction;
+    protected $message_needaction;
 
     /**
      * Number of Actions
@@ -153,7 +153,7 @@ final class Blacklist extends Base
      *
      * @var int|null
      */
-    private $message_needaction_counter;
+    protected $message_needaction_counter;
 
     /**
      * Message Delivery error
@@ -165,7 +165,7 @@ final class Blacklist extends Base
      *
      * @var bool|null
      */
-    private $message_has_error;
+    protected $message_has_error;
 
     /**
      * Number of errors
@@ -177,7 +177,7 @@ final class Blacklist extends Base
      *
      * @var int|null
      */
-    private $message_has_error_counter;
+    protected $message_has_error_counter;
 
     /**
      * Attachment Count
@@ -187,7 +187,7 @@ final class Blacklist extends Base
      *
      * @var int|null
      */
-    private $message_attachment_count;
+    protected $message_attachment_count;
 
     /**
      * Main Attachment
@@ -200,7 +200,7 @@ final class Blacklist extends Base
      *
      * @var OdooRelation|null
      */
-    private $message_main_attachment_id;
+    protected $message_main_attachment_id;
 
     /**
      * Website Messages
@@ -215,7 +215,7 @@ final class Blacklist extends Base
      *
      * @var OdooRelation[]|null
      */
-    private $website_message_ids;
+    protected $website_message_ids;
 
     /**
      * SMS Delivery error
@@ -227,7 +227,7 @@ final class Blacklist extends Base
      *
      * @var bool|null
      */
-    private $message_has_sms_error;
+    protected $message_has_sms_error;
 
     /**
      * Normalized Email
@@ -240,7 +240,7 @@ final class Blacklist extends Base
      *
      * @var string|null
      */
-    private $email_normalized;
+    protected $email_normalized;
 
     /**
      * @return bool|null

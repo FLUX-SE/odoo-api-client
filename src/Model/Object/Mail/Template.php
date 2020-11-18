@@ -15,7 +15,11 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  * Name : mail.template
  * ---
  * Info :
- * Templates for sending email
+ * Mixin that overrides the create and write methods to properly generate
+ *                 ir.model.data entries flagged with Studio for the corresponding resources.
+ *                 Doesn't create an ir.model.data if the record is part of a module being
+ *                 currently installed as the ir.model.data will be created automatically
+ *                 afterwards.
  */
 final class Template extends Base
 {

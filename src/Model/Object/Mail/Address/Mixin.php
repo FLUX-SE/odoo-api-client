@@ -27,7 +27,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  * comparison
  *         and not using time consuming regex anymore).
  */
-final class Mixin extends Base
+abstract class Mixin extends Base
 {
     /**
      * Normalized Email
@@ -40,7 +40,7 @@ final class Mixin extends Base
      *
      * @var string|null
      */
-    private $email_normalized;
+    protected $email_normalized;
 
     /**
      * @return string|null

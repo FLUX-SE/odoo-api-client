@@ -21,7 +21,7 @@ use Flux\OdooApiClient\Model\Object\Base;
  *             result node
  *         * generates the root result node itself through :meth:`~.render_element`
  */
-final class Datetime extends Base
+abstract class Datetime extends Base
 {
     /**
      * @return string

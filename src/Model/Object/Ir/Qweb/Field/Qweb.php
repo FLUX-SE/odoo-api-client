@@ -21,7 +21,7 @@ use Flux\OdooApiClient\Model\Object\Base;
  *             result node
  *         * generates the root result node itself through :meth:`~.render_element`
  */
-final class Qweb extends Base
+abstract class Qweb extends Base
 {
     /**
      * @return string

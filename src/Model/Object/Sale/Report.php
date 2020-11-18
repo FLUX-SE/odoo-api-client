@@ -442,6 +442,19 @@ final class Report extends Base
     private $invoice_status;
 
     /**
+     * Warehouse
+     * ---
+     * Relation : many2one (stock.warehouse)
+     * @see \Flux\OdooApiClient\Model\Object\Stock\Warehouse
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $warehouse_id;
+
+    /**
      * @return string|null
      *
      * @SerializedName("name")
@@ -452,11 +465,23 @@ final class Report extends Base
     }
 
     /**
-     * @param OdooRelation|null $industry_id
+     * @return OdooRelation|null
+     *
+     * @SerializedName("commercial_partner_id")
      */
-    public function setIndustryId(?OdooRelation $industry_id): void
+    public function getCommercialPartnerId(): ?OdooRelation
     {
-        $this->industry_id = $industry_id;
+        return $this->commercial_partner_id;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("volume")
+     */
+    public function getVolume(): ?float
+    {
+        return $this->volume;
     }
 
     /**
@@ -504,13 +529,21 @@ final class Report extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("commercial_partner_id")
+     * @param OdooRelation|null $industry_id
      */
-    public function getCommercialPartnerId(): ?OdooRelation
+    public function setIndustryId(?OdooRelation $industry_id): void
     {
-        return $this->commercial_partner_id;
+        $this->industry_id = $industry_id;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("discount")
+     */
+    public function getDiscount(): ?float
+    {
+        return $this->discount;
     }
 
     /**
@@ -521,14 +554,6 @@ final class Report extends Base
     public function getIndustryId(): ?OdooRelation
     {
         return $this->industry_id;
-    }
-
-    /**
-     * @param float|null $volume
-     */
-    public function setVolume(?float $volume): void
-    {
-        $this->volume = $volume;
     }
 
     /**
@@ -576,51 +601,53 @@ final class Report extends Base
     }
 
     /**
+     * @param float|null $volume
+     */
+    public function setVolume(?float $volume): void
+    {
+        $this->volume = $volume;
+    }
+
+    /**
+     * @param float|null $discount
+     */
+    public function setDiscount(?float $discount): void
+    {
+        $this->discount = $discount;
+    }
+
+    /**
+     * @param OdooRelation|null $pricelist_id
+     */
+    public function setPricelistId(?OdooRelation $pricelist_id): void
+    {
+        $this->pricelist_id = $pricelist_id;
+    }
+
+    /**
+     * @param OdooRelation|null $order_id
+     */
+    public function setOrderId(?OdooRelation $order_id): void
+    {
+        $this->order_id = $order_id;
+    }
+
+    /**
+     * @param OdooRelation|null $warehouse_id
+     */
+    public function setWarehouseId(?OdooRelation $warehouse_id): void
+    {
+        $this->warehouse_id = $warehouse_id;
+    }
+
+    /**
      * @return OdooRelation|null
      *
-     * @SerializedName("analytic_account_id")
+     * @SerializedName("warehouse_id")
      */
-    public function getAnalyticAccountId(): ?OdooRelation
+    public function getWarehouseId(): ?OdooRelation
     {
-        return $this->analytic_account_id;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("volume")
-     */
-    public function getVolume(): ?float
-    {
-        return $this->volume;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("discount")
-     */
-    public function getDiscount(): ?float
-    {
-        return $this->discount;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("pricelist_id")
-     */
-    public function getPricelistId(): ?OdooRelation
-    {
-        return $this->pricelist_id;
-    }
-
-    /**
-     * @param OdooRelation|null $source_id
-     */
-    public function setSourceId(?OdooRelation $source_id): void
-    {
-        $this->source_id = $source_id;
+        return $this->warehouse_id;
     }
 
     /**
@@ -660,14 +687,6 @@ final class Report extends Base
     }
 
     /**
-     * @param OdooRelation|null $order_id
-     */
-    public function setOrderId(?OdooRelation $order_id): void
-    {
-        $this->order_id = $order_id;
-    }
-
-    /**
      * @return OdooRelation|null
      *
      * @SerializedName("order_id")
@@ -678,6 +697,24 @@ final class Report extends Base
     }
 
     /**
+     * @return float|null
+     *
+     * @SerializedName("discount_amount")
+     */
+    public function getDiscountAmount(): ?float
+    {
+        return $this->discount_amount;
+    }
+
+    /**
+     * @param OdooRelation|null $source_id
+     */
+    public function setSourceId(?OdooRelation $source_id): void
+    {
+        $this->source_id = $source_id;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("source_id")
@@ -685,14 +722,6 @@ final class Report extends Base
     public function getSourceId(): ?OdooRelation
     {
         return $this->source_id;
-    }
-
-    /**
-     * @param float|null $discount
-     */
-    public function setDiscount(?float $discount): void
-    {
-        $this->discount = $discount;
     }
 
     /**
@@ -740,29 +769,23 @@ final class Report extends Base
     }
 
     /**
-     * @return float|null
+     * @return OdooRelation|null
      *
-     * @SerializedName("discount_amount")
+     * @SerializedName("analytic_account_id")
      */
-    public function getDiscountAmount(): ?float
+    public function getAnalyticAccountId(): ?OdooRelation
     {
-        return $this->discount_amount;
+        return $this->analytic_account_id;
     }
 
     /**
-     * @param OdooRelation|null $pricelist_id
+     * @return OdooRelation|null
+     *
+     * @SerializedName("pricelist_id")
      */
-    public function setPricelistId(?OdooRelation $pricelist_id): void
+    public function getPricelistId(): ?OdooRelation
     {
-        $this->pricelist_id = $pricelist_id;
-    }
-
-    /**
-     * @param int|null $nbr
-     */
-    public function setNbr(?int $nbr): void
-    {
-        $this->nbr = $nbr;
+        return $this->pricelist_id;
     }
 
     /**
@@ -928,6 +951,24 @@ final class Report extends Base
     }
 
     /**
+     * @param int|null $nbr
+     */
+    public function setNbr(?int $nbr): void
+    {
+        $this->nbr = $nbr;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("untaxed_amount_invoiced")
+     */
+    public function getUntaxedAmountInvoiced(): ?float
+    {
+        return $this->untaxed_amount_invoiced;
+    }
+
+    /**
      * @return int|null
      *
      * @SerializedName("nbr")
@@ -935,14 +976,6 @@ final class Report extends Base
     public function getNbr(): ?int
     {
         return $this->nbr;
-    }
-
-    /**
-     * @param float|null $untaxed_amount_to_invoice
-     */
-    public function setUntaxedAmountToInvoice(?float $untaxed_amount_to_invoice): void
-    {
-        $this->untaxed_amount_to_invoice = $untaxed_amount_to_invoice;
     }
 
     /**
@@ -990,13 +1023,19 @@ final class Report extends Base
     }
 
     /**
-     * @return float|null
-     *
-     * @SerializedName("untaxed_amount_invoiced")
+     * @param float|null $untaxed_amount_to_invoice
      */
-    public function getUntaxedAmountInvoiced(): ?float
+    public function setUntaxedAmountToInvoice(?float $untaxed_amount_to_invoice): void
     {
-        return $this->untaxed_amount_invoiced;
+        $this->untaxed_amount_to_invoice = $untaxed_amount_to_invoice;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
     }
 
     /**
@@ -1007,14 +1046,6 @@ final class Report extends Base
     public function getUntaxedAmountToInvoice(): ?float
     {
         return $this->untaxed_amount_to_invoice;
-    }
-
-    /**
-     * @param OdooRelation|null $company_id
-     */
-    public function setCompanyId(?OdooRelation $company_id): void
-    {
-        $this->company_id = $company_id;
     }
 
     /**

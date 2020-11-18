@@ -15,7 +15,7 @@ use Flux\OdooApiClient\Model\Object\Base;
  * Override qweb.field.float to add a `decimal_precision` domain option
  *         and use that instead of the column's own value if it is specified
  */
-final class Float_ extends Base
+abstract class Float_ extends Base
 {
     /**
      * @return string

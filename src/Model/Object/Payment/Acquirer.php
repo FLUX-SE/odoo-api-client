@@ -348,46 +348,6 @@ final class Acquirer extends Base
     private $fees_active;
 
     /**
-     * Fixed domestic fees
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var float|null
-     */
-    private $fees_dom_fixed;
-
-    /**
-     * Variable domestic fees (in percents)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var float|null
-     */
-    private $fees_dom_var;
-
-    /**
-     * Fixed international fees
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var float|null
-     */
-    private $fees_int_fixed;
-
-    /**
-     * Variable international fees (in percents)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var float|null
-     */
-    private $fees_int_var;
-
-    /**
      * Use SEPA QR Code
      * ---
      * Searchable : yes
@@ -498,10 +458,131 @@ final class Acquirer extends Base
     private $inbound_payment_method_ids;
 
     /**
+     * Email
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $paypal_email_account;
+
+    /**
+     * Merchant Account ID
+     * ---
+     * The Merchant ID is used to ensure communications coming from Paypal are valid and secured.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $paypal_seller_account;
+
+    /**
+     * Use IPN
+     * ---
+     * Paypal Instant Payment Notification
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $paypal_use_ipn;
+
+    /**
+     * PDT Identity Token
+     * ---
+     * Payment Data Transfer allows you to receive notification of successful payments as they are made.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $paypal_pdt_token;
+
+    /**
+     * Fixed domestic fees
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var float|null
+     */
+    private $fees_dom_fixed;
+
+    /**
+     * Variable domestic fees (in percents)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var float|null
+     */
+    private $fees_dom_var;
+
+    /**
+     * Fixed international fees
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var float|null
+     */
+    private $fees_int_fixed;
+
+    /**
+     * Variable international fees (in percents)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var float|null
+     */
+    private $fees_int_var;
+
+    /**
+     * Stripe Secret Key
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $stripe_secret_key;
+
+    /**
+     * Stripe Publishable Key
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $stripe_publishable_key;
+
+    /**
+     * Checkout Image URL
+     * ---
+     * A relative or absolute URL pointing to a square image of your brand or product. As defined in your Stripe
+     * profile. See: https://stripe.com/docs/checkout
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $stripe_image_url;
+
+    /**
      * Provider
      * ---
      * Selection :
      *     -> manual (Custom Payment Form)
+     *     -> paypal (Paypal)
+     *     -> stripe (Stripe)
      *     -> transfer (Manual Payment)
      * ---
      * Searchable : yes
@@ -614,6 +695,8 @@ final class Acquirer extends Base
      *        ---
      *        Selection :
      *            -> manual (Custom Payment Form)
+     *            -> paypal (Paypal)
+     *            -> stripe (Stripe)
      *            -> transfer (Manual Payment)
      *        ---
      *        Searchable : yes
@@ -634,11 +717,221 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param bool|null $qr_code
+     * @param OdooRelation[]|null $inbound_payment_method_ids
      */
-    public function setQrCode(?bool $qr_code): void
+    public function setInboundPaymentMethodIds(?array $inbound_payment_method_ids): void
     {
-        $this->qr_code = $qr_code;
+        $this->inbound_payment_method_ids = $inbound_payment_method_ids;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("paypal_pdt_token")
+     */
+    public function getPaypalPdtToken(): ?string
+    {
+        return $this->paypal_pdt_token;
+    }
+
+    /**
+     * @param bool|null $paypal_use_ipn
+     */
+    public function setPaypalUseIpn(?bool $paypal_use_ipn): void
+    {
+        $this->paypal_use_ipn = $paypal_use_ipn;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("paypal_use_ipn")
+     */
+    public function isPaypalUseIpn(): ?bool
+    {
+        return $this->paypal_use_ipn;
+    }
+
+    /**
+     * @param string|null $paypal_seller_account
+     */
+    public function setPaypalSellerAccount(?string $paypal_seller_account): void
+    {
+        $this->paypal_seller_account = $paypal_seller_account;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("paypal_seller_account")
+     */
+    public function getPaypalSellerAccount(): ?string
+    {
+        return $this->paypal_seller_account;
+    }
+
+    /**
+     * @param string|null $paypal_email_account
+     */
+    public function setPaypalEmailAccount(?string $paypal_email_account): void
+    {
+        $this->paypal_email_account = $paypal_email_account;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("paypal_email_account")
+     */
+    public function getPaypalEmailAccount(): ?string
+    {
+        return $this->paypal_email_account;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeInboundPaymentMethodIds(OdooRelation $item): void
+    {
+        if (null === $this->inbound_payment_method_ids) {
+            $this->inbound_payment_method_ids = [];
+        }
+
+        if ($this->hasInboundPaymentMethodIds($item)) {
+            $index = array_search($item, $this->inbound_payment_method_ids);
+            unset($this->inbound_payment_method_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addInboundPaymentMethodIds(OdooRelation $item): void
+    {
+        if ($this->hasInboundPaymentMethodIds($item)) {
+            return;
+        }
+
+        if (null === $this->inbound_payment_method_ids) {
+            $this->inbound_payment_method_ids = [];
+        }
+
+        $this->inbound_payment_method_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasInboundPaymentMethodIds(OdooRelation $item): bool
+    {
+        if (null === $this->inbound_payment_method_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->inbound_payment_method_ids);
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("inbound_payment_method_ids")
+     */
+    public function getInboundPaymentMethodIds(): ?array
+    {
+        return $this->inbound_payment_method_ids;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("fees_dom_fixed")
+     */
+    public function getFeesDomFixed(): ?float
+    {
+        return $this->fees_dom_fixed;
+    }
+
+    /**
+     * @param string $payment_flow
+     */
+    public function setPaymentFlow(string $payment_flow): void
+    {
+        $this->payment_flow = $payment_flow;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("payment_flow")
+     */
+    public function getPaymentFlow(): string
+    {
+        return $this->payment_flow;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removePaymentIconIds(OdooRelation $item): void
+    {
+        if (null === $this->payment_icon_ids) {
+            $this->payment_icon_ids = [];
+        }
+
+        if ($this->hasPaymentIconIds($item)) {
+            $index = array_search($item, $this->payment_icon_ids);
+            unset($this->payment_icon_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addPaymentIconIds(OdooRelation $item): void
+    {
+        if ($this->hasPaymentIconIds($item)) {
+            return;
+        }
+
+        if (null === $this->payment_icon_ids) {
+            $this->payment_icon_ids = [];
+        }
+
+        $this->payment_icon_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasPaymentIconIds(OdooRelation $item): bool
+    {
+        if (null === $this->payment_icon_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->payment_icon_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $payment_icon_ids
+     */
+    public function setPaymentIconIds(?array $payment_icon_ids): void
+    {
+        $this->payment_icon_ids = $payment_icon_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("payment_icon_ids")
+     */
+    public function getPaymentIconIds(): ?array
+    {
+        return $this->payment_icon_ids;
     }
 
     /**
@@ -678,11 +971,19 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param string|null $module_state
+     * @param string|null $paypal_pdt_token
      */
-    public function setModuleState(?string $module_state): void
+    public function setPaypalPdtToken(?string $paypal_pdt_token): void
     {
-        $this->module_state = $module_state;
+        $this->paypal_pdt_token = $paypal_pdt_token;
+    }
+
+    /**
+     * @param float|null $fees_dom_fixed
+     */
+    public function setFeesDomFixed(?float $fees_dom_fixed): void
+    {
+        $this->fees_dom_fixed = $fees_dom_fixed;
     }
 
     /**
@@ -696,161 +997,11 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param OdooRelation|null $module_id
+     * @param string $provider
      */
-    public function setModuleId(?OdooRelation $module_id): void
+    public function setProvider(string $provider): void
     {
-        $this->module_id = $module_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("module_id")
-     */
-    public function getModuleId(): ?OdooRelation
-    {
-        return $this->module_id;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("qr_code")
-     */
-    public function isQrCode(): ?bool
-    {
-        return $this->qr_code;
-    }
-
-    /**
-     * @param OdooRelation[]|null $payment_icon_ids
-     */
-    public function setPaymentIconIds(?array $payment_icon_ids): void
-    {
-        $this->payment_icon_ids = $payment_icon_ids;
-    }
-
-    /**
-     * @param float|null $fees_int_var
-     */
-    public function setFeesIntVar(?float $fees_int_var): void
-    {
-        $this->fees_int_var = $fees_int_var;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("fees_int_var")
-     */
-    public function getFeesIntVar(): ?float
-    {
-        return $this->fees_int_var;
-    }
-
-    /**
-     * @param float|null $fees_int_fixed
-     */
-    public function setFeesIntFixed(?float $fees_int_fixed): void
-    {
-        $this->fees_int_fixed = $fees_int_fixed;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("fees_int_fixed")
-     */
-    public function getFeesIntFixed(): ?float
-    {
-        return $this->fees_int_fixed;
-    }
-
-    /**
-     * @param float|null $fees_dom_var
-     */
-    public function setFeesDomVar(?float $fees_dom_var): void
-    {
-        $this->fees_dom_var = $fees_dom_var;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("fees_dom_var")
-     */
-    public function getFeesDomVar(): ?float
-    {
-        return $this->fees_dom_var;
-    }
-
-    /**
-     * @param float|null $fees_dom_fixed
-     */
-    public function setFeesDomFixed(?float $fees_dom_fixed): void
-    {
-        $this->fees_dom_fixed = $fees_dom_fixed;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("fees_dom_fixed")
-     */
-    public function getFeesDomFixed(): ?float
-    {
-        return $this->fees_dom_fixed;
-    }
-
-    /**
-     * @param bool|null $fees_active
-     */
-    public function setFeesActive(?bool $fees_active): void
-    {
-        $this->fees_active = $fees_active;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("payment_icon_ids")
-     */
-    public function getPaymentIconIds(): ?array
-    {
-        return $this->payment_icon_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasPaymentIconIds(OdooRelation $item): bool
-    {
-        if (null === $this->payment_icon_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->payment_icon_ids);
-    }
-
-    /**
-     * @param bool|null $fees_implemented
-     */
-    public function setFeesImplemented(?bool $fees_implemented): void
-    {
-        $this->fees_implemented = $fees_implemented;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("so_reference_type")
-     */
-    public function getSoReferenceType(): ?string
-    {
-        return $this->so_reference_type;
+        $this->provider = $provider;
     }
 
     /**
@@ -934,27 +1085,13 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param string $provider
+     * @return string|null
+     *
+     * @SerializedName("so_reference_type")
      */
-    public function setProvider(string $provider): void
+    public function getSoReferenceType(): ?string
     {
-        $this->provider = $provider;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addPaymentIconIds(OdooRelation $item): void
-    {
-        if ($this->hasPaymentIconIds($item)) {
-            return;
-        }
-
-        if (null === $this->payment_icon_ids) {
-            $this->payment_icon_ids = [];
-        }
-
-        $this->payment_icon_ids[] = $item;
+        return $this->so_reference_type;
     }
 
     /**
@@ -968,119 +1105,127 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     */
-    public function removeInboundPaymentMethodIds(OdooRelation $item): void
-    {
-        if (null === $this->inbound_payment_method_ids) {
-            $this->inbound_payment_method_ids = [];
-        }
-
-        if ($this->hasInboundPaymentMethodIds($item)) {
-            $index = array_search($item, $this->inbound_payment_method_ids);
-            unset($this->inbound_payment_method_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addInboundPaymentMethodIds(OdooRelation $item): void
-    {
-        if ($this->hasInboundPaymentMethodIds($item)) {
-            return;
-        }
-
-        if (null === $this->inbound_payment_method_ids) {
-            $this->inbound_payment_method_ids = [];
-        }
-
-        $this->inbound_payment_method_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
+     * @return float|null
      *
-     * @return bool
+     * @SerializedName("fees_dom_var")
      */
-    public function hasInboundPaymentMethodIds(OdooRelation $item): bool
+    public function getFeesDomVar(): ?float
     {
-        if (null === $this->inbound_payment_method_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->inbound_payment_method_ids);
+        return $this->fees_dom_var;
     }
 
     /**
-     * @param OdooRelation[]|null $inbound_payment_method_ids
+     * @param string|null $stripe_image_url
      */
-    public function setInboundPaymentMethodIds(?array $inbound_payment_method_ids): void
+    public function setStripeImageUrl(?string $stripe_image_url): void
     {
-        $this->inbound_payment_method_ids = $inbound_payment_method_ids;
+        $this->stripe_image_url = $stripe_image_url;
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @return string|null
      *
-     * @SerializedName("inbound_payment_method_ids")
+     * @SerializedName("stripe_image_url")
      */
-    public function getInboundPaymentMethodIds(): ?array
+    public function getStripeImageUrl(): ?string
     {
-        return $this->inbound_payment_method_ids;
+        return $this->stripe_image_url;
     }
 
     /**
-     * @param string $payment_flow
+     * @param string|null $stripe_publishable_key
      */
-    public function setPaymentFlow(string $payment_flow): void
+    public function setStripePublishableKey(?string $stripe_publishable_key): void
     {
-        $this->payment_flow = $payment_flow;
+        $this->stripe_publishable_key = $stripe_publishable_key;
     }
 
     /**
-     * @return string
+     * @return string|null
      *
-     * @SerializedName("payment_flow")
+     * @SerializedName("stripe_publishable_key")
      */
-    public function getPaymentFlow(): string
+    public function getStripePublishableKey(): ?string
     {
-        return $this->payment_flow;
+        return $this->stripe_publishable_key;
     }
 
     /**
-     * @param OdooRelation $item
+     * @param string|null $stripe_secret_key
      */
-    public function removePaymentIconIds(OdooRelation $item): void
+    public function setStripeSecretKey(?string $stripe_secret_key): void
     {
-        if (null === $this->payment_icon_ids) {
-            $this->payment_icon_ids = [];
-        }
-
-        if ($this->hasPaymentIconIds($item)) {
-            $index = array_search($item, $this->payment_icon_ids);
-            unset($this->payment_icon_ids[$index]);
-        }
+        $this->stripe_secret_key = $stripe_secret_key;
     }
 
     /**
-     * @return bool|null
+     * @return string|null
      *
-     * @SerializedName("fees_active")
+     * @SerializedName("stripe_secret_key")
      */
-    public function isFeesActive(): ?bool
+    public function getStripeSecretKey(): ?string
     {
-        return $this->fees_active;
+        return $this->stripe_secret_key;
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("fees_implemented")
+     * @param float|null $fees_int_var
      */
-    public function isFeesImplemented(): ?bool
+    public function setFeesIntVar(?float $fees_int_var): void
     {
-        return $this->fees_implemented;
+        $this->fees_int_var = $fees_int_var;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("fees_int_var")
+     */
+    public function getFeesIntVar(): ?float
+    {
+        return $this->fees_int_var;
+    }
+
+    /**
+     * @param float|null $fees_int_fixed
+     */
+    public function setFeesIntFixed(?float $fees_int_fixed): void
+    {
+        $this->fees_int_fixed = $fees_int_fixed;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("fees_int_fixed")
+     */
+    public function getFeesIntFixed(): ?float
+    {
+        return $this->fees_int_fixed;
+    }
+
+    /**
+     * @param float|null $fees_dom_var
+     */
+    public function setFeesDomVar(?float $fees_dom_var): void
+    {
+        $this->fees_dom_var = $fees_dom_var;
+    }
+
+    /**
+     * @param string|null $module_state
+     */
+    public function setModuleState(?string $module_state): void
+    {
+        $this->module_state = $module_state;
+    }
+
+    /**
+     * @param OdooRelation|null $module_id
+     */
+    public function setModuleId(?OdooRelation $module_id): void
+    {
+        $this->module_id = $module_id;
     }
 
     /**
@@ -1094,11 +1239,47 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param OdooRelation $company_id
+     * @param OdooRelation|null $view_template_id
      */
-    public function setCompanyId(OdooRelation $company_id): void
+    public function setViewTemplateId(?OdooRelation $view_template_id): void
     {
-        $this->company_id = $company_id;
+        $this->view_template_id = $view_template_id;
+    }
+
+    /**
+     * @param bool|null $check_validity
+     */
+    public function setCheckValidity(?bool $check_validity): void
+    {
+        $this->check_validity = $check_validity;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("check_validity")
+     */
+    public function isCheckValidity(): ?bool
+    {
+        return $this->check_validity;
+    }
+
+    /**
+     * @param OdooRelation|null $journal_id
+     */
+    public function setJournalId(?OdooRelation $journal_id): void
+    {
+        $this->journal_id = $journal_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("journal_id")
+     */
+    public function getJournalId(): ?OdooRelation
+    {
+        return $this->journal_id;
     }
 
     /**
@@ -1156,14 +1337,6 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param OdooRelation|null $view_template_id
-     */
-    public function setViewTemplateId(?OdooRelation $view_template_id): void
-    {
-        $this->view_template_id = $view_template_id;
-    }
-
-    /**
      * @return OdooRelation|null
      *
      * @SerializedName("view_template_id")
@@ -1174,6 +1347,22 @@ final class Acquirer extends Base
     }
 
     /**
+     * @param OdooRelation[]|null $country_ids
+     */
+    public function setCountryIds(?array $country_ids): void
+    {
+        $this->country_ids = $country_ids;
+    }
+
+    /**
+     * @param OdooRelation $company_id
+     */
+    public function setCompanyId(OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
      * @return OdooRelation
      *
      * @SerializedName("company_id")
@@ -1181,14 +1370,6 @@ final class Acquirer extends Base
     public function getCompanyId(): OdooRelation
     {
         return $this->company_id;
-    }
-
-    /**
-     * @param OdooRelation|null $journal_id
-     */
-    public function setJournalId(?OdooRelation $journal_id): void
-    {
-        $this->journal_id = $journal_id;
     }
 
     /**
@@ -1272,23 +1453,99 @@ final class Acquirer extends Base
     }
 
     /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("country_ids")
+     */
+    public function getCountryIds(): ?array
+    {
+        return $this->country_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasCountryIds(OdooRelation $item): bool
+    {
+        if (null === $this->country_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->country_ids);
+    }
+
+    /**
      * @return OdooRelation|null
      *
-     * @SerializedName("journal_id")
+     * @SerializedName("module_id")
      */
-    public function getJournalId(): ?OdooRelation
+    public function getModuleId(): ?OdooRelation
     {
-        return $this->journal_id;
+        return $this->module_id;
+    }
+
+    /**
+     * @param string|null $save_token
+     */
+    public function setSaveToken(?string $save_token): void
+    {
+        $this->save_token = $save_token;
+    }
+
+    /**
+     * @param bool|null $qr_code
+     */
+    public function setQrCode(?bool $qr_code): void
+    {
+        $this->qr_code = $qr_code;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("check_validity")
+     * @SerializedName("qr_code")
      */
-    public function isCheckValidity(): ?bool
+    public function isQrCode(): ?bool
     {
-        return $this->check_validity;
+        return $this->qr_code;
+    }
+
+    /**
+     * @param bool|null $fees_active
+     */
+    public function setFeesActive(?bool $fees_active): void
+    {
+        $this->fees_active = $fees_active;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("fees_active")
+     */
+    public function isFeesActive(): ?bool
+    {
+        return $this->fees_active;
+    }
+
+    /**
+     * @param bool|null $fees_implemented
+     */
+    public function setFeesImplemented(?bool $fees_implemented): void
+    {
+        $this->fees_implemented = $fees_implemented;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("fees_implemented")
+     */
+    public function isFeesImplemented(): ?bool
+    {
+        return $this->fees_implemented;
     }
 
     /**
@@ -1297,14 +1554,6 @@ final class Acquirer extends Base
     public function setAuthorizeImplemented(?bool $authorize_implemented): void
     {
         $this->authorize_implemented = $authorize_implemented;
-    }
-
-    /**
-     * @param string|null $pending_msg
-     */
-    public function setPendingMsg(?string $pending_msg): void
-    {
-        $this->pending_msg = $pending_msg;
     }
 
     /**
@@ -1336,14 +1585,6 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param string|null $save_token
-     */
-    public function setSaveToken(?string $save_token): void
-    {
-        $this->save_token = $save_token;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("save_token")
@@ -1351,6 +1592,22 @@ final class Acquirer extends Base
     public function getSaveToken(): ?string
     {
         return $this->save_token;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addCountryIds(OdooRelation $item): void
+    {
+        if ($this->hasCountryIds($item)) {
+            return;
+        }
+
+        if (null === $this->country_ids) {
+            $this->country_ids = [];
+        }
+
+        $this->country_ids[] = $item;
     }
 
     /**
@@ -1390,6 +1647,14 @@ final class Acquirer extends Base
     }
 
     /**
+     * @param string|null $pending_msg
+     */
+    public function setPendingMsg(?string $pending_msg): void
+    {
+        $this->pending_msg = $pending_msg;
+    }
+
+    /**
      * @return string|null
      *
      * @SerializedName("pending_msg")
@@ -1397,14 +1662,6 @@ final class Acquirer extends Base
     public function getPendingMsg(): ?string
     {
         return $this->pending_msg;
-    }
-
-    /**
-     * @param bool|null $check_validity
-     */
-    public function setCheckValidity(?bool $check_validity): void
-    {
-        $this->check_validity = $check_validity;
     }
 
     /**
@@ -1456,54 +1713,6 @@ final class Acquirer extends Base
             $index = array_search($item, $this->country_ids);
             unset($this->country_ids[$index]);
         }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addCountryIds(OdooRelation $item): void
-    {
-        if ($this->hasCountryIds($item)) {
-            return;
-        }
-
-        if (null === $this->country_ids) {
-            $this->country_ids = [];
-        }
-
-        $this->country_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasCountryIds(OdooRelation $item): bool
-    {
-        if (null === $this->country_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->country_ids);
-    }
-
-    /**
-     * @param OdooRelation[]|null $country_ids
-     */
-    public function setCountryIds(?array $country_ids): void
-    {
-        $this->country_ids = $country_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("country_ids")
-     */
-    public function getCountryIds(): ?array
-    {
-        return $this->country_ids;
     }
 
     /**

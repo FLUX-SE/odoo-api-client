@@ -15,12 +15,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  * Name : base.language.install
  * ---
  * Info :
- * Model super-class for transient records, meant to be temporarily
- *         persistent, and regularly vacuum-cleaned.
- *
- *         A TransientModel has a simplified access rights management, all users can
- *         create new records, and may only access the records they created. The
- *         superuser has unrestricted access to all TransientModel records.
+ * Install Language
  */
 final class Install extends Base
 {

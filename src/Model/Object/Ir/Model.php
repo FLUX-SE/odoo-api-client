@@ -15,15 +15,11 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  * Name : ir.model
  * ---
  * Info :
- * Main super-class for regular database-persisted Odoo models.
- *
- *         Odoo models are created by inheriting from this class::
- *
- *                 class user(Model):
- *                         ...
- *
- *         The system will later instantiate the class once per database (on
- *         which the class' module is installed).
+ * Mixin that overrides the create and write methods to properly generate
+ *                 ir.model.data entries flagged with Studio for the corresponding resources.
+ *                 Doesn't create an ir.model.data if the record is part of a module being
+ *                 currently installed as the ir.model.data will be created automatically
+ *                 afterwards.
  */
 final class Model extends Base
 {
@@ -221,6 +217,18 @@ final class Model extends Base
     private $is_mail_thread_sms;
 
     /**
+     * Abstract
+     * ---
+     * Wheter this model is abstract
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $abstract;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -293,21 +301,11 @@ final class Model extends Base
     /**
      * @return bool|null
      *
-     * @SerializedName("is_mail_activity")
+     * @SerializedName("is_mail_blacklist")
      */
-    public function isIsMailActivity(): ?bool
+    public function isIsMailBlacklist(): ?bool
     {
-        return $this->is_mail_activity;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("modules")
-     */
-    public function getModules(): ?string
-    {
-        return $this->modules;
+        return $this->is_mail_blacklist;
     }
 
     /**
@@ -418,6 +416,16 @@ final class Model extends Base
     }
 
     /**
+     * @return bool|null
+     *
+     * @SerializedName("is_mail_activity")
+     */
+    public function isIsMailActivity(): ?bool
+    {
+        return $this->is_mail_activity;
+    }
+
+    /**
      * @param bool|null $is_mail_activity
      */
     public function setIsMailActivity(?bool $is_mail_activity): void
@@ -426,31 +434,19 @@ final class Model extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("transient")
-     */
-    public function isTransient(): ?bool
-    {
-        return $this->transient;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("is_mail_blacklist")
-     */
-    public function isIsMailBlacklist(): ?bool
-    {
-        return $this->is_mail_blacklist;
-    }
-
-    /**
      * @param bool|null $is_mail_blacklist
      */
     public function setIsMailBlacklist(?bool $is_mail_blacklist): void
     {
         $this->is_mail_blacklist = $is_mail_blacklist;
+    }
+
+    /**
+     * @param bool|null $transient
+     */
+    public function setTransient(?bool $transient): void
+    {
+        $this->transient = $transient;
     }
 
     /**
@@ -469,6 +465,24 @@ final class Model extends Base
     public function setIsMailThreadSms(?bool $is_mail_thread_sms): void
     {
         $this->is_mail_thread_sms = $is_mail_thread_sms;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("abstract")
+     */
+    public function isAbstract(): ?bool
+    {
+        return $this->abstract;
+    }
+
+    /**
+     * @param bool|null $abstract
+     */
+    public function setAbstract(?bool $abstract): void
+    {
+        $this->abstract = $abstract;
     }
 
     /**
@@ -544,26 +558,23 @@ final class Model extends Base
     }
 
     /**
-     * @param bool|null $transient
+     * @return string|null
+     *
+     * @SerializedName("modules")
      */
-    public function setTransient(?bool $transient): void
+    public function getModules(): ?string
     {
-        $this->transient = $transient;
+        return $this->modules;
     }
 
     /**
-     * @param OdooRelation $item
+     * @return bool|null
+     *
+     * @SerializedName("transient")
      */
-    public function removeRuleIds(OdooRelation $item): void
+    public function isTransient(): ?bool
     {
-        if (null === $this->rule_ids) {
-            $this->rule_ids = [];
-        }
-
-        if ($this->hasRuleIds($item)) {
-            $index = array_search($item, $this->rule_ids);
-            unset($this->rule_ids[$index]);
-        }
+        return $this->transient;
     }
 
     /**
@@ -577,11 +588,17 @@ final class Model extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $inherited_model_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setInheritedModelIds(?array $inherited_model_ids): void
+    public function hasInheritedModelIds(OdooRelation $item): bool
     {
-        $this->inherited_model_ids = $inherited_model_ids;
+        if (null === $this->inherited_model_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->inherited_model_ids);
     }
 
     /**
@@ -690,33 +707,11 @@ final class Model extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param OdooRelation[]|null $inherited_model_ids
      */
-    public function hasInheritedModelIds(OdooRelation $item): bool
+    public function setInheritedModelIds(?array $inherited_model_ids): void
     {
-        if (null === $this->inherited_model_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->inherited_model_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addRuleIds(OdooRelation $item): void
-    {
-        if ($this->hasRuleIds($item)) {
-            return;
-        }
-
-        if (null === $this->rule_ids) {
-            $this->rule_ids = [];
-        }
-
-        $this->rule_ids[] = $item;
+        $this->inherited_model_ids = $inherited_model_ids;
     }
 
     /**
@@ -733,6 +728,21 @@ final class Model extends Base
         }
 
         $this->inherited_model_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeRuleIds(OdooRelation $item): void
+    {
+        if (null === $this->rule_ids) {
+            $this->rule_ids = [];
+        }
+
+        if ($this->hasRuleIds($item)) {
+            $index = array_search($item, $this->rule_ids);
+            unset($this->rule_ids[$index]);
+        }
     }
 
     /**
@@ -861,6 +871,22 @@ final class Model extends Base
         }
 
         return in_array($item, $this->rule_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addRuleIds(OdooRelation $item): void
+    {
+        if ($this->hasRuleIds($item)) {
+            return;
+        }
+
+        if (null === $this->rule_ids) {
+            $this->rule_ids = [];
+        }
+
+        $this->rule_ids[] = $item;
     }
 
     /**

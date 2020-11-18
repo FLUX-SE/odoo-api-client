@@ -28,16 +28,6 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 final class Tag extends Base
 {
     /**
-     * Tag Name
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string
-     */
-    private $name;
-
-    /**
      * Applicability
      * ---
      * Selection :
@@ -117,6 +107,16 @@ final class Tag extends Base
     private $country_id;
 
     /**
+     * Tag Name
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    private $name;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -163,10 +163,6 @@ final class Tag extends Base
     private $write_date;
 
     /**
-     * @param string $name Tag Name
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
      * @param string $applicability Applicability
      *        ---
      *        Selection :
@@ -175,21 +171,25 @@ final class Tag extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $name Tag Name
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(string $name, string $applicability)
+    public function __construct(string $applicability, string $name)
     {
-        $this->name = $name;
         $this->applicability = $applicability;
+        $this->name = $name;
     }
 
     /**
-     * @return bool|null
+     * @return OdooRelation|null
      *
-     * @SerializedName("tax_negate")
+     * @SerializedName("country_id")
      */
-    public function isTaxNegate(): ?bool
+    public function getCountryId(): ?OdooRelation
     {
-        return $this->tax_negate;
+        return $this->country_id;
     }
 
     /**
@@ -265,6 +265,24 @@ final class Tag extends Base
     }
 
     /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("name")
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
      * @param OdooRelation|null $country_id
      */
     public function setCountryId(?OdooRelation $country_id): void
@@ -273,21 +291,31 @@ final class Tag extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("country_id")
-     */
-    public function getCountryId(): ?OdooRelation
-    {
-        return $this->country_id;
-    }
-
-    /**
      * @param bool|null $tax_negate
      */
     public function setTaxNegate(?bool $tax_negate): void
     {
         $this->tax_negate = $tax_negate;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("applicability")
+     */
+    public function getApplicability(): string
+    {
+        return $this->applicability;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("tax_negate")
+     */
+    public function isTaxNegate(): ?bool
+    {
+        return $this->tax_negate;
     }
 
     /**
@@ -303,16 +331,6 @@ final class Tag extends Base
             $index = array_search($item, $this->tax_report_line_ids);
             unset($this->tax_report_line_ids[$index]);
         }
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("name")
-     */
-    public function getName(): string
-    {
-        return $this->name;
     }
 
     /**
@@ -405,24 +423,6 @@ final class Tag extends Base
     public function setApplicability(string $applicability): void
     {
         $this->applicability = $applicability;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("applicability")
-     */
-    public function getApplicability(): string
-    {
-        return $this->applicability;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
     }
 
     /**

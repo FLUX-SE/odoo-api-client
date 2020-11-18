@@ -184,14 +184,6 @@ final class Cron extends Server
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param string $usage Usage
-     *        ---
-     *        Selection :
-     *            -> ir_actions_server (Server Action)
-     *            -> ir_cron (Scheduled Action)
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
      * @param OdooRelation $model_id Model
      *        ---
      *        Model on which the server action runs.
@@ -209,6 +201,15 @@ final class Cron extends Server
      *        Selection :
      *            -> specific (Specific User)
      *            -> generic (Generic User From Record)
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $usage Usage
+     *        ---
+     *        Selection :
+     *            -> ir_actions_server (Server Action)
+     *            -> ir_cron (Scheduled Action)
+     *            -> base_automation (Automated Action)
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -250,9 +251,9 @@ final class Cron extends Server
         DateTimeInterface $nextcall,
         string $name,
         string $type,
-        string $usage,
         OdooRelation $model_id,
         string $activity_user_type,
+        string $usage,
         string $state,
         string $binding_type
     ) {
@@ -262,9 +263,9 @@ final class Cron extends Server
         parent::__construct(
             $name,
             $type,
-            $usage,
             $model_id,
             $activity_user_type,
+            $usage,
             $state,
             $binding_type
         );

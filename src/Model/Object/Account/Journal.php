@@ -28,16 +28,6 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 class Journal extends Base
 {
     /**
-     * Journal Name
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string
-     */
-    protected $name;
-
-    /**
      * Short Code
      * ---
      * The journal entries of this journal will be named using this prefix.
@@ -579,57 +569,6 @@ class Journal extends Base
     protected $color;
 
     /**
-     * Manual Numbering
-     * ---
-     * Check this option if your pre-printed checks are not numbered.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    protected $check_manual_sequencing;
-
-    /**
-     * Check Sequence
-     * ---
-     * Checks numbering sequence.
-     * ---
-     * Relation : many2one (ir.sequence)
-     * @see \Flux\OdooApiClient\Model\Object\Ir\Sequence
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    protected $check_sequence_id;
-
-    /**
-     * Next Check Number
-     * ---
-     * Sequence number of the next printed check.
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    protected $check_next_number;
-
-    /**
-     * Check Printing Payment Method Selected
-     * ---
-     * Technical feature used to know whether check printing was enabled as payment method.
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    protected $check_printing_payment_method_selected;
-
-    /**
      * Next synchronization
      * ---
      * Searchable : no
@@ -699,6 +638,16 @@ class Journal extends Base
      * @var string|null
      */
     protected $bank_statement_creation;
+
+    /**
+     * Journal Name
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    protected $name;
 
     /**
      * Activities
@@ -1038,10 +987,6 @@ class Journal extends Base
     protected $write_date;
 
     /**
-     * @param string $name Journal Name
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
      * @param string $code Short Code
      *        ---
      *        The journal entries of this journal will be named using this prefix.
@@ -1104,61 +1049,35 @@ class Journal extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $name Journal Name
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
-        string $name,
         string $code,
         string $type,
         OdooRelation $sequence_id,
         string $invoice_reference_type,
         string $invoice_reference_model,
-        OdooRelation $company_id
+        OdooRelation $company_id,
+        string $name
     ) {
-        $this->name = $name;
         $this->code = $code;
         $this->type = $type;
         $this->sequence_id = $sequence_id;
         $this->invoice_reference_type = $invoice_reference_type;
         $this->invoice_reference_model = $invoice_reference_model;
         $this->company_id = $company_id;
+        $this->name = $name;
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("activity_summary")
+     * @param string|null $activity_exception_decoration
      */
-    public function getActivitySummary(): ?string
+    public function setActivityExceptionDecoration(?string $activity_exception_decoration): void
     {
-        return $this->activity_summary;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("activity_state")
-     */
-    public function getActivityState(): ?string
-    {
-        return $this->activity_state;
-    }
-
-    /**
-     * @param string|null $activity_state
-     */
-    public function setActivityState(?string $activity_state): void
-    {
-        $this->activity_state = $activity_state;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("activity_user_id")
-     */
-    public function getActivityUserId(): ?OdooRelation
-    {
-        return $this->activity_user_id;
+        $this->activity_exception_decoration = $activity_exception_decoration;
     }
 
     /**
@@ -1206,27 +1125,21 @@ class Journal extends Base
     }
 
     /**
+     * @return string|null
+     *
+     * @SerializedName("activity_summary")
+     */
+    public function getActivitySummary(): ?string
+    {
+        return $this->activity_summary;
+    }
+
+    /**
      * @param string|null $activity_summary
      */
     public function setActivitySummary(?string $activity_summary): void
     {
         $this->activity_summary = $activity_summary;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addActivityIds(OdooRelation $item): void
-    {
-        if ($this->hasActivityIds($item)) {
-            return;
-        }
-
-        if (null === $this->activity_ids) {
-            $this->activity_ids = [];
-        }
-
-        $this->activity_ids[] = $item;
     }
 
     /**
@@ -1240,14 +1153,6 @@ class Journal extends Base
     }
 
     /**
-     * @param string|null $activity_exception_decoration
-     */
-    public function setActivityExceptionDecoration(?string $activity_exception_decoration): void
-    {
-        $this->activity_exception_decoration = $activity_exception_decoration;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("activity_exception_icon")
@@ -1255,6 +1160,14 @@ class Journal extends Base
     public function getActivityExceptionIcon(): ?string
     {
         return $this->activity_exception_icon;
+    }
+
+    /**
+     * @param string|null $activity_state
+     */
+    public function setActivityState(?string $activity_state): void
+    {
+        $this->activity_state = $activity_state;
     }
 
     /**
@@ -1318,30 +1231,17 @@ class Journal extends Base
     /**
      * @param OdooRelation $item
      */
-    public function removeActivityIds(OdooRelation $item): void
+    public function addMessageFollowerIds(OdooRelation $item): void
     {
-        if (null === $this->activity_ids) {
-            $this->activity_ids = [];
+        if ($this->hasMessageFollowerIds($item)) {
+            return;
         }
 
-        if ($this->hasActivityIds($item)) {
-            $index = array_search($item, $this->activity_ids);
-            unset($this->activity_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasActivityIds(OdooRelation $item): bool
-    {
-        if (null === $this->activity_ids) {
-            return false;
+        if (null === $this->message_follower_ids) {
+            $this->message_follower_ids = [];
         }
 
-        return in_array($item, $this->activity_ids);
+        $this->message_follower_ids[] = $item;
     }
 
     /**
@@ -1360,13 +1260,57 @@ class Journal extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
+     * @return OdooRelation|null
      *
-     * @SerializedName("next_synchronization")
+     * @SerializedName("activity_user_id")
      */
-    public function getNextSynchronization(): ?DateTimeInterface
+    public function getActivityUserId(): ?OdooRelation
     {
-        return $this->next_synchronization;
+        return $this->activity_user_id;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("activity_state")
+     */
+    public function getActivityState(): ?string
+    {
+        return $this->activity_state;
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_partner_ids
+     */
+    public function setMessagePartnerIds(?array $message_partner_ids): void
+    {
+        $this->message_partner_ids = $message_partner_ids;
+    }
+
+    /**
+     * @param OdooRelation|null $account_online_provider_id
+     */
+    public function setAccountOnlineProviderId(?OdooRelation $account_online_provider_id): void
+    {
+        $this->account_online_provider_id = $account_online_provider_id;
+    }
+
+    /**
+     * @param bool|null $show_on_dashboard
+     */
+    public function setShowOnDashboard(?bool $show_on_dashboard): void
+    {
+        $this->show_on_dashboard = $show_on_dashboard;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("color")
+     */
+    public function getColor(): ?int
+    {
+        return $this->color;
     }
 
     /**
@@ -1378,76 +1322,13 @@ class Journal extends Base
     }
 
     /**
-     * @return bool|null
+     * @return DateTimeInterface|null
      *
-     * @SerializedName("check_manual_sequencing")
+     * @SerializedName("next_synchronization")
      */
-    public function isCheckManualSequencing(): ?bool
+    public function getNextSynchronization(): ?DateTimeInterface
     {
-        return $this->check_manual_sequencing;
-    }
-
-    /**
-     * @param bool|null $check_manual_sequencing
-     */
-    public function setCheckManualSequencing(?bool $check_manual_sequencing): void
-    {
-        $this->check_manual_sequencing = $check_manual_sequencing;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("check_sequence_id")
-     */
-    public function getCheckSequenceId(): ?OdooRelation
-    {
-        return $this->check_sequence_id;
-    }
-
-    /**
-     * @param OdooRelation|null $check_sequence_id
-     */
-    public function setCheckSequenceId(?OdooRelation $check_sequence_id): void
-    {
-        $this->check_sequence_id = $check_sequence_id;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("check_next_number")
-     */
-    public function getCheckNextNumber(): ?string
-    {
-        return $this->check_next_number;
-    }
-
-    /**
-     * @param string|null $check_next_number
-     */
-    public function setCheckNextNumber(?string $check_next_number): void
-    {
-        $this->check_next_number = $check_next_number;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("check_printing_payment_method_selected")
-     */
-    public function isCheckPrintingPaymentMethodSelected(): ?bool
-    {
-        return $this->check_printing_payment_method_selected;
-    }
-
-    /**
-     * @param bool|null $check_printing_payment_method_selected
-     */
-    public function setCheckPrintingPaymentMethodSelected(
-        ?bool $check_printing_payment_method_selected
-    ): void {
-        $this->check_printing_payment_method_selected = $check_printing_payment_method_selected;
+        return $this->next_synchronization;
     }
 
     /**
@@ -1456,14 +1337,6 @@ class Journal extends Base
     public function setNextSynchronization(?DateTimeInterface $next_synchronization): void
     {
         $this->next_synchronization = $next_synchronization;
-    }
-
-    /**
-     * @param OdooRelation[]|null $activity_ids
-     */
-    public function setActivityIds(?array $activity_ids): void
-    {
-        $this->activity_ids = $activity_ids;
     }
 
     /**
@@ -1495,14 +1368,6 @@ class Journal extends Base
     }
 
     /**
-     * @param OdooRelation|null $account_online_provider_id
-     */
-    public function setAccountOnlineProviderId(?OdooRelation $account_online_provider_id): void
-    {
-        $this->account_online_provider_id = $account_online_provider_id;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("synchronization_status")
@@ -1510,6 +1375,21 @@ class Journal extends Base
     public function getSynchronizationStatus(): ?string
     {
         return $this->synchronization_status;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeActivityIds(OdooRelation $item): void
+    {
+        if (null === $this->activity_ids) {
+            $this->activity_ids = [];
+        }
+
+        if ($this->hasActivityIds($item)) {
+            $index = array_search($item, $this->activity_ids);
+            unset($this->activity_ids[$index]);
+        }
     }
 
     /**
@@ -1539,6 +1419,24 @@ class Journal extends Base
     }
 
     /**
+     * @return string
+     *
+     * @SerializedName("name")
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("activity_ids")
@@ -1549,19 +1447,41 @@ class Journal extends Base
     }
 
     /**
+     * @param OdooRelation[]|null $activity_ids
+     */
+    public function setActivityIds(?array $activity_ids): void
+    {
+        $this->activity_ids = $activity_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasActivityIds(OdooRelation $item): bool
+    {
+        if (null === $this->activity_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->activity_ids);
+    }
+
+    /**
      * @param OdooRelation $item
      */
-    public function addMessageFollowerIds(OdooRelation $item): void
+    public function addActivityIds(OdooRelation $item): void
     {
-        if ($this->hasMessageFollowerIds($item)) {
+        if ($this->hasActivityIds($item)) {
             return;
         }
 
-        if (null === $this->message_follower_ids) {
-            $this->message_follower_ids = [];
+        if (null === $this->activity_ids) {
+            $this->activity_ids = [];
         }
 
-        $this->message_follower_ids[] = $item;
+        $this->activity_ids[] = $item;
     }
 
     /**
@@ -1575,11 +1495,25 @@ class Journal extends Base
     }
 
     /**
-     * @param bool|null $show_on_dashboard
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setShowOnDashboard(?bool $show_on_dashboard): void
+    public function hasMessagePartnerIds(OdooRelation $item): bool
     {
-        $this->show_on_dashboard = $show_on_dashboard;
+        if (null === $this->message_partner_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_partner_ids);
+    }
+
+    /**
+     * @param string|null $json_activity_data
+     */
+    public function setJsonActivityData(?string $json_activity_data): void
+    {
+        $this->json_activity_data = $json_activity_data;
     }
 
     /**
@@ -1595,14 +1529,6 @@ class Journal extends Base
             $index = array_search($item, $this->website_message_ids);
             unset($this->website_message_ids[$index]);
         }
-    }
-
-    /**
-     * @param int|null $message_has_error_counter
-     */
-    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
-    {
-        $this->message_has_error_counter = $message_has_error_counter;
     }
 
     /**
@@ -1700,11 +1626,13 @@ class Journal extends Base
     }
 
     /**
-     * @param bool|null $message_has_error
+     * @return int|null
+     *
+     * @SerializedName("message_has_error_counter")
      */
-    public function setMessageHasError(?bool $message_has_error): void
+    public function getMessageHasErrorCounter(): ?int
     {
-        $this->message_has_error = $message_has_error;
+        return $this->message_has_error_counter;
     }
 
     /**
@@ -1788,53 +1716,19 @@ class Journal extends Base
     }
 
     /**
-     * @return int|null
-     *
-     * @SerializedName("message_has_error_counter")
+     * @param int|null $message_has_error_counter
      */
-    public function getMessageHasErrorCounter(): ?int
+    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
     {
-        return $this->message_has_error_counter;
+        $this->message_has_error_counter = $message_has_error_counter;
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("message_has_error")
+     * @param bool|null $message_has_error
      */
-    public function isMessageHasError(): ?bool
+    public function setMessageHasError(?bool $message_has_error): void
     {
-        return $this->message_has_error;
-    }
-
-    /**
-     * @param OdooRelation[]|null $message_partner_ids
-     */
-    public function setMessagePartnerIds(?array $message_partner_ids): void
-    {
-        $this->message_partner_ids = $message_partner_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $message_ids
-     */
-    public function setMessageIds(?array $message_ids): void
-    {
-        $this->message_ids = $message_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasMessagePartnerIds(OdooRelation $item): bool
-    {
-        if (null === $this->message_partner_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_partner_ids);
+        $this->message_has_error = $message_has_error;
     }
 
     /**
@@ -1851,6 +1745,20 @@ class Journal extends Base
         }
 
         $this->message_partner_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMessageIds(OdooRelation $item): bool
+    {
+        if (null === $this->message_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_ids);
     }
 
     /**
@@ -1942,25 +1850,11 @@ class Journal extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param OdooRelation[]|null $message_ids
      */
-    public function hasMessageIds(OdooRelation $item): bool
+    public function setMessageIds(?array $message_ids): void
     {
-        if (null === $this->message_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_ids);
-    }
-
-    /**
-     * @param int|null $message_needaction_counter
-     */
-    public function setMessageNeedactionCounter(?int $message_needaction_counter): void
-    {
-        $this->message_needaction_counter = $message_needaction_counter;
+        $this->message_ids = $message_ids;
     }
 
     /**
@@ -1977,6 +1871,16 @@ class Journal extends Base
         }
 
         $this->message_ids[] = $item;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("message_has_error")
+     */
+    public function isMessageHasError(): ?bool
+    {
+        return $this->message_has_error;
     }
 
     /**
@@ -2059,13 +1963,11 @@ class Journal extends Base
     }
 
     /**
-     * @return int|null
-     *
-     * @SerializedName("color")
+     * @param int|null $message_needaction_counter
      */
-    public function getColor(): ?int
+    public function setMessageNeedactionCounter(?int $message_needaction_counter): void
     {
-        return $this->color;
+        $this->message_needaction_counter = $message_needaction_counter;
     }
 
     /**
@@ -2079,29 +1981,33 @@ class Journal extends Base
     }
 
     /**
+     * @return string|null
+     *
+     * @SerializedName("json_activity_data")
+     */
+    public function getJsonActivityData(): ?string
+    {
+        return $this->json_activity_data;
+    }
+
+    /**
      * @return string
      *
-     * @SerializedName("name")
+     * @SerializedName("code")
      */
-    public function getName(): string
+    public function getCode(): string
     {
-        return $this->name;
+        return $this->code;
     }
 
     /**
-     * @param int|null $refund_sequence_number_next
+     * @return string
+     *
+     * @SerializedName("invoice_reference_type")
      */
-    public function setRefundSequenceNumberNext(?int $refund_sequence_number_next): void
+    public function getInvoiceReferenceType(): string
     {
-        $this->refund_sequence_number_next = $refund_sequence_number_next;
-    }
-
-    /**
-     * @param OdooRelation $sequence_id
-     */
-    public function setSequenceId(OdooRelation $sequence_id): void
-    {
-        $this->sequence_id = $sequence_id;
+        return $this->invoice_reference_type;
     }
 
     /**
@@ -2169,21 +2075,11 @@ class Journal extends Base
     }
 
     /**
-     * @return string
-     *
-     * @SerializedName("invoice_reference_type")
+     * @param int|null $refund_sequence_number_next
      */
-    public function getInvoiceReferenceType(): string
+    public function setRefundSequenceNumberNext(?int $refund_sequence_number_next): void
     {
-        return $this->invoice_reference_type;
-    }
-
-    /**
-     * @param bool|null $restrict_mode_hash_table
-     */
-    public function setRestrictModeHashTable(?bool $restrict_mode_hash_table): void
-    {
-        $this->restrict_mode_hash_table = $restrict_mode_hash_table;
+        $this->refund_sequence_number_next = $refund_sequence_number_next;
     }
 
     /**
@@ -2192,6 +2088,16 @@ class Journal extends Base
     public function setInvoiceReferenceType(string $invoice_reference_type): void
     {
         $this->invoice_reference_type = $invoice_reference_type;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("sequence_id")
+     */
+    public function getSequenceId(): OdooRelation
+    {
+        return $this->sequence_id;
     }
 
     /**
@@ -2267,23 +2173,19 @@ class Journal extends Base
     }
 
     /**
-     * @return OdooRelation
-     *
-     * @SerializedName("sequence_id")
+     * @param OdooRelation $sequence_id
      */
-    public function getSequenceId(): OdooRelation
+    public function setSequenceId(OdooRelation $sequence_id): void
     {
-        return $this->sequence_id;
+        $this->sequence_id = $sequence_id;
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("restrict_mode_hash_table")
+     * @param bool|null $restrict_mode_hash_table
      */
-    public function isRestrictModeHashTable(): ?bool
+    public function setRestrictModeHashTable(?bool $restrict_mode_hash_table): void
     {
-        return $this->restrict_mode_hash_table;
+        $this->restrict_mode_hash_table = $restrict_mode_hash_table;
     }
 
     /**
@@ -2296,34 +2198,18 @@ class Journal extends Base
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasTypeControlIds(OdooRelation $item): bool
+    public function addTypeControlIds(OdooRelation $item): void
     {
-        if (null === $this->type_control_ids) {
-            return false;
+        if ($this->hasTypeControlIds($item)) {
+            return;
         }
 
-        return in_array($item, $this->type_control_ids);
-    }
+        if (null === $this->type_control_ids) {
+            $this->type_control_ids = [];
+        }
 
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("code")
-     */
-    public function getCode(): string
-    {
-        return $this->code;
+        $this->type_control_ids[] = $item;
     }
 
     /**
@@ -2390,26 +2276,16 @@ class Journal extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function addTypeControlIds(OdooRelation $item): void
+    public function hasTypeControlIds(OdooRelation $item): bool
     {
-        if ($this->hasTypeControlIds($item)) {
-            return;
-        }
-
         if (null === $this->type_control_ids) {
-            $this->type_control_ids = [];
+            return false;
         }
 
-        $this->type_control_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation|null $default_debit_account_id
-     */
-    public function setDefaultDebitAccountId(?OdooRelation $default_debit_account_id): void
-    {
-        $this->default_debit_account_id = $default_debit_account_id;
+        return in_array($item, $this->type_control_ids);
     }
 
     /**
@@ -2425,6 +2301,16 @@ class Journal extends Base
             $index = array_search($item, $this->type_control_ids);
             unset($this->type_control_ids[$index]);
         }
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("restrict_mode_hash_table")
+     */
+    public function isRestrictModeHashTable(): ?bool
+    {
+        return $this->restrict_mode_hash_table;
     }
 
     /**
@@ -2519,6 +2405,14 @@ class Journal extends Base
     }
 
     /**
+     * @param OdooRelation|null $default_debit_account_id
+     */
+    public function setDefaultDebitAccountId(?OdooRelation $default_debit_account_id): void
+    {
+        $this->default_debit_account_id = $default_debit_account_id;
+    }
+
+    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("inbound_payment_method_ids")
@@ -2543,19 +2437,27 @@ class Journal extends Base
     }
 
     /**
-     * @param string|null $json_activity_data
+     * @param string|null $kanban_dashboard_graph
      */
-    public function setJsonActivityData(?string $json_activity_data): void
+    public function setKanbanDashboardGraph(?string $kanban_dashboard_graph): void
     {
-        $this->json_activity_data = $json_activity_data;
+        $this->kanban_dashboard_graph = $kanban_dashboard_graph;
     }
 
     /**
-     * @param OdooRelation[]|null $journal_group_ids
+     * @param string|null $alias_name
      */
-    public function setJournalGroupIds(?array $journal_group_ids): void
+    public function setAliasName(?string $alias_name): void
     {
-        $this->journal_group_ids = $journal_group_ids;
+        $this->alias_name = $alias_name;
+    }
+
+    /**
+     * @param OdooRelation|null $bank_id
+     */
+    public function setBankId(?OdooRelation $bank_id): void
+    {
+        $this->bank_id = $bank_id;
     }
 
     /**
@@ -2623,14 +2525,6 @@ class Journal extends Base
     }
 
     /**
-     * @param string|null $alias_name
-     */
-    public function setAliasName(?string $alias_name): void
-    {
-        $this->alias_name = $alias_name;
-    }
-
-    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("journal_group_ids")
@@ -2638,6 +2532,22 @@ class Journal extends Base
     public function getJournalGroupIds(): ?array
     {
         return $this->journal_group_ids;
+    }
+
+    /**
+     * @param string|null $bank_acc_number
+     */
+    public function setBankAccNumber(?string $bank_acc_number): void
+    {
+        $this->bank_acc_number = $bank_acc_number;
+    }
+
+    /**
+     * @param OdooRelation[]|null $journal_group_ids
+     */
+    public function setJournalGroupIds(?array $journal_group_ids): void
+    {
+        $this->journal_group_ids = $journal_group_ids;
     }
 
     /**
@@ -2652,16 +2562,6 @@ class Journal extends Base
         }
 
         return in_array($item, $this->journal_group_ids);
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("bank_id")
-     */
-    public function getBankId(): ?OdooRelation
-    {
-        return $this->bank_id;
     }
 
     /**
@@ -2742,37 +2642,23 @@ class Journal extends Base
     }
 
     /**
-     * @param string|null $kanban_dashboard_graph
+     * @return OdooRelation|null
+     *
+     * @SerializedName("bank_id")
      */
-    public function setKanbanDashboardGraph(?string $kanban_dashboard_graph): void
+    public function getBankId(): ?OdooRelation
     {
-        $this->kanban_dashboard_graph = $kanban_dashboard_graph;
+        return $this->bank_id;
     }
 
     /**
      * @return string|null
      *
-     * @SerializedName("json_activity_data")
+     * @SerializedName("bank_acc_number")
      */
-    public function getJsonActivityData(): ?string
+    public function getBankAccNumber(): ?string
     {
-        return $this->json_activity_data;
-    }
-
-    /**
-     * @param OdooRelation|null $bank_id
-     */
-    public function setBankId(?OdooRelation $bank_id): void
-    {
-        $this->bank_id = $bank_id;
-    }
-
-    /**
-     * @param string|null $bank_acc_number
-     */
-    public function setBankAccNumber(?string $bank_acc_number): void
-    {
-        $this->bank_acc_number = $bank_acc_number;
+        return $this->bank_acc_number;
     }
 
     /**
@@ -2792,11 +2678,13 @@ class Journal extends Base
     }
 
     /**
-     * @param bool|null $at_least_one_outbound
+     * @return bool|null
+     *
+     * @SerializedName("at_least_one_outbound")
      */
-    public function setAtLeastOneOutbound(?bool $at_least_one_outbound): void
+    public function isAtLeastOneOutbound(): ?bool
     {
-        $this->at_least_one_outbound = $at_least_one_outbound;
+        return $this->at_least_one_outbound;
     }
 
     /**
@@ -2896,13 +2784,19 @@ class Journal extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("at_least_one_outbound")
+     * @param bool|null $at_least_one_outbound
      */
-    public function isAtLeastOneOutbound(): ?bool
+    public function setAtLeastOneOutbound(?bool $at_least_one_outbound): void
     {
-        return $this->at_least_one_outbound;
+        $this->at_least_one_outbound = $at_least_one_outbound;
+    }
+
+    /**
+     * @param string|null $bank_statements_source
+     */
+    public function setBankStatementsSource(?string $bank_statements_source): void
+    {
+        $this->bank_statements_source = $bank_statements_source;
     }
 
     /**
@@ -2913,16 +2807,6 @@ class Journal extends Base
     public function getProfitAccountId(): ?OdooRelation
     {
         return $this->profit_account_id;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("bank_acc_number")
-     */
-    public function getBankAccNumber(): ?string
-    {
-        return $this->bank_acc_number;
     }
 
     /**
@@ -2995,14 +2879,6 @@ class Journal extends Base
     public function getBankStatementsSource(): ?string
     {
         return $this->bank_statements_source;
-    }
-
-    /**
-     * @param string|null $bank_statements_source
-     */
-    public function setBankStatementsSource(?string $bank_statements_source): void
-    {
-        $this->bank_statements_source = $bank_statements_source;
     }
 
     /**

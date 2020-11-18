@@ -14,7 +14,7 @@ use Flux\OdooApiClient\Model\Object\Base;
  * Info :
  * The base model, which is implicitly inherited by all models.
  */
-final class Http extends Base
+abstract class Http extends Base
 {
     /**
      * @return string

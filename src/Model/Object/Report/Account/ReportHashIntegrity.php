@@ -14,7 +14,7 @@ use Flux\OdooApiClient\Model\Object\Base;
  * Info :
  * The base model, which is implicitly inherited by all models.
  */
-final class ReportHashIntegrity extends Base
+abstract class ReportHashIntegrity extends Base
 {
     /**
      * @return string

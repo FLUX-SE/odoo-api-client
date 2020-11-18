@@ -38,16 +38,6 @@ final class Position extends Base
     private $sequence;
 
     /**
-     * Fiscal Position
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string
-     */
-    private $name;
-
-    /**
      * Active
      * ---
      * By unchecking the active field, you may hide a fiscal position without deleting it.
@@ -97,18 +87,6 @@ final class Position extends Base
      * @var OdooRelation[]|null
      */
     private $tax_ids;
-
-    /**
-     * Notes
-     * ---
-     * Legal mentions that have to be printed on the invoices.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $note;
 
     /**
      * Detect Automatically
@@ -208,6 +186,28 @@ final class Position extends Base
     private $states_count;
 
     /**
+     * Fiscal Position
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    private $name;
+
+    /**
+     * Notes
+     * ---
+     * Legal mentions that have to be printed on the invoices.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $note;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -254,10 +254,6 @@ final class Position extends Base
     private $write_date;
 
     /**
-     * @param string $name Fiscal Position
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
      * @param OdooRelation $company_id Company
      *        ---
      *        Relation : many2one (res.company)
@@ -265,57 +261,25 @@ final class Position extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $name Fiscal Position
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(string $name, OdooRelation $company_id)
+    public function __construct(OdooRelation $company_id, string $name)
     {
-        $this->name = $name;
         $this->company_id = $company_id;
+        $this->name = $name;
     }
 
     /**
-     * @return string|null
+     * @return string
      *
-     * @SerializedName("zip_to")
+     * @SerializedName("name")
      */
-    public function getZipTo(): ?string
+    public function getName(): string
     {
-        return $this->zip_to;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("country_group_id")
-     */
-    public function getCountryGroupId(): ?OdooRelation
-    {
-        return $this->country_group_id;
-    }
-
-    /**
-     * @param OdooRelation|null $country_group_id
-     */
-    public function setCountryGroupId(?OdooRelation $country_group_id): void
-    {
-        $this->country_group_id = $country_group_id;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("state_ids")
-     */
-    public function getStateIds(): ?array
-    {
-        return $this->state_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $state_ids
-     */
-    public function setStateIds(?array $state_ids): void
-    {
-        $this->state_ids = $state_ids;
+        return $this->name;
     }
 
     /**
@@ -382,21 +346,21 @@ final class Position extends Base
     }
 
     /**
+     * @return string|null
+     *
+     * @SerializedName("zip_to")
+     */
+    public function getZipTo(): ?string
+    {
+        return $this->zip_to;
+    }
+
+    /**
      * @param string|null $zip_to
      */
     public function setZipTo(?string $zip_to): void
     {
         $this->zip_to = $zip_to;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("country_id")
-     */
-    public function getCountryId(): ?OdooRelation
-    {
-        return $this->country_id;
     }
 
     /**
@@ -415,6 +379,42 @@ final class Position extends Base
     public function setStatesCount(?int $states_count): void
     {
         $this->states_count = $states_count;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("state_ids")
+     */
+    public function getStateIds(): ?array
+    {
+        return $this->state_ids;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("note")
+     */
+    public function getNote(): ?string
+    {
+        return $this->note;
+    }
+
+    /**
+     * @param string|null $note
+     */
+    public function setNote(?string $note): void
+    {
+        $this->note = $note;
     }
 
     /**
@@ -490,19 +490,19 @@ final class Position extends Base
     }
 
     /**
-     * @param OdooRelation|null $country_id
+     * @param OdooRelation[]|null $state_ids
      */
-    public function setCountryId(?OdooRelation $country_id): void
+    public function setStateIds(?array $state_ids): void
     {
-        $this->country_id = $country_id;
+        $this->state_ids = $state_ids;
     }
 
     /**
-     * @param bool|null $vat_required
+     * @param OdooRelation|null $country_group_id
      */
-    public function setVatRequired(?bool $vat_required): void
+    public function setCountryGroupId(?OdooRelation $country_group_id): void
     {
-        $this->vat_required = $vat_required;
+        $this->country_group_id = $country_group_id;
     }
 
     /**
@@ -517,16 +517,17 @@ final class Position extends Base
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasAccountIds(OdooRelation $item): bool
+    public function removeAccountIds(OdooRelation $item): void
     {
         if (null === $this->account_ids) {
-            return false;
+            $this->account_ids = [];
         }
 
-        return in_array($item, $this->account_ids);
+        if ($this->hasAccountIds($item)) {
+            $index = array_search($item, $this->account_ids);
+            unset($this->account_ids[$index]);
+        }
     }
 
     /**
@@ -535,24 +536,6 @@ final class Position extends Base
     public function setSequence(?int $sequence): void
     {
         $this->sequence = $sequence;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("name")
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
     }
 
     /**
@@ -611,6 +594,20 @@ final class Position extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasAccountIds(OdooRelation $item): bool
+    {
+        if (null === $this->account_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->account_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
      */
     public function addAccountIds(OdooRelation $item): void
     {
@@ -626,31 +623,6 @@ final class Position extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("vat_required")
-     */
-    public function isVatRequired(): ?bool
-    {
-        return $this->vat_required;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeAccountIds(OdooRelation $item): void
-    {
-        if (null === $this->account_ids) {
-            $this->account_ids = [];
-        }
-
-        if ($this->hasAccountIds($item)) {
-            $index = array_search($item, $this->account_ids);
-            unset($this->account_ids[$index]);
-        }
-    }
-
-    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("tax_ids")
@@ -658,6 +630,16 @@ final class Position extends Base
     public function getTaxIds(): ?array
     {
         return $this->tax_ids;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("country_group_id")
+     */
+    public function getCountryGroupId(): ?OdooRelation
+    {
+        return $this->country_group_id;
     }
 
     /**
@@ -714,24 +696,6 @@ final class Position extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("note")
-     */
-    public function getNote(): ?string
-    {
-        return $this->note;
-    }
-
-    /**
-     * @param string|null $note
-     */
-    public function setNote(?string $note): void
-    {
-        $this->note = $note;
-    }
-
-    /**
      * @return bool|null
      *
      * @SerializedName("auto_apply")
@@ -747,6 +711,42 @@ final class Position extends Base
     public function setAutoApply(?bool $auto_apply): void
     {
         $this->auto_apply = $auto_apply;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("vat_required")
+     */
+    public function isVatRequired(): ?bool
+    {
+        return $this->vat_required;
+    }
+
+    /**
+     * @param bool|null $vat_required
+     */
+    public function setVatRequired(?bool $vat_required): void
+    {
+        $this->vat_required = $vat_required;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("country_id")
+     */
+    public function getCountryId(): ?OdooRelation
+    {
+        return $this->country_id;
+    }
+
+    /**
+     * @param OdooRelation|null $country_id
+     */
+    public function setCountryId(?OdooRelation $country_id): void
+    {
+        $this->country_id = $country_id;
     }
 
     /**

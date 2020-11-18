@@ -74,6 +74,56 @@ final class Uninstall extends Base
     private $model_ids;
 
     /**
+     * Is Studio
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $is_studio;
+
+    /**
+     * Custom Views
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    private $custom_views;
+
+    /**
+     * Custom Reports
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    private $custom_reports;
+
+    /**
+     * Custom Models
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    private $custom_models;
+
+    /**
+     * Custom Fields
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    private $custom_fields;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -134,19 +184,11 @@ final class Uninstall extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @param int|null $custom_views
      */
-    public function addModelIds(OdooRelation $item): void
+    public function setCustomViews(?int $custom_views): void
     {
-        if ($this->hasModelIds($item)) {
-            return;
-        }
-
-        if (null === $this->model_ids) {
-            $this->model_ids = [];
-        }
-
-        $this->model_ids[] = $item;
+        $this->custom_views = $custom_views;
     }
 
     /**
@@ -222,32 +264,67 @@ final class Uninstall extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @param int|null $custom_fields
      */
-    public function removeModelIds(OdooRelation $item): void
+    public function setCustomFields(?int $custom_fields): void
     {
-        if (null === $this->model_ids) {
-            $this->model_ids = [];
-        }
-
-        if ($this->hasModelIds($item)) {
-            $index = array_search($item, $this->model_ids);
-            unset($this->model_ids[$index]);
-        }
+        $this->custom_fields = $custom_fields;
     }
 
     /**
-     * @param OdooRelation $item
+     * @return int|null
      *
-     * @return bool
+     * @SerializedName("custom_fields")
      */
-    public function hasModelIds(OdooRelation $item): bool
+    public function getCustomFields(): ?int
     {
-        if (null === $this->model_ids) {
-            return false;
-        }
+        return $this->custom_fields;
+    }
 
-        return in_array($item, $this->model_ids);
+    /**
+     * @param int|null $custom_models
+     */
+    public function setCustomModels(?int $custom_models): void
+    {
+        $this->custom_models = $custom_models;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("custom_models")
+     */
+    public function getCustomModels(): ?int
+    {
+        return $this->custom_models;
+    }
+
+    /**
+     * @param int|null $custom_reports
+     */
+    public function setCustomReports(?int $custom_reports): void
+    {
+        $this->custom_reports = $custom_reports;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("custom_reports")
+     */
+    public function getCustomReports(): ?int
+    {
+        return $this->custom_reports;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("custom_views")
+     */
+    public function getCustomViews(): ?int
+    {
+        return $this->custom_views;
     }
 
     /**
@@ -258,39 +335,6 @@ final class Uninstall extends Base
     public function isShowAll(): ?bool
     {
         return $this->show_all;
-    }
-
-    /**
-     * @param OdooRelation[]|null $model_ids
-     */
-    public function setModelIds(?array $model_ids): void
-    {
-        $this->model_ids = $model_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("model_ids")
-     */
-    public function getModelIds(): ?array
-    {
-        return $this->model_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeModuleIds(OdooRelation $item): void
-    {
-        if (null === $this->module_ids) {
-            $this->module_ids = [];
-        }
-
-        if ($this->hasModuleIds($item)) {
-            $index = array_search($item, $this->module_ids);
-            unset($this->module_ids[$index]);
-        }
     }
 
     /**
@@ -310,6 +354,50 @@ final class Uninstall extends Base
     }
 
     /**
+     * @param bool|null $show_all
+     */
+    public function setShowAll(?bool $show_all): void
+    {
+        $this->show_all = $show_all;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("module_id")
+     */
+    public function getModuleId(): OdooRelation
+    {
+        return $this->module_id;
+    }
+
+    /**
+     * @param OdooRelation $module_id
+     */
+    public function setModuleId(OdooRelation $module_id): void
+    {
+        $this->module_id = $module_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("module_ids")
+     */
+    public function getModuleIds(): ?array
+    {
+        return $this->module_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $module_ids
+     */
+    public function setModuleIds(?array $module_ids): void
+    {
+        $this->module_ids = $module_ids;
+    }
+
+    /**
      * @param OdooRelation $item
      *
      * @return bool
@@ -324,47 +412,99 @@ final class Uninstall extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $module_ids
+     * @param OdooRelation $item
      */
-    public function setModuleIds(?array $module_ids): void
+    public function removeModuleIds(OdooRelation $item): void
     {
-        $this->module_ids = $module_ids;
+        if (null === $this->module_ids) {
+            $this->module_ids = [];
+        }
+
+        if ($this->hasModuleIds($item)) {
+            $index = array_search($item, $this->module_ids);
+            unset($this->module_ids[$index]);
+        }
+    }
+
+    /**
+     * @param bool|null $is_studio
+     */
+    public function setIsStudio(?bool $is_studio): void
+    {
+        $this->is_studio = $is_studio;
     }
 
     /**
      * @return OdooRelation[]|null
      *
-     * @SerializedName("module_ids")
+     * @SerializedName("model_ids")
      */
-    public function getModuleIds(): ?array
+    public function getModelIds(): ?array
     {
-        return $this->module_ids;
+        return $this->model_ids;
     }
 
     /**
-     * @param OdooRelation $module_id
+     * @param OdooRelation[]|null $model_ids
      */
-    public function setModuleId(OdooRelation $module_id): void
+    public function setModelIds(?array $model_ids): void
     {
-        $this->module_id = $module_id;
+        $this->model_ids = $model_ids;
     }
 
     /**
-     * @return OdooRelation
+     * @param OdooRelation $item
      *
-     * @SerializedName("module_id")
+     * @return bool
      */
-    public function getModuleId(): OdooRelation
+    public function hasModelIds(OdooRelation $item): bool
     {
-        return $this->module_id;
+        if (null === $this->model_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->model_ids);
     }
 
     /**
-     * @param bool|null $show_all
+     * @param OdooRelation $item
      */
-    public function setShowAll(?bool $show_all): void
+    public function addModelIds(OdooRelation $item): void
     {
-        $this->show_all = $show_all;
+        if ($this->hasModelIds($item)) {
+            return;
+        }
+
+        if (null === $this->model_ids) {
+            $this->model_ids = [];
+        }
+
+        $this->model_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeModelIds(OdooRelation $item): void
+    {
+        if (null === $this->model_ids) {
+            $this->model_ids = [];
+        }
+
+        if ($this->hasModelIds($item)) {
+            $index = array_search($item, $this->model_ids);
+            unset($this->model_ids[$index]);
+        }
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("is_studio")
+     */
+    public function isIsStudio(): ?bool
+    {
+        return $this->is_studio;
     }
 
     /**

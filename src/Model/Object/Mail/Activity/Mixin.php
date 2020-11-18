@@ -38,7 +38,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *               no automated activities will be generated, updated or unlinked, allowing
  *               to save computation and avoid generating unwanted activities;
  */
-final class Mixin extends Base
+abstract class Mixin extends Base
 {
     /**
      * Activities
@@ -51,7 +51,7 @@ final class Mixin extends Base
      *
      * @var OdooRelation[]|null
      */
-    private $activity_ids;
+    protected $activity_ids;
 
     /**
      * Activity State
@@ -71,7 +71,7 @@ final class Mixin extends Base
      *
      * @var string|null
      */
-    private $activity_state;
+    protected $activity_state;
 
     /**
      * Responsible User
@@ -84,7 +84,7 @@ final class Mixin extends Base
      *
      * @var OdooRelation|null
      */
-    private $activity_user_id;
+    protected $activity_user_id;
 
     /**
      * Next Activity Type
@@ -97,7 +97,7 @@ final class Mixin extends Base
      *
      * @var OdooRelation|null
      */
-    private $activity_type_id;
+    protected $activity_type_id;
 
     /**
      * Next Activity Deadline
@@ -107,7 +107,7 @@ final class Mixin extends Base
      *
      * @var DateTimeInterface|null
      */
-    private $activity_date_deadline;
+    protected $activity_date_deadline;
 
     /**
      * Next Activity Summary
@@ -117,7 +117,7 @@ final class Mixin extends Base
      *
      * @var string|null
      */
-    private $activity_summary;
+    protected $activity_summary;
 
     /**
      * Activity Exception Decoration
@@ -133,7 +133,7 @@ final class Mixin extends Base
      *
      * @var string|null
      */
-    private $activity_exception_decoration;
+    protected $activity_exception_decoration;
 
     /**
      * Icon
@@ -145,7 +145,7 @@ final class Mixin extends Base
      *
      * @var string|null
      */
-    private $activity_exception_icon;
+    protected $activity_exception_icon;
 
     /**
      * @return OdooRelation[]|null

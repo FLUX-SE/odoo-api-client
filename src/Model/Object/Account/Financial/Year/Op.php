@@ -98,6 +98,45 @@ final class Op extends Base
     private $fiscalyear_last_month;
 
     /**
+     * Periodicity
+     * ---
+     * Periodicity
+     * ---
+     * Selection :
+     *     -> trimester (trimester)
+     *     -> monthly (monthly)
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string
+     */
+    private $account_tax_periodicity;
+
+    /**
+     * Reminder
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var int
+     */
+    private $account_tax_periodicity_reminder_day;
+
+    /**
+     * Journal
+     * ---
+     * Relation : many2one (account.journal)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $account_tax_periodicity_journal_id;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -183,27 +222,43 @@ final class Op extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : no
+     * @param string $account_tax_periodicity Periodicity
+     *        ---
+     *        Periodicity
+     *        ---
+     *        Selection :
+     *            -> trimester (trimester)
+     *            -> monthly (monthly)
+     *        ---
+     *        Searchable : yes
+     *        Sortable : no
+     * @param int $account_tax_periodicity_reminder_day Reminder
+     *        ---
+     *        Searchable : yes
+     *        Sortable : no
      */
     public function __construct(
         OdooRelation $company_id,
         DateTimeInterface $opening_date,
         int $fiscalyear_last_day,
-        string $fiscalyear_last_month
+        string $fiscalyear_last_month,
+        string $account_tax_periodicity,
+        int $account_tax_periodicity_reminder_day
     ) {
         $this->company_id = $company_id;
         $this->opening_date = $opening_date;
         $this->fiscalyear_last_day = $fiscalyear_last_day;
         $this->fiscalyear_last_month = $fiscalyear_last_month;
+        $this->account_tax_periodicity = $account_tax_periodicity;
+        $this->account_tax_periodicity_reminder_day = $account_tax_periodicity_reminder_day;
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
+     * @param int $account_tax_periodicity_reminder_day
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setAccountTaxPeriodicityReminderDay(int $account_tax_periodicity_reminder_day): void
     {
-        return $this->create_uid;
+        $this->account_tax_periodicity_reminder_day = $account_tax_periodicity_reminder_day;
     }
 
     /**
@@ -269,11 +324,42 @@ final class Op extends Base
     }
 
     /**
-     * @param string $fiscalyear_last_month
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
-    public function setFiscalyearLastMonth(string $fiscalyear_last_month): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->fiscalyear_last_month = $fiscalyear_last_month;
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $account_tax_periodicity_journal_id
+     */
+    public function setAccountTaxPeriodicityJournalId(
+        ?OdooRelation $account_tax_periodicity_journal_id
+    ): void {
+        $this->account_tax_periodicity_journal_id = $account_tax_periodicity_journal_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("account_tax_periodicity_journal_id")
+     */
+    public function getAccountTaxPeriodicityJournalId(): ?OdooRelation
+    {
+        return $this->account_tax_periodicity_journal_id;
+    }
+
+    /**
+     * @return int
+     *
+     * @SerializedName("account_tax_periodicity_reminder_day")
+     */
+    public function getAccountTaxPeriodicityReminderDay(): int
+    {
+        return $this->account_tax_periodicity_reminder_day;
     }
 
     /**
@@ -284,6 +370,32 @@ final class Op extends Base
     public function getCompanyId(): OdooRelation
     {
         return $this->company_id;
+    }
+
+    /**
+     * @param string $account_tax_periodicity
+     */
+    public function setAccountTaxPeriodicity(string $account_tax_periodicity): void
+    {
+        $this->account_tax_periodicity = $account_tax_periodicity;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("account_tax_periodicity")
+     */
+    public function getAccountTaxPeriodicity(): string
+    {
+        return $this->account_tax_periodicity;
+    }
+
+    /**
+     * @param string $fiscalyear_last_month
+     */
+    public function setFiscalyearLastMonth(string $fiscalyear_last_month): void
+    {
+        $this->fiscalyear_last_month = $fiscalyear_last_month;
     }
 
     /**

@@ -122,6 +122,18 @@ final class Data extends Base
     private $reference;
 
     /**
+     * Studio
+     * ---
+     * Checked if it has been edited with Studio.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $studio;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -191,13 +203,11 @@ final class Data extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("date_init")
+     * @param DateTimeInterface|null $date_init
      */
-    public function getDateInit(): ?DateTimeInterface
+    public function setDateInit(?DateTimeInterface $date_init): void
     {
-        return $this->date_init;
+        $this->date_init = $date_init;
     }
 
     /**
@@ -273,6 +283,24 @@ final class Data extends Base
     }
 
     /**
+     * @param bool|null $studio
+     */
+    public function setStudio(?bool $studio): void
+    {
+        $this->studio = $studio;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("studio")
+     */
+    public function isStudio(): ?bool
+    {
+        return $this->studio;
+    }
+
+    /**
      * @param string|null $reference
      */
     public function setReference(?string $reference): void
@@ -291,19 +319,13 @@ final class Data extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $date_init
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("date_init")
      */
-    public function setDateInit(?DateTimeInterface $date_init): void
+    public function getDateInit(): ?DateTimeInterface
     {
-        $this->date_init = $date_init;
-    }
-
-    /**
-     * @param DateTimeInterface|null $date_update
-     */
-    public function setDateUpdate(?DateTimeInterface $date_update): void
-    {
-        $this->date_update = $date_update;
+        return $this->date_init;
     }
 
     /**
@@ -314,6 +336,14 @@ final class Data extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @param DateTimeInterface|null $date_update
+     */
+    public function setDateUpdate(?DateTimeInterface $date_update): void
+    {
+        $this->date_update = $date_update;
     }
 
     /**

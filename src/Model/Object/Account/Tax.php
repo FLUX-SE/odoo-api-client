@@ -28,16 +28,6 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 final class Tax extends Base
 {
     /**
-     * Tax Name
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string
-     */
-    private $name;
-
-    /**
      * Tax Scope
      * ---
      * Determines where the tax is selectable. Note : 'None' means a tax can't be used by itself, however it can
@@ -141,16 +131,6 @@ final class Tax extends Base
      * @var float
      */
     private $amount;
-
-    /**
-     * Label on Invoices
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $description;
 
     /**
      * Included in Price
@@ -308,6 +288,26 @@ final class Tax extends Base
     private $country_id;
 
     /**
+     * Tax Name
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    private $name;
+
+    /**
+     * Label on Invoices
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $description;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -354,10 +354,6 @@ final class Tax extends Base
     private $write_date;
 
     /**
-     * @param string $name Tax Name
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
      * @param string $type_tax_use Tax Scope
      *        ---
      *        Determines where the tax is selectable. Note : 'None' means a tax can't be used by itself, however it can
@@ -415,67 +411,37 @@ final class Tax extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $name Tax Name
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
-        string $name,
         string $type_tax_use,
         string $amount_type,
         OdooRelation $company_id,
         int $sequence,
         float $amount,
-        OdooRelation $tax_group_id
+        OdooRelation $tax_group_id,
+        string $name
     ) {
-        $this->name = $name;
         $this->type_tax_use = $type_tax_use;
         $this->amount_type = $amount_type;
         $this->company_id = $company_id;
         $this->sequence = $sequence;
         $this->amount = $amount;
         $this->tax_group_id = $tax_group_id;
-    }
-
-    /**
-     * @param OdooRelation[]|null $refund_repartition_line_ids
-     */
-    public function setRefundRepartitionLineIds(?array $refund_repartition_line_ids): void
-    {
-        $this->refund_repartition_line_ids = $refund_repartition_line_ids;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("tax_exigibility")
-     */
-    public function getTaxExigibility(): ?string
-    {
-        return $this->tax_exigibility;
-    }
-
-    /**
-     * @param string|null $tax_exigibility
-     */
-    public function setTaxExigibility(?string $tax_exigibility): void
-    {
-        $this->tax_exigibility = $tax_exigibility;
+        $this->name = $name;
     }
 
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("cash_basis_transition_account_id")
+     * @SerializedName("country_id")
      */
-    public function getCashBasisTransitionAccountId(): ?OdooRelation
+    public function getCountryId(): ?OdooRelation
     {
-        return $this->cash_basis_transition_account_id;
-    }
-
-    /**
-     * @param OdooRelation|null $cash_basis_transition_account_id
-     */
-    public function setCashBasisTransitionAccountId(?OdooRelation $cash_basis_transition_account_id): void
-    {
-        $this->cash_basis_transition_account_id = $cash_basis_transition_account_id;
+        return $this->country_id;
     }
 
     /**
@@ -570,6 +536,14 @@ final class Tax extends Base
     }
 
     /**
+     * @param OdooRelation[]|null $refund_repartition_line_ids
+     */
+    public function setRefundRepartitionLineIds(?array $refund_repartition_line_ids): void
+    {
+        $this->refund_repartition_line_ids = $refund_repartition_line_ids;
+    }
+
+    /**
      * @param OdooRelation $item
      *
      * @return bool
@@ -581,16 +555,6 @@ final class Tax extends Base
         }
 
         return in_array($item, $this->refund_repartition_line_ids);
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("hide_tax_exigibility")
-     */
-    public function isHideTaxExigibility(): ?bool
-    {
-        return $this->hide_tax_exigibility;
     }
 
     /**
@@ -625,21 +589,57 @@ final class Tax extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("country_id")
-     */
-    public function getCountryId(): ?OdooRelation
-    {
-        return $this->country_id;
-    }
-
-    /**
      * @param OdooRelation|null $country_id
      */
     public function setCountryId(?OdooRelation $country_id): void
     {
         $this->country_id = $country_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("cash_basis_transition_account_id")
+     */
+    public function getCashBasisTransitionAccountId(): ?OdooRelation
+    {
+        return $this->cash_basis_transition_account_id;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("name")
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("description")
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string|null $description
+     */
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
     }
 
     /**
@@ -715,53 +715,19 @@ final class Tax extends Base
     }
 
     /**
-     * @param bool|null $hide_tax_exigibility
+     * @param OdooRelation|null $cash_basis_transition_account_id
      */
-    public function setHideTaxExigibility(?bool $hide_tax_exigibility): void
+    public function setCashBasisTransitionAccountId(?OdooRelation $cash_basis_transition_account_id): void
     {
-        $this->hide_tax_exigibility = $hide_tax_exigibility;
+        $this->cash_basis_transition_account_id = $cash_basis_transition_account_id;
     }
 
     /**
-     * @param OdooRelation $tax_group_id
+     * @param string|null $tax_exigibility
      */
-    public function setTaxGroupId(OdooRelation $tax_group_id): void
+    public function setTaxExigibility(?string $tax_exigibility): void
     {
-        $this->tax_group_id = $tax_group_id;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("name")
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addChildrenTaxIds(OdooRelation $item): void
-    {
-        if ($this->hasChildrenTaxIds($item)) {
-            return;
-        }
-
-        if (null === $this->children_tax_ids) {
-            $this->children_tax_ids = [];
-        }
-
-        $this->children_tax_ids[] = $item;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
+        $this->tax_exigibility = $tax_exigibility;
     }
 
     /**
@@ -772,6 +738,16 @@ final class Tax extends Base
     public function getTypeTaxUse(): string
     {
         return $this->type_tax_use;
+    }
+
+    /**
+     * @return int
+     *
+     * @SerializedName("sequence")
+     */
+    public function getSequence(): int
+    {
+        return $this->sequence;
     }
 
     /**
@@ -871,6 +847,22 @@ final class Tax extends Base
     /**
      * @param OdooRelation $item
      */
+    public function addChildrenTaxIds(OdooRelation $item): void
+    {
+        if ($this->hasChildrenTaxIds($item)) {
+            return;
+        }
+
+        if (null === $this->children_tax_ids) {
+            $this->children_tax_ids = [];
+        }
+
+        $this->children_tax_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
     public function removeChildrenTaxIds(OdooRelation $item): void
     {
         if (null === $this->children_tax_ids) {
@@ -884,31 +876,21 @@ final class Tax extends Base
     }
 
     /**
-     * @return OdooRelation
-     *
-     * @SerializedName("tax_group_id")
-     */
-    public function getTaxGroupId(): OdooRelation
-    {
-        return $this->tax_group_id;
-    }
-
-    /**
-     * @return int
-     *
-     * @SerializedName("sequence")
-     */
-    public function getSequence(): int
-    {
-        return $this->sequence;
-    }
-
-    /**
      * @param int $sequence
      */
     public function setSequence(int $sequence): void
     {
         $this->sequence = $sequence;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("tax_exigibility")
+     */
+    public function getTaxExigibility(): ?string
+    {
+        return $this->tax_exigibility;
     }
 
     /**
@@ -927,24 +909,6 @@ final class Tax extends Base
     public function setAmount(float $amount): void
     {
         $this->amount = $amount;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("description")
-     */
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string|null $description
-     */
-    public function setDescription(?string $description): void
-    {
-        $this->description = $description;
     }
 
     /**
@@ -999,6 +963,42 @@ final class Tax extends Base
     public function setAnalytic(?bool $analytic): void
     {
         $this->analytic = $analytic;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("tax_group_id")
+     */
+    public function getTaxGroupId(): OdooRelation
+    {
+        return $this->tax_group_id;
+    }
+
+    /**
+     * @param OdooRelation $tax_group_id
+     */
+    public function setTaxGroupId(OdooRelation $tax_group_id): void
+    {
+        $this->tax_group_id = $tax_group_id;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("hide_tax_exigibility")
+     */
+    public function isHideTaxExigibility(): ?bool
+    {
+        return $this->hide_tax_exigibility;
+    }
+
+    /**
+     * @param bool|null $hide_tax_exigibility
+     */
+    public function setHideTaxExigibility(?bool $hide_tax_exigibility): void
+    {
+        $this->hide_tax_exigibility = $hide_tax_exigibility;
     }
 
     /**

@@ -44,10 +44,6 @@ final class Creation extends Journal
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param string $name Journal Name
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
      * @param string $code Short Code
      *        ---
      *        The journal entries of this journal will be named using this prefix.
@@ -110,26 +106,30 @@ final class Creation extends Journal
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $name Journal Name
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
         OdooRelation $journal_id,
-        string $name,
         string $code,
         string $type,
         OdooRelation $sequence_id,
         string $invoice_reference_type,
         string $invoice_reference_model,
-        OdooRelation $company_id
+        OdooRelation $company_id,
+        string $name
     ) {
         $this->journal_id = $journal_id;
         parent::__construct(
-            $name,
             $code,
             $type,
             $sequence_id,
             $invoice_reference_type,
             $invoice_reference_model,
-            $company_id
+            $company_id,
+            $name
         );
     }
 

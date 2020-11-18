@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  * Info :
  * Mixin class for objects which can be tracked by marketing.
  */
-final class Mixin extends Base
+abstract class Mixin extends Base
 {
     /**
      * Campaign
@@ -32,7 +32,7 @@ final class Mixin extends Base
      *
      * @var OdooRelation|null
      */
-    private $campaign_id;
+    protected $campaign_id;
 
     /**
      * Source
@@ -47,7 +47,7 @@ final class Mixin extends Base
      *
      * @var OdooRelation|null
      */
-    private $source_id;
+    protected $source_id;
 
     /**
      * Medium
@@ -62,7 +62,7 @@ final class Mixin extends Base
      *
      * @var OdooRelation|null
      */
-    private $medium_id;
+    protected $medium_id;
 
     /**
      * @return OdooRelation|null

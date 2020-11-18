@@ -132,6 +132,16 @@ final class Token extends Base
     private $verified;
 
     /**
+     * Payment Method ID
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $stripe_payment_method;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -205,11 +215,17 @@ final class Token extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $payment_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setPaymentIds(?array $payment_ids): void
+    public function hasPaymentIds(OdooRelation $item): bool
     {
-        $this->payment_ids = $payment_ids;
+        if (null === $this->payment_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->payment_ids);
     }
 
     /**
@@ -285,6 +301,24 @@ final class Token extends Base
     }
 
     /**
+     * @param string|null $stripe_payment_method
+     */
+    public function setStripePaymentMethod(?string $stripe_payment_method): void
+    {
+        $this->stripe_payment_method = $stripe_payment_method;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("stripe_payment_method")
+     */
+    public function getStripePaymentMethod(): ?string
+    {
+        return $this->stripe_payment_method;
+    }
+
+    /**
      * @param bool|null $verified
      */
     public function setVerified(?bool $verified): void
@@ -334,27 +368,11 @@ final class Token extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param OdooRelation[]|null $payment_ids
      */
-    public function hasPaymentIds(OdooRelation $item): bool
+    public function setPaymentIds(?array $payment_ids): void
     {
-        if (null === $this->payment_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->payment_ids);
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("payment_ids")
-     */
-    public function getPaymentIds(): ?array
-    {
-        return $this->payment_ids;
+        $this->payment_ids = $payment_ids;
     }
 
     /**
@@ -365,6 +383,16 @@ final class Token extends Base
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("payment_ids")
+     */
+    public function getPaymentIds(): ?array
+    {
+        return $this->payment_ids;
     }
 
     /**

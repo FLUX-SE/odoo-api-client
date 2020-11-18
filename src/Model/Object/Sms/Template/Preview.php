@@ -42,6 +42,7 @@ final class Preview extends Base
      * ---
      * Selection :
      *     -> en_US (English (US))
+     *     -> fr_FR (French / Français)
      * ---
      * Searchable : yes
      * Sortable : yes

@@ -435,39 +435,17 @@ final class Payment extends Base
     private $require_partner_bank_account;
 
     /**
-     * Amount in Words
+     * Attachments
      * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $check_amount_in_words;
-
-    /**
-     * Manual Numbering
-     * ---
-     * Check this option if your pre-printed checks are not numbered.
+     * Relation : one2many (ir.attachment -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
      * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var bool|null
+     * @var OdooRelation[]|null
      */
-    private $check_manual_sequencing;
-
-    /**
-     * Check Number
-     * ---
-     * The selected journal is configured to print check numbers. If your pre-printed check paper already has numbers
-     * or if the current numbering is wrong, you can change it in the journal configuration page.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $check_number;
+    private $attachment_ids;
 
     /**
      * Payment Transaction
@@ -1126,16 +1104,6 @@ final class Payment extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("payment_token_id")
-     */
-    public function getPaymentTokenId(): ?OdooRelation
-    {
-        return $this->payment_token_id;
-    }
-
-    /**
      * @param OdooRelation|null $payment_token_id
      */
     public function setPaymentTokenId(?OdooRelation $payment_token_id): void
@@ -1316,13 +1284,11 @@ final class Payment extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("payment_transaction_id")
+     * @param OdooRelation|null $payment_transaction_id
      */
-    public function getPaymentTransactionId(): ?OdooRelation
+    public function setPaymentTransactionId(?OdooRelation $payment_transaction_id): void
     {
-        return $this->payment_transaction_id;
+        $this->payment_transaction_id = $payment_transaction_id;
     }
 
     /**
@@ -1686,19 +1652,23 @@ final class Payment extends Base
     }
 
     /**
-     * @param OdooRelation|null $payment_transaction_id
+     * @return OdooRelation|null
+     *
+     * @SerializedName("payment_token_id")
      */
-    public function setPaymentTransactionId(?OdooRelation $payment_transaction_id): void
+    public function getPaymentTokenId(): ?OdooRelation
     {
-        $this->payment_transaction_id = $payment_transaction_id;
+        return $this->payment_token_id;
     }
 
     /**
-     * @param string|null $check_number
+     * @return OdooRelation|null
+     *
+     * @SerializedName("payment_transaction_id")
      */
-    public function setCheckNumber(?string $check_number): void
+    public function getPaymentTransactionId(): ?OdooRelation
     {
-        $this->check_number = $check_number;
+        return $this->payment_transaction_id;
     }
 
     /**
@@ -2107,13 +2077,18 @@ final class Payment extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("check_number")
+     * @param OdooRelation $item
      */
-    public function getCheckNumber(): ?string
+    public function removeAttachmentIds(OdooRelation $item): void
     {
-        return $this->check_number;
+        if (null === $this->attachment_ids) {
+            $this->attachment_ids = [];
+        }
+
+        if ($this->hasAttachmentIds($item)) {
+            $index = array_search($item, $this->attachment_ids);
+            unset($this->attachment_ids[$index]);
+        }
     }
 
     /**
@@ -2223,39 +2198,51 @@ final class Payment extends Base
     }
 
     /**
-     * @return string|null
+     * @return OdooRelation[]|null
      *
-     * @SerializedName("check_amount_in_words")
+     * @SerializedName("attachment_ids")
      */
-    public function getCheckAmountInWords(): ?string
+    public function getAttachmentIds(): ?array
     {
-        return $this->check_amount_in_words;
+        return $this->attachment_ids;
     }
 
     /**
-     * @param string|null $check_amount_in_words
+     * @param OdooRelation[]|null $attachment_ids
      */
-    public function setCheckAmountInWords(?string $check_amount_in_words): void
+    public function setAttachmentIds(?array $attachment_ids): void
     {
-        $this->check_amount_in_words = $check_amount_in_words;
+        $this->attachment_ids = $attachment_ids;
     }
 
     /**
-     * @return bool|null
+     * @param OdooRelation $item
      *
-     * @SerializedName("check_manual_sequencing")
+     * @return bool
      */
-    public function isCheckManualSequencing(): ?bool
+    public function hasAttachmentIds(OdooRelation $item): bool
     {
-        return $this->check_manual_sequencing;
+        if (null === $this->attachment_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->attachment_ids);
     }
 
     /**
-     * @param bool|null $check_manual_sequencing
+     * @param OdooRelation $item
      */
-    public function setCheckManualSequencing(?bool $check_manual_sequencing): void
+    public function addAttachmentIds(OdooRelation $item): void
     {
-        $this->check_manual_sequencing = $check_manual_sequencing;
+        if ($this->hasAttachmentIds($item)) {
+            return;
+        }
+
+        if (null === $this->attachment_ids) {
+            $this->attachment_ids = [];
+        }
+
+        $this->attachment_ids[] = $item;
     }
 
     /**

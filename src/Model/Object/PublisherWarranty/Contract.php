@@ -14,7 +14,7 @@ use Flux\OdooApiClient\Model\Object\Base;
  * Info :
  * The base model, which is implicitly inherited by all models.
  */
-final class Contract extends Base
+abstract class Contract extends Base
 {
     /**
      * @return string

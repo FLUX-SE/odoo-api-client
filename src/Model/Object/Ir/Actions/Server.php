@@ -15,7 +15,11 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  * Name : ir.actions.server
  * ---
  * Info :
- * Add SMS option in server actions.
+ * Mixin that overrides the create and write methods to properly generate
+ *                 ir.model.data entries flagged with Studio for the corresponding resources.
+ *                 Doesn't create an ir.model.data if the record is part of a module being
+ *                 currently installed as the ir.model.data will be created automatically
+ *                 afterwards.
  */
 class Server extends Base
 {
@@ -38,20 +42,6 @@ class Server extends Base
      * @var string
      */
     protected $type;
-
-    /**
-     * Usage
-     * ---
-     * Selection :
-     *     -> ir_actions_server (Server Action)
-     *     -> ir_cron (Scheduled Action)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string
-     */
-    protected $usage;
 
     /**
      * Sequence
@@ -326,6 +316,21 @@ class Server extends Base
     protected $activity_user_field_name;
 
     /**
+     * Usage
+     * ---
+     * Selection :
+     *     -> ir_actions_server (Server Action)
+     *     -> ir_cron (Scheduled Action)
+     *     -> base_automation (Automated Action)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    protected $usage;
+
+    /**
      * Action To Do
      * ---
      * Type of server action. The following values are available:
@@ -493,14 +498,6 @@ class Server extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param string $usage Usage
-     *        ---
-     *        Selection :
-     *            -> ir_actions_server (Server Action)
-     *            -> ir_cron (Scheduled Action)
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
      * @param OdooRelation $model_id Model
      *        ---
      *        Model on which the server action runs.
@@ -518,6 +515,15 @@ class Server extends Base
      *        Selection :
      *            -> specific (Specific User)
      *            -> generic (Generic User From Record)
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $usage Usage
+     *        ---
+     *        Selection :
+     *            -> ir_actions_server (Server Action)
+     *            -> ir_cron (Scheduled Action)
+     *            -> base_automation (Automated Action)
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -556,29 +562,29 @@ class Server extends Base
     public function __construct(
         string $name,
         string $type,
-        string $usage,
         OdooRelation $model_id,
         string $activity_user_type,
+        string $usage,
         string $state,
         string $binding_type
     ) {
         $this->name = $name;
         $this->type = $type;
-        $this->usage = $usage;
         $this->model_id = $model_id;
         $this->activity_user_type = $activity_user_type;
+        $this->usage = $usage;
         $this->state = $state;
         $this->binding_type = $binding_type;
     }
 
     /**
-     * @return string|null
+     * @return string
      *
-     * @SerializedName("activity_date_deadline_range_type")
+     * @SerializedName("activity_user_type")
      */
-    public function getActivityDateDeadlineRangeType(): ?string
+    public function getActivityUserType(): string
     {
-        return $this->activity_date_deadline_range_type;
+        return $this->activity_user_type;
     }
 
     /**
@@ -589,6 +595,24 @@ class Server extends Base
     public function getState(): string
     {
         return $this->state;
+    }
+
+    /**
+     * @param string $usage
+     */
+    public function setUsage(string $usage): void
+    {
+        $this->usage = $usage;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("usage")
+     */
+    public function getUsage(): string
+    {
+        return $this->usage;
     }
 
     /**
@@ -636,29 +660,11 @@ class Server extends Base
     }
 
     /**
-     * @return string
-     *
-     * @SerializedName("activity_user_type")
-     */
-    public function getActivityUserType(): string
-    {
-        return $this->activity_user_type;
-    }
-
-    /**
      * @param string|null $activity_date_deadline_range_type
      */
     public function setActivityDateDeadlineRangeType(?string $activity_date_deadline_range_type): void
     {
         $this->activity_date_deadline_range_type = $activity_date_deadline_range_type;
-    }
-
-    /**
-     * @param int|null $activity_date_deadline_range
-     */
-    public function setActivityDateDeadlineRange(?int $activity_date_deadline_range): void
-    {
-        $this->activity_date_deadline_range = $activity_date_deadline_range;
     }
 
     /**
@@ -669,6 +675,24 @@ class Server extends Base
     public function getSmsTemplateId(): ?OdooRelation
     {
         return $this->sms_template_id;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("activity_date_deadline_range_type")
+     */
+    public function getActivityDateDeadlineRangeType(): ?string
+    {
+        return $this->activity_date_deadline_range_type;
+    }
+
+    /**
+     * @param int|null $activity_date_deadline_range
+     */
+    public function setActivityDateDeadlineRange(?int $activity_date_deadline_range): void
+    {
+        $this->activity_date_deadline_range = $activity_date_deadline_range;
     }
 
     /**
@@ -726,24 +750,6 @@ class Server extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("activity_type_id")
-     */
-    public function getActivityTypeId(): ?OdooRelation
-    {
-        return $this->activity_type_id;
-    }
-
-    /**
-     * @param OdooRelation|null $template_id
-     */
-    public function setTemplateId(?OdooRelation $template_id): void
-    {
-        $this->template_id = $template_id;
-    }
-
-    /**
      * @param string $state
      */
     public function setState(string $state): void
@@ -760,18 +766,11 @@ class Server extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @param OdooRelation|null $template_id
      */
-    public function removeChannelIds(OdooRelation $item): void
+    public function setTemplateId(?OdooRelation $template_id): void
     {
-        if (null === $this->channel_ids) {
-            $this->channel_ids = [];
-        }
-
-        if ($this->hasChannelIds($item)) {
-            $index = array_search($item, $this->channel_ids);
-            unset($this->channel_ids[$index]);
-        }
+        $this->template_id = $template_id;
     }
 
     /**
@@ -957,27 +956,21 @@ class Server extends Base
     /**
      * @return OdooRelation|null
      *
+     * @SerializedName("activity_type_id")
+     */
+    public function getActivityTypeId(): ?OdooRelation
+    {
+        return $this->activity_type_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
      * @SerializedName("template_id")
      */
     public function getTemplateId(): ?OdooRelation
     {
         return $this->template_id;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addChannelIds(OdooRelation $item): void
-    {
-        if ($this->hasChannelIds($item)) {
-            return;
-        }
-
-        if (null === $this->channel_ids) {
-            $this->channel_ids = [];
-        }
-
-        $this->channel_ids[] = $item;
     }
 
     /**
@@ -993,11 +986,29 @@ class Server extends Base
     /**
      * @return string|null
      *
-     * @SerializedName("model_name")
+     * @SerializedName("code")
      */
-    public function getModelName(): ?string
+    public function getCode(): ?string
     {
-        return $this->model_name;
+        return $this->code;
+    }
+
+    /**
+     * @param OdooRelation|null $crud_model_id
+     */
+    public function setCrudModelId(?OdooRelation $crud_model_id): void
+    {
+        $this->crud_model_id = $crud_model_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("crud_model_id")
+     */
+    public function getCrudModelId(): ?OdooRelation
+    {
+        return $this->crud_model_id;
     }
 
     /**
@@ -1072,16 +1083,6 @@ class Server extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("code")
-     */
-    public function getCode(): ?string
-    {
-        return $this->code;
-    }
-
-    /**
      * @param string|null $model_name
      */
     public function setModelName(?string $model_name): void
@@ -1090,19 +1091,29 @@ class Server extends Base
     }
 
     /**
+     * @param string|null $crud_model_name
+     */
+    public function setCrudModelName(?string $crud_model_name): void
+    {
+        $this->crud_model_name = $crud_model_name;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("model_name")
+     */
+    public function getModelName(): ?string
+    {
+        return $this->model_name;
+    }
+
+    /**
      * @param OdooRelation $model_id
      */
     public function setModelId(OdooRelation $model_id): void
     {
         $this->model_id = $model_id;
-    }
-
-    /**
-     * @param OdooRelation|null $crud_model_id
-     */
-    public function setCrudModelId(?OdooRelation $crud_model_id): void
-    {
-        $this->crud_model_id = $crud_model_id;
     }
 
     /**
@@ -1134,24 +1145,6 @@ class Server extends Base
     }
 
     /**
-     * @param string $usage
-     */
-    public function setUsage(string $usage): void
-    {
-        $this->usage = $usage;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("usage")
-     */
-    public function getUsage(): string
-    {
-        return $this->usage;
-    }
-
-    /**
      * @param string $type
      */
     public function setType(string $type): void
@@ -1178,16 +1171,6 @@ class Server extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("crud_model_id")
-     */
-    public function getCrudModelId(): ?OdooRelation
-    {
-        return $this->crud_model_id;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("crud_model_name")
@@ -1195,6 +1178,57 @@ class Server extends Base
     public function getCrudModelName(): ?string
     {
         return $this->crud_model_name;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("link_field_id")
+     */
+    public function getLinkFieldId(): ?OdooRelation
+    {
+        return $this->link_field_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeChannelIds(OdooRelation $item): void
+    {
+        if (null === $this->channel_ids) {
+            $this->channel_ids = [];
+        }
+
+        if ($this->hasChannelIds($item)) {
+            $index = array_search($item, $this->channel_ids);
+            unset($this->channel_ids[$index]);
+        }
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("partner_ids")
+     */
+    public function getPartnerIds(): ?array
+    {
+        return $this->partner_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addChannelIds(OdooRelation $item): void
+    {
+        if ($this->hasChannelIds($item)) {
+            return;
+        }
+
+        if (null === $this->channel_ids) {
+            $this->channel_ids = [];
+        }
+
+        $this->channel_ids[] = $item;
     }
 
     /**
@@ -1209,22 +1243,6 @@ class Server extends Base
         }
 
         return in_array($item, $this->channel_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addGroupsId(OdooRelation $item): void
-    {
-        if ($this->hasGroupsId($item)) {
-            return;
-        }
-
-        if (null === $this->groups_id) {
-            $this->groups_id = [];
-        }
-
-        $this->groups_id[] = $item;
     }
 
     /**
@@ -1299,16 +1317,6 @@ class Server extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("partner_ids")
-     */
-    public function getPartnerIds(): ?array
-    {
-        return $this->partner_ids;
-    }
-
-    /**
      * @param OdooRelation $item
      */
     public function removeGroupsId(OdooRelation $item): void
@@ -1324,6 +1332,30 @@ class Server extends Base
     }
 
     /**
+     * @param OdooRelation|null $link_field_id
+     */
+    public function setLinkFieldId(?OdooRelation $link_field_id): void
+    {
+        $this->link_field_id = $link_field_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addGroupsId(OdooRelation $item): void
+    {
+        if ($this->hasGroupsId($item)) {
+            return;
+        }
+
+        if (null === $this->groups_id) {
+            $this->groups_id = [];
+        }
+
+        $this->groups_id[] = $item;
+    }
+
+    /**
      * @param OdooRelation $item
      *
      * @return bool
@@ -1335,14 +1367,6 @@ class Server extends Base
         }
 
         return in_array($item, $this->groups_id);
-    }
-
-    /**
-     * @param string|null $crud_model_name
-     */
-    public function setCrudModelName(?string $crud_model_name): void
-    {
-        $this->crud_model_name = $crud_model_name;
     }
 
     /**
@@ -1424,24 +1448,6 @@ class Server extends Base
     public function getFieldsLines(): ?array
     {
         return $this->fields_lines;
-    }
-
-    /**
-     * @param OdooRelation|null $link_field_id
-     */
-    public function setLinkFieldId(?OdooRelation $link_field_id): void
-    {
-        $this->link_field_id = $link_field_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("link_field_id")
-     */
-    public function getLinkFieldId(): ?OdooRelation
-    {
-        return $this->link_field_id;
     }
 
     /**

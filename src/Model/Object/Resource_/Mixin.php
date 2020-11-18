@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  * Info :
  * The base model, which is implicitly inherited by all models.
  */
-final class Mixin extends Base
+abstract class Mixin extends Base
 {
     /**
      * Resource
@@ -29,7 +29,7 @@ final class Mixin extends Base
      *
      * @var OdooRelation
      */
-    private $resource_id;
+    protected $resource_id;
 
     /**
      * Company
@@ -42,7 +42,7 @@ final class Mixin extends Base
      *
      * @var OdooRelation|null
      */
-    private $company_id;
+    protected $company_id;
 
     /**
      * Working Hours
@@ -57,7 +57,7 @@ final class Mixin extends Base
      *
      * @var OdooRelation|null
      */
-    private $resource_calendar_id;
+    protected $resource_calendar_id;
 
     /**
      * Timezone
@@ -664,7 +664,7 @@ final class Mixin extends Base
      *
      * @var string|null
      */
-    private $tz;
+    protected $tz;
 
     /**
      * @param OdooRelation $resource_id Resource

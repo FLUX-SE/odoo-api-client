@@ -214,23 +214,6 @@ final class Type extends Base
     private $previous_type_ids;
 
     /**
-     * Action to Perform
-     * ---
-     * Actions may trigger specific behavior like opening calendar view or automatically mark as done when a document
-     * is uploaded
-     * ---
-     * Selection :
-     *     -> default (None)
-     *     -> upload_file (Upload Document)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $category;
-
-    /**
      * Email templates
      * ---
      * Relation : many2many (mail.template)
@@ -242,19 +225,6 @@ final class Type extends Base
      * @var OdooRelation[]|null
      */
     private $mail_template_ids;
-
-    /**
-     * Default User
-     * ---
-     * Relation : many2one (res.users)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Users
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $default_user_id;
 
     /**
      * Default Description
@@ -292,6 +262,66 @@ final class Type extends Base
      * @var bool|null
      */
     private $res_model_change;
+
+    /**
+     * Tag
+     * ---
+     * Relation : many2many (documents.tag)
+     * @see \Flux\OdooApiClient\Model\Object\Documents\Tag
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $tag_ids;
+
+    /**
+     * Folder
+     * ---
+     * By defining a folder, the upload activities will generate a document
+     * ---
+     * Relation : many2one (documents.folder)
+     * @see \Flux\OdooApiClient\Model\Object\Documents\Folder
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $folder_id;
+
+    /**
+     * Default User
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $default_user_id;
+
+    /**
+     * Action to Perform
+     * ---
+     * Actions may trigger specific behavior like opening calendar view or automatically mark as done when a document
+     * is uploaded
+     * ---
+     * Selection :
+     *     -> default (None)
+     *     -> upload_file (Upload Document)
+     *     -> meeting (Meeting)
+     *     -> tax_report (Tax report)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $category;
 
     /**
      * Created on
@@ -361,61 +391,11 @@ final class Type extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("default_user_id")
+     * @param OdooRelation[]|null $tag_ids
      */
-    public function getDefaultUserId(): ?OdooRelation
+    public function setTagIds(?array $tag_ids): void
     {
-        return $this->default_user_id;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("previous_type_ids")
-     */
-    public function getPreviousTypeIds(): ?array
-    {
-        return $this->previous_type_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $previous_type_ids
-     */
-    public function setPreviousTypeIds(?array $previous_type_ids): void
-    {
-        $this->previous_type_ids = $previous_type_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasPreviousTypeIds(OdooRelation $item): bool
-    {
-        if (null === $this->previous_type_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->previous_type_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addPreviousTypeIds(OdooRelation $item): void
-    {
-        if ($this->hasPreviousTypeIds($item)) {
-            return;
-        }
-
-        if (null === $this->previous_type_ids) {
-            $this->previous_type_ids = [];
-        }
-
-        $this->previous_type_ids[] = $item;
+        $this->tag_ids = $tag_ids;
     }
 
     /**
@@ -431,24 +411,6 @@ final class Type extends Base
             $index = array_search($item, $this->previous_type_ids);
             unset($this->previous_type_ids[$index]);
         }
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("category")
-     */
-    public function getCategory(): ?string
-    {
-        return $this->category;
-    }
-
-    /**
-     * @param string|null $category
-     */
-    public function setCategory(?string $category): void
-    {
-        $this->category = $category;
     }
 
     /**
@@ -515,30 +477,6 @@ final class Type extends Base
     }
 
     /**
-     * @param OdooRelation|null $default_user_id
-     */
-    public function setDefaultUserId(?OdooRelation $default_user_id): void
-    {
-        $this->default_user_id = $default_user_id;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addNextTypeIds(OdooRelation $item): void
-    {
-        if ($this->hasNextTypeIds($item)) {
-            return;
-        }
-
-        if (null === $this->next_type_ids) {
-            $this->next_type_ids = [];
-        }
-
-        $this->next_type_ids[] = $item;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("default_description")
@@ -590,6 +528,129 @@ final class Type extends Base
     public function setResModelChange(?bool $res_model_change): void
     {
         $this->res_model_change = $res_model_change;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("tag_ids")
+     */
+    public function getTagIds(): ?array
+    {
+        return $this->tag_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasTagIds(OdooRelation $item): bool
+    {
+        if (null === $this->tag_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->tag_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasPreviousTypeIds(OdooRelation $item): bool
+    {
+        if (null === $this->previous_type_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->previous_type_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addTagIds(OdooRelation $item): void
+    {
+        if ($this->hasTagIds($item)) {
+            return;
+        }
+
+        if (null === $this->tag_ids) {
+            $this->tag_ids = [];
+        }
+
+        $this->tag_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeTagIds(OdooRelation $item): void
+    {
+        if (null === $this->tag_ids) {
+            $this->tag_ids = [];
+        }
+
+        if ($this->hasTagIds($item)) {
+            $index = array_search($item, $this->tag_ids);
+            unset($this->tag_ids[$index]);
+        }
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("folder_id")
+     */
+    public function getFolderId(): ?OdooRelation
+    {
+        return $this->folder_id;
+    }
+
+    /**
+     * @param OdooRelation|null $folder_id
+     */
+    public function setFolderId(?OdooRelation $folder_id): void
+    {
+        $this->folder_id = $folder_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("default_user_id")
+     */
+    public function getDefaultUserId(): ?OdooRelation
+    {
+        return $this->default_user_id;
+    }
+
+    /**
+     * @param OdooRelation|null $default_user_id
+     */
+    public function setDefaultUserId(?OdooRelation $default_user_id): void
+    {
+        $this->default_user_id = $default_user_id;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("category")
+     */
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param string|null $category
+     */
+    public function setCategory(?string $category): void
+    {
+        $this->category = $category;
     }
 
     /**
@@ -649,30 +710,25 @@ final class Type extends Base
     /**
      * @param OdooRelation $item
      */
-    public function removeNextTypeIds(OdooRelation $item): void
+    public function addPreviousTypeIds(OdooRelation $item): void
     {
-        if (null === $this->next_type_ids) {
-            $this->next_type_ids = [];
+        if ($this->hasPreviousTypeIds($item)) {
+            return;
         }
 
-        if ($this->hasNextTypeIds($item)) {
-            $index = array_search($item, $this->next_type_ids);
-            unset($this->next_type_ids[$index]);
+        if (null === $this->previous_type_ids) {
+            $this->previous_type_ids = [];
         }
+
+        $this->previous_type_ids[] = $item;
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param OdooRelation[]|null $previous_type_ids
      */
-    public function hasNextTypeIds(OdooRelation $item): bool
+    public function setPreviousTypeIds(?array $previous_type_ids): void
     {
-        if (null === $this->next_type_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->next_type_ids);
+        $this->previous_type_ids = $previous_type_ids;
     }
 
     /**
@@ -686,11 +742,11 @@ final class Type extends Base
     }
 
     /**
-     * @param string $delay_unit
+     * @param string $delay_from
      */
-    public function setDelayUnit(string $delay_unit): void
+    public function setDelayFrom(string $delay_from): void
     {
-        $this->delay_unit = $delay_unit;
+        $this->delay_from = $delay_from;
     }
 
     /**
@@ -802,6 +858,14 @@ final class Type extends Base
     }
 
     /**
+     * @param string $delay_unit
+     */
+    public function setDelayUnit(string $delay_unit): void
+    {
+        $this->delay_unit = $delay_unit;
+    }
+
+    /**
      * @return string
      *
      * @SerializedName("delay_from")
@@ -812,22 +876,6 @@ final class Type extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $next_type_ids
-     */
-    public function setNextTypeIds(?array $next_type_ids): void
-    {
-        $this->next_type_ids = $next_type_ids;
-    }
-
-    /**
-     * @param string $delay_from
-     */
-    public function setDelayFrom(string $delay_from): void
-    {
-        $this->delay_from = $delay_from;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("icon")
@@ -835,6 +883,16 @@ final class Type extends Base
     public function getIcon(): ?string
     {
         return $this->icon;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("previous_type_ids")
+     */
+    public function getPreviousTypeIds(): ?array
+    {
+        return $this->previous_type_ids;
     }
 
     /**
@@ -925,6 +983,59 @@ final class Type extends Base
     public function getNextTypeIds(): ?array
     {
         return $this->next_type_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $next_type_ids
+     */
+    public function setNextTypeIds(?array $next_type_ids): void
+    {
+        $this->next_type_ids = $next_type_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasNextTypeIds(OdooRelation $item): bool
+    {
+        if (null === $this->next_type_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->next_type_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addNextTypeIds(OdooRelation $item): void
+    {
+        if ($this->hasNextTypeIds($item)) {
+            return;
+        }
+
+        if (null === $this->next_type_ids) {
+            $this->next_type_ids = [];
+        }
+
+        $this->next_type_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeNextTypeIds(OdooRelation $item): void
+    {
+        if (null === $this->next_type_ids) {
+            $this->next_type_ids = [];
+        }
+
+        if ($this->hasNextTypeIds($item)) {
+            $index = array_search($item, $this->next_type_ids);
+            unset($this->next_type_ids[$index]);
+        }
     }
 
     /**

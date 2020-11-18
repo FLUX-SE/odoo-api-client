@@ -14,7 +14,7 @@ use Flux\OdooApiClient\Model\Object\Base;
  * Info :
  * The base model, which is implicitly inherited by all models.
  */
-final class ReportIrmodulereference extends Base
+abstract class ReportIrmodulereference extends Base
 {
     /**
      * @return string

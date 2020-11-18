@@ -30,7 +30,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *             * ``_phone_reset_blacklisted``: reactivate recordset (even if not blacklisted
  *                 this method can be called safely);
  */
-final class Phone extends Base
+abstract class Phone extends Base
 {
     /**
      * Sanitized Number
@@ -42,7 +42,7 @@ final class Phone extends Base
      *
      * @var string|null
      */
-    private $phone_sanitized;
+    protected $phone_sanitized;
 
     /**
      * Phone Blacklisted
@@ -54,7 +54,7 @@ final class Phone extends Base
      *
      * @var bool|null
      */
-    private $phone_blacklisted;
+    protected $phone_blacklisted;
 
     /**
      * Is Follower
@@ -64,7 +64,7 @@ final class Phone extends Base
      *
      * @var bool|null
      */
-    private $message_is_follower;
+    protected $message_is_follower;
 
     /**
      * Followers
@@ -77,7 +77,7 @@ final class Phone extends Base
      *
      * @var OdooRelation[]|null
      */
-    private $message_follower_ids;
+    protected $message_follower_ids;
 
     /**
      * Followers (Partners)
@@ -90,7 +90,7 @@ final class Phone extends Base
      *
      * @var OdooRelation[]|null
      */
-    private $message_partner_ids;
+    protected $message_partner_ids;
 
     /**
      * Followers (Channels)
@@ -103,7 +103,7 @@ final class Phone extends Base
      *
      * @var OdooRelation[]|null
      */
-    private $message_channel_ids;
+    protected $message_channel_ids;
 
     /**
      * Messages
@@ -116,7 +116,7 @@ final class Phone extends Base
      *
      * @var OdooRelation[]|null
      */
-    private $message_ids;
+    protected $message_ids;
 
     /**
      * Unread Messages
@@ -128,7 +128,7 @@ final class Phone extends Base
      *
      * @var bool|null
      */
-    private $message_unread;
+    protected $message_unread;
 
     /**
      * Unread Messages Counter
@@ -140,7 +140,7 @@ final class Phone extends Base
      *
      * @var int|null
      */
-    private $message_unread_counter;
+    protected $message_unread_counter;
 
     /**
      * Action Needed
@@ -152,7 +152,7 @@ final class Phone extends Base
      *
      * @var bool|null
      */
-    private $message_needaction;
+    protected $message_needaction;
 
     /**
      * Number of Actions
@@ -164,7 +164,7 @@ final class Phone extends Base
      *
      * @var int|null
      */
-    private $message_needaction_counter;
+    protected $message_needaction_counter;
 
     /**
      * Message Delivery error
@@ -176,7 +176,7 @@ final class Phone extends Base
      *
      * @var bool|null
      */
-    private $message_has_error;
+    protected $message_has_error;
 
     /**
      * Number of errors
@@ -188,7 +188,7 @@ final class Phone extends Base
      *
      * @var int|null
      */
-    private $message_has_error_counter;
+    protected $message_has_error_counter;
 
     /**
      * Attachment Count
@@ -198,7 +198,7 @@ final class Phone extends Base
      *
      * @var int|null
      */
-    private $message_attachment_count;
+    protected $message_attachment_count;
 
     /**
      * Main Attachment
@@ -211,7 +211,7 @@ final class Phone extends Base
      *
      * @var OdooRelation|null
      */
-    private $message_main_attachment_id;
+    protected $message_main_attachment_id;
 
     /**
      * Website Messages
@@ -226,7 +226,7 @@ final class Phone extends Base
      *
      * @var OdooRelation[]|null
      */
-    private $website_message_ids;
+    protected $website_message_ids;
 
     /**
      * SMS Delivery error
@@ -238,7 +238,7 @@ final class Phone extends Base
      *
      * @var bool|null
      */
-    private $message_has_sms_error;
+    protected $message_has_sms_error;
 
     /**
      * @return string|null

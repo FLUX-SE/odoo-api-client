@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Model\Object\Print_\Prenumbered;
+namespace Flux\OdooApiClient\Model\Object\AccountReports\Export\Wizard;
 
 use DateTimeInterface;
 use Flux\OdooApiClient\Model\Object\Base;
@@ -10,9 +10,9 @@ use Flux\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
- * Odoo model : print.prenumbered.checks
+ * Odoo model : account_reports.export.wizard.format
  * ---
- * Name : print.prenumbered.checks
+ * Name : account_reports.export.wizard.format
  * ---
  * Info :
  * Model super-class for transient records, meant to be temporarily
@@ -22,17 +22,40 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *         create new records, and may only access the records they created. The
  *         superuser has unrestricted access to all TransientModel records.
  */
-final class Checks extends Base
+final class Format extends Base
 {
     /**
-     * Next Check Number
+     * Name
      * ---
      * Searchable : yes
      * Sortable : yes
      *
      * @var string
      */
-    private $next_check_number;
+    private $name;
+
+    /**
+     * Function to Call
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    private $fun_to_call;
+
+    /**
+     * Parent Wizard
+     * ---
+     * Relation : many2one (account_reports.export.wizard)
+     * @see \Flux\OdooApiClient\Model\Object\AccountReports\Export\Wizard
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation
+     */
+    private $export_wizard_id;
 
     /**
      * Created by
@@ -81,32 +104,81 @@ final class Checks extends Base
     private $write_date;
 
     /**
-     * @param string $next_check_number Next Check Number
+     * @param string $name Name
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $fun_to_call Function to Call
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $export_wizard_id Parent Wizard
+     *        ---
+     *        Relation : many2one (account_reports.export.wizard)
+     *        @see \Flux\OdooApiClient\Model\Object\AccountReports\Export\Wizard
      *        ---
      *        Searchable : yes
      *        Sortable : yes
      */
-    public function __construct(string $next_check_number)
+    public function __construct(string $name, string $fun_to_call, OdooRelation $export_wizard_id)
     {
-        $this->next_check_number = $next_check_number;
+        $this->name = $name;
+        $this->fun_to_call = $fun_to_call;
+        $this->export_wizard_id = $export_wizard_id;
     }
 
     /**
      * @return string
      *
-     * @SerializedName("next_check_number")
+     * @SerializedName("name")
      */
-    public function getNextCheckNumber(): string
+    public function getName(): string
     {
-        return $this->next_check_number;
+        return $this->name;
     }
 
     /**
-     * @param string $next_check_number
+     * @param string $name
      */
-    public function setNextCheckNumber(string $next_check_number): void
+    public function setName(string $name): void
     {
-        $this->next_check_number = $next_check_number;
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("fun_to_call")
+     */
+    public function getFunToCall(): string
+    {
+        return $this->fun_to_call;
+    }
+
+    /**
+     * @param string $fun_to_call
+     */
+    public function setFunToCall(string $fun_to_call): void
+    {
+        $this->fun_to_call = $fun_to_call;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("export_wizard_id")
+     */
+    public function getExportWizardId(): OdooRelation
+    {
+        return $this->export_wizard_id;
+    }
+
+    /**
+     * @param OdooRelation $export_wizard_id
+     */
+    public function setExportWizardId(OdooRelation $export_wizard_id): void
+    {
+        $this->export_wizard_id = $export_wizard_id;
     }
 
     /**
@@ -186,6 +258,6 @@ final class Checks extends Base
      */
     public static function getOdooModelName(): string
     {
-        return 'print.prenumbered.checks';
+        return 'account_reports.export.wizard.format';
     }
 }

@@ -38,16 +38,6 @@ final class Template extends Base
     private $sequence;
 
     /**
-     * Fiscal Position Template
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string
-     */
-    private $name;
-
-    /**
      * Chart Template
      * ---
      * Relation : many2one (account.chart.template)
@@ -85,16 +75,6 @@ final class Template extends Base
      * @var OdooRelation[]|null
      */
     private $tax_ids;
-
-    /**
-     * Notes
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $note;
 
     /**
      * Detect Automatically
@@ -184,6 +164,26 @@ final class Template extends Base
     private $zip_to;
 
     /**
+     * Fiscal Position Template
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    private $name;
+
+    /**
+     * Notes
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $note;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -230,10 +230,6 @@ final class Template extends Base
     private $write_date;
 
     /**
-     * @param string $name Fiscal Position Template
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
      * @param OdooRelation $chart_template_id Chart Template
      *        ---
      *        Relation : many2one (account.chart.template)
@@ -241,55 +237,23 @@ final class Template extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $name Fiscal Position Template
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(string $name, OdooRelation $chart_template_id)
+    public function __construct(OdooRelation $chart_template_id, string $name)
+    {
+        $this->chart_template_id = $chart_template_id;
+        $this->name = $name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
     {
         $this->name = $name;
-        $this->chart_template_id = $chart_template_id;
-    }
-
-    /**
-     * @param string|null $zip_from
-     */
-    public function setZipFrom(?string $zip_from): void
-    {
-        $this->zip_from = $zip_from;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("country_group_id")
-     */
-    public function getCountryGroupId(): ?OdooRelation
-    {
-        return $this->country_group_id;
-    }
-
-    /**
-     * @param OdooRelation|null $country_group_id
-     */
-    public function setCountryGroupId(?OdooRelation $country_group_id): void
-    {
-        $this->country_group_id = $country_group_id;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("state_ids")
-     */
-    public function getStateIds(): ?array
-    {
-        return $this->state_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $state_ids
-     */
-    public function setStateIds(?array $state_ids): void
-    {
-        $this->state_ids = $state_ids;
     }
 
     /**
@@ -348,6 +312,14 @@ final class Template extends Base
     }
 
     /**
+     * @param string|null $zip_from
+     */
+    public function setZipFrom(?string $zip_from): void
+    {
+        $this->zip_from = $zip_from;
+    }
+
+    /**
      * @return string|null
      *
      * @SerializedName("zip_to")
@@ -358,21 +330,49 @@ final class Template extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("country_id")
-     */
-    public function getCountryId(): ?OdooRelation
-    {
-        return $this->country_id;
-    }
-
-    /**
      * @param string|null $zip_to
      */
     public function setZipTo(?string $zip_to): void
     {
         $this->zip_to = $zip_to;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("name")
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("note")
+     */
+    public function getNote(): ?string
+    {
+        return $this->note;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("state_ids")
+     */
+    public function getStateIds(): ?array
+    {
+        return $this->state_ids;
+    }
+
+    /**
+     * @param string|null $note
+     */
+    public function setNote(?string $note): void
+    {
+        $this->note = $note;
     }
 
     /**
@@ -448,19 +448,19 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation|null $country_id
+     * @param OdooRelation[]|null $state_ids
      */
-    public function setCountryId(?OdooRelation $country_id): void
+    public function setStateIds(?array $state_ids): void
     {
-        $this->country_id = $country_id;
+        $this->state_ids = $state_ids;
     }
 
     /**
-     * @param bool|null $vat_required
+     * @param OdooRelation|null $country_group_id
      */
-    public function setVatRequired(?bool $vat_required): void
+    public function setCountryGroupId(?OdooRelation $country_group_id): void
     {
-        $this->vat_required = $vat_required;
+        $this->country_group_id = $country_group_id;
     }
 
     /**
@@ -474,19 +474,13 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("tax_ids")
      */
-    public function addAccountIds(OdooRelation $item): void
+    public function getTaxIds(): ?array
     {
-        if ($this->hasAccountIds($item)) {
-            return;
-        }
-
-        if (null === $this->account_ids) {
-            $this->account_ids = [];
-        }
-
-        $this->account_ids[] = $item;
+        return $this->tax_ids;
     }
 
     /**
@@ -495,24 +489,6 @@ final class Template extends Base
     public function setSequence(?int $sequence): void
     {
         $this->sequence = $sequence;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("name")
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
     }
 
     /**
@@ -568,6 +544,22 @@ final class Template extends Base
     /**
      * @param OdooRelation $item
      */
+    public function addAccountIds(OdooRelation $item): void
+    {
+        if ($this->hasAccountIds($item)) {
+            return;
+        }
+
+        if (null === $this->account_ids) {
+            $this->account_ids = [];
+        }
+
+        $this->account_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
     public function removeAccountIds(OdooRelation $item): void
     {
         if (null === $this->account_ids) {
@@ -581,31 +573,21 @@ final class Template extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("vat_required")
-     */
-    public function isVatRequired(): ?bool
-    {
-        return $this->vat_required;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("tax_ids")
-     */
-    public function getTaxIds(): ?array
-    {
-        return $this->tax_ids;
-    }
-
-    /**
      * @param OdooRelation[]|null $tax_ids
      */
     public function setTaxIds(?array $tax_ids): void
     {
         $this->tax_ids = $tax_ids;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("country_group_id")
+     */
+    public function getCountryGroupId(): ?OdooRelation
+    {
+        return $this->country_group_id;
     }
 
     /**
@@ -654,24 +636,6 @@ final class Template extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("note")
-     */
-    public function getNote(): ?string
-    {
-        return $this->note;
-    }
-
-    /**
-     * @param string|null $note
-     */
-    public function setNote(?string $note): void
-    {
-        $this->note = $note;
-    }
-
-    /**
      * @return bool|null
      *
      * @SerializedName("auto_apply")
@@ -687,6 +651,42 @@ final class Template extends Base
     public function setAutoApply(?bool $auto_apply): void
     {
         $this->auto_apply = $auto_apply;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("vat_required")
+     */
+    public function isVatRequired(): ?bool
+    {
+        return $this->vat_required;
+    }
+
+    /**
+     * @param bool|null $vat_required
+     */
+    public function setVatRequired(?bool $vat_required): void
+    {
+        $this->vat_required = $vat_required;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("country_id")
+     */
+    public function getCountryId(): ?OdooRelation
+    {
+        return $this->country_id;
+    }
+
+    /**
+     * @param OdooRelation|null $country_id
+     */
+    public function setCountryId(?OdooRelation $country_id): void
+    {
+        $this->country_id = $country_id;
     }
 
     /**

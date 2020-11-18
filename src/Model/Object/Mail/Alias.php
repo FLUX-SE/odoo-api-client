@@ -150,6 +150,7 @@ class Alias extends Base
      *     -> everyone (Everyone)
      *     -> partners (Authenticated Partners)
      *     -> followers (Followers only)
+     *     -> employees (Authenticated Employees)
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -233,6 +234,7 @@ class Alias extends Base
      *            -> everyone (Everyone)
      *            -> partners (Authenticated Partners)
      *            -> followers (Followers only)
+     *            -> employees (Authenticated Employees)
      *        ---
      *        Searchable : yes
      *        Sortable : yes

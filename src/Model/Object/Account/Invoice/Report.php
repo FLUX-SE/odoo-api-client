@@ -341,6 +341,19 @@ final class Report extends Base
     private $account_id;
 
     /**
+     * Analytic Account
+     * ---
+     * Relation : many2one (account.analytic.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Account
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $analytic_account_id;
+
+    /**
      * Untaxed Total
      * ---
      * Searchable : yes
@@ -386,19 +399,11 @@ final class Report extends Base
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("product_uom_id")
+     * @SerializedName("product_categ_id")
      */
-    public function getProductUomId(): ?OdooRelation
+    public function getProductCategId(): ?OdooRelation
     {
-        return $this->product_uom_id;
-    }
-
-    /**
-     * @param OdooRelation|null $invoice_partner_bank_id
-     */
-    public function setInvoicePartnerBankId(?OdooRelation $invoice_partner_bank_id): void
-    {
-        $this->invoice_partner_bank_id = $invoice_partner_bank_id;
+        return $this->product_categ_id;
     }
 
     /**
@@ -492,6 +497,16 @@ final class Report extends Base
     }
 
     /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("product_uom_id")
+     */
+    public function getProductUomId(): ?OdooRelation
+    {
+        return $this->product_uom_id;
+    }
+
+    /**
      * @param OdooRelation|null $product_uom_id
      */
     public function setProductUomId(?OdooRelation $product_uom_id): void
@@ -500,29 +515,21 @@ final class Report extends Base
     }
 
     /**
-     * @param OdooRelation|null $invoice_payment_term_id
-     */
-    public function setInvoicePaymentTermId(?OdooRelation $invoice_payment_term_id): void
-    {
-        $this->invoice_payment_term_id = $invoice_payment_term_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("product_categ_id")
-     */
-    public function getProductCategId(): ?OdooRelation
-    {
-        return $this->product_categ_id;
-    }
-
-    /**
      * @param OdooRelation|null $product_categ_id
      */
     public function setProductCategId(?OdooRelation $product_categ_id): void
     {
         $this->product_categ_id = $product_categ_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("invoice_partner_bank_id")
+     */
+    public function getInvoicePartnerBankId(): ?OdooRelation
+    {
+        return $this->invoice_partner_bank_id;
     }
 
     /**
@@ -559,6 +566,24 @@ final class Report extends Base
     public function setAccountId(?OdooRelation $account_id): void
     {
         $this->account_id = $account_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("analytic_account_id")
+     */
+    public function getAnalyticAccountId(): ?OdooRelation
+    {
+        return $this->analytic_account_id;
+    }
+
+    /**
+     * @param OdooRelation|null $analytic_account_id
+     */
+    public function setAnalyticAccountId(?OdooRelation $analytic_account_id): void
+    {
+        $this->analytic_account_id = $analytic_account_id;
     }
 
     /**
@@ -616,23 +641,19 @@ final class Report extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("invoice_partner_bank_id")
+     * @param OdooRelation|null $invoice_partner_bank_id
      */
-    public function getInvoicePartnerBankId(): ?OdooRelation
+    public function setInvoicePartnerBankId(?OdooRelation $invoice_partner_bank_id): void
     {
-        return $this->invoice_partner_bank_id;
+        $this->invoice_partner_bank_id = $invoice_partner_bank_id;
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("invoice_payment_term_id")
+     * @param OdooRelation|null $invoice_payment_term_id
      */
-    public function getInvoicePaymentTermId(): ?OdooRelation
+    public function setInvoicePaymentTermId(?OdooRelation $invoice_payment_term_id): void
     {
-        return $this->invoice_payment_term_id;
+        $this->invoice_payment_term_id = $invoice_payment_term_id;
     }
 
     /**
@@ -644,11 +665,13 @@ final class Report extends Base
     }
 
     /**
-     * @param OdooRelation|null $commercial_partner_id
+     * @return OdooRelation|null
+     *
+     * @SerializedName("country_id")
      */
-    public function setCommercialPartnerId(?OdooRelation $commercial_partner_id): void
+    public function getCountryId(): ?OdooRelation
     {
-        $this->commercial_partner_id = $commercial_partner_id;
+        return $this->country_id;
     }
 
     /**
@@ -752,21 +775,11 @@ final class Report extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("country_id")
+     * @param OdooRelation|null $commercial_partner_id
      */
-    public function getCountryId(): ?OdooRelation
+    public function setCommercialPartnerId(?OdooRelation $commercial_partner_id): void
     {
-        return $this->country_id;
-    }
-
-    /**
-     * @param DateTimeInterface|null $invoice_date
-     */
-    public function setInvoiceDate(?DateTimeInterface $invoice_date): void
-    {
-        $this->invoice_date = $invoice_date;
+        $this->commercial_partner_id = $commercial_partner_id;
     }
 
     /**
@@ -775,6 +788,16 @@ final class Report extends Base
     public function setCountryId(?OdooRelation $country_id): void
     {
         $this->country_id = $country_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("invoice_payment_term_id")
+     */
+    public function getInvoicePaymentTermId(): ?OdooRelation
+    {
+        return $this->invoice_payment_term_id;
     }
 
     /**
@@ -875,6 +898,14 @@ final class Report extends Base
     public function getInvoiceDate(): ?DateTimeInterface
     {
         return $this->invoice_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $invoice_date
+     */
+    public function setInvoiceDate(?DateTimeInterface $invoice_date): void
+    {
+        $this->invoice_date = $invoice_date;
     }
 
     /**

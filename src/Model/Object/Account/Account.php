@@ -28,16 +28,6 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 final class Account extends Base
 {
     /**
-     * Name
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string
-     */
-    private $name;
-
-    /**
      * Account Currency
      * ---
      * Forces all moves for this account to have this account currency.
@@ -251,6 +241,84 @@ final class Account extends Base
     private $opening_credit;
 
     /**
+     * Name
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    private $name;
+
+    /**
+     * Asset Model
+     * ---
+     * If this is selected, an asset will be created automatically when Journal Items on this account are posted.
+     * ---
+     * Relation : many2one (account.asset)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Asset
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $asset_model;
+
+    /**
+     * Create Asset
+     * ---
+     * Selection :
+     *     -> no (No)
+     *     -> draft (Create in draft)
+     *     -> validate (Create and validate)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    private $create_asset;
+
+    /**
+     * Can Create Asset
+     * ---
+     * Technical field specifying if the account can generate asset depending on it's type. It is used in the account
+     * form view.
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $can_create_asset;
+
+    /**
+     * Form View Ref
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $form_view_ref;
+
+    /**
+     * Asset Type
+     * ---
+     * Selection :
+     *     -> sale (Deferred Revenue)
+     *     -> expense (Deferred Expense)
+     *     -> purchase (Asset)
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $asset_type;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -297,10 +365,6 @@ final class Account extends Base
     private $write_date;
 
     /**
-     * @param string $name Name
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
      * @param string $code Code
      *        ---
      *        Searchable : yes
@@ -322,108 +386,42 @@ final class Account extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $name Name
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $create_asset Create Asset
+     *        ---
+     *        Selection :
+     *            -> no (No)
+     *            -> draft (Create in draft)
+     *            -> validate (Create and validate)
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
-        string $name,
         string $code,
         OdooRelation $user_type_id,
-        OdooRelation $company_id
+        OdooRelation $company_id,
+        string $name,
+        string $create_asset
     ) {
-        $this->name = $name;
         $this->code = $code;
         $this->user_type_id = $user_type_id;
         $this->company_id = $company_id;
+        $this->name = $name;
+        $this->create_asset = $create_asset;
     }
 
     /**
-     * @return float|null
+     * @return bool|null
      *
-     * @SerializedName("opening_debit")
+     * @SerializedName("can_create_asset")
      */
-    public function getOpeningDebit(): ?float
+    public function isCanCreateAsset(): ?bool
     {
-        return $this->opening_debit;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("tag_ids")
-     */
-    public function getTagIds(): ?array
-    {
-        return $this->tag_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $tag_ids
-     */
-    public function setTagIds(?array $tag_ids): void
-    {
-        $this->tag_ids = $tag_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasTagIds(OdooRelation $item): bool
-    {
-        if (null === $this->tag_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->tag_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addTagIds(OdooRelation $item): void
-    {
-        if ($this->hasTagIds($item)) {
-            return;
-        }
-
-        if (null === $this->tag_ids) {
-            $this->tag_ids = [];
-        }
-
-        $this->tag_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeTagIds(OdooRelation $item): void
-    {
-        if (null === $this->tag_ids) {
-            $this->tag_ids = [];
-        }
-
-        if ($this->hasTagIds($item)) {
-            $index = array_search($item, $this->tag_ids);
-            unset($this->tag_ids[$index]);
-        }
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("group_id")
-     */
-    public function getGroupId(): ?OdooRelation
-    {
-        return $this->group_id;
-    }
-
-    /**
-     * @param OdooRelation|null $group_id
-     */
-    public function setGroupId(?OdooRelation $group_id): void
-    {
-        $this->group_id = $group_id;
+        return $this->can_create_asset;
     }
 
     /**
@@ -445,21 +443,21 @@ final class Account extends Base
     }
 
     /**
+     * @return float|null
+     *
+     * @SerializedName("opening_debit")
+     */
+    public function getOpeningDebit(): ?float
+    {
+        return $this->opening_debit;
+    }
+
+    /**
      * @param float|null $opening_debit
      */
     public function setOpeningDebit(?float $opening_debit): void
     {
         $this->opening_debit = $opening_debit;
-    }
-
-    /**
-     * @return OdooRelation
-     *
-     * @SerializedName("company_id")
-     */
-    public function getCompanyId(): OdooRelation
-    {
-        return $this->company_id;
     }
 
     /**
@@ -478,6 +476,114 @@ final class Account extends Base
     public function setOpeningCredit(?float $opening_credit): void
     {
         $this->opening_credit = $opening_credit;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("name")
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("asset_model")
+     */
+    public function getAssetModel(): ?OdooRelation
+    {
+        return $this->asset_model;
+    }
+
+    /**
+     * @param OdooRelation|null $asset_model
+     */
+    public function setAssetModel(?OdooRelation $asset_model): void
+    {
+        $this->asset_model = $asset_model;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("create_asset")
+     */
+    public function getCreateAsset(): string
+    {
+        return $this->create_asset;
+    }
+
+    /**
+     * @param string $create_asset
+     */
+    public function setCreateAsset(string $create_asset): void
+    {
+        $this->create_asset = $create_asset;
+    }
+
+    /**
+     * @param bool|null $can_create_asset
+     */
+    public function setCanCreateAsset(?bool $can_create_asset): void
+    {
+        $this->can_create_asset = $can_create_asset;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("group_id")
+     */
+    public function getGroupId(): ?OdooRelation
+    {
+        return $this->group_id;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("form_view_ref")
+     */
+    public function getFormViewRef(): ?string
+    {
+        return $this->form_view_ref;
+    }
+
+    /**
+     * @param string|null $form_view_ref
+     */
+    public function setFormViewRef(?string $form_view_ref): void
+    {
+        $this->form_view_ref = $form_view_ref;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("asset_type")
+     */
+    public function getAssetType(): ?string
+    {
+        return $this->asset_type;
+    }
+
+    /**
+     * @param string|null $asset_type
+     */
+    public function setAssetType(?string $asset_type): void
+    {
+        $this->asset_type = $asset_type;
     }
 
     /**
@@ -553,45 +659,26 @@ final class Account extends Base
     }
 
     /**
-     * @param OdooRelation $company_id
+     * @param OdooRelation|null $group_id
      */
-    public function setCompanyId(OdooRelation $company_id): void
+    public function setGroupId(?OdooRelation $group_id): void
     {
-        $this->company_id = $company_id;
+        $this->group_id = $group_id;
     }
 
     /**
-     * @param string|null $note
+     * @param OdooRelation $item
      */
-    public function setNote(?string $note): void
+    public function removeTagIds(OdooRelation $item): void
     {
-        $this->note = $note;
-    }
+        if (null === $this->tag_ids) {
+            $this->tag_ids = [];
+        }
 
-    /**
-     * @return string
-     *
-     * @SerializedName("name")
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param OdooRelation $user_type_id
-     */
-    public function setUserTypeId(OdooRelation $user_type_id): void
-    {
-        $this->user_type_id = $user_type_id;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
+        if ($this->hasTagIds($item)) {
+            $index = array_search($item, $this->tag_ids);
+            unset($this->tag_ids[$index]);
+        }
     }
 
     /**
@@ -602,6 +689,14 @@ final class Account extends Base
     public function getCurrencyId(): ?OdooRelation
     {
         return $this->currency_id;
+    }
+
+    /**
+     * @param string|null $internal_group
+     */
+    public function setInternalGroup(?string $internal_group): void
+    {
+        $this->internal_group = $internal_group;
     }
 
     /**
@@ -677,6 +772,14 @@ final class Account extends Base
     }
 
     /**
+     * @param OdooRelation $user_type_id
+     */
+    public function setUserTypeId(OdooRelation $user_type_id): void
+    {
+        $this->user_type_id = $user_type_id;
+    }
+
+    /**
      * @return string|null
      *
      * @SerializedName("internal_type")
@@ -684,16 +787,6 @@ final class Account extends Base
     public function getInternalType(): ?string
     {
         return $this->internal_type;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("note")
-     */
-    public function getNote(): ?string
-    {
-        return $this->note;
     }
 
     /**
@@ -715,14 +808,6 @@ final class Account extends Base
     }
 
     /**
-     * @param string|null $internal_group
-     */
-    public function setInternalGroup(?string $internal_group): void
-    {
-        $this->internal_group = $internal_group;
-    }
-
-    /**
      * @return bool|null
      *
      * @SerializedName("reconcile")
@@ -730,6 +815,22 @@ final class Account extends Base
     public function isReconcile(): ?bool
     {
         return $this->reconcile;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addTagIds(OdooRelation $item): void
+    {
+        if ($this->hasTagIds($item)) {
+            return;
+        }
+
+        if (null === $this->tag_ids) {
+            $this->tag_ids = [];
+        }
+
+        $this->tag_ids[] = $item;
     }
 
     /**
@@ -801,6 +902,74 @@ final class Account extends Base
             $index = array_search($item, $this->tax_ids);
             unset($this->tax_ids[$index]);
         }
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("note")
+     */
+    public function getNote(): ?string
+    {
+        return $this->note;
+    }
+
+    /**
+     * @param string|null $note
+     */
+    public function setNote(?string $note): void
+    {
+        $this->note = $note;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("company_id")
+     */
+    public function getCompanyId(): OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param OdooRelation $company_id
+     */
+    public function setCompanyId(OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("tag_ids")
+     */
+    public function getTagIds(): ?array
+    {
+        return $this->tag_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $tag_ids
+     */
+    public function setTagIds(?array $tag_ids): void
+    {
+        $this->tag_ids = $tag_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasTagIds(OdooRelation $item): bool
+    {
+        if (null === $this->tag_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->tag_ids);
     }
 
     /**

@@ -77,21 +77,6 @@ final class Resource_ extends Base
     private $resource_type;
 
     /**
-     * User
-     * ---
-     * Related user name for the resource to manage its access.
-     * ---
-     * Relation : many2one (res.users)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Users
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $user_id;
-
-    /**
      * Efficiency Factor
      * ---
      * This field is used to calculate the the expected duration of a work order at this work center. For example, if
@@ -726,6 +711,21 @@ final class Resource_ extends Base
      * @var string
      */
     private $tz;
+
+    /**
+     * User
+     * ---
+     * Related user name for the resource to manage its access.
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $user_id;
 
     /**
      * Created by
@@ -1420,11 +1420,11 @@ final class Resource_ extends Base
     }
 
     /**
-     * @param OdooRelation $calendar_id
+     * @param string $tz
      */
-    public function setCalendarId(OdooRelation $calendar_id): void
+    public function setTz(string $tz): void
     {
-        $this->calendar_id = $calendar_id;
+        $this->tz = $tz;
     }
 
     /**
@@ -1500,11 +1500,21 @@ final class Resource_ extends Base
     }
 
     /**
-     * @param string $tz
+     * @param OdooRelation|null $user_id
      */
-    public function setTz(string $tz): void
+    public function setUserId(?OdooRelation $user_id): void
     {
-        $this->tz = $tz;
+        $this->user_id = $user_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("user_id")
+     */
+    public function getUserId(): ?OdooRelation
+    {
+        return $this->user_id;
     }
 
     /**
@@ -1518,16 +1528,6 @@ final class Resource_ extends Base
     }
 
     /**
-     * @return OdooRelation
-     *
-     * @SerializedName("calendar_id")
-     */
-    public function getCalendarId(): OdooRelation
-    {
-        return $this->calendar_id;
-    }
-
-    /**
      * @return string
      *
      * @SerializedName("name")
@@ -1535,6 +1535,24 @@ final class Resource_ extends Base
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @param OdooRelation $calendar_id
+     */
+    public function setCalendarId(OdooRelation $calendar_id): void
+    {
+        $this->calendar_id = $calendar_id;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("calendar_id")
+     */
+    public function getCalendarId(): OdooRelation
+    {
+        return $this->calendar_id;
     }
 
     /**
@@ -1553,24 +1571,6 @@ final class Resource_ extends Base
     public function getTimeEfficiency(): float
     {
         return $this->time_efficiency;
-    }
-
-    /**
-     * @param OdooRelation|null $user_id
-     */
-    public function setUserId(?OdooRelation $user_id): void
-    {
-        $this->user_id = $user_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("user_id")
-     */
-    public function getUserId(): ?OdooRelation
-    {
-        return $this->user_id;
     }
 
     /**

@@ -28,16 +28,6 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 final class Template extends Base
 {
     /**
-     * Name
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string
-     */
-    private $name;
-
-    /**
      * Parent Chart Template
      * ---
      * Relation : many2one (account.chart.template)
@@ -392,6 +382,30 @@ final class Template extends Base
     private $property_advance_tax_payment_account_id;
 
     /**
+     * Name
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    private $name;
+
+    /**
+     * Spoken Languages
+     * ---
+     * State here the languages for which the translations of templates could be loaded at the time of installation
+     * of this localization module and copied in the final object when generating them from templates. You must
+     * provide the language codes separated by ';'
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $spoken_languages;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -438,10 +452,6 @@ final class Template extends Base
     private $write_date;
 
     /**
-     * @param string $name Name
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
      * @param int $code_digits # of Digits
      *        ---
      *        No. of Digits to use for account code
@@ -467,31 +477,73 @@ final class Template extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $name Name
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
     public function __construct(
-        string $name,
         int $code_digits,
         OdooRelation $currency_id,
         string $bank_account_code_prefix,
         string $cash_account_code_prefix,
-        string $transfer_account_code_prefix
+        string $transfer_account_code_prefix,
+        string $name
     ) {
-        $this->name = $name;
         $this->code_digits = $code_digits;
         $this->currency_id = $currency_id;
         $this->bank_account_code_prefix = $bank_account_code_prefix;
         $this->cash_account_code_prefix = $cash_account_code_prefix;
         $this->transfer_account_code_prefix = $transfer_account_code_prefix;
+        $this->name = $name;
     }
 
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("property_account_income_categ_id")
+     * @SerializedName("property_account_income_id")
      */
-    public function getPropertyAccountIncomeCategId(): ?OdooRelation
+    public function getPropertyAccountIncomeId(): ?OdooRelation
     {
-        return $this->property_account_income_categ_id;
+        return $this->property_account_income_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("property_stock_valuation_account_id")
+     */
+    public function getPropertyStockValuationAccountId(): ?OdooRelation
+    {
+        return $this->property_stock_valuation_account_id;
+    }
+
+    /**
+     * @param OdooRelation|null $property_stock_account_output_categ_id
+     */
+    public function setPropertyStockAccountOutputCategId(
+        ?OdooRelation $property_stock_account_output_categ_id
+    ): void {
+        $this->property_stock_account_output_categ_id = $property_stock_account_output_categ_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("property_stock_account_output_categ_id")
+     */
+    public function getPropertyStockAccountOutputCategId(): ?OdooRelation
+    {
+        return $this->property_stock_account_output_categ_id;
+    }
+
+    /**
+     * @param OdooRelation|null $property_stock_account_input_categ_id
+     */
+    public function setPropertyStockAccountInputCategId(
+        ?OdooRelation $property_stock_account_input_categ_id
+    ): void {
+        $this->property_stock_account_input_categ_id = $property_stock_account_input_categ_id;
     }
 
     /**
@@ -513,21 +565,21 @@ final class Template extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("property_account_income_id")
-     */
-    public function getPropertyAccountIncomeId(): ?OdooRelation
-    {
-        return $this->property_account_income_id;
-    }
-
-    /**
      * @param OdooRelation|null $property_account_expense_id
      */
     public function setPropertyAccountExpenseId(?OdooRelation $property_account_expense_id): void
     {
         $this->property_account_expense_id = $property_account_expense_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("property_tax_payable_account_id")
+     */
+    public function getPropertyTaxPayableAccountId(): ?OdooRelation
+    {
+        return $this->property_tax_payable_account_id;
     }
 
     /**
@@ -549,21 +601,21 @@ final class Template extends Base
     }
 
     /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("property_account_income_categ_id")
+     */
+    public function getPropertyAccountIncomeCategId(): ?OdooRelation
+    {
+        return $this->property_account_income_categ_id;
+    }
+
+    /**
      * @param OdooRelation|null $property_account_expense_categ_id
      */
     public function setPropertyAccountExpenseCategId(?OdooRelation $property_account_expense_categ_id): void
     {
         $this->property_account_expense_categ_id = $property_account_expense_categ_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("property_stock_account_output_categ_id")
-     */
-    public function getPropertyStockAccountOutputCategId(): ?OdooRelation
-    {
-        return $this->property_stock_account_output_categ_id;
     }
 
     /**
@@ -595,11 +647,20 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation|null $property_account_receivable_id
+     * @param OdooRelation|null $property_stock_valuation_account_id
      */
-    public function setPropertyAccountReceivableId(?OdooRelation $property_account_receivable_id): void
+    public function setPropertyStockValuationAccountId(
+        ?OdooRelation $property_stock_valuation_account_id
+    ): void {
+        $this->property_stock_valuation_account_id = $property_stock_valuation_account_id;
+    }
+
+    /**
+     * @param OdooRelation|null $property_tax_payable_account_id
+     */
+    public function setPropertyTaxPayableAccountId(?OdooRelation $property_tax_payable_account_id): void
     {
-        $this->property_account_receivable_id = $property_account_receivable_id;
+        $this->property_tax_payable_account_id = $property_tax_payable_account_id;
     }
 
     /**
@@ -610,41 +671,6 @@ final class Template extends Base
     public function getPropertyAccountReceivableId(): ?OdooRelation
     {
         return $this->property_account_receivable_id;
-    }
-
-    /**
-     * @param OdooRelation|null $default_pos_receivable_account_id
-     */
-    public function setDefaultPosReceivableAccountId(?OdooRelation $default_pos_receivable_account_id): void
-    {
-        $this->default_pos_receivable_account_id = $default_pos_receivable_account_id;
-    }
-
-    /**
-     * @param OdooRelation|null $property_stock_account_input_categ_id
-     */
-    public function setPropertyStockAccountInputCategId(
-        ?OdooRelation $property_stock_account_input_categ_id
-    ): void {
-        $this->property_stock_account_input_categ_id = $property_stock_account_input_categ_id;
-    }
-
-    /**
-     * @param OdooRelation|null $property_stock_account_output_categ_id
-     */
-    public function setPropertyStockAccountOutputCategId(
-        ?OdooRelation $property_stock_account_output_categ_id
-    ): void {
-        $this->property_stock_account_output_categ_id = $property_stock_account_output_categ_id;
-    }
-
-    /**
-     * @param OdooRelation|null $default_cash_difference_expense_account_id
-     */
-    public function setDefaultCashDifferenceExpenseAccountId(
-        ?OdooRelation $default_cash_difference_expense_account_id
-    ): void {
-        $this->default_cash_difference_expense_account_id = $default_cash_difference_expense_account_id;
     }
 
     /**
@@ -722,11 +748,47 @@ final class Template extends Base
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("property_stock_valuation_account_id")
+     * @SerializedName("property_tax_receivable_account_id")
      */
-    public function getPropertyStockValuationAccountId(): ?OdooRelation
+    public function getPropertyTaxReceivableAccountId(): ?OdooRelation
     {
-        return $this->property_stock_valuation_account_id;
+        return $this->property_tax_receivable_account_id;
+    }
+
+    /**
+     * @param string|null $spoken_languages
+     */
+    public function setSpokenLanguages(?string $spoken_languages): void
+    {
+        $this->spoken_languages = $spoken_languages;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("spoken_languages")
+     */
+    public function getSpokenLanguages(): ?string
+    {
+        return $this->spoken_languages;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("name")
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     /**
@@ -758,78 +820,67 @@ final class Template extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("property_tax_receivable_account_id")
+     * @param OdooRelation|null $property_account_receivable_id
      */
-    public function getPropertyTaxReceivableAccountId(): ?OdooRelation
+    public function setPropertyAccountReceivableId(?OdooRelation $property_account_receivable_id): void
     {
-        return $this->property_tax_receivable_account_id;
+        $this->property_account_receivable_id = $property_account_receivable_id;
     }
 
     /**
-     * @param OdooRelation|null $property_tax_payable_account_id
+     * @param OdooRelation|null $default_pos_receivable_account_id
      */
-    public function setPropertyTaxPayableAccountId(?OdooRelation $property_tax_payable_account_id): void
+    public function setDefaultPosReceivableAccountId(?OdooRelation $default_pos_receivable_account_id): void
     {
-        $this->property_tax_payable_account_id = $property_tax_payable_account_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("property_tax_payable_account_id")
-     */
-    public function getPropertyTaxPayableAccountId(): ?OdooRelation
-    {
-        return $this->property_tax_payable_account_id;
-    }
-
-    /**
-     * @param OdooRelation|null $property_stock_valuation_account_id
-     */
-    public function setPropertyStockValuationAccountId(
-        ?OdooRelation $property_stock_valuation_account_id
-    ): void {
-        $this->property_stock_valuation_account_id = $property_stock_valuation_account_id;
+        $this->default_pos_receivable_account_id = $default_pos_receivable_account_id;
     }
 
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("default_pos_receivable_account_id")
+     * @SerializedName("parent_id")
      */
-    public function getDefaultPosReceivableAccountId(): ?OdooRelation
+    public function getParentId(): ?OdooRelation
     {
-        return $this->default_pos_receivable_account_id;
+        return $this->parent_id;
     }
 
     /**
-     * @return OdooRelation|null
+     * @param bool|null $use_anglo_saxon
+     */
+    public function setUseAngloSaxon(?bool $use_anglo_saxon): void
+    {
+        $this->use_anglo_saxon = $use_anglo_saxon;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addAccountIds(OdooRelation $item): void
+    {
+        if ($this->hasAccountIds($item)) {
+            return;
+        }
+
+        if (null === $this->account_ids) {
+            $this->account_ids = [];
+        }
+
+        $this->account_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
      *
-     * @SerializedName("default_cash_difference_expense_account_id")
+     * @return bool
      */
-    public function getDefaultCashDifferenceExpenseAccountId(): ?OdooRelation
+    public function hasAccountIds(OdooRelation $item): bool
     {
-        return $this->default_cash_difference_expense_account_id;
-    }
+        if (null === $this->account_ids) {
+            return false;
+        }
 
-    /**
-     * @return string
-     *
-     * @SerializedName("name")
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param OdooRelation $currency_id
-     */
-    public function setCurrencyId(OdooRelation $currency_id): void
-    {
-        $this->currency_id = $currency_id;
+        return in_array($item, $this->account_ids);
     }
 
     /**
@@ -869,14 +920,6 @@ final class Template extends Base
     }
 
     /**
-     * @param bool|null $use_anglo_saxon
-     */
-    public function setUseAngloSaxon(?bool $use_anglo_saxon): void
-    {
-        $this->use_anglo_saxon = $use_anglo_saxon;
-    }
-
-    /**
      * @return bool|null
      *
      * @SerializedName("use_anglo_saxon")
@@ -887,6 +930,24 @@ final class Template extends Base
     }
 
     /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("tax_template_ids")
+     */
+    public function getTaxTemplateIds(): ?array
+    {
+        return $this->tax_template_ids;
+    }
+
+    /**
+     * @param OdooRelation $currency_id
+     */
+    public function setCurrencyId(OdooRelation $currency_id): void
+    {
+        $this->currency_id = $currency_id;
+    }
+
+    /**
      * @return OdooRelation
      *
      * @SerializedName("currency_id")
@@ -894,22 +955,6 @@ final class Template extends Base
     public function getCurrencyId(): OdooRelation
     {
         return $this->currency_id;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addAccountIds(OdooRelation $item): void
-    {
-        if ($this->hasAccountIds($item)) {
-            return;
-        }
-
-        if (null === $this->account_ids) {
-            $this->account_ids = [];
-        }
-
-        $this->account_ids[] = $item;
     }
 
     /**
@@ -957,38 +1002,6 @@ final class Template extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("parent_id")
-     */
-    public function getParentId(): ?OdooRelation
-    {
-        return $this->parent_id;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasAccountIds(OdooRelation $item): bool
-    {
-        if (null === $this->account_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->account_ids);
-    }
-
-    /**
      * @param OdooRelation $item
      */
     public function removeAccountIds(OdooRelation $item): void
@@ -1004,22 +1017,59 @@ final class Template extends Base
     }
 
     /**
+     * @param OdooRelation[]|null $tax_template_ids
+     */
+    public function setTaxTemplateIds(?array $tax_template_ids): void
+    {
+        $this->tax_template_ids = $tax_template_ids;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("default_pos_receivable_account_id")
+     */
+    public function getDefaultPosReceivableAccountId(): ?OdooRelation
+    {
+        return $this->default_pos_receivable_account_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("income_currency_exchange_account_id")
+     */
+    public function getIncomeCurrencyExchangeAccountId(): ?OdooRelation
+    {
+        return $this->income_currency_exchange_account_id;
+    }
+
+    /**
+     * @param OdooRelation|null $default_cash_difference_expense_account_id
+     */
+    public function setDefaultCashDifferenceExpenseAccountId(
+        ?OdooRelation $default_cash_difference_expense_account_id
+    ): void {
+        $this->default_cash_difference_expense_account_id = $default_cash_difference_expense_account_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("default_cash_difference_expense_account_id")
+     */
+    public function getDefaultCashDifferenceExpenseAccountId(): ?OdooRelation
+    {
+        return $this->default_cash_difference_expense_account_id;
+    }
+
+    /**
      * @param OdooRelation|null $default_cash_difference_income_account_id
      */
     public function setDefaultCashDifferenceIncomeAccountId(
         ?OdooRelation $default_cash_difference_income_account_id
     ): void {
         $this->default_cash_difference_income_account_id = $default_cash_difference_income_account_id;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("transfer_account_code_prefix")
-     */
-    public function getTransferAccountCodePrefix(): string
-    {
-        return $this->transfer_account_code_prefix;
     }
 
     /**
@@ -1061,16 +1111,6 @@ final class Template extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("income_currency_exchange_account_id")
-     */
-    public function getIncomeCurrencyExchangeAccountId(): ?OdooRelation
-    {
-        return $this->income_currency_exchange_account_id;
-    }
-
-    /**
      * @param string $transfer_account_code_prefix
      */
     public function setTransferAccountCodePrefix(string $transfer_account_code_prefix): void
@@ -1079,21 +1119,35 @@ final class Template extends Base
     }
 
     /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasTaxTemplateIds(OdooRelation $item): bool
+    {
+        if (null === $this->tax_template_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->tax_template_ids);
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("transfer_account_code_prefix")
+     */
+    public function getTransferAccountCodePrefix(): string
+    {
+        return $this->transfer_account_code_prefix;
+    }
+
+    /**
      * @param string $cash_account_code_prefix
      */
     public function setCashAccountCodePrefix(string $cash_account_code_prefix): void
     {
         $this->cash_account_code_prefix = $cash_account_code_prefix;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("tax_template_ids")
-     */
-    public function getTaxTemplateIds(): ?array
-    {
-        return $this->tax_template_ids;
     }
 
     /**
@@ -1153,28 +1207,6 @@ final class Template extends Base
         }
 
         $this->tax_template_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasTaxTemplateIds(OdooRelation $item): bool
-    {
-        if (null === $this->tax_template_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->tax_template_ids);
-    }
-
-    /**
-     * @param OdooRelation[]|null $tax_template_ids
-     */
-    public function setTaxTemplateIds(?array $tax_template_ids): void
-    {
-        $this->tax_template_ids = $tax_template_ids;
     }
 
     /**

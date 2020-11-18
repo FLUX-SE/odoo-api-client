@@ -18,7 +18,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *                 alias_id column in database, and manages the expected one-to-one
  *                 relation between your model and mail aliases.
  */
-final class Mixin extends Alias
+abstract class Mixin extends Alias
 {
     /**
      * Alias
@@ -31,7 +31,7 @@ final class Mixin extends Alias
      *
      * @var OdooRelation
      */
-    private $alias_id;
+    protected $alias_id;
 
     /**
      * @param OdooRelation $alias_id Alias
@@ -69,6 +69,7 @@ final class Mixin extends Alias
      *            -> everyone (Everyone)
      *            -> partners (Authenticated Partners)
      *            -> followers (Followers only)
+     *            -> employees (Authenticated Employees)
      *        ---
      *        Searchable : yes
      *        Sortable : yes

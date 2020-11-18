@@ -14,7 +14,7 @@ use Flux\OdooApiClient\Model\Object\Base;
  * Info :
  * Expose the vacuum method to the cron jobs mechanism.
  */
-final class Autovacuum extends Base
+abstract class Autovacuum extends Base
 {
     /**
      * @return string

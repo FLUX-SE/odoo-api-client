@@ -25,7 +25,7 @@ use Flux\OdooApiClient\Model\Object\Base;
  *                             options mapping, so that the context is available to callees.
  *                             It's set under the ``_values`` key.
  */
-final class Monetary extends Base
+abstract class Monetary extends Base
 {
     /**
      * @return string

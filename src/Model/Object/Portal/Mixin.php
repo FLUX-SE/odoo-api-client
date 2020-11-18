@@ -15,7 +15,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  * Info :
  * The base model, which is implicitly inherited by all models.
  */
-final class Mixin extends Base
+abstract class Mixin extends Base
 {
     /**
      * Portal Access URL
@@ -27,7 +27,7 @@ final class Mixin extends Base
      *
      * @var string|null
      */
-    private $access_url;
+    protected $access_url;
 
     /**
      * Security Token
@@ -37,7 +37,7 @@ final class Mixin extends Base
      *
      * @var string|null
      */
-    private $access_token;
+    protected $access_token;
 
     /**
      * Access warning
@@ -47,7 +47,7 @@ final class Mixin extends Base
      *
      * @var string|null
      */
-    private $access_warning;
+    protected $access_warning;
 
     /**
      * @return string|null

@@ -655,6 +655,19 @@ final class Model extends Base
     private $number_entries;
 
     /**
+     * Activity type
+     * ---
+     * Relation : many2one (mail.activity.type)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity\Type
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $activity_type_id;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -793,11 +806,23 @@ final class Model extends Base
     }
 
     /**
-     * @param OdooRelation|null $analytic_account_id
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("analytic_tag_ids")
      */
-    public function setAnalyticAccountId(?OdooRelation $analytic_account_id): void
+    public function getAnalyticTagIds(): ?array
     {
-        $this->analytic_account_id = $analytic_account_id;
+        return $this->analytic_tag_ids;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("second_amount_type")
+     */
+    public function getSecondAmountType(): string
+    {
+        return $this->second_amount_type;
     }
 
     /**
@@ -926,13 +951,21 @@ final class Model extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("analytic_tag_ids")
+     * @param OdooRelation|null $analytic_account_id
      */
-    public function getAnalyticTagIds(): ?array
+    public function setAnalyticAccountId(?OdooRelation $analytic_account_id): void
     {
-        return $this->analytic_tag_ids;
+        $this->analytic_account_id = $analytic_account_id;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("show_second_force_tax_included")
+     */
+    public function isShowSecondForceTaxIncluded(): ?bool
+    {
+        return $this->show_second_force_tax_included;
     }
 
     /**
@@ -943,14 +976,6 @@ final class Model extends Base
     public function getAnalyticAccountId(): ?OdooRelation
     {
         return $this->analytic_account_id;
-    }
-
-    /**
-     * @param string $second_amount_type
-     */
-    public function setSecondAmountType(string $second_amount_type): void
-    {
-        $this->second_amount_type = $second_amount_type;
     }
 
     /**
@@ -1079,51 +1104,43 @@ final class Model extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("force_tax_included")
+     * @param string $second_amount_type
      */
-    public function isForceTaxIncluded(): ?bool
+    public function setSecondAmountType(string $second_amount_type): void
     {
-        return $this->force_tax_included;
+        $this->second_amount_type = $second_amount_type;
     }
 
     /**
-     * @return string
-     *
-     * @SerializedName("second_amount_type")
+     * @param bool|null $show_second_force_tax_included
      */
-    public function getSecondAmountType(): string
+    public function setShowSecondForceTaxIncluded(?bool $show_second_force_tax_included): void
     {
-        return $this->second_amount_type;
+        $this->show_second_force_tax_included = $show_second_force_tax_included;
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("show_second_force_tax_included")
+     * @param bool|null $show_force_tax_included
      */
-    public function isShowSecondForceTaxIncluded(): ?bool
+    public function setShowForceTaxIncluded(?bool $show_force_tax_included): void
     {
-        return $this->show_second_force_tax_included;
+        $this->show_force_tax_included = $show_force_tax_included;
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("show_force_tax_included")
+     * @param OdooRelation $item
      */
-    public function isShowForceTaxIncluded(): ?bool
+    public function addSecondAnalyticTagIds(OdooRelation $item): void
     {
-        return $this->show_force_tax_included;
-    }
+        if ($this->hasSecondAnalyticTagIds($item)) {
+            return;
+        }
 
-    /**
-     * @param OdooRelation[]|null $second_analytic_tag_ids
-     */
-    public function setSecondAnalyticTagIds(?array $second_analytic_tag_ids): void
-    {
-        $this->second_analytic_tag_ids = $second_analytic_tag_ids;
+        if (null === $this->second_analytic_tag_ids) {
+            $this->second_analytic_tag_ids = [];
+        }
+
+        $this->second_analytic_tag_ids[] = $item;
     }
 
     /**
@@ -1199,6 +1216,24 @@ final class Model extends Base
     }
 
     /**
+     * @param OdooRelation|null $activity_type_id
+     */
+    public function setActivityTypeId(?OdooRelation $activity_type_id): void
+    {
+        $this->activity_type_id = $activity_type_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("activity_type_id")
+     */
+    public function getActivityTypeId(): ?OdooRelation
+    {
+        return $this->activity_type_id;
+    }
+
+    /**
      * @param int|null $number_entries
      */
     public function setNumberEntries(?int $number_entries): void
@@ -1233,22 +1268,6 @@ final class Model extends Base
 
     /**
      * @param OdooRelation $item
-     */
-    public function addSecondAnalyticTagIds(OdooRelation $item): void
-    {
-        if ($this->hasSecondAnalyticTagIds($item)) {
-            return;
-        }
-
-        if (null === $this->second_analytic_tag_ids) {
-            $this->second_analytic_tag_ids = [];
-        }
-
-        $this->second_analytic_tag_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
      *
      * @return bool
      */
@@ -1262,6 +1281,24 @@ final class Model extends Base
     }
 
     /**
+     * @return bool|null
+     *
+     * @SerializedName("force_second_tax_included")
+     */
+    public function isForceSecondTaxIncluded(): ?bool
+    {
+        return $this->force_second_tax_included;
+    }
+
+    /**
+     * @param OdooRelation[]|null $second_analytic_tag_ids
+     */
+    public function setSecondAnalyticTagIds(?array $second_analytic_tag_ids): void
+    {
+        $this->second_analytic_tag_ids = $second_analytic_tag_ids;
+    }
+
+    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("second_analytic_tag_ids")
@@ -1269,14 +1306,6 @@ final class Model extends Base
     public function getSecondAnalyticTagIds(): ?array
     {
         return $this->second_analytic_tag_ids;
-    }
-
-    /**
-     * @param bool|null $show_second_force_tax_included
-     */
-    public function setShowSecondForceTaxIncluded(?bool $show_second_force_tax_included): void
-    {
-        $this->show_second_force_tax_included = $show_second_force_tax_included;
     }
 
     /**
@@ -1407,27 +1436,21 @@ final class Model extends Base
     /**
      * @return bool|null
      *
-     * @SerializedName("force_second_tax_included")
+     * @SerializedName("force_tax_included")
      */
-    public function isForceSecondTaxIncluded(): ?bool
+    public function isForceTaxIncluded(): ?bool
     {
-        return $this->force_second_tax_included;
+        return $this->force_tax_included;
     }
 
     /**
-     * @param bool|null $show_force_tax_included
+     * @return bool|null
+     *
+     * @SerializedName("show_force_tax_included")
      */
-    public function setShowForceTaxIncluded(?bool $show_force_tax_included): void
+    public function isShowForceTaxIncluded(): ?bool
     {
-        $this->show_force_tax_included = $show_force_tax_included;
-    }
-
-    /**
-     * @param string $amount_type
-     */
-    public function setAmountType(string $amount_type): void
-    {
-        $this->amount_type = $amount_type;
+        return $this->show_force_tax_included;
     }
 
     /**
@@ -1738,6 +1761,30 @@ final class Model extends Base
     }
 
     /**
+     * @param string $amount_type
+     */
+    public function setAmountType(string $amount_type): void
+    {
+        $this->amount_type = $amount_type;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMatchPartnerIds(OdooRelation $item): void
+    {
+        if ($this->hasMatchPartnerIds($item)) {
+            return;
+        }
+
+        if (null === $this->match_partner_ids) {
+            $this->match_partner_ids = [];
+        }
+
+        $this->match_partner_ids[] = $item;
+    }
+
+    /**
      * @return string
      *
      * @SerializedName("amount_type")
@@ -1745,20 +1792,6 @@ final class Model extends Base
     public function getAmountType(): string
     {
         return $this->amount_type;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasMatchPartnerIds(OdooRelation $item): bool
-    {
-        if (null === $this->match_partner_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->match_partner_ids);
     }
 
     /**
@@ -1895,26 +1928,16 @@ final class Model extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function addMatchPartnerIds(OdooRelation $item): void
+    public function hasMatchPartnerIds(OdooRelation $item): bool
     {
-        if ($this->hasMatchPartnerIds($item)) {
-            return;
-        }
-
         if (null === $this->match_partner_ids) {
-            $this->match_partner_ids = [];
+            return false;
         }
 
-        $this->match_partner_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation[]|null $match_partner_ids
-     */
-    public function setMatchPartnerIds(?array $match_partner_ids): void
-    {
-        $this->match_partner_ids = $match_partner_ids;
+        return in_array($item, $this->match_partner_ids);
     }
 
     /**
@@ -1923,6 +1946,14 @@ final class Model extends Base
     public function setMatchNoteParam(?string $match_note_param): void
     {
         $this->match_note_param = $match_note_param;
+    }
+
+    /**
+     * @param OdooRelation[]|null $match_partner_ids
+     */
+    public function setMatchPartnerIds(?array $match_partner_ids): void
+    {
+        $this->match_partner_ids = $match_partner_ids;
     }
 
     /**

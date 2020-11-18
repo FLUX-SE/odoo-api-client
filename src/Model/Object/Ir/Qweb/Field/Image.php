@@ -17,7 +17,7 @@ use Flux\OdooApiClient\Model\Object\Base;
  *         ``class``
  *                 set as attribute on the generated <img> tag
  */
-final class Image extends Base
+abstract class Image extends Base
 {
     /**
      * @return string

@@ -90,6 +90,8 @@ final class Activity extends Base
      * Selection :
      *     -> default (None)
      *     -> upload_file (Upload Document)
+     *     -> meeting (Meeting)
+     *     -> tax_report (Tax report)
      * ---
      * Searchable : yes
      * Sortable : no
@@ -270,6 +272,19 @@ final class Activity extends Base
     private $can_write;
 
     /**
+     * Calendar Meeting
+     * ---
+     * Relation : many2one (calendar.event)
+     * @see \Flux\OdooApiClient\Model\Object\Calendar\Event
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $calendar_event_id;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -352,28 +367,11 @@ final class Activity extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @param bool|null $force_next
      */
-    public function removeMailTemplateIds(OdooRelation $item): void
+    public function setForceNext(?bool $force_next): void
     {
-        if (null === $this->mail_template_ids) {
-            $this->mail_template_ids = [];
-        }
-
-        if ($this->hasMailTemplateIds($item)) {
-            $index = array_search($item, $this->mail_template_ids);
-            unset($this->mail_template_ids[$index]);
-        }
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("recommended_activity_type_id")
-     */
-    public function getRecommendedActivityTypeId(): ?OdooRelation
-    {
-        return $this->recommended_activity_type_id;
+        $this->force_next = $force_next;
     }
 
     /**
@@ -469,6 +467,21 @@ final class Activity extends Base
     }
 
     /**
+     * @param OdooRelation $item
+     */
+    public function removeMailTemplateIds(OdooRelation $item): void
+    {
+        if (null === $this->mail_template_ids) {
+            $this->mail_template_ids = [];
+        }
+
+        if ($this->hasMailTemplateIds($item)) {
+            $index = array_search($item, $this->mail_template_ids);
+            unset($this->mail_template_ids[$index]);
+        }
+    }
+
+    /**
      * @return bool|null
      *
      * @SerializedName("force_next")
@@ -476,24 +489,6 @@ final class Activity extends Base
     public function isForceNext(): ?bool
     {
         return $this->force_next;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("state")
-     */
-    public function getState(): ?string
-    {
-        return $this->state;
-    }
-
-    /**
-     * @param bool|null $force_next
-     */
-    public function setForceNext(?bool $force_next): void
-    {
-        $this->force_next = $force_next;
     }
 
     /**
@@ -507,11 +502,37 @@ final class Activity extends Base
     }
 
     /**
+     * @param string|null $state
+     */
+    public function setState(?string $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
      * @param bool|null $can_write
      */
     public function setCanWrite(?bool $can_write): void
     {
         $this->can_write = $can_write;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("calendar_event_id")
+     */
+    public function getCalendarEventId(): ?OdooRelation
+    {
+        return $this->calendar_event_id;
+    }
+
+    /**
+     * @param OdooRelation|null $calendar_event_id
+     */
+    public function setCalendarEventId(?OdooRelation $calendar_event_id): void
+    {
+        $this->calendar_event_id = $calendar_event_id;
     }
 
     /**
@@ -587,19 +608,23 @@ final class Activity extends Base
     }
 
     /**
-     * @param string|null $state
+     * @return OdooRelation|null
+     *
+     * @SerializedName("recommended_activity_type_id")
      */
-    public function setState(?string $state): void
+    public function getRecommendedActivityTypeId(): ?OdooRelation
     {
-        $this->state = $state;
+        return $this->recommended_activity_type_id;
     }
 
     /**
-     * @param OdooRelation $user_id
+     * @return string|null
+     *
+     * @SerializedName("state")
      */
-    public function setUserId(OdooRelation $user_id): void
+    public function getState(): ?string
     {
-        $this->user_id = $user_id;
+        return $this->state;
     }
 
     /**
@@ -613,11 +638,13 @@ final class Activity extends Base
     }
 
     /**
-     * @param string|null $activity_category
+     * @return string|null
+     *
+     * @SerializedName("activity_decoration")
      */
-    public function setActivityCategory(?string $activity_category): void
+    public function getActivityDecoration(): ?string
     {
-        $this->activity_category = $activity_category;
+        return $this->activity_decoration;
     }
 
     /**
@@ -711,23 +738,11 @@ final class Activity extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("activity_decoration")
+     * @param string|null $activity_category
      */
-    public function getActivityDecoration(): ?string
+    public function setActivityCategory(?string $activity_category): void
     {
-        return $this->activity_decoration;
-    }
-
-    /**
-     * @return OdooRelation
-     *
-     * @SerializedName("user_id")
-     */
-    public function getUserId(): OdooRelation
-    {
-        return $this->user_id;
+        $this->activity_category = $activity_category;
     }
 
     /**
@@ -736,6 +751,14 @@ final class Activity extends Base
     public function setActivityDecoration(?string $activity_decoration): void
     {
         $this->activity_decoration = $activity_decoration;
+    }
+
+    /**
+     * @param OdooRelation $user_id
+     */
+    public function setUserId(OdooRelation $user_id): void
+    {
+        $this->user_id = $user_id;
     }
 
     /**
@@ -826,6 +849,16 @@ final class Activity extends Base
     public function setAutomated(?bool $automated): void
     {
         $this->automated = $automated;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("user_id")
+     */
+    public function getUserId(): OdooRelation
+    {
+        return $this->user_id;
     }
 
     /**

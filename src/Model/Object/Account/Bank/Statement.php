@@ -312,6 +312,19 @@ final class Statement extends Base
     private $is_difference_zero;
 
     /**
+     * Attachments
+     * ---
+     * Relation : one2many (ir.attachment -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $attachment_ids;
+
+    /**
      * Is Follower
      * ---
      * Searchable : yes
@@ -570,27 +583,11 @@ final class Statement extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @param OdooRelation[]|null $message_channel_ids
      */
-    public function addMessageChannelIds(OdooRelation $item): void
+    public function setMessageChannelIds(?array $message_channel_ids): void
     {
-        if ($this->hasMessageChannelIds($item)) {
-            return;
-        }
-
-        if (null === $this->message_channel_ids) {
-            $this->message_channel_ids = [];
-        }
-
-        $this->message_channel_ids[] = $item;
-    }
-
-    /**
-     * @param int|null $message_unread_counter
-     */
-    public function setMessageUnreadCounter(?int $message_unread_counter): void
-    {
-        $this->message_unread_counter = $message_unread_counter;
+        $this->message_channel_ids = $message_channel_ids;
     }
 
     /**
@@ -701,6 +698,22 @@ final class Statement extends Base
 
     /**
      * @param OdooRelation $item
+     */
+    public function addMessageChannelIds(OdooRelation $item): void
+    {
+        if ($this->hasMessageChannelIds($item)) {
+            return;
+        }
+
+        if (null === $this->message_channel_ids) {
+            $this->message_channel_ids = [];
+        }
+
+        $this->message_channel_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
      *
      * @return bool
      */
@@ -714,22 +727,6 @@ final class Statement extends Base
     }
 
     /**
-     * @param bool|null $message_needaction
-     */
-    public function setMessageNeedaction(?bool $message_needaction): void
-    {
-        $this->message_needaction = $message_needaction;
-    }
-
-    /**
-     * @param OdooRelation[]|null $message_channel_ids
-     */
-    public function setMessageChannelIds(?array $message_channel_ids): void
-    {
-        $this->message_channel_ids = $message_channel_ids;
-    }
-
-    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("message_channel_ids")
@@ -737,6 +734,16 @@ final class Statement extends Base
     public function getMessageChannelIds(): ?array
     {
         return $this->message_channel_ids;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("message_needaction")
+     */
+    public function isMessageNeedaction(): ?bool
+    {
+        return $this->message_needaction;
     }
 
     /**
@@ -856,23 +863,13 @@ final class Statement extends Base
     }
 
     /**
-     * @return bool|null
+     * @return OdooRelation[]|null
      *
-     * @SerializedName("message_needaction")
+     * @SerializedName("message_follower_ids")
      */
-    public function isMessageNeedaction(): ?bool
+    public function getMessageFollowerIds(): ?array
     {
-        return $this->message_needaction;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("message_needaction_counter")
-     */
-    public function getMessageNeedactionCounter(): ?int
-    {
-        return $this->message_needaction_counter;
+        return $this->message_follower_ids;
     }
 
     /**
@@ -884,18 +881,50 @@ final class Statement extends Base
     }
 
     /**
+     * @param int|null $message_unread_counter
+     */
+    public function setMessageUnreadCounter(?int $message_unread_counter): void
+    {
+        $this->message_unread_counter = $message_unread_counter;
+    }
+
+    /**
+     * @param bool|null $message_needaction
+     */
+    public function setMessageNeedaction(?bool $message_needaction): void
+    {
+        $this->message_needaction = $message_needaction;
+    }
+
+    /**
      * @param OdooRelation $item
      */
-    public function removeWebsiteMessageIds(OdooRelation $item): void
+    public function removeAttachmentIds(OdooRelation $item): void
     {
+        if (null === $this->attachment_ids) {
+            $this->attachment_ids = [];
+        }
+
+        if ($this->hasAttachmentIds($item)) {
+            $index = array_search($item, $this->attachment_ids);
+            unset($this->attachment_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addWebsiteMessageIds(OdooRelation $item): void
+    {
+        if ($this->hasWebsiteMessageIds($item)) {
+            return;
+        }
+
         if (null === $this->website_message_ids) {
             $this->website_message_ids = [];
         }
 
-        if ($this->hasWebsiteMessageIds($item)) {
-            $index = array_search($item, $this->website_message_ids);
-            unset($this->website_message_ids[$index]);
-        }
+        $this->website_message_ids[] = $item;
     }
 
     /**
@@ -991,25 +1020,16 @@ final class Statement extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addWebsiteMessageIds(OdooRelation $item): void
+    public function removeWebsiteMessageIds(OdooRelation $item): void
     {
-        if ($this->hasWebsiteMessageIds($item)) {
-            return;
-        }
-
         if (null === $this->website_message_ids) {
             $this->website_message_ids = [];
         }
 
-        $this->website_message_ids[] = $item;
-    }
-
-    /**
-     * @param int|null $message_needaction_counter
-     */
-    public function setMessageNeedactionCounter(?int $message_needaction_counter): void
-    {
-        $this->message_needaction_counter = $message_needaction_counter;
+        if ($this->hasWebsiteMessageIds($item)) {
+            $index = array_search($item, $this->website_message_ids);
+            unset($this->website_message_ids[$index]);
+        }
     }
 
     /**
@@ -1024,6 +1044,16 @@ final class Statement extends Base
         }
 
         return in_array($item, $this->website_message_ids);
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("message_needaction_counter")
+     */
+    public function getMessageNeedactionCounter(): ?int
+    {
+        return $this->message_needaction_counter;
     }
 
     /**
@@ -1117,13 +1147,11 @@ final class Statement extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("message_follower_ids")
+     * @param int|null $message_needaction_counter
      */
-    public function getMessageFollowerIds(): ?array
+    public function setMessageNeedactionCounter(?int $message_needaction_counter): void
     {
-        return $this->message_follower_ids;
+        $this->message_needaction_counter = $message_needaction_counter;
     }
 
     /**
@@ -1134,6 +1162,22 @@ final class Statement extends Base
     public function isMessageIsFollower(): ?bool
     {
         return $this->message_is_follower;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addAttachmentIds(OdooRelation $item): void
+    {
+        if ($this->hasAttachmentIds($item)) {
+            return;
+        }
+
+        if (null === $this->attachment_ids) {
+            $this->attachment_ids = [];
+        }
+
+        $this->attachment_ids[] = $item;
     }
 
     /**
@@ -1152,6 +1196,16 @@ final class Statement extends Base
     public function setAccountingDate(?DateTimeInterface $accounting_date): void
     {
         $this->accounting_date = $accounting_date;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("total_entry_encoding")
+     */
+    public function getTotalEntryEncoding(): ?float
+    {
+        return $this->total_entry_encoding;
     }
 
     /**
@@ -1255,11 +1309,13 @@ final class Statement extends Base
     }
 
     /**
-     * @param float|null $total_entry_encoding
+     * @return float|null
+     *
+     * @SerializedName("balance_end")
      */
-    public function setTotalEntryEncoding(?float $total_entry_encoding): void
+    public function getBalanceEnd(): ?float
     {
-        $this->total_entry_encoding = $total_entry_encoding;
+        return $this->balance_end;
     }
 
     /**
@@ -1361,23 +1417,61 @@ final class Statement extends Base
     }
 
     /**
-     * @return float|null
-     *
-     * @SerializedName("total_entry_encoding")
+     * @param float|null $total_entry_encoding
      */
-    public function getTotalEntryEncoding(): ?float
+    public function setTotalEntryEncoding(?float $total_entry_encoding): void
     {
-        return $this->total_entry_encoding;
+        $this->total_entry_encoding = $total_entry_encoding;
     }
 
     /**
-     * @return float|null
-     *
-     * @SerializedName("balance_end")
+     * @param float|null $balance_end
      */
-    public function getBalanceEnd(): ?float
+    public function setBalanceEnd(?float $balance_end): void
     {
-        return $this->balance_end;
+        $this->balance_end = $balance_end;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasAttachmentIds(OdooRelation $item): bool
+    {
+        if (null === $this->attachment_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->attachment_ids);
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("all_lines_reconciled")
+     */
+    public function isAllLinesReconciled(): ?bool
+    {
+        return $this->all_lines_reconciled;
+    }
+
+    /**
+     * @param OdooRelation[]|null $attachment_ids
+     */
+    public function setAttachmentIds(?array $attachment_ids): void
+    {
+        $this->attachment_ids = $attachment_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("attachment_ids")
+     */
+    public function getAttachmentIds(): ?array
+    {
+        return $this->attachment_ids;
     }
 
     /**
@@ -1386,16 +1480,6 @@ final class Statement extends Base
     public function setIsDifferenceZero(?bool $is_difference_zero): void
     {
         $this->is_difference_zero = $is_difference_zero;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("move_line_count")
-     */
-    public function getMoveLineCount(): ?int
-    {
-        return $this->move_line_count;
     }
 
     /**
@@ -1471,21 +1555,31 @@ final class Statement extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("all_lines_reconciled")
-     */
-    public function isAllLinesReconciled(): ?bool
-    {
-        return $this->all_lines_reconciled;
-    }
-
-    /**
      * @param int|null $move_line_count
      */
     public function setMoveLineCount(?int $move_line_count): void
     {
         $this->move_line_count = $move_line_count;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("difference")
+     */
+    public function getDifference(): ?float
+    {
+        return $this->difference;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("move_line_count")
+     */
+    public function getMoveLineCount(): ?int
+    {
+        return $this->move_line_count;
     }
 
     /**
@@ -1501,14 +1595,6 @@ final class Statement extends Base
             $index = array_search($item, $this->move_line_ids);
             unset($this->move_line_ids[$index]);
         }
-    }
-
-    /**
-     * @param float|null $balance_end
-     */
-    public function setBalanceEnd(?float $balance_end): void
-    {
-        $this->balance_end = $balance_end;
     }
 
     /**
@@ -1628,16 +1714,6 @@ final class Statement extends Base
     public function setDifference(?float $difference): void
     {
         $this->difference = $difference;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("difference")
-     */
-    public function getDifference(): ?float
-    {
-        return $this->difference;
     }
 
     /**

@@ -41,18 +41,6 @@ final class State extends Base
     private $country_id;
 
     /**
-     * State Name
-     * ---
-     * Administrative divisions of a country. E.g. Fed. State, Departement, Canton
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string
-     */
-    private $name;
-
-    /**
      * State Code
      * ---
      * The state code.
@@ -63,6 +51,18 @@ final class State extends Base
      * @var string
      */
     private $code;
+
+    /**
+     * State Name
+     * ---
+     * Administrative divisions of a country. E.g. Fed. State, Departement, Canton
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    private $name;
 
     /**
      * Created by
@@ -118,24 +118,24 @@ final class State extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param string $name State Name
-     *        ---
-     *        Administrative divisions of a country. E.g. Fed. State, Departement, Canton
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
      * @param string $code State Code
      *        ---
      *        The state code.
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $name State Name
+     *        ---
+     *        Administrative divisions of a country. E.g. Fed. State, Departement, Canton
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(OdooRelation $country_id, string $name, string $code)
+    public function __construct(OdooRelation $country_id, string $code, string $name)
     {
         $this->country_id = $country_id;
-        $this->name = $name;
         $this->code = $code;
+        $this->name = $name;
     }
 
     /**
@@ -159,24 +159,6 @@ final class State extends Base
     /**
      * @return string
      *
-     * @SerializedName("name")
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return string
-     *
      * @SerializedName("code")
      */
     public function getCode(): string
@@ -190,6 +172,24 @@ final class State extends Base
     public function setCode(string $code): void
     {
         $this->code = $code;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("name")
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 
     /**

@@ -21,7 +21,7 @@ use Flux\OdooApiClient\Model\Object\Base;
  *             result node
  *         * generates the root result node itself through :meth:`~.render_element`
  */
-final class Many2many extends Base
+abstract class Many2many extends Base
 {
     /**
      * @return string

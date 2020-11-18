@@ -28,16 +28,6 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 final class Template extends Base
 {
     /**
-     * Name
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string
-     */
-    private $name;
-
-    /**
      * Account Currency
      * ---
      * Forces all moves for this account to have this secondary currency.
@@ -184,6 +174,16 @@ final class Template extends Base
     private $root_id;
 
     /**
+     * Name
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    private $name;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -230,10 +230,6 @@ final class Template extends Base
     private $write_date;
 
     /**
-     * @param string $name Name
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
      * @param string $code Code
      *        ---
      *        Searchable : yes
@@ -248,42 +244,24 @@ final class Template extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $name Name
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(string $name, string $code, OdooRelation $user_type_id)
+    public function __construct(string $code, OdooRelation $user_type_id, string $name)
     {
-        $this->name = $name;
         $this->code = $code;
         $this->user_type_id = $user_type_id;
+        $this->name = $name;
     }
 
     /**
-     * @param OdooRelation|null $root_id
+     * @param string $name
      */
-    public function setRootId(?OdooRelation $root_id): void
+    public function setName(string $name): void
     {
-        $this->root_id = $root_id;
-    }
-
-    /**
-     * @param OdooRelation[]|null $tag_ids
-     */
-    public function setTagIds(?array $tag_ids): void
-    {
-        $this->tag_ids = $tag_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasTagIds(OdooRelation $item): bool
-    {
-        if (null === $this->tag_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->tag_ids);
+        $this->name = $name;
     }
 
     /**
@@ -346,6 +324,24 @@ final class Template extends Base
     }
 
     /**
+     * @param OdooRelation|null $root_id
+     */
+    public function setRootId(?OdooRelation $root_id): void
+    {
+        $this->root_id = $root_id;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("name")
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("create_uid")
@@ -356,11 +352,11 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation|null $chart_template_id
+     * @param OdooRelation[]|null $tag_ids
      */
-    public function setChartTemplateId(?OdooRelation $chart_template_id): void
+    public function setTagIds(?array $tag_ids): void
     {
-        $this->chart_template_id = $chart_template_id;
+        $this->tag_ids = $tag_ids;
     }
 
     /**
@@ -426,6 +422,20 @@ final class Template extends Base
     }
 
     /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasTagIds(OdooRelation $item): bool
+    {
+        if (null === $this->tag_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->tag_ids);
+    }
+
+    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("tag_ids")
@@ -438,49 +448,21 @@ final class Template extends Base
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("chart_template_id")
-     */
-    public function getChartTemplateId(): ?OdooRelation
-    {
-        return $this->chart_template_id;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("name")
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("reconcile")
-     */
-    public function isReconcile(): ?bool
-    {
-        return $this->reconcile;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
      * @SerializedName("currency_id")
      */
     public function getCurrencyId(): ?OdooRelation
     {
         return $this->currency_id;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("note")
+     */
+    public function getNote(): ?string
+    {
+        return $this->note;
     }
 
     /**
@@ -528,6 +510,16 @@ final class Template extends Base
     }
 
     /**
+     * @return bool|null
+     *
+     * @SerializedName("reconcile")
+     */
+    public function isReconcile(): ?bool
+    {
+        return $this->reconcile;
+    }
+
+    /**
      * @param bool|null $reconcile
      */
     public function setReconcile(?bool $reconcile): void
@@ -536,29 +528,19 @@ final class Template extends Base
     }
 
     /**
-     * @param bool|null $nocreate
-     */
-    public function setNocreate(?bool $nocreate): void
-    {
-        $this->nocreate = $nocreate;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("note")
-     */
-    public function getNote(): ?string
-    {
-        return $this->note;
-    }
-
-    /**
      * @param string|null $note
      */
     public function setNote(?string $note): void
     {
         $this->note = $note;
+    }
+
+    /**
+     * @param OdooRelation|null $chart_template_id
+     */
+    public function setChartTemplateId(?OdooRelation $chart_template_id): void
+    {
+        $this->chart_template_id = $chart_template_id;
     }
 
     /**
@@ -632,6 +614,24 @@ final class Template extends Base
     public function isNocreate(): ?bool
     {
         return $this->nocreate;
+    }
+
+    /**
+     * @param bool|null $nocreate
+     */
+    public function setNocreate(?bool $nocreate): void
+    {
+        $this->nocreate = $nocreate;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("chart_template_id")
+     */
+    public function getChartTemplateId(): ?OdooRelation
+    {
+        return $this->chart_template_id;
     }
 
     /**
