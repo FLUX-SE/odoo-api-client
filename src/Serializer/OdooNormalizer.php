@@ -16,7 +16,7 @@ final class OdooNormalizer extends ObjectNormalizer
      * @param string|null $format
      * @param array $context
      */
-    protected function setAttributeValue(object $object, string $attribute, $value, string $format = null, array $context = []): void
+    protected function setAttributeValue($object, $attribute, $value, $format = null, array $context = []): void
     {
         /**
          * Override to set null when original value is false

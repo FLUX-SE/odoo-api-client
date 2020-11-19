@@ -28,7 +28,7 @@ final class XmlRpcDecoder implements ContextAwareDecoderInterface
     /**
      * {@inheritDoc}
      */
-    public function supportsDecoding(string $format, array $context = [])
+    public function supportsDecoding($format, array $context = [])
     {
         return $format === self::FORMAT;
     }
@@ -36,7 +36,7 @@ final class XmlRpcDecoder implements ContextAwareDecoderInterface
     /**
      * {@inheritDoc}
      */
-    public function decode(string $data, string $format, array $context = [])
+    public function decode($data, $format, array $context = [])
     {
         if ('' === trim($data)) {
             throw new UnexpectedValueException('Invalid XML data, it can not be empty.');

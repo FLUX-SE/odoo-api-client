@@ -10,7 +10,7 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 final class NullOdooRelationDenormalizer implements DenormalizerInterface
 {
-    public function supportsDenormalization($data, string $type, string $format = null): bool
+    public function supportsDenormalization($data, $type, $format = null): bool
     {
         if ($type !== OdooRelation::class) {
             return false;
@@ -20,7 +20,7 @@ final class NullOdooRelationDenormalizer implements DenormalizerInterface
         return false === $data;
     }
 
-    public function denormalize($data, string $type, string $format = null, array $context = [])
+    public function denormalize($data, $type, $format = null, array $context = [])
     {
         if (false === $data) {
             return null;

@@ -20,12 +20,12 @@ final class OdooRelationNormalizer implements NormalizerInterface, NormalizerAwa
 {
     use NormalizerAwareTrait;
 
-    public function supportsNormalization($data, string $format = null): bool
+    public function supportsNormalization($data, $format = null): bool
     {
         return $data instanceof OdooRelation;
     }
 
-    public function normalize($object, string $format = null, array $context = [])
+    public function normalize($object, $format = null, array $context = [])
     {
         if ($object instanceof OdooRelation) {
             return $this->buildOdooRelation($object, $format, $context);

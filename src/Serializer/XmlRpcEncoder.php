@@ -30,7 +30,7 @@ final class XmlRpcEncoder implements EncoderInterface
     /**
      * {@inheritDoc}
      */
-    public function supportsEncoding(string $format)
+    public function supportsEncoding($format)
     {
         return $format === self::FORMAT;
     }
@@ -38,7 +38,7 @@ final class XmlRpcEncoder implements EncoderInterface
     /**
      * {@inheritDoc}
      */
-    public function encode($data, string $format, array $context = [])
+    public function encode($data, $format, array $context = [])
     {
         if (false === is_array($data)) {
             throw new UnexpectedValueException(sprintf(
