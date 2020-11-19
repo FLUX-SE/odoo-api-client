@@ -28,11 +28,6 @@ final class XmlRpcSerializerHelper implements XmlRpcSerializerHelperInterface
         $this->streamFactory = $streamFactory;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @throws ExceptionInterface
-     */
     public function serializeRequestBody(RequestBodyInterface $requestBody): StreamInterface
     {
         $body = $this->serializer->serialize(
@@ -46,15 +41,10 @@ final class XmlRpcSerializerHelper implements XmlRpcSerializerHelperInterface
         return $this->streamFactory->createStream($body);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @throws ExceptionInterface
-     */
     public function deserializeResponseBody(StreamInterface $body, string $type)
     {
         return $this->serializer->deserialize(
-            $body,
+            $body->__toString(),
             $type,
             XmlRpcDecoder::FORMAT,
             [
@@ -63,9 +53,6 @@ final class XmlRpcSerializerHelper implements XmlRpcSerializerHelperInterface
         );
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function decodeResponseBody(StreamInterface $body)
     {
         return $this->serializer->decode(

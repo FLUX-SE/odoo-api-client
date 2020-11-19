@@ -6,6 +6,7 @@ namespace Flux\OdooApiClient\Operations;
 
 use Flux\OdooApiClient\Model\Common\Version;
 use Flux\OdooApiClient\Operations\Exception\AuthenticationFailedException;
+use Webmozart\Assert\Assert;
 
 final class CommonOperations extends AbstractOperations implements CommonOperationsInterface
 {
@@ -63,6 +64,8 @@ final class CommonOperations extends AbstractOperations implements CommonOperati
             ));
         }
 
-        return $this->deserializeInteger($response);
+        Assert::integer($body);
+
+        return $body;
     }
 }

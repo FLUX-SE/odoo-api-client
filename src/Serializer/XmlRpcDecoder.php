@@ -25,17 +25,11 @@ final class XmlRpcDecoder implements ContextAwareDecoderInterface
         $this->defaultContext = array_merge($this->defaultContext, $defaultContext);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function supportsDecoding($format, array $context = [])
     {
         return $format === self::FORMAT;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function decode($data, $format, array $context = [])
     {
         if ('' === trim($data)) {

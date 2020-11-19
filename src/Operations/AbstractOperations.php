@@ -9,6 +9,7 @@ use Flux\OdooApiClient\Api\OdooApiRequestMakerInterface;
 use Flux\OdooApiClient\Serializer\XmlRpcSerializerHelperInterface;
 use Psr\Http\Message\ResponseInterface;
 use UnexpectedValueException;
+use Webmozart\Assert\Assert;
 
 abstract class AbstractOperations implements OperationsInterface
 {
@@ -50,12 +51,7 @@ abstract class AbstractOperations implements OperationsInterface
             $response->getBody()
         );
 
-        if (false === is_array($body)) {
-            throw new UnexpectedValueException(sprintf(
-                'The decoded value should be an array value, "%s" found !',
-                gettype($body)
-            ));
-        }
+        Assert::isArray($body,'The decoded value should be an array value, "%s" found !');
 
         return $body;
     }
@@ -70,98 +66,56 @@ abstract class AbstractOperations implements OperationsInterface
             $model
         );
 
-        if (false === $body instanceof $model) {
-            throw new UnexpectedValueException(sprintf(
-                'The deserialize value should be an instance of "%s" value, "%s" found !',
-                $model,
-                gettype($body)
-            ));
-        }
+        Assert::isInstanceOf(
+            $body,
+            $model,
+            'The deserialize value should be an instance of "%2$s" value, "%s" found !'
+        );
 
         return $body;
     }
 
     public function deserializeArrayOf(ResponseInterface $response, string $type = 'string'): array
     {
-        $body = $this->xmlRpcSerializerHelper->deserializeResponseBody(
-            $response->getBody(),
-            sprintf('%s[]', $type)
-        );
+        $body = $this->xmlRpcSerializerHelper->decodeResponseBody($response->getBody());
 
-        if (false === is_array($body)) {
-            throw new UnexpectedValueException(sprintf(
-                'The deserialize value should be an array value, "%s" found !',
-                gettype($body)
-            ));
-        }
+        Assert::allString($body, 'The deserialize value should be an array value, "%s" found !');
 
         return $body;
     }
 
     public function deserializeBoolean(ResponseInterface $response): bool
     {
-        $body = $this->xmlRpcSerializerHelper->deserializeResponseBody(
-            $response->getBody(),
-            'bool'
-        );
+        $body = $this->xmlRpcSerializerHelper->decodeResponseBody($response->getBody());
 
-        if (false === is_bool($body)) {
-            throw new UnexpectedValueException(sprintf(
-                'The deserialize value should be a boolean value, "%s" found !',
-                gettype($body)
-            ));
-        }
+        Assert::boolean($body, 'The deserialize value should be a boolean value, "%s" found !');
 
         return $body;
     }
 
     public function deserializeInteger(ResponseInterface $response): int
     {
-        $body = $this->xmlRpcSerializerHelper->deserializeResponseBody(
-            $response->getBody(),
-            'int'
-        );
+        $body = $this->xmlRpcSerializerHelper->decodeResponseBody($response->getBody());
 
-        if (false === is_int($body)) {
-            throw new UnexpectedValueException(sprintf(
-                'The deserialize value should be an integer value, "%s" found !',
-                gettype($body)
-            ));
-        }
+        Assert::integer($body, 'The deserialize value should be an integer value, "%s" found !');
 
         return $body;
     }
 
     public function deserializeFloat(ResponseInterface $response): float
     {
-        $body = $this->xmlRpcSerializerHelper->deserializeResponseBody(
-            $response->getBody(),
-            'float'
-        );
+        $body = $this->xmlRpcSerializerHelper->decodeResponseBody($response->getBody());
 
-        if (false === is_float($body)) {
-            throw new UnexpectedValueException(sprintf(
-                'The deserialize value should be a float value, "%s" found !',
-                gettype($body)
-            ));
-        }
+        Assert::float($body, 'The deserialize value should be a float value, "%s" found !');
 
         return $body;
     }
 
     public function deserializeString(ResponseInterface $response): string
     {
-        $body = $this->xmlRpcSerializerHelper->deserializeResponseBody(
-            $response->getBody(),
-            'string'
-        );
+        $body = $this->xmlRpcSerializerHelper->decodeResponseBody($response->getBody());
 
-        if (false === is_string($body)) {
-            throw new UnexpectedValueException(sprintf(
-                'The deserialize value should be a string value, "%s" found !',
-                gettype($body)
-            ));
-        }
+        Assert::string($body, 'The deserialize value should be a string value, "%s" found !');
 
         return $body;
     }
