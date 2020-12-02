@@ -21,7 +21,7 @@ use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordOperations;
-use Http\Client\Common\Exception\ClientErrorException;
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordOperationsInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 
@@ -31,21 +31,17 @@ class RecordOperationsTest extends TestCase
 
     /** @var RecordListOperations */
     private $recordListOperations;
-    /** @var RecordOperations */
-    private $recordOperations;
     /** @var ModelManager */
     private $modelManager;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->recordListOperations = $this->buildExecuteKwOperations(RecordListOperations::class);
-        $this->recordOperations = $this->buildExecuteKwOperations(RecordOperations::class);
+        /** @var RecordOperationsInterface $recordOperations */
+        $recordOperations = $this->buildExecuteKwOperations(RecordOperations::class);
         $this->modelManager = new ModelManager(
-            $this->recordOperations->getObjectOperations()->getXmlRpcSerializerHelper()->getSerializer(),
-            $this->recordOperations
+            $recordOperations->getObjectOperations()->getXmlRpcSerializerHelper()->getSerializer(),
+            $recordOperations
         );
     }
 

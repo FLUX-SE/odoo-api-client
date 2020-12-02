@@ -14,9 +14,6 @@ class RecordListOperationsTest extends TestCase
     /** @var RecordListOperations */
     private $recordListOperations;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->recordListOperations = $this->buildExecuteKwOperations(RecordListOperations::class);

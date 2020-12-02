@@ -6,13 +6,6 @@ namespace Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments;
 
 interface SearchDomainsInterface extends ArgumentsInterface
 {
-    /** @var string */
-    public const LOGIC_AND = '&';
-    /** @var string */
-    public const LOGIC_NOT = '!';
-    /** @var string */
-    public const LOGIC_OR = '|';
-
     public function addCriterion(CriterionInterface $c1): SearchDomainsInterface;
 
     public function addAndCriteria(CriterionInterface $c1, CriterionInterface $c2): SearchDomainsInterface;

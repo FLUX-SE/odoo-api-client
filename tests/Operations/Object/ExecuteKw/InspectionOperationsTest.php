@@ -18,9 +18,6 @@ class InspectionOperationsTest extends TestCase
     /** @var InspectionOperations */
     private $inspectionOperations;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->inspectionOperations = $this->buildExecuteKwOperations(InspectionOperations::class);

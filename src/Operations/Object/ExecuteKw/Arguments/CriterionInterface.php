@@ -6,6 +6,13 @@ namespace Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments;
 
 interface CriterionInterface
 {
+    /** @var string */
+    public const LOGIC_AND = '&';
+    /** @var string */
+    public const LOGIC_NOT = '!';
+    /** @var string */
+    public const LOGIC_OR = '|';
+
     /**
      * is equal to any of the items from value, value should be a list of items
      */
@@ -82,139 +89,94 @@ interface CriterionInterface
 
     public function toArray(): array;
 
+    public static function and(CriterionInterface $c1, CriterionInterface $c2): CriterionInterface;
+    public static function or(CriterionInterface $c1, CriterionInterface $c2): CriterionInterface;
+    public static function not(CriterionInterface $c1): CriterionInterface;
+
     /**
-     * @param string $fieldName
      * @param string|int|float|bool $value
-     *
-     * @return CriterionInterface
      */
     public static function in(string $fieldName, $value): CriterionInterface;
 
     /**
-     * @param string $fieldName
      * @param string|int|float|bool $value
-     *
-     * @return CriterionInterface
-     */
-    public static function not_like(string $fieldName, $value): CriterionInterface;
-
-    /**
-     * @param string $fieldName
-     * @param string|int|float|bool $value
-     *
-     * @return CriterionInterface
      */
     public static function ilike(string $fieldName, $value): CriterionInterface;
 
     /**
-     * @param string $fieldName
      * @param string|int|float|bool $value
-     *
-     * @return CriterionInterface
+     */
+    public static function not_like(string $fieldName, $value): CriterionInterface;
+
+    /**
+     * @param string|int|float|bool $value
      */
     public static function less_than(string $fieldName, $value): CriterionInterface;
 
     /**
-     * @param string $fieldName
      * @param string|int|float|bool $value
-     *
-     * @return CriterionInterface
      */
     public static function not_equal(string $fieldName, $value): CriterionInterface;
 
     /**
-     * @param string $fieldName
      * @param string|int|float|bool $value
-     *
-     * @return CriterionInterface
      */
     public static function not_in(string $fieldName, $value): CriterionInterface;
 
     /**
-     * @param string $fieldName
      * @param string|int|float|bool $value
-     *
-     * @return CriterionInterface
      */
     public static function parent_of(string $fieldName, $value): CriterionInterface;
 
     /**
-     * @param string $fieldName
      * @param string|int|float|bool $value
-     *
-     * @return CriterionInterface
      */
     public static function not_ilike(string $fieldName, $value): CriterionInterface;
 
     /**
-     * @param string $fieldName
      * @param string|int|float|bool $value
-     *
-     * @return CriterionInterface
      */
     public static function equal_like(string $fieldName, $value): CriterionInterface;
 
     /**
-     * @param string $fieldName
      * @param string|int|float|bool $value
-     *
-     * @return CriterionInterface
      */
     public static function child_of(string $fieldName, $value): CriterionInterface;
 
     /**
-     * @param string $fieldName
      * @param string|int|float|bool $value
-     *
-     * @return CriterionInterface
      */
     public static function less_than_equal(string $fieldName, $value): CriterionInterface;
 
     /**
-     * @param string $fieldName
      * @param string|int|float|bool $value
-     *
-     * @return CriterionInterface
      */
     public static function equal_ilike(string $fieldName, $value): CriterionInterface;
 
     /**
-     * @param string $fieldName
      * @param string|int|float|bool $value
-     *
-     * @return CriterionInterface
      */
     public static function greater_than_equal(string $fieldName, $value): CriterionInterface;
 
     /**
-     * @param string $fieldName
      * @param string|int|float|bool $value
-     *
-     * @return CriterionInterface
      */
     public static function greater_than(string $fieldName, $value): CriterionInterface;
 
     /**
-     * @param string $fieldName
      * @param string|int|float|bool $value
-     *
-     * @return CriterionInterface
      */
     public static function unset_equal(string $fieldName, $value): CriterionInterface;
 
     /**
-     * @param string $fieldName
      * @param string|int|float|bool $value
-     *
-     * @return CriterionInterface
      */
     public static function equal(string $fieldName, $value): CriterionInterface;
 
     /**
-     * @param string $fieldName
      * @param string|int|float|bool $value
-     *
-     * @return CriterionInterface
      */
     public static function like(string $fieldName, $value): CriterionInterface;
+
+    public function hasSubCriterion(): bool;
 }
