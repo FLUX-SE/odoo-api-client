@@ -7,7 +7,7 @@ namespace Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments;
 abstract class AbstractArguments implements ArgumentsInterface
 {
     /** @var array */
-    private $arguments = [];
+    protected $arguments = [];
 
     public function toArray(): array
     {
