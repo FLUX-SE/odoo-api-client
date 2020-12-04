@@ -17,10 +17,6 @@ interface ModelListManagerInterface
     public function findOneBy(string $class, ?SearchDomainsInterface $searchDomains = null): ?BaseInterface;
 
     /**
-     * @param string $class
-     * @param SearchDomainsInterface|null $searchDomains
-     * @param SearchReadOptionsInterface|null $searchReadOptions
-     *
      * @return BaseInterface[]
      */
     public function findBy(
@@ -28,6 +24,8 @@ interface ModelListManagerInterface
         ?SearchDomainsInterface $searchDomains = null,
         ?SearchReadOptionsInterface $searchReadOptions = null
     ): array;
+
+    public function count(string $class, ?SearchDomainsInterface $searchDomains = null): int;
 
     public function getRecordListOperations(): RecordListOperationsInterface;
 

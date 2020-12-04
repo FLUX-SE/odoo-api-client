@@ -29,9 +29,6 @@ final class ModelListManager implements ModelListManagerInterface
     }
 
     /**
-     * @param string $class
-     * @param int $id
-     *
      * @return BaseInterface|null
      *
      * @throws ExceptionInterface
@@ -52,9 +49,6 @@ final class ModelListManager implements ModelListManagerInterface
     }
 
     /**
-     * @param string $class
-     * @param SearchDomainsInterface|null $searchDomains
-     *
      * @return BaseInterface|null
      *
      * @throws ExceptionInterface
@@ -74,8 +68,6 @@ final class ModelListManager implements ModelListManagerInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws ExceptionInterface
      */
     public function findBy(
@@ -95,6 +87,15 @@ final class ModelListManager implements ModelListManagerInterface
         $denormalizedModels = $this->serializer->denormalize($results, sprintf('%s[]', $class));
 
         return $denormalizedModels;
+    }
+
+    public function count(string $class, ?SearchDomainsInterface $searchDomains = null): int
+    {
+        $modelName = $this->getModelNameFromClass($class);
+        return $this->recordListOperations->search_count(
+            $modelName,
+            $searchDomains
+        );
     }
 
     private function getModelNameFromClass(string $class): string
