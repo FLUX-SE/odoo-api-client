@@ -51,7 +51,7 @@ abstract class AbstractOperations implements OperationsInterface
             $response->getBody()
         );
 
-        Assert::isArray($body,'The decoded value should be an array value, "%s" found !');
+        Assert::isArray($body, 'The decoded value should be an array value, "%s" found !');
 
         return $body;
     }
