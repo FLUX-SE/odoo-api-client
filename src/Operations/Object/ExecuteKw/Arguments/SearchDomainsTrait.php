@@ -7,7 +7,7 @@ namespace Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments;
 trait SearchDomainsTrait
 {
     abstract protected function buildCriteria(
-        CriterionInterface $c1
+        CriterionInterface $c
     ): SearchDomainsInterface;
 
     public function addAndCriteria(CriterionInterface $c1, CriterionInterface $c2): SearchDomainsInterface
