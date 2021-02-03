@@ -4,25 +4,19 @@ declare(strict_types=1);
 
 namespace Flux\OdooApiClient\HttPlug\Factory;
 
-use Flux\OdooApiClient\Api\OdooApiRequestMakerInterface;
 use Flux\OdooApiClient\HttPlug\Plugin\OdooApiErrorPlugin;
 use Flux\OdooApiClient\Serializer\XmlRpcSerializerHelperInterface;
 use Http\Client\Common\Plugin;
-use Http\Client\Common\Plugin\BaseUriPlugin;
 use Http\Client\Common\Plugin\ContentTypePlugin;
 use Http\Client\Common\Plugin\ErrorPlugin;
 use Http\Client\Common\Plugin\LoggerPlugin;
 use Http\Client\Common\PluginClient;
 use Http\Discovery\HttpClientDiscovery;
-use Http\Discovery\Psr17FactoryDiscovery;
 use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\UriInterface;
 use Symfony\Component\HttpKernel\Log\Logger;
 
 final class OdooHttpClientFactory implements OdooHttpClientFactoryInterface
 {
-    /** @var string */
-    protected $basePath;
     /** @var XmlRpcSerializerHelperInterface */
     private $xmlRpcSerializerHelper;
 

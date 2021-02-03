@@ -126,17 +126,17 @@ class RecordOperationsTest extends TestCase
         )[0];
 
         $partner = new OdooRelation($partner['id']);
+        $currency_id = new OdooRelation($currency['id']);
         $move = new Move(
-            'TESTI00001',
             new DateTime(),
             'draft',
             'out_invoice',
             new OdooRelation($journal['id']),
-            new OdooRelation($currency['id']),
+             $currency_id,
             'no_extract_requested'
         );
 
-        $line = new Line(new OdooRelation());
+        $line = new Line(new OdooRelation(), $currency_id);
         $line->setAccountId(new OdooRelation($account['id']));
         $line->setQuantity(2);
         $line->setPriceUnit(10);
@@ -149,7 +149,7 @@ class RecordOperationsTest extends TestCase
         $relation->buildAdd($line);
         $move->addInvoiceLineIds($relation);
 
-        $line2 = new Line(new OdooRelation());
+        $line2 = new Line(new OdooRelation(), $currency_id);
         $line2->setAccountId(new OdooRelation(false));
         $line2->setDisplayType('line_note');
         $line2->setName('test');

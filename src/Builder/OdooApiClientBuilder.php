@@ -78,7 +78,7 @@ final class OdooApiClientBuilder implements OdooApiClientBuilderInterface
     public function buildBaseUri(): UriInterface
     {
         if (null === $this->baseUri) {
-            $uriFactory = Psr17FactoryDiscovery::findUrlFactory();
+            $uriFactory = Psr17FactoryDiscovery::findUriFactory();
             $this->baseUri = $uriFactory->createUri(sprintf(
                 '%s/%s',
                 $this->baseHostname,

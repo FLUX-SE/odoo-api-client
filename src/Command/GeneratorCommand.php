@@ -81,7 +81,8 @@ final class GeneratorCommand extends Command
     private function reconfigureServices(): void
     {
         $odooApiRequestMaker = $this->objectOperations->getApiRequestMaker();
-        $uriFactory = Psr17FactoryDiscovery::findUrlFactory();
+
+        $uriFactory = Psr17FactoryDiscovery::findUriFactory();
         $baseUri = $uriFactory->createUri(sprintf(
             '%s/%s',
             $this->baseUrl,
@@ -91,8 +92,6 @@ final class GeneratorCommand extends Command
         $this->objectOperations->setDatabase($this->database);
         $this->objectOperations->setUsername($this->username);
         $this->objectOperations->setPassword($this->password);
-
-
 
         $this->odooPhpClassesGenerator->setBasePath($this->basePath);
         $this->odooPhpClassesGenerator->setBaseNamespace($this->baseNamespace);

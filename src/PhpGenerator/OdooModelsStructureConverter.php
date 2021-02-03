@@ -9,6 +9,7 @@ use Flux\OdooApiClient\Model\BaseInterface;
 use Flux\OdooApiClient\Model\OdooRelation;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\InspectionOperationsInterface;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\FieldsGetOptions;
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterface;
 use Flux\OdooApiClient\PhpGenerator\ModelFixer\ModelFixerInterface;
 use LogicException;
@@ -62,7 +63,18 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         $baseClass = $this->buildClassNameFormModelName(self::BASE_MODEL_NAME);
         $baseModelClass = sprintf('%s\\%s', $baseModelNamespace, $baseClass);
 
-        $search_read = $this->recordListOperations->search_read('ir.model');
+        $searchReadOptions = new SearchReadOptions();
+        $searchReadOptions->setFields([
+            'id',
+            'model',
+            'inherited_model_ids',
+            'info',
+        ]);
+        $search_read = $this->recordListOperations->search_read(
+            'ir.model',
+            null,
+            $searchReadOptions
+        );
 
         $this->initConvert($search_read);
 
