@@ -309,7 +309,7 @@ final class Line extends Move
         $this->move_id = $move_id;
         $this->statement_id = $statement_id;
         $this->payment_ref = $payment_ref;
-        parent::__construct(
+        parent::__construct( 
             $date, 
             $state, 
             $move_type, 

@@ -105,7 +105,7 @@ final class Config extends Bank
     ) {
         $this->res_partner_bank_id = $res_partner_bank_id;
         $this->new_journal_name = $new_journal_name;
-        parent::__construct($acc_number, $partner_id);
+        parent::__construct($acc_number,$partner_id);
     }
 
     /**

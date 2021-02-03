@@ -590,7 +590,7 @@ final class Channel extends Alias
         $this->name = $name;
         $this->public = $public;
         $this->alias_id = $alias_id;
-        parent::__construct($alias_model_id, $alias_defaults, $alias_contact);
+        parent::__construct($alias_model_id,$alias_defaults,$alias_contact);
     }
 
     /**

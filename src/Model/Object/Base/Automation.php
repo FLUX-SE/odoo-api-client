@@ -322,7 +322,7 @@ final class Automation extends Server
     ) {
         $this->action_server_id = $action_server_id;
         $this->trigger = $trigger;
-        parent::__construct(
+        parent::__construct( 
             $name, 
             $type, 
             $model_id, 

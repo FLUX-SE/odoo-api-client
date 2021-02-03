@@ -434,7 +434,7 @@ final class Payment extends Move
         $this->move_id = $move_id;
         $this->payment_type = $payment_type;
         $this->partner_type = $partner_type;
-        parent::__construct(
+        parent::__construct( 
             $date, 
             $state, 
             $move_type, 

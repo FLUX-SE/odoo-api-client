@@ -587,7 +587,7 @@ final class Product extends Template
         string $sale_line_warn
     ) {
         $this->product_tmpl_id = $product_tmpl_id;
-        parent::__construct(
+        parent::__construct( 
             $name, 
             $categ_id, 
             $uom_id, 

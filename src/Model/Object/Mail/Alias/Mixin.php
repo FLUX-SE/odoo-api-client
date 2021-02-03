@@ -81,7 +81,7 @@ final class Mixin extends Alias
         string $alias_contact
     ) {
         $this->alias_id = $alias_id;
-        parent::__construct($alias_model_id, $alias_defaults, $alias_contact);
+        parent::__construct($alias_model_id,$alias_defaults,$alias_contact);
     }
 
     /**

@@ -1729,7 +1729,7 @@ final class Users extends Partner
         $this->login = $login;
         $this->company_id = $company_id;
         $this->notification_type = $notification_type;
-        parent::__construct($property_account_payable_id, $property_account_receivable_id);
+        parent::__construct($property_account_payable_id,$property_account_receivable_id);
     }
 
     /**

@@ -113,7 +113,7 @@ final class Creation extends Journal
         string $name
     ) {
         $this->journal_id = $journal_id;
-        parent::__construct(
+        parent::__construct( 
             $code, 
             $type, 
             $invoice_reference_type, 

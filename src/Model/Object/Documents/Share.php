@@ -545,7 +545,7 @@ final class Share extends Alias
         $this->folder_id = $folder_id;
         $this->access_token = $access_token;
         $this->alias_id = $alias_id;
-        parent::__construct($alias_model_id, $alias_defaults, $alias_contact);
+        parent::__construct($alias_model_id,$alias_defaults,$alias_contact);
     }
 
     /**

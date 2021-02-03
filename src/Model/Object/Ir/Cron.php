@@ -260,7 +260,7 @@ final class Cron extends Server
         $this->ir_actions_server_id = $ir_actions_server_id;
         $this->user_id = $user_id;
         $this->nextcall = $nextcall;
-        parent::__construct(
+        parent::__construct( 
             $name, 
             $type, 
             $model_id, 
