@@ -70,6 +70,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             'inherited_model_ids',
             'info',
         ]);
+
         $search_read = $this->recordListOperations->search_read(
             'ir.model',
             null,
@@ -277,7 +278,9 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
                 $types[] = 'false';
             }
 
-            $inheritedFieldInfo = $this->getInheritedFieldInfo($item, $fieldName);
+            $inheritedFieldMetadata = $this->getInheritedFieldMetadata($item, $fieldName);
+            $inheritedFieldInfo = $inheritedFieldMetadata['info'];
+            $inheritedFieldPosition = $inheritedFieldMetadata['position'];
             $inheritedTypes = [];
             if (null !== $inheritedFieldInfo) {
                 $inheritedTypes = OdooModelsStructureConverterHelper::transformTypes($inheritedFieldInfo);
@@ -289,6 +292,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
                 'default' => null,
                 'description' => $description,
                 'inherited' => null !== $inheritedFieldInfo,
+                'inherited_position' => $inheritedFieldPosition,
                 'inherited_required' => false === in_array('null', $inheritedTypes),
             ];
         }
@@ -340,11 +344,17 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         return $description;
     }
 
-    private function getInheritedFieldInfo(array $currentItem, string $fieldName): ?array
+    private function getInheritedFieldMetadata(array $currentItem, string $fieldName): array
     {
         $modelName = $currentItem['model'];
+
+        $metadata = [
+            'position' => null,
+            'info' => null,
+        ];
+
         if ($modelName === self::BASE_MODEL_NAME) {
-            return null;
+            return $metadata;
         }
 
         $inheritedModelIds = $currentItem['inherited_model_ids'];
@@ -356,10 +366,13 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             $inheritedModel = $this->modelIdToModelName[$inheritedModelId];
             $properties = $this->inheritedPropertiesCache[$inheritedModel];
             if (in_array($fieldName, $properties)) {
-                return $this->fields_get($inheritedModel)[$fieldName];
+                $modelInfo = $this->fields_get($inheritedModel);
+                $metadata['position'] = array_search($fieldName, array_keys($modelInfo));
+                $metadata['info'] = $modelInfo[$fieldName];
+                break;
             }
         }
 
-        return null;
+        return $metadata;
     }
 }

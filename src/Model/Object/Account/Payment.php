@@ -364,6 +364,15 @@ final class Payment extends Move
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param OdooRelation|null $currency_id Currency
+     *        ---
+     *        The payment's currency.
+     *        ---
+     *        Relation : many2one (res.currency)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param DateTimeInterface $date Date
      *        ---
      *        Searchable : yes
@@ -415,6 +424,7 @@ final class Payment extends Move
         OdooRelation $move_id,
         string $payment_type,
         string $partner_type,
+        ?OdooRelation $currency_id,
         DateTimeInterface $date,
         string $state,
         string $move_type,
@@ -429,6 +439,7 @@ final class Payment extends Move
             $state, 
             $move_type, 
             $journal_id, 
+            $currency_id, 
             $extract_state
         );
     }

@@ -6,7 +6,6 @@ namespace Flux\OdooApiClient\PhpGenerator;
 
 use Exception;
 use Prometee\PhpClassGenerator\Builder\ClassBuilderInterface;
-use Symfony\Component\Serializer\Annotation\SerializedName;
 
 final class OdooPhpClassesGenerator implements OdooPhpClassesGeneratorInterface
 {
@@ -96,6 +95,7 @@ final class OdooPhpClassesGenerator implements OdooPhpClassesGeneratorInterface
                 $property->setReadable($propertyConfig['readable'] ?? true);
                 $property->setWriteable($propertyConfig['writable'] ?? true);
                 $property->setInherited($propertyConfig['inherited'] ?? false);
+                $property->setInheritedPosition($propertyConfig['inherited_position'] ?? null);
                 $property->setInheritedRequired($propertyConfig['inherited_required'] ?? false);
 
                 $this->classBuilder->addProperty($property);

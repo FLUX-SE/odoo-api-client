@@ -135,8 +135,9 @@ class RecordOperationsTest extends TestCase
              $currency_id,
             'no_extract_requested'
         );
+        $move->setRef('TEST_I000000');
 
-        $line = new Line(new OdooRelation(), $currency_id);
+        $line = new Line(new OdooRelation(), new OdooRelation());
         $line->setAccountId(new OdooRelation($account['id']));
         $line->setQuantity(2);
         $line->setPriceUnit(10);

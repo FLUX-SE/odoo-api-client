@@ -237,6 +237,26 @@ final class Line extends Move
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param OdooRelation|null $currency_id Journal Currency
+     *        ---
+     *        Relation : many2one (res.currency)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string|null $state Status
+     *        ---
+     *        The current state of your bank statement:- New: Fully editable with draft Journal Entries.- Processing: No
+     *        longer editable with posted Journal entries, ready for the reconciliation.- Validated: All lines are
+     *        reconciled. There is nothing left to process.
+     *        ---
+     *        Selection :
+     *            -> open (New)
+     *            -> posted (Processing)
+     *            -> confirm (Validated)
+     *        ---
+     *        Searchable : yes
+     *        Sortable : no
      * @param DateTimeInterface $date Date
      *        ---
      *        Searchable : yes
@@ -279,6 +299,8 @@ final class Line extends Move
         OdooRelation $move_id,
         OdooRelation $statement_id,
         string $payment_ref,
+        ?OdooRelation $currency_id,
+        ?string $state,
         DateTimeInterface $date,
         string $move_type,
         OdooRelation $journal_id,
@@ -289,8 +311,10 @@ final class Line extends Move
         $this->payment_ref = $payment_ref;
         parent::__construct(
             $date, 
+            $state, 
             $move_type, 
             $journal_id, 
+            $currency_id, 
             $extract_state
         );
     }
