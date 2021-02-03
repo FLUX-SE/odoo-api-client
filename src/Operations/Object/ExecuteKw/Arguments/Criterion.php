@@ -64,7 +64,7 @@ final class Criterion implements CriterionInterface
     }
 
     /**
-     * @param string|int|float|bool $value
+     * @param string|int|float|bool|array $value
      */
     private static function build(string $fieldName, string $operator, $value): self
     {
@@ -142,7 +142,7 @@ final class Criterion implements CriterionInterface
         return self::build($fieldName, self::OPERATOR_ILIKE, $value);
     }
 
-    public static function in(string $fieldName, $value): CriterionInterface
+    public static function in(string $fieldName, array $value): CriterionInterface
     {
         return self::build($fieldName, self::OPERATOR_IN, $value);
     }
@@ -172,7 +172,7 @@ final class Criterion implements CriterionInterface
         return self::build($fieldName, self::OPERATOR_NOT_ILIKE, $value);
     }
 
-    public static function not_in(string $fieldName, $value): CriterionInterface
+    public static function not_in(string $fieldName, array $value): CriterionInterface
     {
         return self::build($fieldName, self::OPERATOR_NOT_IN, $value);
     }

@@ -94,9 +94,9 @@ interface CriterionInterface
     public static function not(CriterionInterface $c1): CriterionInterface;
 
     /**
-     * @param string|int|float|bool $value
+     * @param array<int, string|int|float|bool> $value
      */
-    public static function in(string $fieldName, $value): CriterionInterface;
+    public static function in(string $fieldName, array $value): CriterionInterface;
 
     /**
      * @param string|int|float|bool $value
@@ -119,9 +119,9 @@ interface CriterionInterface
     public static function not_equal(string $fieldName, $value): CriterionInterface;
 
     /**
-     * @param string|int|float|bool $value
+     * @param array<int, string|int|float|bool> $value
      */
-    public static function not_in(string $fieldName, $value): CriterionInterface;
+    public static function not_in(string $fieldName, array $value): CriterionInterface;
 
     /**
      * @param string|int|float|bool $value

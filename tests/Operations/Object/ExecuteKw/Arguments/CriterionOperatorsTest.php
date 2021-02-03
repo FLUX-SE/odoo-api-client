@@ -72,10 +72,10 @@ class CriterionOperatorsTest extends TestCase
 
     public function testIn(): void
     {
-        $c = Criterion::in('field1', true);
+        $c = Criterion::in('field1', [true]);
 
         $this->assertEquals([
-            ['field1', 'in', true]
+            ['field1', 'in', [true]]
         ], $c->toArray());
     }
 
@@ -126,10 +126,10 @@ class CriterionOperatorsTest extends TestCase
 
     public function testNotIn(): void
     {
-        $c = Criterion::not_in('field1', true);
+        $c = Criterion::not_in('field1', [true]);
 
         $this->assertEquals([
-            ['field1', 'not in', true]
+            ['field1', 'not in', [true]]
         ], $c->toArray());
     }
 
