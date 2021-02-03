@@ -32,6 +32,8 @@ final class Tag extends Base
     /**
      * Color Index
      * ---
+     * Tag color. No color means no display in kanban to distinguish internal tags from public categorization tags.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *

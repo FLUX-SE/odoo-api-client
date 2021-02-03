@@ -76,6 +76,19 @@ final class Employee extends Base
     private $active;
 
     /**
+     * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation
+     */
+    private $company_id;
+
+    /**
      * Address
      * ---
      * Enter here the private address of the employee, not the one linked to your company.
@@ -321,8 +334,10 @@ final class Employee extends Base
      * Certificate Level
      * ---
      * Selection :
+     *     -> graduate (Graduate)
      *     -> bachelor (Bachelor)
      *     -> master (Master)
+     *     -> doctor (Doctor)
      *     -> other (Other)
      * ---
      * Searchable : yes
@@ -373,7 +388,7 @@ final class Employee extends Base
     private $emergency_phone;
 
     /**
-     * Km Home-Work
+     * Home-Work Distance
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -498,6 +513,16 @@ final class Employee extends Base
     private $departure_description;
 
     /**
+     * Departure Date
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var DateTimeInterface|null
+     */
+    private $departure_date;
+
+    /**
      * Main Attachment
      * ---
      * Relation : many2one (ir.attachment)
@@ -509,16 +534,6 @@ final class Employee extends Base
      * @var OdooRelation|null
      */
     private $message_main_attachment_id;
-
-    /**
-     * Medical Examination Date
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var DateTimeInterface|null
-     */
-    private $medic_exam;
 
     /**
      * Company Vehicle
@@ -589,6 +604,16 @@ final class Employee extends Base
     private $contract_warning;
 
     /**
+     * First Contract Date
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var DateTimeInterface|null
+     */
+    private $first_contract_date;
+
+    /**
      * Subordinates
      * ---
      * Direct and indirect subordinates
@@ -604,16 +629,6 @@ final class Employee extends Base
     private $subordinate_ids;
 
     /**
-     * Documents
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var int|null
-     */
-    private $document_count;
-
-    /**
      * Sign Request Count
      * ---
      * Searchable : no
@@ -624,9 +639,20 @@ final class Employee extends Base
     private $sign_request_count;
 
     /**
+     * Documents
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    private $document_count;
+
+    /**
      * Expense
      * ---
-     * User responsible of expense approval. Should be Expense approver.
+     * Select the user responsible for approving "Expenses" of this employee.
+     * If empty, the approval is done by an Administrator or Approver (determined in settings/users).
      * ---
      * Relation : many2one (res.users)
      * @see \Flux\OdooApiClient\Model\Object\Res\Users
@@ -736,6 +762,18 @@ final class Employee extends Base
      * @var OdooRelation|null
      */
     private $activity_type_id;
+
+    /**
+     * Activity Type Icon
+     * ---
+     * Font awesome icon e.g. fa-tasks
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $activity_type_icon;
 
     /**
      * Next Activity Deadline
@@ -993,19 +1031,6 @@ final class Employee extends Base
     private $job_title;
 
     /**
-     * Company
-     * ---
-     * Relation : many2one (res.company)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Company
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $company_id;
-
-    /**
      * Work Address
      * ---
      * Relation : many2one (res.partner)
@@ -1101,6 +1126,9 @@ final class Employee extends Base
 
     /**
      * Coach
+     * ---
+     * Select the "Employee" who is the coach of this employee.
+     * The "Coach" has no specific rights or responsibilities by default.
      * ---
      * Relation : many2one (hr.employee)
      * @see \Flux\OdooApiClient\Model\Object\Hr\Employee
@@ -1293,7 +1321,6 @@ final class Employee extends Base
      *     -> America/North_Dakota/Beulah (America/North_Dakota/Beulah)
      *     -> America/North_Dakota/Center (America/North_Dakota/Center)
      *     -> America/North_Dakota/New_Salem (America/North_Dakota/New_Salem)
-     *     -> America/Nuuk (America/Nuuk)
      *     -> America/Ojinaga (America/Ojinaga)
      *     -> America/Panama (America/Panama)
      *     -> America/Pangnirtung (America/Pangnirtung)
@@ -1755,7 +1782,24 @@ final class Employee extends Base
     private $last_activity_time;
 
     /**
-     * Indirect Surbordinates Count
+     * Hr Icon Display
+     * ---
+     * Selection :
+     *     -> presence_present (Present)
+     *     -> presence_absent_active (Present but not active)
+     *     -> presence_absent (Absent)
+     *     -> presence_to_define (To define)
+     *     -> presence_undetermined (Undetermined)
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $hr_icon_display;
+
+    /**
+     * Indirect Subordinates Count
      * ---
      * Searchable : no
      * Sortable : no
@@ -1811,6 +1855,13 @@ final class Employee extends Base
     private $write_date;
 
     /**
+     * @param OdooRelation $company_id Company
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param OdooRelation $resource_id Resource
      *        ---
      *        Relation : many2one (resource.resource)
@@ -1819,23 +1870,36 @@ final class Employee extends Base
      *        Searchable : yes
      *        Sortable : yes
      */
-    public function __construct(OdooRelation $resource_id)
+    public function __construct(OdooRelation $company_id, OdooRelation $resource_id)
     {
+        $this->company_id = $company_id;
         $this->resource_id = $resource_id;
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param OdooRelation[]|null $message_channel_ids
      */
-    public function hasMessageChannelIds(OdooRelation $item): bool
+    public function setMessageChannelIds(?array $message_channel_ids): void
     {
-        if (null === $this->message_channel_ids) {
-            return false;
-        }
+        $this->message_channel_ids = $message_channel_ids;
+    }
 
-        return in_array($item, $this->message_channel_ids);
+    /**
+     * @param bool|null $message_is_follower
+     */
+    public function setMessageIsFollower(?bool $message_is_follower): void
+    {
+        $this->message_is_follower = $message_is_follower;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_follower_ids")
+     */
+    public function getMessageFollowerIds(): ?array
+    {
+        return $this->message_follower_ids;
     }
 
     /**
@@ -1965,11 +2029,25 @@ final class Employee extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $message_channel_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setMessageChannelIds(?array $message_channel_ids): void
+    public function hasMessageChannelIds(OdooRelation $item): bool
     {
-        $this->message_channel_ids = $message_channel_ids;
+        if (null === $this->message_channel_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_channel_ids);
+    }
+
+    /**
+     * @param string|null $activity_exception_icon
+     */
+    public function setActivityExceptionIcon(?string $activity_exception_icon): void
+    {
+        $this->activity_exception_icon = $activity_exception_icon;
     }
 
     /**
@@ -1986,14 +2064,6 @@ final class Employee extends Base
         }
 
         $this->message_channel_ids[] = $item;
-    }
-
-    /**
-     * @param bool|null $message_is_follower
-     */
-    public function setMessageIsFollower(?bool $message_is_follower): void
-    {
-        $this->message_is_follower = $message_is_follower;
     }
 
     /**
@@ -2121,24 +2191,6 @@ final class Employee extends Base
     }
 
     /**
-     * @param bool|null $message_needaction
-     */
-    public function setMessageNeedaction(?bool $message_needaction): void
-    {
-        $this->message_needaction = $message_needaction;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("message_follower_ids")
-     */
-    public function getMessageFollowerIds(): ?array
-    {
-        return $this->message_follower_ids;
-    }
-
-    /**
      * @return bool|null
      *
      * @SerializedName("message_is_follower")
@@ -2149,11 +2201,23 @@ final class Employee extends Base
     }
 
     /**
-     * @param int|null $message_needaction_counter
+     * @return string|null
+     *
+     * @SerializedName("activity_exception_icon")
      */
-    public function setMessageNeedactionCounter(?int $message_needaction_counter): void
+    public function getActivityExceptionIcon(): ?string
     {
-        $this->message_needaction_counter = $message_needaction_counter;
+        return $this->activity_exception_icon;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("message_needaction_counter")
+     */
+    public function getMessageNeedactionCounter(): ?int
+    {
+        return $this->message_needaction_counter;
     }
 
     /**
@@ -2169,6 +2233,16 @@ final class Employee extends Base
             $index = array_search($item, $this->activity_ids);
             unset($this->activity_ids[$index]);
         }
+    }
+
+    /**
+     * @return mixed|null
+     *
+     * @SerializedName("image_1024")
+     */
+    public function getImage1024()
+    {
+        return $this->image_1024;
     }
 
     /**
@@ -2292,11 +2366,11 @@ final class Employee extends Base
     }
 
     /**
-     * @param string|null $activity_exception_icon
+     * @param string|null $activity_exception_decoration
      */
-    public function setActivityExceptionIcon(?string $activity_exception_icon): void
+    public function setActivityExceptionDecoration(?string $activity_exception_decoration): void
     {
-        $this->activity_exception_icon = $activity_exception_icon;
+        $this->activity_exception_decoration = $activity_exception_decoration;
     }
 
     /**
@@ -2341,6 +2415,24 @@ final class Employee extends Base
     public function setActivityTypeId(?OdooRelation $activity_type_id): void
     {
         $this->activity_type_id = $activity_type_id;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("activity_type_icon")
+     */
+    public function getActivityTypeIcon(): ?string
+    {
+        return $this->activity_type_icon;
+    }
+
+    /**
+     * @param string|null $activity_type_icon
+     */
+    public function setActivityTypeIcon(?string $activity_type_icon): void
+    {
+        $this->activity_type_icon = $activity_type_icon;
     }
 
     /**
@@ -2390,67 +2482,39 @@ final class Employee extends Base
     }
 
     /**
-     * @param string|null $activity_exception_decoration
+     * @param bool|null $message_needaction
      */
-    public function setActivityExceptionDecoration(?string $activity_exception_decoration): void
+    public function setMessageNeedaction(?bool $message_needaction): void
     {
-        $this->activity_exception_decoration = $activity_exception_decoration;
+        $this->message_needaction = $message_needaction;
+    }
+
+    /**
+     * @param int|null $message_needaction_counter
+     */
+    public function setMessageNeedactionCounter(?int $message_needaction_counter): void
+    {
+        $this->message_needaction_counter = $message_needaction_counter;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("expense_manager_id")
+     */
+    public function getExpenseManagerId(): ?OdooRelation
+    {
+        return $this->expense_manager_id;
     }
 
     /**
      * @return string|null
      *
-     * @SerializedName("activity_exception_icon")
+     * @SerializedName("last_activity_time")
      */
-    public function getActivityExceptionIcon(): ?string
+    public function getLastActivityTime(): ?string
     {
-        return $this->activity_exception_icon;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("message_needaction_counter")
-     */
-    public function getMessageNeedactionCounter(): ?int
-    {
-        return $this->message_needaction_counter;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("message_has_error")
-     */
-    public function isMessageHasError(): ?bool
-    {
-        return $this->message_has_error;
-    }
-
-    /**
-     * @param OdooRelation|null $expense_manager_id
-     */
-    public function setExpenseManagerId(?OdooRelation $expense_manager_id): void
-    {
-        $this->expense_manager_id = $expense_manager_id;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("last_activity")
-     */
-    public function getLastActivity(): ?DateTimeInterface
-    {
-        return $this->last_activity;
-    }
-
-    /**
-     * @param OdooRelation $resource_id
-     */
-    public function setResourceId(OdooRelation $resource_id): void
-    {
-        $this->resource_id = $resource_id;
+        return $this->last_activity_time;
     }
 
     /**
@@ -2544,6 +2608,16 @@ final class Employee extends Base
     }
 
     /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("last_activity")
+     */
+    public function getLastActivity(): ?DateTimeInterface
+    {
+        return $this->last_activity;
+    }
+
+    /**
      * @param DateTimeInterface|null $last_activity
      */
     public function setLastActivity(?DateTimeInterface $last_activity): void
@@ -2552,29 +2626,39 @@ final class Employee extends Base
     }
 
     /**
-     * @param string|null $work_location
-     */
-    public function setWorkLocation(?string $work_location): void
-    {
-        $this->work_location = $work_location;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("last_activity_time")
-     */
-    public function getLastActivityTime(): ?string
-    {
-        return $this->last_activity_time;
-    }
-
-    /**
      * @param string|null $last_activity_time
      */
     public function setLastActivityTime(?string $last_activity_time): void
     {
         $this->last_activity_time = $last_activity_time;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("resource_id")
+     */
+    public function getResourceId(): OdooRelation
+    {
+        return $this->resource_id;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("hr_icon_display")
+     */
+    public function getHrIconDisplay(): ?string
+    {
+        return $this->hr_icon_display;
+    }
+
+    /**
+     * @param string|null $hr_icon_display
+     */
+    public function setHrIconDisplay(?string $hr_icon_display): void
+    {
+        $this->hr_icon_display = $hr_icon_display;
     }
 
     /**
@@ -2668,23 +2752,39 @@ final class Employee extends Base
     }
 
     /**
-     * @return OdooRelation
-     *
-     * @SerializedName("resource_id")
+     * @param OdooRelation $resource_id
      */
-    public function getResourceId(): OdooRelation
+    public function setResourceId(OdooRelation $resource_id): void
     {
-        return $this->resource_id;
+        $this->resource_id = $resource_id;
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("work_location")
+     * @param string|null $work_location
      */
-    public function getWorkLocation(): ?string
+    public function setWorkLocation(?string $work_location): void
     {
-        return $this->work_location;
+        $this->work_location = $work_location;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("message_has_error")
+     */
+    public function isMessageHasError(): ?bool
+    {
+        return $this->message_has_error;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("department_id")
+     */
+    public function getDepartmentId(): ?OdooRelation
+    {
+        return $this->department_id;
     }
 
     /**
@@ -2693,14 +2793,6 @@ final class Employee extends Base
     public function setMessageHasError(?bool $message_has_error): void
     {
         $this->message_has_error = $message_has_error;
-    }
-
-    /**
-     * @param OdooRelation|null $department_id
-     */
-    public function setDepartmentId(?OdooRelation $department_id): void
-    {
-        $this->department_id = $department_id;
     }
 
     /**
@@ -2821,13 +2913,21 @@ final class Employee extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("department_id")
+     * @param OdooRelation|null $department_id
      */
-    public function getDepartmentId(): ?OdooRelation
+    public function setDepartmentId(?OdooRelation $department_id): void
     {
-        return $this->department_id;
+        $this->department_id = $department_id;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("work_location")
+     */
+    public function getWorkLocation(): ?string
+    {
+        return $this->work_location;
     }
 
     /**
@@ -2838,14 +2938,6 @@ final class Employee extends Base
     public function getJobId(): ?OdooRelation
     {
         return $this->job_id;
-    }
-
-    /**
-     * @param string|null $work_email
-     */
-    public function setWorkEmail(?string $work_email): void
-    {
-        $this->work_email = $work_email;
     }
 
     /**
@@ -2872,24 +2964,6 @@ final class Employee extends Base
     public function setJobTitle(?string $job_title): void
     {
         $this->job_title = $job_title;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("company_id")
-     */
-    public function getCompanyId(): ?OdooRelation
-    {
-        return $this->company_id;
-    }
-
-    /**
-     * @param OdooRelation|null $company_id
-     */
-    public function setCompanyId(?OdooRelation $company_id): void
-    {
-        $this->company_id = $company_id;
     }
 
     /**
@@ -2957,23 +3031,27 @@ final class Employee extends Base
     }
 
     /**
-     * @return mixed|null
-     *
-     * @SerializedName("image_1024")
+     * @param string|null $work_email
      */
-    public function getImage1024()
+    public function setWorkEmail(?string $work_email): void
     {
-        return $this->image_1024;
+        $this->work_email = $work_email;
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("expense_manager_id")
+     * @param OdooRelation|null $expense_manager_id
      */
-    public function getExpenseManagerId(): ?OdooRelation
+    public function setExpenseManagerId(?OdooRelation $expense_manager_id): void
     {
-        return $this->expense_manager_id;
+        $this->expense_manager_id = $expense_manager_id;
+    }
+
+    /**
+     * @param int|null $document_count
+     */
+    public function setDocumentCount(?int $document_count): void
+    {
+        $this->document_count = $document_count;
     }
 
     /**
@@ -2987,13 +3065,29 @@ final class Employee extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("permit_no")
+     * @param OdooRelation|null $bank_account_id
      */
-    public function getPermitNo(): ?string
+    public function setBankAccountId(?OdooRelation $bank_account_id): void
     {
-        return $this->permit_no;
+        $this->bank_account_id = $bank_account_id;
+    }
+
+    /**
+     * @param OdooRelation|null $country_of_birth
+     */
+    public function setCountryOfBirth(?OdooRelation $country_of_birth): void
+    {
+        $this->country_of_birth = $country_of_birth;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("birthday")
+     */
+    public function getBirthday(): ?DateTimeInterface
+    {
+        return $this->birthday;
     }
 
     /**
@@ -3087,11 +3181,21 @@ final class Employee extends Base
     }
 
     /**
-     * @param OdooRelation|null $bank_account_id
+     * @return string|null
+     *
+     * @SerializedName("permit_no")
      */
-    public function setBankAccountId(?OdooRelation $bank_account_id): void
+    public function getPermitNo(): ?string
     {
-        $this->bank_account_id = $bank_account_id;
+        return $this->permit_no;
+    }
+
+    /**
+     * @param string|null $place_of_birth
+     */
+    public function setPlaceOfBirth(?string $place_of_birth): void
+    {
+        $this->place_of_birth = $place_of_birth;
     }
 
     /**
@@ -3100,14 +3204,6 @@ final class Employee extends Base
     public function setPermitNo(?string $permit_no): void
     {
         $this->permit_no = $permit_no;
-    }
-
-    /**
-     * @param OdooRelation|null $country_of_birth
-     */
-    public function setCountryOfBirth(?OdooRelation $country_of_birth): void
-    {
-        $this->country_of_birth = $country_of_birth;
     }
 
     /**
@@ -3211,24 +3307,6 @@ final class Employee extends Base
     }
 
     /**
-     * @param string|null $study_school
-     */
-    public function setStudySchool(?string $study_school): void
-    {
-        $this->study_school = $study_school;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("birthday")
-     */
-    public function getBirthday(): ?DateTimeInterface
-    {
-        return $this->birthday;
-    }
-
-    /**
      * @return OdooRelation|null
      *
      * @SerializedName("country_of_birth")
@@ -3239,19 +3317,31 @@ final class Employee extends Base
     }
 
     /**
-     * @param string|null $emergency_contact
+     * @return string|null
+     *
+     * @SerializedName("place_of_birth")
      */
-    public function setEmergencyContact(?string $emergency_contact): void
+    public function getPlaceOfBirth(): ?string
     {
-        $this->emergency_contact = $emergency_contact;
+        return $this->place_of_birth;
     }
 
     /**
-     * @param string|null $private_email
+     * @return string|null
+     *
+     * @SerializedName("emergency_contact")
      */
-    public function setPrivateEmail(?string $private_email): void
+    public function getEmergencyContact(): ?string
     {
-        $this->private_email = $private_email;
+        return $this->emergency_contact;
+    }
+
+    /**
+     * @param bool|null $is_address_home_a_company
+     */
+    public function setIsAddressHomeACompany(?bool $is_address_home_a_company): void
+    {
+        $this->is_address_home_a_company = $is_address_home_a_company;
     }
 
     /**
@@ -3317,6 +3407,24 @@ final class Employee extends Base
     }
 
     /**
+     * @return OdooRelation
+     *
+     * @SerializedName("company_id")
+     */
+    public function getCompanyId(): OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param OdooRelation $company_id
+     */
+    public function setCompanyId(OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("address_home_id")
@@ -3345,14 +3453,6 @@ final class Employee extends Base
     }
 
     /**
-     * @param bool|null $is_address_home_a_company
-     */
-    public function setIsAddressHomeACompany(?bool $is_address_home_a_company): void
-    {
-        $this->is_address_home_a_company = $is_address_home_a_company;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("private_email")
@@ -3363,6 +3463,22 @@ final class Employee extends Base
     }
 
     /**
+     * @param int|null $children
+     */
+    public function setChildren(?int $children): void
+    {
+        $this->children = $children;
+    }
+
+    /**
+     * @param string|null $private_email
+     */
+    public function setPrivateEmail(?string $private_email): void
+    {
+        $this->private_email = $private_email;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("country_id")
@@ -3370,14 +3486,6 @@ final class Employee extends Base
     public function getCountryId(): ?OdooRelation
     {
         return $this->country_id;
-    }
-
-    /**
-     * @param string|null $place_of_birth
-     */
-    public function setPlaceOfBirth(?string $place_of_birth): void
-    {
-        $this->place_of_birth = $place_of_birth;
     }
 
     /**
@@ -3471,77 +3579,55 @@ final class Employee extends Base
     }
 
     /**
-     * @param int|null $children
+     * @param string|null $study_school
      */
-    public function setChildren(?int $children): void
+    public function setStudySchool(?string $study_school): void
     {
-        $this->children = $children;
+        $this->study_school = $study_school;
     }
 
     /**
-     * @return string|null
+     * @param string|null $emergency_contact
+     */
+    public function setEmergencyContact(?string $emergency_contact): void
+    {
+        $this->emergency_contact = $emergency_contact;
+    }
+
+    /**
+     * @return int|null
      *
-     * @SerializedName("place_of_birth")
+     * @SerializedName("document_count")
      */
-    public function getPlaceOfBirth(): ?string
+    public function getDocumentCount(): ?int
     {
-        return $this->place_of_birth;
+        return $this->document_count;
     }
 
     /**
-     * @return string|null
+     * @param bool|null $calendar_mismatch
+     */
+    public function setCalendarMismatch(?bool $calendar_mismatch): void
+    {
+        $this->calendar_mismatch = $calendar_mismatch;
+    }
+
+    /**
+     * @return OdooRelation|null
      *
-     * @SerializedName("emergency_contact")
+     * @SerializedName("message_main_attachment_id")
      */
-    public function getEmergencyContact(): ?string
+    public function getMessageMainAttachmentId(): ?OdooRelation
     {
-        return $this->emergency_contact;
+        return $this->message_main_attachment_id;
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("emergency_phone")
+     * @param OdooRelation|null $message_main_attachment_id
      */
-    public function getEmergencyPhone(): ?string
+    public function setMessageMainAttachmentId(?OdooRelation $message_main_attachment_id): void
     {
-        return $this->emergency_phone;
-    }
-
-    /**
-     * @param int|null $sign_request_count
-     */
-    public function setSignRequestCount(?int $sign_request_count): void
-    {
-        $this->sign_request_count = $sign_request_count;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("calendar_mismatch")
-     */
-    public function isCalendarMismatch(): ?bool
-    {
-        return $this->calendar_mismatch;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("medic_exam")
-     */
-    public function getMedicExam(): ?DateTimeInterface
-    {
-        return $this->medic_exam;
-    }
-
-    /**
-     * @param DateTimeInterface|null $medic_exam
-     */
-    public function setMedicExam(?DateTimeInterface $medic_exam): void
-    {
-        $this->medic_exam = $medic_exam;
+        $this->message_main_attachment_id = $message_main_attachment_id;
     }
 
     /**
@@ -3644,21 +3730,13 @@ final class Employee extends Base
     }
 
     /**
-     * @param bool|null $calendar_mismatch
-     */
-    public function setCalendarMismatch(?bool $calendar_mismatch): void
-    {
-        $this->calendar_mismatch = $calendar_mismatch;
-    }
-
-    /**
-     * @return OdooRelation|null
+     * @return bool|null
      *
-     * @SerializedName("message_main_attachment_id")
+     * @SerializedName("calendar_mismatch")
      */
-    public function getMessageMainAttachmentId(): ?OdooRelation
+    public function isCalendarMismatch(): ?bool
     {
-        return $this->message_main_attachment_id;
+        return $this->calendar_mismatch;
     }
 
     /**
@@ -3669,6 +3747,16 @@ final class Employee extends Base
     public function getContractsCount(): ?int
     {
         return $this->contracts_count;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("departure_date")
+     */
+    public function getDepartureDate(): ?DateTimeInterface
+    {
+        return $this->departure_date;
     }
 
     /**
@@ -3695,6 +3783,24 @@ final class Employee extends Base
     public function setContractWarning(?bool $contract_warning): void
     {
         $this->contract_warning = $contract_warning;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("first_contract_date")
+     */
+    public function getFirstContractDate(): ?DateTimeInterface
+    {
+        return $this->first_contract_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $first_contract_date
+     */
+    public function setFirstContractDate(?DateTimeInterface $first_contract_date): void
+    {
+        $this->first_contract_date = $first_contract_date;
     }
 
     /**
@@ -3763,24 +3869,6 @@ final class Employee extends Base
     /**
      * @return int|null
      *
-     * @SerializedName("document_count")
-     */
-    public function getDocumentCount(): ?int
-    {
-        return $this->document_count;
-    }
-
-    /**
-     * @param int|null $document_count
-     */
-    public function setDocumentCount(?int $document_count): void
-    {
-        $this->document_count = $document_count;
-    }
-
-    /**
-     * @return int|null
-     *
      * @SerializedName("sign_request_count")
      */
     public function getSignRequestCount(): ?int
@@ -3789,11 +3877,19 @@ final class Employee extends Base
     }
 
     /**
-     * @param OdooRelation|null $message_main_attachment_id
+     * @param int|null $sign_request_count
      */
-    public function setMessageMainAttachmentId(?OdooRelation $message_main_attachment_id): void
+    public function setSignRequestCount(?int $sign_request_count): void
     {
-        $this->message_main_attachment_id = $message_main_attachment_id;
+        $this->sign_request_count = $sign_request_count;
+    }
+
+    /**
+     * @param DateTimeInterface|null $departure_date
+     */
+    public function setDepartureDate(?DateTimeInterface $departure_date): void
+    {
+        $this->departure_date = $departure_date;
     }
 
     /**
@@ -3805,19 +3901,31 @@ final class Employee extends Base
     }
 
     /**
+     * @return string|null
+     *
+     * @SerializedName("emergency_phone")
+     */
+    public function getEmergencyPhone(): ?string
+    {
+        return $this->emergency_phone;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("category_ids")
+     */
+    public function getCategoryIds(): ?array
+    {
+        return $this->category_ids;
+    }
+
+    /**
      * @param string|null $emergency_phone
      */
     public function setEmergencyPhone(?string $emergency_phone): void
     {
         $this->emergency_phone = $emergency_phone;
-    }
-
-    /**
-     * @param OdooRelation[]|null $category_ids
-     */
-    public function setCategoryIds(?array $category_ids): void
-    {
-        $this->category_ids = $category_ids;
     }
 
     /**
@@ -3938,13 +4046,21 @@ final class Employee extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("category_ids")
+     * @param OdooRelation[]|null $category_ids
      */
-    public function getCategoryIds(): ?array
+    public function setCategoryIds(?array $category_ids): void
     {
-        return $this->category_ids;
+        $this->category_ids = $category_ids;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("departure_description")
+     */
+    public function getDepartureDescription(): ?string
+    {
+        return $this->departure_description;
     }
 
     /**
@@ -3959,16 +4075,6 @@ final class Employee extends Base
         }
 
         return in_array($item, $this->category_ids);
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("departure_description")
-     */
-    public function getDepartureDescription(): ?string
-    {
-        return $this->departure_description;
     }
 
     /**

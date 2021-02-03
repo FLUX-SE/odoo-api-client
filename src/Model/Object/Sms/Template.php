@@ -65,19 +65,6 @@ final class Template extends Base
     private $body;
 
     /**
-     * Language
-     * ---
-     * Use this field to either force a specific language (ISO code) or dynamically detect the language of your
-     * recipient by a placeholder expression (e.g. ${object.partner_id.lang})
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $lang;
-
-    /**
      * Sidebar action
      * ---
      * Sidebar action to make this template available on records of the related document model
@@ -91,6 +78,20 @@ final class Template extends Base
      * @var OdooRelation|null
      */
     private $sidebar_action_id;
+
+    /**
+     * Language
+     * ---
+     * Optional translation language (ISO code) to select when sending out an email. If not set, the english version
+     * will be used. This should usually be a placeholder expression that provides the appropriate language, e.g.
+     * ${object.partner_id.lang}.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $lang;
 
     /**
      * Field
@@ -405,24 +406,6 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation|null $sidebar_action_id
-     */
-    public function setSidebarActionId(?OdooRelation $sidebar_action_id): void
-    {
-        $this->sidebar_action_id = $sidebar_action_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("sidebar_action_id")
-     */
-    public function getSidebarActionId(): ?OdooRelation
-    {
-        return $this->sidebar_action_id;
-    }
-
-    /**
      * @param string|null $lang
      */
     public function setLang(?string $lang): void
@@ -438,6 +421,24 @@ final class Template extends Base
     public function getLang(): ?string
     {
         return $this->lang;
+    }
+
+    /**
+     * @param OdooRelation|null $sidebar_action_id
+     */
+    public function setSidebarActionId(?OdooRelation $sidebar_action_id): void
+    {
+        $this->sidebar_action_id = $sidebar_action_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("sidebar_action_id")
+     */
+    public function getSidebarActionId(): ?OdooRelation
+    {
+        return $this->sidebar_action_id;
     }
 
     /**

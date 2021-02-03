@@ -132,7 +132,7 @@ final class Line extends Base
     /**
      * Manual Action
      * ---
-     * When processing, it will set the manual action to be taken for that customer.
+     * When processing, it will set the manual action to be taken for that customer. 
      * ---
      * Searchable : yes
      * Sortable : yes

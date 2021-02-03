@@ -259,7 +259,6 @@ final class Test extends Base
      *     -> America/North_Dakota/Beulah (America/North_Dakota/Beulah)
      *     -> America/North_Dakota/Center (America/North_Dakota/Center)
      *     -> America/North_Dakota/New_Salem (America/North_Dakota/New_Salem)
-     *     -> America/Nuuk (America/Nuuk)
      *     -> America/Ojinaga (America/Ojinaga)
      *     -> America/Panama (America/Panama)
      *     -> America/Pangnirtung (America/Pangnirtung)

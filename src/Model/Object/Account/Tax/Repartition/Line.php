@@ -30,7 +30,7 @@ final class Line extends Base
     /**
      * %
      * ---
-     * Factor to apply on the account move lines generated from this repartition line, in percents
+     * Factor to apply on the account move lines generated from this distribution line, in percents
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -42,7 +42,7 @@ final class Line extends Base
     /**
      * Factor Ratio
      * ---
-     * Factor to apply on the account move lines generated from this repartition line
+     * Factor to apply on the account move lines generated from this distribution line
      * ---
      * Searchable : no
      * Sortable : no
@@ -98,7 +98,7 @@ final class Line extends Base
     /**
      * Invoice Tax
      * ---
-     * The tax set to apply this repartition on invoices. Mutually exclusive with refund_tax_id
+     * The tax set to apply this distribution on invoices. Mutually exclusive with refund_tax_id
      * ---
      * Relation : many2one (account.tax)
      * @see \Flux\OdooApiClient\Model\Object\Account\Tax
@@ -113,7 +113,7 @@ final class Line extends Base
     /**
      * Refund Tax
      * ---
-     * The tax set to apply this repartition on refund invoices. Mutually exclusive with invoice_tax_id
+     * The tax set to apply this distribution on refund invoices. Mutually exclusive with invoice_tax_id
      * ---
      * Relation : many2one (account.tax)
      * @see \Flux\OdooApiClient\Model\Object\Account\Tax
@@ -139,24 +139,24 @@ final class Line extends Base
     private $tax_id;
 
     /**
-     * Country
+     * Fiscal Country
      * ---
      * Technical field used to restrict tags domain in form view.
      * ---
      * Relation : many2one (res.country)
      * @see \Flux\OdooApiClient\Model\Object\Res\Country
      * ---
-     * Searchable : no
+     * Searchable : yes
      * Sortable : no
      *
      * @var OdooRelation|null
      */
-    private $country_id;
+    private $tax_fiscal_country_id;
 
     /**
      * Company
      * ---
-     * The company this repartition line belongs to.
+     * The company this distribution line belongs to.
      * ---
      * Relation : many2one (res.company)
      * @see \Flux\OdooApiClient\Model\Object\Res\Company
@@ -164,15 +164,16 @@ final class Line extends Base
      * Searchable : yes
      * Sortable : yes
      *
-     * @var OdooRelation
+     * @var OdooRelation|null
      */
     private $company_id;
 
     /**
      * Sequence
      * ---
-     * The order in which display and match repartition lines. For refunds to work properly, invoice repartition
-     * lines should be arranged in the same order as the credit note repartition lines they correspond to.
+     * The order in which distribution lines are displayed and matched. For refunds to work properly, invoice
+     * distribution lines should be arranged in the same order as the credit note distribution lines they correspond
+     * to.
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -180,6 +181,16 @@ final class Line extends Base
      * @var int|null
      */
     private $sequence;
+
+    /**
+     * Tax Closing Entry
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $use_in_tax_closing;
 
     /**
      * Created by
@@ -230,7 +241,7 @@ final class Line extends Base
     /**
      * @param float $factor_percent %
      *        ---
-     *        Factor to apply on the account move lines generated from this repartition line, in percents
+     *        Factor to apply on the account move lines generated from this distribution line, in percents
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -244,65 +255,43 @@ final class Line extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param OdooRelation $company_id Company
-     *        ---
-     *        The company this repartition line belongs to.
-     *        ---
-     *        Relation : many2one (res.company)
-     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
      */
-    public function __construct(float $factor_percent, string $repartition_type, OdooRelation $company_id)
+    public function __construct(float $factor_percent, string $repartition_type)
     {
         $this->factor_percent = $factor_percent;
         $this->repartition_type = $repartition_type;
-        $this->company_id = $company_id;
+    }
+
+    /**
+     * @param bool|null $use_in_tax_closing
+     */
+    public function setUseInTaxClosing(?bool $use_in_tax_closing): void
+    {
+        $this->use_in_tax_closing = $use_in_tax_closing;
+    }
+
+    /**
+     * @param OdooRelation|null $tax_fiscal_country_id
+     */
+    public function setTaxFiscalCountryId(?OdooRelation $tax_fiscal_country_id): void
+    {
+        $this->tax_fiscal_country_id = $tax_fiscal_country_id;
     }
 
     /**
      * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
-     */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("country_id")
-     */
-    public function getCountryId(): ?OdooRelation
-    {
-        return $this->country_id;
-    }
-
-    /**
-     * @param OdooRelation|null $country_id
-     */
-    public function setCountryId(?OdooRelation $country_id): void
-    {
-        $this->country_id = $country_id;
-    }
-
-    /**
-     * @return OdooRelation
      *
      * @SerializedName("company_id")
      */
-    public function getCompanyId(): OdooRelation
+    public function getCompanyId(): ?OdooRelation
     {
         return $this->company_id;
     }
 
     /**
-     * @param OdooRelation $company_id
+     * @param OdooRelation|null $company_id
      */
-    public function setCompanyId(OdooRelation $company_id): void
+    public function setCompanyId(?OdooRelation $company_id): void
     {
         $this->company_id = $company_id;
     }
@@ -326,21 +315,39 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation|null $create_uid
+     * @return bool|null
+     *
+     * @SerializedName("use_in_tax_closing")
      */
-    public function setCreateUid(?OdooRelation $create_uid): void
+    public function isUseInTaxClosing(): ?bool
     {
-        $this->create_uid = $create_uid;
+        return $this->use_in_tax_closing;
     }
 
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("tax_id")
+     * @SerializedName("create_uid")
      */
-    public function getTaxId(): ?OdooRelation
+    public function getCreateUid(): ?OdooRelation
     {
-        return $this->tax_id;
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $tax_id
+     */
+    public function setTaxId(?OdooRelation $tax_id): void
+    {
+        $this->tax_id = $tax_id;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
     }
 
     /**
@@ -398,19 +405,23 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation|null $tax_id
+     * @return OdooRelation|null
+     *
+     * @SerializedName("tax_fiscal_country_id")
      */
-    public function setTaxId(?OdooRelation $tax_id): void
+    public function getTaxFiscalCountryId(): ?OdooRelation
     {
-        $this->tax_id = $tax_id;
+        return $this->tax_fiscal_country_id;
     }
 
     /**
-     * @param OdooRelation|null $refund_tax_id
+     * @return OdooRelation|null
+     *
+     * @SerializedName("tax_id")
      */
-    public function setRefundTaxId(?OdooRelation $refund_tax_id): void
+    public function getTaxId(): ?OdooRelation
     {
-        $this->refund_tax_id = $refund_tax_id;
+        return $this->tax_id;
     }
 
     /**
@@ -496,13 +507,11 @@ final class Line extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("refund_tax_id")
+     * @param OdooRelation|null $refund_tax_id
      */
-    public function getRefundTaxId(): ?OdooRelation
+    public function setRefundTaxId(?OdooRelation $refund_tax_id): void
     {
-        return $this->refund_tax_id;
+        $this->refund_tax_id = $refund_tax_id;
     }
 
     /**
@@ -574,6 +583,16 @@ final class Line extends Base
     public function setInvoiceTaxId(?OdooRelation $invoice_tax_id): void
     {
         $this->invoice_tax_id = $invoice_tax_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("refund_tax_id")
+     */
+    public function getRefundTaxId(): ?OdooRelation
+    {
+        return $this->refund_tax_id;
     }
 
     /**

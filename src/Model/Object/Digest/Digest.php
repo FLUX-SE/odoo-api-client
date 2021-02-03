@@ -54,6 +54,7 @@ final class Digest extends Base
      * Periodicity
      * ---
      * Selection :
+     *     -> daily (Daily)
      *     -> weekly (Weekly)
      *     -> monthly (Monthly)
      *     -> quarterly (Quarterly)
@@ -74,19 +75,6 @@ final class Digest extends Base
      * @var DateTimeInterface|null
      */
     private $next_run_date;
-
-    /**
-     * Email Template
-     * ---
-     * Relation : many2one (mail.template)
-     * @see \Flux\OdooApiClient\Model\Object\Mail\Template
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation
-     */
-    private $template_id;
 
     /**
      * Currency
@@ -302,41 +290,28 @@ final class Digest extends Base
      * @param string $periodicity Periodicity
      *        ---
      *        Selection :
+     *            -> daily (Daily)
      *            -> weekly (Weekly)
      *            -> monthly (Monthly)
      *            -> quarterly (Quarterly)
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param OdooRelation $template_id Email Template
-     *        ---
-     *        Relation : many2one (mail.template)
-     *        @see \Flux\OdooApiClient\Model\Object\Mail\Template
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
      */
-    public function __construct(string $name, string $periodicity, OdooRelation $template_id)
+    public function __construct(string $name, string $periodicity)
     {
         $this->name = $name;
         $this->periodicity = $periodicity;
-        $this->template_id = $template_id;
     }
 
     /**
-     * @param float|null $kpi_account_bank_cash_value
+     * @return bool|null
+     *
+     * @SerializedName("kpi_all_sale_total")
      */
-    public function setKpiAccountBankCashValue(?float $kpi_account_bank_cash_value): void
+    public function isKpiAllSaleTotal(): ?bool
     {
-        $this->kpi_account_bank_cash_value = $kpi_account_bank_cash_value;
-    }
-
-    /**
-     * @param bool|null $kpi_mail_message_total
-     */
-    public function setKpiMailMessageTotal(?bool $kpi_mail_message_total): void
-    {
-        $this->kpi_mail_message_total = $kpi_mail_message_total;
+        return $this->kpi_all_sale_total;
     }
 
     /**
@@ -422,21 +397,11 @@ final class Digest extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("kpi_all_sale_total")
+     * @param float|null $kpi_account_bank_cash_value
      */
-    public function isKpiAllSaleTotal(): ?bool
+    public function setKpiAccountBankCashValue(?float $kpi_account_bank_cash_value): void
     {
-        return $this->kpi_all_sale_total;
-    }
-
-    /**
-     * @param int|null $kpi_res_users_connected_value
-     */
-    public function setKpiResUsersConnectedValue(?int $kpi_res_users_connected_value): void
-    {
-        $this->kpi_res_users_connected_value = $kpi_res_users_connected_value;
+        $this->kpi_account_bank_cash_value = $kpi_account_bank_cash_value;
     }
 
     /**
@@ -445,6 +410,16 @@ final class Digest extends Base
     public function setKpiAllSaleTotal(?bool $kpi_all_sale_total): void
     {
         $this->kpi_all_sale_total = $kpi_all_sale_total;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("kpi_mail_message_total")
+     */
+    public function isKpiMailMessageTotal(): ?bool
+    {
+        return $this->kpi_mail_message_total;
     }
 
     /**
@@ -538,23 +513,19 @@ final class Digest extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("kpi_mail_message_total")
+     * @param bool|null $kpi_mail_message_total
      */
-    public function isKpiMailMessageTotal(): ?bool
+    public function setKpiMailMessageTotal(?bool $kpi_mail_message_total): void
     {
-        return $this->kpi_mail_message_total;
+        $this->kpi_mail_message_total = $kpi_mail_message_total;
     }
 
     /**
-     * @return int|null
-     *
-     * @SerializedName("kpi_res_users_connected_value")
+     * @param int|null $kpi_res_users_connected_value
      */
-    public function getKpiResUsersConnectedValue(): ?int
+    public function setKpiResUsersConnectedValue(?int $kpi_res_users_connected_value): void
     {
-        return $this->kpi_res_users_connected_value;
+        $this->kpi_res_users_connected_value = $kpi_res_users_connected_value;
     }
 
     /**
@@ -568,13 +539,13 @@ final class Digest extends Base
     }
 
     /**
-     * @return OdooRelation
+     * @return OdooRelation|null
      *
-     * @SerializedName("template_id")
+     * @SerializedName("currency_id")
      */
-    public function getTemplateId(): OdooRelation
+    public function getCurrencyId(): ?OdooRelation
     {
-        return $this->template_id;
+        return $this->currency_id;
     }
 
     /**
@@ -685,37 +656,21 @@ final class Digest extends Base
     }
 
     /**
-     * @param OdooRelation $template_id
-     */
-    public function setTemplateId(OdooRelation $template_id): void
-    {
-        $this->template_id = $template_id;
-    }
-
-    /**
-     * @param bool|null $kpi_res_users_connected
-     */
-    public function setKpiResUsersConnected(?bool $kpi_res_users_connected): void
-    {
-        $this->kpi_res_users_connected = $kpi_res_users_connected;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("currency_id")
-     */
-    public function getCurrencyId(): ?OdooRelation
-    {
-        return $this->currency_id;
-    }
-
-    /**
      * @param OdooRelation|null $currency_id
      */
     public function setCurrencyId(?OdooRelation $currency_id): void
     {
         $this->currency_id = $currency_id;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("kpi_res_users_connected_value")
+     */
+    public function getKpiResUsersConnectedValue(): ?int
+    {
+        return $this->kpi_res_users_connected_value;
     }
 
     /**
@@ -798,6 +753,14 @@ final class Digest extends Base
     public function isKpiResUsersConnected(): ?bool
     {
         return $this->kpi_res_users_connected;
+    }
+
+    /**
+     * @param bool|null $kpi_res_users_connected
+     */
+    public function setKpiResUsersConnected(?bool $kpi_res_users_connected): void
+    {
+        $this->kpi_res_users_connected = $kpi_res_users_connected;
     }
 
     /**

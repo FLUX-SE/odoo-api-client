@@ -134,7 +134,8 @@ final class Mail extends Message
     /**
      * Auto Delete
      * ---
-     * Permanently delete this email after sending it, to save space
+     * This option permanently removes any track of email after it's been sent, including from the Technical menu in
+     * the Settings, in order to preserve storage space of your Odoo database.
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -200,8 +201,8 @@ final class Mail extends Message
      *            -> comment (Comment)
      *            -> notification (System notification)
      *            -> user_notification (User Specific Notification)
-     *            -> snailmail (Snailmail)
      *            -> sms (SMS)
+     *            -> snailmail (Snailmail)
      *        ---
      *        Searchable : yes
      *        Sortable : yes

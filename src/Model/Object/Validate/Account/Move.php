@@ -25,6 +25,18 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 final class Move extends Base
 {
     /**
+     * Force
+     * ---
+     * Entries in the future are set to be auto-posted by default. Check this checkbox to post them now.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $force_post;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -69,6 +81,24 @@ final class Move extends Base
      * @var DateTimeInterface|null
      */
     private $write_date;
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("force_post")
+     */
+    public function isForcePost(): ?bool
+    {
+        return $this->force_post;
+    }
+
+    /**
+     * @param bool|null $force_post
+     */
+    public function setForcePost(?bool $force_post): void
+    {
+        $this->force_post = $force_post;
+    }
 
     /**
      * @return OdooRelation|null

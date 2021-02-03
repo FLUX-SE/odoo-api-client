@@ -30,6 +30,20 @@ final class Orderpoint extends Base
     private $name;
 
     /**
+     * Trigger
+     * ---
+     * Selection :
+     *     -> auto (Auto)
+     *     -> manual (Manual)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    private $trigger;
+
+    /**
      * Active
      * ---
      * If the active field is set to False, it will allow you to hide the orderpoint without removing it.
@@ -40,6 +54,18 @@ final class Orderpoint extends Base
      * @var bool|null
      */
     private $active;
+
+    /**
+     * Snoozed
+     * ---
+     * Hidden until next scheduler.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var DateTimeInterface|null
+     */
+    private $snoozed_until;
 
     /**
      * Warehouse
@@ -68,6 +94,19 @@ final class Orderpoint extends Base
     private $location_id;
 
     /**
+     * Product Template
+     * ---
+     * Relation : many2one (product.template)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Template
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $product_tmpl_id;
+
+    /**
      * Product
      * ---
      * Relation : many2one (product.product)
@@ -81,6 +120,21 @@ final class Orderpoint extends Base
     private $product_id;
 
     /**
+     * Product Category
+     * ---
+     * Select category for the current product
+     * ---
+     * Relation : many2one (product.category)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Category
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $product_category_id;
+
+    /**
      * Unit of Measure
      * ---
      * Default unit of measure used for all stock operations.
@@ -91,7 +145,7 @@ final class Orderpoint extends Base
      * Searchable : yes
      * Sortable : no
      *
-     * @var OdooRelation
+     * @var OdooRelation|null
      */
     private $product_uom;
 
@@ -106,7 +160,7 @@ final class Orderpoint extends Base
     private $product_uom_name;
 
     /**
-     * Minimum Quantity
+     * Min Quantity
      * ---
      * When the virtual stock equals to or goes below the Min Quantity specified for this field, Odoo generates a
      * procurement to bring the forecasted quantity to the Max Quantity.
@@ -119,7 +173,7 @@ final class Orderpoint extends Base
     private $product_min_qty;
 
     /**
-     * Maximum Quantity
+     * Max Quantity
      * ---
      * When the virtual stock goes below the Min Quantity, Odoo generates a procurement to bring the forecasted
      * quantity to the Quantity specified as Max Quantity.
@@ -132,7 +186,7 @@ final class Orderpoint extends Base
     private $product_max_qty;
 
     /**
-     * Qty Multiple
+     * Multiple Quantity
      * ---
      * The procurement quantity will be rounded up to this multiple.  If it is 0, the exact quantity will be used.
      * ---
@@ -173,32 +227,6 @@ final class Orderpoint extends Base
     private $company_id;
 
     /**
-     * Lead Time
-     * ---
-     * Number of days after the orderpoint is triggered to receive the products or to order to the vendor
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var int|null
-     */
-    private $lead_days;
-
-    /**
-     * Lead Type
-     * ---
-     * Selection :
-     *     -> net (Days to get the products)
-     *     -> supplier (Days to purchase)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string
-     */
-    private $lead_type;
-
-    /**
      * Allowed Location
      * ---
      * Relation : one2many (stock.location)
@@ -210,6 +238,118 @@ final class Orderpoint extends Base
      * @var OdooRelation[]|null
      */
     private $allowed_location_ids;
+
+    /**
+     * Rules used
+     * ---
+     * Relation : many2many (stock.rule)
+     * @see \Flux\OdooApiClient\Model\Object\Stock\Rule
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $rule_ids;
+
+    /**
+     * Json Lead Days Popover
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $json_lead_days_popover;
+
+    /**
+     * Lead Days Date
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var DateTimeInterface|null
+     */
+    private $lead_days_date;
+
+    /**
+     * Allowed Route
+     * ---
+     * Relation : many2many (stock.location.route)
+     * @see \Flux\OdooApiClient\Model\Object\Stock\Location\Route
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $allowed_route_ids;
+
+    /**
+     * Preferred Route
+     * ---
+     * Relation : many2one (stock.location.route)
+     * @see \Flux\OdooApiClient\Model\Object\Stock\Location\Route
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $route_id;
+
+    /**
+     * On Hand
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var float|null
+     */
+    private $qty_on_hand;
+
+    /**
+     * Forecast
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var float|null
+     */
+    private $qty_forecast;
+
+    /**
+     * To Order
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var float|null
+     */
+    private $qty_to_order;
+
+    /**
+     * Show supplier column
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $show_supplier;
+
+    /**
+     * Vendor
+     * ---
+     * Relation : many2one (product.supplierinfo)
+     * @see \Flux\OdooApiClient\Model\Object\Product\Supplierinfo
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $supplier_id;
 
     /**
      * Created by
@@ -262,6 +402,14 @@ final class Orderpoint extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $trigger Trigger
+     *        ---
+     *        Selection :
+     *            -> auto (Auto)
+     *            -> manual (Manual)
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param OdooRelation $warehouse_id Warehouse
      *        ---
      *        Relation : many2one (stock.warehouse)
@@ -283,30 +431,21 @@ final class Orderpoint extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param OdooRelation $product_uom Unit of Measure
-     *        ---
-     *        Default unit of measure used for all stock operations.
-     *        ---
-     *        Relation : many2one (uom.uom)
-     *        @see \Flux\OdooApiClient\Model\Object\Uom\Uom
-     *        ---
-     *        Searchable : yes
-     *        Sortable : no
-     * @param float $product_min_qty Minimum Quantity
+     * @param float $product_min_qty Min Quantity
      *        ---
      *        When the virtual stock equals to or goes below the Min Quantity specified for this field, Odoo generates a
      *        procurement to bring the forecasted quantity to the Max Quantity.
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param float $product_max_qty Maximum Quantity
+     * @param float $product_max_qty Max Quantity
      *        ---
      *        When the virtual stock goes below the Min Quantity, Odoo generates a procurement to bring the forecasted
      *        quantity to the Quantity specified as Max Quantity.
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param float $qty_multiple Qty Multiple
+     * @param float $qty_multiple Multiple Quantity
      *        ---
      *        The procurement quantity will be rounded up to this multiple.  If it is 0, the exact quantity will be used.
      *        ---
@@ -319,37 +458,384 @@ final class Orderpoint extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param string $lead_type Lead Type
-     *        ---
-     *        Selection :
-     *            -> net (Days to get the products)
-     *            -> supplier (Days to purchase)
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
      */
     public function __construct(
         string $name,
+        string $trigger,
         OdooRelation $warehouse_id,
         OdooRelation $location_id,
         OdooRelation $product_id,
-        OdooRelation $product_uom,
         float $product_min_qty,
         float $product_max_qty,
         float $qty_multiple,
-        OdooRelation $company_id,
-        string $lead_type
+        OdooRelation $company_id
     ) {
         $this->name = $name;
+        $this->trigger = $trigger;
         $this->warehouse_id = $warehouse_id;
         $this->location_id = $location_id;
         $this->product_id = $product_id;
-        $this->product_uom = $product_uom;
         $this->product_min_qty = $product_min_qty;
         $this->product_max_qty = $product_max_qty;
         $this->qty_multiple = $qty_multiple;
         $this->company_id = $company_id;
-        $this->lead_type = $lead_type;
+    }
+
+    /**
+     * @param DateTimeInterface|null $lead_days_date
+     */
+    public function setLeadDaysDate(?DateTimeInterface $lead_days_date): void
+    {
+        $this->lead_days_date = $lead_days_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("route_id")
+     */
+    public function getRouteId(): ?OdooRelation
+    {
+        return $this->route_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeAllowedRouteIds(OdooRelation $item): void
+    {
+        if (null === $this->allowed_route_ids) {
+            $this->allowed_route_ids = [];
+        }
+
+        if ($this->hasAllowedRouteIds($item)) {
+            $index = array_search($item, $this->allowed_route_ids);
+            unset($this->allowed_route_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addAllowedRouteIds(OdooRelation $item): void
+    {
+        if ($this->hasAllowedRouteIds($item)) {
+            return;
+        }
+
+        if (null === $this->allowed_route_ids) {
+            $this->allowed_route_ids = [];
+        }
+
+        $this->allowed_route_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasAllowedRouteIds(OdooRelation $item): bool
+    {
+        if (null === $this->allowed_route_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->allowed_route_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $allowed_route_ids
+     */
+    public function setAllowedRouteIds(?array $allowed_route_ids): void
+    {
+        $this->allowed_route_ids = $allowed_route_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("allowed_route_ids")
+     */
+    public function getAllowedRouteIds(): ?array
+    {
+        return $this->allowed_route_ids;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("lead_days_date")
+     */
+    public function getLeadDaysDate(): ?DateTimeInterface
+    {
+        return $this->lead_days_date;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("qty_on_hand")
+     */
+    public function getQtyOnHand(): ?float
+    {
+        return $this->qty_on_hand;
+    }
+
+    /**
+     * @param string|null $json_lead_days_popover
+     */
+    public function setJsonLeadDaysPopover(?string $json_lead_days_popover): void
+    {
+        $this->json_lead_days_popover = $json_lead_days_popover;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("json_lead_days_popover")
+     */
+    public function getJsonLeadDaysPopover(): ?string
+    {
+        return $this->json_lead_days_popover;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeRuleIds(OdooRelation $item): void
+    {
+        if (null === $this->rule_ids) {
+            $this->rule_ids = [];
+        }
+
+        if ($this->hasRuleIds($item)) {
+            $index = array_search($item, $this->rule_ids);
+            unset($this->rule_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addRuleIds(OdooRelation $item): void
+    {
+        if ($this->hasRuleIds($item)) {
+            return;
+        }
+
+        if (null === $this->rule_ids) {
+            $this->rule_ids = [];
+        }
+
+        $this->rule_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasRuleIds(OdooRelation $item): bool
+    {
+        if (null === $this->rule_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->rule_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $rule_ids
+     */
+    public function setRuleIds(?array $rule_ids): void
+    {
+        $this->rule_ids = $rule_ids;
+    }
+
+    /**
+     * @param OdooRelation|null $route_id
+     */
+    public function setRouteId(?OdooRelation $route_id): void
+    {
+        $this->route_id = $route_id;
+    }
+
+    /**
+     * @param float|null $qty_on_hand
+     */
+    public function setQtyOnHand(?float $qty_on_hand): void
+    {
+        $this->qty_on_hand = $qty_on_hand;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeAllowedLocationIds(OdooRelation $item): void
+    {
+        if (null === $this->allowed_location_ids) {
+            $this->allowed_location_ids = [];
+        }
+
+        if ($this->hasAllowedLocationIds($item)) {
+            $index = array_search($item, $this->allowed_location_ids);
+            unset($this->allowed_location_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("qty_forecast")
+     */
+    public function getQtyForecast(): ?float
+    {
+        return $this->qty_forecast;
+    }
+
+    /**
+     * @param OdooRelation|null $supplier_id
+     */
+    public function setSupplierId(?OdooRelation $supplier_id): void
+    {
+        $this->supplier_id = $supplier_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("supplier_id")
+     */
+    public function getSupplierId(): ?OdooRelation
+    {
+        return $this->supplier_id;
+    }
+
+    /**
+     * @param bool|null $show_supplier
+     */
+    public function setShowSupplier(?bool $show_supplier): void
+    {
+        $this->show_supplier = $show_supplier;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("show_supplier")
+     */
+    public function isShowSupplier(): ?bool
+    {
+        return $this->show_supplier;
+    }
+
+    /**
+     * @param float|null $qty_to_order
+     */
+    public function setQtyToOrder(?float $qty_to_order): void
+    {
+        $this->qty_to_order = $qty_to_order;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("qty_to_order")
+     */
+    public function getQtyToOrder(): ?float
+    {
+        return $this->qty_to_order;
+    }
+
+    /**
+     * @param float|null $qty_forecast
+     */
+    public function setQtyForecast(?float $qty_forecast): void
+    {
+        $this->qty_forecast = $qty_forecast;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("rule_ids")
+     */
+    public function getRuleIds(): ?array
+    {
+        return $this->rule_ids;
     }
 
     /**
@@ -369,65 +855,165 @@ final class Orderpoint extends Base
     }
 
     /**
-     * @param OdooRelation $company_id
-     */
-    public function setCompanyId(OdooRelation $company_id): void
-    {
-        $this->company_id = $company_id;
-    }
-
-    /**
-     * @return int|null
+     * @return string
      *
-     * @SerializedName("lead_days")
+     * @SerializedName("name")
      */
-    public function getLeadDays(): ?int
+    public function getName(): string
     {
-        return $this->lead_days;
+        return $this->name;
     }
 
     /**
-     * @param int|null $lead_days
+     * @return OdooRelation
+     *
+     * @SerializedName("warehouse_id")
      */
-    public function setLeadDays(?int $lead_days): void
+    public function getWarehouseId(): OdooRelation
     {
-        $this->lead_days = $lead_days;
+        return $this->warehouse_id;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("product_id")
+     */
+    public function getProductId(): OdooRelation
+    {
+        return $this->product_id;
+    }
+
+    /**
+     * @param OdooRelation|null $product_tmpl_id
+     */
+    public function setProductTmplId(?OdooRelation $product_tmpl_id): void
+    {
+        $this->product_tmpl_id = $product_tmpl_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("product_tmpl_id")
+     */
+    public function getProductTmplId(): ?OdooRelation
+    {
+        return $this->product_tmpl_id;
+    }
+
+    /**
+     * @param OdooRelation $location_id
+     */
+    public function setLocationId(OdooRelation $location_id): void
+    {
+        $this->location_id = $location_id;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("location_id")
+     */
+    public function getLocationId(): OdooRelation
+    {
+        return $this->location_id;
+    }
+
+    /**
+     * @param OdooRelation $warehouse_id
+     */
+    public function setWarehouseId(OdooRelation $warehouse_id): void
+    {
+        $this->warehouse_id = $warehouse_id;
+    }
+
+    /**
+     * @param DateTimeInterface|null $snoozed_until
+     */
+    public function setSnoozedUntil(?DateTimeInterface $snoozed_until): void
+    {
+        $this->snoozed_until = $snoozed_until;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("product_category_id")
+     */
+    public function getProductCategoryId(): ?OdooRelation
+    {
+        return $this->product_category_id;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("snoozed_until")
+     */
+    public function getSnoozedUntil(): ?DateTimeInterface
+    {
+        return $this->snoozed_until;
+    }
+
+    /**
+     * @param bool|null $active
+     */
+    public function setActive(?bool $active): void
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("active")
+     */
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param string $trigger
+     */
+    public function setTrigger(string $trigger): void
+    {
+        $this->trigger = $trigger;
     }
 
     /**
      * @return string
      *
-     * @SerializedName("lead_type")
+     * @SerializedName("trigger")
      */
-    public function getLeadType(): string
+    public function getTrigger(): string
     {
-        return $this->lead_type;
+        return $this->trigger;
     }
 
     /**
-     * @param string $lead_type
+     * @param string $name
      */
-    public function setLeadType(string $lead_type): void
+    public function setName(string $name): void
     {
-        $this->lead_type = $lead_type;
+        $this->name = $name;
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("allowed_location_ids")
+     * @param OdooRelation $product_id
      */
-    public function getAllowedLocationIds(): ?array
+    public function setProductId(OdooRelation $product_id): void
     {
-        return $this->allowed_location_ids;
+        $this->product_id = $product_id;
     }
 
     /**
-     * @param OdooRelation[]|null $allowed_location_ids
+     * @param OdooRelation|null $product_category_id
      */
-    public function setAllowedLocationIds(?array $allowed_location_ids): void
+    public function setProductCategoryId(?OdooRelation $product_category_id): void
     {
-        $this->allowed_location_ids = $allowed_location_ids;
+        $this->product_category_id = $product_category_id;
     }
 
     /**
@@ -445,98 +1031,37 @@ final class Orderpoint extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @param float $qty_multiple
      */
-    public function removeAllowedLocationIds(OdooRelation $item): void
+    public function setQtyMultiple(float $qty_multiple): void
     {
-        if (null === $this->allowed_location_ids) {
-            $this->allowed_location_ids = [];
-        }
-
-        if ($this->hasAllowedLocationIds($item)) {
-            $index = array_search($item, $this->allowed_location_ids);
-            unset($this->allowed_location_ids[$index]);
-        }
+        $this->qty_multiple = $qty_multiple;
     }
 
     /**
-     * @param OdooRelation|null $group_id
+     * @param OdooRelation[]|null $allowed_location_ids
      */
-    public function setGroupId(?OdooRelation $group_id): void
+    public function setAllowedLocationIds(?array $allowed_location_ids): void
     {
-        $this->group_id = $group_id;
+        $this->allowed_location_ids = $allowed_location_ids;
     }
 
     /**
-     * @return OdooRelation|null
+     * @return OdooRelation[]|null
      *
-     * @SerializedName("create_uid")
+     * @SerializedName("allowed_location_ids")
      */
-    public function getCreateUid(): ?OdooRelation
+    public function getAllowedLocationIds(): ?array
     {
-        return $this->create_uid;
+        return $this->allowed_location_ids;
     }
 
     /**
-     * @param OdooRelation|null $create_uid
+     * @param OdooRelation $company_id
      */
-    public function setCreateUid(?OdooRelation $create_uid): void
+    public function setCompanyId(OdooRelation $company_id): void
     {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("create_date")
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("write_uid")
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("write_date")
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $write_date
-     */
-    public function setWriteDate(?DateTimeInterface $write_date): void
-    {
-        $this->write_date = $write_date;
+        $this->company_id = $company_id;
     }
 
     /**
@@ -550,6 +1075,14 @@ final class Orderpoint extends Base
     }
 
     /**
+     * @param OdooRelation|null $group_id
+     */
+    public function setGroupId(?OdooRelation $group_id): void
+    {
+        $this->group_id = $group_id;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("group_id")
@@ -560,165 +1093,23 @@ final class Orderpoint extends Base
     }
 
     /**
-     * @return string
+     * @return float
      *
-     * @SerializedName("name")
+     * @SerializedName("qty_multiple")
      */
-    public function getName(): string
+    public function getQtyMultiple(): float
     {
-        return $this->name;
+        return $this->qty_multiple;
     }
 
     /**
-     * @param OdooRelation $product_id
-     */
-    public function setProductId(OdooRelation $product_id): void
-    {
-        $this->product_id = $product_id;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("active")
-     */
-    public function isActive(): ?bool
-    {
-        return $this->active;
-    }
-
-    /**
-     * @param bool|null $active
-     */
-    public function setActive(?bool $active): void
-    {
-        $this->active = $active;
-    }
-
-    /**
-     * @return OdooRelation
-     *
-     * @SerializedName("warehouse_id")
-     */
-    public function getWarehouseId(): OdooRelation
-    {
-        return $this->warehouse_id;
-    }
-
-    /**
-     * @param OdooRelation $warehouse_id
-     */
-    public function setWarehouseId(OdooRelation $warehouse_id): void
-    {
-        $this->warehouse_id = $warehouse_id;
-    }
-
-    /**
-     * @return OdooRelation
-     *
-     * @SerializedName("location_id")
-     */
-    public function getLocationId(): OdooRelation
-    {
-        return $this->location_id;
-    }
-
-    /**
-     * @param OdooRelation $location_id
-     */
-    public function setLocationId(OdooRelation $location_id): void
-    {
-        $this->location_id = $location_id;
-    }
-
-    /**
-     * @return OdooRelation
-     *
-     * @SerializedName("product_id")
-     */
-    public function getProductId(): OdooRelation
-    {
-        return $this->product_id;
-    }
-
-    /**
-     * @return OdooRelation
+     * @return OdooRelation|null
      *
      * @SerializedName("product_uom")
      */
-    public function getProductUom(): OdooRelation
+    public function getProductUom(): ?OdooRelation
     {
         return $this->product_uom;
-    }
-
-    /**
-     * @param float $qty_multiple
-     */
-    public function setQtyMultiple(float $qty_multiple): void
-    {
-        $this->qty_multiple = $qty_multiple;
-    }
-
-    /**
-     * @param OdooRelation $product_uom
-     */
-    public function setProductUom(OdooRelation $product_uom): void
-    {
-        $this->product_uom = $product_uom;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("product_uom_name")
-     */
-    public function getProductUomName(): ?string
-    {
-        return $this->product_uom_name;
-    }
-
-    /**
-     * @param string|null $product_uom_name
-     */
-    public function setProductUomName(?string $product_uom_name): void
-    {
-        $this->product_uom_name = $product_uom_name;
-    }
-
-    /**
-     * @return float
-     *
-     * @SerializedName("product_min_qty")
-     */
-    public function getProductMinQty(): float
-    {
-        return $this->product_min_qty;
-    }
-
-    /**
-     * @param float $product_min_qty
-     */
-    public function setProductMinQty(float $product_min_qty): void
-    {
-        $this->product_min_qty = $product_min_qty;
-    }
-
-    /**
-     * @return float
-     *
-     * @SerializedName("product_max_qty")
-     */
-    public function getProductMaxQty(): float
-    {
-        return $this->product_max_qty;
     }
 
     /**
@@ -732,11 +1123,55 @@ final class Orderpoint extends Base
     /**
      * @return float
      *
-     * @SerializedName("qty_multiple")
+     * @SerializedName("product_max_qty")
      */
-    public function getQtyMultiple(): float
+    public function getProductMaxQty(): float
     {
-        return $this->qty_multiple;
+        return $this->product_max_qty;
+    }
+
+    /**
+     * @param float $product_min_qty
+     */
+    public function setProductMinQty(float $product_min_qty): void
+    {
+        $this->product_min_qty = $product_min_qty;
+    }
+
+    /**
+     * @return float
+     *
+     * @SerializedName("product_min_qty")
+     */
+    public function getProductMinQty(): float
+    {
+        return $this->product_min_qty;
+    }
+
+    /**
+     * @param string|null $product_uom_name
+     */
+    public function setProductUomName(?string $product_uom_name): void
+    {
+        $this->product_uom_name = $product_uom_name;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("product_uom_name")
+     */
+    public function getProductUomName(): ?string
+    {
+        return $this->product_uom_name;
+    }
+
+    /**
+     * @param OdooRelation|null $product_uom
+     */
+    public function setProductUom(?OdooRelation $product_uom): void
+    {
+        $this->product_uom = $product_uom;
     }
 
     /**

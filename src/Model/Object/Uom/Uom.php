@@ -120,23 +120,6 @@ final class Uom extends Base
     private $uom_type;
 
     /**
-     * Type of measurement category
-     * ---
-     * Selection :
-     *     -> unit (Default Units)
-     *     -> weight (Default Weight)
-     *     -> working_time (Default Working Time)
-     *     -> length (Default Length)
-     *     -> volume (Default Volume)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $measure_type;
-
-    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -245,11 +228,13 @@ final class Uom extends Base
     }
 
     /**
-     * @param string $uom_type
+     * @return string
+     *
+     * @SerializedName("uom_type")
      */
-    public function setUomType(string $uom_type): void
+    public function getUomType(): string
     {
-        $this->uom_type = $uom_type;
+        return $this->uom_type;
     }
 
     /**
@@ -325,31 +310,19 @@ final class Uom extends Base
     }
 
     /**
-     * @param string|null $measure_type
+     * @param string $uom_type
      */
-    public function setMeasureType(?string $measure_type): void
+    public function setUomType(string $uom_type): void
     {
-        $this->measure_type = $measure_type;
+        $this->uom_type = $uom_type;
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("measure_type")
+     * @param bool|null $active
      */
-    public function getMeasureType(): ?string
+    public function setActive(?bool $active): void
     {
-        return $this->measure_type;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("uom_type")
-     */
-    public function getUomType(): string
-    {
-        return $this->uom_type;
+        $this->active = $active;
     }
 
     /**
@@ -360,14 +333,6 @@ final class Uom extends Base
     public function getName(): string
     {
         return $this->name;
-    }
-
-    /**
-     * @param bool|null $active
-     */
-    public function setActive(?bool $active): void
-    {
-        $this->active = $active;
     }
 
     /**

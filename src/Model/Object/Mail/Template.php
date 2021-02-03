@@ -59,32 +59,6 @@ final class Template extends Base
     private $model;
 
     /**
-     * Language
-     * ---
-     * Optional translation language (ISO code) to select when sending out an email. If not set, the english version
-     * will be used. This should usually be a placeholder expression that provides the appropriate language, e.g.
-     * ${object.partner_id.lang}.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $lang;
-
-    /**
-     * Add Signature
-     * ---
-     * If checked, the user's signature will be appended to the text version of the message
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $user_signature;
-
-    /**
      * Subject
      * ---
      * Subject (placeholders may be used here)
@@ -172,21 +146,6 @@ final class Template extends Base
     private $reply_to;
 
     /**
-     * Outgoing Mail Server
-     * ---
-     * Optional preferred server for outgoing mails. If not set, the highest priority one will be used.
-     * ---
-     * Relation : many2one (ir.mail_server)
-     * @see \Flux\OdooApiClient\Model\Object\Ir\MailServer
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $mail_server_id;
-
-    /**
      * Body
      * ---
      * Searchable : yes
@@ -195,6 +154,21 @@ final class Template extends Base
      * @var string|null
      */
     private $body_html;
+
+    /**
+     * Attachments
+     * ---
+     * You may attach files to this template, to be added to all emails created from this template
+     * ---
+     * Relation : many2many (ir.attachment)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $attachment_ids;
 
     /**
      * Report Filename
@@ -223,6 +197,47 @@ final class Template extends Base
     private $report_template;
 
     /**
+     * Outgoing Mail Server
+     * ---
+     * Optional preferred server for outgoing mails. If not set, the highest priority one will be used.
+     * ---
+     * Relation : many2one (ir.mail_server)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\MailServer
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $mail_server_id;
+
+    /**
+     * Scheduled Date
+     * ---
+     * If set, the queue manager will send the email after the date. If not set, the email will be send as soon as
+     * possible. Jinja2 placeholders may be used.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $scheduled_date;
+
+    /**
+     * Auto Delete
+     * ---
+     * This option permanently removes any track of email after it's been sent, including from the Technical menu in
+     * the Settings, in order to preserve storage space of your Odoo database.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $auto_delete;
+
+    /**
      * Sidebar action
      * ---
      * Sidebar action to make this template available on records of the related document model
@@ -238,31 +253,18 @@ final class Template extends Base
     private $ref_ir_act_window;
 
     /**
-     * Attachments
+     * Language
      * ---
-     * You may attach files to this template, to be added to all emails created from this template
-     * ---
-     * Relation : many2many (ir.attachment)
-     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $attachment_ids;
-
-    /**
-     * Auto Delete
-     * ---
-     * Permanently delete this email after sending it, to save space
+     * Optional translation language (ISO code) to select when sending out an email. If not set, the english version
+     * will be used. This should usually be a placeholder expression that provides the appropriate language, e.g.
+     * ${object.partner_id.lang}.
      * ---
      * Searchable : yes
      * Sortable : yes
      *
-     * @var bool|null
+     * @var string|null
      */
-    private $auto_delete;
+    private $lang;
 
     /**
      * Field
@@ -274,8 +276,8 @@ final class Template extends Base
      * Relation : many2one (ir.model.fields)
      * @see \Flux\OdooApiClient\Model\Object\Ir\Model\Fields
      * ---
-     * Searchable : yes
-     * Sortable : yes
+     * Searchable : no
+     * Sortable : no
      *
      * @var OdooRelation|null
      */
@@ -290,8 +292,8 @@ final class Template extends Base
      * Relation : many2one (ir.model)
      * @see \Flux\OdooApiClient\Model\Object\Ir\Model
      * ---
-     * Searchable : yes
-     * Sortable : yes
+     * Searchable : no
+     * Sortable : no
      *
      * @var OdooRelation|null
      */
@@ -306,8 +308,8 @@ final class Template extends Base
      * Relation : many2one (ir.model.fields)
      * @see \Flux\OdooApiClient\Model\Object\Ir\Model\Fields
      * ---
-     * Searchable : yes
-     * Sortable : yes
+     * Searchable : no
+     * Sortable : no
      *
      * @var OdooRelation|null
      */
@@ -318,8 +320,8 @@ final class Template extends Base
      * ---
      * Optional value to use if the target field is empty
      * ---
-     * Searchable : yes
-     * Sortable : yes
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
@@ -330,25 +332,12 @@ final class Template extends Base
      * ---
      * Final placeholder expression, to be copy-pasted in the desired template field.
      * ---
-     * Searchable : yes
-     * Sortable : yes
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
     private $copyvalue;
-
-    /**
-     * Scheduled Date
-     * ---
-     * If set, the queue manager will send the email after the date. If not set, the email will be send as soon as
-     * possible. Jinja2 placeholders may be used.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $scheduled_date;
 
     /**
      * Created by
@@ -407,74 +396,31 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation|null $sub_model_object_field
-     */
-    public function setSubModelObjectField(?OdooRelation $sub_model_object_field): void
-    {
-        $this->sub_model_object_field = $sub_model_object_field;
-    }
-
-    /**
-     * @return OdooRelation[]|null
+     * @return OdooRelation|null
      *
-     * @SerializedName("attachment_ids")
+     * @SerializedName("sub_model_object_field")
      */
-    public function getAttachmentIds(): ?array
+    public function getSubModelObjectField(): ?OdooRelation
     {
-        return $this->attachment_ids;
+        return $this->sub_model_object_field;
     }
 
     /**
-     * @param OdooRelation[]|null $attachment_ids
-     */
-    public function setAttachmentIds(?array $attachment_ids): void
-    {
-        $this->attachment_ids = $attachment_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
+     * @return string|null
      *
-     * @return bool
+     * @SerializedName("scheduled_date")
      */
-    public function hasAttachmentIds(OdooRelation $item): bool
+    public function getScheduledDate(): ?string
     {
-        if (null === $this->attachment_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->attachment_ids);
+        return $this->scheduled_date;
     }
 
     /**
-     * @param OdooRelation $item
+     * @param string|null $scheduled_date
      */
-    public function addAttachmentIds(OdooRelation $item): void
+    public function setScheduledDate(?string $scheduled_date): void
     {
-        if ($this->hasAttachmentIds($item)) {
-            return;
-        }
-
-        if (null === $this->attachment_ids) {
-            $this->attachment_ids = [];
-        }
-
-        $this->attachment_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeAttachmentIds(OdooRelation $item): void
-    {
-        if (null === $this->attachment_ids) {
-            $this->attachment_ids = [];
-        }
-
-        if ($this->hasAttachmentIds($item)) {
-            $index = array_search($item, $this->attachment_ids);
-            unset($this->attachment_ids[$index]);
-        }
+        $this->scheduled_date = $scheduled_date;
     }
 
     /**
@@ -493,6 +439,42 @@ final class Template extends Base
     public function setAutoDelete(?bool $auto_delete): void
     {
         $this->auto_delete = $auto_delete;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("ref_ir_act_window")
+     */
+    public function getRefIrActWindow(): ?OdooRelation
+    {
+        return $this->ref_ir_act_window;
+    }
+
+    /**
+     * @param OdooRelation|null $ref_ir_act_window
+     */
+    public function setRefIrActWindow(?OdooRelation $ref_ir_act_window): void
+    {
+        $this->ref_ir_act_window = $ref_ir_act_window;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("lang")
+     */
+    public function getLang(): ?string
+    {
+        return $this->lang;
+    }
+
+    /**
+     * @param string|null $lang
+     */
+    public function setLang(?string $lang): void
+    {
+        $this->lang = $lang;
     }
 
     /**
@@ -532,13 +514,21 @@ final class Template extends Base
     }
 
     /**
+     * @param OdooRelation|null $sub_model_object_field
+     */
+    public function setSubModelObjectField(?OdooRelation $sub_model_object_field): void
+    {
+        $this->sub_model_object_field = $sub_model_object_field;
+    }
+
+    /**
      * @return OdooRelation|null
      *
-     * @SerializedName("sub_model_object_field")
+     * @SerializedName("mail_server_id")
      */
-    public function getSubModelObjectField(): ?OdooRelation
+    public function getMailServerId(): ?OdooRelation
     {
-        return $this->sub_model_object_field;
+        return $this->mail_server_id;
     }
 
     /**
@@ -549,16 +539,6 @@ final class Template extends Base
     public function getNullValue(): ?string
     {
         return $this->null_value;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("ref_ir_act_window")
-     */
-    public function getRefIrActWindow(): ?OdooRelation
-    {
-        return $this->ref_ir_act_window;
     }
 
     /**
@@ -585,24 +565,6 @@ final class Template extends Base
     public function setCopyvalue(?string $copyvalue): void
     {
         $this->copyvalue = $copyvalue;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("scheduled_date")
-     */
-    public function getScheduledDate(): ?string
-    {
-        return $this->scheduled_date;
-    }
-
-    /**
-     * @param string|null $scheduled_date
-     */
-    public function setScheduledDate(?string $scheduled_date): void
-    {
-        $this->scheduled_date = $scheduled_date;
     }
 
     /**
@@ -678,11 +640,11 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation|null $ref_ir_act_window
+     * @param OdooRelation|null $mail_server_id
      */
-    public function setRefIrActWindow(?OdooRelation $ref_ir_act_window): void
+    public function setMailServerId(?OdooRelation $mail_server_id): void
     {
-        $this->ref_ir_act_window = $ref_ir_act_window;
+        $this->mail_server_id = $mail_server_id;
     }
 
     /**
@@ -702,11 +664,13 @@ final class Template extends Base
     }
 
     /**
-     * @param bool|null $use_default_to
+     * @return string|null
+     *
+     * @SerializedName("partner_to")
      */
-    public function setUseDefaultTo(?bool $use_default_to): void
+    public function getPartnerTo(): ?string
     {
-        $this->use_default_to = $use_default_to;
+        return $this->partner_to;
     }
 
     /**
@@ -743,42 +707,6 @@ final class Template extends Base
     public function setModel(?string $model): void
     {
         $this->model = $model;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("lang")
-     */
-    public function getLang(): ?string
-    {
-        return $this->lang;
-    }
-
-    /**
-     * @param string|null $lang
-     */
-    public function setLang(?string $lang): void
-    {
-        $this->lang = $lang;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("user_signature")
-     */
-    public function isUserSignature(): ?bool
-    {
-        return $this->user_signature;
-    }
-
-    /**
-     * @param bool|null $user_signature
-     */
-    public function setUserSignature(?bool $user_signature): void
-    {
-        $this->user_signature = $user_signature;
     }
 
     /**
@@ -828,6 +756,14 @@ final class Template extends Base
     }
 
     /**
+     * @param bool|null $use_default_to
+     */
+    public function setUseDefaultTo(?bool $use_default_to): void
+    {
+        $this->use_default_to = $use_default_to;
+    }
+
+    /**
      * @return string|null
      *
      * @SerializedName("email_to")
@@ -835,16 +771,6 @@ final class Template extends Base
     public function getEmailTo(): ?string
     {
         return $this->email_to;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("report_template")
-     */
-    public function getReportTemplate(): ?OdooRelation
-    {
-        return $this->report_template;
     }
 
     /**
@@ -856,21 +782,21 @@ final class Template extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("partner_to")
-     */
-    public function getPartnerTo(): ?string
-    {
-        return $this->partner_to;
-    }
-
-    /**
      * @param string|null $partner_to
      */
     public function setPartnerTo(?string $partner_to): void
     {
         $this->partner_to = $partner_to;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("report_template")
+     */
+    public function getReportTemplate(): ?OdooRelation
+    {
+        return $this->report_template;
     }
 
     /**
@@ -910,24 +836,6 @@ final class Template extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("mail_server_id")
-     */
-    public function getMailServerId(): ?OdooRelation
-    {
-        return $this->mail_server_id;
-    }
-
-    /**
-     * @param OdooRelation|null $mail_server_id
-     */
-    public function setMailServerId(?OdooRelation $mail_server_id): void
-    {
-        $this->mail_server_id = $mail_server_id;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("body_html")
@@ -943,6 +851,69 @@ final class Template extends Base
     public function setBodyHtml(?string $body_html): void
     {
         $this->body_html = $body_html;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("attachment_ids")
+     */
+    public function getAttachmentIds(): ?array
+    {
+        return $this->attachment_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $attachment_ids
+     */
+    public function setAttachmentIds(?array $attachment_ids): void
+    {
+        $this->attachment_ids = $attachment_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasAttachmentIds(OdooRelation $item): bool
+    {
+        if (null === $this->attachment_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->attachment_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addAttachmentIds(OdooRelation $item): void
+    {
+        if ($this->hasAttachmentIds($item)) {
+            return;
+        }
+
+        if (null === $this->attachment_ids) {
+            $this->attachment_ids = [];
+        }
+
+        $this->attachment_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeAttachmentIds(OdooRelation $item): void
+    {
+        if (null === $this->attachment_ids) {
+            $this->attachment_ids = [];
+        }
+
+        if ($this->hasAttachmentIds($item)) {
+            $index = array_search($item, $this->attachment_ids);
+            unset($this->attachment_ids[$index]);
+        }
     }
 
     /**

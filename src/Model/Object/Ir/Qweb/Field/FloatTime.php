@@ -17,7 +17,7 @@ use Flux\OdooApiClient\Model\Object\Base;
  *
  *         Can be used on any numerical field.
  */
-abstract class FloatTime extends Base
+final class FloatTime extends Base
 {
     /**
      * @return string

@@ -58,7 +58,7 @@ final class Rate extends Base
      * Searchable : yes
      * Sortable : yes
      *
-     * @var OdooRelation|null
+     * @var OdooRelation
      */
     private $currency_id;
 
@@ -126,10 +126,18 @@ final class Rate extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param OdooRelation $currency_id Currency
+     *        ---
+     *        Relation : many2one (res.currency)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(DateTimeInterface $name)
+    public function __construct(DateTimeInterface $name, OdooRelation $currency_id)
     {
         $this->name = $name;
+        $this->currency_id = $currency_id;
     }
 
     /**
@@ -233,19 +241,19 @@ final class Rate extends Base
     }
 
     /**
-     * @param OdooRelation|null $currency_id
+     * @param OdooRelation $currency_id
      */
-    public function setCurrencyId(?OdooRelation $currency_id): void
+    public function setCurrencyId(OdooRelation $currency_id): void
     {
         $this->currency_id = $currency_id;
     }
 
     /**
-     * @return OdooRelation|null
+     * @return OdooRelation
      *
      * @SerializedName("currency_id")
      */
-    public function getCurrencyId(): ?OdooRelation
+    public function getCurrencyId(): OdooRelation
     {
         return $this->currency_id;
     }

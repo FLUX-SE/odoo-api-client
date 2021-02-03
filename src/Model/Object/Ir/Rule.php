@@ -47,7 +47,7 @@ final class Rule extends Base
     private $active;
 
     /**
-     * Object
+     * Model
      * ---
      * Relation : many2one (ir.model)
      * @see \Flux\OdooApiClient\Model\Object\Ir\Model
@@ -181,7 +181,7 @@ final class Rule extends Base
     private $write_date;
 
     /**
-     * @param OdooRelation $model_id Object
+     * @param OdooRelation $model_id Model
      *        ---
      *        Relation : many2one (ir.model)
      *        @see \Flux\OdooApiClient\Model\Object\Ir\Model

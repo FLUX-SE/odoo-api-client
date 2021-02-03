@@ -13,9 +13,11 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  * Name : portal.mixin
  * ---
  * Info :
- * The base model, which is implicitly inherited by all models.
+ * Updates the base class to support setting xids directly in create by
+ *         providing an "id" key (otherwise stripped by create) during an import
+ *         (which should strip 'id' from the input data anyway)
  */
-abstract class Mixin extends Base
+final class Mixin extends Base
 {
     /**
      * Portal Access URL
@@ -27,7 +29,7 @@ abstract class Mixin extends Base
      *
      * @var string|null
      */
-    protected $access_url;
+    private $access_url;
 
     /**
      * Security Token
@@ -37,7 +39,7 @@ abstract class Mixin extends Base
      *
      * @var string|null
      */
-    protected $access_token;
+    private $access_token;
 
     /**
      * Access warning
@@ -47,7 +49,7 @@ abstract class Mixin extends Base
      *
      * @var string|null
      */
-    protected $access_warning;
+    private $access_warning;
 
     /**
      * @return string|null

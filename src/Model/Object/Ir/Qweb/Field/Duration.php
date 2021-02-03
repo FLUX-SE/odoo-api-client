@@ -27,7 +27,7 @@ use Flux\OdooApiClient\Model\Object\Base;
  *
  *         Sub-second values will be ignored.
  */
-abstract class Duration extends Base
+final class Duration extends Base
 {
     /**
      * @return string

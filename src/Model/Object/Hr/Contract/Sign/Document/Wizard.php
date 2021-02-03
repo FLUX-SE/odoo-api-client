@@ -77,6 +77,19 @@ final class Wizard extends Base
     private $employee_role_id;
 
     /**
+     * Sign Template Responsible
+     * ---
+     * Relation : many2many (sign.item.role)
+     * @see \Flux\OdooApiClient\Model\Object\Sign\Item\Role
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $sign_template_responsible_ids;
+
+    /**
      * Document to Sign
      * ---
      * Document that the employee will have to sign.
@@ -212,13 +225,13 @@ final class Wizard extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @return string|null
      *
-     * @SerializedName("follower_ids")
+     * @SerializedName("message")
      */
-    public function getFollowerIds(): ?array
+    public function getMessage(): ?string
     {
-        return $this->follower_ids;
+        return $this->message;
     }
 
     /**
@@ -347,11 +360,29 @@ final class Wizard extends Base
     }
 
     /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("follower_ids")
+     */
+    public function getFollowerIds(): ?array
+    {
+        return $this->follower_ids;
+    }
+
+    /**
      * @param string|null $message
      */
     public function setMessage(?string $message): void
     {
         $this->message = $message;
+    }
+
+    /**
+     * @param string $subject
+     */
+    public function setSubject(string $subject): void
+    {
+        $this->subject = $subject;
     }
 
     /**
@@ -365,52 +396,6 @@ final class Wizard extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("message")
-     */
-    public function getMessage(): ?string
-    {
-        return $this->message;
-    }
-
-    /**
-     * @param string $subject
-     */
-    public function setSubject(string $subject): void
-    {
-        $this->subject = $subject;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("subject")
-     */
-    public function getSubject(): string
-    {
-        return $this->subject;
-    }
-
-    /**
-     * @param OdooRelation $sign_template_id
-     */
-    public function setSignTemplateId(OdooRelation $sign_template_id): void
-    {
-        $this->sign_template_id = $sign_template_id;
-    }
-
-    /**
-     * @return OdooRelation
-     *
-     * @SerializedName("sign_template_id")
-     */
-    public function getSignTemplateId(): OdooRelation
-    {
-        return $this->sign_template_id;
-    }
-
-    /**
      * @param OdooRelation $employee_role_id
      */
     public function setEmployeeRoleId(OdooRelation $employee_role_id): void
@@ -419,39 +404,11 @@ final class Wizard extends Base
     }
 
     /**
-     * @return OdooRelation
-     *
-     * @SerializedName("employee_role_id")
+     * @param OdooRelation|null $contract_id
      */
-    public function getEmployeeRoleId(): OdooRelation
+    public function setContractId(?OdooRelation $contract_id): void
     {
-        return $this->employee_role_id;
-    }
-
-    /**
-     * @param OdooRelation $responsible_id
-     */
-    public function setResponsibleId(OdooRelation $responsible_id): void
-    {
-        $this->responsible_id = $responsible_id;
-    }
-
-    /**
-     * @return OdooRelation
-     *
-     * @SerializedName("responsible_id")
-     */
-    public function getResponsibleId(): OdooRelation
-    {
-        return $this->responsible_id;
-    }
-
-    /**
-     * @param OdooRelation|null $employee_id
-     */
-    public function setEmployeeId(?OdooRelation $employee_id): void
-    {
-        $this->employee_id = $employee_id;
+        $this->contract_id = $contract_id;
     }
 
     /**
@@ -465,11 +422,130 @@ final class Wizard extends Base
     }
 
     /**
-     * @param OdooRelation|null $contract_id
+     * @param OdooRelation|null $employee_id
      */
-    public function setContractId(?OdooRelation $contract_id): void
+    public function setEmployeeId(?OdooRelation $employee_id): void
     {
-        $this->contract_id = $contract_id;
+        $this->employee_id = $employee_id;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("responsible_id")
+     */
+    public function getResponsibleId(): OdooRelation
+    {
+        return $this->responsible_id;
+    }
+
+    /**
+     * @param OdooRelation $responsible_id
+     */
+    public function setResponsibleId(OdooRelation $responsible_id): void
+    {
+        $this->responsible_id = $responsible_id;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("employee_role_id")
+     */
+    public function getEmployeeRoleId(): OdooRelation
+    {
+        return $this->employee_role_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("sign_template_responsible_ids")
+     */
+    public function getSignTemplateResponsibleIds(): ?array
+    {
+        return $this->sign_template_responsible_ids;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("subject")
+     */
+    public function getSubject(): string
+    {
+        return $this->subject;
+    }
+
+    /**
+     * @param OdooRelation[]|null $sign_template_responsible_ids
+     */
+    public function setSignTemplateResponsibleIds(?array $sign_template_responsible_ids): void
+    {
+        $this->sign_template_responsible_ids = $sign_template_responsible_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasSignTemplateResponsibleIds(OdooRelation $item): bool
+    {
+        if (null === $this->sign_template_responsible_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->sign_template_responsible_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addSignTemplateResponsibleIds(OdooRelation $item): void
+    {
+        if ($this->hasSignTemplateResponsibleIds($item)) {
+            return;
+        }
+
+        if (null === $this->sign_template_responsible_ids) {
+            $this->sign_template_responsible_ids = [];
+        }
+
+        $this->sign_template_responsible_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeSignTemplateResponsibleIds(OdooRelation $item): void
+    {
+        if (null === $this->sign_template_responsible_ids) {
+            $this->sign_template_responsible_ids = [];
+        }
+
+        if ($this->hasSignTemplateResponsibleIds($item)) {
+            $index = array_search($item, $this->sign_template_responsible_ids);
+            unset($this->sign_template_responsible_ids[$index]);
+        }
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("sign_template_id")
+     */
+    public function getSignTemplateId(): OdooRelation
+    {
+        return $this->sign_template_id;
+    }
+
+    /**
+     * @param OdooRelation $sign_template_id
+     */
+    public function setSignTemplateId(OdooRelation $sign_template_id): void
+    {
+        $this->sign_template_id = $sign_template_id;
     }
 
     /**

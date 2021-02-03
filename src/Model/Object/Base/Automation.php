@@ -15,7 +15,11 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  * Name : base.automation
  * ---
  * Info :
- * Add resource and calendar for time-based conditions
+ * Mixin that overrides the create and write methods to properly generate
+ *                 ir.model.data entries flagged with Studio for the corresponding resources.
+ *                 Doesn't create an ir.model.data if the record is part of a module being
+ *                 currently installed as the ir.model.data will be created automatically
+ *                 afterwards.
  */
 final class Automation extends Server
 {
@@ -45,7 +49,7 @@ final class Automation extends Server
     private $active;
 
     /**
-     * Trigger Condition
+     * Trigger
      * ---
      * Selection :
      *     -> on_create (On Creation)
@@ -164,17 +168,20 @@ final class Automation extends Server
     /**
      * On Change Fields Trigger
      * ---
-     * Comma-separated list of field names that triggers the onchange.
+     * Fields that trigger the onchange.
+     * ---
+     * Relation : many2many (ir.model.fields)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model\Fields
      * ---
      * Searchable : yes
-     * Sortable : yes
+     * Sortable : no
      *
-     * @var string|null
+     * @var OdooRelation[]|null
      */
-    private $on_change_fields;
+    private $on_change_field_ids;
 
     /**
-     * Watched fields
+     * Trigger Fields
      * ---
      * The action will be triggered if and only if one of these fields is updated.If empty, all fields are watched.
      * ---
@@ -187,6 +194,16 @@ final class Automation extends Server
      * @var OdooRelation[]|null
      */
     private $trigger_field_ids;
+
+    /**
+     * Least Delay Msg
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $least_delay_msg;
 
     /**
      * Use employee work schedule
@@ -211,7 +228,7 @@ final class Automation extends Server
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param string $trigger Trigger Condition
+     * @param string $trigger Trigger
      *        ---
      *        Selection :
      *            -> on_create (On Creation)
@@ -306,55 +323,119 @@ final class Automation extends Server
         $this->action_server_id = $action_server_id;
         $this->trigger = $trigger;
         parent::__construct(
-            $name,
-            $type,
-            $model_id,
-            $activity_user_type,
-            $usage,
-            $state,
+            $name, 
+            $type, 
+            $model_id, 
+            $activity_user_type, 
+            $usage, 
+            $state, 
             $binding_type
         );
     }
 
     /**
-     * @param string|null $filter_pre_domain
+     * @param OdooRelation[]|null $trigger_field_ids
      */
-    public function setFilterPreDomain(?string $filter_pre_domain): void
+    public function setTriggerFieldIds(?array $trigger_field_ids): void
     {
-        $this->filter_pre_domain = $filter_pre_domain;
+        $this->trigger_field_ids = $trigger_field_ids;
     }
 
     /**
-     * @param OdooRelation|null $trg_date_resource_field_id
-     */
-    public function setTrgDateResourceFieldId(?OdooRelation $trg_date_resource_field_id): void
-    {
-        $this->trg_date_resource_field_id = $trg_date_resource_field_id;
-    }
-
-    /**
-     * @return OdooRelation|null
+     * @return OdooRelation[]|null
      *
-     * @SerializedName("trg_date_resource_field_id")
+     * @SerializedName("on_change_field_ids")
      */
-    public function getTrgDateResourceFieldId(): ?OdooRelation
+    public function getOnChangeFieldIds(): ?array
     {
-        return $this->trg_date_resource_field_id;
+        return $this->on_change_field_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $on_change_field_ids
+     */
+    public function setOnChangeFieldIds(?array $on_change_field_ids): void
+    {
+        $this->on_change_field_ids = $on_change_field_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasOnChangeFieldIds(OdooRelation $item): bool
+    {
+        if (null === $this->on_change_field_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->on_change_field_ids);
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function removeTriggerFieldIds(OdooRelation $item): void
+    public function addOnChangeFieldIds(OdooRelation $item): void
     {
-        if (null === $this->trigger_field_ids) {
-            $this->trigger_field_ids = [];
+        if ($this->hasOnChangeFieldIds($item)) {
+            return;
         }
 
-        if ($this->hasTriggerFieldIds($item)) {
-            $index = array_search($item, $this->trigger_field_ids);
-            unset($this->trigger_field_ids[$index]);
+        if (null === $this->on_change_field_ids) {
+            $this->on_change_field_ids = [];
         }
+
+        $this->on_change_field_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeOnChangeFieldIds(OdooRelation $item): void
+    {
+        if (null === $this->on_change_field_ids) {
+            $this->on_change_field_ids = [];
+        }
+
+        if ($this->hasOnChangeFieldIds($item)) {
+            $index = array_search($item, $this->on_change_field_ids);
+            unset($this->on_change_field_ids[$index]);
+        }
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("trigger_field_ids")
+     */
+    public function getTriggerFieldIds(): ?array
+    {
+        return $this->trigger_field_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasTriggerFieldIds(OdooRelation $item): bool
+    {
+        if (null === $this->trigger_field_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->trigger_field_ids);
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("last_run")
+     */
+    public function getLastRun(): ?DateTimeInterface
+    {
+        return $this->last_run;
     }
 
     /**
@@ -375,52 +456,53 @@ final class Automation extends Server
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasTriggerFieldIds(OdooRelation $item): bool
+    public function removeTriggerFieldIds(OdooRelation $item): void
     {
         if (null === $this->trigger_field_ids) {
-            return false;
+            $this->trigger_field_ids = [];
         }
 
-        return in_array($item, $this->trigger_field_ids);
-    }
-
-    /**
-     * @param OdooRelation[]|null $trigger_field_ids
-     */
-    public function setTriggerFieldIds(?array $trigger_field_ids): void
-    {
-        $this->trigger_field_ids = $trigger_field_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("trigger_field_ids")
-     */
-    public function getTriggerFieldIds(): ?array
-    {
-        return $this->trigger_field_ids;
-    }
-
-    /**
-     * @param string|null $on_change_fields
-     */
-    public function setOnChangeFields(?string $on_change_fields): void
-    {
-        $this->on_change_fields = $on_change_fields;
+        if ($this->hasTriggerFieldIds($item)) {
+            $index = array_search($item, $this->trigger_field_ids);
+            unset($this->trigger_field_ids[$index]);
+        }
     }
 
     /**
      * @return string|null
      *
-     * @SerializedName("on_change_fields")
+     * @SerializedName("least_delay_msg")
      */
-    public function getOnChangeFields(): ?string
+    public function getLeastDelayMsg(): ?string
     {
-        return $this->on_change_fields;
+        return $this->least_delay_msg;
+    }
+
+    /**
+     * @param string|null $least_delay_msg
+     */
+    public function setLeastDelayMsg(?string $least_delay_msg): void
+    {
+        $this->least_delay_msg = $least_delay_msg;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("trg_date_resource_field_id")
+     */
+    public function getTrgDateResourceFieldId(): ?OdooRelation
+    {
+        return $this->trg_date_resource_field_id;
+    }
+
+    /**
+     * @param OdooRelation|null $trg_date_resource_field_id
+     */
+    public function setTrgDateResourceFieldId(?OdooRelation $trg_date_resource_field_id): void
+    {
+        $this->trg_date_resource_field_id = $trg_date_resource_field_id;
     }
 
     /**
@@ -432,41 +514,11 @@ final class Automation extends Server
     }
 
     /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("last_run")
-     */
-    public function getLastRun(): ?DateTimeInterface
-    {
-        return $this->last_run;
-    }
-
-    /**
      * @param string|null $filter_domain
      */
     public function setFilterDomain(?string $filter_domain): void
     {
         $this->filter_domain = $filter_domain;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("filter_domain")
-     */
-    public function getFilterDomain(): ?string
-    {
-        return $this->filter_domain;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("filter_pre_domain")
-     */
-    public function getFilterPreDomain(): ?string
-    {
-        return $this->filter_pre_domain;
     }
 
     /**
@@ -480,60 +532,6 @@ final class Automation extends Server
     }
 
     /**
-     * @param OdooRelation|null $trg_date_calendar_id
-     */
-    public function setTrgDateCalendarId(?OdooRelation $trg_date_calendar_id): void
-    {
-        $this->trg_date_calendar_id = $trg_date_calendar_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("trg_date_calendar_id")
-     */
-    public function getTrgDateCalendarId(): ?OdooRelation
-    {
-        return $this->trg_date_calendar_id;
-    }
-
-    /**
-     * @param string|null $trg_date_range_type
-     */
-    public function setTrgDateRangeType(?string $trg_date_range_type): void
-    {
-        $this->trg_date_range_type = $trg_date_range_type;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("trg_date_range_type")
-     */
-    public function getTrgDateRangeType(): ?string
-    {
-        return $this->trg_date_range_type;
-    }
-
-    /**
-     * @param int|null $trg_date_range
-     */
-    public function setTrgDateRange(?int $trg_date_range): void
-    {
-        $this->trg_date_range = $trg_date_range;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("trg_date_range")
-     */
-    public function getTrgDateRange(): ?int
-    {
-        return $this->trg_date_range;
-    }
-
-    /**
      * @param OdooRelation|null $trg_date_id
      */
     public function setTrgDateId(?OdooRelation $trg_date_id): void
@@ -542,39 +540,11 @@ final class Automation extends Server
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("trg_date_id")
+     * @param OdooRelation $action_server_id
      */
-    public function getTrgDateId(): ?OdooRelation
+    public function setActionServerId(OdooRelation $action_server_id): void
     {
-        return $this->trg_date_id;
-    }
-
-    /**
-     * @param string $trigger
-     */
-    public function setTrigger(string $trigger): void
-    {
-        $this->trigger = $trigger;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("trigger")
-     */
-    public function getTrigger(): string
-    {
-        return $this->trigger;
-    }
-
-    /**
-     * @param bool|null $active
-     */
-    public function setActive(?bool $active): void
-    {
-        $this->active = $active;
+        $this->action_server_id = $action_server_id;
     }
 
     /**
@@ -588,11 +558,121 @@ final class Automation extends Server
     }
 
     /**
-     * @param OdooRelation $action_server_id
+     * @param bool|null $active
      */
-    public function setActionServerId(OdooRelation $action_server_id): void
+    public function setActive(?bool $active): void
     {
-        $this->action_server_id = $action_server_id;
+        $this->active = $active;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("trigger")
+     */
+    public function getTrigger(): string
+    {
+        return $this->trigger;
+    }
+
+    /**
+     * @param string $trigger
+     */
+    public function setTrigger(string $trigger): void
+    {
+        $this->trigger = $trigger;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("trg_date_id")
+     */
+    public function getTrgDateId(): ?OdooRelation
+    {
+        return $this->trg_date_id;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("trg_date_range")
+     */
+    public function getTrgDateRange(): ?int
+    {
+        return $this->trg_date_range;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("filter_domain")
+     */
+    public function getFilterDomain(): ?string
+    {
+        return $this->filter_domain;
+    }
+
+    /**
+     * @param int|null $trg_date_range
+     */
+    public function setTrgDateRange(?int $trg_date_range): void
+    {
+        $this->trg_date_range = $trg_date_range;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("trg_date_range_type")
+     */
+    public function getTrgDateRangeType(): ?string
+    {
+        return $this->trg_date_range_type;
+    }
+
+    /**
+     * @param string|null $trg_date_range_type
+     */
+    public function setTrgDateRangeType(?string $trg_date_range_type): void
+    {
+        $this->trg_date_range_type = $trg_date_range_type;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("trg_date_calendar_id")
+     */
+    public function getTrgDateCalendarId(): ?OdooRelation
+    {
+        return $this->trg_date_calendar_id;
+    }
+
+    /**
+     * @param OdooRelation|null $trg_date_calendar_id
+     */
+    public function setTrgDateCalendarId(?OdooRelation $trg_date_calendar_id): void
+    {
+        $this->trg_date_calendar_id = $trg_date_calendar_id;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("filter_pre_domain")
+     */
+    public function getFilterPreDomain(): ?string
+    {
+        return $this->filter_pre_domain;
+    }
+
+    /**
+     * @param string|null $filter_pre_domain
+     */
+    public function setFilterPreDomain(?string $filter_pre_domain): void
+    {
+        $this->filter_pre_domain = $filter_pre_domain;
     }
 
     /**

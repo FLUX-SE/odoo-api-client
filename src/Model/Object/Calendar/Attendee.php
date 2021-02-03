@@ -20,6 +20,32 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 final class Attendee extends Base
 {
     /**
+     * Meeting linked
+     * ---
+     * Relation : many2one (calendar.event)
+     * @see \Flux\OdooApiClient\Model\Object\Calendar\Event
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation
+     */
+    private $event_id;
+
+    /**
+     * Contact
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation
+     */
+    private $partner_id;
+
+    /**
      * Status
      * ---
      * Status of the attendee's participation
@@ -48,25 +74,12 @@ final class Attendee extends Base
     private $common_name;
 
     /**
-     * Contact
-     * ---
-     * Relation : many2one (res.partner)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $partner_id;
-
-    /**
      * Email
      * ---
      * Email of Invited Person
      * ---
      * Searchable : yes
-     * Sortable : yes
+     * Sortable : no
      *
      * @var string|null
      */
@@ -97,37 +110,17 @@ final class Attendee extends Base
     private $access_token;
 
     /**
-     * Meeting linked
+     * Recurrence Rule
      * ---
-     * Relation : many2one (calendar.event)
-     * @see \Flux\OdooApiClient\Model\Object\Calendar\Event
+     * Relation : many2one (calendar.recurrence)
+     * @see \Flux\OdooApiClient\Model\Object\Calendar\Recurrence
      * ---
      * Searchable : yes
-     * Sortable : yes
+     * Sortable : no
      *
      * @var OdooRelation|null
      */
-    private $event_id;
-
-    /**
-     * Google Calendar Event Id
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $google_internal_event_id;
-
-    /**
-     * Odoo Synchro Date
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var DateTimeInterface|null
-     */
-    private $oe_synchro_date;
+    private $recurrence_id;
 
     /**
      * Created by
@@ -176,23 +169,33 @@ final class Attendee extends Base
     private $write_date;
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("state")
+     * @param OdooRelation $event_id Meeting linked
+     *        ---
+     *        Relation : many2one (calendar.event)
+     *        @see \Flux\OdooApiClient\Model\Object\Calendar\Event
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $partner_id Contact
+     *        ---
+     *        Relation : many2one (res.partner)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function getState(): ?string
+    public function __construct(OdooRelation $event_id, OdooRelation $partner_id)
     {
-        return $this->state;
+        $this->event_id = $event_id;
+        $this->partner_id = $partner_id;
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("google_internal_event_id")
+     * @param string|null $access_token
      */
-    public function getGoogleInternalEventId(): ?string
+    public function setAccessToken(?string $access_token): void
     {
-        return $this->google_internal_event_id;
+        $this->access_token = $access_token;
     }
 
     /**
@@ -268,63 +271,21 @@ final class Attendee extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $oe_synchro_date
+     * @param OdooRelation|null $recurrence_id
      */
-    public function setOeSynchroDate(?DateTimeInterface $oe_synchro_date): void
+    public function setRecurrenceId(?OdooRelation $recurrence_id): void
     {
-        $this->oe_synchro_date = $oe_synchro_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("oe_synchro_date")
-     */
-    public function getOeSynchroDate(): ?DateTimeInterface
-    {
-        return $this->oe_synchro_date;
-    }
-
-    /**
-     * @param string|null $google_internal_event_id
-     */
-    public function setGoogleInternalEventId(?string $google_internal_event_id): void
-    {
-        $this->google_internal_event_id = $google_internal_event_id;
-    }
-
-    /**
-     * @param OdooRelation|null $event_id
-     */
-    public function setEventId(?OdooRelation $event_id): void
-    {
-        $this->event_id = $event_id;
-    }
-
-    /**
-     * @param string|null $state
-     */
-    public function setState(?string $state): void
-    {
-        $this->state = $state;
+        $this->recurrence_id = $recurrence_id;
     }
 
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("event_id")
+     * @SerializedName("recurrence_id")
      */
-    public function getEventId(): ?OdooRelation
+    public function getRecurrenceId(): ?OdooRelation
     {
-        return $this->event_id;
-    }
-
-    /**
-     * @param string|null $access_token
-     */
-    public function setAccessToken(?string $access_token): void
-    {
-        $this->access_token = $access_token;
+        return $this->recurrence_id;
     }
 
     /**
@@ -335,6 +296,16 @@ final class Attendee extends Base
     public function getAccessToken(): ?string
     {
         return $this->access_token;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("event_id")
+     */
+    public function getEventId(): OdooRelation
+    {
+        return $this->event_id;
     }
 
     /**
@@ -374,24 +345,6 @@ final class Attendee extends Base
     }
 
     /**
-     * @param OdooRelation|null $partner_id
-     */
-    public function setPartnerId(?OdooRelation $partner_id): void
-    {
-        $this->partner_id = $partner_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("partner_id")
-     */
-    public function getPartnerId(): ?OdooRelation
-    {
-        return $this->partner_id;
-    }
-
-    /**
      * @param string|null $common_name
      */
     public function setCommonName(?string $common_name): void
@@ -407,6 +360,50 @@ final class Attendee extends Base
     public function getCommonName(): ?string
     {
         return $this->common_name;
+    }
+
+    /**
+     * @param string|null $state
+     */
+    public function setState(?string $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("state")
+     */
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param OdooRelation $partner_id
+     */
+    public function setPartnerId(OdooRelation $partner_id): void
+    {
+        $this->partner_id = $partner_id;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("partner_id")
+     */
+    public function getPartnerId(): OdooRelation
+    {
+        return $this->partner_id;
+    }
+
+    /**
+     * @param OdooRelation $event_id
+     */
+    public function setEventId(OdooRelation $event_id): void
+    {
+        $this->event_id = $event_id;
     }
 
     /**

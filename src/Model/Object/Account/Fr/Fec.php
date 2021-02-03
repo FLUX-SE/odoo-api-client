@@ -65,6 +65,16 @@ final class Fec extends Base
     private $filename;
 
     /**
+     * Test File
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $test_file;
+
+    /**
      * Export Type
      * ---
      * Selection :
@@ -153,13 +163,11 @@ final class Fec extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
+     * @param string $export_type
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setExportType(string $export_type): void
     {
-        return $this->create_uid;
+        $this->export_type = $export_type;
     }
 
     /**
@@ -225,11 +233,23 @@ final class Fec extends Base
     }
 
     /**
-     * @param string $export_type
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
-    public function setExportType(string $export_type): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->export_type = $export_type;
+        return $this->create_uid;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("export_type")
+     */
+    public function getExportType(): string
+    {
+        return $this->export_type;
     }
 
     /**
@@ -243,13 +263,21 @@ final class Fec extends Base
     }
 
     /**
-     * @return string
-     *
-     * @SerializedName("export_type")
+     * @param bool|null $test_file
      */
-    public function getExportType(): string
+    public function setTestFile(?bool $test_file): void
     {
-        return $this->export_type;
+        $this->test_file = $test_file;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("test_file")
+     */
+    public function isTestFile(): ?bool
+    {
+        return $this->test_file;
     }
 
     /**

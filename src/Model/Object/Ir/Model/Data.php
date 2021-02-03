@@ -92,26 +92,6 @@ final class Data extends Base
     private $noupdate;
 
     /**
-     * Update Date
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var DateTimeInterface|null
-     */
-    private $date_update;
-
-    /**
-     * Init Date
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var DateTimeInterface|null
-     */
-    private $date_init;
-
-    /**
      * Reference
      * ---
      * Searchable : no
@@ -203,11 +183,11 @@ final class Data extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $date_init
+     * @param string|null $reference
      */
-    public function setDateInit(?DateTimeInterface $date_init): void
+    public function setReference(?string $reference): void
     {
-        $this->date_init = $date_init;
+        $this->reference = $reference;
     }
 
     /**
@@ -301,14 +281,6 @@ final class Data extends Base
     }
 
     /**
-     * @param string|null $reference
-     */
-    public function setReference(?string $reference): void
-    {
-        $this->reference = $reference;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("reference")
@@ -319,16 +291,6 @@ final class Data extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("date_init")
-     */
-    public function getDateInit(): ?DateTimeInterface
-    {
-        return $this->date_init;
-    }
-
-    /**
      * @return string
      *
      * @SerializedName("name")
@@ -336,24 +298,6 @@ final class Data extends Base
     public function getName(): string
     {
         return $this->name;
-    }
-
-    /**
-     * @param DateTimeInterface|null $date_update
-     */
-    public function setDateUpdate(?DateTimeInterface $date_update): void
-    {
-        $this->date_update = $date_update;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("date_update")
-     */
-    public function getDateUpdate(): ?DateTimeInterface
-    {
-        return $this->date_update;
     }
 
     /**

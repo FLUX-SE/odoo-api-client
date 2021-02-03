@@ -30,7 +30,7 @@ final class Template extends Base
     /**
      * %
      * ---
-     * Factor to apply on the account move lines generated from this repartition line, in percents
+     * Factor to apply on the account move lines generated from this distribution line, in percents
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -73,7 +73,7 @@ final class Template extends Base
     /**
      * Invoice Tax
      * ---
-     * The tax set to apply this repartition on invoices. Mutually exclusive with refund_tax_id
+     * The tax set to apply this distribution on invoices. Mutually exclusive with refund_tax_id
      * ---
      * Relation : many2one (account.tax.template)
      * @see \Flux\OdooApiClient\Model\Object\Account\Tax\Template
@@ -88,7 +88,7 @@ final class Template extends Base
     /**
      * Refund Tax
      * ---
-     * The tax set to apply this repartition on refund invoices. Mutually exclusive with invoice_tax_id
+     * The tax set to apply this distribution on refund invoices. Mutually exclusive with invoice_tax_id
      * ---
      * Relation : many2one (account.tax.template)
      * @see \Flux\OdooApiClient\Model\Object\Account\Tax\Template
@@ -114,6 +114,16 @@ final class Template extends Base
      * @var OdooRelation[]|null
      */
     private $tag_ids;
+
+    /**
+     * Tax Closing Entry
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $use_in_tax_closing;
 
     /**
      * Plus Tax Report Lines
@@ -194,7 +204,7 @@ final class Template extends Base
     /**
      * @param float $factor_percent %
      *        ---
-     *        Factor to apply on the account move lines generated from this repartition line, in percents
+     *        Factor to apply on the account move lines generated from this distribution line, in percents
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -216,13 +226,34 @@ final class Template extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
+     * @param OdooRelation $item
      */
-    public function getCreateUid(): ?OdooRelation
+    public function removeMinusReportLineIds(OdooRelation $item): void
     {
-        return $this->create_uid;
+        if (null === $this->minus_report_line_ids) {
+            $this->minus_report_line_ids = [];
+        }
+
+        if ($this->hasMinusReportLineIds($item)) {
+            $index = array_search($item, $this->minus_report_line_ids);
+            unset($this->minus_report_line_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addPlusReportLineIds(OdooRelation $item): void
+    {
+        if ($this->hasPlusReportLineIds($item)) {
+            return;
+        }
+
+        if (null === $this->plus_report_line_ids) {
+            $this->plus_report_line_ids = [];
+        }
+
+        $this->plus_report_line_ids[] = $item;
     }
 
     /**
@@ -289,18 +320,21 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
-    public function removeMinusReportLineIds(OdooRelation $item): void
+    public function getCreateUid(): ?OdooRelation
     {
-        if (null === $this->minus_report_line_ids) {
-            $this->minus_report_line_ids = [];
-        }
+        return $this->create_uid;
+    }
 
-        if ($this->hasMinusReportLineIds($item)) {
-            $index = array_search($item, $this->minus_report_line_ids);
-            unset($this->minus_report_line_ids[$index]);
-        }
+    /**
+     * @param OdooRelation[]|null $plus_report_line_ids
+     */
+    public function setPlusReportLineIds(?array $plus_report_line_ids): void
+    {
+        $this->plus_report_line_ids = $plus_report_line_ids;
     }
 
     /**
@@ -309,20 +343,6 @@ final class Template extends Base
     public function setCreateUid(?OdooRelation $create_uid): void
     {
         $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasPlusReportLineIds(OdooRelation $item): bool
-    {
-        if (null === $this->plus_report_line_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->plus_report_line_ids);
     }
 
     /**
@@ -381,26 +401,26 @@ final class Template extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function addPlusReportLineIds(OdooRelation $item): void
+    public function hasPlusReportLineIds(OdooRelation $item): bool
     {
-        if ($this->hasPlusReportLineIds($item)) {
-            return;
-        }
-
         if (null === $this->plus_report_line_ids) {
-            $this->plus_report_line_ids = [];
+            return false;
         }
 
-        $this->plus_report_line_ids[] = $item;
+        return in_array($item, $this->plus_report_line_ids);
     }
 
     /**
-     * @param OdooRelation[]|null $plus_report_line_ids
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("plus_report_line_ids")
      */
-    public function setPlusReportLineIds(?array $plus_report_line_ids): void
+    public function getPlusReportLineIds(): ?array
     {
-        $this->plus_report_line_ids = $plus_report_line_ids;
+        return $this->plus_report_line_ids;
     }
 
     /**
@@ -486,13 +506,11 @@ final class Template extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("plus_report_line_ids")
+     * @param bool|null $use_in_tax_closing
      */
-    public function getPlusReportLineIds(): ?array
+    public function setUseInTaxClosing(?bool $use_in_tax_closing): void
     {
-        return $this->plus_report_line_ids;
+        $this->use_in_tax_closing = $use_in_tax_closing;
     }
 
     /**
@@ -564,6 +582,16 @@ final class Template extends Base
             $index = array_search($item, $this->tag_ids);
             unset($this->tag_ids[$index]);
         }
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("use_in_tax_closing")
+     */
+    public function isUseInTaxClosing(): ?bool
+    {
+        return $this->use_in_tax_closing;
     }
 
     /**

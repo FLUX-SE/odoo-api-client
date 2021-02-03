@@ -18,7 +18,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *                 Models using this mixin must implement the method on_barcode_scanned. It works
  *                 like an onchange and receives the scanned barcode in parameter.
  */
-abstract class BarcodeEventsMixin extends Base
+final class BarcodeEventsMixin extends Base
 {
     /**
      * Barcode Scanned
@@ -30,7 +30,7 @@ abstract class BarcodeEventsMixin extends Base
      *
      * @var string|null
      */
-    protected $_barcode_scanned;
+    private $_barcode_scanned;
 
     /**
      * @return string|null

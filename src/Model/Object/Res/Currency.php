@@ -157,6 +157,19 @@ final class Currency extends Base
     private $currency_subunit_label;
 
     /**
+     * Display Rounding Warning
+     * ---
+     * Technical field. Used to tell whether or not to display the rounding warning. The warning informs a rounding
+     * factor change might be dangerous on res.currency's form view.
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $display_rounding_warning;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -223,23 +236,11 @@ final class Currency extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
+     * @param bool|null $display_rounding_warning
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setDisplayRoundingWarning(?bool $display_rounding_warning): void
     {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("date")
-     */
-    public function getDate(): ?DateTimeInterface
-    {
-        return $this->date;
+        $this->display_rounding_warning = $display_rounding_warning;
     }
 
     /**
@@ -287,21 +288,39 @@ final class Currency extends Base
     }
 
     /**
+     * @return bool|null
+     *
+     * @SerializedName("display_rounding_warning")
+     */
+    public function isDisplayRoundingWarning(): ?bool
+    {
+        return $this->display_rounding_warning;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param string|null $position
+     */
+    public function setPosition(?string $position): void
+    {
+        $this->position = $position;
+    }
+
+    /**
      * @param OdooRelation|null $create_uid
      */
     public function setCreateUid(?OdooRelation $create_uid): void
     {
         $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("position")
-     */
-    public function getPosition(): ?string
-    {
-        return $this->position;
     }
 
     /**
@@ -359,19 +378,23 @@ final class Currency extends Base
     }
 
     /**
-     * @param string|null $position
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("date")
      */
-    public function setPosition(?string $position): void
+    public function getDate(): ?DateTimeInterface
     {
-        $this->position = $position;
+        return $this->date;
     }
 
     /**
-     * @param bool|null $active
+     * @return string|null
+     *
+     * @SerializedName("position")
      */
-    public function setActive(?bool $active): void
+    public function getPosition(): ?string
     {
-        $this->active = $active;
+        return $this->position;
     }
 
     /**
@@ -461,13 +484,11 @@ final class Currency extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("active")
+     * @param bool|null $active
      */
-    public function isActive(): ?bool
+    public function setActive(?bool $active): void
     {
-        return $this->active;
+        $this->active = $active;
     }
 
     /**
@@ -535,6 +556,16 @@ final class Currency extends Base
     public function setDecimalPlaces(?int $decimal_places): void
     {
         $this->decimal_places = $decimal_places;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("active")
+     */
+    public function isActive(): ?bool
+    {
+        return $this->active;
     }
 
     /**

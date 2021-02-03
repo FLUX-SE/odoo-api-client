@@ -28,7 +28,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 final class Rule extends Base
 {
     /**
-     * Workspace
+     * Related Workspace
      * ---
      * Relation : many2one (documents.folder)
      * @see \Flux\OdooApiClient\Model\Object\Documents\Folder
@@ -41,7 +41,7 @@ final class Rule extends Base
     private $domain_folder_id;
 
     /**
-     * Rule name
+     * Action Button Name
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -287,6 +287,16 @@ final class Rule extends Base
     private $activity_note;
 
     /**
+     * Set the activity on the document owner
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $has_owner_activity;
+
+    /**
      * Responsible
      * ---
      * Relation : many2one (res.users)
@@ -314,7 +324,7 @@ final class Rule extends Base
      * ---
      * Selection :
      *     -> product.template (Product template)
-     *     -> sign.template.new (Create signature request)
+     *     -> sign.template.new (Signature request)
      *     -> sign.template.direct (Sign directly)
      *     -> account.move.in_invoice (Vendor bill)
      *     -> account.move.out_invoice (Customer invoice)
@@ -375,14 +385,14 @@ final class Rule extends Base
     private $write_date;
 
     /**
-     * @param OdooRelation $domain_folder_id Workspace
+     * @param OdooRelation $domain_folder_id Related Workspace
      *        ---
      *        Relation : many2one (documents.folder)
      *        @see \Flux\OdooApiClient\Model\Object\Documents\Folder
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param string $name Rule name
+     * @param string $name Action Button Name
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -394,93 +404,6 @@ final class Rule extends Base
     }
 
     /**
-     * @param string|null $activity_date_deadline_range_type
-     */
-    public function setActivityDateDeadlineRangeType(?string $activity_date_deadline_range_type): void
-    {
-        $this->activity_date_deadline_range_type = $activity_date_deadline_range_type;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeTagActionIds(OdooRelation $item): void
-    {
-        if (null === $this->tag_action_ids) {
-            $this->tag_action_ids = [];
-        }
-
-        if ($this->hasTagActionIds($item)) {
-            $index = array_search($item, $this->tag_action_ids);
-            unset($this->tag_action_ids[$index]);
-        }
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("folder_id")
-     */
-    public function getFolderId(): ?OdooRelation
-    {
-        return $this->folder_id;
-    }
-
-    /**
-     * @param OdooRelation|null $folder_id
-     */
-    public function setFolderId(?OdooRelation $folder_id): void
-    {
-        $this->folder_id = $folder_id;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("remove_activities")
-     */
-    public function isRemoveActivities(): ?bool
-    {
-        return $this->remove_activities;
-    }
-
-    /**
-     * @param bool|null $remove_activities
-     */
-    public function setRemoveActivities(?bool $remove_activities): void
-    {
-        $this->remove_activities = $remove_activities;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("activity_option")
-     */
-    public function isActivityOption(): ?bool
-    {
-        return $this->activity_option;
-    }
-
-    /**
-     * @param bool|null $activity_option
-     */
-    public function setActivityOption(?bool $activity_option): void
-    {
-        $this->activity_option = $activity_option;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("activity_type_id")
-     */
-    public function getActivityTypeId(): ?OdooRelation
-    {
-        return $this->activity_type_id;
-    }
-
-    /**
      * @param OdooRelation|null $activity_type_id
      */
     public function setActivityTypeId(?OdooRelation $activity_type_id): void
@@ -489,39 +412,11 @@ final class Rule extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("activity_summary")
+     * @param string|null $activity_date_deadline_range_type
      */
-    public function getActivitySummary(): ?string
+    public function setActivityDateDeadlineRangeType(?string $activity_date_deadline_range_type): void
     {
-        return $this->activity_summary;
-    }
-
-    /**
-     * @param string|null $activity_summary
-     */
-    public function setActivitySummary(?string $activity_summary): void
-    {
-        $this->activity_summary = $activity_summary;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("activity_date_deadline_range")
-     */
-    public function getActivityDateDeadlineRange(): ?int
-    {
-        return $this->activity_date_deadline_range;
-    }
-
-    /**
-     * @param int|null $activity_date_deadline_range
-     */
-    public function setActivityDateDeadlineRange(?int $activity_date_deadline_range): void
-    {
-        $this->activity_date_deadline_range = $activity_date_deadline_range;
+        $this->activity_date_deadline_range_type = $activity_date_deadline_range_type;
     }
 
     /**
@@ -535,6 +430,114 @@ final class Rule extends Base
     }
 
     /**
+     * @param int|null $activity_date_deadline_range
+     */
+    public function setActivityDateDeadlineRange(?int $activity_date_deadline_range): void
+    {
+        $this->activity_date_deadline_range = $activity_date_deadline_range;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("activity_date_deadline_range")
+     */
+    public function getActivityDateDeadlineRange(): ?int
+    {
+        return $this->activity_date_deadline_range;
+    }
+
+    /**
+     * @param string|null $activity_summary
+     */
+    public function setActivitySummary(?string $activity_summary): void
+    {
+        $this->activity_summary = $activity_summary;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("activity_summary")
+     */
+    public function getActivitySummary(): ?string
+    {
+        return $this->activity_summary;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("activity_type_id")
+     */
+    public function getActivityTypeId(): ?OdooRelation
+    {
+        return $this->activity_type_id;
+    }
+
+    /**
+     * @param string|null $activity_note
+     */
+    public function setActivityNote(?string $activity_note): void
+    {
+        $this->activity_note = $activity_note;
+    }
+
+    /**
+     * @param bool|null $activity_option
+     */
+    public function setActivityOption(?bool $activity_option): void
+    {
+        $this->activity_option = $activity_option;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("activity_option")
+     */
+    public function isActivityOption(): ?bool
+    {
+        return $this->activity_option;
+    }
+
+    /**
+     * @param bool|null $remove_activities
+     */
+    public function setRemoveActivities(?bool $remove_activities): void
+    {
+        $this->remove_activities = $remove_activities;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("remove_activities")
+     */
+    public function isRemoveActivities(): ?bool
+    {
+        return $this->remove_activities;
+    }
+
+    /**
+     * @param OdooRelation|null $folder_id
+     */
+    public function setFolderId(?OdooRelation $folder_id): void
+    {
+        $this->folder_id = $folder_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("folder_id")
+     */
+    public function getFolderId(): ?OdooRelation
+    {
+        return $this->folder_id;
+    }
+
+    /**
      * @return string|null
      *
      * @SerializedName("activity_note")
@@ -545,17 +548,29 @@ final class Rule extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return bool|null
      *
-     * @return bool
+     * @SerializedName("has_owner_activity")
      */
-    public function hasTagActionIds(OdooRelation $item): bool
+    public function isHasOwnerActivity(): ?bool
     {
-        if (null === $this->tag_action_ids) {
-            return false;
+        return $this->has_owner_activity;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addTagActionIds(OdooRelation $item): void
+    {
+        if ($this->hasTagActionIds($item)) {
+            return;
         }
 
-        return in_array($item, $this->tag_action_ids);
+        if (null === $this->tag_action_ids) {
+            $this->tag_action_ids = [];
+        }
+
+        $this->tag_action_ids[] = $item;
     }
 
     /**
@@ -631,11 +646,11 @@ final class Rule extends Base
     }
 
     /**
-     * @param string|null $activity_note
+     * @param bool|null $has_owner_activity
      */
-    public function setActivityNote(?string $activity_note): void
+    public function setHasOwnerActivity(?bool $has_owner_activity): void
     {
-        $this->activity_note = $activity_note;
+        $this->has_owner_activity = $has_owner_activity;
     }
 
     /**
@@ -695,25 +710,30 @@ final class Rule extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addTagActionIds(OdooRelation $item): void
+    public function removeTagActionIds(OdooRelation $item): void
     {
-        if ($this->hasTagActionIds($item)) {
-            return;
-        }
-
         if (null === $this->tag_action_ids) {
             $this->tag_action_ids = [];
         }
 
-        $this->tag_action_ids[] = $item;
+        if ($this->hasTagActionIds($item)) {
+            $index = array_search($item, $this->tag_action_ids);
+            unset($this->tag_action_ids[$index]);
+        }
     }
 
     /**
-     * @param OdooRelation[]|null $tag_action_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setTagActionIds(?array $tag_action_ids): void
+    public function hasTagActionIds(OdooRelation $item): bool
     {
-        $this->tag_action_ids = $tag_action_ids;
+        if (null === $this->tag_action_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->tag_action_ids);
     }
 
     /**
@@ -727,76 +747,6 @@ final class Rule extends Base
     }
 
     /**
-     * @param OdooRelation|null $criteria_owner_id
-     */
-    public function setCriteriaOwnerId(?OdooRelation $criteria_owner_id): void
-    {
-        $this->criteria_owner_id = $criteria_owner_id;
-    }
-
-    /**
-     * @param OdooRelation $domain_folder_id
-     */
-    public function setDomainFolderId(OdooRelation $domain_folder_id): void
-    {
-        $this->domain_folder_id = $domain_folder_id;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("name")
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("note")
-     */
-    public function getNote(): ?string
-    {
-        return $this->note;
-    }
-
-    /**
-     * @param string|null $note
-     */
-    public function setNote(?string $note): void
-    {
-        $this->note = $note;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("sequence")
-     */
-    public function getSequence(): ?int
-    {
-        return $this->sequence;
-    }
-
-    /**
-     * @param int|null $sequence
-     */
-    public function setSequence(?int $sequence): void
-    {
-        $this->sequence = $sequence;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("condition_type")
@@ -804,50 +754,6 @@ final class Rule extends Base
     public function getConditionType(): ?string
     {
         return $this->condition_type;
-    }
-
-    /**
-     * @param string|null $condition_type
-     */
-    public function setConditionType(?string $condition_type): void
-    {
-        $this->condition_type = $condition_type;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("domain")
-     */
-    public function getDomain(): ?string
-    {
-        return $this->domain;
-    }
-
-    /**
-     * @param string|null $domain
-     */
-    public function setDomain(?string $domain): void
-    {
-        $this->domain = $domain;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("criteria_partner_id")
-     */
-    public function getCriteriaPartnerId(): ?OdooRelation
-    {
-        return $this->criteria_partner_id;
-    }
-
-    /**
-     * @param OdooRelation|null $criteria_partner_id
-     */
-    public function setCriteriaPartnerId(?OdooRelation $criteria_partner_id): void
-    {
-        $this->criteria_partner_id = $criteria_partner_id;
     }
 
     /**
@@ -861,6 +767,58 @@ final class Rule extends Base
     }
 
     /**
+     * @param OdooRelation|null $criteria_partner_id
+     */
+    public function setCriteriaPartnerId(?OdooRelation $criteria_partner_id): void
+    {
+        $this->criteria_partner_id = $criteria_partner_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("criteria_partner_id")
+     */
+    public function getCriteriaPartnerId(): ?OdooRelation
+    {
+        return $this->criteria_partner_id;
+    }
+
+    /**
+     * @param string|null $domain
+     */
+    public function setDomain(?string $domain): void
+    {
+        $this->domain = $domain;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("domain")
+     */
+    public function getDomain(): ?string
+    {
+        return $this->domain;
+    }
+
+    /**
+     * @param string|null $condition_type
+     */
+    public function setConditionType(?string $condition_type): void
+    {
+        $this->condition_type = $condition_type;
+    }
+
+    /**
+     * @param int|null $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("required_tag_ids")
@@ -871,6 +829,94 @@ final class Rule extends Base
     }
 
     /**
+     * @return int|null
+     *
+     * @SerializedName("sequence")
+     */
+    public function getSequence(): ?int
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * @param string|null $note
+     */
+    public function setNote(?string $note): void
+    {
+        $this->note = $note;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("note")
+     */
+    public function getNote(): ?string
+    {
+        return $this->note;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("name")
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param OdooRelation $domain_folder_id
+     */
+    public function setDomainFolderId(OdooRelation $domain_folder_id): void
+    {
+        $this->domain_folder_id = $domain_folder_id;
+    }
+
+    /**
+     * @param OdooRelation|null $criteria_owner_id
+     */
+    public function setCriteriaOwnerId(?OdooRelation $criteria_owner_id): void
+    {
+        $this->criteria_owner_id = $criteria_owner_id;
+    }
+
+    /**
+     * @param OdooRelation[]|null $required_tag_ids
+     */
+    public function setRequiredTagIds(?array $required_tag_ids): void
+    {
+        $this->required_tag_ids = $required_tag_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $tag_action_ids
+     */
+    public function setTagActionIds(?array $tag_action_ids): void
+    {
+        $this->tag_action_ids = $tag_action_ids;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("limited_to_single_record")
+     */
+    public function isLimitedToSingleRecord(): ?bool
+    {
+        return $this->limited_to_single_record;
+    }
+
+    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("tag_action_ids")
@@ -878,21 +924,6 @@ final class Rule extends Base
     public function getTagActionIds(): ?array
     {
         return $this->tag_action_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeExcludedTagIds(OdooRelation $item): void
-    {
-        if (null === $this->excluded_tag_ids) {
-            $this->excluded_tag_ids = [];
-        }
-
-        if ($this->hasExcludedTagIds($item)) {
-            $index = array_search($item, $this->excluded_tag_ids);
-            unset($this->excluded_tag_ids[$index]);
-        }
     }
 
     /**
@@ -940,13 +971,32 @@ final class Rule extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("limited_to_single_record")
+     * @param OdooRelation $item
      */
-    public function isLimitedToSingleRecord(): ?bool
+    public function removeExcludedTagIds(OdooRelation $item): void
     {
-        return $this->limited_to_single_record;
+        if (null === $this->excluded_tag_ids) {
+            $this->excluded_tag_ids = [];
+        }
+
+        if ($this->hasExcludedTagIds($item)) {
+            $index = array_search($item, $this->excluded_tag_ids);
+            unset($this->excluded_tag_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasRequiredTagIds(OdooRelation $item): bool
+    {
+        if (null === $this->required_tag_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->required_tag_ids);
     }
 
     /**
@@ -963,14 +1013,6 @@ final class Rule extends Base
         }
 
         $this->excluded_tag_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation[]|null $required_tag_ids
-     */
-    public function setRequiredTagIds(?array $required_tag_ids): void
-    {
-        $this->required_tag_ids = $required_tag_ids;
     }
 
     /**
@@ -1034,20 +1076,6 @@ final class Rule extends Base
         }
 
         $this->required_tag_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasRequiredTagIds(OdooRelation $item): bool
-    {
-        if (null === $this->required_tag_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->required_tag_ids);
     }
 
     /**

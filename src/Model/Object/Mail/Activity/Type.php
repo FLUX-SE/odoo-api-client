@@ -105,6 +105,16 @@ final class Type extends Base
     private $delay_unit;
 
     /**
+     * Delay Label
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $delay_label;
+
+    /**
      * Delay Type
      * ---
      * Type of delay
@@ -239,7 +249,7 @@ final class Type extends Base
     /**
      * Initial model
      * ---
-     * Technical field to keep trace of the model at the beginning of the edition for UX related behaviour
+     * Technical field to keep track of the model at the start of editing to support UX related behaviour
      * ---
      * Relation : many2one (ir.model)
      * @see \Flux\OdooApiClient\Model\Object\Ir\Model
@@ -401,6 +411,22 @@ final class Type extends Base
     /**
      * @param OdooRelation $item
      */
+    public function addPreviousTypeIds(OdooRelation $item): void
+    {
+        if ($this->hasPreviousTypeIds($item)) {
+            return;
+        }
+
+        if (null === $this->previous_type_ids) {
+            $this->previous_type_ids = [];
+        }
+
+        $this->previous_type_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
     public function removePreviousTypeIds(OdooRelation $item): void
     {
         if (null === $this->previous_type_ids) {
@@ -555,17 +581,11 @@ final class Type extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param OdooRelation[]|null $previous_type_ids
      */
-    public function hasPreviousTypeIds(OdooRelation $item): bool
+    public function setPreviousTypeIds(?array $previous_type_ids): void
     {
-        if (null === $this->previous_type_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->previous_type_ids);
+        $this->previous_type_ids = $previous_type_ids;
     }
 
     /**
@@ -709,26 +729,26 @@ final class Type extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function addPreviousTypeIds(OdooRelation $item): void
+    public function hasPreviousTypeIds(OdooRelation $item): bool
     {
-        if ($this->hasPreviousTypeIds($item)) {
-            return;
-        }
-
         if (null === $this->previous_type_ids) {
-            $this->previous_type_ids = [];
+            return false;
         }
 
-        $this->previous_type_ids[] = $item;
+        return in_array($item, $this->previous_type_ids);
     }
 
     /**
-     * @param OdooRelation[]|null $previous_type_ids
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("previous_type_ids")
      */
-    public function setPreviousTypeIds(?array $previous_type_ids): void
+    public function getPreviousTypeIds(): ?array
     {
-        $this->previous_type_ids = $previous_type_ids;
+        return $this->previous_type_ids;
     }
 
     /**
@@ -742,11 +762,11 @@ final class Type extends Base
     }
 
     /**
-     * @param string $delay_from
+     * @param string|null $delay_label
      */
-    public function setDelayFrom(string $delay_from): void
+    public function setDelayLabel(?string $delay_label): void
     {
-        $this->delay_from = $delay_from;
+        $this->delay_label = $delay_label;
     }
 
     /**
@@ -866,6 +886,16 @@ final class Type extends Base
     }
 
     /**
+     * @return string|null
+     *
+     * @SerializedName("delay_label")
+     */
+    public function getDelayLabel(): ?string
+    {
+        return $this->delay_label;
+    }
+
+    /**
      * @return string
      *
      * @SerializedName("delay_from")
@@ -876,77 +906,18 @@ final class Type extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("icon")
+     * @param OdooRelation $item
      */
-    public function getIcon(): ?string
+    public function removeNextTypeIds(OdooRelation $item): void
     {
-        return $this->icon;
-    }
+        if (null === $this->next_type_ids) {
+            $this->next_type_ids = [];
+        }
 
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("previous_type_ids")
-     */
-    public function getPreviousTypeIds(): ?array
-    {
-        return $this->previous_type_ids;
-    }
-
-    /**
-     * @param string|null $icon
-     */
-    public function setIcon(?string $icon): void
-    {
-        $this->icon = $icon;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("decoration_type")
-     */
-    public function getDecorationType(): ?string
-    {
-        return $this->decoration_type;
-    }
-
-    /**
-     * @param string|null $decoration_type
-     */
-    public function setDecorationType(?string $decoration_type): void
-    {
-        $this->decoration_type = $decoration_type;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("res_model_id")
-     */
-    public function getResModelId(): ?OdooRelation
-    {
-        return $this->res_model_id;
-    }
-
-    /**
-     * @param OdooRelation|null $res_model_id
-     */
-    public function setResModelId(?OdooRelation $res_model_id): void
-    {
-        $this->res_model_id = $res_model_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("default_next_type_id")
-     */
-    public function getDefaultNextTypeId(): ?OdooRelation
-    {
-        return $this->default_next_type_id;
+        if ($this->hasNextTypeIds($item)) {
+            $index = array_search($item, $this->next_type_ids);
+            unset($this->next_type_ids[$index]);
+        }
     }
 
     /**
@@ -955,56 +926,6 @@ final class Type extends Base
     public function setDefaultNextTypeId(?OdooRelation $default_next_type_id): void
     {
         $this->default_next_type_id = $default_next_type_id;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("force_next")
-     */
-    public function isForceNext(): ?bool
-    {
-        return $this->force_next;
-    }
-
-    /**
-     * @param bool|null $force_next
-     */
-    public function setForceNext(?bool $force_next): void
-    {
-        $this->force_next = $force_next;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("next_type_ids")
-     */
-    public function getNextTypeIds(): ?array
-    {
-        return $this->next_type_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $next_type_ids
-     */
-    public function setNextTypeIds(?array $next_type_ids): void
-    {
-        $this->next_type_ids = $next_type_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasNextTypeIds(OdooRelation $item): bool
-    {
-        if (null === $this->next_type_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->next_type_ids);
     }
 
     /**
@@ -1025,17 +946,124 @@ final class Type extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removeNextTypeIds(OdooRelation $item): void
+    public function hasNextTypeIds(OdooRelation $item): bool
     {
         if (null === $this->next_type_ids) {
-            $this->next_type_ids = [];
+            return false;
         }
 
-        if ($this->hasNextTypeIds($item)) {
-            $index = array_search($item, $this->next_type_ids);
-            unset($this->next_type_ids[$index]);
-        }
+        return in_array($item, $this->next_type_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $next_type_ids
+     */
+    public function setNextTypeIds(?array $next_type_ids): void
+    {
+        $this->next_type_ids = $next_type_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("next_type_ids")
+     */
+    public function getNextTypeIds(): ?array
+    {
+        return $this->next_type_ids;
+    }
+
+    /**
+     * @param bool|null $force_next
+     */
+    public function setForceNext(?bool $force_next): void
+    {
+        $this->force_next = $force_next;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("force_next")
+     */
+    public function isForceNext(): ?bool
+    {
+        return $this->force_next;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("default_next_type_id")
+     */
+    public function getDefaultNextTypeId(): ?OdooRelation
+    {
+        return $this->default_next_type_id;
+    }
+
+    /**
+     * @param string $delay_from
+     */
+    public function setDelayFrom(string $delay_from): void
+    {
+        $this->delay_from = $delay_from;
+    }
+
+    /**
+     * @param OdooRelation|null $res_model_id
+     */
+    public function setResModelId(?OdooRelation $res_model_id): void
+    {
+        $this->res_model_id = $res_model_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("res_model_id")
+     */
+    public function getResModelId(): ?OdooRelation
+    {
+        return $this->res_model_id;
+    }
+
+    /**
+     * @param string|null $decoration_type
+     */
+    public function setDecorationType(?string $decoration_type): void
+    {
+        $this->decoration_type = $decoration_type;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("decoration_type")
+     */
+    public function getDecorationType(): ?string
+    {
+        return $this->decoration_type;
+    }
+
+    /**
+     * @param string|null $icon
+     */
+    public function setIcon(?string $icon): void
+    {
+        $this->icon = $icon;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("icon")
+     */
+    public function getIcon(): ?string
+    {
+        return $this->icon;
     }
 
     /**

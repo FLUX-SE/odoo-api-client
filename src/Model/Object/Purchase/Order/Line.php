@@ -68,7 +68,10 @@ final class Line extends Base
     private $product_uom_qty;
 
     /**
-     * Scheduled Date
+     * Delivery Date
+     * ---
+     * Delivery date expected from vendor. This date respectively defaults to vendor pricelist lead time then today's
+     * date.
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -305,6 +308,16 @@ final class Line extends Base
     private $qty_received_manual;
 
     /**
+     * To Invoice Quantity
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var float|null
+     */
+    private $qty_to_invoice;
+
+    /**
      * Partner
      * ---
      * You can find a vendor by its Name, TIN, Email or Internal Reference.
@@ -335,7 +348,7 @@ final class Line extends Base
     /**
      * Order Date
      * ---
-     * Depicts the date where the Quotation should be validated and converted into a purchase order.
+     * Depicts the date within which the Quotation should be confirmed and converted into a purchase order.
      * ---
      * Searchable : yes
      * Sortable : no
@@ -363,7 +376,7 @@ final class Line extends Base
     /**
      * Received Qty Method
      * ---
-     * According to product configuration, the recieved quantity can be automatically computed by mechanism :
+     * According to product configuration, the received quantity can be automatically computed by mechanism :
      *     - Manual: the quantity is set manually on the line
      *     - Stock Moves: the quantity comes from confirmed pickings
      *
@@ -419,28 +432,14 @@ final class Line extends Base
     private $move_dest_ids;
 
     /**
-     * Propagate Rescheduling
-     * ---
-     * The rescheduling is propagated to the next move.
+     * Custom Description
      * ---
      * Searchable : yes
      * Sortable : yes
      *
-     * @var bool|null
+     * @var string|null
      */
-    private $propagate_date;
-
-    /**
-     * Reschedule if Higher Than
-     * ---
-     * The change must be higher than this value to be propagated
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var int|null
-     */
-    private $propagate_date_minimum_delta;
+    private $product_description_variants;
 
     /**
      * Propagate cancellation
@@ -554,42 +553,11 @@ final class Line extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $date_order
+     * @param OdooRelation|null $currency_id
      */
-    public function setDateOrder(?DateTimeInterface $date_order): void
+    public function setCurrencyId(?OdooRelation $currency_id): void
     {
-        $this->date_order = $date_order;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMoveIds(OdooRelation $item): void
-    {
-        if (null === $this->move_ids) {
-            $this->move_ids = [];
-        }
-
-        if ($this->hasMoveIds($item)) {
-            $index = array_search($item, $this->move_ids);
-            unset($this->move_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addMoveIds(OdooRelation $item): void
-    {
-        if ($this->hasMoveIds($item)) {
-            return;
-        }
-
-        if (null === $this->move_ids) {
-            $this->move_ids = [];
-        }
-
-        $this->move_ids[] = $item;
+        $this->currency_id = $currency_id;
     }
 
     /**
@@ -661,6 +629,14 @@ final class Line extends Base
     }
 
     /**
+     * @param DateTimeInterface|null $date_order
+     */
+    public function setDateOrder(?DateTimeInterface $date_order): void
+    {
+        $this->date_order = $date_order;
+    }
+
+    /**
      * @return DateTimeInterface|null
      *
      * @SerializedName("date_order")
@@ -671,22 +647,6 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation|null $orderpoint_id
-     */
-    public function setOrderpointId(?OdooRelation $orderpoint_id): void
-    {
-        $this->orderpoint_id = $orderpoint_id;
-    }
-
-    /**
-     * @param OdooRelation|null $currency_id
-     */
-    public function setCurrencyId(?OdooRelation $currency_id): void
-    {
-        $this->currency_id = $currency_id;
-    }
-
-    /**
      * @return OdooRelation|null
      *
      * @SerializedName("currency_id")
@@ -694,6 +654,21 @@ final class Line extends Base
     public function getCurrencyId(): ?OdooRelation
     {
         return $this->currency_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMoveIds(OdooRelation $item): void
+    {
+        if (null === $this->move_ids) {
+            $this->move_ids = [];
+        }
+
+        if ($this->hasMoveIds($item)) {
+            $index = array_search($item, $this->move_ids);
+            unset($this->move_ids[$index]);
+        }
     }
 
     /**
@@ -712,6 +687,24 @@ final class Line extends Base
     public function getPartnerId(): ?OdooRelation
     {
         return $this->partner_id;
+    }
+
+    /**
+     * @param float|null $qty_to_invoice
+     */
+    public function setQtyToInvoice(?float $qty_to_invoice): void
+    {
+        $this->qty_to_invoice = $qty_to_invoice;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("qty_to_invoice")
+     */
+    public function getQtyToInvoice(): ?float
+    {
+        return $this->qty_to_invoice;
     }
 
     /**
@@ -759,6 +752,22 @@ final class Line extends Base
     }
 
     /**
+     * @param OdooRelation $item
+     */
+    public function addMoveIds(OdooRelation $item): void
+    {
+        if ($this->hasMoveIds($item)) {
+            return;
+        }
+
+        if (null === $this->move_ids) {
+            $this->move_ids = [];
+        }
+
+        $this->move_ids[] = $item;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("orderpoint_id")
@@ -766,16 +775,6 @@ final class Line extends Base
     public function getOrderpointId(): ?OdooRelation
     {
         return $this->orderpoint_id;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("move_dest_ids")
-     */
-    public function getMoveDestIds(): ?array
-    {
-        return $this->move_dest_ids;
     }
 
     /**
@@ -892,11 +891,11 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $move_dest_ids
+     * @param OdooRelation|null $orderpoint_id
      */
-    public function setMoveDestIds(?array $move_dest_ids): void
+    public function setOrderpointId(?OdooRelation $orderpoint_id): void
     {
-        $this->move_dest_ids = $move_dest_ids;
+        $this->orderpoint_id = $orderpoint_id;
     }
 
     /**
@@ -928,39 +927,21 @@ final class Line extends Base
     }
 
     /**
-     * @param int|null $propagate_date_minimum_delta
+     * @param string|null $product_description_variants
      */
-    public function setPropagateDateMinimumDelta(?int $propagate_date_minimum_delta): void
+    public function setProductDescriptionVariants(?string $product_description_variants): void
     {
-        $this->propagate_date_minimum_delta = $propagate_date_minimum_delta;
+        $this->product_description_variants = $product_description_variants;
     }
 
     /**
-     * @return int|null
+     * @return string|null
      *
-     * @SerializedName("propagate_date_minimum_delta")
+     * @SerializedName("product_description_variants")
      */
-    public function getPropagateDateMinimumDelta(): ?int
+    public function getProductDescriptionVariants(): ?string
     {
-        return $this->propagate_date_minimum_delta;
-    }
-
-    /**
-     * @param bool|null $propagate_date
-     */
-    public function setPropagateDate(?bool $propagate_date): void
-    {
-        $this->propagate_date = $propagate_date;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("propagate_date")
-     */
-    public function isPropagateDate(): ?bool
-    {
-        return $this->propagate_date;
+        return $this->product_description_variants;
     }
 
     /**
@@ -1006,6 +987,24 @@ final class Line extends Base
         }
 
         return in_array($item, $this->move_dest_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $move_dest_ids
+     */
+    public function setMoveDestIds(?array $move_dest_ids): void
+    {
+        $this->move_dest_ids = $move_dest_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("move_dest_ids")
+     */
+    public function getMoveDestIds(): ?array
+    {
+        return $this->move_dest_ids;
     }
 
     /**

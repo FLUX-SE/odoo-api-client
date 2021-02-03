@@ -41,7 +41,22 @@ final class Notification extends Base
     private $mail_message_id;
 
     /**
-     * Needaction Recipient
+     * Mail
+     * ---
+     * Optional mail_mail ID. Used mainly to optimize searches.
+     * ---
+     * Relation : many2one (mail.mail)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Mail
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $mail_id;
+
+    /**
+     * Recipient
      * ---
      * Relation : many2one (res.partner)
      * @see \Flux\OdooApiClient\Model\Object\Res\Partner
@@ -54,17 +69,7 @@ final class Notification extends Base
     private $res_partner_id;
 
     /**
-     * Is Read
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $is_read;
-
-    /**
-     * Email Status
+     * Status
      * ---
      * Selection :
      *     -> ready (Ready to Send)
@@ -81,27 +86,14 @@ final class Notification extends Base
     private $notification_status;
 
     /**
-     * Mail
-     * ---
-     * Relation : many2one (mail.mail)
-     * @see \Flux\OdooApiClient\Model\Object\Mail\Mail
+     * Is Read
      * ---
      * Searchable : yes
      * Sortable : yes
      *
-     * @var OdooRelation|null
+     * @var bool|null
      */
-    private $mail_id;
-
-    /**
-     * Failure reason
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $failure_reason;
+    private $is_read;
 
     /**
      * Read Date
@@ -114,19 +106,14 @@ final class Notification extends Base
     private $read_date;
 
     /**
-     * Notification Type
-     * ---
-     * Selection :
-     *     -> inbox (Inbox)
-     *     -> email (Email)
-     *     -> sms (SMS)
+     * Failure reason
      * ---
      * Searchable : yes
      * Sortable : yes
      *
-     * @var string
+     * @var string|null
      */
-    private $notification_type;
+    private $failure_reason;
 
     /**
      * SMS
@@ -152,6 +139,35 @@ final class Notification extends Base
     private $sms_number;
 
     /**
+     * Notification Type
+     * ---
+     * Selection :
+     *     -> inbox (Inbox)
+     *     -> email (Email)
+     *     -> sms (SMS)
+     *     -> snail (Snailmail)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    private $notification_type;
+
+    /**
+     * Snailmail Letter
+     * ---
+     * Relation : many2one (snailmail.letter)
+     * @see \Flux\OdooApiClient\Model\Object\Snailmail\Letter
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $letter_id;
+
+    /**
      * Failure type
      * ---
      * Selection :
@@ -163,6 +179,13 @@ final class Notification extends Base
      *     -> sms_number_format (Wrong Number Format)
      *     -> sms_credit (Insufficient Credit)
      *     -> sms_server (Server Error)
+     *     -> sms_acc (Unregistered Account)
+     *     -> sn_credit (Snailmail Credit Error)
+     *     -> sn_trial (Snailmail Trial Error)
+     *     -> sn_price (Snailmail No Price Available)
+     *     -> sn_fields (Snailmail Missing Required Fields)
+     *     -> sn_format (Snailmail Format Error)
+     *     -> sn_error (Snailmail Unknown Error)
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -185,6 +208,7 @@ final class Notification extends Base
      *            -> inbox (Inbox)
      *            -> email (Email)
      *            -> sms (SMS)
+     *            -> snail (Snailmail)
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -196,13 +220,11 @@ final class Notification extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("read_date")
+     * @param string|null $failure_reason
      */
-    public function getReadDate(): ?DateTimeInterface
+    public function setFailureReason(?string $failure_reason): void
     {
-        return $this->read_date;
+        $this->failure_reason = $failure_reason;
     }
 
     /**
@@ -221,6 +243,42 @@ final class Notification extends Base
     public function getFailureType(): ?string
     {
         return $this->failure_type;
+    }
+
+    /**
+     * @param OdooRelation|null $letter_id
+     */
+    public function setLetterId(?OdooRelation $letter_id): void
+    {
+        $this->letter_id = $letter_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("letter_id")
+     */
+    public function getLetterId(): ?OdooRelation
+    {
+        return $this->letter_id;
+    }
+
+    /**
+     * @param string $notification_type
+     */
+    public function setNotificationType(string $notification_type): void
+    {
+        $this->notification_type = $notification_type;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("notification_type")
+     */
+    public function getNotificationType(): string
+    {
+        return $this->notification_type;
     }
 
     /**
@@ -260,37 +318,13 @@ final class Notification extends Base
     }
 
     /**
-     * @param string $notification_type
-     */
-    public function setNotificationType(string $notification_type): void
-    {
-        $this->notification_type = $notification_type;
-    }
-
-    /**
-     * @return string
+     * @return string|null
      *
-     * @SerializedName("notification_type")
+     * @SerializedName("failure_reason")
      */
-    public function getNotificationType(): string
+    public function getFailureReason(): ?string
     {
-        return $this->notification_type;
-    }
-
-    /**
-     * @param DateTimeInterface|null $read_date
-     */
-    public function setReadDate(?DateTimeInterface $read_date): void
-    {
-        $this->read_date = $read_date;
-    }
-
-    /**
-     * @param string|null $failure_reason
-     */
-    public function setFailureReason(?string $failure_reason): void
-    {
-        $this->failure_reason = $failure_reason;
+        return $this->failure_reason;
     }
 
     /**
@@ -304,49 +338,21 @@ final class Notification extends Base
     }
 
     /**
-     * @return string|null
+     * @param DateTimeInterface|null $read_date
+     */
+    public function setReadDate(?DateTimeInterface $read_date): void
+    {
+        $this->read_date = $read_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
      *
-     * @SerializedName("failure_reason")
+     * @SerializedName("read_date")
      */
-    public function getFailureReason(): ?string
+    public function getReadDate(): ?DateTimeInterface
     {
-        return $this->failure_reason;
-    }
-
-    /**
-     * @param OdooRelation|null $mail_id
-     */
-    public function setMailId(?OdooRelation $mail_id): void
-    {
-        $this->mail_id = $mail_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("mail_id")
-     */
-    public function getMailId(): ?OdooRelation
-    {
-        return $this->mail_id;
-    }
-
-    /**
-     * @param string|null $notification_status
-     */
-    public function setNotificationStatus(?string $notification_status): void
-    {
-        $this->notification_status = $notification_status;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("notification_status")
-     */
-    public function getNotificationStatus(): ?string
-    {
-        return $this->notification_status;
+        return $this->read_date;
     }
 
     /**
@@ -368,6 +374,24 @@ final class Notification extends Base
     }
 
     /**
+     * @param string|null $notification_status
+     */
+    public function setNotificationStatus(?string $notification_status): void
+    {
+        $this->notification_status = $notification_status;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("notification_status")
+     */
+    public function getNotificationStatus(): ?string
+    {
+        return $this->notification_status;
+    }
+
+    /**
      * @param OdooRelation|null $res_partner_id
      */
     public function setResPartnerId(?OdooRelation $res_partner_id): void
@@ -383,6 +407,24 @@ final class Notification extends Base
     public function getResPartnerId(): ?OdooRelation
     {
         return $this->res_partner_id;
+    }
+
+    /**
+     * @param OdooRelation|null $mail_id
+     */
+    public function setMailId(?OdooRelation $mail_id): void
+    {
+        $this->mail_id = $mail_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("mail_id")
+     */
+    public function getMailId(): ?OdooRelation
+    {
+        return $this->mail_id;
     }
 
     /**

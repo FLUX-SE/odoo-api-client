@@ -89,26 +89,6 @@ final class Line extends Base
     private $product_id;
 
     /**
-     * Unit Price
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var float
-     */
-    private $price_unit;
-
-    /**
-     * Discount (%)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var float|null
-     */
-    private $discount;
-
-    /**
      * Quantity
      * ---
      * Searchable : yes
@@ -221,35 +201,26 @@ final class Line extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param float $price_unit Unit Price
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
      * @param float $product_uom_qty Quantity
      *        ---
      *        Searchable : yes
      *        Sortable : yes
      */
-    public function __construct(
-        OdooRelation $sale_order_template_id,
-        string $name,
-        float $price_unit,
-        float $product_uom_qty
-    ) {
+    public function __construct(OdooRelation $sale_order_template_id, string $name, float $product_uom_qty)
+    {
         $this->sale_order_template_id = $sale_order_template_id;
         $this->name = $name;
-        $this->price_unit = $price_unit;
         $this->product_uom_qty = $product_uom_qty;
     }
 
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("product_uom_id")
+     * @SerializedName("product_uom_category_id")
      */
-    public function getProductUomId(): ?OdooRelation
+    public function getProductUomCategoryId(): ?OdooRelation
     {
-        return $this->product_uom_id;
+        return $this->product_uom_category_id;
     }
 
     /**
@@ -351,29 +322,11 @@ final class Line extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("product_uom_category_id")
-     */
-    public function getProductUomCategoryId(): ?OdooRelation
-    {
-        return $this->product_uom_category_id;
-    }
-
-    /**
      * @param OdooRelation|null $product_uom_id
      */
     public function setProductUomId(?OdooRelation $product_uom_id): void
     {
         $this->product_uom_id = $product_uom_id;
-    }
-
-    /**
-     * @param float $product_uom_qty
-     */
-    public function setProductUomQty(float $product_uom_qty): void
-    {
-        $this->product_uom_qty = $product_uom_qty;
     }
 
     /**
@@ -387,6 +340,24 @@ final class Line extends Base
     }
 
     /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("product_uom_id")
+     */
+    public function getProductUomId(): ?OdooRelation
+    {
+        return $this->product_uom_id;
+    }
+
+    /**
+     * @param float $product_uom_qty
+     */
+    public function setProductUomQty(float $product_uom_qty): void
+    {
+        $this->product_uom_qty = $product_uom_qty;
+    }
+
+    /**
      * @return float
      *
      * @SerializedName("product_uom_qty")
@@ -394,42 +365,6 @@ final class Line extends Base
     public function getProductUomQty(): float
     {
         return $this->product_uom_qty;
-    }
-
-    /**
-     * @param float|null $discount
-     */
-    public function setDiscount(?float $discount): void
-    {
-        $this->discount = $discount;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("discount")
-     */
-    public function getDiscount(): ?float
-    {
-        return $this->discount;
-    }
-
-    /**
-     * @param float $price_unit
-     */
-    public function setPriceUnit(float $price_unit): void
-    {
-        $this->price_unit = $price_unit;
-    }
-
-    /**
-     * @return float
-     *
-     * @SerializedName("price_unit")
-     */
-    public function getPriceUnit(): float
-    {
-        return $this->price_unit;
     }
 
     /**

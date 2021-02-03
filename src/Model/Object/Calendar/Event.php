@@ -15,11 +15,15 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  * Name : calendar.event
  * ---
  * Info :
- * Model for Calendar Event
+ * Main super-class for regular database-persisted Odoo models.
  *
- *                 Special context keys :
- *                         - `no_mail_to_attendees` : disabled sending email to attendees when creating/editing a
- * meeting
+ *         Odoo models are created by inheriting from this class::
+ *
+ *                 class user(Model):
+ *                         ...
+ *
+ *         The system will later instantiate the class once per database (on
+ *         which the class' module is installed).
  */
 final class Event extends Base
 {
@@ -32,30 +36,6 @@ final class Event extends Base
      * @var string
      */
     private $name;
-
-    /**
-     * Status
-     * ---
-     * Selection :
-     *     -> draft (Unconfirmed)
-     *     -> open (Confirmed)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $state;
-
-    /**
-     * Attendee
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $is_attendee;
 
     /**
      * Attendee Status
@@ -82,16 +62,6 @@ final class Event extends Base
      * @var string|null
      */
     private $display_time;
-
-    /**
-     * Date
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $display_start;
 
     /**
      * Start
@@ -138,16 +108,6 @@ final class Event extends Base
     private $start_date;
 
     /**
-     * Start DateTime
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var DateTimeInterface|null
-     */
-    private $start_datetime;
-
-    /**
      * End Date
      * ---
      * Searchable : yes
@@ -158,14 +118,308 @@ final class Event extends Base
     private $stop_date;
 
     /**
-     * End Datetime
+     * Duration
      * ---
      * Searchable : yes
      * Sortable : yes
      *
-     * @var DateTimeInterface|null
+     * @var float|null
      */
-    private $stop_datetime;
+    private $duration;
+
+    /**
+     * Description
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $description;
+
+    /**
+     * Privacy
+     * ---
+     * Selection :
+     *     -> public (Everyone)
+     *     -> private (Only me)
+     *     -> confidential (Only internal users)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    private $privacy;
+
+    /**
+     * Location
+     * ---
+     * Location of Event
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $location;
+
+    /**
+     * Show Time as
+     * ---
+     * Selection :
+     *     -> free (Free)
+     *     -> busy (Busy)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    private $show_as;
+
+    /**
+     * Document ID
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var int|null
+     */
+    private $res_id;
+
+    /**
+     * Document Model
+     * ---
+     * Relation : many2one (ir.model)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $res_model_id;
+
+    /**
+     * Document Model Name
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $res_model;
+
+    /**
+     * Activities
+     * ---
+     * Relation : one2many (mail.activity -> calendar_event_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $activity_ids;
+
+    /**
+     * Messages
+     * ---
+     * Relation : one2many (mail.message -> res_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $message_ids;
+
+    /**
+     * Responsible
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $user_id;
+
+    /**
+     * Responsible Contact
+     * ---
+     * Partner-related data of the user
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $partner_id;
+
+    /**
+     * Active
+     * ---
+     * If the active field is set to false, it will allow you to hide the event alarm information without removing
+     * it.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $active;
+
+    /**
+     * Tags
+     * ---
+     * Relation : many2many (calendar.event.type)
+     * @see \Flux\OdooApiClient\Model\Object\Calendar\Event\Type
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $categ_ids;
+
+    /**
+     * Participant
+     * ---
+     * Relation : one2many (calendar.attendee -> event_id)
+     * @see \Flux\OdooApiClient\Model\Object\Calendar\Attendee
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $attendee_ids;
+
+    /**
+     * Attendees
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $partner_ids;
+
+    /**
+     * Reminders
+     * ---
+     * Relation : many2many (calendar.alarm)
+     * @see \Flux\OdooApiClient\Model\Object\Calendar\Alarm
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $alarm_ids;
+
+    /**
+     * Is the Event Highlighted
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $is_highlighted;
+
+    /**
+     * Recurrent
+     * ---
+     * Recurrent Event
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $recurrency;
+
+    /**
+     * Recurrence Rule
+     * ---
+     * Relation : many2one (calendar.recurrence)
+     * @see \Flux\OdooApiClient\Model\Object\Calendar\Recurrence
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $recurrence_id;
+
+    /**
+     * Follow Recurrence
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $follow_recurrence;
+
+    /**
+     * Recurrence Update
+     * ---
+     * Choose what to do with other events in the recurrence. Updating All Events is not allowed when dates or time
+     * is modified
+     * ---
+     * Selection :
+     *     -> self_only (This event)
+     *     -> future_events (This and following events)
+     *     -> all_events (All events)
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $recurrence_update;
+
+    /**
+     * Recurrent Rule
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $rrule;
+
+    /**
+     * Recurrence
+     * ---
+     * Let the event automatically repeat at that interval
+     * ---
+     * Selection :
+     *     -> daily (Days)
+     *     -> weekly (Weeks)
+     *     -> monthly (Months)
+     *     -> yearly (Years)
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $rrule_type;
 
     /**
      * Timezone
@@ -346,7 +600,6 @@ final class Event extends Base
      *     -> America/North_Dakota/Beulah (America/North_Dakota/Beulah)
      *     -> America/North_Dakota/Center (America/North_Dakota/Center)
      *     -> America/North_Dakota/New_Salem (America/North_Dakota/New_Salem)
-     *     -> America/Nuuk (America/Nuuk)
      *     -> America/Ojinaga (America/Ojinaga)
      *     -> America/Panama (America/Panama)
      *     -> America/Pangnirtung (America/Pangnirtung)
@@ -765,192 +1018,12 @@ final class Event extends Base
      *     -> Etc/Universal (Etc/Universal)
      *     -> Etc/Zulu (Etc/Zulu)
      * ---
-     * Searchable : yes
-     * Sortable : yes
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
     private $event_tz;
-
-    /**
-     * Duration
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var float|null
-     */
-    private $duration;
-
-    /**
-     * Description
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $description;
-
-    /**
-     * Privacy
-     * ---
-     * Selection :
-     *     -> public (Everyone)
-     *     -> private (Only me)
-     *     -> confidential (Only internal users)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $privacy;
-
-    /**
-     * Location
-     * ---
-     * Location of Event
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $location;
-
-    /**
-     * Show Time as
-     * ---
-     * Selection :
-     *     -> free (Free)
-     *     -> busy (Busy)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $show_as;
-
-    /**
-     * Document ID
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var int|null
-     */
-    private $res_id;
-
-    /**
-     * Document Model
-     * ---
-     * Relation : many2one (ir.model)
-     * @see \Flux\OdooApiClient\Model\Object\Ir\Model
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $res_model_id;
-
-    /**
-     * Document Model Name
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $res_model;
-
-    /**
-     * Activities
-     * ---
-     * Relation : one2many (mail.activity -> calendar_event_id)
-     * @see \Flux\OdooApiClient\Model\Object\Mail\Activity
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $activity_ids;
-
-    /**
-     * Messages
-     * ---
-     * Relation : one2many (mail.message -> res_id)
-     * @see \Flux\OdooApiClient\Model\Object\Mail\Message
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $message_ids;
-
-    /**
-     * Recurrent Rule
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $rrule;
-
-    /**
-     * Recurrence
-     * ---
-     * Let the event automatically repeat at that interval
-     * ---
-     * Selection :
-     *     -> daily (Days)
-     *     -> weekly (Weeks)
-     *     -> monthly (Months)
-     *     -> yearly (Years)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $rrule_type;
-
-    /**
-     * Recurrent
-     * ---
-     * Recurrent Meeting
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $recurrency;
-
-    /**
-     * Recurrent ID
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var int|null
-     */
-    private $recurrent_id;
-
-    /**
-     * Recurrent ID date
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var DateTimeInterface|null
-     */
-    private $recurrent_id_date;
 
     /**
      * Recurrence Termination
@@ -958,9 +1031,10 @@ final class Event extends Base
      * Selection :
      *     -> count (Number of repetitions)
      *     -> end_date (End date)
+     *     -> forever (Forever)
      * ---
-     * Searchable : yes
-     * Sortable : yes
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
@@ -971,8 +1045,8 @@ final class Event extends Base
      * ---
      * Repeat every (Days/Week/Month/Year)
      * ---
-     * Searchable : yes
-     * Sortable : yes
+     * Searchable : no
+     * Sortable : no
      *
      * @var int|null
      */
@@ -983,8 +1057,8 @@ final class Event extends Base
      * ---
      * Repeat x times
      * ---
-     * Searchable : yes
-     * Sortable : yes
+     * Searchable : no
+     * Sortable : no
      *
      * @var int|null
      */
@@ -993,8 +1067,8 @@ final class Event extends Base
     /**
      * Mon
      * ---
-     * Searchable : yes
-     * Sortable : yes
+     * Searchable : no
+     * Sortable : no
      *
      * @var bool|null
      */
@@ -1003,8 +1077,8 @@ final class Event extends Base
     /**
      * Tue
      * ---
-     * Searchable : yes
-     * Sortable : yes
+     * Searchable : no
+     * Sortable : no
      *
      * @var bool|null
      */
@@ -1013,8 +1087,8 @@ final class Event extends Base
     /**
      * Wed
      * ---
-     * Searchable : yes
-     * Sortable : yes
+     * Searchable : no
+     * Sortable : no
      *
      * @var bool|null
      */
@@ -1023,8 +1097,8 @@ final class Event extends Base
     /**
      * Thu
      * ---
-     * Searchable : yes
-     * Sortable : yes
+     * Searchable : no
+     * Sortable : no
      *
      * @var bool|null
      */
@@ -1033,8 +1107,8 @@ final class Event extends Base
     /**
      * Fri
      * ---
-     * Searchable : yes
-     * Sortable : yes
+     * Searchable : no
+     * Sortable : no
      *
      * @var bool|null
      */
@@ -1043,8 +1117,8 @@ final class Event extends Base
     /**
      * Sat
      * ---
-     * Searchable : yes
-     * Sortable : yes
+     * Searchable : no
+     * Sortable : no
      *
      * @var bool|null
      */
@@ -1053,8 +1127,8 @@ final class Event extends Base
     /**
      * Sun
      * ---
-     * Searchable : yes
-     * Sortable : yes
+     * Searchable : no
+     * Sortable : no
      *
      * @var bool|null
      */
@@ -1067,8 +1141,8 @@ final class Event extends Base
      *     -> date (Date of month)
      *     -> day (Day of month)
      * ---
-     * Searchable : yes
-     * Sortable : yes
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
@@ -1077,8 +1151,8 @@ final class Event extends Base
     /**
      * Date of month
      * ---
-     * Searchable : yes
-     * Sortable : yes
+     * Searchable : no
+     * Sortable : no
      *
      * @var int|null
      */
@@ -1096,153 +1170,59 @@ final class Event extends Base
      *     -> SA (Saturday)
      *     -> SU (Sunday)
      * ---
-     * Searchable : yes
-     * Sortable : yes
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
-    private $week_list;
+    private $weekday;
 
     /**
-     * By day
+     * Byday
      * ---
      * Selection :
      *     -> 1 (First)
      *     -> 2 (Second)
      *     -> 3 (Third)
      *     -> 4 (Fourth)
-     *     -> 5 (Fifth)
      *     -> -1 (Last)
      * ---
-     * Searchable : yes
-     * Sortable : yes
+     * Searchable : no
+     * Sortable : no
      *
      * @var string|null
      */
     private $byday;
 
     /**
-     * Repeat Until
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var DateTimeInterface|null
-     */
-    private $final_date;
-
-    /**
-     * Owner
-     * ---
-     * Relation : many2one (res.users)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Users
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $user_id;
-
-    /**
-     * Responsible
-     * ---
-     * Partner-related data of the user
-     * ---
-     * Relation : many2one (res.partner)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation|null
-     */
-    private $partner_id;
-
-    /**
-     * Active
-     * ---
-     * If the active field is set to false, it will allow you to hide the event alarm information without removing
-     * it.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $active;
-
-    /**
-     * Tags
-     * ---
-     * Relation : many2many (calendar.event.type)
-     * @see \Flux\OdooApiClient\Model\Object\Calendar\Event\Type
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $categ_ids;
-
-    /**
-     * Participant
-     * ---
-     * Relation : one2many (calendar.attendee -> event_id)
-     * @see \Flux\OdooApiClient\Model\Object\Calendar\Attendee
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $attendee_ids;
-
-    /**
-     * Attendees
-     * ---
-     * Relation : many2many (res.partner)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $partner_ids;
-
-    /**
-     * Reminders
-     * ---
-     * Relation : many2many (calendar.alarm)
-     * @see \Flux\OdooApiClient\Model\Object\Calendar\Alarm
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $alarm_ids;
-
-    /**
-     * Is the Event Highlighted
+     * Until
      * ---
      * Searchable : no
      * Sortable : no
      *
-     * @var bool|null
+     * @var DateTimeInterface|null
      */
-    private $is_highlighted;
+    private $until;
 
     /**
-     * Odoo Update Date
+     * Need Sync
      * ---
      * Searchable : yes
      * Sortable : yes
      *
-     * @var DateTimeInterface|null
+     * @var bool|null
      */
-    private $oe_update_date;
+    private $need_sync;
+
+    /**
+     * Google Calendar Event Id
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $google_id;
 
     /**
      * Is Follower
@@ -1478,179 +1458,142 @@ final class Event extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $privacy Privacy
+     *        ---
+     *        Selection :
+     *            -> public (Everyone)
+     *            -> private (Only me)
+     *            -> confidential (Only internal users)
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $show_as Show Time as
+     *        ---
+     *        Selection :
+     *            -> free (Free)
+     *            -> busy (Busy)
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(string $name, DateTimeInterface $start, DateTimeInterface $stop)
-    {
+    public function __construct(
+        string $name,
+        DateTimeInterface $start,
+        DateTimeInterface $stop,
+        string $privacy,
+        string $show_as
+    ) {
         $this->name = $name;
         $this->start = $start;
         $this->stop = $stop;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addAlarmIds(OdooRelation $item): void
-    {
-        if ($this->hasAlarmIds($item)) {
-            return;
-        }
-
-        if (null === $this->alarm_ids) {
-            $this->alarm_ids = [];
-        }
-
-        $this->alarm_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation[]|null $partner_ids
-     */
-    public function setPartnerIds(?array $partner_ids): void
-    {
-        $this->partner_ids = $partner_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasPartnerIds(OdooRelation $item): bool
-    {
-        if (null === $this->partner_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->partner_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addPartnerIds(OdooRelation $item): void
-    {
-        if ($this->hasPartnerIds($item)) {
-            return;
-        }
-
-        if (null === $this->partner_ids) {
-            $this->partner_ids = [];
-        }
-
-        $this->partner_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removePartnerIds(OdooRelation $item): void
-    {
-        if (null === $this->partner_ids) {
-            $this->partner_ids = [];
-        }
-
-        if ($this->hasPartnerIds($item)) {
-            $index = array_search($item, $this->partner_ids);
-            unset($this->partner_ids[$index]);
-        }
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("alarm_ids")
-     */
-    public function getAlarmIds(): ?array
-    {
-        return $this->alarm_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $alarm_ids
-     */
-    public function setAlarmIds(?array $alarm_ids): void
-    {
-        $this->alarm_ids = $alarm_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasAlarmIds(OdooRelation $item): bool
-    {
-        if (null === $this->alarm_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->alarm_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeAlarmIds(OdooRelation $item): void
-    {
-        if (null === $this->alarm_ids) {
-            $this->alarm_ids = [];
-        }
-
-        if ($this->hasAlarmIds($item)) {
-            $index = array_search($item, $this->alarm_ids);
-            unset($this->alarm_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeAttendeeIds(OdooRelation $item): void
-    {
-        if (null === $this->attendee_ids) {
-            $this->attendee_ids = [];
-        }
-
-        if ($this->hasAttendeeIds($item)) {
-            $index = array_search($item, $this->attendee_ids);
-            unset($this->attendee_ids[$index]);
-        }
+        $this->privacy = $privacy;
+        $this->show_as = $show_as;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("is_highlighted")
+     * @SerializedName("need_sync")
      */
-    public function isIsHighlighted(): ?bool
+    public function isNeedSync(): ?bool
     {
-        return $this->is_highlighted;
+        return $this->need_sync;
     }
 
     /**
-     * @param bool|null $is_highlighted
+     * @param int|null $day
      */
-    public function setIsHighlighted(?bool $is_highlighted): void
+    public function setDay(?int $day): void
     {
-        $this->is_highlighted = $is_highlighted;
+        $this->day = $day;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("weekday")
+     */
+    public function getWeekday(): ?string
+    {
+        return $this->weekday;
+    }
+
+    /**
+     * @param string|null $weekday
+     */
+    public function setWeekday(?string $weekday): void
+    {
+        $this->weekday = $weekday;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("byday")
+     */
+    public function getByday(): ?string
+    {
+        return $this->byday;
+    }
+
+    /**
+     * @param string|null $byday
+     */
+    public function setByday(?string $byday): void
+    {
+        $this->byday = $byday;
     }
 
     /**
      * @return DateTimeInterface|null
      *
-     * @SerializedName("oe_update_date")
+     * @SerializedName("until")
      */
-    public function getOeUpdateDate(): ?DateTimeInterface
+    public function getUntil(): ?DateTimeInterface
     {
-        return $this->oe_update_date;
+        return $this->until;
     }
 
     /**
-     * @param DateTimeInterface|null $oe_update_date
+     * @param DateTimeInterface|null $until
      */
-    public function setOeUpdateDate(?DateTimeInterface $oe_update_date): void
+    public function setUntil(?DateTimeInterface $until): void
     {
-        $this->oe_update_date = $oe_update_date;
+        $this->until = $until;
+    }
+
+    /**
+     * @param bool|null $need_sync
+     */
+    public function setNeedSync(?bool $need_sync): void
+    {
+        $this->need_sync = $need_sync;
+    }
+
+    /**
+     * @param string|null $month_by
+     */
+    public function setMonthBy(?string $month_by): void
+    {
+        $this->month_by = $month_by;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("google_id")
+     */
+    public function getGoogleId(): ?string
+    {
+        return $this->google_id;
+    }
+
+    /**
+     * @param string|null $google_id
+     */
+    public function setGoogleId(?string $google_id): void
+    {
+        $this->google_id = $google_id;
     }
 
     /**
@@ -1690,29 +1633,17 @@ final class Event extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("partner_ids")
-     */
-    public function getPartnerIds(): ?array
-    {
-        return $this->partner_ids;
-    }
-
-    /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function addAttendeeIds(OdooRelation $item): void
+    public function hasMessageFollowerIds(OdooRelation $item): bool
     {
-        if ($this->hasAttendeeIds($item)) {
-            return;
+        if (null === $this->message_follower_ids) {
+            return false;
         }
 
-        if (null === $this->attendee_ids) {
-            $this->attendee_ids = [];
-        }
-
-        $this->attendee_ids[] = $item;
+        return in_array($item, $this->message_follower_ids);
     }
 
     /**
@@ -1732,210 +1663,195 @@ final class Event extends Base
     }
 
     /**
-     * @param OdooRelation|null $partner_id
+     * @return int|null
+     *
+     * @SerializedName("day")
      */
-    public function setPartnerId(?OdooRelation $partner_id): void
+    public function getDay(): ?int
     {
-        $this->partner_id = $partner_id;
-    }
-
-    /**
-     * @param string|null $week_list
-     */
-    public function setWeekList(?string $week_list): void
-    {
-        $this->week_list = $week_list;
+        return $this->day;
     }
 
     /**
      * @return string|null
      *
-     * @SerializedName("byday")
+     * @SerializedName("month_by")
      */
-    public function getByday(): ?string
+    public function getMonthBy(): ?string
     {
-        return $this->byday;
+        return $this->month_by;
     }
 
     /**
-     * @param string|null $byday
-     */
-    public function setByday(?string $byday): void
-    {
-        $this->byday = $byday;
-    }
-
-    /**
-     * @return DateTimeInterface|null
+     * @return OdooRelation[]|null
      *
-     * @SerializedName("final_date")
+     * @SerializedName("message_partner_ids")
      */
-    public function getFinalDate(): ?DateTimeInterface
+    public function getMessagePartnerIds(): ?array
     {
-        return $this->final_date;
+        return $this->message_partner_ids;
     }
 
     /**
-     * @param DateTimeInterface|null $final_date
+     * @param bool|null $tu
      */
-    public function setFinalDate(?DateTimeInterface $final_date): void
+    public function setTu(?bool $tu): void
     {
-        $this->final_date = $final_date;
+        $this->tu = $tu;
     }
 
     /**
-     * @return OdooRelation|null
+     * @return int|null
      *
-     * @SerializedName("user_id")
+     * @SerializedName("interval")
      */
-    public function getUserId(): ?OdooRelation
+    public function getInterval(): ?int
     {
-        return $this->user_id;
+        return $this->interval;
     }
 
     /**
-     * @param OdooRelation|null $user_id
+     * @param int|null $interval
      */
-    public function setUserId(?OdooRelation $user_id): void
+    public function setInterval(?int $interval): void
     {
-        $this->user_id = $user_id;
+        $this->interval = $interval;
     }
 
     /**
-     * @return OdooRelation|null
+     * @return int|null
      *
-     * @SerializedName("partner_id")
+     * @SerializedName("count")
      */
-    public function getPartnerId(): ?OdooRelation
+    public function getCount(): ?int
     {
-        return $this->partner_id;
+        return $this->count;
+    }
+
+    /**
+     * @param int|null $count
+     */
+    public function setCount(?int $count): void
+    {
+        $this->count = $count;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("active")
+     * @SerializedName("mo")
      */
-    public function isActive(): ?bool
+    public function isMo(): ?bool
     {
-        return $this->active;
+        return $this->mo;
     }
 
     /**
-     * @param OdooRelation $item
+     * @param bool|null $mo
+     */
+    public function setMo(?bool $mo): void
+    {
+        $this->mo = $mo;
+    }
+
+    /**
+     * @return bool|null
      *
-     * @return bool
+     * @SerializedName("tu")
      */
-    public function hasAttendeeIds(OdooRelation $item): bool
+    public function isTu(): ?bool
     {
-        if (null === $this->attendee_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->attendee_ids);
+        return $this->tu;
     }
 
     /**
-     * @param bool|null $active
-     */
-    public function setActive(?bool $active): void
-    {
-        $this->active = $active;
-    }
-
-    /**
-     * @return OdooRelation[]|null
+     * @return bool|null
      *
-     * @SerializedName("categ_ids")
+     * @SerializedName("we")
      */
-    public function getCategIds(): ?array
+    public function isWe(): ?bool
     {
-        return $this->categ_ids;
+        return $this->we;
     }
 
     /**
-     * @param OdooRelation[]|null $categ_ids
+     * @param bool|null $su
      */
-    public function setCategIds(?array $categ_ids): void
+    public function setSu(?bool $su): void
     {
-        $this->categ_ids = $categ_ids;
+        $this->su = $su;
     }
 
     /**
-     * @param OdooRelation $item
+     * @param bool|null $we
+     */
+    public function setWe(?bool $we): void
+    {
+        $this->we = $we;
+    }
+
+    /**
+     * @return bool|null
      *
-     * @return bool
+     * @SerializedName("th")
      */
-    public function hasCategIds(OdooRelation $item): bool
+    public function isTh(): ?bool
     {
-        if (null === $this->categ_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->categ_ids);
+        return $this->th;
     }
 
     /**
-     * @param OdooRelation $item
+     * @param bool|null $th
      */
-    public function addCategIds(OdooRelation $item): void
+    public function setTh(?bool $th): void
     {
-        if ($this->hasCategIds($item)) {
-            return;
-        }
-
-        if (null === $this->categ_ids) {
-            $this->categ_ids = [];
-        }
-
-        $this->categ_ids[] = $item;
+        $this->th = $th;
     }
 
     /**
-     * @param OdooRelation $item
-     */
-    public function removeCategIds(OdooRelation $item): void
-    {
-        if (null === $this->categ_ids) {
-            $this->categ_ids = [];
-        }
-
-        if ($this->hasCategIds($item)) {
-            $index = array_search($item, $this->categ_ids);
-            unset($this->categ_ids[$index]);
-        }
-    }
-
-    /**
-     * @return OdooRelation[]|null
+     * @return bool|null
      *
-     * @SerializedName("attendee_ids")
+     * @SerializedName("fr")
      */
-    public function getAttendeeIds(): ?array
+    public function isFr(): ?bool
     {
-        return $this->attendee_ids;
+        return $this->fr;
     }
 
     /**
-     * @param OdooRelation[]|null $attendee_ids
+     * @param bool|null $fr
      */
-    public function setAttendeeIds(?array $attendee_ids): void
+    public function setFr(?bool $fr): void
     {
-        $this->attendee_ids = $attendee_ids;
+        $this->fr = $fr;
     }
 
     /**
-     * @param OdooRelation $item
+     * @return bool|null
      *
-     * @return bool
+     * @SerializedName("sa")
      */
-    public function hasMessageFollowerIds(OdooRelation $item): bool
+    public function isSa(): ?bool
     {
-        if (null === $this->message_follower_ids) {
-            return false;
-        }
+        return $this->sa;
+    }
 
-        return in_array($item, $this->message_follower_ids);
+    /**
+     * @param bool|null $sa
+     */
+    public function setSa(?bool $sa): void
+    {
+        $this->sa = $sa;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("su")
+     */
+    public function isSu(): ?bool
+    {
+        return $this->su;
     }
 
     /**
@@ -1954,11 +1870,21 @@ final class Event extends Base
     }
 
     /**
-     * @param int|null $day
+     * @param OdooRelation[]|null $message_partner_ids
      */
-    public function setDay(?int $day): void
+    public function setMessagePartnerIds(?array $message_partner_ids): void
     {
-        $this->day = $day;
+        $this->message_partner_ids = $message_partner_ids;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("end_type")
+     */
+    public function getEndType(): ?string
+    {
+        return $this->end_type;
     }
 
     /**
@@ -1969,14 +1895,6 @@ final class Event extends Base
     public function isMessageHasSmsError(): ?bool
     {
         return $this->message_has_sms_error;
-    }
-
-    /**
-     * @param int|null $message_attachment_count
-     */
-    public function setMessageAttachmentCount(?int $message_attachment_count): void
-    {
-        $this->message_attachment_count = $message_attachment_count;
     }
 
     /**
@@ -2069,11 +1987,13 @@ final class Event extends Base
     }
 
     /**
-     * @param int|null $message_has_error_counter
+     * @return int|null
+     *
+     * @SerializedName("message_attachment_count")
      */
-    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
+    public function getMessageAttachmentCount(): ?int
     {
-        $this->message_has_error_counter = $message_has_error_counter;
+        return $this->message_attachment_count;
     }
 
     /**
@@ -2149,56 +2069,19 @@ final class Event extends Base
     }
 
     /**
-     * @return int|null
-     *
-     * @SerializedName("message_attachment_count")
+     * @param int|null $message_attachment_count
      */
-    public function getMessageAttachmentCount(): ?int
+    public function setMessageAttachmentCount(?int $message_attachment_count): void
     {
-        return $this->message_attachment_count;
+        $this->message_attachment_count = $message_attachment_count;
     }
 
     /**
-     * @return int|null
-     *
-     * @SerializedName("message_has_error_counter")
+     * @param int|null $message_has_error_counter
      */
-    public function getMessageHasErrorCounter(): ?int
+    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
     {
-        return $this->message_has_error_counter;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("message_partner_ids")
-     */
-    public function getMessagePartnerIds(): ?array
-    {
-        return $this->message_partner_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMessageChannelIds(OdooRelation $item): void
-    {
-        if (null === $this->message_channel_ids) {
-            $this->message_channel_ids = [];
-        }
-
-        if ($this->hasMessageChannelIds($item)) {
-            $index = array_search($item, $this->message_channel_ids);
-            unset($this->message_channel_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation[]|null $message_partner_ids
-     */
-    public function setMessagePartnerIds(?array $message_partner_ids): void
-    {
-        $this->message_partner_ids = $message_partner_ids;
+        $this->message_has_error_counter = $message_has_error_counter;
     }
 
     /**
@@ -2213,6 +2096,16 @@ final class Event extends Base
         }
 
         return in_array($item, $this->message_partner_ids);
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("message_unread")
+     */
+    public function isMessageUnread(): ?bool
+    {
+        return $this->message_unread;
     }
 
     /**
@@ -2295,21 +2188,18 @@ final class Event extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("message_unread")
+     * @param OdooRelation $item
      */
-    public function isMessageUnread(): ?bool
+    public function removeMessageChannelIds(OdooRelation $item): void
     {
-        return $this->message_unread;
-    }
+        if (null === $this->message_channel_ids) {
+            $this->message_channel_ids = [];
+        }
 
-    /**
-     * @param bool|null $message_has_error
-     */
-    public function setMessageHasError(?bool $message_has_error): void
-    {
-        $this->message_has_error = $message_has_error;
+        if ($this->hasMessageChannelIds($item)) {
+            $index = array_search($item, $this->message_channel_ids);
+            unset($this->message_channel_ids[$index]);
+        }
     }
 
     /**
@@ -2318,6 +2208,16 @@ final class Event extends Base
     public function setMessageUnread(?bool $message_unread): void
     {
         $this->message_unread = $message_unread;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("message_has_error_counter")
+     */
+    public function getMessageHasErrorCounter(): ?int
+    {
+        return $this->message_has_error_counter;
     }
 
     /**
@@ -2385,23 +2285,27 @@ final class Event extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("week_list")
+     * @param bool|null $message_has_error
      */
-    public function getWeekList(): ?string
+    public function setMessageHasError(?bool $message_has_error): void
     {
-        return $this->week_list;
+        $this->message_has_error = $message_has_error;
     }
 
     /**
-     * @return int|null
-     *
-     * @SerializedName("day")
+     * @param string|null $end_type
      */
-    public function getDay(): ?int
+    public function setEndType(?string $end_type): void
     {
-        return $this->day;
+        $this->end_type = $end_type;
+    }
+
+    /**
+     * @param string|null $event_tz
+     */
+    public function setEventTz(?string $event_tz): void
+    {
+        $this->event_tz = $event_tz;
     }
 
     /**
@@ -2415,109 +2319,11 @@ final class Event extends Base
     }
 
     /**
-     * @param string|null $description
+     * @param OdooRelation|null $res_model_id
      */
-    public function setDescription(?string $description): void
+    public function setResModelId(?OdooRelation $res_model_id): void
     {
-        $this->description = $description;
-    }
-
-    /**
-     * @param DateTimeInterface|null $stop_date
-     */
-    public function setStopDate(?DateTimeInterface $stop_date): void
-    {
-        $this->stop_date = $stop_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("stop_datetime")
-     */
-    public function getStopDatetime(): ?DateTimeInterface
-    {
-        return $this->stop_datetime;
-    }
-
-    /**
-     * @param DateTimeInterface|null $stop_datetime
-     */
-    public function setStopDatetime(?DateTimeInterface $stop_datetime): void
-    {
-        $this->stop_datetime = $stop_datetime;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("event_tz")
-     */
-    public function getEventTz(): ?string
-    {
-        return $this->event_tz;
-    }
-
-    /**
-     * @param string|null $event_tz
-     */
-    public function setEventTz(?string $event_tz): void
-    {
-        $this->event_tz = $event_tz;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("duration")
-     */
-    public function getDuration(): ?float
-    {
-        return $this->duration;
-    }
-
-    /**
-     * @param float|null $duration
-     */
-    public function setDuration(?float $duration): void
-    {
-        $this->duration = $duration;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("description")
-     */
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("privacy")
-     */
-    public function getPrivacy(): ?string
-    {
-        return $this->privacy;
-    }
-
-    /**
-     * @param DateTimeInterface|null $start_datetime
-     */
-    public function setStartDatetime(?DateTimeInterface $start_datetime): void
-    {
-        $this->start_datetime = $start_datetime;
-    }
-
-    /**
-     * @param string|null $privacy
-     */
-    public function setPrivacy(?string $privacy): void
-    {
-        $this->privacy = $privacy;
+        $this->res_model_id = $res_model_id;
     }
 
     /**
@@ -2539,19 +2345,19 @@ final class Event extends Base
     }
 
     /**
-     * @return string|null
+     * @return string
      *
      * @SerializedName("show_as")
      */
-    public function getShowAs(): ?string
+    public function getShowAs(): string
     {
         return $this->show_as;
     }
 
     /**
-     * @param string|null $show_as
+     * @param string $show_as
      */
-    public function setShowAs(?string $show_as): void
+    public function setShowAs(string $show_as): void
     {
         $this->show_as = $show_as;
     }
@@ -2585,26 +2391,6 @@ final class Event extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("stop_date")
-     */
-    public function getStopDate(): ?DateTimeInterface
-    {
-        return $this->stop_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("start_datetime")
-     */
-    public function getStartDatetime(): ?DateTimeInterface
-    {
-        return $this->start_datetime;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("res_model")
@@ -2615,181 +2401,13 @@ final class Event extends Base
     }
 
     /**
-     * @param string|null $display_time
-     */
-    public function setDisplayTime(?string $display_time): void
-    {
-        $this->display_time = $display_time;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return string|null
+     * @return string
      *
-     * @SerializedName("state")
+     * @SerializedName("privacy")
      */
-    public function getState(): ?string
+    public function getPrivacy(): string
     {
-        return $this->state;
-    }
-
-    /**
-     * @param string|null $state
-     */
-    public function setState(?string $state): void
-    {
-        $this->state = $state;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("is_attendee")
-     */
-    public function isIsAttendee(): ?bool
-    {
-        return $this->is_attendee;
-    }
-
-    /**
-     * @param bool|null $is_attendee
-     */
-    public function setIsAttendee(?bool $is_attendee): void
-    {
-        $this->is_attendee = $is_attendee;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("attendee_status")
-     */
-    public function getAttendeeStatus(): ?string
-    {
-        return $this->attendee_status;
-    }
-
-    /**
-     * @param string|null $attendee_status
-     */
-    public function setAttendeeStatus(?string $attendee_status): void
-    {
-        $this->attendee_status = $attendee_status;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("display_time")
-     */
-    public function getDisplayTime(): ?string
-    {
-        return $this->display_time;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("display_start")
-     */
-    public function getDisplayStart(): ?string
-    {
-        return $this->display_start;
-    }
-
-    /**
-     * @param DateTimeInterface|null $start_date
-     */
-    public function setStartDate(?DateTimeInterface $start_date): void
-    {
-        $this->start_date = $start_date;
-    }
-
-    /**
-     * @param string|null $display_start
-     */
-    public function setDisplayStart(?string $display_start): void
-    {
-        $this->display_start = $display_start;
-    }
-
-    /**
-     * @return DateTimeInterface
-     *
-     * @SerializedName("start")
-     */
-    public function getStart(): DateTimeInterface
-    {
-        return $this->start;
-    }
-
-    /**
-     * @param DateTimeInterface $start
-     */
-    public function setStart(DateTimeInterface $start): void
-    {
-        $this->start = $start;
-    }
-
-    /**
-     * @return DateTimeInterface
-     *
-     * @SerializedName("stop")
-     */
-    public function getStop(): DateTimeInterface
-    {
-        return $this->stop;
-    }
-
-    /**
-     * @param DateTimeInterface $stop
-     */
-    public function setStop(DateTimeInterface $stop): void
-    {
-        $this->stop = $stop;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("allday")
-     */
-    public function isAllday(): ?bool
-    {
-        return $this->allday;
-    }
-
-    /**
-     * @param bool|null $allday
-     */
-    public function setAllday(?bool $allday): void
-    {
-        $this->allday = $allday;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("start_date")
-     */
-    public function getStartDate(): ?DateTimeInterface
-    {
-        return $this->start_date;
-    }
-
-    /**
-     * @param OdooRelation|null $res_model_id
-     */
-    public function setResModelId(?OdooRelation $res_model_id): void
-    {
-        $this->res_model_id = $res_model_id;
+        return $this->privacy;
     }
 
     /**
@@ -2801,204 +2419,6 @@ final class Event extends Base
     }
 
     /**
-     * @param string|null $month_by
-     */
-    public function setMonthBy(?string $month_by): void
-    {
-        $this->month_by = $month_by;
-    }
-
-    /**
-     * @param bool|null $we
-     */
-    public function setWe(?bool $we): void
-    {
-        $this->we = $we;
-    }
-
-    /**
-     * @param int|null $interval
-     */
-    public function setInterval(?int $interval): void
-    {
-        $this->interval = $interval;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("count")
-     */
-    public function getCount(): ?int
-    {
-        return $this->count;
-    }
-
-    /**
-     * @param int|null $count
-     */
-    public function setCount(?int $count): void
-    {
-        $this->count = $count;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("mo")
-     */
-    public function isMo(): ?bool
-    {
-        return $this->mo;
-    }
-
-    /**
-     * @param bool|null $mo
-     */
-    public function setMo(?bool $mo): void
-    {
-        $this->mo = $mo;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("tu")
-     */
-    public function isTu(): ?bool
-    {
-        return $this->tu;
-    }
-
-    /**
-     * @param bool|null $tu
-     */
-    public function setTu(?bool $tu): void
-    {
-        $this->tu = $tu;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("we")
-     */
-    public function isWe(): ?bool
-    {
-        return $this->we;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("th")
-     */
-    public function isTh(): ?bool
-    {
-        return $this->th;
-    }
-
-    /**
-     * @param string|null $end_type
-     */
-    public function setEndType(?string $end_type): void
-    {
-        $this->end_type = $end_type;
-    }
-
-    /**
-     * @param bool|null $th
-     */
-    public function setTh(?bool $th): void
-    {
-        $this->th = $th;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("fr")
-     */
-    public function isFr(): ?bool
-    {
-        return $this->fr;
-    }
-
-    /**
-     * @param bool|null $fr
-     */
-    public function setFr(?bool $fr): void
-    {
-        $this->fr = $fr;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("sa")
-     */
-    public function isSa(): ?bool
-    {
-        return $this->sa;
-    }
-
-    /**
-     * @param bool|null $sa
-     */
-    public function setSa(?bool $sa): void
-    {
-        $this->sa = $sa;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("su")
-     */
-    public function isSu(): ?bool
-    {
-        return $this->su;
-    }
-
-    /**
-     * @param bool|null $su
-     */
-    public function setSu(?bool $su): void
-    {
-        $this->su = $su;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("month_by")
-     */
-    public function getMonthBy(): ?string
-    {
-        return $this->month_by;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("interval")
-     */
-    public function getInterval(): ?int
-    {
-        return $this->interval;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("end_type")
-     */
-    public function getEndType(): ?string
-    {
-        return $this->end_type;
-    }
-
-    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("activity_ids")
@@ -3006,21 +2426,6 @@ final class Event extends Base
     public function getActivityIds(): ?array
     {
         return $this->activity_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMessageIds(OdooRelation $item): void
-    {
-        if (null === $this->message_ids) {
-            $this->message_ids = [];
-        }
-
-        if ($this->hasMessageIds($item)) {
-            $index = array_search($item, $this->message_ids);
-            unset($this->message_ids[$index]);
-        }
     }
 
     /**
@@ -3095,17 +2500,19 @@ final class Event extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param string $privacy
      */
-    public function hasMessageIds(OdooRelation $item): bool
+    public function setPrivacy(string $privacy): void
     {
-        if (null === $this->message_ids) {
-            return false;
-        }
+        $this->privacy = $privacy;
+    }
 
-        return in_array($item, $this->message_ids);
+    /**
+     * @param string|null $description
+     */
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
     }
 
     /**
@@ -3125,6 +2532,352 @@ final class Event extends Base
     }
 
     /**
+     * @return DateTimeInterface
+     *
+     * @SerializedName("stop")
+     */
+    public function getStop(): DateTimeInterface
+    {
+        return $this->stop;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("attendee_status")
+     */
+    public function getAttendeeStatus(): ?string
+    {
+        return $this->attendee_status;
+    }
+
+    /**
+     * @param string|null $attendee_status
+     */
+    public function setAttendeeStatus(?string $attendee_status): void
+    {
+        $this->attendee_status = $attendee_status;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("display_time")
+     */
+    public function getDisplayTime(): ?string
+    {
+        return $this->display_time;
+    }
+
+    /**
+     * @param string|null $display_time
+     */
+    public function setDisplayTime(?string $display_time): void
+    {
+        $this->display_time = $display_time;
+    }
+
+    /**
+     * @return DateTimeInterface
+     *
+     * @SerializedName("start")
+     */
+    public function getStart(): DateTimeInterface
+    {
+        return $this->start;
+    }
+
+    /**
+     * @param DateTimeInterface $start
+     */
+    public function setStart(DateTimeInterface $start): void
+    {
+        $this->start = $start;
+    }
+
+    /**
+     * @param DateTimeInterface $stop
+     */
+    public function setStop(DateTimeInterface $stop): void
+    {
+        $this->stop = $stop;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("description")
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("allday")
+     */
+    public function isAllday(): ?bool
+    {
+        return $this->allday;
+    }
+
+    /**
+     * @param bool|null $allday
+     */
+    public function setAllday(?bool $allday): void
+    {
+        $this->allday = $allday;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("start_date")
+     */
+    public function getStartDate(): ?DateTimeInterface
+    {
+        return $this->start_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $start_date
+     */
+    public function setStartDate(?DateTimeInterface $start_date): void
+    {
+        $this->start_date = $start_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("stop_date")
+     */
+    public function getStopDate(): ?DateTimeInterface
+    {
+        return $this->stop_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $stop_date
+     */
+    public function setStopDate(?DateTimeInterface $stop_date): void
+    {
+        $this->stop_date = $stop_date;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("duration")
+     */
+    public function getDuration(): ?float
+    {
+        return $this->duration;
+    }
+
+    /**
+     * @param float|null $duration
+     */
+    public function setDuration(?float $duration): void
+    {
+        $this->duration = $duration;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMessageIds(OdooRelation $item): bool
+    {
+        if (null === $this->message_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMessageIds(OdooRelation $item): void
+    {
+        if (null === $this->message_ids) {
+            $this->message_ids = [];
+        }
+
+        if ($this->hasMessageIds($item)) {
+            $index = array_search($item, $this->message_ids);
+            unset($this->message_ids[$index]);
+        }
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("event_tz")
+     */
+    public function getEventTz(): ?string
+    {
+        return $this->event_tz;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("recurrence_id")
+     */
+    public function getRecurrenceId(): ?OdooRelation
+    {
+        return $this->recurrence_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasAlarmIds(OdooRelation $item): bool
+    {
+        if (null === $this->alarm_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->alarm_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addAlarmIds(OdooRelation $item): void
+    {
+        if ($this->hasAlarmIds($item)) {
+            return;
+        }
+
+        if (null === $this->alarm_ids) {
+            $this->alarm_ids = [];
+        }
+
+        $this->alarm_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeAlarmIds(OdooRelation $item): void
+    {
+        if (null === $this->alarm_ids) {
+            $this->alarm_ids = [];
+        }
+
+        if ($this->hasAlarmIds($item)) {
+            $index = array_search($item, $this->alarm_ids);
+            unset($this->alarm_ids[$index]);
+        }
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("is_highlighted")
+     */
+    public function isIsHighlighted(): ?bool
+    {
+        return $this->is_highlighted;
+    }
+
+    /**
+     * @param bool|null $is_highlighted
+     */
+    public function setIsHighlighted(?bool $is_highlighted): void
+    {
+        $this->is_highlighted = $is_highlighted;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("recurrency")
+     */
+    public function isRecurrency(): ?bool
+    {
+        return $this->recurrency;
+    }
+
+    /**
+     * @param bool|null $recurrency
+     */
+    public function setRecurrency(?bool $recurrency): void
+    {
+        $this->recurrency = $recurrency;
+    }
+
+    /**
+     * @param OdooRelation|null $recurrence_id
+     */
+    public function setRecurrenceId(?OdooRelation $recurrence_id): void
+    {
+        $this->recurrence_id = $recurrence_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("alarm_ids")
+     */
+    public function getAlarmIds(): ?array
+    {
+        return $this->alarm_ids;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("follow_recurrence")
+     */
+    public function isFollowRecurrence(): ?bool
+    {
+        return $this->follow_recurrence;
+    }
+
+    /**
+     * @param bool|null $follow_recurrence
+     */
+    public function setFollowRecurrence(?bool $follow_recurrence): void
+    {
+        $this->follow_recurrence = $follow_recurrence;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("recurrence_update")
+     */
+    public function getRecurrenceUpdate(): ?string
+    {
+        return $this->recurrence_update;
+    }
+
+    /**
+     * @param string|null $recurrence_update
+     */
+    public function setRecurrenceUpdate(?string $recurrence_update): void
+    {
+        $this->recurrence_update = $recurrence_update;
+    }
+
+    /**
      * @return string|null
      *
      * @SerializedName("rrule")
@@ -3132,14 +2885,6 @@ final class Event extends Base
     public function getRrule(): ?string
     {
         return $this->rrule;
-    }
-
-    /**
-     * @param DateTimeInterface|null $recurrent_id_date
-     */
-    public function setRecurrentIdDate(?DateTimeInterface $recurrent_id_date): void
-    {
-        $this->recurrent_id_date = $recurrent_id_date;
     }
 
     /**
@@ -3169,49 +2914,254 @@ final class Event extends Base
     }
 
     /**
+     * @param OdooRelation[]|null $alarm_ids
+     */
+    public function setAlarmIds(?array $alarm_ids): void
+    {
+        $this->alarm_ids = $alarm_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removePartnerIds(OdooRelation $item): void
+    {
+        if (null === $this->partner_ids) {
+            $this->partner_ids = [];
+        }
+
+        if ($this->hasPartnerIds($item)) {
+            $index = array_search($item, $this->partner_ids);
+            unset($this->partner_ids[$index]);
+        }
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("user_id")
+     */
+    public function getUserId(): ?OdooRelation
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addCategIds(OdooRelation $item): void
+    {
+        if ($this->hasCategIds($item)) {
+            return;
+        }
+
+        if (null === $this->categ_ids) {
+            $this->categ_ids = [];
+        }
+
+        $this->categ_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation|null $user_id
+     */
+    public function setUserId(?OdooRelation $user_id): void
+    {
+        $this->user_id = $user_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("partner_id")
+     */
+    public function getPartnerId(): ?OdooRelation
+    {
+        return $this->partner_id;
+    }
+
+    /**
+     * @param OdooRelation|null $partner_id
+     */
+    public function setPartnerId(?OdooRelation $partner_id): void
+    {
+        $this->partner_id = $partner_id;
+    }
+
+    /**
      * @return bool|null
      *
-     * @SerializedName("recurrency")
+     * @SerializedName("active")
      */
-    public function isRecurrency(): ?bool
+    public function isActive(): ?bool
     {
-        return $this->recurrency;
+        return $this->active;
     }
 
     /**
-     * @param bool|null $recurrency
+     * @param bool|null $active
      */
-    public function setRecurrency(?bool $recurrency): void
+    public function setActive(?bool $active): void
     {
-        $this->recurrency = $recurrency;
+        $this->active = $active;
     }
 
     /**
-     * @return int|null
+     * @return OdooRelation[]|null
      *
-     * @SerializedName("recurrent_id")
+     * @SerializedName("categ_ids")
      */
-    public function getRecurrentId(): ?int
+    public function getCategIds(): ?array
     {
-        return $this->recurrent_id;
+        return $this->categ_ids;
     }
 
     /**
-     * @param int|null $recurrent_id
+     * @param OdooRelation[]|null $categ_ids
      */
-    public function setRecurrentId(?int $recurrent_id): void
+    public function setCategIds(?array $categ_ids): void
     {
-        $this->recurrent_id = $recurrent_id;
+        $this->categ_ids = $categ_ids;
     }
 
     /**
-     * @return DateTimeInterface|null
+     * @param OdooRelation $item
      *
-     * @SerializedName("recurrent_id_date")
+     * @return bool
      */
-    public function getRecurrentIdDate(): ?DateTimeInterface
+    public function hasCategIds(OdooRelation $item): bool
     {
-        return $this->recurrent_id_date;
+        if (null === $this->categ_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->categ_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeCategIds(OdooRelation $item): void
+    {
+        if (null === $this->categ_ids) {
+            $this->categ_ids = [];
+        }
+
+        if ($this->hasCategIds($item)) {
+            $index = array_search($item, $this->categ_ids);
+            unset($this->categ_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addPartnerIds(OdooRelation $item): void
+    {
+        if ($this->hasPartnerIds($item)) {
+            return;
+        }
+
+        if (null === $this->partner_ids) {
+            $this->partner_ids = [];
+        }
+
+        $this->partner_ids[] = $item;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("attendee_ids")
+     */
+    public function getAttendeeIds(): ?array
+    {
+        return $this->attendee_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $attendee_ids
+     */
+    public function setAttendeeIds(?array $attendee_ids): void
+    {
+        $this->attendee_ids = $attendee_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasAttendeeIds(OdooRelation $item): bool
+    {
+        if (null === $this->attendee_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->attendee_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addAttendeeIds(OdooRelation $item): void
+    {
+        if ($this->hasAttendeeIds($item)) {
+            return;
+        }
+
+        if (null === $this->attendee_ids) {
+            $this->attendee_ids = [];
+        }
+
+        $this->attendee_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeAttendeeIds(OdooRelation $item): void
+    {
+        if (null === $this->attendee_ids) {
+            $this->attendee_ids = [];
+        }
+
+        if ($this->hasAttendeeIds($item)) {
+            $index = array_search($item, $this->attendee_ids);
+            unset($this->attendee_ids[$index]);
+        }
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("partner_ids")
+     */
+    public function getPartnerIds(): ?array
+    {
+        return $this->partner_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $partner_ids
+     */
+    public function setPartnerIds(?array $partner_ids): void
+    {
+        $this->partner_ids = $partner_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasPartnerIds(OdooRelation $item): bool
+    {
+        if (null === $this->partner_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->partner_ids);
     }
 
     /**

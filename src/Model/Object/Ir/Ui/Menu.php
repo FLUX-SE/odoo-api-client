@@ -146,6 +146,18 @@ final class Menu extends Base
     private $web_icon_data;
 
     /**
+     * Studio Configuration Menu
+     * ---
+     * Indicates that this menu was created by Studio to hold configuration sub-menus
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $is_studio_configuration;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -203,19 +215,11 @@ final class Menu extends Base
     }
 
     /**
-     * @param mixed|null $web_icon_data
+     * @param bool|null $is_studio_configuration
      */
-    public function setWebIconData($web_icon_data): void
+    public function setIsStudioConfiguration(?bool $is_studio_configuration): void
     {
-        $this->web_icon_data = $web_icon_data;
-    }
-
-    /**
-     * @param string|null $complete_name
-     */
-    public function setCompleteName(?string $complete_name): void
-    {
-        $this->complete_name = $complete_name;
+        $this->is_studio_configuration = $is_studio_configuration;
     }
 
     /**
@@ -265,6 +269,24 @@ final class Menu extends Base
     }
 
     /**
+     * @param mixed|null $web_icon_data
+     */
+    public function setWebIconData($web_icon_data): void
+    {
+        $this->web_icon_data = $web_icon_data;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("is_studio_configuration")
+     */
+    public function isIsStudioConfiguration(): ?bool
+    {
+        return $this->is_studio_configuration;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("create_uid")
@@ -275,18 +297,13 @@ final class Menu extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return string|null
+     *
+     * @SerializedName("complete_name")
      */
-    public function removeGroupsId(OdooRelation $item): void
+    public function getCompleteName(): ?string
     {
-        if (null === $this->groups_id) {
-            $this->groups_id = [];
-        }
-
-        if ($this->hasGroupsId($item)) {
-            $index = array_search($item, $this->groups_id);
-            unset($this->groups_id[$index]);
-        }
+        return $this->complete_name;
     }
 
     /**
@@ -352,29 +369,26 @@ final class Menu extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("complete_name")
+     * @param string|null $complete_name
      */
-    public function getCompleteName(): ?string
+    public function setCompleteName(?string $complete_name): void
     {
-        return $this->complete_name;
+        $this->complete_name = $complete_name;
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function addGroupsId(OdooRelation $item): void
+    public function removeGroupsId(OdooRelation $item): void
     {
-        if ($this->hasGroupsId($item)) {
-            return;
-        }
-
         if (null === $this->groups_id) {
             $this->groups_id = [];
         }
 
-        $this->groups_id[] = $item;
+        if ($this->hasGroupsId($item)) {
+            $index = array_search($item, $this->groups_id);
+            unset($this->groups_id[$index]);
+        }
     }
 
     /**
@@ -481,16 +495,18 @@ final class Menu extends Base
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasGroupsId(OdooRelation $item): bool
+    public function addGroupsId(OdooRelation $item): void
     {
-        if (null === $this->groups_id) {
-            return false;
+        if ($this->hasGroupsId($item)) {
+            return;
         }
 
-        return in_array($item, $this->groups_id);
+        if (null === $this->groups_id) {
+            $this->groups_id = [];
+        }
+
+        $this->groups_id[] = $item;
     }
 
     /**
@@ -560,6 +576,20 @@ final class Menu extends Base
     public function setGroupsId(?array $groups_id): void
     {
         $this->groups_id = $groups_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasGroupsId(OdooRelation $item): bool
+    {
+        if (null === $this->groups_id) {
+            return false;
+        }
+
+        return in_array($item, $this->groups_id);
     }
 
     /**

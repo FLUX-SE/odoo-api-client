@@ -21,7 +21,7 @@ use Flux\OdooApiClient\Model\Object\Base;
  *             result node
  *         * generates the root result node itself through :meth:`~.render_element`
  */
-abstract class Html extends Base
+final class Html extends Base
 {
     /**
      * @return string

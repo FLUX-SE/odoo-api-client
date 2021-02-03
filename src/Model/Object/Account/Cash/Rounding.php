@@ -63,17 +63,30 @@ final class Rounding extends Base
     private $strategy;
 
     /**
-     * Account
+     * Profit Account
      * ---
      * Relation : many2one (account.account)
      * @see \Flux\OdooApiClient\Model\Object\Account\Account
      * ---
      * Searchable : yes
-     * Sortable : yes
+     * Sortable : no
      *
      * @var OdooRelation|null
      */
-    private $account_id;
+    private $profit_account_id;
+
+    /**
+     * Loss Account
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $loss_account_id;
 
     /**
      * Rounding Method
@@ -193,11 +206,13 @@ final class Rounding extends Base
     }
 
     /**
-     * @param OdooRelation|null $company_id
+     * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
-    public function setCompanyId(?OdooRelation $company_id): void
+    public function getCompanyId(): ?OdooRelation
     {
-        $this->company_id = $company_id;
+        return $this->company_id;
     }
 
     /**
@@ -273,23 +288,11 @@ final class Rounding extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("company_id")
+     * @param OdooRelation|null $company_id
      */
-    public function getCompanyId(): ?OdooRelation
+    public function setCompanyId(?OdooRelation $company_id): void
     {
-        return $this->company_id;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("name")
-     */
-    public function getName(): string
-    {
-        return $this->name;
+        $this->company_id = $company_id;
     }
 
     /**
@@ -303,6 +306,16 @@ final class Rounding extends Base
     /**
      * @return string
      *
+     * @SerializedName("name")
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     *
      * @SerializedName("rounding_method")
      */
     public function getRoundingMethod(): string
@@ -311,21 +324,39 @@ final class Rounding extends Base
     }
 
     /**
-     * @param OdooRelation|null $account_id
+     * @param OdooRelation|null $loss_account_id
      */
-    public function setAccountId(?OdooRelation $account_id): void
+    public function setLossAccountId(?OdooRelation $loss_account_id): void
     {
-        $this->account_id = $account_id;
+        $this->loss_account_id = $loss_account_id;
     }
 
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("account_id")
+     * @SerializedName("loss_account_id")
      */
-    public function getAccountId(): ?OdooRelation
+    public function getLossAccountId(): ?OdooRelation
     {
-        return $this->account_id;
+        return $this->loss_account_id;
+    }
+
+    /**
+     * @param OdooRelation|null $profit_account_id
+     */
+    public function setProfitAccountId(?OdooRelation $profit_account_id): void
+    {
+        $this->profit_account_id = $profit_account_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("profit_account_id")
+     */
+    public function getProfitAccountId(): ?OdooRelation
+    {
+        return $this->profit_account_id;
     }
 
     /**

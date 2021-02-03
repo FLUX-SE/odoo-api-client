@@ -74,6 +74,16 @@ final class Settings extends Base
     private $module_google_calendar;
 
     /**
+     * Allow the users to synchronize their calendar with Outlook Calendar
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $module_microsoft_calendar;
+
+    /**
      * Attach Google documents to any record
      * ---
      * Searchable : yes
@@ -131,7 +141,7 @@ final class Settings extends Base
      *
      * @var bool|null
      */
-    private $module_inter_company_rules;
+    private $module_account_inter_company_rules;
 
     /**
      * Collaborative Pads
@@ -182,6 +192,16 @@ final class Settings extends Base
      * @var bool|null
      */
     private $module_base_geolocalize;
+
+    /**
+     * reCAPTCHA: Easy on Humans, Hard on Bots
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $module_google_recaptcha;
 
     /**
      * Custom Report Footer
@@ -294,6 +314,38 @@ final class Settings extends Base
     private $company_informations;
 
     /**
+     * Site Key
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $recaptcha_public_key;
+
+    /**
+     * Secret Key
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $recaptcha_private_key;
+
+    /**
+     * Minimum score
+     * ---
+     * Should be between 0.0 and 1.0
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var float|null
+     */
+    private $recaptcha_min_score;
+
+    /**
      * Fail Mail
      * ---
      * Searchable : yes
@@ -326,16 +378,6 @@ final class Settings extends Base
      * @var string|null
      */
     private $map_box_token;
-
-    /**
-     * Push Notifications
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $module_ocn_client;
 
     /**
      * Access Key
@@ -403,14 +445,107 @@ final class Settings extends Base
     private $is_google_drive_token_generated;
 
     /**
-     * Insufficient credit
+     * Company Working Hours
      * ---
-     * Searchable : no
+     * Relation : many2one (resource.calendar)
+     * @see \Flux\OdooApiClient\Model\Object\Resource_\Calendar
+     * ---
+     * Searchable : yes
      * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $resource_calendar_id;
+
+    /**
+     * Advanced Presence Control
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var bool|null
      */
-    private $partner_autocomplete_insufficient_credit;
+    private $module_hr_presence;
+
+    /**
+     * Skills Management
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $module_hr_skills;
+
+    /**
+     * Based on user status in system
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $hr_presence_control_login;
+
+    /**
+     * Based on number of emails sent
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $hr_presence_control_email;
+
+    /**
+     * Based on IP Address
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $hr_presence_control_ip;
+
+    /**
+     * Based on attendances
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $module_hr_attendance;
+
+    /**
+     * # emails to send
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    private $hr_presence_control_email_amount;
+
+    /**
+     * Valid IP addresses
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $hr_presence_control_ip_list;
+
+    /**
+     * Employee Editing
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $hr_employee_self_edit;
 
     /**
      * Discounts
@@ -516,8 +651,8 @@ final class Settings extends Base
      * Weight unit of measure
      * ---
      * Selection :
-     *     -> 0 (Kilogram)
-     *     -> 1 (Pound)
+     *     -> 0 (Kilograms)
+     *     -> 1 (Pounds)
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -539,36 +674,6 @@ final class Settings extends Base
      * @var string|null
      */
     private $product_volume_volume_in_cubic_feet;
-
-    /**
-     * Print In Color
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $snailmail_color;
-
-    /**
-     * Add a Cover Page
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $snailmail_cover;
-
-    /**
-     * Print Both sides
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $snailmail_duplex;
 
     /**
      * Allow users to sign in with Google
@@ -621,299 +726,44 @@ final class Settings extends Base
     private $cal_client_secret;
 
     /**
-     * URI for tuto
+     * Insufficient credit
      * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $server_uri;
-
-    /**
-     * Company Working Hours
-     * ---
-     * Relation : many2one (resource.calendar)
-     * @see \Flux\OdooApiClient\Model\Object\Resource_\Calendar
-     * ---
-     * Searchable : yes
+     * Searchable : no
      * Sortable : no
      *
-     * @var OdooRelation|null
-     */
-    private $resource_calendar_id;
-
-    /**
-     * Organizational Chart
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
      * @var bool|null
      */
-    private $module_hr_org_chart;
+    private $partner_autocomplete_insufficient_credit;
 
     /**
-     * Advanced Presence Control
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $module_hr_presence;
-
-    /**
-     * Skills Management
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $module_hr_skills;
-
-    /**
-     * Based on user status in system
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $hr_presence_control_login;
-
-    /**
-     * Based on number of emails sent
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $hr_presence_control_email;
-
-    /**
-     * Based on IP Address
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $hr_presence_control_ip;
-
-    /**
-     * Based on attendances
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $module_hr_attendance;
-
-    /**
-     * # emails to send
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var int|null
-     */
-    private $hr_presence_control_email_amount;
-
-    /**
-     * Valid IP addresses
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $hr_presence_control_ip_list;
-
-    /**
-     * Employee Edition
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $hr_employee_self_edit;
-
-    /**
-     * Reservation
-     * ---
-     * Reserving products manually in delivery orders or by running the scheduler is advised to better manage
-     * priorities in case of long customer lead times or/and frequent stock-outs.
-     * ---
-     * Selection :
-     *     -> 1 (Immediately after sales order confirmation)
-     *     -> 0 (Manually or based on automatic scheduler)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $module_procurement_jit;
-
-    /**
-     * Expiration Dates
-     * ---
-     * Track following dates on lots & serial numbers: best before, removal, end of life, alert.
-     *   Such dates are set automatically at lot/serial number creation based on values set on the product (in days).
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $module_product_expiry;
-
-    /**
-     * Lots & Serial Numbers
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $group_stock_production_lot;
-
-    /**
-     * Display Lots & Serial Numbers on Delivery Slips
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $group_lot_on_delivery_slip;
-
-    /**
-     * Delivery Packages
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $group_stock_tracking_lot;
-
-    /**
-     * Consignment
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $group_stock_tracking_owner;
-
-    /**
-     * Multi-Step Routes
-     * ---
-     * Add and customize route operations to process product moves in your warehouse(s): e.g. unload > quality
-     * control > stock for incoming products, pick > pack > ship for outgoing products.
-     *   You can also set putaway strategies on warehouse locations in order to send incoming products into specific
-     * child locations straight away (e.g. specific bins, racks).
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $group_stock_adv_location;
-
-    /**
-     * Warnings for Stock
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $group_warning_stock;
-
-    /**
-     * Batch Pickings
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $module_stock_picking_batch;
-
-    /**
-     * Barcode Scanner
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $module_stock_barcode;
-
-    /**
-     * Email Confirmation picking
+     * Print In Color
      * ---
      * Searchable : yes
      * Sortable : no
      *
      * @var bool|null
      */
-    private $stock_move_email_validation;
+    private $snailmail_color;
 
     /**
-     * Email Template confirmation picking
-     * ---
-     * Email sent to the customer once the order is done.
-     * ---
-     * Relation : many2one (mail.template)
-     * @see \Flux\OdooApiClient\Model\Object\Mail\Template
+     * Add a Cover Page
      * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var OdooRelation|null
+     * @var bool|null
      */
-    private $stock_mail_confirmation_template_id;
+    private $snailmail_cover;
 
     /**
-     * SMS Confirmation
+     * Print Both sides
      * ---
      * Searchable : yes
-     * Sortable : yes
+     * Sortable : no
      *
      * @var bool|null
      */
-    private $module_stock_sms;
-
-    /**
-     * Storage Locations
-     * ---
-     * Store products in specific locations of your warehouse (e.g. bins, racks) and to track inventory accordingly.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $group_stock_multi_locations;
-
-    /**
-     * Multi-Warehouses
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $group_stock_multi_warehouses;
+    private $snailmail_duplex;
 
     /**
      * Digest Emails
@@ -937,31 +787,6 @@ final class Settings extends Base
      * @var OdooRelation|null
      */
     private $digest_id;
-
-    /**
-     * SMS Validation with stock move
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $stock_move_sms_validation;
-
-    /**
-     * SMS Template
-     * ---
-     * SMS sent to the customer once the order is done.
-     * ---
-     * Relation : many2one (sms.template)
-     * @see \Flux\OdooApiClient\Model\Object\Sms\Template
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation|null
-     */
-    private $stock_sms_confirmation_template_id;
 
     /**
      * Has Accounting Entries
@@ -989,7 +814,7 @@ final class Settings extends Base
     private $currency_id;
 
     /**
-     * Exchange Gain or Loss Journal
+     * Currency Exchange Journal
      * ---
      * The accounting journal where automatic exchange differences will be registered
      * ---
@@ -1002,6 +827,32 @@ final class Settings extends Base
      * @var OdooRelation|null
      */
     private $currency_exchange_journal_id;
+
+    /**
+     * Gain Account
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $income_currency_exchange_account_id;
+
+    /**
+     * Loss Account
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $expense_currency_exchange_account_id;
 
     /**
      * Company has a chart of accounts
@@ -1117,16 +968,6 @@ final class Settings extends Base
     private $group_cash_rounding;
 
     /**
-     * Fiscal Years
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $group_fiscal_year;
-
-    /**
      * Show line subtotals without taxes (B2B)
      * ---
      * Searchable : yes
@@ -1145,6 +986,26 @@ final class Settings extends Base
      * @var bool|null
      */
     private $group_show_line_subtotals_tax_included;
+
+    /**
+     * Sale Receipt
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $group_show_sale_receipts;
+
+    /**
+     * Purchase Receipt
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $group_show_purchase_receipts;
 
     /**
      * Line Subtotals Tax Display
@@ -1387,22 +1248,23 @@ final class Settings extends Base
     private $tax_cash_basis_journal_id;
 
     /**
-     * Bank Reconciliation Threshold
+     * Base Tax Received Account
      * ---
-     * The bank reconciliation widget won't ask to reconcile payments older than this date.
-     *                               This is useful if you install accounting after having used invoicing for some
-     * time and
-     *                               don't want to reconcile all the past payments with bank statements.
+     * Account that will be set on lines created in cash basis journal entry and used to keep track of the tax base
+     * amount.
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var DateTimeInterface|null
+     * @var OdooRelation|null
      */
-    private $account_bank_reconciliation_start;
+    private $account_cash_basis_base_account_id;
 
     /**
-     * Display SEPA QR code
+     * Display SEPA QR-code
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1467,63 +1329,189 @@ final class Settings extends Base
     private $use_invoice_terms;
 
     /**
-     * Human Resources
+     * Country Code
+     * ---
+     * The ISO country code in two chars. 
+     * You can use this field for quick search.
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $country_code;
+
+    /**
+     * Reservation
+     * ---
+     * Reserving products manually in delivery orders or by running the scheduler is advised to better manage
+     * priorities in case of long customer lead times or/and frequent stock-outs.
+     * ---
+     * Selection :
+     *     -> 1 (Immediately after sales order confirmation)
+     *     -> 0 (Manually or based on automatic scheduler)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $module_procurement_jit;
+
+    /**
+     * Expiration Dates
+     * ---
+     * Track following dates on lots & serial numbers: best before, removal, end of life, alert. 
+     *   Such dates are set automatically at lot/serial number creation based on values set on the product (in days).
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $module_product_expiry;
+
+    /**
+     * Lots & Serial Numbers
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $group_stock_production_lot;
+
+    /**
+     * Display Lots & Serial Numbers on Delivery Slips
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $group_lot_on_delivery_slip;
+
+    /**
+     * Packages
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $group_stock_tracking_lot;
+
+    /**
+     * Consignment
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $group_stock_tracking_owner;
+
+    /**
+     * Multi-Step Routes
+     * ---
+     * Add and customize route operations to process product moves in your warehouse(s): e.g. unload > quality
+     * control > stock for incoming products, pick > pack > ship for outgoing products. 
+     *   You can also set putaway strategies on warehouse locations in order to send incoming products into specific
+     * child locations straight away (e.g. specific bins, racks).
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $group_stock_adv_location;
+
+    /**
+     * Warnings for Stock
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $group_warning_stock;
+
+    /**
+     * Signature
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $group_stock_sign_delivery;
+
+    /**
+     * Batch Pickings
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $module_stock_picking_batch;
+
+    /**
+     * Barcode Scanner
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $module_stock_barcode;
+
+    /**
+     * Email Confirmation picking
      * ---
      * Searchable : yes
      * Sortable : no
      *
      * @var bool|null
      */
-    private $documents_hr_settings;
+    private $stock_move_email_validation;
 
     /**
-     * hr default workspace
+     * Email Template confirmation picking
      * ---
-     * Relation : many2one (documents.folder)
-     * @see \Flux\OdooApiClient\Model\Object\Documents\Folder
+     * Email sent to the customer once the order is done.
+     * ---
+     * Relation : many2one (mail.template)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Template
      * ---
      * Searchable : yes
      * Sortable : no
      *
      * @var OdooRelation|null
      */
-    private $documents_hr_folder;
+    private $stock_mail_confirmation_template_id;
 
     /**
-     * Product
+     * SMS Confirmation
      * ---
      * Searchable : yes
-     * Sortable : no
+     * Sortable : yes
      *
      * @var bool|null
      */
-    private $documents_product_settings;
+    private $module_stock_sms;
 
     /**
-     * product default workspace
+     * Storage Locations
      * ---
-     * Relation : many2one (documents.folder)
-     * @see \Flux\OdooApiClient\Model\Object\Documents\Folder
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation|null
-     */
-    private $product_folder;
-
-    /**
-     * Product Tags
-     * ---
-     * Relation : many2many (documents.tag)
-     * @see \Flux\OdooApiClient\Model\Object\Documents\Tag
+     * Store products in specific locations of your warehouse (e.g. bins, racks) and to track inventory accordingly.
      * ---
      * Searchable : yes
-     * Sortable : no
+     * Sortable : yes
      *
-     * @var OdooRelation[]|null
+     * @var bool|null
      */
-    private $product_tags;
+    private $group_stock_multi_locations;
 
     /**
      * Fiscalyear Last Day
@@ -1633,6 +1621,87 @@ final class Settings extends Base
     private $transfer_account_id;
 
     /**
+     * Invoicing Switch Threshold
+     * ---
+     * Every payment and invoice before this date will receive the 'From Invoicing' status, hiding all the accounting
+     * entries related to it. Use this option after installing Accounting if you were using only Invoicing before,
+     * before importing all your actual accounting data in to Odoo.
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var DateTimeInterface|null
+     */
+    private $invoicing_switch_threshold;
+
+    /**
+     * Fiscal Years
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $group_fiscal_year;
+
+    /**
+     * Rule
+     * ---
+     * Select the type to setup inter company rules in selected company.
+     * ---
+     * Selection :
+     *     -> not_synchronize (Do not synchronize)
+     *     -> invoice_and_refund (Synchronize invoices/bills)
+     *     -> sale (Synchronize Sales Order)
+     *     -> purchase (Synchronize Purchase Order)
+     *     -> sale_purchase (Synchronize Sales and Purchase Order)
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $rule_type;
+
+    /**
+     * Create as
+     * ---
+     * Responsible user for creation of documents triggered by intercompany rules.
+     * ---
+     * Relation : many2one (res.users)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation
+     */
+    private $intercompany_user_id;
+
+    /**
+     * Select Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $rules_company_id;
+
+    /**
+     * Intercompany Transaction Message
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $intercompany_transaction_message;
+
+    /**
      * Processing Option
      * ---
      * Selection :
@@ -1692,6 +1761,7 @@ final class Settings extends Base
      *     -> banxico (Mexican Bank)
      *     -> boc (Bank Of Canada)
      *     -> xe_com (xe.com)
+     *     -> bnr (National Bank Of Romania)
      *     -> mindicador (Chilean mindicador.cl)
      * ---
      * Searchable : yes
@@ -1712,7 +1782,53 @@ final class Settings extends Base
     private $currency_next_execution_date;
 
     /**
-     * Contracts
+     * Human Resources
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $documents_hr_settings;
+
+    /**
+     * hr default workspace
+     * ---
+     * Relation : many2one (documents.folder)
+     * @see \Flux\OdooApiClient\Model\Object\Documents\Folder
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $documents_hr_folder;
+
+    /**
+     * Product
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $documents_product_settings;
+
+    /**
+     * product default workspace
+     * ---
+     * Relation : many2one (documents.folder)
+     * @see \Flux\OdooApiClient\Model\Object\Documents\Folder
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $product_folder;
+
+    /**
+     * Product Tags
      * ---
      * Relation : many2many (documents.tag)
      * @see \Flux\OdooApiClient\Model\Object\Documents\Tag
@@ -1722,7 +1838,7 @@ final class Settings extends Base
      *
      * @var OdooRelation[]|null
      */
-    private $documents_hr_contracts_tags;
+    private $product_tags;
 
     /**
      * Default Alias Name for Expenses
@@ -1753,6 +1869,16 @@ final class Settings extends Base
      * @var bool|null
      */
     private $module_hr_payroll_expense;
+
+    /**
+     * Send bills to OCR to generate expenses
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $module_hr_expense_extract;
 
     /**
      * Lock Confirmed Orders
@@ -1916,6 +2042,18 @@ final class Settings extends Base
     private $use_po_lead;
 
     /**
+     * Receipt Reminder
+     * ---
+     * Allow automatically send email to remind your vendor the receipt date
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $group_send_reminder;
+
+    /**
      * Send by Post
      * ---
      * Searchable : yes
@@ -1938,6 +2076,31 @@ final class Settings extends Base
     private $module_stock_landed_costs;
 
     /**
+     * SMS Validation with stock move
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $stock_move_sms_validation;
+
+    /**
+     * SMS Template
+     * ---
+     * SMS sent to the customer once the order is done.
+     * ---
+     * Relation : many2one (sms.template)
+     * @see \Flux\OdooApiClient\Model\Object\Sms\Template
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $stock_sms_confirmation_template_id;
+
+    /**
      * Add totals below sections
      * ---
      * When ticked, totals and subtotals appear below the sections of the report.
@@ -1955,7 +2118,11 @@ final class Settings extends Base
      * Periodicity
      * ---
      * Selection :
-     *     -> trimester (trimester)
+     *     -> year (annually)
+     *     -> semester (semi-annually)
+     *     -> 4_months (every 4 months)
+     *     -> trimester (quarterly)
+     *     -> 2_months (every 2 months)
      *     -> monthly (monthly)
      * ---
      * Searchable : yes
@@ -1989,6 +2156,34 @@ final class Settings extends Base
     private $account_tax_periodicity_journal_id;
 
     /**
+     * Fiscal Country
+     * ---
+     * The country to use the tax reports from for this company
+     * ---
+     * Relation : many2one (res.country)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $account_tax_fiscal_country_id;
+
+    /**
+     * Contracts
+     * ---
+     * Relation : many2many (documents.tag)
+     * @see \Flux\OdooApiClient\Model\Object\Documents\Tag
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $documents_hr_contracts_tags;
+
+    /**
      * Dropshipping
      * ---
      * Searchable : yes
@@ -1997,6 +2192,18 @@ final class Settings extends Base
      * @var bool|null
      */
     private $module_stock_dropshipping;
+
+    /**
+     * Days to Purchase
+     * ---
+     * Days needed to confirm a PO, define when a PO should be validated
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var float|null
+     */
+    private $days_to_purchase;
 
     /**
      * Is the Sale Module Installed
@@ -2130,16 +2337,6 @@ final class Settings extends Base
     private $deposit_default_product_id;
 
     /**
-     * Digital Content
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $module_website_sale_digital;
-
-    /**
      * Customer Account
      * ---
      * Selection :
@@ -2154,7 +2351,7 @@ final class Settings extends Base
     private $auth_signup_uninvited;
 
     /**
-     * Shipping Costs
+     * Delivery Methods
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -2164,7 +2361,7 @@ final class Settings extends Base
     private $module_delivery;
 
     /**
-     * DHL Connector
+     * DHL USA Connector
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -2298,7 +2495,7 @@ final class Settings extends Base
     private $confirmation_template_id;
 
     /**
-     * Accounting
+     * Accounting 
      * ---
      * Searchable : yes
      * Sortable : no
@@ -2321,6 +2518,21 @@ final class Settings extends Base
     private $account_folder;
 
     /**
+     * Expense processing option
+     * ---
+     * Selection :
+     *     -> no_send (Do not digitalize)
+     *     -> manual_send (Digitalize on demand only)
+     *     -> auto_send (Digitalize automatically)
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $expense_extract_show_ocr_option_selection;
+
+    /**
      * Quotation Templates
      * ---
      * Searchable : yes
@@ -2337,11 +2549,11 @@ final class Settings extends Base
      * @see \Flux\OdooApiClient\Model\Object\Sale\Order\Template
      * ---
      * Searchable : yes
-     * Sortable : yes
+     * Sortable : no
      *
      * @var OdooRelation|null
      */
-    private $default_sale_order_template_id;
+    private $company_so_template_id;
 
     /**
      * Quotation Builder
@@ -2414,38 +2626,6 @@ final class Settings extends Base
     private $default_picking_policy;
 
     /**
-     * Rule
-     * ---
-     * Select the type to setup inter company rules in selected company.
-     * ---
-     * Selection :
-     *     -> not_synchronize (Do not synchronize)
-     *     -> invoice_and_refund (Synchronize invoices/bills)
-     *     -> so_and_po (Synchronize sales/purchase orders)
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $rule_type;
-
-    /**
-     * Apply on
-     * ---
-     * Selection :
-     *     -> sale (Sales Order)
-     *     -> purchase (Purchase Order)
-     *     -> sale_purchase (Sales and Purchase Order)
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $applicable_on;
-
-    /**
      * Automatic Validation
      * ---
      * Searchable : yes
@@ -2454,34 +2634,6 @@ final class Settings extends Base
      * @var bool|null
      */
     private $auto_validation;
-
-    /**
-     * Assign to
-     * ---
-     * Responsible user for creation of documents triggered by intercompany rules.
-     * ---
-     * Relation : many2one (res.users)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Users
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation
-     */
-    private $intercompany_user_id;
-
-    /**
-     * Select Company
-     * ---
-     * Relation : many2one (res.company)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Company
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation|null
-     */
-    private $rules_company_id;
 
     /**
      * Warehouse For Purchase Orders
@@ -2498,16 +2650,6 @@ final class Settings extends Base
      * @var OdooRelation|null
      */
     private $warehouse_id;
-
-    /**
-     * Intercompany Transaction Message
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $intercompany_transaction_message;
 
     /**
      * Created by
@@ -2602,12 +2744,25 @@ final class Settings extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : no
+     * @param OdooRelation $intercompany_user_id Create as
+     *        ---
+     *        Responsible user for creation of documents triggered by intercompany rules.
+     *        ---
+     *        Relation : many2one (res.users)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Users
+     *        ---
+     *        Searchable : yes
+     *        Sortable : no
      * @param string $account_tax_periodicity Periodicity
      *        ---
      *        Periodicity
      *        ---
      *        Selection :
-     *            -> trimester (trimester)
+     *            -> year (annually)
+     *            -> semester (semi-annually)
+     *            -> 4_months (every 4 months)
+     *            -> trimester (quarterly)
+     *            -> 2_months (every 2 months)
      *            -> monthly (monthly)
      *        ---
      *        Searchable : yes
@@ -2624,15 +2779,6 @@ final class Settings extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param OdooRelation $intercompany_user_id Assign to
-     *        ---
-     *        Responsible user for creation of documents triggered by intercompany rules.
-     *        ---
-     *        Relation : many2one (res.users)
-     *        @see \Flux\OdooApiClient\Model\Object\Res\Users
-     *        ---
-     *        Searchable : yes
-     *        Sortable : no
      */
     public function __construct(
         OdooRelation $company_id,
@@ -2640,46 +2786,46 @@ final class Settings extends Base
         string $show_line_subtotals_tax_selection,
         int $fiscalyear_last_day,
         string $fiscalyear_last_month,
+        OdooRelation $intercompany_user_id,
         string $account_tax_periodicity,
         int $account_tax_periodicity_reminder_day,
-        string $default_picking_policy,
-        OdooRelation $intercompany_user_id
+        string $default_picking_policy
     ) {
         $this->company_id = $company_id;
         $this->currency_id = $currency_id;
         $this->show_line_subtotals_tax_selection = $show_line_subtotals_tax_selection;
         $this->fiscalyear_last_day = $fiscalyear_last_day;
         $this->fiscalyear_last_month = $fiscalyear_last_month;
+        $this->intercompany_user_id = $intercompany_user_id;
         $this->account_tax_periodicity = $account_tax_periodicity;
         $this->account_tax_periodicity_reminder_day = $account_tax_periodicity_reminder_day;
         $this->default_picking_policy = $default_picking_policy;
-        $this->intercompany_user_id = $intercompany_user_id;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("vat_check_vies")
+     * @SerializedName("documents_hr_settings")
      */
-    public function isVatCheckVies(): ?bool
+    public function isDocumentsHrSettings(): ?bool
     {
-        return $this->vat_check_vies;
+        return $this->documents_hr_settings;
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function addDocumentsHrContractsTags(OdooRelation $item): void
+    public function addProductTags(OdooRelation $item): void
     {
-        if ($this->hasDocumentsHrContractsTags($item)) {
+        if ($this->hasProductTags($item)) {
             return;
         }
 
-        if (null === $this->documents_hr_contracts_tags) {
-            $this->documents_hr_contracts_tags = [];
+        if (null === $this->product_tags) {
+            $this->product_tags = [];
         }
 
-        $this->documents_hr_contracts_tags[] = $item;
+        $this->product_tags[] = $item;
     }
 
     /**
@@ -2687,31 +2833,93 @@ final class Settings extends Base
      *
      * @return bool
      */
-    public function hasDocumentsHrContractsTags(OdooRelation $item): bool
+    public function hasProductTags(OdooRelation $item): bool
     {
-        if (null === $this->documents_hr_contracts_tags) {
+        if (null === $this->product_tags) {
             return false;
         }
 
-        return in_array($item, $this->documents_hr_contracts_tags);
+        return in_array($item, $this->product_tags);
     }
 
     /**
-     * @param OdooRelation[]|null $documents_hr_contracts_tags
+     * @param OdooRelation[]|null $product_tags
      */
-    public function setDocumentsHrContractsTags(?array $documents_hr_contracts_tags): void
+    public function setProductTags(?array $product_tags): void
     {
-        $this->documents_hr_contracts_tags = $documents_hr_contracts_tags;
+        $this->product_tags = $product_tags;
     }
 
     /**
      * @return OdooRelation[]|null
      *
-     * @SerializedName("documents_hr_contracts_tags")
+     * @SerializedName("product_tags")
      */
-    public function getDocumentsHrContractsTags(): ?array
+    public function getProductTags(): ?array
     {
-        return $this->documents_hr_contracts_tags;
+        return $this->product_tags;
+    }
+
+    /**
+     * @param OdooRelation|null $product_folder
+     */
+    public function setProductFolder(?OdooRelation $product_folder): void
+    {
+        $this->product_folder = $product_folder;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("product_folder")
+     */
+    public function getProductFolder(): ?OdooRelation
+    {
+        return $this->product_folder;
+    }
+
+    /**
+     * @param bool|null $documents_product_settings
+     */
+    public function setDocumentsProductSettings(?bool $documents_product_settings): void
+    {
+        $this->documents_product_settings = $documents_product_settings;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("documents_product_settings")
+     */
+    public function isDocumentsProductSettings(): ?bool
+    {
+        return $this->documents_product_settings;
+    }
+
+    /**
+     * @param OdooRelation|null $documents_hr_folder
+     */
+    public function setDocumentsHrFolder(?OdooRelation $documents_hr_folder): void
+    {
+        $this->documents_hr_folder = $documents_hr_folder;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("documents_hr_folder")
+     */
+    public function getDocumentsHrFolder(): ?OdooRelation
+    {
+        return $this->documents_hr_folder;
+    }
+
+    /**
+     * @param bool|null $documents_hr_settings
+     */
+    public function setDocumentsHrSettings(?bool $documents_hr_settings): void
+    {
+        $this->documents_hr_settings = $documents_hr_settings;
     }
 
     /**
@@ -2720,6 +2928,16 @@ final class Settings extends Base
     public function setCurrencyNextExecutionDate(?DateTimeInterface $currency_next_execution_date): void
     {
         $this->currency_next_execution_date = $currency_next_execution_date;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("expense_alias_prefix")
+     */
+    public function getExpenseAliasPrefix(): ?string
+    {
+        return $this->expense_alias_prefix;
     }
 
     /**
@@ -2777,21 +2995,21 @@ final class Settings extends Base
     }
 
     /**
+     * @return bool|null
+     *
+     * @SerializedName("vat_check_vies")
+     */
+    public function isVatCheckVies(): ?bool
+    {
+        return $this->vat_check_vies;
+    }
+
+    /**
      * @param bool|null $extract_single_line_per_tax
      */
     public function setExtractSingleLinePerTax(?bool $extract_single_line_per_tax): void
     {
         $this->extract_single_line_per_tax = $extract_single_line_per_tax;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("expense_alias_prefix")
-     */
-    public function getExpenseAliasPrefix(): ?string
-    {
-        return $this->expense_alias_prefix;
     }
 
     /**
@@ -2823,89 +3041,25 @@ final class Settings extends Base
     }
 
     /**
-     * @param OdooRelation|null $transfer_account_id
+     * @param string|null $intercompany_transaction_message
      */
-    public function setTransferAccountId(?OdooRelation $transfer_account_id): void
+    public function setIntercompanyTransactionMessage(?string $intercompany_transaction_message): void
     {
-        $this->transfer_account_id = $transfer_account_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("transfer_account_id")
-     */
-    public function getTransferAccountId(): ?OdooRelation
-    {
-        return $this->transfer_account_id;
-    }
-
-    /**
-     * @param bool|null $module_account_predictive_bills
-     */
-    public function setModuleAccountPredictiveBills(?bool $module_account_predictive_bills): void
-    {
-        $this->module_account_predictive_bills = $module_account_predictive_bills;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_account_predictive_bills")
-     */
-    public function isModuleAccountPredictiveBills(): ?bool
-    {
-        return $this->module_account_predictive_bills;
-    }
-
-    /**
-     * @param bool|null $use_anglo_saxon
-     */
-    public function setUseAngloSaxon(?bool $use_anglo_saxon): void
-    {
-        $this->use_anglo_saxon = $use_anglo_saxon;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("use_anglo_saxon")
-     */
-    public function isUseAngloSaxon(): ?bool
-    {
-        return $this->use_anglo_saxon;
-    }
-
-    /**
-     * @param DateTimeInterface|null $tax_lock_date
-     */
-    public function setTaxLockDate(?DateTimeInterface $tax_lock_date): void
-    {
-        $this->tax_lock_date = $tax_lock_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("tax_lock_date")
-     */
-    public function getTaxLockDate(): ?DateTimeInterface
-    {
-        return $this->tax_lock_date;
+        $this->intercompany_transaction_message = $intercompany_transaction_message;
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function removeDocumentsHrContractsTags(OdooRelation $item): void
+    public function removeProductTags(OdooRelation $item): void
     {
-        if (null === $this->documents_hr_contracts_tags) {
-            $this->documents_hr_contracts_tags = [];
+        if (null === $this->product_tags) {
+            $this->product_tags = [];
         }
 
-        if ($this->hasDocumentsHrContractsTags($item)) {
-            $index = array_search($item, $this->documents_hr_contracts_tags);
-            unset($this->documents_hr_contracts_tags[$index]);
+        if ($this->hasProductTags($item)) {
+            $index = array_search($item, $this->product_tags);
+            unset($this->product_tags[$index]);
         }
     }
 
@@ -2918,31 +3072,21 @@ final class Settings extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("fiscalyear_lock_date")
+     * @param OdooRelation|null $rules_company_id
      */
-    public function getFiscalyearLockDate(): ?DateTimeInterface
+    public function setRulesCompanyId(?OdooRelation $rules_company_id): void
     {
-        return $this->fiscalyear_lock_date;
+        $this->rules_company_id = $rules_company_id;
     }
 
     /**
-     * @return OdooRelation|null
+     * @return float|null
      *
-     * @SerializedName("company_currency_id")
+     * @SerializedName("po_double_validation_amount")
      */
-    public function getCompanyCurrencyId(): ?OdooRelation
+    public function getPoDoubleValidationAmount(): ?float
     {
-        return $this->company_currency_id;
-    }
-
-    /**
-     * @param bool|null $module_purchase_product_matrix
-     */
-    public function setModulePurchaseProductMatrix(?bool $module_purchase_product_matrix): void
-    {
-        $this->module_purchase_product_matrix = $module_purchase_product_matrix;
+        return $this->po_double_validation_amount;
     }
 
     /**
@@ -3036,11 +3180,29 @@ final class Settings extends Base
     }
 
     /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("company_currency_id")
+     */
+    public function getCompanyCurrencyId(): ?OdooRelation
+    {
+        return $this->company_currency_id;
+    }
+
+    /**
      * @param float|null $po_double_validation_amount
      */
     public function setPoDoubleValidationAmount(?float $po_double_validation_amount): void
     {
         $this->po_double_validation_amount = $po_double_validation_amount;
+    }
+
+    /**
+     * @param string|null $po_double_validation
+     */
+    public function setPoDoubleValidation(?string $po_double_validation): void
+    {
+        $this->po_double_validation = $po_double_validation;
     }
 
     /**
@@ -3051,24 +3213,6 @@ final class Settings extends Base
     public function isUseMailgateway(): ?bool
     {
         return $this->use_mailgateway;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("po_double_validation_amount")
-     */
-    public function getPoDoubleValidationAmount(): ?float
-    {
-        return $this->po_double_validation_amount;
-    }
-
-    /**
-     * @param string|null $po_double_validation
-     */
-    public function setPoDoubleValidation(?string $po_double_validation): void
-    {
-        $this->po_double_validation = $po_double_validation;
     }
 
     /**
@@ -3136,6 +3280,24 @@ final class Settings extends Base
     }
 
     /**
+     * @param bool|null $module_hr_expense_extract
+     */
+    public function setModuleHrExpenseExtract(?bool $module_hr_expense_extract): void
+    {
+        $this->module_hr_expense_extract = $module_hr_expense_extract;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_hr_expense_extract")
+     */
+    public function isModuleHrExpenseExtract(): ?bool
+    {
+        return $this->module_hr_expense_extract;
+    }
+
+    /**
      * @param bool|null $module_hr_payroll_expense
      */
     public function setModuleHrPayrollExpense(?bool $module_hr_payroll_expense): void
@@ -3162,11 +3324,466 @@ final class Settings extends Base
     }
 
     /**
+     * @return string|null
+     *
+     * @SerializedName("intercompany_transaction_message")
+     */
+    public function getIntercompanyTransactionMessage(): ?string
+    {
+        return $this->intercompany_transaction_message;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("rules_company_id")
+     */
+    public function getRulesCompanyId(): ?OdooRelation
+    {
+        return $this->rules_company_id;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("po_lead")
+     */
+    public function getPoLead(): ?float
+    {
+        return $this->po_lead;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("group_stock_tracking_owner")
+     */
+    public function isGroupStockTrackingOwner(): ?bool
+    {
+        return $this->group_stock_tracking_owner;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("stock_move_email_validation")
+     */
+    public function isStockMoveEmailValidation(): ?bool
+    {
+        return $this->stock_move_email_validation;
+    }
+
+    /**
+     * @param bool|null $module_stock_barcode
+     */
+    public function setModuleStockBarcode(?bool $module_stock_barcode): void
+    {
+        $this->module_stock_barcode = $module_stock_barcode;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_stock_barcode")
+     */
+    public function isModuleStockBarcode(): ?bool
+    {
+        return $this->module_stock_barcode;
+    }
+
+    /**
+     * @param bool|null $module_stock_picking_batch
+     */
+    public function setModuleStockPickingBatch(?bool $module_stock_picking_batch): void
+    {
+        $this->module_stock_picking_batch = $module_stock_picking_batch;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_stock_picking_batch")
+     */
+    public function isModuleStockPickingBatch(): ?bool
+    {
+        return $this->module_stock_picking_batch;
+    }
+
+    /**
+     * @param bool|null $group_stock_sign_delivery
+     */
+    public function setGroupStockSignDelivery(?bool $group_stock_sign_delivery): void
+    {
+        $this->group_stock_sign_delivery = $group_stock_sign_delivery;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("group_stock_sign_delivery")
+     */
+    public function isGroupStockSignDelivery(): ?bool
+    {
+        return $this->group_stock_sign_delivery;
+    }
+
+    /**
+     * @param bool|null $group_warning_stock
+     */
+    public function setGroupWarningStock(?bool $group_warning_stock): void
+    {
+        $this->group_warning_stock = $group_warning_stock;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("group_warning_stock")
+     */
+    public function isGroupWarningStock(): ?bool
+    {
+        return $this->group_warning_stock;
+    }
+
+    /**
+     * @param bool|null $group_stock_adv_location
+     */
+    public function setGroupStockAdvLocation(?bool $group_stock_adv_location): void
+    {
+        $this->group_stock_adv_location = $group_stock_adv_location;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("group_stock_adv_location")
+     */
+    public function isGroupStockAdvLocation(): ?bool
+    {
+        return $this->group_stock_adv_location;
+    }
+
+    /**
+     * @param bool|null $group_stock_tracking_owner
+     */
+    public function setGroupStockTrackingOwner(?bool $group_stock_tracking_owner): void
+    {
+        $this->group_stock_tracking_owner = $group_stock_tracking_owner;
+    }
+
+    /**
+     * @param bool|null $group_stock_tracking_lot
+     */
+    public function setGroupStockTrackingLot(?bool $group_stock_tracking_lot): void
+    {
+        $this->group_stock_tracking_lot = $group_stock_tracking_lot;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("stock_mail_confirmation_template_id")
+     */
+    public function getStockMailConfirmationTemplateId(): ?OdooRelation
+    {
+        return $this->stock_mail_confirmation_template_id;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("group_stock_tracking_lot")
+     */
+    public function isGroupStockTrackingLot(): ?bool
+    {
+        return $this->group_stock_tracking_lot;
+    }
+
+    /**
+     * @param bool|null $group_lot_on_delivery_slip
+     */
+    public function setGroupLotOnDeliverySlip(?bool $group_lot_on_delivery_slip): void
+    {
+        $this->group_lot_on_delivery_slip = $group_lot_on_delivery_slip;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("group_lot_on_delivery_slip")
+     */
+    public function isGroupLotOnDeliverySlip(): ?bool
+    {
+        return $this->group_lot_on_delivery_slip;
+    }
+
+    /**
+     * @param bool|null $group_stock_production_lot
+     */
+    public function setGroupStockProductionLot(?bool $group_stock_production_lot): void
+    {
+        $this->group_stock_production_lot = $group_stock_production_lot;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("group_stock_production_lot")
+     */
+    public function isGroupStockProductionLot(): ?bool
+    {
+        return $this->group_stock_production_lot;
+    }
+
+    /**
+     * @param bool|null $module_product_expiry
+     */
+    public function setModuleProductExpiry(?bool $module_product_expiry): void
+    {
+        $this->module_product_expiry = $module_product_expiry;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_product_expiry")
+     */
+    public function isModuleProductExpiry(): ?bool
+    {
+        return $this->module_product_expiry;
+    }
+
+    /**
+     * @param string|null $module_procurement_jit
+     */
+    public function setModuleProcurementJit(?string $module_procurement_jit): void
+    {
+        $this->module_procurement_jit = $module_procurement_jit;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("module_procurement_jit")
+     */
+    public function getModuleProcurementJit(): ?string
+    {
+        return $this->module_procurement_jit;
+    }
+
+    /**
+     * @param string|null $country_code
+     */
+    public function setCountryCode(?string $country_code): void
+    {
+        $this->country_code = $country_code;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("country_code")
+     */
+    public function getCountryCode(): ?string
+    {
+        return $this->country_code;
+    }
+
+    /**
+     * @param bool|null $use_invoice_terms
+     */
+    public function setUseInvoiceTerms(?bool $use_invoice_terms): void
+    {
+        $this->use_invoice_terms = $use_invoice_terms;
+    }
+
+    /**
+     * @param bool|null $stock_move_email_validation
+     */
+    public function setStockMoveEmailValidation(?bool $stock_move_email_validation): void
+    {
+        $this->stock_move_email_validation = $stock_move_email_validation;
+    }
+
+    /**
+     * @param OdooRelation|null $stock_mail_confirmation_template_id
+     */
+    public function setStockMailConfirmationTemplateId(
+        ?OdooRelation $stock_mail_confirmation_template_id
+    ): void {
+        $this->stock_mail_confirmation_template_id = $stock_mail_confirmation_template_id;
+    }
+
+    /**
+     * @param OdooRelation $intercompany_user_id
+     */
+    public function setIntercompanyUserId(OdooRelation $intercompany_user_id): void
+    {
+        $this->intercompany_user_id = $intercompany_user_id;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("use_anglo_saxon")
+     */
+    public function isUseAngloSaxon(): ?bool
+    {
+        return $this->use_anglo_saxon;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("intercompany_user_id")
+     */
+    public function getIntercompanyUserId(): OdooRelation
+    {
+        return $this->intercompany_user_id;
+    }
+
+    /**
+     * @param string|null $rule_type
+     */
+    public function setRuleType(?string $rule_type): void
+    {
+        $this->rule_type = $rule_type;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("rule_type")
+     */
+    public function getRuleType(): ?string
+    {
+        return $this->rule_type;
+    }
+
+    /**
+     * @param bool|null $group_fiscal_year
+     */
+    public function setGroupFiscalYear(?bool $group_fiscal_year): void
+    {
+        $this->group_fiscal_year = $group_fiscal_year;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("group_fiscal_year")
+     */
+    public function isGroupFiscalYear(): ?bool
+    {
+        return $this->group_fiscal_year;
+    }
+
+    /**
+     * @param DateTimeInterface|null $invoicing_switch_threshold
+     */
+    public function setInvoicingSwitchThreshold(?DateTimeInterface $invoicing_switch_threshold): void
+    {
+        $this->invoicing_switch_threshold = $invoicing_switch_threshold;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("invoicing_switch_threshold")
+     */
+    public function getInvoicingSwitchThreshold(): ?DateTimeInterface
+    {
+        return $this->invoicing_switch_threshold;
+    }
+
+    /**
+     * @param OdooRelation|null $transfer_account_id
+     */
+    public function setTransferAccountId(?OdooRelation $transfer_account_id): void
+    {
+        $this->transfer_account_id = $transfer_account_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("transfer_account_id")
+     */
+    public function getTransferAccountId(): ?OdooRelation
+    {
+        return $this->transfer_account_id;
+    }
+
+    /**
+     * @param bool|null $module_account_predictive_bills
+     */
+    public function setModuleAccountPredictiveBills(?bool $module_account_predictive_bills): void
+    {
+        $this->module_account_predictive_bills = $module_account_predictive_bills;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_account_predictive_bills")
+     */
+    public function isModuleAccountPredictiveBills(): ?bool
+    {
+        return $this->module_account_predictive_bills;
+    }
+
+    /**
+     * @param bool|null $use_anglo_saxon
+     */
+    public function setUseAngloSaxon(?bool $use_anglo_saxon): void
+    {
+        $this->use_anglo_saxon = $use_anglo_saxon;
+    }
+
+    /**
+     * @param DateTimeInterface|null $tax_lock_date
+     */
+    public function setTaxLockDate(?DateTimeInterface $tax_lock_date): void
+    {
+        $this->tax_lock_date = $tax_lock_date;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_stock_sms")
+     */
+    public function isModuleStockSms(): ?bool
+    {
+        return $this->module_stock_sms;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("tax_lock_date")
+     */
+    public function getTaxLockDate(): ?DateTimeInterface
+    {
+        return $this->tax_lock_date;
+    }
+
+    /**
      * @param DateTimeInterface|null $fiscalyear_lock_date
      */
     public function setFiscalyearLockDate(?DateTimeInterface $fiscalyear_lock_date): void
     {
         $this->fiscalyear_lock_date = $fiscalyear_lock_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("fiscalyear_lock_date")
+     */
+    public function getFiscalyearLockDate(): ?DateTimeInterface
+    {
+        return $this->fiscalyear_lock_date;
     }
 
     /**
@@ -3178,261 +3795,6 @@ final class Settings extends Base
     }
 
     /**
-     * @param float|null $po_lead
-     */
-    public function setPoLead(?float $po_lead): void
-    {
-        $this->po_lead = $po_lead;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_account_taxcloud")
-     */
-    public function isModuleAccountTaxcloud(): ?bool
-    {
-        return $this->module_account_taxcloud;
-    }
-
-    /**
-     * @param DateTimeInterface|null $account_bank_reconciliation_start
-     */
-    public function setAccountBankReconciliationStart(
-        ?DateTimeInterface $account_bank_reconciliation_start
-    ): void {
-        $this->account_bank_reconciliation_start = $account_bank_reconciliation_start;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("account_bank_reconciliation_start")
-     */
-    public function getAccountBankReconciliationStart(): ?DateTimeInterface
-    {
-        return $this->account_bank_reconciliation_start;
-    }
-
-    /**
-     * @param OdooRelation|null $tax_cash_basis_journal_id
-     */
-    public function setTaxCashBasisJournalId(?OdooRelation $tax_cash_basis_journal_id): void
-    {
-        $this->tax_cash_basis_journal_id = $tax_cash_basis_journal_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("tax_cash_basis_journal_id")
-     */
-    public function getTaxCashBasisJournalId(): ?OdooRelation
-    {
-        return $this->tax_cash_basis_journal_id;
-    }
-
-    /**
-     * @param bool|null $tax_exigibility
-     */
-    public function setTaxExigibility(?bool $tax_exigibility): void
-    {
-        $this->tax_exigibility = $tax_exigibility;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("tax_exigibility")
-     */
-    public function isTaxExigibility(): ?bool
-    {
-        return $this->tax_exigibility;
-    }
-
-    /**
-     * @param bool|null $module_snailmail_account
-     */
-    public function setModuleSnailmailAccount(?bool $module_snailmail_account): void
-    {
-        $this->module_snailmail_account = $module_snailmail_account;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_snailmail_account")
-     */
-    public function isModuleSnailmailAccount(): ?bool
-    {
-        return $this->module_snailmail_account;
-    }
-
-    /**
-     * @param bool|null $module_account_invoice_extract
-     */
-    public function setModuleAccountInvoiceExtract(?bool $module_account_invoice_extract): void
-    {
-        $this->module_account_invoice_extract = $module_account_invoice_extract;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_account_invoice_extract")
-     */
-    public function isModuleAccountInvoiceExtract(): ?bool
-    {
-        return $this->module_account_invoice_extract;
-    }
-
-    /**
-     * @param bool|null $module_account_taxcloud
-     */
-    public function setModuleAccountTaxcloud(?bool $module_account_taxcloud): void
-    {
-        $this->module_account_taxcloud = $module_account_taxcloud;
-    }
-
-    /**
-     * @param bool|null $module_l10n_eu_service
-     */
-    public function setModuleL10nEuService(?bool $module_l10n_eu_service): void
-    {
-        $this->module_l10n_eu_service = $module_l10n_eu_service;
-    }
-
-    /**
-     * @param bool|null $qr_code
-     */
-    public function setQrCode(?bool $qr_code): void
-    {
-        $this->qr_code = $qr_code;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_l10n_eu_service")
-     */
-    public function isModuleL10nEuService(): ?bool
-    {
-        return $this->module_l10n_eu_service;
-    }
-
-    /**
-     * @param bool|null $module_product_margin
-     */
-    public function setModuleProductMargin(?bool $module_product_margin): void
-    {
-        $this->module_product_margin = $module_product_margin;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_product_margin")
-     */
-    public function isModuleProductMargin(): ?bool
-    {
-        return $this->module_product_margin;
-    }
-
-    /**
-     * @param bool|null $module_account_intrastat
-     */
-    public function setModuleAccountIntrastat(?bool $module_account_intrastat): void
-    {
-        $this->module_account_intrastat = $module_account_intrastat;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_account_intrastat")
-     */
-    public function isModuleAccountIntrastat(): ?bool
-    {
-        return $this->module_account_intrastat;
-    }
-
-    /**
-     * @param bool|null $module_currency_rate_live
-     */
-    public function setModuleCurrencyRateLive(?bool $module_currency_rate_live): void
-    {
-        $this->module_currency_rate_live = $module_currency_rate_live;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_currency_rate_live")
-     */
-    public function isModuleCurrencyRateLive(): ?bool
-    {
-        return $this->module_currency_rate_live;
-    }
-
-    /**
-     * @param bool|null $module_account_bank_statement_import_camt
-     */
-    public function setModuleAccountBankStatementImportCamt(
-        ?bool $module_account_bank_statement_import_camt
-    ): void {
-        $this->module_account_bank_statement_import_camt = $module_account_bank_statement_import_camt;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_account_bank_statement_import_camt")
-     */
-    public function isModuleAccountBankStatementImportCamt(): ?bool
-    {
-        return $this->module_account_bank_statement_import_camt;
-    }
-
-    /**
-     * @param bool|null $module_account_bank_statement_import_csv
-     */
-    public function setModuleAccountBankStatementImportCsv(
-        ?bool $module_account_bank_statement_import_csv
-    ): void {
-        $this->module_account_bank_statement_import_csv = $module_account_bank_statement_import_csv;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_account_bank_statement_import_csv")
-     */
-    public function isModuleAccountBankStatementImportCsv(): ?bool
-    {
-        return $this->module_account_bank_statement_import_csv;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("qr_code")
-     */
-    public function isQrCode(): ?bool
-    {
-        return $this->qr_code;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("invoice_is_print")
-     */
-    public function isInvoiceIsPrint(): ?bool
-    {
-        return $this->invoice_is_print;
-    }
-
-    /**
      * @return DateTimeInterface|null
      *
      * @SerializedName("period_lock_date")
@@ -3440,14 +3802,6 @@ final class Settings extends Base
     public function getPeriodLockDate(): ?DateTimeInterface
     {
         return $this->period_lock_date;
-    }
-
-    /**
-     * @param bool|null $documents_product_settings
-     */
-    public function setDocumentsProductSettings(?bool $documents_product_settings): void
-    {
-        $this->documents_product_settings = $documents_product_settings;
     }
 
     /**
@@ -3487,156 +3841,45 @@ final class Settings extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @param bool|null $group_stock_multi_locations
      */
-    public function removeProductTags(OdooRelation $item): void
+    public function setGroupStockMultiLocations(?bool $group_stock_multi_locations): void
     {
-        if (null === $this->product_tags) {
-            $this->product_tags = [];
-        }
-
-        if ($this->hasProductTags($item)) {
-            $index = array_search($item, $this->product_tags);
-            unset($this->product_tags[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addProductTags(OdooRelation $item): void
-    {
-        if ($this->hasProductTags($item)) {
-            return;
-        }
-
-        if (null === $this->product_tags) {
-            $this->product_tags = [];
-        }
-
-        $this->product_tags[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasProductTags(OdooRelation $item): bool
-    {
-        if (null === $this->product_tags) {
-            return false;
-        }
-
-        return in_array($item, $this->product_tags);
-    }
-
-    /**
-     * @param OdooRelation[]|null $product_tags
-     */
-    public function setProductTags(?array $product_tags): void
-    {
-        $this->product_tags = $product_tags;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("product_tags")
-     */
-    public function getProductTags(): ?array
-    {
-        return $this->product_tags;
-    }
-
-    /**
-     * @param OdooRelation|null $product_folder
-     */
-    public function setProductFolder(?OdooRelation $product_folder): void
-    {
-        $this->product_folder = $product_folder;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("product_folder")
-     */
-    public function getProductFolder(): ?OdooRelation
-    {
-        return $this->product_folder;
+        $this->group_stock_multi_locations = $group_stock_multi_locations;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("documents_product_settings")
+     * @SerializedName("group_stock_multi_locations")
      */
-    public function isDocumentsProductSettings(): ?bool
+    public function isGroupStockMultiLocations(): ?bool
     {
-        return $this->documents_product_settings;
+        return $this->group_stock_multi_locations;
     }
 
     /**
-     * @param bool|null $invoice_is_print
+     * @param bool|null $module_stock_sms
      */
-    public function setInvoiceIsPrint(?bool $invoice_is_print): void
+    public function setModuleStockSms(?bool $module_stock_sms): void
     {
-        $this->invoice_is_print = $invoice_is_print;
+        $this->module_stock_sms = $module_stock_sms;
     }
 
     /**
-     * @param OdooRelation|null $documents_hr_folder
+     * @param bool|null $module_purchase_product_matrix
      */
-    public function setDocumentsHrFolder(?OdooRelation $documents_hr_folder): void
+    public function setModulePurchaseProductMatrix(?bool $module_purchase_product_matrix): void
     {
-        $this->documents_hr_folder = $documents_hr_folder;
+        $this->module_purchase_product_matrix = $module_purchase_product_matrix;
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("documents_hr_folder")
+     * @param float|null $po_lead
      */
-    public function getDocumentsHrFolder(): ?OdooRelation
+    public function setPoLead(?float $po_lead): void
     {
-        return $this->documents_hr_folder;
-    }
-
-    /**
-     * @param bool|null $documents_hr_settings
-     */
-    public function setDocumentsHrSettings(?bool $documents_hr_settings): void
-    {
-        $this->documents_hr_settings = $documents_hr_settings;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("documents_hr_settings")
-     */
-    public function isDocumentsHrSettings(): ?bool
-    {
-        return $this->documents_hr_settings;
-    }
-
-    /**
-     * @param bool|null $use_invoice_terms
-     */
-    public function setUseInvoiceTerms(?bool $use_invoice_terms): void
-    {
-        $this->use_invoice_terms = $use_invoice_terms;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("use_invoice_terms")
-     */
-    public function isUseInvoiceTerms(): ?bool
-    {
-        return $this->use_invoice_terms;
+        $this->po_lead = $po_lead;
     }
 
     /**
@@ -3648,169 +3891,11 @@ final class Settings extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("invoice_terms")
+     * @param bool|null $module_sale_coupon
      */
-    public function getInvoiceTerms(): ?string
+    public function setModuleSaleCoupon(?bool $module_sale_coupon): void
     {
-        return $this->invoice_terms;
-    }
-
-    /**
-     * @param OdooRelation|null $incoterm_id
-     */
-    public function setIncotermId(?OdooRelation $incoterm_id): void
-    {
-        $this->incoterm_id = $incoterm_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("incoterm_id")
-     */
-    public function getIncotermId(): ?OdooRelation
-    {
-        return $this->incoterm_id;
-    }
-
-    /**
-     * @param bool|null $invoice_is_email
-     */
-    public function setInvoiceIsEmail(?bool $invoice_is_email): void
-    {
-        $this->invoice_is_email = $invoice_is_email;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("invoice_is_email")
-     */
-    public function isInvoiceIsEmail(): ?bool
-    {
-        return $this->invoice_is_email;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("po_lead")
-     */
-    public function getPoLead(): ?float
-    {
-        return $this->po_lead;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("use_po_lead")
-     */
-    public function isUsePoLead(): ?bool
-    {
-        return $this->use_po_lead;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_account_bank_statement_import_ofx")
-     */
-    public function isModuleAccountBankStatementImportOfx(): ?bool
-    {
-        return $this->module_account_bank_statement_import_ofx;
-    }
-
-    /**
-     * @param bool|null $documents_account_settings
-     */
-    public function setDocumentsAccountSettings(?bool $documents_account_settings): void
-    {
-        $this->documents_account_settings = $documents_account_settings;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("group_display_incoterm")
-     */
-    public function isGroupDisplayIncoterm(): ?bool
-    {
-        return $this->group_display_incoterm;
-    }
-
-    /**
-     * @param float|null $security_lead
-     */
-    public function setSecurityLead(?float $security_lead): void
-    {
-        $this->security_lead = $security_lead;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("security_lead")
-     */
-    public function getSecurityLead(): ?float
-    {
-        return $this->security_lead;
-    }
-
-    /**
-     * @param bool|null $module_sale_quotation_builder
-     */
-    public function setModuleSaleQuotationBuilder(?bool $module_sale_quotation_builder): void
-    {
-        $this->module_sale_quotation_builder = $module_sale_quotation_builder;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_sale_quotation_builder")
-     */
-    public function isModuleSaleQuotationBuilder(): ?bool
-    {
-        return $this->module_sale_quotation_builder;
-    }
-
-    /**
-     * @param OdooRelation|null $default_sale_order_template_id
-     */
-    public function setDefaultSaleOrderTemplateId(?OdooRelation $default_sale_order_template_id): void
-    {
-        $this->default_sale_order_template_id = $default_sale_order_template_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("default_sale_order_template_id")
-     */
-    public function getDefaultSaleOrderTemplateId(): ?OdooRelation
-    {
-        return $this->default_sale_order_template_id;
-    }
-
-    /**
-     * @param bool|null $group_sale_order_template
-     */
-    public function setGroupSaleOrderTemplate(?bool $group_sale_order_template): void
-    {
-        $this->group_sale_order_template = $group_sale_order_template;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("group_sale_order_template")
-     */
-    public function isGroupSaleOrderTemplate(): ?bool
-    {
-        return $this->group_sale_order_template;
+        $this->module_sale_coupon = $module_sale_coupon;
     }
 
     /**
@@ -3832,6 +3917,14 @@ final class Settings extends Base
     }
 
     /**
+     * @param bool|null $documents_account_settings
+     */
+    public function setDocumentsAccountSettings(?bool $documents_account_settings): void
+    {
+        $this->documents_account_settings = $documents_account_settings;
+    }
+
+    /**
      * @return bool|null
      *
      * @SerializedName("documents_account_settings")
@@ -3839,16 +3932,6 @@ final class Settings extends Base
     public function isDocumentsAccountSettings(): ?bool
     {
         return $this->documents_account_settings;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("group_lot_on_invoice")
-     */
-    public function isGroupLotOnInvoice(): ?bool
-    {
-        return $this->group_lot_on_invoice;
     }
 
     /**
@@ -3924,14 +4007,6 @@ final class Settings extends Base
     }
 
     /**
-     * @param bool|null $module_sale_coupon
-     */
-    public function setModuleSaleCoupon(?bool $module_sale_coupon): void
-    {
-        $this->module_sale_coupon = $module_sale_coupon;
-    }
-
-    /**
      * @return bool|null
      *
      * @SerializedName("module_sale_coupon")
@@ -3939,6 +4014,15 @@ final class Settings extends Base
     public function isModuleSaleCoupon(): ?bool
     {
         return $this->module_sale_coupon;
+    }
+
+    /**
+     * @param string|null $expense_extract_show_ocr_option_selection
+     */
+    public function setExpenseExtractShowOcrOptionSelection(
+        ?string $expense_extract_show_ocr_option_selection
+    ): void {
+        $this->expense_extract_show_ocr_option_selection = $expense_extract_show_ocr_option_selection;
     }
 
     /**
@@ -3950,19 +4034,13 @@ final class Settings extends Base
     }
 
     /**
-     * @param bool|null $group_display_incoterm
+     * @return bool|null
+     *
+     * @SerializedName("module_product_email_template")
      */
-    public function setGroupDisplayIncoterm(?bool $group_display_incoterm): void
+    public function isModuleProductEmailTemplate(): ?bool
     {
-        $this->group_display_incoterm = $group_display_incoterm;
-    }
-
-    /**
-     * @param bool|null $group_lot_on_invoice
-     */
-    public function setGroupLotOnInvoice(?bool $group_lot_on_invoice): void
-    {
-        $this->group_lot_on_invoice = $group_lot_on_invoice;
+        return $this->module_product_email_template;
     }
 
     /**
@@ -3974,13 +4052,123 @@ final class Settings extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @return bool|null
      *
-     * @SerializedName("warehouse_id")
+     * @SerializedName("module_delivery_easypost")
      */
-    public function getWarehouseId(): ?OdooRelation
+    public function isModuleDeliveryEasypost(): ?bool
     {
-        return $this->warehouse_id;
+        return $this->module_delivery_easypost;
+    }
+
+    /**
+     * @param bool|null $module_delivery_bpost
+     */
+    public function setModuleDeliveryBpost(?bool $module_delivery_bpost): void
+    {
+        $this->module_delivery_bpost = $module_delivery_bpost;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_delivery_bpost")
+     */
+    public function isModuleDeliveryBpost(): ?bool
+    {
+        return $this->module_delivery_bpost;
+    }
+
+    /**
+     * @param bool|null $module_delivery_usps
+     */
+    public function setModuleDeliveryUsps(?bool $module_delivery_usps): void
+    {
+        $this->module_delivery_usps = $module_delivery_usps;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_delivery_usps")
+     */
+    public function isModuleDeliveryUsps(): ?bool
+    {
+        return $this->module_delivery_usps;
+    }
+
+    /**
+     * @param bool|null $module_delivery_ups
+     */
+    public function setModuleDeliveryUps(?bool $module_delivery_ups): void
+    {
+        $this->module_delivery_ups = $module_delivery_ups;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_delivery_ups")
+     */
+    public function isModuleDeliveryUps(): ?bool
+    {
+        return $this->module_delivery_ups;
+    }
+
+    /**
+     * @param bool|null $module_delivery_fedex
+     */
+    public function setModuleDeliveryFedex(?bool $module_delivery_fedex): void
+    {
+        $this->module_delivery_fedex = $module_delivery_fedex;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_delivery_fedex")
+     */
+    public function isModuleDeliveryFedex(): ?bool
+    {
+        return $this->module_delivery_fedex;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("expense_extract_show_ocr_option_selection")
+     */
+    public function getExpenseExtractShowOcrOptionSelection(): ?string
+    {
+        return $this->expense_extract_show_ocr_option_selection;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("group_sale_order_template")
+     */
+    public function isGroupSaleOrderTemplate(): ?bool
+    {
+        return $this->group_sale_order_template;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_delivery_dhl")
+     */
+    public function isModuleDeliveryDhl(): ?bool
+    {
+        return $this->module_delivery_dhl;
+    }
+
+    /**
+     * @param string $default_picking_policy
+     */
+    public function setDefaultPickingPolicy(string $default_picking_policy): void
+    {
+        $this->default_picking_policy = $default_picking_policy;
     }
 
     /**
@@ -4056,24 +4244,6 @@ final class Settings extends Base
     }
 
     /**
-     * @param string|null $intercompany_transaction_message
-     */
-    public function setIntercompanyTransactionMessage(?string $intercompany_transaction_message): void
-    {
-        $this->intercompany_transaction_message = $intercompany_transaction_message;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("intercompany_transaction_message")
-     */
-    public function getIntercompanyTransactionMessage(): ?string
-    {
-        return $this->intercompany_transaction_message;
-    }
-
-    /**
      * @param OdooRelation|null $warehouse_id
      */
     public function setWarehouseId(?OdooRelation $warehouse_id): void
@@ -4082,49 +4252,13 @@ final class Settings extends Base
     }
 
     /**
-     * @param OdooRelation|null $rules_company_id
-     */
-    public function setRulesCompanyId(?OdooRelation $rules_company_id): void
-    {
-        $this->rules_company_id = $rules_company_id;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("use_security_lead")
-     */
-    public function isUseSecurityLead(): ?bool
-    {
-        return $this->use_security_lead;
-    }
-
-    /**
      * @return OdooRelation|null
      *
-     * @SerializedName("rules_company_id")
+     * @SerializedName("warehouse_id")
      */
-    public function getRulesCompanyId(): ?OdooRelation
+    public function getWarehouseId(): ?OdooRelation
     {
-        return $this->rules_company_id;
-    }
-
-    /**
-     * @param OdooRelation $intercompany_user_id
-     */
-    public function setIntercompanyUserId(OdooRelation $intercompany_user_id): void
-    {
-        $this->intercompany_user_id = $intercompany_user_id;
-    }
-
-    /**
-     * @return OdooRelation
-     *
-     * @SerializedName("intercompany_user_id")
-     */
-    public function getIntercompanyUserId(): OdooRelation
-    {
-        return $this->intercompany_user_id;
+        return $this->warehouse_id;
     }
 
     /**
@@ -4146,50 +4280,6 @@ final class Settings extends Base
     }
 
     /**
-     * @param string|null $applicable_on
-     */
-    public function setApplicableOn(?string $applicable_on): void
-    {
-        $this->applicable_on = $applicable_on;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("applicable_on")
-     */
-    public function getApplicableOn(): ?string
-    {
-        return $this->applicable_on;
-    }
-
-    /**
-     * @param string|null $rule_type
-     */
-    public function setRuleType(?string $rule_type): void
-    {
-        $this->rule_type = $rule_type;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("rule_type")
-     */
-    public function getRuleType(): ?string
-    {
-        return $this->rule_type;
-    }
-
-    /**
-     * @param string $default_picking_policy
-     */
-    public function setDefaultPickingPolicy(string $default_picking_policy): void
-    {
-        $this->default_picking_policy = $default_picking_policy;
-    }
-
-    /**
      * @return string
      *
      * @SerializedName("default_picking_policy")
@@ -4197,6 +4287,14 @@ final class Settings extends Base
     public function getDefaultPickingPolicy(): string
     {
         return $this->default_picking_policy;
+    }
+
+    /**
+     * @param bool|null $group_sale_order_template
+     */
+    public function setGroupSaleOrderTemplate(?bool $group_sale_order_template): void
+    {
+        $this->group_sale_order_template = $group_sale_order_template;
     }
 
     /**
@@ -4210,137 +4308,218 @@ final class Settings extends Base
     /**
      * @return bool|null
      *
-     * @SerializedName("module_product_email_template")
+     * @SerializedName("use_security_lead")
      */
-    public function isModuleProductEmailTemplate(): ?bool
+    public function isUseSecurityLead(): ?bool
     {
-        return $this->module_product_email_template;
+        return $this->use_security_lead;
+    }
+
+    /**
+     * @param bool|null $group_lot_on_invoice
+     */
+    public function setGroupLotOnInvoice(?bool $group_lot_on_invoice): void
+    {
+        $this->group_lot_on_invoice = $group_lot_on_invoice;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("module_delivery_easypost")
+     * @SerializedName("group_lot_on_invoice")
      */
-    public function isModuleDeliveryEasypost(): ?bool
+    public function isGroupLotOnInvoice(): ?bool
     {
-        return $this->module_delivery_easypost;
+        return $this->group_lot_on_invoice;
     }
 
     /**
-     * @param bool|null $use_po_lead
+     * @param bool|null $group_display_incoterm
      */
-    public function setUsePoLead(?bool $use_po_lead): void
+    public function setGroupDisplayIncoterm(?bool $group_display_incoterm): void
     {
-        $this->use_po_lead = $use_po_lead;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_stock_dropshipping")
-     */
-    public function isModuleStockDropshipping(): ?bool
-    {
-        return $this->module_stock_dropshipping;
-    }
-
-    /**
-     * @param bool|null $use_quotation_validity_days
-     */
-    public function setUseQuotationValidityDays(?bool $use_quotation_validity_days): void
-    {
-        $this->use_quotation_validity_days = $use_quotation_validity_days;
+        $this->group_display_incoterm = $group_display_incoterm;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("use_quotation_validity_days")
+     * @SerializedName("group_display_incoterm")
      */
-    public function isUseQuotationValidityDays(): ?bool
+    public function isGroupDisplayIncoterm(): ?bool
     {
-        return $this->use_quotation_validity_days;
+        return $this->group_display_incoterm;
     }
 
     /**
-     * @param int|null $quotation_validity_days
+     * @param float|null $security_lead
      */
-    public function setQuotationValidityDays(?int $quotation_validity_days): void
+    public function setSecurityLead(?float $security_lead): void
     {
-        $this->quotation_validity_days = $quotation_validity_days;
+        $this->security_lead = $security_lead;
     }
 
     /**
-     * @return int|null
+     * @return float|null
      *
-     * @SerializedName("quotation_validity_days")
+     * @SerializedName("security_lead")
      */
-    public function getQuotationValidityDays(): ?int
+    public function getSecurityLead(): ?float
     {
-        return $this->quotation_validity_days;
+        return $this->security_lead;
     }
 
     /**
-     * @param bool|null $module_sale_margin
+     * @param bool|null $module_sale_quotation_builder
      */
-    public function setModuleSaleMargin(?bool $module_sale_margin): void
+    public function setModuleSaleQuotationBuilder(?bool $module_sale_quotation_builder): void
     {
-        $this->module_sale_margin = $module_sale_margin;
+        $this->module_sale_quotation_builder = $module_sale_quotation_builder;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("module_sale_margin")
+     * @SerializedName("module_sale_quotation_builder")
      */
-    public function isModuleSaleMargin(): ?bool
+    public function isModuleSaleQuotationBuilder(): ?bool
     {
-        return $this->module_sale_margin;
+        return $this->module_sale_quotation_builder;
     }
 
     /**
-     * @param bool|null $group_auto_done_setting
+     * @param OdooRelation|null $company_so_template_id
      */
-    public function setGroupAutoDoneSetting(?bool $group_auto_done_setting): void
+    public function setCompanySoTemplateId(?OdooRelation $company_so_template_id): void
     {
-        $this->group_auto_done_setting = $group_auto_done_setting;
+        $this->company_so_template_id = $company_so_template_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("company_so_template_id")
+     */
+    public function getCompanySoTemplateId(): ?OdooRelation
+    {
+        return $this->company_so_template_id;
+    }
+
+    /**
+     * @param bool|null $module_delivery_dhl
+     */
+    public function setModuleDeliveryDhl(?bool $module_delivery_dhl): void
+    {
+        $this->module_delivery_dhl = $module_delivery_dhl;
+    }
+
+    /**
+     * @param bool|null $module_delivery
+     */
+    public function setModuleDelivery(?bool $module_delivery): void
+    {
+        $this->module_delivery = $module_delivery;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("group_auto_done_setting")
+     * @SerializedName("use_po_lead")
      */
-    public function isGroupAutoDoneSetting(): ?bool
+    public function isUsePoLead(): ?bool
     {
-        return $this->group_auto_done_setting;
+        return $this->use_po_lead;
     }
 
     /**
-     * @param bool|null $is_installed_sale
-     */
-    public function setIsInstalledSale(?bool $is_installed_sale): void
-    {
-        $this->is_installed_sale = $is_installed_sale;
-    }
-
-    /**
-     * @return bool|null
+     * @return string
      *
-     * @SerializedName("is_installed_sale")
+     * @SerializedName("account_tax_periodicity")
      */
-    public function isIsInstalledSale(): ?bool
+    public function getAccountTaxPeriodicity(): string
     {
-        return $this->is_installed_sale;
+        return $this->account_tax_periodicity;
     }
 
     /**
-     * @param bool|null $module_stock_dropshipping
+     * @param OdooRelation $item
      */
-    public function setModuleStockDropshipping(?bool $module_stock_dropshipping): void
+    public function removeDocumentsHrContractsTags(OdooRelation $item): void
     {
-        $this->module_stock_dropshipping = $module_stock_dropshipping;
+        if (null === $this->documents_hr_contracts_tags) {
+            $this->documents_hr_contracts_tags = [];
+        }
+
+        if ($this->hasDocumentsHrContractsTags($item)) {
+            $index = array_search($item, $this->documents_hr_contracts_tags);
+            unset($this->documents_hr_contracts_tags[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addDocumentsHrContractsTags(OdooRelation $item): void
+    {
+        if ($this->hasDocumentsHrContractsTags($item)) {
+            return;
+        }
+
+        if (null === $this->documents_hr_contracts_tags) {
+            $this->documents_hr_contracts_tags = [];
+        }
+
+        $this->documents_hr_contracts_tags[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasDocumentsHrContractsTags(OdooRelation $item): bool
+    {
+        if (null === $this->documents_hr_contracts_tags) {
+            return false;
+        }
+
+        return in_array($item, $this->documents_hr_contracts_tags);
+    }
+
+    /**
+     * @param OdooRelation[]|null $documents_hr_contracts_tags
+     */
+    public function setDocumentsHrContractsTags(?array $documents_hr_contracts_tags): void
+    {
+        $this->documents_hr_contracts_tags = $documents_hr_contracts_tags;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("documents_hr_contracts_tags")
+     */
+    public function getDocumentsHrContractsTags(): ?array
+    {
+        return $this->documents_hr_contracts_tags;
+    }
+
+    /**
+     * @param OdooRelation|null $account_tax_fiscal_country_id
+     */
+    public function setAccountTaxFiscalCountryId(?OdooRelation $account_tax_fiscal_country_id): void
+    {
+        $this->account_tax_fiscal_country_id = $account_tax_fiscal_country_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("account_tax_fiscal_country_id")
+     */
+    public function getAccountTaxFiscalCountryId(): ?OdooRelation
+    {
+        return $this->account_tax_fiscal_country_id;
     }
 
     /**
@@ -4350,14 +4529,6 @@ final class Settings extends Base
         ?OdooRelation $account_tax_periodicity_journal_id
     ): void {
         $this->account_tax_periodicity_journal_id = $account_tax_periodicity_journal_id;
-    }
-
-    /**
-     * @param bool|null $group_warning_sale
-     */
-    public function setGroupWarningSale(?bool $group_warning_sale): void
-    {
-        $this->group_warning_sale = $group_warning_sale;
     }
 
     /**
@@ -4397,21 +4568,19 @@ final class Settings extends Base
     }
 
     /**
-     * @return string
-     *
-     * @SerializedName("account_tax_periodicity")
-     */
-    public function getAccountTaxPeriodicity(): string
-    {
-        return $this->account_tax_periodicity;
-    }
-
-    /**
      * @param bool|null $totals_below_sections
      */
     public function setTotalsBelowSections(?bool $totals_below_sections): void
     {
         $this->totals_below_sections = $totals_below_sections;
+    }
+
+    /**
+     * @param bool|null $module_stock_dropshipping
+     */
+    public function setModuleStockDropshipping(?bool $module_stock_dropshipping): void
+    {
+        $this->module_stock_dropshipping = $module_stock_dropshipping;
     }
 
     /**
@@ -4422,6 +4591,43 @@ final class Settings extends Base
     public function isTotalsBelowSections(): ?bool
     {
         return $this->totals_below_sections;
+    }
+
+    /**
+     * @param OdooRelation|null $stock_sms_confirmation_template_id
+     */
+    public function setStockSmsConfirmationTemplateId(
+        ?OdooRelation $stock_sms_confirmation_template_id
+    ): void {
+        $this->stock_sms_confirmation_template_id = $stock_sms_confirmation_template_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("stock_sms_confirmation_template_id")
+     */
+    public function getStockSmsConfirmationTemplateId(): ?OdooRelation
+    {
+        return $this->stock_sms_confirmation_template_id;
+    }
+
+    /**
+     * @param bool|null $stock_move_sms_validation
+     */
+    public function setStockMoveSmsValidation(?bool $stock_move_sms_validation): void
+    {
+        $this->stock_move_sms_validation = $stock_move_sms_validation;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("stock_move_sms_validation")
+     */
+    public function isStockMoveSmsValidation(): ?bool
+    {
+        return $this->stock_move_sms_validation;
     }
 
     /**
@@ -4461,129 +4667,49 @@ final class Settings extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("group_warning_sale")
+     * @param bool|null $group_send_reminder
      */
-    public function isGroupWarningSale(): ?bool
+    public function setGroupSendReminder(?bool $group_send_reminder): void
     {
-        return $this->group_warning_sale;
+        $this->group_send_reminder = $group_send_reminder;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("portal_confirmation_sign")
+     * @SerializedName("group_send_reminder")
      */
-    public function isPortalConfirmationSign(): ?bool
+    public function isGroupSendReminder(): ?bool
     {
-        return $this->portal_confirmation_sign;
+        return $this->group_send_reminder;
     }
 
     /**
-     * @param bool|null $module_delivery_bpost
+     * @param bool|null $use_po_lead
      */
-    public function setModuleDeliveryBpost(?bool $module_delivery_bpost): void
+    public function setUsePoLead(?bool $use_po_lead): void
     {
-        $this->module_delivery_bpost = $module_delivery_bpost;
-    }
-
-    /**
-     * @param string|null $auth_signup_uninvited
-     */
-    public function setAuthSignupUninvited(?string $auth_signup_uninvited): void
-    {
-        $this->auth_signup_uninvited = $auth_signup_uninvited;
+        $this->use_po_lead = $use_po_lead;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("module_delivery_bpost")
+     * @SerializedName("module_stock_dropshipping")
      */
-    public function isModuleDeliveryBpost(): ?bool
+    public function isModuleStockDropshipping(): ?bool
     {
-        return $this->module_delivery_bpost;
+        return $this->module_stock_dropshipping;
     }
 
     /**
-     * @param bool|null $module_delivery_usps
-     */
-    public function setModuleDeliveryUsps(?bool $module_delivery_usps): void
-    {
-        $this->module_delivery_usps = $module_delivery_usps;
-    }
-
-    /**
-     * @return bool|null
+     * @return float|null
      *
-     * @SerializedName("module_delivery_usps")
+     * @SerializedName("days_to_purchase")
      */
-    public function isModuleDeliveryUsps(): ?bool
+    public function getDaysToPurchase(): ?float
     {
-        return $this->module_delivery_usps;
-    }
-
-    /**
-     * @param bool|null $module_delivery_ups
-     */
-    public function setModuleDeliveryUps(?bool $module_delivery_ups): void
-    {
-        $this->module_delivery_ups = $module_delivery_ups;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_delivery_ups")
-     */
-    public function isModuleDeliveryUps(): ?bool
-    {
-        return $this->module_delivery_ups;
-    }
-
-    /**
-     * @param bool|null $module_delivery_fedex
-     */
-    public function setModuleDeliveryFedex(?bool $module_delivery_fedex): void
-    {
-        $this->module_delivery_fedex = $module_delivery_fedex;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_delivery_fedex")
-     */
-    public function isModuleDeliveryFedex(): ?bool
-    {
-        return $this->module_delivery_fedex;
-    }
-
-    /**
-     * @param bool|null $module_delivery_dhl
-     */
-    public function setModuleDeliveryDhl(?bool $module_delivery_dhl): void
-    {
-        $this->module_delivery_dhl = $module_delivery_dhl;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_delivery_dhl")
-     */
-    public function isModuleDeliveryDhl(): ?bool
-    {
-        return $this->module_delivery_dhl;
-    }
-
-    /**
-     * @param bool|null $module_delivery
-     */
-    public function setModuleDelivery(?bool $module_delivery): void
-    {
-        $this->module_delivery = $module_delivery;
+        return $this->days_to_purchase;
     }
 
     /**
@@ -4597,16 +4723,6 @@ final class Settings extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("auth_signup_uninvited")
-     */
-    public function getAuthSignupUninvited(): ?string
-    {
-        return $this->auth_signup_uninvited;
-    }
-
-    /**
      * @param bool|null $portal_confirmation_sign
      */
     public function setPortalConfirmationSign(?bool $portal_confirmation_sign): void
@@ -4615,21 +4731,21 @@ final class Settings extends Base
     }
 
     /**
-     * @param bool|null $module_website_sale_digital
+     * @param string|null $auth_signup_uninvited
      */
-    public function setModuleWebsiteSaleDigital(?bool $module_website_sale_digital): void
+    public function setAuthSignupUninvited(?string $auth_signup_uninvited): void
     {
-        $this->module_website_sale_digital = $module_website_sale_digital;
+        $this->auth_signup_uninvited = $auth_signup_uninvited;
     }
 
     /**
-     * @return bool|null
+     * @return string|null
      *
-     * @SerializedName("module_website_sale_digital")
+     * @SerializedName("auth_signup_uninvited")
      */
-    public function isModuleWebsiteSaleDigital(): ?bool
+    public function getAuthSignupUninvited(): ?string
     {
-        return $this->module_website_sale_digital;
+        return $this->auth_signup_uninvited;
     }
 
     /**
@@ -4723,21 +4839,149 @@ final class Settings extends Base
     }
 
     /**
-     * @param bool|null $module_account_bank_statement_import_ofx
+     * @return bool|null
+     *
+     * @SerializedName("portal_confirmation_sign")
      */
-    public function setModuleAccountBankStatementImportOfx(
-        ?bool $module_account_bank_statement_import_ofx
-    ): void {
-        $this->module_account_bank_statement_import_ofx = $module_account_bank_statement_import_ofx;
+    public function isPortalConfirmationSign(): ?bool
+    {
+        return $this->portal_confirmation_sign;
     }
 
     /**
-     * @param bool|null $module_account_bank_statement_import_qif
+     * @param float|null $days_to_purchase
      */
-    public function setModuleAccountBankStatementImportQif(
-        ?bool $module_account_bank_statement_import_qif
-    ): void {
-        $this->module_account_bank_statement_import_qif = $module_account_bank_statement_import_qif;
+    public function setDaysToPurchase(?float $days_to_purchase): void
+    {
+        $this->days_to_purchase = $days_to_purchase;
+    }
+
+    /**
+     * @param bool|null $group_warning_sale
+     */
+    public function setGroupWarningSale(?bool $group_warning_sale): void
+    {
+        $this->group_warning_sale = $group_warning_sale;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("group_warning_sale")
+     */
+    public function isGroupWarningSale(): ?bool
+    {
+        return $this->group_warning_sale;
+    }
+
+    /**
+     * @param bool|null $use_quotation_validity_days
+     */
+    public function setUseQuotationValidityDays(?bool $use_quotation_validity_days): void
+    {
+        $this->use_quotation_validity_days = $use_quotation_validity_days;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("use_quotation_validity_days")
+     */
+    public function isUseQuotationValidityDays(): ?bool
+    {
+        return $this->use_quotation_validity_days;
+    }
+
+    /**
+     * @param int|null $quotation_validity_days
+     */
+    public function setQuotationValidityDays(?int $quotation_validity_days): void
+    {
+        $this->quotation_validity_days = $quotation_validity_days;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("quotation_validity_days")
+     */
+    public function getQuotationValidityDays(): ?int
+    {
+        return $this->quotation_validity_days;
+    }
+
+    /**
+     * @param bool|null $module_sale_margin
+     */
+    public function setModuleSaleMargin(?bool $module_sale_margin): void
+    {
+        $this->module_sale_margin = $module_sale_margin;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_sale_margin")
+     */
+    public function isModuleSaleMargin(): ?bool
+    {
+        return $this->module_sale_margin;
+    }
+
+    /**
+     * @param bool|null $group_auto_done_setting
+     */
+    public function setGroupAutoDoneSetting(?bool $group_auto_done_setting): void
+    {
+        $this->group_auto_done_setting = $group_auto_done_setting;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("group_auto_done_setting")
+     */
+    public function isGroupAutoDoneSetting(): ?bool
+    {
+        return $this->group_auto_done_setting;
+    }
+
+    /**
+     * @param bool|null $is_installed_sale
+     */
+    public function setIsInstalledSale(?bool $is_installed_sale): void
+    {
+        $this->is_installed_sale = $is_installed_sale;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("is_installed_sale")
+     */
+    public function isIsInstalledSale(): ?bool
+    {
+        return $this->is_installed_sale;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("use_invoice_terms")
+     */
+    public function isUseInvoiceTerms(): ?bool
+    {
+        return $this->use_invoice_terms;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("invoice_terms")
+     */
+    public function getInvoiceTerms(): ?string
+    {
+        return $this->invoice_terms;
     }
 
     /**
@@ -4751,104 +4995,77 @@ final class Settings extends Base
     }
 
     /**
-     * @return bool|null
+     * @return string|null
      *
-     * @SerializedName("is_google_drive_token_generated")
+     * @SerializedName("google_drive_authorization_code")
      */
-    public function isIsGoogleDriveTokenGenerated(): ?bool
+    public function getGoogleDriveAuthorizationCode(): ?string
     {
-        return $this->is_google_drive_token_generated;
-    }
-
-    /**
-     * @param bool|null $module_sale_product_configurator
-     */
-    public function setModuleSaleProductConfigurator(?bool $module_sale_product_configurator): void
-    {
-        $this->module_sale_product_configurator = $module_sale_product_configurator;
+        return $this->google_drive_authorization_code;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("module_sale_product_configurator")
+     * @SerializedName("hr_presence_control_login")
      */
-    public function isModuleSaleProductConfigurator(): ?bool
+    public function isHrPresenceControlLogin(): ?bool
     {
-        return $this->module_sale_product_configurator;
+        return $this->hr_presence_control_login;
     }
 
     /**
-     * @param bool|null $group_product_variant
+     * @param bool|null $module_hr_skills
      */
-    public function setGroupProductVariant(?bool $group_product_variant): void
+    public function setModuleHrSkills(?bool $module_hr_skills): void
     {
-        $this->group_product_variant = $group_product_variant;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("group_product_variant")
-     */
-    public function isGroupProductVariant(): ?bool
-    {
-        return $this->group_product_variant;
-    }
-
-    /**
-     * @param bool|null $group_uom
-     */
-    public function setGroupUom(?bool $group_uom): void
-    {
-        $this->group_uom = $group_uom;
+        $this->module_hr_skills = $module_hr_skills;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("group_uom")
+     * @SerializedName("module_hr_skills")
      */
-    public function isGroupUom(): ?bool
+    public function isModuleHrSkills(): ?bool
     {
-        return $this->group_uom;
+        return $this->module_hr_skills;
     }
 
     /**
-     * @param bool|null $group_discount_per_so_line
+     * @param bool|null $module_hr_presence
      */
-    public function setGroupDiscountPerSoLine(?bool $group_discount_per_so_line): void
+    public function setModuleHrPresence(?bool $module_hr_presence): void
     {
-        $this->group_discount_per_so_line = $group_discount_per_so_line;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("group_discount_per_so_line")
-     */
-    public function isGroupDiscountPerSoLine(): ?bool
-    {
-        return $this->group_discount_per_so_line;
-    }
-
-    /**
-     * @param bool|null $partner_autocomplete_insufficient_credit
-     */
-    public function setPartnerAutocompleteInsufficientCredit(
-        ?bool $partner_autocomplete_insufficient_credit
-    ): void {
-        $this->partner_autocomplete_insufficient_credit = $partner_autocomplete_insufficient_credit;
+        $this->module_hr_presence = $module_hr_presence;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("partner_autocomplete_insufficient_credit")
+     * @SerializedName("module_hr_presence")
      */
-    public function isPartnerAutocompleteInsufficientCredit(): ?bool
+    public function isModuleHrPresence(): ?bool
     {
-        return $this->partner_autocomplete_insufficient_credit;
+        return $this->module_hr_presence;
+    }
+
+    /**
+     * @param OdooRelation|null $resource_calendar_id
+     */
+    public function setResourceCalendarId(?OdooRelation $resource_calendar_id): void
+    {
+        $this->resource_calendar_id = $resource_calendar_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("resource_calendar_id")
+     */
+    public function getResourceCalendarId(): ?OdooRelation
+    {
+        return $this->resource_calendar_id;
     }
 
     /**
@@ -4860,19 +5077,21 @@ final class Settings extends Base
     }
 
     /**
+     * @return bool|null
+     *
+     * @SerializedName("is_google_drive_token_generated")
+     */
+    public function isIsGoogleDriveTokenGenerated(): ?bool
+    {
+        return $this->is_google_drive_token_generated;
+    }
+
+    /**
      * @param string|null $google_drive_uri
      */
     public function setGoogleDriveUri(?string $google_drive_uri): void
     {
         $this->google_drive_uri = $google_drive_uri;
-    }
-
-    /**
-     * @param bool|null $module_sale_product_matrix
-     */
-    public function setModuleSaleProductMatrix(?bool $module_sale_product_matrix): void
-    {
-        $this->module_sale_product_matrix = $module_sale_product_matrix;
     }
 
     /**
@@ -4894,21 +5113,21 @@ final class Settings extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("google_drive_authorization_code")
-     */
-    public function getGoogleDriveAuthorizationCode(): ?string
-    {
-        return $this->google_drive_authorization_code;
-    }
-
-    /**
      * @param OdooRelation|null $auth_signup_template_user_id
      */
     public function setAuthSignupTemplateUserId(?OdooRelation $auth_signup_template_user_id): void
     {
         $this->auth_signup_template_user_id = $auth_signup_template_user_id;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("hr_presence_control_email")
+     */
+    public function isHrPresenceControlEmail(): ?bool
+    {
+        return $this->hr_presence_control_email;
     }
 
     /**
@@ -4958,41 +5177,11 @@ final class Settings extends Base
     }
 
     /**
-     * @param bool|null $module_ocn_client
+     * @param string|null $map_box_token
      */
-    public function setModuleOcnClient(?bool $module_ocn_client): void
+    public function setMapBoxToken(?string $map_box_token): void
     {
-        $this->module_ocn_client = $module_ocn_client;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_ocn_client")
-     */
-    public function isModuleOcnClient(): ?bool
-    {
-        return $this->module_ocn_client;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_sale_product_matrix")
-     */
-    public function isModuleSaleProductMatrix(): ?bool
-    {
-        return $this->module_sale_product_matrix;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("group_stock_packaging")
-     */
-    public function isGroupStockPackaging(): ?bool
-    {
-        return $this->group_stock_packaging;
+        $this->map_box_token = $map_box_token;
     }
 
     /**
@@ -5006,191 +5195,81 @@ final class Settings extends Base
     }
 
     /**
-     * @param bool|null $snailmail_cover
+     * @param string|null $alias_domain
      */
-    public function setSnailmailCover(?bool $snailmail_cover): void
+    public function setAliasDomain(?string $alias_domain): void
     {
-        $this->snailmail_cover = $snailmail_cover;
+        $this->alias_domain = $alias_domain;
     }
 
     /**
      * @return string|null
      *
-     * @SerializedName("cal_client_secret")
+     * @SerializedName("alias_domain")
      */
-    public function getCalClientSecret(): ?string
+    public function getAliasDomain(): ?string
     {
-        return $this->cal_client_secret;
+        return $this->alias_domain;
     }
 
     /**
-     * @param string|null $cal_client_id
+     * @param int|null $fail_counter
      */
-    public function setCalClientId(?string $cal_client_id): void
+    public function setFailCounter(?int $fail_counter): void
     {
-        $this->cal_client_id = $cal_client_id;
+        $this->fail_counter = $fail_counter;
     }
 
     /**
-     * @return string|null
+     * @return int|null
      *
-     * @SerializedName("cal_client_id")
+     * @SerializedName("fail_counter")
      */
-    public function getCalClientId(): ?string
+    public function getFailCounter(): ?int
     {
-        return $this->cal_client_id;
+        return $this->fail_counter;
     }
 
     /**
-     * @param string|null $server_uri_google
+     * @param float|null $recaptcha_min_score
      */
-    public function setServerUriGoogle(?string $server_uri_google): void
+    public function setRecaptchaMinScore(?float $recaptcha_min_score): void
     {
-        $this->server_uri_google = $server_uri_google;
+        $this->recaptcha_min_score = $recaptcha_min_score;
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("server_uri_google")
+     * @param bool|null $hr_presence_control_login
      */
-    public function getServerUriGoogle(): ?string
+    public function setHrPresenceControlLogin(?bool $hr_presence_control_login): void
     {
-        return $this->server_uri_google;
+        $this->hr_presence_control_login = $hr_presence_control_login;
     }
 
     /**
-     * @param string|null $auth_oauth_google_client_id
+     * @param bool|null $hr_presence_control_email
      */
-    public function setAuthOauthGoogleClientId(?string $auth_oauth_google_client_id): void
+    public function setHrPresenceControlEmail(?bool $hr_presence_control_email): void
     {
-        $this->auth_oauth_google_client_id = $auth_oauth_google_client_id;
+        $this->hr_presence_control_email = $hr_presence_control_email;
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("auth_oauth_google_client_id")
+     * @param string|null $recaptcha_private_key
      */
-    public function getAuthOauthGoogleClientId(): ?string
+    public function setRecaptchaPrivateKey(?string $recaptcha_private_key): void
     {
-        return $this->auth_oauth_google_client_id;
-    }
-
-    /**
-     * @param bool|null $auth_oauth_google_enabled
-     */
-    public function setAuthOauthGoogleEnabled(?bool $auth_oauth_google_enabled): void
-    {
-        $this->auth_oauth_google_enabled = $auth_oauth_google_enabled;
+        $this->recaptcha_private_key = $recaptcha_private_key;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("auth_oauth_google_enabled")
+     * @SerializedName("group_product_variant")
      */
-    public function isAuthOauthGoogleEnabled(): ?bool
+    public function isGroupProductVariant(): ?bool
     {
-        return $this->auth_oauth_google_enabled;
-    }
-
-    /**
-     * @param bool|null $snailmail_duplex
-     */
-    public function setSnailmailDuplex(?bool $snailmail_duplex): void
-    {
-        $this->snailmail_duplex = $snailmail_duplex;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("snailmail_duplex")
-     */
-    public function isSnailmailDuplex(): ?bool
-    {
-        return $this->snailmail_duplex;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("snailmail_cover")
-     */
-    public function isSnailmailCover(): ?bool
-    {
-        return $this->snailmail_cover;
-    }
-
-    /**
-     * @param bool|null $group_stock_packaging
-     */
-    public function setGroupStockPackaging(?bool $group_stock_packaging): void
-    {
-        $this->group_stock_packaging = $group_stock_packaging;
-    }
-
-    /**
-     * @param bool|null $snailmail_color
-     */
-    public function setSnailmailColor(?bool $snailmail_color): void
-    {
-        $this->snailmail_color = $snailmail_color;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("snailmail_color")
-     */
-    public function isSnailmailColor(): ?bool
-    {
-        return $this->snailmail_color;
-    }
-
-    /**
-     * @param string|null $product_volume_volume_in_cubic_feet
-     */
-    public function setProductVolumeVolumeInCubicFeet(?string $product_volume_volume_in_cubic_feet): void
-    {
-        $this->product_volume_volume_in_cubic_feet = $product_volume_volume_in_cubic_feet;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("product_volume_volume_in_cubic_feet")
-     */
-    public function getProductVolumeVolumeInCubicFeet(): ?string
-    {
-        return $this->product_volume_volume_in_cubic_feet;
-    }
-
-    /**
-     * @param string|null $product_weight_in_lbs
-     */
-    public function setProductWeightInLbs(?string $product_weight_in_lbs): void
-    {
-        $this->product_weight_in_lbs = $product_weight_in_lbs;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("product_weight_in_lbs")
-     */
-    public function getProductWeightInLbs(): ?string
-    {
-        return $this->product_weight_in_lbs;
-    }
-
-    /**
-     * @param string|null $product_pricelist_setting
-     */
-    public function setProductPricelistSetting(?string $product_pricelist_setting): void
-    {
-        $this->product_pricelist_setting = $product_pricelist_setting;
+        return $this->group_product_variant;
     }
 
     /**
@@ -5240,37 +5319,231 @@ final class Settings extends Base
     }
 
     /**
-     * @param string|null $map_box_token
+     * @param bool|null $group_stock_packaging
      */
-    public function setMapBoxToken(?string $map_box_token): void
+    public function setGroupStockPackaging(?bool $group_stock_packaging): void
     {
-        $this->map_box_token = $map_box_token;
+        $this->group_stock_packaging = $group_stock_packaging;
     }
 
     /**
-     * @param string|null $alias_domain
+     * @return bool|null
+     *
+     * @SerializedName("group_stock_packaging")
      */
-    public function setAliasDomain(?string $alias_domain): void
+    public function isGroupStockPackaging(): ?bool
     {
-        $this->alias_domain = $alias_domain;
+        return $this->group_stock_packaging;
+    }
+
+    /**
+     * @param bool|null $module_sale_product_matrix
+     */
+    public function setModuleSaleProductMatrix(?bool $module_sale_product_matrix): void
+    {
+        $this->module_sale_product_matrix = $module_sale_product_matrix;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_sale_product_matrix")
+     */
+    public function isModuleSaleProductMatrix(): ?bool
+    {
+        return $this->module_sale_product_matrix;
+    }
+
+    /**
+     * @param bool|null $module_sale_product_configurator
+     */
+    public function setModuleSaleProductConfigurator(?bool $module_sale_product_configurator): void
+    {
+        $this->module_sale_product_configurator = $module_sale_product_configurator;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_sale_product_configurator")
+     */
+    public function isModuleSaleProductConfigurator(): ?bool
+    {
+        return $this->module_sale_product_configurator;
+    }
+
+    /**
+     * @param bool|null $group_product_variant
+     */
+    public function setGroupProductVariant(?bool $group_product_variant): void
+    {
+        $this->group_product_variant = $group_product_variant;
+    }
+
+    /**
+     * @param bool|null $group_uom
+     */
+    public function setGroupUom(?bool $group_uom): void
+    {
+        $this->group_uom = $group_uom;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("hr_presence_control_ip")
+     */
+    public function isHrPresenceControlIp(): ?bool
+    {
+        return $this->hr_presence_control_ip;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("group_uom")
+     */
+    public function isGroupUom(): ?bool
+    {
+        return $this->group_uom;
+    }
+
+    /**
+     * @param bool|null $group_discount_per_so_line
+     */
+    public function setGroupDiscountPerSoLine(?bool $group_discount_per_so_line): void
+    {
+        $this->group_discount_per_so_line = $group_discount_per_so_line;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("group_discount_per_so_line")
+     */
+    public function isGroupDiscountPerSoLine(): ?bool
+    {
+        return $this->group_discount_per_so_line;
+    }
+
+    /**
+     * @param bool|null $hr_employee_self_edit
+     */
+    public function setHrEmployeeSelfEdit(?bool $hr_employee_self_edit): void
+    {
+        $this->hr_employee_self_edit = $hr_employee_self_edit;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("hr_employee_self_edit")
+     */
+    public function isHrEmployeeSelfEdit(): ?bool
+    {
+        return $this->hr_employee_self_edit;
+    }
+
+    /**
+     * @param string|null $hr_presence_control_ip_list
+     */
+    public function setHrPresenceControlIpList(?string $hr_presence_control_ip_list): void
+    {
+        $this->hr_presence_control_ip_list = $hr_presence_control_ip_list;
     }
 
     /**
      * @return string|null
      *
-     * @SerializedName("server_uri")
+     * @SerializedName("hr_presence_control_ip_list")
      */
-    public function getServerUri(): ?string
+    public function getHrPresenceControlIpList(): ?string
     {
-        return $this->server_uri;
+        return $this->hr_presence_control_ip_list;
     }
 
     /**
-     * @param bool|null $module_google_spreadsheet
+     * @param int|null $hr_presence_control_email_amount
      */
-    public function setModuleGoogleSpreadsheet(?bool $module_google_spreadsheet): void
+    public function setHrPresenceControlEmailAmount(?int $hr_presence_control_email_amount): void
     {
-        $this->module_google_spreadsheet = $module_google_spreadsheet;
+        $this->hr_presence_control_email_amount = $hr_presence_control_email_amount;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("hr_presence_control_email_amount")
+     */
+    public function getHrPresenceControlEmailAmount(): ?int
+    {
+        return $this->hr_presence_control_email_amount;
+    }
+
+    /**
+     * @param bool|null $module_hr_attendance
+     */
+    public function setModuleHrAttendance(?bool $module_hr_attendance): void
+    {
+        $this->module_hr_attendance = $module_hr_attendance;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_hr_attendance")
+     */
+    public function isModuleHrAttendance(): ?bool
+    {
+        return $this->module_hr_attendance;
+    }
+
+    /**
+     * @param bool|null $hr_presence_control_ip
+     */
+    public function setHrPresenceControlIp(?bool $hr_presence_control_ip): void
+    {
+        $this->hr_presence_control_ip = $hr_presence_control_ip;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("recaptcha_min_score")
+     */
+    public function getRecaptchaMinScore(): ?float
+    {
+        return $this->recaptcha_min_score;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("recaptcha_private_key")
+     */
+    public function getRecaptchaPrivateKey(): ?string
+    {
+        return $this->recaptcha_private_key;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("product_weight_in_lbs")
+     */
+    public function getProductWeightInLbs(): ?string
+    {
+        return $this->product_weight_in_lbs;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_google_spreadsheet")
+     */
+    public function isModuleGoogleSpreadsheet(): ?bool
+    {
+        return $this->module_google_spreadsheet;
     }
 
     /**
@@ -5302,21 +5575,21 @@ final class Settings extends Base
     }
 
     /**
-     * @param bool|null $module_inter_company_rules
+     * @param bool|null $module_account_inter_company_rules
      */
-    public function setModuleInterCompanyRules(?bool $module_inter_company_rules): void
+    public function setModuleAccountInterCompanyRules(?bool $module_account_inter_company_rules): void
     {
-        $this->module_inter_company_rules = $module_inter_company_rules;
+        $this->module_account_inter_company_rules = $module_account_inter_company_rules;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("module_inter_company_rules")
+     * @SerializedName("module_account_inter_company_rules")
      */
-    public function isModuleInterCompanyRules(): ?bool
+    public function isModuleAccountInterCompanyRules(): ?bool
     {
-        return $this->module_inter_company_rules;
+        return $this->module_account_inter_company_rules;
     }
 
     /**
@@ -5374,23 +5647,11 @@ final class Settings extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("module_google_spreadsheet")
+     * @param bool|null $module_google_spreadsheet
      */
-    public function isModuleGoogleSpreadsheet(): ?bool
+    public function setModuleGoogleSpreadsheet(?bool $module_google_spreadsheet): void
     {
-        return $this->module_google_spreadsheet;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_web_unsplash")
-     */
-    public function isModuleWebUnsplash(): ?bool
-    {
-        return $this->module_web_unsplash;
+        $this->module_google_spreadsheet = $module_google_spreadsheet;
     }
 
     /**
@@ -5404,11 +5665,39 @@ final class Settings extends Base
     /**
      * @return bool|null
      *
+     * @SerializedName("module_web_unsplash")
+     */
+    public function isModuleWebUnsplash(): ?bool
+    {
+        return $this->module_web_unsplash;
+    }
+
+    /**
+     * @return bool|null
+     *
      * @SerializedName("module_google_drive")
      */
     public function isModuleGoogleDrive(): ?bool
     {
         return $this->module_google_drive;
+    }
+
+    /**
+     * @param bool|null $module_microsoft_calendar
+     */
+    public function setModuleMicrosoftCalendar(?bool $module_microsoft_calendar): void
+    {
+        $this->module_microsoft_calendar = $module_microsoft_calendar;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_microsoft_calendar")
+     */
+    public function isModuleMicrosoftCalendar(): ?bool
+    {
+        return $this->module_microsoft_calendar;
     }
 
     /**
@@ -5508,41 +5797,31 @@ final class Settings extends Base
     }
 
     /**
+     * @param string|null $recaptcha_public_key
+     */
+    public function setRecaptchaPublicKey(?string $recaptcha_public_key): void
+    {
+        $this->recaptcha_public_key = $recaptcha_public_key;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("show_effect")
+     */
+    public function isShowEffect(): ?bool
+    {
+        return $this->show_effect;
+    }
+
+    /**
      * @return string|null
      *
-     * @SerializedName("alias_domain")
+     * @SerializedName("recaptcha_public_key")
      */
-    public function getAliasDomain(): ?string
+    public function getRecaptchaPublicKey(): ?string
     {
-        return $this->alias_domain;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("company_count")
-     */
-    public function getCompanyCount(): ?int
-    {
-        return $this->company_count;
-    }
-
-    /**
-     * @param int|null $fail_counter
-     */
-    public function setFailCounter(?int $fail_counter): void
-    {
-        $this->fail_counter = $fail_counter;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("fail_counter")
-     */
-    public function getFailCounter(): ?int
-    {
-        return $this->fail_counter;
+        return $this->recaptcha_public_key;
     }
 
     /**
@@ -5626,11 +5905,29 @@ final class Settings extends Base
     }
 
     /**
+     * @return int|null
+     *
+     * @SerializedName("company_count")
+     */
+    public function getCompanyCount(): ?int
+    {
+        return $this->company_count;
+    }
+
+    /**
      * @param bool|null $show_effect
      */
     public function setShowEffect(?bool $show_effect): void
     {
         $this->show_effect = $show_effect;
+    }
+
+    /**
+     * @param OdooRelation|null $external_report_layout_id
+     */
+    public function setExternalReportLayoutId(?OdooRelation $external_report_layout_id): void
+    {
+        $this->external_report_layout_id = $external_report_layout_id;
     }
 
     /**
@@ -5641,24 +5938,6 @@ final class Settings extends Base
     public function isModulePartnerAutocomplete(): ?bool
     {
         return $this->module_partner_autocomplete;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("show_effect")
-     */
-    public function isShowEffect(): ?bool
-    {
-        return $this->show_effect;
-    }
-
-    /**
-     * @param OdooRelation|null $external_report_layout_id
-     */
-    public function setExternalReportLayoutId(?OdooRelation $external_report_layout_id): void
-    {
-        $this->external_report_layout_id = $external_report_layout_id;
     }
 
     /**
@@ -5726,6 +6005,24 @@ final class Settings extends Base
     }
 
     /**
+     * @param bool|null $module_google_recaptcha
+     */
+    public function setModuleGoogleRecaptcha(?bool $module_google_recaptcha): void
+    {
+        $this->module_google_recaptcha = $module_google_recaptcha;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_google_recaptcha")
+     */
+    public function isModuleGoogleRecaptcha(): ?bool
+    {
+        return $this->module_google_recaptcha;
+    }
+
+    /**
      * @param bool|null $module_base_geolocalize
      */
     public function setModuleBaseGeolocalize(?bool $module_base_geolocalize): void
@@ -5752,19 +6049,75 @@ final class Settings extends Base
     }
 
     /**
-     * @param string|null $cal_client_secret
+     * @param string|null $product_pricelist_setting
      */
-    public function setCalClientSecret(?string $cal_client_secret): void
+    public function setProductPricelistSetting(?string $product_pricelist_setting): void
     {
-        $this->cal_client_secret = $cal_client_secret;
+        $this->product_pricelist_setting = $product_pricelist_setting;
     }
 
     /**
-     * @param string|null $server_uri
+     * @param string|null $product_weight_in_lbs
      */
-    public function setServerUri(?string $server_uri): void
+    public function setProductWeightInLbs(?string $product_weight_in_lbs): void
     {
-        $this->server_uri = $server_uri;
+        $this->product_weight_in_lbs = $product_weight_in_lbs;
+    }
+
+    /**
+     * @param OdooRelation|null $incoterm_id
+     */
+    public function setIncotermId(?OdooRelation $incoterm_id): void
+    {
+        $this->incoterm_id = $incoterm_id;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_account_sepa")
+     */
+    public function isModuleAccountSepa(): ?bool
+    {
+        return $this->module_account_sepa;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_account_bank_statement_import_csv")
+     */
+    public function isModuleAccountBankStatementImportCsv(): ?bool
+    {
+        return $this->module_account_bank_statement_import_csv;
+    }
+
+    /**
+     * @param bool|null $module_account_bank_statement_import_ofx
+     */
+    public function setModuleAccountBankStatementImportOfx(
+        ?bool $module_account_bank_statement_import_ofx
+    ): void {
+        $this->module_account_bank_statement_import_ofx = $module_account_bank_statement_import_ofx;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_account_bank_statement_import_ofx")
+     */
+    public function isModuleAccountBankStatementImportOfx(): ?bool
+    {
+        return $this->module_account_bank_statement_import_ofx;
+    }
+
+    /**
+     * @param bool|null $module_account_bank_statement_import_qif
+     */
+    public function setModuleAccountBankStatementImportQif(
+        ?bool $module_account_bank_statement_import_qif
+    ): void {
+        $this->module_account_bank_statement_import_qif = $module_account_bank_statement_import_qif;
     }
 
     /**
@@ -5775,267 +6128,6 @@ final class Settings extends Base
     public function isModuleAccountBankStatementImportQif(): ?bool
     {
         return $this->module_account_bank_statement_import_qif;
-    }
-
-    /**
-     * @param OdooRelation|null $sale_tax_id
-     */
-    public function setSaleTaxId(?OdooRelation $sale_tax_id): void
-    {
-        $this->sale_tax_id = $sale_tax_id;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("group_warning_account")
-     */
-    public function isGroupWarningAccount(): ?bool
-    {
-        return $this->group_warning_account;
-    }
-
-    /**
-     * @param bool|null $group_analytic_tags
-     */
-    public function setGroupAnalyticTags(?bool $group_analytic_tags): void
-    {
-        $this->group_analytic_tags = $group_analytic_tags;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("group_analytic_tags")
-     */
-    public function isGroupAnalyticTags(): ?bool
-    {
-        return $this->group_analytic_tags;
-    }
-
-    /**
-     * @param bool|null $group_analytic_accounting
-     */
-    public function setGroupAnalyticAccounting(?bool $group_analytic_accounting): void
-    {
-        $this->group_analytic_accounting = $group_analytic_accounting;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("group_analytic_accounting")
-     */
-    public function isGroupAnalyticAccounting(): ?bool
-    {
-        return $this->group_analytic_accounting;
-    }
-
-    /**
-     * @param bool|null $module_account_accountant
-     */
-    public function setModuleAccountAccountant(?bool $module_account_accountant): void
-    {
-        $this->module_account_accountant = $module_account_accountant;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_account_accountant")
-     */
-    public function isModuleAccountAccountant(): ?bool
-    {
-        return $this->module_account_accountant;
-    }
-
-    /**
-     * @param string|null $tax_calculation_rounding_method
-     */
-    public function setTaxCalculationRoundingMethod(?string $tax_calculation_rounding_method): void
-    {
-        $this->tax_calculation_rounding_method = $tax_calculation_rounding_method;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("tax_calculation_rounding_method")
-     */
-    public function getTaxCalculationRoundingMethod(): ?string
-    {
-        return $this->tax_calculation_rounding_method;
-    }
-
-    /**
-     * @param OdooRelation|null $purchase_tax_id
-     */
-    public function setPurchaseTaxId(?OdooRelation $purchase_tax_id): void
-    {
-        $this->purchase_tax_id = $purchase_tax_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("purchase_tax_id")
-     */
-    public function getPurchaseTaxId(): ?OdooRelation
-    {
-        return $this->purchase_tax_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("sale_tax_id")
-     */
-    public function getSaleTaxId(): ?OdooRelation
-    {
-        return $this->sale_tax_id;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("group_cash_rounding")
-     */
-    public function isGroupCashRounding(): ?bool
-    {
-        return $this->group_cash_rounding;
-    }
-
-    /**
-     * @param OdooRelation|null $chart_template_id
-     */
-    public function setChartTemplateId(?OdooRelation $chart_template_id): void
-    {
-        $this->chart_template_id = $chart_template_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("chart_template_id")
-     */
-    public function getChartTemplateId(): ?OdooRelation
-    {
-        return $this->chart_template_id;
-    }
-
-    /**
-     * @param bool|null $has_chart_of_accounts
-     */
-    public function setHasChartOfAccounts(?bool $has_chart_of_accounts): void
-    {
-        $this->has_chart_of_accounts = $has_chart_of_accounts;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("has_chart_of_accounts")
-     */
-    public function isHasChartOfAccounts(): ?bool
-    {
-        return $this->has_chart_of_accounts;
-    }
-
-    /**
-     * @param OdooRelation|null $currency_exchange_journal_id
-     */
-    public function setCurrencyExchangeJournalId(?OdooRelation $currency_exchange_journal_id): void
-    {
-        $this->currency_exchange_journal_id = $currency_exchange_journal_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("currency_exchange_journal_id")
-     */
-    public function getCurrencyExchangeJournalId(): ?OdooRelation
-    {
-        return $this->currency_exchange_journal_id;
-    }
-
-    /**
-     * @param OdooRelation $currency_id
-     */
-    public function setCurrencyId(OdooRelation $currency_id): void
-    {
-        $this->currency_id = $currency_id;
-    }
-
-    /**
-     * @return OdooRelation
-     *
-     * @SerializedName("currency_id")
-     */
-    public function getCurrencyId(): OdooRelation
-    {
-        return $this->currency_id;
-    }
-
-    /**
-     * @param bool|null $has_accounting_entries
-     */
-    public function setHasAccountingEntries(?bool $has_accounting_entries): void
-    {
-        $this->has_accounting_entries = $has_accounting_entries;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("has_accounting_entries")
-     */
-    public function isHasAccountingEntries(): ?bool
-    {
-        return $this->has_accounting_entries;
-    }
-
-    /**
-     * @param OdooRelation|null $stock_sms_confirmation_template_id
-     */
-    public function setStockSmsConfirmationTemplateId(
-        ?OdooRelation $stock_sms_confirmation_template_id
-    ): void {
-        $this->stock_sms_confirmation_template_id = $stock_sms_confirmation_template_id;
-    }
-
-    /**
-     * @param bool|null $group_warning_account
-     */
-    public function setGroupWarningAccount(?bool $group_warning_account): void
-    {
-        $this->group_warning_account = $group_warning_account;
-    }
-
-    /**
-     * @param bool|null $group_cash_rounding
-     */
-    public function setGroupCashRounding(?bool $group_cash_rounding): void
-    {
-        $this->group_cash_rounding = $group_cash_rounding;
-    }
-
-    /**
-     * @param bool|null $stock_move_sms_validation
-     */
-    public function setStockMoveSmsValidation(?bool $stock_move_sms_validation): void
-    {
-        $this->stock_move_sms_validation = $stock_move_sms_validation;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_account_check_printing")
-     */
-    public function isModuleAccountCheckPrinting(): ?bool
-    {
-        return $this->module_account_check_printing;
     }
 
     /**
@@ -6101,21 +6193,21 @@ final class Settings extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("module_account_sepa")
-     */
-    public function isModuleAccountSepa(): ?bool
-    {
-        return $this->module_account_sepa;
-    }
-
-    /**
      * @param bool|null $module_account_batch_payment
      */
     public function setModuleAccountBatchPayment(?bool $module_account_batch_payment): void
     {
         $this->module_account_batch_payment = $module_account_batch_payment;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_account_bank_statement_import_camt")
+     */
+    public function isModuleAccountBankStatementImportCamt(): ?bool
+    {
+        return $this->module_account_bank_statement_import_camt;
     }
 
     /**
@@ -6137,21 +6229,21 @@ final class Settings extends Base
     }
 
     /**
+     * @return bool|null
+     *
+     * @SerializedName("module_account_check_printing")
+     */
+    public function isModuleAccountCheckPrinting(): ?bool
+    {
+        return $this->module_account_check_printing;
+    }
+
+    /**
      * @param bool|null $module_account_reports
      */
     public function setModuleAccountReports(?bool $module_account_reports): void
     {
         $this->module_account_reports = $module_account_reports;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("group_fiscal_year")
-     */
-    public function isGroupFiscalYear(): ?bool
-    {
-        return $this->group_fiscal_year;
     }
 
     /**
@@ -6219,12 +6311,592 @@ final class Settings extends Base
     }
 
     /**
+     * @param bool|null $group_show_purchase_receipts
+     */
+    public function setGroupShowPurchaseReceipts(?bool $group_show_purchase_receipts): void
+    {
+        $this->group_show_purchase_receipts = $group_show_purchase_receipts;
+    }
+
+    /**
+     * @param bool|null $module_account_bank_statement_import_csv
+     */
+    public function setModuleAccountBankStatementImportCsv(
+        ?bool $module_account_bank_statement_import_csv
+    ): void {
+        $this->module_account_bank_statement_import_csv = $module_account_bank_statement_import_csv;
+    }
+
+    /**
+     * @param bool|null $module_account_bank_statement_import_camt
+     */
+    public function setModuleAccountBankStatementImportCamt(
+        ?bool $module_account_bank_statement_import_camt
+    ): void {
+        $this->module_account_bank_statement_import_camt = $module_account_bank_statement_import_camt;
+    }
+
+    /**
+     * @param bool|null $group_show_sale_receipts
+     */
+    public function setGroupShowSaleReceipts(?bool $group_show_sale_receipts): void
+    {
+        $this->group_show_sale_receipts = $group_show_sale_receipts;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("tax_exigibility")
+     */
+    public function isTaxExigibility(): ?bool
+    {
+        return $this->tax_exigibility;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("incoterm_id")
+     */
+    public function getIncotermId(): ?OdooRelation
+    {
+        return $this->incoterm_id;
+    }
+
+    /**
+     * @param bool|null $invoice_is_email
+     */
+    public function setInvoiceIsEmail(?bool $invoice_is_email): void
+    {
+        $this->invoice_is_email = $invoice_is_email;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("invoice_is_email")
+     */
+    public function isInvoiceIsEmail(): ?bool
+    {
+        return $this->invoice_is_email;
+    }
+
+    /**
+     * @param bool|null $invoice_is_print
+     */
+    public function setInvoiceIsPrint(?bool $invoice_is_print): void
+    {
+        $this->invoice_is_print = $invoice_is_print;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("invoice_is_print")
+     */
+    public function isInvoiceIsPrint(): ?bool
+    {
+        return $this->invoice_is_print;
+    }
+
+    /**
+     * @param bool|null $qr_code
+     */
+    public function setQrCode(?bool $qr_code): void
+    {
+        $this->qr_code = $qr_code;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("qr_code")
+     */
+    public function isQrCode(): ?bool
+    {
+        return $this->qr_code;
+    }
+
+    /**
+     * @param OdooRelation|null $account_cash_basis_base_account_id
+     */
+    public function setAccountCashBasisBaseAccountId(
+        ?OdooRelation $account_cash_basis_base_account_id
+    ): void {
+        $this->account_cash_basis_base_account_id = $account_cash_basis_base_account_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("account_cash_basis_base_account_id")
+     */
+    public function getAccountCashBasisBaseAccountId(): ?OdooRelation
+    {
+        return $this->account_cash_basis_base_account_id;
+    }
+
+    /**
+     * @param OdooRelation|null $tax_cash_basis_journal_id
+     */
+    public function setTaxCashBasisJournalId(?OdooRelation $tax_cash_basis_journal_id): void
+    {
+        $this->tax_cash_basis_journal_id = $tax_cash_basis_journal_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("tax_cash_basis_journal_id")
+     */
+    public function getTaxCashBasisJournalId(): ?OdooRelation
+    {
+        return $this->tax_cash_basis_journal_id;
+    }
+
+    /**
+     * @param bool|null $tax_exigibility
+     */
+    public function setTaxExigibility(?bool $tax_exigibility): void
+    {
+        $this->tax_exigibility = $tax_exigibility;
+    }
+
+    /**
+     * @param bool|null $module_snailmail_account
+     */
+    public function setModuleSnailmailAccount(?bool $module_snailmail_account): void
+    {
+        $this->module_snailmail_account = $module_snailmail_account;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_currency_rate_live")
+     */
+    public function isModuleCurrencyRateLive(): ?bool
+    {
+        return $this->module_currency_rate_live;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_snailmail_account")
+     */
+    public function isModuleSnailmailAccount(): ?bool
+    {
+        return $this->module_snailmail_account;
+    }
+
+    /**
+     * @param bool|null $module_account_invoice_extract
+     */
+    public function setModuleAccountInvoiceExtract(?bool $module_account_invoice_extract): void
+    {
+        $this->module_account_invoice_extract = $module_account_invoice_extract;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_account_invoice_extract")
+     */
+    public function isModuleAccountInvoiceExtract(): ?bool
+    {
+        return $this->module_account_invoice_extract;
+    }
+
+    /**
+     * @param bool|null $module_account_taxcloud
+     */
+    public function setModuleAccountTaxcloud(?bool $module_account_taxcloud): void
+    {
+        $this->module_account_taxcloud = $module_account_taxcloud;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_account_taxcloud")
+     */
+    public function isModuleAccountTaxcloud(): ?bool
+    {
+        return $this->module_account_taxcloud;
+    }
+
+    /**
+     * @param bool|null $module_l10n_eu_service
+     */
+    public function setModuleL10nEuService(?bool $module_l10n_eu_service): void
+    {
+        $this->module_l10n_eu_service = $module_l10n_eu_service;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_l10n_eu_service")
+     */
+    public function isModuleL10nEuService(): ?bool
+    {
+        return $this->module_l10n_eu_service;
+    }
+
+    /**
+     * @param bool|null $module_product_margin
+     */
+    public function setModuleProductMargin(?bool $module_product_margin): void
+    {
+        $this->module_product_margin = $module_product_margin;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_product_margin")
+     */
+    public function isModuleProductMargin(): ?bool
+    {
+        return $this->module_product_margin;
+    }
+
+    /**
+     * @param bool|null $module_account_intrastat
+     */
+    public function setModuleAccountIntrastat(?bool $module_account_intrastat): void
+    {
+        $this->module_account_intrastat = $module_account_intrastat;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_account_intrastat")
+     */
+    public function isModuleAccountIntrastat(): ?bool
+    {
+        return $this->module_account_intrastat;
+    }
+
+    /**
+     * @param bool|null $module_currency_rate_live
+     */
+    public function setModuleCurrencyRateLive(?bool $module_currency_rate_live): void
+    {
+        $this->module_currency_rate_live = $module_currency_rate_live;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("group_show_purchase_receipts")
+     */
+    public function isGroupShowPurchaseReceipts(): ?bool
+    {
+        return $this->group_show_purchase_receipts;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("group_show_sale_receipts")
+     */
+    public function isGroupShowSaleReceipts(): ?bool
+    {
+        return $this->group_show_sale_receipts;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("product_volume_volume_in_cubic_feet")
+     */
+    public function getProductVolumeVolumeInCubicFeet(): ?string
+    {
+        return $this->product_volume_volume_in_cubic_feet;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("snailmail_color")
+     */
+    public function isSnailmailColor(): ?bool
+    {
+        return $this->snailmail_color;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("currency_id")
+     */
+    public function getCurrencyId(): OdooRelation
+    {
+        return $this->currency_id;
+    }
+
+    /**
+     * @param bool|null $has_accounting_entries
+     */
+    public function setHasAccountingEntries(?bool $has_accounting_entries): void
+    {
+        $this->has_accounting_entries = $has_accounting_entries;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("has_accounting_entries")
+     */
+    public function isHasAccountingEntries(): ?bool
+    {
+        return $this->has_accounting_entries;
+    }
+
+    /**
+     * @param OdooRelation|null $digest_id
+     */
+    public function setDigestId(?OdooRelation $digest_id): void
+    {
+        $this->digest_id = $digest_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("digest_id")
+     */
+    public function getDigestId(): ?OdooRelation
+    {
+        return $this->digest_id;
+    }
+
+    /**
+     * @param bool|null $digest_emails
+     */
+    public function setDigestEmails(?bool $digest_emails): void
+    {
+        $this->digest_emails = $digest_emails;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("digest_emails")
+     */
+    public function isDigestEmails(): ?bool
+    {
+        return $this->digest_emails;
+    }
+
+    /**
+     * @param bool|null $snailmail_duplex
+     */
+    public function setSnailmailDuplex(?bool $snailmail_duplex): void
+    {
+        $this->snailmail_duplex = $snailmail_duplex;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("snailmail_duplex")
+     */
+    public function isSnailmailDuplex(): ?bool
+    {
+        return $this->snailmail_duplex;
+    }
+
+    /**
+     * @param bool|null $snailmail_cover
+     */
+    public function setSnailmailCover(?bool $snailmail_cover): void
+    {
+        $this->snailmail_cover = $snailmail_cover;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("snailmail_cover")
+     */
+    public function isSnailmailCover(): ?bool
+    {
+        return $this->snailmail_cover;
+    }
+
+    /**
+     * @param bool|null $snailmail_color
+     */
+    public function setSnailmailColor(?bool $snailmail_color): void
+    {
+        $this->snailmail_color = $snailmail_color;
+    }
+
+    /**
+     * @param bool|null $partner_autocomplete_insufficient_credit
+     */
+    public function setPartnerAutocompleteInsufficientCredit(
+        ?bool $partner_autocomplete_insufficient_credit
+    ): void {
+        $this->partner_autocomplete_insufficient_credit = $partner_autocomplete_insufficient_credit;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("currency_exchange_journal_id")
+     */
+    public function getCurrencyExchangeJournalId(): ?OdooRelation
+    {
+        return $this->currency_exchange_journal_id;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("partner_autocomplete_insufficient_credit")
+     */
+    public function isPartnerAutocompleteInsufficientCredit(): ?bool
+    {
+        return $this->partner_autocomplete_insufficient_credit;
+    }
+
+    /**
+     * @param string|null $cal_client_secret
+     */
+    public function setCalClientSecret(?string $cal_client_secret): void
+    {
+        $this->cal_client_secret = $cal_client_secret;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("cal_client_secret")
+     */
+    public function getCalClientSecret(): ?string
+    {
+        return $this->cal_client_secret;
+    }
+
+    /**
+     * @param string|null $cal_client_id
+     */
+    public function setCalClientId(?string $cal_client_id): void
+    {
+        $this->cal_client_id = $cal_client_id;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("cal_client_id")
+     */
+    public function getCalClientId(): ?string
+    {
+        return $this->cal_client_id;
+    }
+
+    /**
+     * @param string|null $server_uri_google
+     */
+    public function setServerUriGoogle(?string $server_uri_google): void
+    {
+        $this->server_uri_google = $server_uri_google;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("server_uri_google")
+     */
+    public function getServerUriGoogle(): ?string
+    {
+        return $this->server_uri_google;
+    }
+
+    /**
+     * @param string|null $auth_oauth_google_client_id
+     */
+    public function setAuthOauthGoogleClientId(?string $auth_oauth_google_client_id): void
+    {
+        $this->auth_oauth_google_client_id = $auth_oauth_google_client_id;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("auth_oauth_google_client_id")
+     */
+    public function getAuthOauthGoogleClientId(): ?string
+    {
+        return $this->auth_oauth_google_client_id;
+    }
+
+    /**
+     * @param bool|null $auth_oauth_google_enabled
+     */
+    public function setAuthOauthGoogleEnabled(?bool $auth_oauth_google_enabled): void
+    {
+        $this->auth_oauth_google_enabled = $auth_oauth_google_enabled;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("auth_oauth_google_enabled")
+     */
+    public function isAuthOauthGoogleEnabled(): ?bool
+    {
+        return $this->auth_oauth_google_enabled;
+    }
+
+    /**
+     * @param string|null $product_volume_volume_in_cubic_feet
+     */
+    public function setProductVolumeVolumeInCubicFeet(?string $product_volume_volume_in_cubic_feet): void
+    {
+        $this->product_volume_volume_in_cubic_feet = $product_volume_volume_in_cubic_feet;
+    }
+
+    /**
+     * @param OdooRelation $currency_id
+     */
+    public function setCurrencyId(OdooRelation $currency_id): void
+    {
+        $this->currency_id = $currency_id;
+    }
+
+    /**
+     * @param OdooRelation|null $currency_exchange_journal_id
+     */
+    public function setCurrencyExchangeJournalId(?OdooRelation $currency_exchange_journal_id): void
+    {
+        $this->currency_exchange_journal_id = $currency_exchange_journal_id;
+    }
+
+    /**
      * @param bool|null $group_show_line_subtotals_tax_included
      */
     public function setGroupShowLineSubtotalsTaxIncluded(
         ?bool $group_show_line_subtotals_tax_included
     ): void {
         $this->group_show_line_subtotals_tax_included = $group_show_line_subtotals_tax_included;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("module_account_accountant")
+     */
+    public function isModuleAccountAccountant(): ?bool
+    {
+        return $this->module_account_accountant;
     }
 
     /**
@@ -6257,536 +6929,211 @@ final class Settings extends Base
     }
 
     /**
-     * @param bool|null $group_fiscal_year
+     * @param bool|null $group_cash_rounding
      */
-    public function setGroupFiscalYear(?bool $group_fiscal_year): void
+    public function setGroupCashRounding(?bool $group_cash_rounding): void
     {
-        $this->group_fiscal_year = $group_fiscal_year;
+        $this->group_cash_rounding = $group_cash_rounding;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("group_cash_rounding")
+     */
+    public function isGroupCashRounding(): ?bool
+    {
+        return $this->group_cash_rounding;
+    }
+
+    /**
+     * @param bool|null $group_warning_account
+     */
+    public function setGroupWarningAccount(?bool $group_warning_account): void
+    {
+        $this->group_warning_account = $group_warning_account;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("group_warning_account")
+     */
+    public function isGroupWarningAccount(): ?bool
+    {
+        return $this->group_warning_account;
+    }
+
+    /**
+     * @param bool|null $group_analytic_tags
+     */
+    public function setGroupAnalyticTags(?bool $group_analytic_tags): void
+    {
+        $this->group_analytic_tags = $group_analytic_tags;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("group_analytic_tags")
+     */
+    public function isGroupAnalyticTags(): ?bool
+    {
+        return $this->group_analytic_tags;
+    }
+
+    /**
+     * @param bool|null $group_analytic_accounting
+     */
+    public function setGroupAnalyticAccounting(?bool $group_analytic_accounting): void
+    {
+        $this->group_analytic_accounting = $group_analytic_accounting;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("group_analytic_accounting")
+     */
+    public function isGroupAnalyticAccounting(): ?bool
+    {
+        return $this->group_analytic_accounting;
+    }
+
+    /**
+     * @param bool|null $module_account_accountant
+     */
+    public function setModuleAccountAccountant(?bool $module_account_accountant): void
+    {
+        $this->module_account_accountant = $module_account_accountant;
+    }
+
+    /**
+     * @param string|null $tax_calculation_rounding_method
+     */
+    public function setTaxCalculationRoundingMethod(?string $tax_calculation_rounding_method): void
+    {
+        $this->tax_calculation_rounding_method = $tax_calculation_rounding_method;
     }
 
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("stock_sms_confirmation_template_id")
+     * @SerializedName("income_currency_exchange_account_id")
      */
-    public function getStockSmsConfirmationTemplateId(): ?OdooRelation
+    public function getIncomeCurrencyExchangeAccountId(): ?OdooRelation
     {
-        return $this->stock_sms_confirmation_template_id;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("stock_move_sms_validation")
-     */
-    public function isStockMoveSmsValidation(): ?bool
-    {
-        return $this->stock_move_sms_validation;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("resource_calendar_id")
-     */
-    public function getResourceCalendarId(): ?OdooRelation
-    {
-        return $this->resource_calendar_id;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_hr_attendance")
-     */
-    public function isModuleHrAttendance(): ?bool
-    {
-        return $this->module_hr_attendance;
-    }
-
-    /**
-     * @param bool|null $module_product_expiry
-     */
-    public function setModuleProductExpiry(?bool $module_product_expiry): void
-    {
-        $this->module_product_expiry = $module_product_expiry;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_product_expiry")
-     */
-    public function isModuleProductExpiry(): ?bool
-    {
-        return $this->module_product_expiry;
-    }
-
-    /**
-     * @param string|null $module_procurement_jit
-     */
-    public function setModuleProcurementJit(?string $module_procurement_jit): void
-    {
-        $this->module_procurement_jit = $module_procurement_jit;
+        return $this->income_currency_exchange_account_id;
     }
 
     /**
      * @return string|null
      *
-     * @SerializedName("module_procurement_jit")
+     * @SerializedName("tax_calculation_rounding_method")
      */
-    public function getModuleProcurementJit(): ?string
+    public function getTaxCalculationRoundingMethod(): ?string
     {
-        return $this->module_procurement_jit;
+        return $this->tax_calculation_rounding_method;
     }
 
     /**
-     * @param bool|null $hr_employee_self_edit
+     * @param OdooRelation|null $purchase_tax_id
      */
-    public function setHrEmployeeSelfEdit(?bool $hr_employee_self_edit): void
+    public function setPurchaseTaxId(?OdooRelation $purchase_tax_id): void
     {
-        $this->hr_employee_self_edit = $hr_employee_self_edit;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("hr_employee_self_edit")
-     */
-    public function isHrEmployeeSelfEdit(): ?bool
-    {
-        return $this->hr_employee_self_edit;
-    }
-
-    /**
-     * @param string|null $hr_presence_control_ip_list
-     */
-    public function setHrPresenceControlIpList(?string $hr_presence_control_ip_list): void
-    {
-        $this->hr_presence_control_ip_list = $hr_presence_control_ip_list;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("hr_presence_control_ip_list")
-     */
-    public function getHrPresenceControlIpList(): ?string
-    {
-        return $this->hr_presence_control_ip_list;
-    }
-
-    /**
-     * @param int|null $hr_presence_control_email_amount
-     */
-    public function setHrPresenceControlEmailAmount(?int $hr_presence_control_email_amount): void
-    {
-        $this->hr_presence_control_email_amount = $hr_presence_control_email_amount;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("hr_presence_control_email_amount")
-     */
-    public function getHrPresenceControlEmailAmount(): ?int
-    {
-        return $this->hr_presence_control_email_amount;
-    }
-
-    /**
-     * @param bool|null $module_hr_attendance
-     */
-    public function setModuleHrAttendance(?bool $module_hr_attendance): void
-    {
-        $this->module_hr_attendance = $module_hr_attendance;
-    }
-
-    /**
-     * @param bool|null $hr_presence_control_ip
-     */
-    public function setHrPresenceControlIp(?bool $hr_presence_control_ip): void
-    {
-        $this->hr_presence_control_ip = $hr_presence_control_ip;
-    }
-
-    /**
-     * @param bool|null $group_stock_production_lot
-     */
-    public function setGroupStockProductionLot(?bool $group_stock_production_lot): void
-    {
-        $this->group_stock_production_lot = $group_stock_production_lot;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("hr_presence_control_ip")
-     */
-    public function isHrPresenceControlIp(): ?bool
-    {
-        return $this->hr_presence_control_ip;
-    }
-
-    /**
-     * @param bool|null $hr_presence_control_email
-     */
-    public function setHrPresenceControlEmail(?bool $hr_presence_control_email): void
-    {
-        $this->hr_presence_control_email = $hr_presence_control_email;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("hr_presence_control_email")
-     */
-    public function isHrPresenceControlEmail(): ?bool
-    {
-        return $this->hr_presence_control_email;
-    }
-
-    /**
-     * @param bool|null $hr_presence_control_login
-     */
-    public function setHrPresenceControlLogin(?bool $hr_presence_control_login): void
-    {
-        $this->hr_presence_control_login = $hr_presence_control_login;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("hr_presence_control_login")
-     */
-    public function isHrPresenceControlLogin(): ?bool
-    {
-        return $this->hr_presence_control_login;
-    }
-
-    /**
-     * @param bool|null $module_hr_skills
-     */
-    public function setModuleHrSkills(?bool $module_hr_skills): void
-    {
-        $this->module_hr_skills = $module_hr_skills;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_hr_skills")
-     */
-    public function isModuleHrSkills(): ?bool
-    {
-        return $this->module_hr_skills;
-    }
-
-    /**
-     * @param bool|null $module_hr_presence
-     */
-    public function setModuleHrPresence(?bool $module_hr_presence): void
-    {
-        $this->module_hr_presence = $module_hr_presence;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_hr_presence")
-     */
-    public function isModuleHrPresence(): ?bool
-    {
-        return $this->module_hr_presence;
-    }
-
-    /**
-     * @param bool|null $module_hr_org_chart
-     */
-    public function setModuleHrOrgChart(?bool $module_hr_org_chart): void
-    {
-        $this->module_hr_org_chart = $module_hr_org_chart;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_hr_org_chart")
-     */
-    public function isModuleHrOrgChart(): ?bool
-    {
-        return $this->module_hr_org_chart;
-    }
-
-    /**
-     * @param OdooRelation|null $resource_calendar_id
-     */
-    public function setResourceCalendarId(?OdooRelation $resource_calendar_id): void
-    {
-        $this->resource_calendar_id = $resource_calendar_id;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("group_stock_production_lot")
-     */
-    public function isGroupStockProductionLot(): ?bool
-    {
-        return $this->group_stock_production_lot;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("group_lot_on_delivery_slip")
-     */
-    public function isGroupLotOnDeliverySlip(): ?bool
-    {
-        return $this->group_lot_on_delivery_slip;
-    }
-
-    /**
-     * @param OdooRelation|null $digest_id
-     */
-    public function setDigestId(?OdooRelation $digest_id): void
-    {
-        $this->digest_id = $digest_id;
-    }
-
-    /**
-     * @param bool|null $stock_move_email_validation
-     */
-    public function setStockMoveEmailValidation(?bool $stock_move_email_validation): void
-    {
-        $this->stock_move_email_validation = $stock_move_email_validation;
+        $this->purchase_tax_id = $purchase_tax_id;
     }
 
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("digest_id")
+     * @SerializedName("purchase_tax_id")
      */
-    public function getDigestId(): ?OdooRelation
+    public function getPurchaseTaxId(): ?OdooRelation
     {
-        return $this->digest_id;
+        return $this->purchase_tax_id;
     }
 
     /**
-     * @param bool|null $digest_emails
+     * @param OdooRelation|null $sale_tax_id
      */
-    public function setDigestEmails(?bool $digest_emails): void
+    public function setSaleTaxId(?OdooRelation $sale_tax_id): void
     {
-        $this->digest_emails = $digest_emails;
+        $this->sale_tax_id = $sale_tax_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("sale_tax_id")
+     */
+    public function getSaleTaxId(): ?OdooRelation
+    {
+        return $this->sale_tax_id;
+    }
+
+    /**
+     * @param OdooRelation|null $chart_template_id
+     */
+    public function setChartTemplateId(?OdooRelation $chart_template_id): void
+    {
+        $this->chart_template_id = $chart_template_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("chart_template_id")
+     */
+    public function getChartTemplateId(): ?OdooRelation
+    {
+        return $this->chart_template_id;
+    }
+
+    /**
+     * @param bool|null $has_chart_of_accounts
+     */
+    public function setHasChartOfAccounts(?bool $has_chart_of_accounts): void
+    {
+        $this->has_chart_of_accounts = $has_chart_of_accounts;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("digest_emails")
+     * @SerializedName("has_chart_of_accounts")
      */
-    public function isDigestEmails(): ?bool
+    public function isHasChartOfAccounts(): ?bool
     {
-        return $this->digest_emails;
+        return $this->has_chart_of_accounts;
     }
 
     /**
-     * @param bool|null $group_stock_multi_warehouses
+     * @param OdooRelation|null $expense_currency_exchange_account_id
      */
-    public function setGroupStockMultiWarehouses(?bool $group_stock_multi_warehouses): void
-    {
-        $this->group_stock_multi_warehouses = $group_stock_multi_warehouses;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("group_stock_multi_warehouses")
-     */
-    public function isGroupStockMultiWarehouses(): ?bool
-    {
-        return $this->group_stock_multi_warehouses;
-    }
-
-    /**
-     * @param bool|null $group_stock_multi_locations
-     */
-    public function setGroupStockMultiLocations(?bool $group_stock_multi_locations): void
-    {
-        $this->group_stock_multi_locations = $group_stock_multi_locations;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("group_stock_multi_locations")
-     */
-    public function isGroupStockMultiLocations(): ?bool
-    {
-        return $this->group_stock_multi_locations;
-    }
-
-    /**
-     * @param bool|null $module_stock_sms
-     */
-    public function setModuleStockSms(?bool $module_stock_sms): void
-    {
-        $this->module_stock_sms = $module_stock_sms;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_stock_sms")
-     */
-    public function isModuleStockSms(): ?bool
-    {
-        return $this->module_stock_sms;
-    }
-
-    /**
-     * @param OdooRelation|null $stock_mail_confirmation_template_id
-     */
-    public function setStockMailConfirmationTemplateId(
-        ?OdooRelation $stock_mail_confirmation_template_id
+    public function setExpenseCurrencyExchangeAccountId(
+        ?OdooRelation $expense_currency_exchange_account_id
     ): void {
-        $this->stock_mail_confirmation_template_id = $stock_mail_confirmation_template_id;
+        $this->expense_currency_exchange_account_id = $expense_currency_exchange_account_id;
     }
 
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("stock_mail_confirmation_template_id")
+     * @SerializedName("expense_currency_exchange_account_id")
      */
-    public function getStockMailConfirmationTemplateId(): ?OdooRelation
+    public function getExpenseCurrencyExchangeAccountId(): ?OdooRelation
     {
-        return $this->stock_mail_confirmation_template_id;
+        return $this->expense_currency_exchange_account_id;
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("stock_move_email_validation")
+     * @param OdooRelation|null $income_currency_exchange_account_id
      */
-    public function isStockMoveEmailValidation(): ?bool
-    {
-        return $this->stock_move_email_validation;
-    }
-
-    /**
-     * @param bool|null $group_lot_on_delivery_slip
-     */
-    public function setGroupLotOnDeliverySlip(?bool $group_lot_on_delivery_slip): void
-    {
-        $this->group_lot_on_delivery_slip = $group_lot_on_delivery_slip;
-    }
-
-    /**
-     * @param bool|null $module_stock_barcode
-     */
-    public function setModuleStockBarcode(?bool $module_stock_barcode): void
-    {
-        $this->module_stock_barcode = $module_stock_barcode;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_stock_barcode")
-     */
-    public function isModuleStockBarcode(): ?bool
-    {
-        return $this->module_stock_barcode;
-    }
-
-    /**
-     * @param bool|null $module_stock_picking_batch
-     */
-    public function setModuleStockPickingBatch(?bool $module_stock_picking_batch): void
-    {
-        $this->module_stock_picking_batch = $module_stock_picking_batch;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("module_stock_picking_batch")
-     */
-    public function isModuleStockPickingBatch(): ?bool
-    {
-        return $this->module_stock_picking_batch;
-    }
-
-    /**
-     * @param bool|null $group_warning_stock
-     */
-    public function setGroupWarningStock(?bool $group_warning_stock): void
-    {
-        $this->group_warning_stock = $group_warning_stock;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("group_warning_stock")
-     */
-    public function isGroupWarningStock(): ?bool
-    {
-        return $this->group_warning_stock;
-    }
-
-    /**
-     * @param bool|null $group_stock_adv_location
-     */
-    public function setGroupStockAdvLocation(?bool $group_stock_adv_location): void
-    {
-        $this->group_stock_adv_location = $group_stock_adv_location;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("group_stock_adv_location")
-     */
-    public function isGroupStockAdvLocation(): ?bool
-    {
-        return $this->group_stock_adv_location;
-    }
-
-    /**
-     * @param bool|null $group_stock_tracking_owner
-     */
-    public function setGroupStockTrackingOwner(?bool $group_stock_tracking_owner): void
-    {
-        $this->group_stock_tracking_owner = $group_stock_tracking_owner;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("group_stock_tracking_owner")
-     */
-    public function isGroupStockTrackingOwner(): ?bool
-    {
-        return $this->group_stock_tracking_owner;
-    }
-
-    /**
-     * @param bool|null $group_stock_tracking_lot
-     */
-    public function setGroupStockTrackingLot(?bool $group_stock_tracking_lot): void
-    {
-        $this->group_stock_tracking_lot = $group_stock_tracking_lot;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("group_stock_tracking_lot")
-     */
-    public function isGroupStockTrackingLot(): ?bool
-    {
-        return $this->group_stock_tracking_lot;
+    public function setIncomeCurrencyExchangeAccountId(
+        ?OdooRelation $income_currency_exchange_account_id
+    ): void {
+        $this->income_currency_exchange_account_id = $income_currency_exchange_account_id;
     }
 
     /**

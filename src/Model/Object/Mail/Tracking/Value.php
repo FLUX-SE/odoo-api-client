@@ -28,12 +28,15 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 final class Value extends Base
 {
     /**
-     * Changed Field
+     * Field
+     * ---
+     * Relation : many2one (ir.model.fields)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Model\Fields
      * ---
      * Searchable : yes
      * Sortable : yes
      *
-     * @var string
+     * @var OdooRelation
      */
     private $field;
 
@@ -257,7 +260,10 @@ final class Value extends Base
     private $write_date;
 
     /**
-     * @param string $field Changed Field
+     * @param OdooRelation $field Field
+     *        ---
+     *        Relation : many2one (ir.model.fields)
+     *        @see \Flux\OdooApiClient\Model\Object\Ir\Model\Fields
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -273,7 +279,7 @@ final class Value extends Base
      *        Searchable : yes
      *        Sortable : yes
      */
-    public function __construct(string $field, string $field_desc, OdooRelation $mail_message_id)
+    public function __construct(OdooRelation $field, string $field_desc, OdooRelation $mail_message_id)
     {
         $this->field = $field;
         $this->field_desc = $field_desc;
@@ -479,11 +485,11 @@ final class Value extends Base
     }
 
     /**
-     * @return string
+     * @return OdooRelation
      *
      * @SerializedName("field")
      */
-    public function getField(): string
+    public function getField(): OdooRelation
     {
         return $this->field;
     }
@@ -499,9 +505,9 @@ final class Value extends Base
     }
 
     /**
-     * @param string $field
+     * @param OdooRelation $field
      */
-    public function setField(string $field): void
+    public function setField(OdooRelation $field): void
     {
         $this->field = $field;
     }

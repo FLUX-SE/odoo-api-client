@@ -98,12 +98,16 @@ final class Op extends Base
     private $fiscalyear_last_month;
 
     /**
-     * Periodicity
+     * Periodicity in month
      * ---
      * Periodicity
      * ---
      * Selection :
-     *     -> trimester (trimester)
+     *     -> year (annually)
+     *     -> semester (semi-annually)
+     *     -> 4_months (every 4 months)
+     *     -> trimester (quarterly)
+     *     -> 2_months (every 2 months)
      *     -> monthly (monthly)
      * ---
      * Searchable : yes
@@ -222,12 +226,16 @@ final class Op extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : no
-     * @param string $account_tax_periodicity Periodicity
+     * @param string $account_tax_periodicity Periodicity in month
      *        ---
      *        Periodicity
      *        ---
      *        Selection :
-     *            -> trimester (trimester)
+     *            -> year (annually)
+     *            -> semester (semi-annually)
+     *            -> 4_months (every 4 months)
+     *            -> trimester (quarterly)
+     *            -> 2_months (every 2 months)
      *            -> monthly (monthly)
      *        ---
      *        Searchable : yes

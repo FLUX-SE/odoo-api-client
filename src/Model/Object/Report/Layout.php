@@ -61,6 +61,16 @@ final class Layout extends Base
     private $pdf;
 
     /**
+     * Sequence
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var int|null
+     */
+    private $sequence;
+
+    /**
      * Name
      * ---
      * Searchable : yes
@@ -131,11 +141,13 @@ final class Layout extends Base
     }
 
     /**
-     * @param OdooRelation|null $create_uid
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
-    public function setCreateUid(?OdooRelation $create_uid): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->create_uid = $create_uid;
+        return $this->create_uid;
     }
 
     /**
@@ -193,13 +205,19 @@ final class Layout extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->create_uid;
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @param string|null $name
+     */
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
     }
 
     /**
@@ -213,14 +231,6 @@ final class Layout extends Base
     }
 
     /**
-     * @param string|null $name
-     */
-    public function setName(?string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("name")
@@ -228,6 +238,24 @@ final class Layout extends Base
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    /**
+     * @param int|null $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("sequence")
+     */
+    public function getSequence(): ?int
+    {
+        return $this->sequence;
     }
 
     /**

@@ -71,6 +71,16 @@ final class Resend extends Base
     private $has_insufficient_credit;
 
     /**
+     * Has Unregistered Account
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $has_unregistered_account;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -131,11 +141,13 @@ final class Resend extends Base
     }
 
     /**
-     * @param bool|null $has_insufficient_credit
+     * @return bool|null
+     *
+     * @SerializedName("has_unregistered_account")
      */
-    public function setHasInsufficientCredit(?bool $has_insufficient_credit): void
+    public function isHasUnregisteredAccount(): ?bool
     {
-        $this->has_insufficient_credit = $has_insufficient_credit;
+        return $this->has_unregistered_account;
     }
 
     /**
@@ -211,13 +223,19 @@ final class Resend extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("has_insufficient_credit")
+     * @param bool|null $has_unregistered_account
      */
-    public function isHasInsufficientCredit(): ?bool
+    public function setHasUnregisteredAccount(?bool $has_unregistered_account): void
     {
-        return $this->has_insufficient_credit;
+        $this->has_unregistered_account = $has_unregistered_account;
+    }
+
+    /**
+     * @param bool|null $has_insufficient_credit
+     */
+    public function setHasInsufficientCredit(?bool $has_insufficient_credit): void
+    {
+        $this->has_insufficient_credit = $has_insufficient_credit;
     }
 
     /**
@@ -228,6 +246,16 @@ final class Resend extends Base
     public function getMailMessageId(): OdooRelation
     {
         return $this->mail_message_id;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("has_insufficient_credit")
+     */
+    public function isHasInsufficientCredit(): ?bool
+    {
+        return $this->has_insufficient_credit;
     }
 
     /**

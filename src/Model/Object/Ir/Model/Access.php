@@ -47,7 +47,7 @@ final class Access extends Base
     private $active;
 
     /**
-     * Object
+     * Model
      * ---
      * Relation : many2one (ir.model)
      * @see \Flux\OdooApiClient\Model\Object\Ir\Model
@@ -163,7 +163,7 @@ final class Access extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param OdooRelation $model_id Object
+     * @param OdooRelation $model_id Model
      *        ---
      *        Relation : many2one (ir.model)
      *        @see \Flux\OdooApiClient\Model\Object\Ir\Model

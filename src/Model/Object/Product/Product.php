@@ -185,7 +185,7 @@ final class Product extends Template
     private $stock_move_ids;
 
     /**
-     * Free To Use Quantity
+     * Free To Use Quantity 
      * ---
      * Forecast quantity (computed as Quantity On Hand - reserved quantity)
      * In a context with a single Stock Location, this includes goods stored in this location, or any of its
@@ -277,7 +277,7 @@ final class Product extends Template
     /**
      * Avg. Purchase Unit Price
      * ---
-     * Avg. Price in Vendor Bills
+     * Avg. Price in Vendor Bills 
      * ---
      * Searchable : no
      * Sortable : no
@@ -349,7 +349,7 @@ final class Product extends Template
     /**
      * Total Cost
      * ---
-     * Sum of Multiplication of Invoice price and quantity of Vendor Bills
+     * Sum of Multiplication of Invoice price and quantity of Vendor Bills 
      * ---
      * Searchable : no
      * Sortable : no
@@ -464,6 +464,21 @@ final class Product extends Template
     private $stock_valuation_layer_ids;
 
     /**
+     * Purchase Order Line
+     * ---
+     * Technical: used to compute quantities.
+     * ---
+     * Relation : one2many (purchase.order.line -> product_id)
+     * @see \Flux\OdooApiClient\Model\Object\Purchase\Order\Line
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $purchase_order_line_ids;
+
+    /**
      * @param OdooRelation $product_tmpl_id Product Template
      *        ---
      *        Relation : many2one (product.template)
@@ -534,7 +549,7 @@ final class Product extends Template
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param string $purchase_line_warn Purchase Order Line
+     * @param string $purchase_line_warn Purchase Order Line Warning
      *        ---
      *        Selecting the "Warning" option will notify user with the message, Selecting "Blocking Message" will throw an
      *        exception with the message and block the flow. The Message has to be written in the next field.
@@ -573,26 +588,60 @@ final class Product extends Template
     ) {
         $this->product_tmpl_id = $product_tmpl_id;
         parent::__construct(
-            $name,
-            $categ_id,
-            $uom_id,
-            $uom_po_id,
-            $product_variant_ids,
-            $type,
-            $tracking,
-            $purchase_line_warn,
+            $name, 
+            $categ_id, 
+            $uom_id, 
+            $uom_po_id, 
+            $product_variant_ids, 
+            $type, 
+            $tracking, 
+            $purchase_line_warn, 
             $sale_line_warn
         );
     }
 
     /**
+     * @param float|null $purchase_num_invoiced
+     */
+    public function setPurchaseNumInvoiced(?float $purchase_num_invoiced): void
+    {
+        $this->purchase_num_invoiced = $purchase_num_invoiced;
+    }
+
+    /**
      * @return float|null
      *
-     * @SerializedName("sale_num_invoiced")
+     * @SerializedName("sale_expected")
      */
-    public function getSaleNumInvoiced(): ?float
+    public function getSaleExpected(): ?float
     {
-        return $this->sale_num_invoiced;
+        return $this->sale_expected;
+    }
+
+    /**
+     * @param float|null $total_cost
+     */
+    public function setTotalCost(?float $total_cost): void
+    {
+        $this->total_cost = $total_cost;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("total_cost")
+     */
+    public function getTotalCost(): ?float
+    {
+        return $this->total_cost;
+    }
+
+    /**
+     * @param float|null $turnover
+     */
+    public function setTurnover(?float $turnover): void
+    {
+        $this->turnover = $turnover;
     }
 
     /**
@@ -642,14 +691,6 @@ final class Product extends Template
     }
 
     /**
-     * @param float|null $purchase_num_invoiced
-     */
-    public function setPurchaseNumInvoiced(?float $purchase_num_invoiced): void
-    {
-        $this->purchase_num_invoiced = $purchase_num_invoiced;
-    }
-
-    /**
      * @return float|null
      *
      * @SerializedName("purchase_num_invoiced")
@@ -657,6 +698,16 @@ final class Product extends Template
     public function getPurchaseNumInvoiced(): ?float
     {
         return $this->purchase_num_invoiced;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("normal_cost")
+     */
+    public function getNormalCost(): ?float
+    {
+        return $this->normal_cost;
     }
 
     /**
@@ -668,21 +719,21 @@ final class Product extends Template
     }
 
     /**
+     * @return float|null
+     *
+     * @SerializedName("sale_num_invoiced")
+     */
+    public function getSaleNumInvoiced(): ?float
+    {
+        return $this->sale_num_invoiced;
+    }
+
+    /**
      * @param float|null $purchase_avg_price
      */
     public function setPurchaseAvgPrice(?float $purchase_avg_price): void
     {
         $this->purchase_avg_price = $purchase_avg_price;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("total_cost")
-     */
-    public function getTotalCost(): ?float
-    {
-        return $this->total_cost;
     }
 
     /**
@@ -750,11 +801,19 @@ final class Product extends Template
     }
 
     /**
-     * @param DateTimeInterface|null $date_from
+     * @param float|null $sale_expected
      */
-    public function setDateFrom(?DateTimeInterface $date_from): void
+    public function setSaleExpected(?float $sale_expected): void
     {
-        $this->date_from = $date_from;
+        $this->sale_expected = $sale_expected;
+    }
+
+    /**
+     * @param float|null $normal_cost
+     */
+    public function setNormalCost(?float $normal_cost): void
+    {
+        $this->normal_cost = $normal_cost;
     }
 
     /**
@@ -768,43 +827,76 @@ final class Product extends Template
     }
 
     /**
-     * @param float|null $turnover
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("stock_valuation_layer_ids")
      */
-    public function setTurnover(?float $turnover): void
+    public function getStockValuationLayerIds(): ?array
     {
-        $this->turnover = $turnover;
-    }
-
-    /**
-     * @param float|null $total_cost
-     */
-    public function setTotalCost(?float $total_cost): void
-    {
-        $this->total_cost = $total_cost;
+        return $this->stock_valuation_layer_ids;
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function addPutawayRuleIds(OdooRelation $item): void
+    public function removePurchaseOrderLineIds(OdooRelation $item): void
     {
-        if ($this->hasPutawayRuleIds($item)) {
-            return;
+        if (null === $this->purchase_order_line_ids) {
+            $this->purchase_order_line_ids = [];
         }
 
-        if (null === $this->putaway_rule_ids) {
-            $this->putaway_rule_ids = [];
+        if ($this->hasPurchaseOrderLineIds($item)) {
+            $index = array_search($item, $this->purchase_order_line_ids);
+            unset($this->purchase_order_line_ids[$index]);
         }
-
-        $this->putaway_rule_ids[] = $item;
     }
 
     /**
-     * @param float|null $expected_margin_rate
+     * @param OdooRelation $item
      */
-    public function setExpectedMarginRate(?float $expected_margin_rate): void
+    public function addPurchaseOrderLineIds(OdooRelation $item): void
     {
-        $this->expected_margin_rate = $expected_margin_rate;
+        if ($this->hasPurchaseOrderLineIds($item)) {
+            return;
+        }
+
+        if (null === $this->purchase_order_line_ids) {
+            $this->purchase_order_line_ids = [];
+        }
+
+        $this->purchase_order_line_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasPurchaseOrderLineIds(OdooRelation $item): bool
+    {
+        if (null === $this->purchase_order_line_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->purchase_order_line_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $purchase_order_line_ids
+     */
+    public function setPurchaseOrderLineIds(?array $purchase_order_line_ids): void
+    {
+        $this->purchase_order_line_ids = $purchase_order_line_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("purchase_order_line_ids")
+     */
+    public function getPurchaseOrderLineIds(): ?array
+    {
+        return $this->purchase_order_line_ids;
     }
 
     /**
@@ -861,21 +953,21 @@ final class Product extends Template
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("stock_valuation_layer_ids")
-     */
-    public function getStockValuationLayerIds(): ?array
-    {
-        return $this->stock_valuation_layer_ids;
-    }
-
-    /**
      * @param float|null $quantity_svl
      */
     public function setQuantitySvl(?float $quantity_svl): void
     {
         $this->quantity_svl = $quantity_svl;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("total_margin")
+     */
+    public function getTotalMargin(): ?float
+    {
+        return $this->total_margin;
     }
 
     /**
@@ -907,6 +999,14 @@ final class Product extends Template
     }
 
     /**
+     * @param float|null $expected_margin_rate
+     */
+    public function setExpectedMarginRate(?float $expected_margin_rate): void
+    {
+        $this->expected_margin_rate = $expected_margin_rate;
+    }
+
+    /**
      * @return float|null
      *
      * @SerializedName("expected_margin_rate")
@@ -914,16 +1014,6 @@ final class Product extends Template
     public function getExpectedMarginRate(): ?float
     {
         return $this->expected_margin_rate;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("sale_expected")
-     */
-    public function getSaleExpected(): ?float
-    {
-        return $this->sale_expected;
     }
 
     /**
@@ -971,39 +1061,11 @@ final class Product extends Template
     }
 
     /**
-     * @return float|null
-     *
-     * @SerializedName("total_margin")
+     * @param DateTimeInterface|null $date_from
      */
-    public function getTotalMargin(): ?float
+    public function setDateFrom(?DateTimeInterface $date_from): void
     {
-        return $this->total_margin;
-    }
-
-    /**
-     * @param float|null $normal_cost
-     */
-    public function setNormalCost(?float $normal_cost): void
-    {
-        $this->normal_cost = $normal_cost;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("normal_cost")
-     */
-    public function getNormalCost(): ?float
-    {
-        return $this->normal_cost;
-    }
-
-    /**
-     * @param float|null $sale_expected
-     */
-    public function setSaleExpected(?float $sale_expected): void
-    {
-        $this->sale_expected = $sale_expected;
+        $this->date_from = $date_from;
     }
 
     /**
@@ -1022,20 +1084,6 @@ final class Product extends Template
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasPutawayRuleIds(OdooRelation $item): bool
-    {
-        if (null === $this->putaway_rule_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->putaway_rule_ids);
-    }
-
-    /**
      * @return float|null
      *
      * @SerializedName("price_extra")
@@ -1048,17 +1096,26 @@ final class Product extends Template
     /**
      * @param OdooRelation $item
      */
-    public function addProductTemplateAttributeValueIds(OdooRelation $item): void
+    public function removeProductTemplateAttributeValueIds(OdooRelation $item): void
     {
-        if ($this->hasProductTemplateAttributeValueIds($item)) {
-            return;
-        }
-
         if (null === $this->product_template_attribute_value_ids) {
             $this->product_template_attribute_value_ids = [];
         }
 
-        $this->product_template_attribute_value_ids[] = $item;
+        if ($this->hasProductTemplateAttributeValueIds($item)) {
+            $index = array_search($item, $this->product_template_attribute_value_ids);
+            unset($this->product_template_attribute_value_ids[$index]);
+        }
+    }
+
+    /**
+     * @return mixed|null
+     *
+     * @SerializedName("image_variant_256")
+     */
+    public function getImageVariant256()
+    {
+        return $this->image_variant_256;
     }
 
     /**
@@ -1136,16 +1193,27 @@ final class Product extends Template
     /**
      * @param OdooRelation $item
      */
-    public function removeProductTemplateAttributeValueIds(OdooRelation $item): void
+    public function addProductTemplateAttributeValueIds(OdooRelation $item): void
     {
+        if ($this->hasProductTemplateAttributeValueIds($item)) {
+            return;
+        }
+
         if (null === $this->product_template_attribute_value_ids) {
             $this->product_template_attribute_value_ids = [];
         }
 
-        if ($this->hasProductTemplateAttributeValueIds($item)) {
-            $index = array_search($item, $this->product_template_attribute_value_ids);
-            unset($this->product_template_attribute_value_ids[$index]);
-        }
+        $this->product_template_attribute_value_ids[] = $item;
+    }
+
+    /**
+     * @return mixed|null
+     *
+     * @SerializedName("image_variant_128")
+     */
+    public function getImageVariant128()
+    {
+        return $this->image_variant_128;
     }
 
     /**
@@ -1160,14 +1228,6 @@ final class Product extends Template
         }
 
         return in_array($item, $this->product_template_attribute_value_ids);
-    }
-
-    /**
-     * @param mixed|null $image_variant_256
-     */
-    public function setImageVariant256($image_variant_256): void
-    {
-        $this->image_variant_256 = $image_variant_256;
     }
 
     /**
@@ -1251,23 +1311,59 @@ final class Product extends Template
     }
 
     /**
-     * @return mixed|null
-     *
-     * @SerializedName("image_variant_256")
+     * @param mixed|null $image_variant_256
      */
-    public function getImageVariant256()
+    public function setImageVariant256($image_variant_256): void
     {
-        return $this->image_variant_256;
+        $this->image_variant_256 = $image_variant_256;
     }
 
     /**
-     * @return mixed|null
-     *
-     * @SerializedName("image_variant_128")
+     * @param mixed|null $image_variant_128
      */
-    public function getImageVariant128()
+    public function setImageVariant128($image_variant_128): void
     {
-        return $this->image_variant_128;
+        $this->image_variant_128 = $image_variant_128;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addPutawayRuleIds(OdooRelation $item): void
+    {
+        if ($this->hasPutawayRuleIds($item)) {
+            return;
+        }
+
+        if (null === $this->putaway_rule_ids) {
+            $this->putaway_rule_ids = [];
+        }
+
+        $this->putaway_rule_ids[] = $item;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("free_qty")
+     */
+    public function getFreeQty(): ?float
+    {
+        return $this->free_qty;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasPutawayRuleIds(OdooRelation $item): bool
+    {
+        if (null === $this->putaway_rule_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->putaway_rule_ids);
     }
 
     /**
@@ -1276,22 +1372,6 @@ final class Product extends Template
     public function setPutawayRuleIds(?array $putaway_rule_ids): void
     {
         $this->putaway_rule_ids = $putaway_rule_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addStockMoveIds(OdooRelation $item): void
-    {
-        if ($this->hasStockMoveIds($item)) {
-            return;
-        }
-
-        if (null === $this->stock_move_ids) {
-            $this->stock_move_ids = [];
-        }
-
-        $this->stock_move_ids[] = $item;
     }
 
     /**
@@ -1376,16 +1456,6 @@ final class Product extends Template
     }
 
     /**
-     * @return float|null
-     *
-     * @SerializedName("free_qty")
-     */
-    public function getFreeQty(): ?float
-    {
-        return $this->free_qty;
-    }
-
-    /**
      * @param OdooRelation $item
      */
     public function removeStockMoveIds(OdooRelation $item): void
@@ -1401,6 +1471,32 @@ final class Product extends Template
     }
 
     /**
+     * @return bool|null
+     *
+     * @SerializedName("can_image_variant_1024_be_zoomed")
+     */
+    public function isCanImageVariant1024BeZoomed(): ?bool
+    {
+        return $this->can_image_variant_1024_be_zoomed;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addStockMoveIds(OdooRelation $item): void
+    {
+        if ($this->hasStockMoveIds($item)) {
+            return;
+        }
+
+        if (null === $this->stock_move_ids) {
+            $this->stock_move_ids = [];
+        }
+
+        $this->stock_move_ids[] = $item;
+    }
+
+    /**
      * @param OdooRelation $item
      *
      * @return bool
@@ -1412,14 +1508,6 @@ final class Product extends Template
         }
 
         return in_array($item, $this->stock_move_ids);
-    }
-
-    /**
-     * @param mixed|null $image_variant_128
-     */
-    public function setImageVariant128($image_variant_128): void
-    {
-        $this->image_variant_128 = $image_variant_128;
     }
 
     /**
@@ -1509,16 +1597,6 @@ final class Product extends Template
     public function setCanImageVariant1024BeZoomed(?bool $can_image_variant_1024_be_zoomed): void
     {
         $this->can_image_variant_1024_be_zoomed = $can_image_variant_1024_be_zoomed;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("can_image_variant_1024_be_zoomed")
-     */
-    public function isCanImageVariant1024BeZoomed(): ?bool
-    {
-        return $this->can_image_variant_1024_be_zoomed;
     }
 
     /**

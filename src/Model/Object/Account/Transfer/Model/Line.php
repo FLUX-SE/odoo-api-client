@@ -68,8 +68,8 @@ final class Line extends Base
     /**
      * Analytic Filter
      * ---
-     * The sum of all lines from the origin accounts having this analytic account will be automatically transferred
-     * to the destination account
+     * Adds a condition to only transfer the sum of the lines from the origin accounts that match these analytic
+     * accounts to the destination account
      * ---
      * Relation : many2many (account.analytic.account)
      * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Account
@@ -82,6 +82,22 @@ final class Line extends Base
     private $analytic_account_ids;
 
     /**
+     * Partner Filter
+     * ---
+     * Adds a condition to only transfer the sum of the lines from the origin accounts that match these partners to
+     * the destination account
+     * ---
+     * Relation : many2many (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $partner_ids;
+
+    /**
      * Percent Is Readonly
      * ---
      * Searchable : no
@@ -90,6 +106,16 @@ final class Line extends Base
      * @var bool|null
      */
     private $percent_is_readonly;
+
+    /**
+     * Sequence
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var int|null
+     */
+    private $sequence;
 
     /**
      * Created by
@@ -167,13 +193,18 @@ final class Line extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("percent_is_readonly")
+     * @param OdooRelation $item
      */
-    public function isPercentIsReadonly(): ?bool
+    public function removePartnerIds(OdooRelation $item): void
     {
-        return $this->percent_is_readonly;
+        if (null === $this->partner_ids) {
+            $this->partner_ids = [];
+        }
+
+        if ($this->hasPartnerIds($item)) {
+            $index = array_search($item, $this->partner_ids);
+            unset($this->partner_ids[$index]);
+        }
     }
 
     /**
@@ -249,11 +280,97 @@ final class Line extends Base
     }
 
     /**
+     * @param int|null $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("sequence")
+     */
+    public function getSequence(): ?int
+    {
+        return $this->sequence;
+    }
+
+    /**
      * @param bool|null $percent_is_readonly
      */
     public function setPercentIsReadonly(?bool $percent_is_readonly): void
     {
         $this->percent_is_readonly = $percent_is_readonly;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("percent_is_readonly")
+     */
+    public function isPercentIsReadonly(): ?bool
+    {
+        return $this->percent_is_readonly;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addPartnerIds(OdooRelation $item): void
+    {
+        if ($this->hasPartnerIds($item)) {
+            return;
+        }
+
+        if (null === $this->partner_ids) {
+            $this->partner_ids = [];
+        }
+
+        $this->partner_ids[] = $item;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("transfer_model_id")
+     */
+    public function getTransferModelId(): OdooRelation
+    {
+        return $this->transfer_model_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasPartnerIds(OdooRelation $item): bool
+    {
+        if (null === $this->partner_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->partner_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $partner_ids
+     */
+    public function setPartnerIds(?array $partner_ids): void
+    {
+        $this->partner_ids = $partner_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("partner_ids")
+     */
+    public function getPartnerIds(): ?array
+    {
+        return $this->partner_ids;
     }
 
     /**
@@ -269,16 +386,6 @@ final class Line extends Base
             $index = array_search($item, $this->analytic_account_ids);
             unset($this->analytic_account_ids[$index]);
         }
-    }
-
-    /**
-     * @return OdooRelation
-     *
-     * @SerializedName("transfer_model_id")
-     */
-    public function getTransferModelId(): OdooRelation
-    {
-        return $this->transfer_model_id;
     }
 
     /**

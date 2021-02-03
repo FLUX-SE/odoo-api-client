@@ -38,16 +38,6 @@ final class Report extends Base
     private $name;
 
     /**
-     * Show Credit and Debit Columns
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $debit_credit;
-
-    /**
      * Lines
      * ---
      * Relation : one2many (account.financial.html.report.line -> financial_report_id)
@@ -95,18 +85,6 @@ final class Report extends Base
      * @var bool|null
      */
     private $analytic;
-
-    /**
-     * Enable the hierarchy option
-     * ---
-     * Display the hierarchy choice in the report options
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $hierarchy_option;
 
     /**
      * Allow filtering by journals
@@ -259,35 +237,16 @@ final class Report extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addApplicableFiltersIds(OdooRelation $item): void
+    public function removeApplicableFiltersIds(OdooRelation $item): void
     {
-        if ($this->hasApplicableFiltersIds($item)) {
-            return;
-        }
-
         if (null === $this->applicable_filters_ids) {
             $this->applicable_filters_ids = [];
         }
 
-        $this->applicable_filters_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation|null $generated_menu_id
-     */
-    public function setGeneratedMenuId(?OdooRelation $generated_menu_id): void
-    {
-        $this->generated_menu_id = $generated_menu_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("parent_id")
-     */
-    public function getParentId(): ?OdooRelation
-    {
-        return $this->parent_id;
+        if ($this->hasApplicableFiltersIds($item)) {
+            $index = array_search($item, $this->applicable_filters_ids);
+            unset($this->applicable_filters_ids[$index]);
+        }
     }
 
     /**
@@ -351,24 +310,17 @@ final class Report extends Base
     /**
      * @param OdooRelation $item
      */
-    public function removeApplicableFiltersIds(OdooRelation $item): void
+    public function addApplicableFiltersIds(OdooRelation $item): void
     {
+        if ($this->hasApplicableFiltersIds($item)) {
+            return;
+        }
+
         if (null === $this->applicable_filters_ids) {
             $this->applicable_filters_ids = [];
         }
 
-        if ($this->hasApplicableFiltersIds($item)) {
-            $index = array_search($item, $this->applicable_filters_ids);
-            unset($this->applicable_filters_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation|null $company_id
-     */
-    public function setCompanyId(?OdooRelation $company_id): void
-    {
-        $this->company_id = $company_id;
+        $this->applicable_filters_ids[] = $item;
     }
 
     /**
@@ -379,6 +331,14 @@ final class Report extends Base
     public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $generated_menu_id
+     */
+    public function setGeneratedMenuId(?OdooRelation $generated_menu_id): void
+    {
+        $this->generated_menu_id = $generated_menu_id;
     }
 
     /**
@@ -446,21 +406,21 @@ final class Report extends Base
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("generated_menu_id")
+     * @SerializedName("parent_id")
      */
-    public function getGeneratedMenuId(): ?OdooRelation
+    public function getParentId(): ?OdooRelation
     {
-        return $this->generated_menu_id;
+        return $this->parent_id;
     }
 
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("company_id")
+     * @SerializedName("generated_menu_id")
      */
-    public function getCompanyId(): ?OdooRelation
+    public function getGeneratedMenuId(): ?OdooRelation
     {
-        return $this->company_id;
+        return $this->generated_menu_id;
     }
 
     /**
@@ -472,29 +432,13 @@ final class Report extends Base
     }
 
     /**
-     * @param bool|null $date_range
-     */
-    public function setDateRange(?bool $date_range): void
-    {
-        $this->date_range = $date_range;
-    }
-
-    /**
      * @return bool|null
      *
-     * @SerializedName("debit_credit")
+     * @SerializedName("comparison")
      */
-    public function isDebitCredit(): ?bool
+    public function isComparison(): ?bool
     {
-        return $this->debit_credit;
-    }
-
-    /**
-     * @param bool|null $debit_credit
-     */
-    public function setDebitCredit(?bool $debit_credit): void
-    {
-        $this->debit_credit = $debit_credit;
+        return $this->comparison;
     }
 
     /**
@@ -571,21 +515,11 @@ final class Report extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("comparison")
+     * @param bool|null $date_range
      */
-    public function isComparison(): ?bool
+    public function setDateRange(?bool $date_range): void
     {
-        return $this->comparison;
-    }
-
-    /**
-     * @param bool|null $unfold_all_filter
-     */
-    public function setUnfoldAllFilter(?bool $unfold_all_filter): void
-    {
-        $this->unfold_all_filter = $unfold_all_filter;
+        $this->date_range = $date_range;
     }
 
     /**
@@ -594,6 +528,14 @@ final class Report extends Base
     public function setComparison(?bool $comparison): void
     {
         $this->comparison = $comparison;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
     }
 
     /**
@@ -612,24 +554,6 @@ final class Report extends Base
     public function setAnalytic(?bool $analytic): void
     {
         $this->analytic = $analytic;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("hierarchy_option")
-     */
-    public function isHierarchyOption(): ?bool
-    {
-        return $this->hierarchy_option;
-    }
-
-    /**
-     * @param bool|null $hierarchy_option
-     */
-    public function setHierarchyOption(?bool $hierarchy_option): void
-    {
-        $this->hierarchy_option = $hierarchy_option;
     }
 
     /**
@@ -658,6 +582,24 @@ final class Report extends Base
     public function isUnfoldAllFilter(): ?bool
     {
         return $this->unfold_all_filter;
+    }
+
+    /**
+     * @param bool|null $unfold_all_filter
+     */
+    public function setUnfoldAllFilter(?bool $unfold_all_filter): void
+    {
+        $this->unfold_all_filter = $unfold_all_filter;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
     }
 
     /**

@@ -184,6 +184,19 @@ final class Activity extends Base
     private $user_id;
 
     /**
+     * Requesting Partner
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $request_partner_id;
+
+    /**
      * State
      * ---
      * Selection :
@@ -367,11 +380,23 @@ final class Activity extends Base
     }
 
     /**
-     * @param bool|null $force_next
+     * @return bool|null
+     *
+     * @SerializedName("force_next")
      */
-    public function setForceNext(?bool $force_next): void
+    public function isForceNext(): ?bool
     {
-        $this->force_next = $force_next;
+        return $this->force_next;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("recommended_activity_type_id")
+     */
+    public function getRecommendedActivityTypeId(): ?OdooRelation
+    {
+        return $this->recommended_activity_type_id;
     }
 
     /**
@@ -482,13 +507,21 @@ final class Activity extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("force_next")
+     * @param bool|null $force_next
      */
-    public function isForceNext(): ?bool
+    public function setForceNext(?bool $force_next): void
     {
-        return $this->force_next;
+        $this->force_next = $force_next;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("state")
+     */
+    public function getState(): ?string
+    {
+        return $this->state;
     }
 
     /**
@@ -499,14 +532,6 @@ final class Activity extends Base
     public function isCanWrite(): ?bool
     {
         return $this->can_write;
-    }
-
-    /**
-     * @param string|null $state
-     */
-    public function setState(?string $state): void
-    {
-        $this->state = $state;
     }
 
     /**
@@ -608,23 +633,19 @@ final class Activity extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("recommended_activity_type_id")
+     * @param string|null $state
      */
-    public function getRecommendedActivityTypeId(): ?OdooRelation
+    public function setState(?string $state): void
     {
-        return $this->recommended_activity_type_id;
+        $this->state = $state;
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("state")
+     * @param OdooRelation|null $request_partner_id
      */
-    public function getState(): ?string
+    public function setRequestPartnerId(?OdooRelation $request_partner_id): void
     {
-        return $this->state;
+        $this->request_partner_id = $request_partner_id;
     }
 
     /**
@@ -754,11 +775,13 @@ final class Activity extends Base
     }
 
     /**
-     * @param OdooRelation $user_id
+     * @return OdooRelation|null
+     *
+     * @SerializedName("request_partner_id")
      */
-    public function setUserId(OdooRelation $user_id): void
+    public function getRequestPartnerId(): ?OdooRelation
     {
-        $this->user_id = $user_id;
+        return $this->request_partner_id;
     }
 
     /**
@@ -859,6 +882,14 @@ final class Activity extends Base
     public function getUserId(): OdooRelation
     {
         return $this->user_id;
+    }
+
+    /**
+     * @param OdooRelation $user_id
+     */
+    public function setUserId(OdooRelation $user_id): void
+    {
+        $this->user_id = $user_id;
     }
 
     /**

@@ -145,6 +145,7 @@ final class Log extends Base
      * Selection :
      *     -> create (Creation)
      *     -> open (View/Download)
+     *     -> save (Save)
      *     -> sign (Signature)
      * ---
      * Searchable : yes
@@ -158,8 +159,8 @@ final class Log extends Base
      * State of the request on action log
      * ---
      * Selection :
-     *     -> sent (Signatures in Progress)
-     *     -> signed (Fully Signed)
+     *     -> sent (Before Signature)
+     *     -> signed (After Signature)
      *     -> canceled (Canceled)
      * ---
      * Searchable : yes
@@ -236,6 +237,7 @@ final class Log extends Base
      *        Selection :
      *            -> create (Creation)
      *            -> open (View/Download)
+     *            -> save (Save)
      *            -> sign (Signature)
      *        ---
      *        Searchable : yes
@@ -243,8 +245,8 @@ final class Log extends Base
      * @param string $request_state State of the request on action log
      *        ---
      *        Selection :
-     *            -> sent (Signatures in Progress)
-     *            -> signed (Fully Signed)
+     *            -> sent (Before Signature)
+     *            -> signed (After Signature)
      *            -> canceled (Canceled)
      *        ---
      *        Searchable : yes

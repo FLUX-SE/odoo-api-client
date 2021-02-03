@@ -171,6 +171,26 @@ final class Lang extends Base
     private $thousands_sep;
 
     /**
+     * Image
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var mixed|null
+     */
+    private $flag_image;
+
+    /**
+     * Flag Image Url
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $flag_image_url;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -298,91 +318,19 @@ final class Lang extends Base
     }
 
     /**
-     * @param string $week_start
+     * @param string|null $flag_image_url
      */
-    public function setWeekStart(string $week_start): void
+    public function setFlagImageUrl(?string $flag_image_url): void
     {
-        $this->week_start = $week_start;
+        $this->flag_image_url = $flag_image_url;
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @param string $decimal_point
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function setDecimalPoint(string $decimal_point): void
     {
-        $this->write_date = $write_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("write_date")
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("write_uid")
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("create_date")
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @param OdooRelation|null $create_uid
-     */
-    public function setCreateUid(?OdooRelation $create_uid): void
-    {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
-     */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param string|null $thousands_sep
-     */
-    public function setThousandsSep(?string $thousands_sep): void
-    {
-        $this->thousands_sep = $thousands_sep;
+        $this->decimal_point = $decimal_point;
     }
 
     /**
@@ -396,11 +344,119 @@ final class Lang extends Base
     }
 
     /**
-     * @param string $decimal_point
+     * @param string|null $thousands_sep
      */
-    public function setDecimalPoint(string $decimal_point): void
+    public function setThousandsSep(?string $thousands_sep): void
     {
-        $this->decimal_point = $decimal_point;
+        $this->thousands_sep = $thousands_sep;
+    }
+
+    /**
+     * @return mixed|null
+     *
+     * @SerializedName("flag_image")
+     */
+    public function getFlagImage()
+    {
+        return $this->flag_image;
+    }
+
+    /**
+     * @param mixed|null $flag_image
+     */
+    public function setFlagImage($flag_image): void
+    {
+        $this->flag_image = $flag_image;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("flag_image_url")
+     */
+    public function getFlagImageUrl(): ?string
+    {
+        return $this->flag_image_url;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param string $grouping
+     */
+    public function setGrouping(string $grouping): void
+    {
+        $this->grouping = $grouping;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
     }
 
     /**
@@ -411,14 +467,6 @@ final class Lang extends Base
     public function getDecimalPoint(): string
     {
         return $this->decimal_point;
-    }
-
-    /**
-     * @param string $grouping
-     */
-    public function setGrouping(string $grouping): void
-    {
-        $this->grouping = $grouping;
     }
 
     /**
@@ -434,16 +482,6 @@ final class Lang extends Base
     /**
      * @return string
      *
-     * @SerializedName("week_start")
-     */
-    public function getWeekStart(): string
-    {
-        return $this->week_start;
-    }
-
-    /**
-     * @return string
-     *
      * @SerializedName("name")
      */
     public function getName(): string
@@ -452,11 +490,13 @@ final class Lang extends Base
     }
 
     /**
-     * @param string $url_code
+     * @return bool|null
+     *
+     * @SerializedName("active")
      */
-    public function setUrlCode(string $url_code): void
+    public function isActive(): ?bool
     {
-        $this->url_code = $url_code;
+        return $this->active;
     }
 
     /**
@@ -514,21 +554,11 @@ final class Lang extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("active")
+     * @param string $url_code
      */
-    public function isActive(): ?bool
+    public function setUrlCode(string $url_code): void
     {
-        return $this->active;
-    }
-
-    /**
-     * @param string $time_format
-     */
-    public function setTimeFormat(string $time_format): void
-    {
-        $this->time_format = $time_format;
+        $this->url_code = $url_code;
     }
 
     /**
@@ -537,6 +567,14 @@ final class Lang extends Base
     public function setActive(?bool $active): void
     {
         $this->active = $active;
+    }
+
+    /**
+     * @param string $week_start
+     */
+    public function setWeekStart(string $week_start): void
+    {
+        $this->week_start = $week_start;
     }
 
     /**
@@ -583,6 +621,24 @@ final class Lang extends Base
     public function getTimeFormat(): string
     {
         return $this->time_format;
+    }
+
+    /**
+     * @param string $time_format
+     */
+    public function setTimeFormat(string $time_format): void
+    {
+        $this->time_format = $time_format;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("week_start")
+     */
+    public function getWeekStart(): string
+    {
+        return $this->week_start;
     }
 
     /**

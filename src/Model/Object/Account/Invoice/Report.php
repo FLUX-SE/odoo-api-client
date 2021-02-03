@@ -41,16 +41,6 @@ final class Report extends Base
     private $move_id;
 
     /**
-     * Invoice #
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $name;
-
-    /**
      * Journal
      * ---
      * Relation : many2one (account.journal)
@@ -77,7 +67,7 @@ final class Report extends Base
     private $company_id;
 
     /**
-     * Currency
+     * Company Currency
      * ---
      * Relation : many2one (res.currency)
      * @see \Flux\OdooApiClient\Model\Object\Res\Currency
@@ -87,7 +77,7 @@ final class Report extends Base
      *
      * @var OdooRelation|null
      */
-    private $currency_id;
+    private $company_currency_id;
 
     /**
      * Partner
@@ -144,7 +134,7 @@ final class Report extends Base
     private $invoice_user_id;
 
     /**
-     * Type
+     * Move Type
      * ---
      * Selection :
      *     -> out_invoice (Customer Invoice)
@@ -157,7 +147,7 @@ final class Report extends Base
      *
      * @var string|null
      */
-    private $type;
+    private $move_type;
 
     /**
      * Invoice Status
@@ -187,7 +177,7 @@ final class Report extends Base
      *
      * @var string|null
      */
-    private $invoice_payment_state;
+    private $payment_state;
 
     /**
      * Fiscal Position
@@ -211,62 +201,6 @@ final class Report extends Base
      * @var DateTimeInterface|null
      */
     private $invoice_date;
-
-    /**
-     * Payment Terms
-     * ---
-     * Relation : many2one (account.payment.term)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Payment\Term
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $invoice_payment_term_id;
-
-    /**
-     * Bank Account
-     * ---
-     * Relation : many2one (res.partner.bank)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Partner\Bank
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $invoice_partner_bank_id;
-
-    /**
-     * Line Count
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var int|null
-     */
-    private $nbr_lines;
-
-    /**
-     * Due Amount
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var float|null
-     */
-    private $residual;
-
-    /**
-     * Total
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var float|null
-     */
-    private $amount_total;
 
     /**
      * Product Quantity
@@ -397,67 +331,11 @@ final class Report extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("product_categ_id")
+     * @param DateTimeInterface|null $invoice_date_due
      */
-    public function getProductCategId(): ?OdooRelation
+    public function setInvoiceDateDue(?DateTimeInterface $invoice_date_due): void
     {
-        return $this->product_categ_id;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("nbr_lines")
-     */
-    public function getNbrLines(): ?int
-    {
-        return $this->nbr_lines;
-    }
-
-    /**
-     * @param int|null $nbr_lines
-     */
-    public function setNbrLines(?int $nbr_lines): void
-    {
-        $this->nbr_lines = $nbr_lines;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("residual")
-     */
-    public function getResidual(): ?float
-    {
-        return $this->residual;
-    }
-
-    /**
-     * @param float|null $residual
-     */
-    public function setResidual(?float $residual): void
-    {
-        $this->residual = $residual;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("amount_total")
-     */
-    public function getAmountTotal(): ?float
-    {
-        return $this->amount_total;
-    }
-
-    /**
-     * @param float|null $amount_total
-     */
-    public function setAmountTotal(?float $amount_total): void
-    {
-        $this->amount_total = $amount_total;
+        $this->invoice_date_due = $invoice_date_due;
     }
 
     /**
@@ -515,21 +393,21 @@ final class Report extends Base
     }
 
     /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("product_categ_id")
+     */
+    public function getProductCategId(): ?OdooRelation
+    {
+        return $this->product_categ_id;
+    }
+
+    /**
      * @param OdooRelation|null $product_categ_id
      */
     public function setProductCategId(?OdooRelation $product_categ_id): void
     {
         $this->product_categ_id = $product_categ_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("invoice_partner_bank_id")
-     */
-    public function getInvoicePartnerBankId(): ?OdooRelation
-    {
-        return $this->invoice_partner_bank_id;
     }
 
     /**
@@ -543,14 +421,6 @@ final class Report extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $invoice_date_due
-     */
-    public function setInvoiceDateDue(?DateTimeInterface $invoice_date_due): void
-    {
-        $this->invoice_date_due = $invoice_date_due;
-    }
-
-    /**
      * @return OdooRelation|null
      *
      * @SerializedName("account_id")
@@ -558,6 +428,16 @@ final class Report extends Base
     public function getAccountId(): ?OdooRelation
     {
         return $this->account_id;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("invoice_date")
+     */
+    public function getInvoiceDate(): ?DateTimeInterface
+    {
+        return $this->invoice_date;
     }
 
     /**
@@ -641,19 +521,19 @@ final class Report extends Base
     }
 
     /**
-     * @param OdooRelation|null $invoice_partner_bank_id
+     * @param DateTimeInterface|null $invoice_date
      */
-    public function setInvoicePartnerBankId(?OdooRelation $invoice_partner_bank_id): void
+    public function setInvoiceDate(?DateTimeInterface $invoice_date): void
     {
-        $this->invoice_partner_bank_id = $invoice_partner_bank_id;
+        $this->invoice_date = $invoice_date;
     }
 
     /**
-     * @param OdooRelation|null $invoice_payment_term_id
+     * @param OdooRelation|null $fiscal_position_id
      */
-    public function setInvoicePaymentTermId(?OdooRelation $invoice_payment_term_id): void
+    public function setFiscalPositionId(?OdooRelation $fiscal_position_id): void
     {
-        $this->invoice_payment_term_id = $invoice_payment_term_id;
+        $this->fiscal_position_id = $fiscal_position_id;
     }
 
     /**
@@ -665,31 +545,11 @@ final class Report extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("country_id")
+     * @param OdooRelation|null $commercial_partner_id
      */
-    public function getCountryId(): ?OdooRelation
+    public function setCommercialPartnerId(?OdooRelation $commercial_partner_id): void
     {
-        return $this->country_id;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("name")
-     */
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string|null $name
-     */
-    public function setName(?string $name): void
-    {
-        $this->name = $name;
+        $this->commercial_partner_id = $commercial_partner_id;
     }
 
     /**
@@ -731,19 +591,19 @@ final class Report extends Base
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("currency_id")
+     * @SerializedName("company_currency_id")
      */
-    public function getCurrencyId(): ?OdooRelation
+    public function getCompanyCurrencyId(): ?OdooRelation
     {
-        return $this->currency_id;
+        return $this->company_currency_id;
     }
 
     /**
-     * @param OdooRelation|null $currency_id
+     * @param OdooRelation|null $company_currency_id
      */
-    public function setCurrencyId(?OdooRelation $currency_id): void
+    public function setCompanyCurrencyId(?OdooRelation $company_currency_id): void
     {
-        $this->currency_id = $currency_id;
+        $this->company_currency_id = $company_currency_id;
     }
 
     /**
@@ -775,11 +635,23 @@ final class Report extends Base
     }
 
     /**
-     * @param OdooRelation|null $commercial_partner_id
+     * @return OdooRelation|null
+     *
+     * @SerializedName("country_id")
      */
-    public function setCommercialPartnerId(?OdooRelation $commercial_partner_id): void
+    public function getCountryId(): ?OdooRelation
     {
-        $this->commercial_partner_id = $commercial_partner_id;
+        return $this->country_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("fiscal_position_id")
+     */
+    public function getFiscalPositionId(): ?OdooRelation
+    {
+        return $this->fiscal_position_id;
     }
 
     /**
@@ -788,16 +660,6 @@ final class Report extends Base
     public function setCountryId(?OdooRelation $country_id): void
     {
         $this->country_id = $country_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("invoice_payment_term_id")
-     */
-    public function getInvoicePaymentTermId(): ?OdooRelation
-    {
-        return $this->invoice_payment_term_id;
     }
 
     /**
@@ -821,19 +683,19 @@ final class Report extends Base
     /**
      * @return string|null
      *
-     * @SerializedName("type")
+     * @SerializedName("move_type")
      */
-    public function getType(): ?string
+    public function getMoveType(): ?string
     {
-        return $this->type;
+        return $this->move_type;
     }
 
     /**
-     * @param string|null $type
+     * @param string|null $move_type
      */
-    public function setType(?string $type): void
+    public function setMoveType(?string $move_type): void
     {
-        $this->type = $type;
+        $this->move_type = $move_type;
     }
 
     /**
@@ -857,55 +719,19 @@ final class Report extends Base
     /**
      * @return string|null
      *
-     * @SerializedName("invoice_payment_state")
+     * @SerializedName("payment_state")
      */
-    public function getInvoicePaymentState(): ?string
+    public function getPaymentState(): ?string
     {
-        return $this->invoice_payment_state;
+        return $this->payment_state;
     }
 
     /**
-     * @param string|null $invoice_payment_state
+     * @param string|null $payment_state
      */
-    public function setInvoicePaymentState(?string $invoice_payment_state): void
+    public function setPaymentState(?string $payment_state): void
     {
-        $this->invoice_payment_state = $invoice_payment_state;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("fiscal_position_id")
-     */
-    public function getFiscalPositionId(): ?OdooRelation
-    {
-        return $this->fiscal_position_id;
-    }
-
-    /**
-     * @param OdooRelation|null $fiscal_position_id
-     */
-    public function setFiscalPositionId(?OdooRelation $fiscal_position_id): void
-    {
-        $this->fiscal_position_id = $fiscal_position_id;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("invoice_date")
-     */
-    public function getInvoiceDate(): ?DateTimeInterface
-    {
-        return $this->invoice_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $invoice_date
-     */
-    public function setInvoiceDate(?DateTimeInterface $invoice_date): void
-    {
-        $this->invoice_date = $invoice_date;
+        $this->payment_state = $payment_state;
     }
 
     /**

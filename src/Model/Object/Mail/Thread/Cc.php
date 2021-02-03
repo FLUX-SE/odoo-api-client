@@ -50,7 +50,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *           - ``mail_notify_force_send``: if less than 50 email notifications to send,
  *               send them directly instead of using the queue; True by default
  */
-abstract class Cc extends Base
+final class Cc extends Base
 {
     /**
      * Email cc
@@ -62,7 +62,7 @@ abstract class Cc extends Base
      *
      * @var string|null
      */
-    protected $email_cc;
+    private $email_cc;
 
     /**
      * Is Follower
@@ -72,7 +72,7 @@ abstract class Cc extends Base
      *
      * @var bool|null
      */
-    protected $message_is_follower;
+    private $message_is_follower;
 
     /**
      * Followers
@@ -85,7 +85,7 @@ abstract class Cc extends Base
      *
      * @var OdooRelation[]|null
      */
-    protected $message_follower_ids;
+    private $message_follower_ids;
 
     /**
      * Followers (Partners)
@@ -98,7 +98,7 @@ abstract class Cc extends Base
      *
      * @var OdooRelation[]|null
      */
-    protected $message_partner_ids;
+    private $message_partner_ids;
 
     /**
      * Followers (Channels)
@@ -111,7 +111,7 @@ abstract class Cc extends Base
      *
      * @var OdooRelation[]|null
      */
-    protected $message_channel_ids;
+    private $message_channel_ids;
 
     /**
      * Messages
@@ -124,7 +124,7 @@ abstract class Cc extends Base
      *
      * @var OdooRelation[]|null
      */
-    protected $message_ids;
+    private $message_ids;
 
     /**
      * Unread Messages
@@ -136,7 +136,7 @@ abstract class Cc extends Base
      *
      * @var bool|null
      */
-    protected $message_unread;
+    private $message_unread;
 
     /**
      * Unread Messages Counter
@@ -148,7 +148,7 @@ abstract class Cc extends Base
      *
      * @var int|null
      */
-    protected $message_unread_counter;
+    private $message_unread_counter;
 
     /**
      * Action Needed
@@ -160,7 +160,7 @@ abstract class Cc extends Base
      *
      * @var bool|null
      */
-    protected $message_needaction;
+    private $message_needaction;
 
     /**
      * Number of Actions
@@ -172,7 +172,7 @@ abstract class Cc extends Base
      *
      * @var int|null
      */
-    protected $message_needaction_counter;
+    private $message_needaction_counter;
 
     /**
      * Message Delivery error
@@ -184,7 +184,7 @@ abstract class Cc extends Base
      *
      * @var bool|null
      */
-    protected $message_has_error;
+    private $message_has_error;
 
     /**
      * Number of errors
@@ -196,7 +196,7 @@ abstract class Cc extends Base
      *
      * @var int|null
      */
-    protected $message_has_error_counter;
+    private $message_has_error_counter;
 
     /**
      * Attachment Count
@@ -206,7 +206,7 @@ abstract class Cc extends Base
      *
      * @var int|null
      */
-    protected $message_attachment_count;
+    private $message_attachment_count;
 
     /**
      * Main Attachment
@@ -219,7 +219,7 @@ abstract class Cc extends Base
      *
      * @var OdooRelation|null
      */
-    protected $message_main_attachment_id;
+    private $message_main_attachment_id;
 
     /**
      * Website Messages
@@ -234,7 +234,7 @@ abstract class Cc extends Base
      *
      * @var OdooRelation[]|null
      */
-    protected $website_message_ids;
+    private $website_message_ids;
 
     /**
      * SMS Delivery error
@@ -246,7 +246,7 @@ abstract class Cc extends Base
      *
      * @var bool|null
      */
-    protected $message_has_sms_error;
+    private $message_has_sms_error;
 
     /**
      * @return string|null

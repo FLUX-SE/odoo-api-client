@@ -187,6 +187,19 @@ final class Template extends Base
     private $expense_currency_exchange_account_id;
 
     /**
+     * Journal Suspense Account
+     * ---
+     * Relation : many2one (account.account.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $account_journal_suspense_account_id;
+
+    /**
      * Cash Difference Income Account
      * ---
      * Relation : many2one (account.account.template)
@@ -382,6 +395,22 @@ final class Template extends Base
     private $property_advance_tax_payment_account_id;
 
     /**
+     * Base Tax Received Account
+     * ---
+     * Account that will be set on lines created in cash basis journal entry and used to keep track of the tax base
+     * amount.
+     * ---
+     * Relation : many2one (account.account.template)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $property_cash_basis_base_account_id;
+
+    /**
      * Name
      * ---
      * Searchable : yes
@@ -509,6 +538,15 @@ final class Template extends Base
     }
 
     /**
+     * @param OdooRelation|null $property_stock_valuation_account_id
+     */
+    public function setPropertyStockValuationAccountId(
+        ?OdooRelation $property_stock_valuation_account_id
+    ): void {
+        $this->property_stock_valuation_account_id = $property_stock_valuation_account_id;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("property_stock_valuation_account_id")
@@ -573,13 +611,11 @@ final class Template extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("property_tax_payable_account_id")
+     * @param OdooRelation|null $property_tax_payable_account_id
      */
-    public function getPropertyTaxPayableAccountId(): ?OdooRelation
+    public function setPropertyTaxPayableAccountId(?OdooRelation $property_tax_payable_account_id): void
     {
-        return $this->property_tax_payable_account_id;
+        $this->property_tax_payable_account_id = $property_tax_payable_account_id;
     }
 
     /**
@@ -647,20 +683,23 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation|null $property_stock_valuation_account_id
+     * @return OdooRelation|null
+     *
+     * @SerializedName("property_tax_payable_account_id")
      */
-    public function setPropertyStockValuationAccountId(
-        ?OdooRelation $property_stock_valuation_account_id
-    ): void {
-        $this->property_stock_valuation_account_id = $property_stock_valuation_account_id;
+    public function getPropertyTaxPayableAccountId(): ?OdooRelation
+    {
+        return $this->property_tax_payable_account_id;
     }
 
     /**
-     * @param OdooRelation|null $property_tax_payable_account_id
+     * @return OdooRelation|null
+     *
+     * @SerializedName("property_tax_receivable_account_id")
      */
-    public function setPropertyTaxPayableAccountId(?OdooRelation $property_tax_payable_account_id): void
+    public function getPropertyTaxReceivableAccountId(): ?OdooRelation
     {
-        $this->property_tax_payable_account_id = $property_tax_payable_account_id;
+        return $this->property_tax_receivable_account_id;
     }
 
     /**
@@ -674,11 +713,13 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation|null $create_uid
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
-    public function setCreateUid(?OdooRelation $create_uid): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->create_uid = $create_uid;
+        return $this->create_uid;
     }
 
     /**
@@ -736,23 +777,11 @@ final class Template extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
+     * @param OdooRelation|null $create_uid
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setCreateUid(?OdooRelation $create_uid): void
     {
-        return $this->create_uid;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("property_tax_receivable_account_id")
-     */
-    public function getPropertyTaxReceivableAccountId(): ?OdooRelation
-    {
-        return $this->property_tax_receivable_account_id;
+        $this->create_uid = $create_uid;
     }
 
     /**
@@ -761,6 +790,15 @@ final class Template extends Base
     public function setSpokenLanguages(?string $spoken_languages): void
     {
         $this->spoken_languages = $spoken_languages;
+    }
+
+    /**
+     * @param OdooRelation|null $property_tax_receivable_account_id
+     */
+    public function setPropertyTaxReceivableAccountId(
+        ?OdooRelation $property_tax_receivable_account_id
+    ): void {
+        $this->property_tax_receivable_account_id = $property_tax_receivable_account_id;
     }
 
     /**
@@ -792,6 +830,25 @@ final class Template extends Base
     }
 
     /**
+     * @param OdooRelation|null $property_cash_basis_base_account_id
+     */
+    public function setPropertyCashBasisBaseAccountId(
+        ?OdooRelation $property_cash_basis_base_account_id
+    ): void {
+        $this->property_cash_basis_base_account_id = $property_cash_basis_base_account_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("property_cash_basis_base_account_id")
+     */
+    public function getPropertyCashBasisBaseAccountId(): ?OdooRelation
+    {
+        return $this->property_cash_basis_base_account_id;
+    }
+
+    /**
      * @param OdooRelation|null $property_advance_tax_payment_account_id
      */
     public function setPropertyAdvanceTaxPaymentAccountId(
@@ -808,15 +865,6 @@ final class Template extends Base
     public function getPropertyAdvanceTaxPaymentAccountId(): ?OdooRelation
     {
         return $this->property_advance_tax_payment_account_id;
-    }
-
-    /**
-     * @param OdooRelation|null $property_tax_receivable_account_id
-     */
-    public function setPropertyTaxReceivableAccountId(
-        ?OdooRelation $property_tax_receivable_account_id
-    ): void {
-        $this->property_tax_receivable_account_id = $property_tax_receivable_account_id;
     }
 
     /**
@@ -851,6 +899,21 @@ final class Template extends Base
     public function setUseAngloSaxon(?bool $use_anglo_saxon): void
     {
         $this->use_anglo_saxon = $use_anglo_saxon;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeAccountIds(OdooRelation $item): void
+    {
+        if (null === $this->account_ids) {
+            $this->account_ids = [];
+        }
+
+        if ($this->hasAccountIds($item)) {
+            $index = array_search($item, $this->account_ids);
+            unset($this->account_ids[$index]);
+        }
     }
 
     /**
@@ -930,13 +993,11 @@ final class Template extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("tax_template_ids")
+     * @param OdooRelation[]|null $tax_template_ids
      */
-    public function getTaxTemplateIds(): ?array
+    public function setTaxTemplateIds(?array $tax_template_ids): void
     {
-        return $this->tax_template_ids;
+        $this->tax_template_ids = $tax_template_ids;
     }
 
     /**
@@ -1002,26 +1063,27 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("tax_template_ids")
      */
-    public function removeAccountIds(OdooRelation $item): void
+    public function getTaxTemplateIds(): ?array
     {
-        if (null === $this->account_ids) {
-            $this->account_ids = [];
-        }
-
-        if ($this->hasAccountIds($item)) {
-            $index = array_search($item, $this->account_ids);
-            unset($this->account_ids[$index]);
-        }
+        return $this->tax_template_ids;
     }
 
     /**
-     * @param OdooRelation[]|null $tax_template_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setTaxTemplateIds(?array $tax_template_ids): void
+    public function hasTaxTemplateIds(OdooRelation $item): bool
     {
-        $this->tax_template_ids = $tax_template_ids;
+        if (null === $this->tax_template_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->tax_template_ids);
     }
 
     /**
@@ -1037,11 +1099,11 @@ final class Template extends Base
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("income_currency_exchange_account_id")
+     * @SerializedName("expense_currency_exchange_account_id")
      */
-    public function getIncomeCurrencyExchangeAccountId(): ?OdooRelation
+    public function getExpenseCurrencyExchangeAccountId(): ?OdooRelation
     {
-        return $this->income_currency_exchange_account_id;
+        return $this->expense_currency_exchange_account_id;
     }
 
     /**
@@ -1083,22 +1145,31 @@ final class Template extends Base
     }
 
     /**
+     * @param OdooRelation|null $account_journal_suspense_account_id
+     */
+    public function setAccountJournalSuspenseAccountId(
+        ?OdooRelation $account_journal_suspense_account_id
+    ): void {
+        $this->account_journal_suspense_account_id = $account_journal_suspense_account_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("account_journal_suspense_account_id")
+     */
+    public function getAccountJournalSuspenseAccountId(): ?OdooRelation
+    {
+        return $this->account_journal_suspense_account_id;
+    }
+
+    /**
      * @param OdooRelation|null $expense_currency_exchange_account_id
      */
     public function setExpenseCurrencyExchangeAccountId(
         ?OdooRelation $expense_currency_exchange_account_id
     ): void {
         $this->expense_currency_exchange_account_id = $expense_currency_exchange_account_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("expense_currency_exchange_account_id")
-     */
-    public function getExpenseCurrencyExchangeAccountId(): ?OdooRelation
-    {
-        return $this->expense_currency_exchange_account_id;
     }
 
     /**
@@ -1111,25 +1182,37 @@ final class Template extends Base
     }
 
     /**
+     * @param OdooRelation $item
+     */
+    public function addTaxTemplateIds(OdooRelation $item): void
+    {
+        if ($this->hasTaxTemplateIds($item)) {
+            return;
+        }
+
+        if (null === $this->tax_template_ids) {
+            $this->tax_template_ids = [];
+        }
+
+        $this->tax_template_ids[] = $item;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("income_currency_exchange_account_id")
+     */
+    public function getIncomeCurrencyExchangeAccountId(): ?OdooRelation
+    {
+        return $this->income_currency_exchange_account_id;
+    }
+
+    /**
      * @param string $transfer_account_code_prefix
      */
     public function setTransferAccountCodePrefix(string $transfer_account_code_prefix): void
     {
         $this->transfer_account_code_prefix = $transfer_account_code_prefix;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasTaxTemplateIds(OdooRelation $item): bool
-    {
-        if (null === $this->tax_template_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->tax_template_ids);
     }
 
     /**
@@ -1191,22 +1274,6 @@ final class Template extends Base
             $index = array_search($item, $this->tax_template_ids);
             unset($this->tax_template_ids[$index]);
         }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addTaxTemplateIds(OdooRelation $item): void
-    {
-        if ($this->hasTaxTemplateIds($item)) {
-            return;
-        }
-
-        if (null === $this->tax_template_ids) {
-            $this->tax_template_ids = [];
-        }
-
-        $this->tax_template_ids[] = $item;
     }
 
     /**

@@ -30,7 +30,7 @@ final class Line extends Base
     /**
      * Is Editable
      * ---
-     * Technical field to restrict the edition.
+     * Technical field to restrict editing.
      * ---
      * Searchable : yes
      * Sortable : yes

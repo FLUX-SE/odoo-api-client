@@ -51,6 +51,39 @@ final class Group extends Base
     private $parent_path;
 
     /**
+     * Code Prefix Start
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $code_prefix_start;
+
+    /**
+     * Code Prefix End
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $code_prefix_end;
+
+    /**
+     * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation
+     */
+    private $company_id;
+
+    /**
      * Name
      * ---
      * Searchable : yes
@@ -59,16 +92,6 @@ final class Group extends Base
      * @var string
      */
     private $name;
-
-    /**
-     * Code Prefix
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $code_prefix;
 
     /**
      * Created by
@@ -117,22 +140,30 @@ final class Group extends Base
     private $write_date;
 
     /**
+     * @param OdooRelation $company_id Company
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param string $name Name
      *        ---
      *        Searchable : yes
      *        Sortable : yes
      */
-    public function __construct(string $name)
+    public function __construct(OdooRelation $company_id, string $name)
     {
+        $this->company_id = $company_id;
         $this->name = $name;
     }
 
     /**
-     * @param OdooRelation|null $create_uid
+     * @param string $name
      */
-    public function setCreateUid(?OdooRelation $create_uid): void
+    public function setName(string $name): void
     {
-        $this->create_uid = $create_uid;
+        $this->name = $name;
     }
 
     /**
@@ -190,6 +221,14 @@ final class Group extends Base
     }
 
     /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("create_uid")
@@ -197,6 +236,16 @@ final class Group extends Base
     public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("name")
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     /**
@@ -210,39 +259,57 @@ final class Group extends Base
     }
 
     /**
-     * @param string|null $code_prefix
+     * @param OdooRelation $company_id
      */
-    public function setCodePrefix(?string $code_prefix): void
+    public function setCompanyId(OdooRelation $company_id): void
     {
-        $this->code_prefix = $code_prefix;
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("company_id")
+     */
+    public function getCompanyId(): OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param string|null $code_prefix_end
+     */
+    public function setCodePrefixEnd(?string $code_prefix_end): void
+    {
+        $this->code_prefix_end = $code_prefix_end;
     }
 
     /**
      * @return string|null
      *
-     * @SerializedName("code_prefix")
+     * @SerializedName("code_prefix_end")
      */
-    public function getCodePrefix(): ?string
+    public function getCodePrefixEnd(): ?string
     {
-        return $this->code_prefix;
+        return $this->code_prefix_end;
     }
 
     /**
-     * @param string $name
+     * @param string|null $code_prefix_start
      */
-    public function setName(string $name): void
+    public function setCodePrefixStart(?string $code_prefix_start): void
     {
-        $this->name = $name;
+        $this->code_prefix_start = $code_prefix_start;
     }
 
     /**
-     * @return string
+     * @return string|null
      *
-     * @SerializedName("name")
+     * @SerializedName("code_prefix_start")
      */
-    public function getName(): string
+    public function getCodePrefixStart(): ?string
     {
-        return $this->name;
+        return $this->code_prefix_start;
     }
 
     /**

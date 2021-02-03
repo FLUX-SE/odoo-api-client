@@ -87,7 +87,7 @@ final class Type extends Base
      * ---
      * This is the default source location when you create a picking manually with this operation type. It is
      * possible however to change it or that the routes put another location. If it is empty, it will check for the
-     * supplier location on the partner.
+     * supplier location on the partner. 
      * ---
      * Relation : many2one (stock.location)
      * @see \Flux\OdooApiClient\Model\Object\Stock\Location
@@ -104,7 +104,7 @@ final class Type extends Base
      * ---
      * This is the default destination location when you create a picking manually with this operation type. It is
      * possible however to change it or that the routes put another location. If it is empty, it will check for the
-     * customer location on the partner.
+     * customer location on the partner. 
      * ---
      * Relation : many2one (stock.location)
      * @see \Flux\OdooApiClient\Model\Object\Stock\Location
@@ -183,7 +183,7 @@ final class Type extends Base
      * Create New Lots/Serial Numbers
      * ---
      * If this is checked only, it will suppose you want to create new Lots/Serial Numbers, so you can provide them
-     * in a text field.
+     * in a text field. 
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -196,7 +196,7 @@ final class Type extends Base
      * Use Existing Lots/Serial Numbers
      * ---
      * If this is checked, you will be able to choose the Lots/Serial Numbers. You can also decide to not put lots in
-     * this operation type.  This means it will create stock with no lot or not put a restriction on the lot taken.
+     * this operation type.  This means it will create stock with no lot or not put a restriction on the lot taken. 
      * ---
      * Searchable : yes
      * Sortable : yes

@@ -121,7 +121,7 @@ final class Pricelist extends Base
      * Searchable : yes
      * Sortable : yes
      *
-     * @var string|null
+     * @var string
      */
     private $discount_policy;
 
@@ -183,11 +183,20 @@ final class Pricelist extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param string $discount_policy Discount Policy
+     *        ---
+     *        Selection :
+     *            -> with_discount (Discount included in the price)
+     *            -> without_discount (Show public price & discount to the customer)
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(string $name, OdooRelation $currency_id)
+    public function __construct(string $name, OdooRelation $currency_id, string $discount_policy)
     {
         $this->name = $name;
         $this->currency_id = $currency_id;
+        $this->discount_policy = $discount_policy;
     }
 
     /**
@@ -271,19 +280,19 @@ final class Pricelist extends Base
     }
 
     /**
-     * @param string|null $discount_policy
+     * @param string $discount_policy
      */
-    public function setDiscountPolicy(?string $discount_policy): void
+    public function setDiscountPolicy(string $discount_policy): void
     {
         $this->discount_policy = $discount_policy;
     }
 
     /**
-     * @return string|null
+     * @return string
      *
      * @SerializedName("discount_policy")
      */
-    public function getDiscountPolicy(): ?string
+    public function getDiscountPolicy(): string
     {
         return $this->discount_policy;
     }

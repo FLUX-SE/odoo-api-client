@@ -13,9 +13,11 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  * Name : image.mixin
  * ---
  * Info :
- * The base model, which is implicitly inherited by all models.
+ * Updates the base class to support setting xids directly in create by
+ *         providing an "id" key (otherwise stripped by create) during an import
+ *         (which should strip 'id' from the input data anyway)
  */
-abstract class Mixin extends Base
+final class Mixin extends Base
 {
     /**
      * Image
@@ -25,7 +27,7 @@ abstract class Mixin extends Base
      *
      * @var mixed|null
      */
-    protected $image_1920;
+    private $image_1920;
 
     /**
      * Image 1024
@@ -35,7 +37,7 @@ abstract class Mixin extends Base
      *
      * @var mixed|null
      */
-    protected $image_1024;
+    private $image_1024;
 
     /**
      * Image 512
@@ -45,7 +47,7 @@ abstract class Mixin extends Base
      *
      * @var mixed|null
      */
-    protected $image_512;
+    private $image_512;
 
     /**
      * Image 256
@@ -55,7 +57,7 @@ abstract class Mixin extends Base
      *
      * @var mixed|null
      */
-    protected $image_256;
+    private $image_256;
 
     /**
      * Image 128
@@ -65,7 +67,7 @@ abstract class Mixin extends Base
      *
      * @var mixed|null
      */
-    protected $image_128;
+    private $image_128;
 
     /**
      * @return mixed|null

@@ -18,7 +18,7 @@ use Flux\OdooApiClient\Model\Object\Base;
  *                 currently installed as the ir.model.data will be created automatically
  *                 afterwards.
  */
-abstract class Mixin extends Base
+final class Mixin extends Base
 {
     /**
      * @return string

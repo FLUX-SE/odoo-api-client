@@ -40,6 +40,16 @@ final class Tip extends Base
     private $sequence;
 
     /**
+     * Name
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $name;
+
+    /**
      * Recipients
      * ---
      * Users having already received this tip
@@ -134,13 +144,11 @@ final class Tip extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
+     * @param OdooRelation|null $group_id
      */
-    public function getCreateUid(): ?OdooRelation
+    public function setGroupId(?OdooRelation $group_id): void
     {
-        return $this->create_uid;
+        $this->group_id = $group_id;
     }
 
     /**
@@ -206,19 +214,13 @@ final class Tip extends Base
     }
 
     /**
-     * @param OdooRelation|null $group_id
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
      */
-    public function setGroupId(?OdooRelation $group_id): void
+    public function getCreateUid(): ?OdooRelation
     {
-        $this->group_id = $group_id;
-    }
-
-    /**
-     * @param int|null $sequence
-     */
-    public function setSequence(?int $sequence): void
-    {
-        $this->sequence = $sequence;
+        return $this->create_uid;
     }
 
     /**
@@ -229,6 +231,14 @@ final class Tip extends Base
     public function getGroupId(): ?OdooRelation
     {
         return $this->group_id;
+    }
+
+    /**
+     * @param int|null $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
     }
 
     /**
@@ -310,6 +320,24 @@ final class Tip extends Base
     public function getUserIds(): ?array
     {
         return $this->user_ids;
+    }
+
+    /**
+     * @param string|null $name
+     */
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("name")
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
     }
 
     /**

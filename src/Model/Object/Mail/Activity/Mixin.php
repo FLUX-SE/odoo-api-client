@@ -24,7 +24,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *         Activities come with a new JS widget for the form view. It is integrated in the
  *         Chatter widget although it is a separate widget. It displays activities linked
  *         to the current record and allow to schedule, edit and mark done activities.
- *         Use widget="mail_activity" on activity_ids field in form view to use it.
+ *         Just include field activity_ids in the div.oe-chatter to use it.
  *
  *         There is also a kanban widget defined. It defines a small widget to integrate
  *         in kanban vignettes. It allow to manage activities directly from the kanban
@@ -38,7 +38,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *               no automated activities will be generated, updated or unlinked, allowing
  *               to save computation and avoid generating unwanted activities;
  */
-abstract class Mixin extends Base
+final class Mixin extends Base
 {
     /**
      * Activities
@@ -51,7 +51,7 @@ abstract class Mixin extends Base
      *
      * @var OdooRelation[]|null
      */
-    protected $activity_ids;
+    private $activity_ids;
 
     /**
      * Activity State
@@ -71,7 +71,7 @@ abstract class Mixin extends Base
      *
      * @var string|null
      */
-    protected $activity_state;
+    private $activity_state;
 
     /**
      * Responsible User
@@ -84,7 +84,7 @@ abstract class Mixin extends Base
      *
      * @var OdooRelation|null
      */
-    protected $activity_user_id;
+    private $activity_user_id;
 
     /**
      * Next Activity Type
@@ -97,7 +97,19 @@ abstract class Mixin extends Base
      *
      * @var OdooRelation|null
      */
-    protected $activity_type_id;
+    private $activity_type_id;
+
+    /**
+     * Activity Type Icon
+     * ---
+     * Font awesome icon e.g. fa-tasks
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $activity_type_icon;
 
     /**
      * Next Activity Deadline
@@ -107,7 +119,7 @@ abstract class Mixin extends Base
      *
      * @var DateTimeInterface|null
      */
-    protected $activity_date_deadline;
+    private $activity_date_deadline;
 
     /**
      * Next Activity Summary
@@ -117,7 +129,7 @@ abstract class Mixin extends Base
      *
      * @var string|null
      */
-    protected $activity_summary;
+    private $activity_summary;
 
     /**
      * Activity Exception Decoration
@@ -133,7 +145,7 @@ abstract class Mixin extends Base
      *
      * @var string|null
      */
-    protected $activity_exception_decoration;
+    private $activity_exception_decoration;
 
     /**
      * Icon
@@ -145,7 +157,7 @@ abstract class Mixin extends Base
      *
      * @var string|null
      */
-    protected $activity_exception_icon;
+    private $activity_exception_icon;
 
     /**
      * @return OdooRelation[]|null
@@ -158,13 +170,11 @@ abstract class Mixin extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("activity_date_deadline")
+     * @param string|null $activity_type_icon
      */
-    public function getActivityDateDeadline(): ?DateTimeInterface
+    public function setActivityTypeIcon(?string $activity_type_icon): void
     {
-        return $this->activity_date_deadline;
+        $this->activity_type_icon = $activity_type_icon;
     }
 
     /**
@@ -230,11 +240,23 @@ abstract class Mixin extends Base
     }
 
     /**
-     * @param OdooRelation|null $activity_type_id
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("activity_date_deadline")
      */
-    public function setActivityTypeId(?OdooRelation $activity_type_id): void
+    public function getActivityDateDeadline(): ?DateTimeInterface
     {
-        $this->activity_type_id = $activity_type_id;
+        return $this->activity_date_deadline;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("activity_type_icon")
+     */
+    public function getActivityTypeIcon(): ?string
+    {
+        return $this->activity_type_icon;
     }
 
     /**
@@ -243,6 +265,14 @@ abstract class Mixin extends Base
     public function setActivityIds(?array $activity_ids): void
     {
         $this->activity_ids = $activity_ids;
+    }
+
+    /**
+     * @param OdooRelation|null $activity_type_id
+     */
+    public function setActivityTypeId(?OdooRelation $activity_type_id): void
+    {
+        $this->activity_type_id = $activity_type_id;
     }
 
     /**

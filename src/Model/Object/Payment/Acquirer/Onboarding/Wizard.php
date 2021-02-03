@@ -145,6 +145,16 @@ final class Wizard extends Base
     private $manual_post_msg;
 
     /**
+     *   Data Fetched
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $_data_fetched;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -201,13 +211,11 @@ final class Wizard extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("journal_name")
+     * @param string|null $journal_name
      */
-    public function getJournalName(): ?string
+    public function setJournalName(?string $journal_name): void
     {
-        return $this->journal_name;
+        $this->journal_name = $journal_name;
     }
 
     /**
@@ -283,6 +291,24 @@ final class Wizard extends Base
     }
 
     /**
+     * @param bool|null $_data_fetched
+     */
+    public function setDataFetched(?bool $_data_fetched): void
+    {
+        $this->_data_fetched = $_data_fetched;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("_data_fetched")
+     */
+    public function isDataFetched(): ?bool
+    {
+        return $this->_data_fetched;
+    }
+
+    /**
      * @param string|null $manual_post_msg
      */
     public function setManualPostMsg(?string $manual_post_msg): void
@@ -319,19 +345,13 @@ final class Wizard extends Base
     }
 
     /**
-     * @param string|null $journal_name
+     * @return string|null
+     *
+     * @SerializedName("journal_name")
      */
-    public function setJournalName(?string $journal_name): void
+    public function getJournalName(): ?string
     {
-        $this->journal_name = $journal_name;
-    }
-
-    /**
-     * @param string|null $manual_name
-     */
-    public function setManualName(?string $manual_name): void
-    {
-        $this->manual_name = $manual_name;
+        return $this->journal_name;
     }
 
     /**
@@ -340,6 +360,14 @@ final class Wizard extends Base
     public function setPaymentMethod(?string $payment_method): void
     {
         $this->payment_method = $payment_method;
+    }
+
+    /**
+     * @param string|null $manual_name
+     */
+    public function setManualName(?string $manual_name): void
+    {
+        $this->manual_name = $manual_name;
     }
 
     /**

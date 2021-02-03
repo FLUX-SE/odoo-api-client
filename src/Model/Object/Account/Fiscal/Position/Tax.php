@@ -41,6 +41,19 @@ final class Tax extends Base
     private $position_id;
 
     /**
+     * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $company_id;
+
+    /**
      * Tax on Product
      * ---
      * Relation : many2one (account.tax)
@@ -135,70 +148,6 @@ final class Tax extends Base
     }
 
     /**
-     * @return OdooRelation
-     *
-     * @SerializedName("position_id")
-     */
-    public function getPositionId(): OdooRelation
-    {
-        return $this->position_id;
-    }
-
-    /**
-     * @param OdooRelation $position_id
-     */
-    public function setPositionId(OdooRelation $position_id): void
-    {
-        $this->position_id = $position_id;
-    }
-
-    /**
-     * @return OdooRelation
-     *
-     * @SerializedName("tax_src_id")
-     */
-    public function getTaxSrcId(): OdooRelation
-    {
-        return $this->tax_src_id;
-    }
-
-    /**
-     * @param OdooRelation $tax_src_id
-     */
-    public function setTaxSrcId(OdooRelation $tax_src_id): void
-    {
-        $this->tax_src_id = $tax_src_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("tax_dest_id")
-     */
-    public function getTaxDestId(): ?OdooRelation
-    {
-        return $this->tax_dest_id;
-    }
-
-    /**
-     * @param OdooRelation|null $tax_dest_id
-     */
-    public function setTaxDestId(?OdooRelation $tax_dest_id): void
-    {
-        $this->tax_dest_id = $tax_dest_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
-     */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
-    }
-
-    /**
      * @param OdooRelation|null $create_uid
      */
     public function setCreateUid(?OdooRelation $create_uid): void
@@ -207,39 +156,11 @@ final class Tax extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("create_date")
+     * @param DateTimeInterface|null $write_date
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->create_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("write_uid")
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
+        $this->write_date = $write_date;
     }
 
     /**
@@ -253,11 +174,121 @@ final class Tax extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @param OdooRelation|null $write_uid
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function setWriteUid(?OdooRelation $write_uid): void
     {
-        $this->write_date = $write_date;
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("position_id")
+     */
+    public function getPositionId(): OdooRelation
+    {
+        return $this->position_id;
+    }
+
+    /**
+     * @param OdooRelation|null $tax_dest_id
+     */
+    public function setTaxDestId(?OdooRelation $tax_dest_id): void
+    {
+        $this->tax_dest_id = $tax_dest_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("tax_dest_id")
+     */
+    public function getTaxDestId(): ?OdooRelation
+    {
+        return $this->tax_dest_id;
+    }
+
+    /**
+     * @param OdooRelation $tax_src_id
+     */
+    public function setTaxSrcId(OdooRelation $tax_src_id): void
+    {
+        $this->tax_src_id = $tax_src_id;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("tax_src_id")
+     */
+    public function getTaxSrcId(): OdooRelation
+    {
+        return $this->tax_src_id;
+    }
+
+    /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param OdooRelation $position_id
+     */
+    public function setPositionId(OdooRelation $position_id): void
+    {
+        $this->position_id = $position_id;
     }
 
     /**

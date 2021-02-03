@@ -138,6 +138,18 @@ class Alias extends Base
     protected $alias_parent_thread_id;
 
     /**
+     * Custom Bounced Message
+     * ---
+     * If set, this content will automatically be sent out to unauthorized users instead of the default message.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    protected $alias_bounced_content;
+
+    /**
      * Alias Contact Security
      * ---
      * Policy to post a message on the document using the mailgateway.
@@ -228,7 +240,7 @@ class Alias extends Base
      *        - everyone: everyone can post
      *        - partners: only authenticated partners
      *        - followers: only followers of the related document or members of following channels
-     *
+     *       
      *        ---
      *        Selection :
      *            -> everyone (Everyone)
@@ -247,13 +259,11 @@ class Alias extends Base
     }
 
     /**
-     * @return int|null
-     *
-     * @SerializedName("alias_parent_thread_id")
+     * @param int|null $alias_parent_thread_id
      */
-    public function getAliasParentThreadId(): ?int
+    public function setAliasParentThreadId(?int $alias_parent_thread_id): void
     {
-        return $this->alias_parent_thread_id;
+        $this->alias_parent_thread_id = $alias_parent_thread_id;
     }
 
     /**
@@ -347,19 +357,31 @@ class Alias extends Base
     }
 
     /**
-     * @param int|null $alias_parent_thread_id
+     * @param string|null $alias_bounced_content
      */
-    public function setAliasParentThreadId(?int $alias_parent_thread_id): void
+    public function setAliasBouncedContent(?string $alias_bounced_content): void
     {
-        $this->alias_parent_thread_id = $alias_parent_thread_id;
+        $this->alias_bounced_content = $alias_bounced_content;
     }
 
     /**
-     * @param OdooRelation|null $alias_parent_model_id
+     * @return string|null
+     *
+     * @SerializedName("alias_bounced_content")
      */
-    public function setAliasParentModelId(?OdooRelation $alias_parent_model_id): void
+    public function getAliasBouncedContent(): ?string
     {
-        $this->alias_parent_model_id = $alias_parent_model_id;
+        return $this->alias_bounced_content;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("alias_parent_thread_id")
+     */
+    public function getAliasParentThreadId(): ?int
+    {
+        return $this->alias_parent_thread_id;
     }
 
     /**
@@ -370,6 +392,14 @@ class Alias extends Base
     public function getAliasName(): ?string
     {
         return $this->alias_name;
+    }
+
+    /**
+     * @param OdooRelation|null $alias_parent_model_id
+     */
+    public function setAliasParentModelId(?OdooRelation $alias_parent_model_id): void
+    {
+        $this->alias_parent_model_id = $alias_parent_model_id;
     }
 
     /**

@@ -76,6 +76,19 @@ final class Group extends Base
     private $move_type;
 
     /**
+     * Related Stock Moves
+     * ---
+     * Relation : one2many (stock.move -> group_id)
+     * @see \Flux\OdooApiClient\Model\Object\Stock\Move
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $stock_move_ids;
+
+    /**
      * Sale Order
      * ---
      * Relation : many2one (sale.order)
@@ -155,11 +168,13 @@ final class Group extends Base
     }
 
     /**
-     * @param OdooRelation|null $create_uid
+     * @return OdooRelation|null
+     *
+     * @SerializedName("sale_id")
      */
-    public function setCreateUid(?OdooRelation $create_uid): void
+    public function getSaleId(): ?OdooRelation
     {
-        $this->create_uid = $create_uid;
+        return $this->sale_id;
     }
 
     /**
@@ -217,6 +232,14 @@ final class Group extends Base
     }
 
     /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("create_uid")
@@ -224,6 +247,29 @@ final class Group extends Base
     public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $sale_id
+     */
+    public function setSaleId(?OdooRelation $sale_id): void
+    {
+        $this->sale_id = $sale_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeStockMoveIds(OdooRelation $item): void
+    {
+        if (null === $this->stock_move_ids) {
+            $this->stock_move_ids = [];
+        }
+
+        if ($this->hasStockMoveIds($item)) {
+            $index = array_search($item, $this->stock_move_ids);
+            unset($this->stock_move_ids[$index]);
+        }
     }
 
     /**
@@ -237,21 +283,51 @@ final class Group extends Base
     }
 
     /**
-     * @param OdooRelation|null $sale_id
+     * @param OdooRelation $item
      */
-    public function setSaleId(?OdooRelation $sale_id): void
+    public function addStockMoveIds(OdooRelation $item): void
     {
-        $this->sale_id = $sale_id;
+        if ($this->hasStockMoveIds($item)) {
+            return;
+        }
+
+        if (null === $this->stock_move_ids) {
+            $this->stock_move_ids = [];
+        }
+
+        $this->stock_move_ids[] = $item;
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation $item
      *
-     * @SerializedName("sale_id")
+     * @return bool
      */
-    public function getSaleId(): ?OdooRelation
+    public function hasStockMoveIds(OdooRelation $item): bool
     {
-        return $this->sale_id;
+        if (null === $this->stock_move_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->stock_move_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $stock_move_ids
+     */
+    public function setStockMoveIds(?array $stock_move_ids): void
+    {
+        $this->stock_move_ids = $stock_move_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("stock_move_ids")
+     */
+    public function getStockMoveIds(): ?array
+    {
+        return $this->stock_move_ids;
     }
 
     /**

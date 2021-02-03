@@ -189,7 +189,7 @@ final class Line extends Base
      * Selection :
      *     -> from_beginning (From the beginning)
      *     -> to_beginning_of_period (At the beginning of the period)
-     *     -> normal (Use given dates)
+     *     -> normal (Use the dates that should normally be used, depending on the account types)
      *     -> strict_range (Force given dates for all accounts and account types)
      *     -> from_fiscalyear (From the beginning of the fiscal year)
      * ---

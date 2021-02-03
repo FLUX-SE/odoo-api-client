@@ -379,7 +379,6 @@ final class Public_ extends Base
      *     -> America/North_Dakota/Beulah (America/North_Dakota/Beulah)
      *     -> America/North_Dakota/Center (America/North_Dakota/Center)
      *     -> America/North_Dakota/New_Salem (America/North_Dakota/New_Salem)
-     *     -> America/Nuuk (America/Nuuk)
      *     -> America/Ojinaga (America/Ojinaga)
      *     -> America/Panama (America/Panama)
      *     -> America/Pangnirtung (America/Pangnirtung)
@@ -894,6 +893,9 @@ final class Public_ extends Base
     /**
      * Coach
      * ---
+     * Select the "Employee" who is the coach of this employee.
+     * The "Coach" has no specific rights or responsibilities by default.
+     * ---
      * Relation : many2one (hr.employee.public)
      * @see \Flux\OdooApiClient\Model\Object\Hr\Employee\Public_
      * ---
@@ -903,6 +905,21 @@ final class Public_ extends Base
      * @var OdooRelation|null
      */
     private $coach_id;
+
+    /**
+     * User's partner
+     * ---
+     * Partner-related data of the user
+     * ---
+     * Relation : many2one (res.partner)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $user_partner_id;
 
     /**
      * Subordinates
@@ -968,7 +985,24 @@ final class Public_ extends Base
     private $last_activity_time;
 
     /**
-     * Indirect Surbordinates Count
+     * Hr Icon Display
+     * ---
+     * Selection :
+     *     -> presence_present (Present)
+     *     -> presence_absent_active (Present but not active)
+     *     -> presence_absent (Absent)
+     *     -> presence_to_define (To define)
+     *     -> presence_undetermined (Undetermined)
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $hr_icon_display;
+
+    /**
+     * Indirect Subordinates Count
      * ---
      * Searchable : no
      * Sortable : no
@@ -1024,11 +1058,25 @@ final class Public_ extends Base
     }
 
     /**
-     * @param mixed|null $image_128
+     * @param OdooRelation|null $parent_id
      */
-    public function setImage128($image_128): void
+    public function setParentId(?OdooRelation $parent_id): void
     {
-        $this->image_128 = $image_128;
+        $this->parent_id = $parent_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasSubordinateIds(OdooRelation $item): bool
+    {
+        if (null === $this->subordinate_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->subordinate_ids);
     }
 
     /**
@@ -1050,6 +1098,24 @@ final class Public_ extends Base
     }
 
     /**
+     * @param OdooRelation|null $user_partner_id
+     */
+    public function setUserPartnerId(?OdooRelation $user_partner_id): void
+    {
+        $this->user_partner_id = $user_partner_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("user_partner_id")
+     */
+    public function getUserPartnerId(): ?OdooRelation
+    {
+        return $this->user_partner_id;
+    }
+
+    /**
      * @param OdooRelation|null $coach_id
      */
     public function setCoachId(?OdooRelation $coach_id): void
@@ -1068,14 +1134,6 @@ final class Public_ extends Base
     }
 
     /**
-     * @param OdooRelation|null $parent_id
-     */
-    public function setParentId(?OdooRelation $parent_id): void
-    {
-        $this->parent_id = $parent_id;
-    }
-
-    /**
      * @return OdooRelation|null
      *
      * @SerializedName("parent_id")
@@ -1086,6 +1144,29 @@ final class Public_ extends Base
     }
 
     /**
+     * @param OdooRelation $item
+     */
+    public function removeSubordinateIds(OdooRelation $item): void
+    {
+        if (null === $this->subordinate_ids) {
+            $this->subordinate_ids = [];
+        }
+
+        if ($this->hasSubordinateIds($item)) {
+            $index = array_search($item, $this->subordinate_ids);
+            unset($this->subordinate_ids[$index]);
+        }
+    }
+
+    /**
+     * @param mixed|null $image_128
+     */
+    public function setImage128($image_128): void
+    {
+        $this->image_128 = $image_128;
+    }
+
+    /**
      * @return mixed|null
      *
      * @SerializedName("image_128")
@@ -1093,22 +1174,6 @@ final class Public_ extends Base
     public function getImage128()
     {
         return $this->image_128;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addSubordinateIds(OdooRelation $item): void
-    {
-        if ($this->hasSubordinateIds($item)) {
-            return;
-        }
-
-        if (null === $this->subordinate_ids) {
-            $this->subordinate_ids = [];
-        }
-
-        $this->subordinate_ids[] = $item;
     }
 
     /**
@@ -1156,13 +1221,29 @@ final class Public_ extends Base
     }
 
     /**
-     * @return mixed|null
-     *
-     * @SerializedName("image_1024")
+     * @param OdooRelation $item
      */
-    public function getImage1024()
+    public function addSubordinateIds(OdooRelation $item): void
     {
-        return $this->image_1024;
+        if ($this->hasSubordinateIds($item)) {
+            return;
+        }
+
+        if (null === $this->subordinate_ids) {
+            $this->subordinate_ids = [];
+        }
+
+        $this->subordinate_ids[] = $item;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("expense_manager_id")
+     */
+    public function getExpenseManagerId(): ?OdooRelation
+    {
+        return $this->expense_manager_id;
     }
 
     /**
@@ -1174,55 +1255,13 @@ final class Public_ extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return int|null
      *
-     * @return bool
+     * @SerializedName("child_all_count")
      */
-    public function hasSubordinateIds(OdooRelation $item): bool
+    public function getChildAllCount(): ?int
     {
-        if (null === $this->subordinate_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->subordinate_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeSubordinateIds(OdooRelation $item): void
-    {
-        if (null === $this->subordinate_ids) {
-            $this->subordinate_ids = [];
-        }
-
-        if ($this->hasSubordinateIds($item)) {
-            $index = array_search($item, $this->subordinate_ids);
-            unset($this->subordinate_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeChildIds(OdooRelation $item): void
-    {
-        if (null === $this->child_ids) {
-            $this->child_ids = [];
-        }
-
-        if ($this->hasChildIds($item)) {
-            $index = array_search($item, $this->child_ids);
-            unset($this->child_ids[$index]);
-        }
-    }
-
-    /**
-     * @param int|null $child_all_count
-     */
-    public function setChildAllCount(?int $child_all_count): void
-    {
-        $this->child_all_count = $child_all_count;
+        return $this->child_all_count;
     }
 
     /**
@@ -1280,23 +1319,37 @@ final class Public_ extends Base
     }
 
     /**
-     * @return int|null
-     *
-     * @SerializedName("child_all_count")
+     * @param int|null $child_all_count
      */
-    public function getChildAllCount(): ?int
+    public function setChildAllCount(?int $child_all_count): void
     {
-        return $this->child_all_count;
+        $this->child_all_count = $child_all_count;
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("expense_manager_id")
+     * @param string|null $hr_icon_display
      */
-    public function getExpenseManagerId(): ?OdooRelation
+    public function setHrIconDisplay(?string $hr_icon_display): void
     {
-        return $this->expense_manager_id;
+        $this->hr_icon_display = $hr_icon_display;
+    }
+
+    /**
+     * @param OdooRelation|null $expense_manager_id
+     */
+    public function setExpenseManagerId(?OdooRelation $expense_manager_id): void
+    {
+        $this->expense_manager_id = $expense_manager_id;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("hr_icon_display")
+     */
+    public function getHrIconDisplay(): ?string
+    {
+        return $this->hr_icon_display;
     }
 
     /**
@@ -1354,11 +1407,13 @@ final class Public_ extends Base
     }
 
     /**
-     * @param OdooRelation|null $expense_manager_id
+     * @return mixed|null
+     *
+     * @SerializedName("image_1024")
      */
-    public function setExpenseManagerId(?OdooRelation $expense_manager_id): void
+    public function getImage1024()
     {
-        $this->expense_manager_id = $expense_manager_id;
+        return $this->image_1024;
     }
 
     /**
@@ -1369,22 +1424,6 @@ final class Public_ extends Base
     public function getImage1920()
     {
         return $this->image_1920;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addChildIds(OdooRelation $item): void
-    {
-        if ($this->hasChildIds($item)) {
-            return;
-        }
-
-        if (null === $this->child_ids) {
-            $this->child_ids = [];
-        }
-
-        $this->child_ids[] = $item;
     }
 
     /**
@@ -1403,6 +1442,14 @@ final class Public_ extends Base
     public function getJobTitle(): ?string
     {
         return $this->job_title;
+    }
+
+    /**
+     * @param string|null $mobile_phone
+     */
+    public function setMobilePhone(?string $mobile_phone): void
+    {
+        $this->mobile_phone = $mobile_phone;
     }
 
     /**
@@ -1468,13 +1515,11 @@ final class Public_ extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("work_phone")
+     * @param string|null $work_phone
      */
-    public function getWorkPhone(): ?string
+    public function setWorkPhone(?string $work_phone): void
     {
-        return $this->work_phone;
+        $this->work_phone = $work_phone;
     }
 
     /**
@@ -1542,19 +1587,64 @@ final class Public_ extends Base
     }
 
     /**
-     * @param string|null $mobile_phone
+     * @return string|null
+     *
+     * @SerializedName("work_phone")
      */
-    public function setMobilePhone(?string $mobile_phone): void
+    public function getWorkPhone(): ?string
     {
-        $this->mobile_phone = $mobile_phone;
+        return $this->work_phone;
     }
 
     /**
-     * @param string|null $work_phone
+     * @return string|null
+     *
+     * @SerializedName("work_email")
      */
-    public function setWorkPhone(?string $work_phone): void
+    public function getWorkEmail(): ?string
     {
-        $this->work_phone = $work_phone;
+        return $this->work_email;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeChildIds(OdooRelation $item): void
+    {
+        if (null === $this->child_ids) {
+            $this->child_ids = [];
+        }
+
+        if ($this->hasChildIds($item)) {
+            $index = array_search($item, $this->child_ids);
+            unset($this->child_ids[$index]);
+        }
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("tz")
+     */
+    public function getTz(): ?string
+    {
+        return $this->tz;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addChildIds(OdooRelation $item): void
+    {
+        if ($this->hasChildIds($item)) {
+            return;
+        }
+
+        if (null === $this->child_ids) {
+            $this->child_ids = [];
+        }
+
+        $this->child_ids[] = $item;
     }
 
     /**
@@ -1569,14 +1659,6 @@ final class Public_ extends Base
         }
 
         return in_array($item, $this->child_ids);
-    }
-
-    /**
-     * @param OdooRelation|null $resource_calendar_id
-     */
-    public function setResourceCalendarId(?OdooRelation $resource_calendar_id): void
-    {
-        $this->resource_calendar_id = $resource_calendar_id;
     }
 
     /**
@@ -1624,13 +1706,19 @@ final class Public_ extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("tz")
+     * @param OdooRelation|null $resource_calendar_id
      */
-    public function getTz(): ?string
+    public function setResourceCalendarId(?OdooRelation $resource_calendar_id): void
     {
-        return $this->tz;
+        $this->resource_calendar_id = $resource_calendar_id;
+    }
+
+    /**
+     * @param string|null $work_email
+     */
+    public function setWorkEmail(?string $work_email): void
+    {
+        $this->work_email = $work_email;
     }
 
     /**
@@ -1641,16 +1729,6 @@ final class Public_ extends Base
     public function getResourceCalendarId(): ?OdooRelation
     {
         return $this->resource_calendar_id;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("work_email")
-     */
-    public function getWorkEmail(): ?string
-    {
-        return $this->work_email;
     }
 
     /**
@@ -1705,14 +1783,6 @@ final class Public_ extends Base
     public function getWorkLocation(): ?string
     {
         return $this->work_location;
-    }
-
-    /**
-     * @param string|null $work_email
-     */
-    public function setWorkEmail(?string $work_email): void
-    {
-        $this->work_email = $work_email;
     }
 
     /**

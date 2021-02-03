@@ -97,6 +97,7 @@ final class Sms extends Base
      *     -> sms_number_format (Wrong Number Format)
      *     -> sms_credit (Insufficient Credit)
      *     -> sms_server (Server Error)
+     *     -> sms_acc (Unregistered Account)
      *     -> sms_blacklist (Blacklisted)
      *     -> sms_duplicate (Duplicate)
      * ---

@@ -16,7 +16,7 @@ use Flux\OdooApiClient\Model\Object\Base;
  *         to evaluate every node. The context is composed of all the variables available at this point
  *         in the report, and their type.
  */
-abstract class Qweb extends Base
+final class Qweb extends Base
 {
     /**
      * @return string

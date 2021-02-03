@@ -154,7 +154,17 @@ final class Attachment extends Base
     private $access_token;
 
     /**
-     * File Content
+     * File Content (raw)
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var mixed|null
+     */
+    private $raw;
+
+    /**
+     * File Content (base64)
      * ---
      * Searchable : no
      * Sortable : no
@@ -264,6 +274,19 @@ final class Attachment extends Base
     private $image_height;
 
     /**
+     * Original (unoptimized, unresized) attachment
+     * ---
+     * Relation : many2one (ir.attachment)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Attachment
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $original_id;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -332,11 +355,13 @@ final class Attachment extends Base
     }
 
     /**
-     * @param string|null $image_src
+     * @return int|null
+     *
+     * @SerializedName("image_width")
      */
-    public function setImageSrc(?string $image_src): void
+    public function getImageWidth(): ?int
     {
-        $this->image_src = $image_src;
+        return $this->image_width;
     }
 
     /**
@@ -430,21 +455,11 @@ final class Attachment extends Base
     }
 
     /**
-     * @return int|null
-     *
-     * @SerializedName("image_width")
+     * @param string|null $image_src
      */
-    public function getImageWidth(): ?int
+    public function setImageSrc(?string $image_src): void
     {
-        return $this->image_width;
-    }
-
-    /**
-     * @param string|null $store_fname
-     */
-    public function setStoreFname(?string $store_fname): void
-    {
-        $this->store_fname = $store_fname;
+        $this->image_src = $image_src;
     }
 
     /**
@@ -453,6 +468,14 @@ final class Attachment extends Base
     public function setImageWidth(?int $image_width): void
     {
         $this->image_width = $image_width;
+    }
+
+    /**
+     * @param string|null $store_fname
+     */
+    public function setStoreFname(?string $store_fname): void
+    {
+        $this->store_fname = $store_fname;
     }
 
     /**
@@ -471,6 +494,24 @@ final class Attachment extends Base
     public function setImageHeight(?int $image_height): void
     {
         $this->image_height = $image_height;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("original_id")
+     */
+    public function getOriginalId(): ?OdooRelation
+    {
+        return $this->original_id;
+    }
+
+    /**
+     * @param OdooRelation|null $original_id
+     */
+    public function setOriginalId(?OdooRelation $original_id): void
+    {
+        $this->original_id = $original_id;
     }
 
     /**
@@ -576,13 +617,11 @@ final class Attachment extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("company_id")
+     * @param OdooRelation|null $company_id
      */
-    public function getCompanyId(): ?OdooRelation
+    public function setCompanyId(?OdooRelation $company_id): void
     {
-        return $this->company_id;
+        $this->company_id = $company_id;
     }
 
     /**
@@ -684,19 +723,13 @@ final class Attachment extends Base
     }
 
     /**
-     * @param OdooRelation|null $company_id
+     * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
      */
-    public function setCompanyId(?OdooRelation $company_id): void
+    public function getCompanyId(): ?OdooRelation
     {
-        $this->company_id = $company_id;
-    }
-
-    /**
-     * @param mixed|null $db_datas
-     */
-    public function setDbDatas($db_datas): void
-    {
-        $this->db_datas = $db_datas;
+        return $this->company_id;
     }
 
     /**
@@ -707,6 +740,14 @@ final class Attachment extends Base
     public function getType(): string
     {
         return $this->type;
+    }
+
+    /**
+     * @param mixed|null $db_datas
+     */
+    public function setDbDatas($db_datas): void
+    {
+        $this->db_datas = $db_datas;
     }
 
     /**
@@ -769,6 +810,24 @@ final class Attachment extends Base
     public function setAccessToken(?string $access_token): void
     {
         $this->access_token = $access_token;
+    }
+
+    /**
+     * @return mixed|null
+     *
+     * @SerializedName("raw")
+     */
+    public function getRaw()
+    {
+        return $this->raw;
+    }
+
+    /**
+     * @param mixed|null $raw
+     */
+    public function setRaw($raw): void
+    {
+        $this->raw = $raw;
     }
 
     /**

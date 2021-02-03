@@ -28,6 +28,16 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 class Bank extends Base
 {
     /**
+     * Active
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    protected $active;
+
+    /**
      * Type
      * ---
      * Bank account type: Normal or IBAN. Inferred from the bank account number.
@@ -160,16 +170,6 @@ class Bank extends Base
     protected $company_id;
 
     /**
-     * Has all required arguments
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    protected $qr_code_valid;
-
-    /**
      * Account Journal
      * ---
      * The accounting journal corresponding to this bank account.
@@ -265,29 +265,29 @@ class Bank extends Base
     }
 
     /**
+     * @param OdooRelation|null $currency_id
+     */
+    public function setCurrencyId(?OdooRelation $currency_id): void
+    {
+        $this->currency_id = $currency_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
      * @param OdooRelation|null $company_id
      */
     public function setCompanyId(?OdooRelation $company_id): void
     {
         $this->company_id = $company_id;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("qr_code_valid")
-     */
-    public function isQrCodeValid(): ?bool
-    {
-        return $this->qr_code_valid;
-    }
-
-    /**
-     * @param bool|null $qr_code_valid
-     */
-    public function setQrCodeValid(?bool $qr_code_valid): void
-    {
-        $this->qr_code_valid = $qr_code_valid;
     }
 
     /**
@@ -349,11 +349,11 @@ class Bank extends Base
     }
 
     /**
-     * @param OdooRelation|null $currency_id
+     * @param int|null $sequence
      */
-    public function setCurrencyId(?OdooRelation $currency_id): void
+    public function setSequence(?int $sequence): void
     {
-        $this->currency_id = $currency_id;
+        $this->sequence = $sequence;
     }
 
     /**
@@ -421,21 +421,49 @@ class Bank extends Base
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("company_id")
-     */
-    public function getCompanyId(): ?OdooRelation
-    {
-        return $this->company_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
      * @SerializedName("currency_id")
      */
     public function getCurrencyId(): ?OdooRelation
     {
         return $this->currency_id;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("sequence")
+     */
+    public function getSequence(): ?int
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("active")
+     */
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("acc_holder_name")
+     */
+    public function getAccHolderName(): ?string
+    {
+        return $this->acc_holder_name;
+    }
+
+    /**
+     * @param bool|null $active
+     */
+    public function setActive(?bool $active): void
+    {
+        $this->active = $active;
     }
 
     /**
@@ -446,16 +474,6 @@ class Bank extends Base
     public function getAccType(): ?string
     {
         return $this->acc_type;
-    }
-
-    /**
-     * @return OdooRelation
-     *
-     * @SerializedName("partner_id")
-     */
-    public function getPartnerId(): OdooRelation
-    {
-        return $this->partner_id;
     }
 
     /**
@@ -503,16 +521,6 @@ class Bank extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("acc_holder_name")
-     */
-    public function getAccHolderName(): ?string
-    {
-        return $this->acc_holder_name;
-    }
-
-    /**
      * @param string|null $acc_holder_name
      */
     public function setAccHolderName(?string $acc_holder_name): void
@@ -521,19 +529,29 @@ class Bank extends Base
     }
 
     /**
+     * @param string|null $bank_bic
+     */
+    public function setBankBic(?string $bank_bic): void
+    {
+        $this->bank_bic = $bank_bic;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("partner_id")
+     */
+    public function getPartnerId(): OdooRelation
+    {
+        return $this->partner_id;
+    }
+
+    /**
      * @param OdooRelation $partner_id
      */
     public function setPartnerId(OdooRelation $partner_id): void
     {
         $this->partner_id = $partner_id;
-    }
-
-    /**
-     * @param int|null $sequence
-     */
-    public function setSequence(?int $sequence): void
-    {
-        $this->sequence = $sequence;
     }
 
     /**
@@ -580,24 +598,6 @@ class Bank extends Base
     public function getBankBic(): ?string
     {
         return $this->bank_bic;
-    }
-
-    /**
-     * @param string|null $bank_bic
-     */
-    public function setBankBic(?string $bank_bic): void
-    {
-        $this->bank_bic = $bank_bic;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("sequence")
-     */
-    public function getSequence(): ?int
-    {
-        return $this->sequence;
     }
 
     /**

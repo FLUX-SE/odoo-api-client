@@ -234,6 +234,19 @@ final class Letter extends Base
     private $message_id;
 
     /**
+     * Notifications
+     * ---
+     * Relation : one2many (mail.notification -> letter_id)
+     * @see \Flux\OdooApiClient\Model\Object\Mail\Notification
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $notification_ids;
+
+    /**
      * Street
      * ---
      * Searchable : yes
@@ -398,29 +411,11 @@ final class Letter extends Base
     }
 
     /**
-     * @param string|null $city
+     * @param string|null $zip
      */
-    public function setCity(?string $city): void
+    public function setZip(?string $zip): void
     {
-        $this->city = $city;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("reference")
-     */
-    public function getReference(): ?string
-    {
-        return $this->reference;
-    }
-
-    /**
-     * @param string|null $reference
-     */
-    public function setReference(?string $reference): void
-    {
-        $this->reference = $reference;
+        $this->zip = $zip;
     }
 
     /**
@@ -439,6 +434,69 @@ final class Letter extends Base
     public function setMessageId(?OdooRelation $message_id): void
     {
         $this->message_id = $message_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("notification_ids")
+     */
+    public function getNotificationIds(): ?array
+    {
+        return $this->notification_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $notification_ids
+     */
+    public function setNotificationIds(?array $notification_ids): void
+    {
+        $this->notification_ids = $notification_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasNotificationIds(OdooRelation $item): bool
+    {
+        if (null === $this->notification_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->notification_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addNotificationIds(OdooRelation $item): void
+    {
+        if ($this->hasNotificationIds($item)) {
+            return;
+        }
+
+        if (null === $this->notification_ids) {
+            $this->notification_ids = [];
+        }
+
+        $this->notification_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeNotificationIds(OdooRelation $item): void
+    {
+        if (null === $this->notification_ids) {
+            $this->notification_ids = [];
+        }
+
+        if ($this->hasNotificationIds($item)) {
+            $index = array_search($item, $this->notification_ids);
+            unset($this->notification_ids[$index]);
+        }
     }
 
     /**
@@ -488,14 +546,6 @@ final class Letter extends Base
     }
 
     /**
-     * @param string|null $zip
-     */
-    public function setZip(?string $zip): void
-    {
-        $this->zip = $zip;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("city")
@@ -506,6 +556,24 @@ final class Letter extends Base
     }
 
     /**
+     * @return string|null
+     *
+     * @SerializedName("reference")
+     */
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+
+    /**
+     * @param string|null $city
+     */
+    public function setCity(?string $city): void
+    {
+        $this->city = $city;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("state_id")
@@ -513,16 +581,6 @@ final class Letter extends Base
     public function getStateId(): ?OdooRelation
     {
         return $this->state_id;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("info_msg")
-     */
-    public function getInfoMsg(): ?string
-    {
-        return $this->info_msg;
     }
 
     /**
@@ -624,19 +682,19 @@ final class Letter extends Base
     }
 
     /**
+     * @param string|null $reference
+     */
+    public function setReference(?string $reference): void
+    {
+        $this->reference = $reference;
+    }
+
+    /**
      * @param string|null $info_msg
      */
     public function setInfoMsg(?string $info_msg): void
     {
         $this->info_msg = $info_msg;
-    }
-
-    /**
-     * @param string|null $error_code
-     */
-    public function setErrorCode(?string $error_code): void
-    {
-        $this->error_code = $error_code;
     }
 
     /**
@@ -650,13 +708,11 @@ final class Letter extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("attachment_id")
+     * @param OdooRelation|null $attachment_id
      */
-    public function getAttachmentId(): ?OdooRelation
+    public function setAttachmentId(?OdooRelation $attachment_id): void
     {
-        return $this->attachment_id;
+        $this->attachment_id = $attachment_id;
     }
 
     /**
@@ -758,21 +814,13 @@ final class Letter extends Base
     }
 
     /**
-     * @param OdooRelation|null $attachment_id
-     */
-    public function setAttachmentId(?OdooRelation $attachment_id): void
-    {
-        $this->attachment_id = $attachment_id;
-    }
-
-    /**
-     * @return string|null
+     * @return OdooRelation|null
      *
-     * @SerializedName("error_code")
+     * @SerializedName("attachment_id")
      */
-    public function getErrorCode(): ?string
+    public function getAttachmentId(): ?OdooRelation
     {
-        return $this->error_code;
+        return $this->attachment_id;
     }
 
     /**
@@ -783,6 +831,16 @@ final class Letter extends Base
     public function getAttachmentDatas()
     {
         return $this->attachment_datas;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("info_msg")
+     */
+    public function getInfoMsg(): ?string
+    {
+        return $this->info_msg;
     }
 
     /**
@@ -881,6 +939,24 @@ final class Letter extends Base
     public function setState(string $state): void
     {
         $this->state = $state;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("error_code")
+     */
+    public function getErrorCode(): ?string
+    {
+        return $this->error_code;
+    }
+
+    /**
+     * @param string|null $error_code
+     */
+    public function setErrorCode(?string $error_code): void
+    {
+        $this->error_code = $error_code;
     }
 
     /**

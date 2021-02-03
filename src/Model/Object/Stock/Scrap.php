@@ -103,7 +103,7 @@ final class Scrap extends Base
     private $product_uom_category_id;
 
     /**
-     * Tracking
+     * Product Tracking
      * ---
      * Ensure the traceability of a storable product in your warehouse.
      * ---

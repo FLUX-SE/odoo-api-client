@@ -102,10 +102,6 @@ final class Report extends Base
     /**
      * Template Name
      * ---
-     * For QWeb reports, name of the template used in the rendering. The method 'render_html' of the model
-     * 'report.template_name' will be called (if any) to give the html. For RML reports, this is the LocalService
-     * name.
-     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -179,8 +175,7 @@ final class Report extends Base
     /**
      * Reload from Attachment
      * ---
-     * If you check this, then the second time the user prints with same attachment name, it returns the previous
-     * report.
+     * If enabled, then the second time the user prints with same attachment name, it returns the previous report.
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -330,10 +325,6 @@ final class Report extends Base
      *        Searchable : yes
      *        Sortable : yes
      * @param string $report_name Template Name
-     *        ---
-     *        For QWeb reports, name of the template used in the rendering. The method 'render_html' of the model
-     *        'report.template_name' will be called (if any) to give the html. For RML reports, this is the LocalService
-     *        name.
      *        ---
      *        Searchable : yes
      *        Sortable : yes

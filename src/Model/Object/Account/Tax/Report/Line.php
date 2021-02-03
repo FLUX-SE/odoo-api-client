@@ -43,21 +43,6 @@ final class Line extends Base
     private $tag_ids;
 
     /**
-     * Country
-     * ---
-     * Country for which this line is available.
-     * ---
-     * Relation : many2one (res.country)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Country
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation
-     */
-    private $country_id;
-
-    /**
      * Report Action
      * ---
      * The optional action to call when clicking on this line in accounting reports.
@@ -122,6 +107,21 @@ final class Line extends Base
      * @var string|null
      */
     private $parent_path;
+
+    /**
+     * Tax Report
+     * ---
+     * The parent tax report of this line
+     * ---
+     * Relation : many2one (account.tax.report)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax\Report
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation
+     */
+    private $report_id;
 
     /**
      * Code
@@ -222,19 +222,19 @@ final class Line extends Base
     private $write_date;
 
     /**
-     * @param OdooRelation $country_id Country
-     *        ---
-     *        Country for which this line is available.
-     *        ---
-     *        Relation : many2one (res.country)
-     *        @see \Flux\OdooApiClient\Model\Object\Res\Country
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
      * @param int $sequence Sequence
      *        ---
      *        Sequence determining the order of the lines in the report (smaller ones come first). This order is applied
      *        locally per section (so, children of the same line are always rendered one after the other).
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param OdooRelation $report_id Tax Report
+     *        ---
+     *        The parent tax report of this line
+     *        ---
+     *        Relation : many2one (account.tax.report)
+     *        @see \Flux\OdooApiClient\Model\Object\Account\Tax\Report
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -245,10 +245,10 @@ final class Line extends Base
      *        Searchable : yes
      *        Sortable : yes
      */
-    public function __construct(OdooRelation $country_id, int $sequence, string $name)
+    public function __construct(int $sequence, OdooRelation $report_id, string $name)
     {
-        $this->country_id = $country_id;
         $this->sequence = $sequence;
+        $this->report_id = $report_id;
         $this->name = $name;
     }
 
@@ -325,11 +325,11 @@ final class Line extends Base
     }
 
     /**
-     * @param string|null $parent_path
+     * @param OdooRelation $report_id
      */
-    public function setParentPath(?string $parent_path): void
+    public function setReportId(OdooRelation $report_id): void
     {
-        $this->parent_path = $parent_path;
+        $this->report_id = $report_id;
     }
 
     /**
@@ -405,13 +405,13 @@ final class Line extends Base
     }
 
     /**
-     * @return string|null
+     * @return OdooRelation
      *
-     * @SerializedName("parent_path")
+     * @SerializedName("report_id")
      */
-    public function getParentPath(): ?string
+    public function getReportId(): OdooRelation
     {
-        return $this->parent_path;
+        return $this->report_id;
     }
 
     /**
@@ -425,11 +425,11 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation|null $report_action_id
+     * @param OdooRelation[]|null $children_line_ids
      */
-    public function setReportActionId(?OdooRelation $report_action_id): void
+    public function setChildrenLineIds(?array $children_line_ids): void
     {
-        $this->report_action_id = $report_action_id;
+        $this->children_line_ids = $children_line_ids;
     }
 
     /**
@@ -486,24 +486,6 @@ final class Line extends Base
     }
 
     /**
-     * @return OdooRelation
-     *
-     * @SerializedName("country_id")
-     */
-    public function getCountryId(): OdooRelation
-    {
-        return $this->country_id;
-    }
-
-    /**
-     * @param OdooRelation $country_id
-     */
-    public function setCountryId(OdooRelation $country_id): void
-    {
-        $this->country_id = $country_id;
-    }
-
-    /**
      * @return OdooRelation|null
      *
      * @SerializedName("report_action_id")
@@ -514,6 +496,14 @@ final class Line extends Base
     }
 
     /**
+     * @param OdooRelation|null $report_action_id
+     */
+    public function setReportActionId(?OdooRelation $report_action_id): void
+    {
+        $this->report_action_id = $report_action_id;
+    }
+
+    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("children_line_ids")
@@ -521,22 +511,6 @@ final class Line extends Base
     public function getChildrenLineIds(): ?array
     {
         return $this->children_line_ids;
-    }
-
-    /**
-     * @param int $sequence
-     */
-    public function setSequence(int $sequence): void
-    {
-        $this->sequence = $sequence;
-    }
-
-    /**
-     * @param OdooRelation[]|null $children_line_ids
-     */
-    public function setChildrenLineIds(?array $children_line_ids): void
-    {
-        $this->children_line_ids = $children_line_ids;
     }
 
     /**
@@ -551,6 +525,14 @@ final class Line extends Base
         }
 
         return in_array($item, $this->children_line_ids);
+    }
+
+    /**
+     * @param string|null $parent_path
+     */
+    public function setParentPath(?string $parent_path): void
+    {
+        $this->parent_path = $parent_path;
     }
 
     /**
@@ -610,6 +592,24 @@ final class Line extends Base
     public function getSequence(): int
     {
         return $this->sequence;
+    }
+
+    /**
+     * @param int $sequence
+     */
+    public function setSequence(int $sequence): void
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("parent_path")
+     */
+    public function getParentPath(): ?string
+    {
+        return $this->parent_path;
     }
 
     /**

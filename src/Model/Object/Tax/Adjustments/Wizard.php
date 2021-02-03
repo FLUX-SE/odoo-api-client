@@ -136,17 +136,19 @@ final class Wizard extends Base
     private $company_currency_id;
 
     /**
-     * Country
+     * Report
      * ---
-     * Relation : many2one (res.country)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Country
+     * The parent tax report of this line
+     * ---
+     * Relation : many2one (account.tax.report)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Tax\Report
      * ---
      * Searchable : yes
-     * Sortable : yes
+     * Sortable : no
      *
      * @var OdooRelation|null
      */
-    private $country_id;
+    private $report_id;
 
     /**
      * Created by
@@ -347,21 +349,21 @@ final class Wizard extends Base
     }
 
     /**
-     * @param OdooRelation|null $country_id
+     * @param OdooRelation|null $report_id
      */
-    public function setCountryId(?OdooRelation $country_id): void
+    public function setReportId(?OdooRelation $report_id): void
     {
-        $this->country_id = $country_id;
+        $this->report_id = $report_id;
     }
 
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("country_id")
+     * @SerializedName("report_id")
      */
-    public function getCountryId(): ?OdooRelation
+    public function getReportId(): ?OdooRelation
     {
-        return $this->country_id;
+        return $this->report_id;
     }
 
     /**

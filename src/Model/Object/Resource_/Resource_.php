@@ -79,8 +79,8 @@ final class Resource_ extends Base
     /**
      * Efficiency Factor
      * ---
-     * This field is used to calculate the the expected duration of a work order at this work center. For example, if
-     * a work order takes one hour and the efficiency factor is 100%, then the expected duration will be one hour. If
+     * This field is used to calculate the expected duration of a work order at this work center. For example, if a
+     * work order takes one hour and the efficiency factor is 100%, then the expected duration will be one hour. If
      * the efficiency factor is 200%, however the expected duration will be 30 minutes.
      * ---
      * Searchable : yes
@@ -286,7 +286,6 @@ final class Resource_ extends Base
      *     -> America/North_Dakota/Beulah (America/North_Dakota/Beulah)
      *     -> America/North_Dakota/Center (America/North_Dakota/Center)
      *     -> America/North_Dakota/New_Salem (America/North_Dakota/New_Salem)
-     *     -> America/Nuuk (America/Nuuk)
      *     -> America/Ojinaga (America/Ojinaga)
      *     -> America/Panama (America/Panama)
      *     -> America/Pangnirtung (America/Pangnirtung)
@@ -788,8 +787,8 @@ final class Resource_ extends Base
      *        Sortable : yes
      * @param float $time_efficiency Efficiency Factor
      *        ---
-     *        This field is used to calculate the the expected duration of a work order at this work center. For example, if
-     *        a work order takes one hour and the efficiency factor is 100%, then the expected duration will be one hour. If
+     *        This field is used to calculate the expected duration of a work order at this work center. For example, if a
+     *        work order takes one hour and the efficiency factor is 100%, then the expected duration will be one hour. If
      *        the efficiency factor is 200%, however the expected duration will be 30 minutes.
      *        ---
      *        Searchable : yes
@@ -983,7 +982,6 @@ final class Resource_ extends Base
      *            -> America/North_Dakota/Beulah (America/North_Dakota/Beulah)
      *            -> America/North_Dakota/Center (America/North_Dakota/Center)
      *            -> America/North_Dakota/New_Salem (America/North_Dakota/New_Salem)
-     *            -> America/Nuuk (America/Nuuk)
      *            -> America/Ojinaga (America/Ojinaga)
      *            -> America/Panama (America/Panama)
      *            -> America/Pangnirtung (America/Pangnirtung)

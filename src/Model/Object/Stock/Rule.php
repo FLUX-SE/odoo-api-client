@@ -134,6 +134,21 @@ final class Rule extends Base
     private $route_id;
 
     /**
+     * Route Company
+     * ---
+     * Leave this field empty if this route is shared between all companies
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $route_company_id;
+
+    /**
      * Supply Method
      * ---
      * Take From Stock: the products will be taken from the available stock of the source location.
@@ -179,9 +194,19 @@ final class Rule extends Base
     private $picking_type_id;
 
     /**
-     * Delay
+     * Picking Type Code Domain
      * ---
-     * The expected date of the created transfer will be computed based on this delay.
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $picking_type_code_domain;
+
+    /**
+     * Lead Time
+     * ---
+     * The expected date of the created transfer will be computed based on this lead time.
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -272,43 +297,6 @@ final class Rule extends Base
      * @var string|null
      */
     private $rule_message;
-
-    /**
-     * Propagate Rescheduling
-     * ---
-     * The rescheduling is propagated to the next move.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $propagate_date;
-
-    /**
-     * Reschedule if Higher Than
-     * ---
-     * The change must be higher than this value to be propagated
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var int|null
-     */
-    private $propagate_date_minimum_delta;
-
-    /**
-     * Alert if Delay
-     * ---
-     * Log an exception on the picking if this move has to be delayed (due to a change in the previous move scheduled
-     * date).
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $delay_alert;
 
     /**
      * Action
@@ -457,11 +445,55 @@ final class Rule extends Base
     }
 
     /**
-     * @param int|null $propagate_date_minimum_delta
+     * @param string $auto
      */
-    public function setPropagateDateMinimumDelta(?int $propagate_date_minimum_delta): void
+    public function setAuto(string $auto): void
     {
-        $this->propagate_date_minimum_delta = $propagate_date_minimum_delta;
+        $this->auto = $auto;
+    }
+
+    /**
+     * @param int|null $delay
+     */
+    public function setDelay(?int $delay): void
+    {
+        $this->delay = $delay;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("partner_address_id")
+     */
+    public function getPartnerAddressId(): ?OdooRelation
+    {
+        return $this->partner_address_id;
+    }
+
+    /**
+     * @param OdooRelation|null $partner_address_id
+     */
+    public function setPartnerAddressId(?OdooRelation $partner_address_id): void
+    {
+        $this->partner_address_id = $partner_address_id;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("propagate_cancel")
+     */
+    public function isPropagateCancel(): ?bool
+    {
+        return $this->propagate_cancel;
+    }
+
+    /**
+     * @param bool|null $propagate_cancel
+     */
+    public function setPropagateCancel(?bool $propagate_cancel): void
+    {
+        $this->propagate_cancel = $propagate_cancel;
     }
 
     /**
@@ -511,14 +543,6 @@ final class Rule extends Base
     }
 
     /**
-     * @param string $auto
-     */
-    public function setAuto(string $auto): void
-    {
-        $this->auto = $auto;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("rule_message")
@@ -529,67 +553,19 @@ final class Rule extends Base
     }
 
     /**
+     * @param string|null $picking_type_code_domain
+     */
+    public function setPickingTypeCodeDomain(?string $picking_type_code_domain): void
+    {
+        $this->picking_type_code_domain = $picking_type_code_domain;
+    }
+
+    /**
      * @param string|null $rule_message
      */
     public function setRuleMessage(?string $rule_message): void
     {
         $this->rule_message = $rule_message;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("propagate_date")
-     */
-    public function isPropagateDate(): ?bool
-    {
-        return $this->propagate_date;
-    }
-
-    /**
-     * @param bool|null $propagate_date
-     */
-    public function setPropagateDate(?bool $propagate_date): void
-    {
-        $this->propagate_date = $propagate_date;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("propagate_date_minimum_delta")
-     */
-    public function getPropagateDateMinimumDelta(): ?int
-    {
-        return $this->propagate_date_minimum_delta;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("delay_alert")
-     */
-    public function isDelayAlert(): ?bool
-    {
-        return $this->delay_alert;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("propagate_cancel")
-     */
-    public function isPropagateCancel(): ?bool
-    {
-        return $this->propagate_cancel;
-    }
-
-    /**
-     * @param bool|null $delay_alert
-     */
-    public function setDelayAlert(?bool $delay_alert): void
-    {
-        $this->delay_alert = $delay_alert;
     }
 
     /**
@@ -683,19 +659,23 @@ final class Rule extends Base
     }
 
     /**
-     * @param bool|null $propagate_cancel
+     * @return int|null
+     *
+     * @SerializedName("delay")
      */
-    public function setPropagateCancel(?bool $propagate_cancel): void
+    public function getDelay(): ?int
     {
-        $this->propagate_cancel = $propagate_cancel;
+        return $this->delay;
     }
 
     /**
-     * @param OdooRelation|null $partner_address_id
+     * @return string|null
+     *
+     * @SerializedName("picking_type_code_domain")
      */
-    public function setPartnerAddressId(?OdooRelation $partner_address_id): void
+    public function getPickingTypeCodeDomain(): ?string
     {
-        $this->partner_address_id = $partner_address_id;
+        return $this->picking_type_code_domain;
     }
 
     /**
@@ -825,13 +805,11 @@ final class Rule extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("partner_address_id")
+     * @param OdooRelation $picking_type_id
      */
-    public function getPartnerAddressId(): ?OdooRelation
+    public function setPickingTypeId(OdooRelation $picking_type_id): void
     {
-        return $this->partner_address_id;
+        $this->picking_type_id = $picking_type_id;
     }
 
     /**
@@ -868,6 +846,24 @@ final class Rule extends Base
     public function setRouteId(OdooRelation $route_id): void
     {
         $this->route_id = $route_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("route_company_id")
+     */
+    public function getRouteCompanyId(): ?OdooRelation
+    {
+        return $this->route_company_id;
+    }
+
+    /**
+     * @param OdooRelation|null $route_company_id
+     */
+    public function setRouteCompanyId(?OdooRelation $route_company_id): void
+    {
+        $this->route_company_id = $route_company_id;
     }
 
     /**
@@ -914,32 +910,6 @@ final class Rule extends Base
     public function getPickingTypeId(): OdooRelation
     {
         return $this->picking_type_id;
-    }
-
-    /**
-     * @param OdooRelation $picking_type_id
-     */
-    public function setPickingTypeId(OdooRelation $picking_type_id): void
-    {
-        $this->picking_type_id = $picking_type_id;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("delay")
-     */
-    public function getDelay(): ?int
-    {
-        return $this->delay;
-    }
-
-    /**
-     * @param int|null $delay
-     */
-    public function setDelay(?int $delay): void
-    {
-        $this->delay = $delay;
     }
 
     /**

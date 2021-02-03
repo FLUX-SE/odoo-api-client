@@ -219,6 +219,29 @@ final class Users extends Partner
     private $groups_count;
 
     /**
+     * API Keys
+     * ---
+     * Relation : one2many (res.users.apikeys -> user_id)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Users\Apikeys
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $api_key_ids;
+
+    /**
+     * Two-factor authentication
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $totp_enabled;
+
+    /**
      * Resources
      * ---
      * Relation : one2many (resource.resource -> user_id)
@@ -245,43 +268,6 @@ final class Users extends Partner
      * @var OdooRelation|null
      */
     private $resource_calendar_id;
-
-    /**
-     * Alias
-     * ---
-     * Email address internally associated with this user. Incoming emails will appear in the user's notifications.
-     * ---
-     * Relation : many2one (mail.alias)
-     * @see \Flux\OdooApiClient\Model\Object\Mail\Alias
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $alias_id;
-
-    /**
-     * Alias Contact Security
-     * ---
-     * Policy to post a message on the document using the mailgateway.
-     * - everyone: everyone can post
-     * - partners: only authenticated partners
-     * - followers: only followers of the related document or members of following channels
-     *
-     * ---
-     * Selection :
-     *     -> everyone (Everyone)
-     *     -> partners (Authenticated Partners)
-     *     -> followers (Followers only)
-     *     -> employees (Authenticated Employees)
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $alias_contact;
 
     /**
      * Notification
@@ -335,16 +321,6 @@ final class Users extends Partner
     private $moderation_channel_ids;
 
     /**
-     * Chat Status
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $out_of_office_message;
-
-    /**
      * Status
      * ---
      * Selection :
@@ -357,128 +333,6 @@ final class Users extends Partner
      * @var string|null
      */
     private $state;
-
-    /**
-     * OdooBot Status
-     * ---
-     * Selection :
-     *     -> not_initialized (Not initialized)
-     *     -> onboarding_emoji (Onboarding emoji)
-     *     -> onboarding_attachement (Onboarding attachement)
-     *     -> onboarding_command (Onboarding command)
-     *     -> onboarding_ping (Onboarding ping)
-     *     -> idle (Idle)
-     *     -> disabled (Disabled)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string
-     */
-    private $odoobot_state;
-
-    /**
-     * User's Sales Team
-     * ---
-     * Sales Team the user is member of. Used to compute the members of a Sales Team through the inverse one2many
-     * ---
-     * Relation : many2one (crm.team)
-     * @see \Flux\OdooApiClient\Model\Object\Crm\Team
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $sale_team_id;
-
-    /**
-     * OAuth Provider
-     * ---
-     * Relation : many2one (auth.oauth.provider)
-     * @see \Flux\OdooApiClient\Model\Object\Auth\Oauth\Provider
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $oauth_provider_id;
-
-    /**
-     * OAuth User ID
-     * ---
-     * Oauth Provider user_id
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $oauth_uid;
-
-    /**
-     * OAuth Access Token
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $oauth_access_token;
-
-    /**
-     * Refresh Token
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $google_calendar_rtoken;
-
-    /**
-     * User token
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $google_calendar_token;
-
-    /**
-     * Token Validity
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var DateTimeInterface|null
-     */
-    private $google_calendar_token_validity;
-
-    /**
-     * Last synchro date
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var DateTimeInterface|null
-     */
-    private $google_calendar_last_sync_date;
-
-    /**
-     * Calendar ID
-     * ---
-     * Last Calendar ID who has been synchronized. If it is changed, we remove all links between GoogleID and Odoo
-     * Google Internal ID
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $google_calendar_cal_id;
 
     /**
      * Related employee
@@ -621,6 +475,9 @@ final class Users extends Partner
     /**
      * Coach
      * ---
+     * Select the "Employee" who is the coach of this employee.
+     * The "Coach" has no specific rights or responsibilities by default.
+     * ---
      * Relation : many2one (hr.employee)
      * @see \Flux\OdooApiClient\Model\Object\Hr\Employee
      * ---
@@ -667,7 +524,7 @@ final class Users extends Partner
     private $private_email;
 
     /**
-     * Km Home-Work
+     * Home-Work Distance
      * ---
      * Searchable : yes
      * Sortable : no
@@ -880,18 +737,6 @@ final class Users extends Partner
     private $additional_note;
 
     /**
-     * Badge ID
-     * ---
-     * ID used for employee identification.
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $barcode;
-
-    /**
      * PIN
      * ---
      * PIN used to Check In/Out in Kiosk Mode (if enabled in Configuration).
@@ -907,8 +752,10 @@ final class Users extends Partner
      * Certificate Level
      * ---
      * Selection :
+     *     -> graduate (Graduate)
      *     -> bachelor (Bachelor)
      *     -> master (Master)
+     *     -> doctor (Doctor)
      *     -> other (Other)
      * ---
      * Searchable : yes
@@ -994,14 +841,136 @@ final class Users extends Partner
     private $can_edit;
 
     /**
-     * Medical Examination Date
+     * OdooBot Status
+     * ---
+     * Selection :
+     *     -> not_initialized (Not initialized)
+     *     -> onboarding_emoji (Onboarding emoji)
+     *     -> onboarding_attachement (Onboarding attachement)
+     *     -> onboarding_command (Onboarding command)
+     *     -> onboarding_ping (Onboarding ping)
+     *     -> idle (Idle)
+     *     -> disabled (Disabled)
      * ---
      * Searchable : yes
-     * Sortable : no
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $odoobot_state;
+
+    /**
+     * Odoobot Failed
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $odoobot_failed;
+
+    /**
+     * User's Sales Team
+     * ---
+     * Sales Team the user is member of. Used to compute the members of a Sales Team through the inverse one2many
+     * ---
+     * Relation : many2one (crm.team)
+     * @see \Flux\OdooApiClient\Model\Object\Crm\Team
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $sale_team_id;
+
+    /**
+     * OAuth Provider
+     * ---
+     * Relation : many2one (auth.oauth.provider)
+     * @see \Flux\OdooApiClient\Model\Object\Auth\Oauth\Provider
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $oauth_provider_id;
+
+    /**
+     * OAuth User ID
+     * ---
+     * Oauth Provider user_id
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $oauth_uid;
+
+    /**
+     * OAuth Access Token
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $oauth_access_token;
+
+    /**
+     * Refresh Token
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $google_calendar_rtoken;
+
+    /**
+     * User token
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $google_calendar_token;
+
+    /**
+     * Token Validity
+     * ---
+     * Searchable : yes
+     * Sortable : yes
      *
      * @var DateTimeInterface|null
      */
-    private $medic_exam;
+    private $google_calendar_token_validity;
+
+    /**
+     * Next Sync Token
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $google_calendar_sync_token;
+
+    /**
+     * Calendar ID
+     * ---
+     * Last Calendar ID who has been synchronized. If it is changed, we remove all links between GoogleID and Odoo
+     * Google Internal ID
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $google_calendar_cal_id;
 
     /**
      * Company Vehicle
@@ -1049,6 +1018,16 @@ final class Users extends Partner
     private $sign_initials;
 
     /**
+     * Sign Request Count
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    private $sign_request_count;
+
+    /**
      * Document
      * ---
      * Relation : one2many (documents.document -> owner_id)
@@ -1062,19 +1041,10 @@ final class Users extends Partner
     private $document_ids;
 
     /**
-     * Sign Request Count
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var int|null
-     */
-    private $sign_request_count;
-
-    /**
      * Expense
      * ---
-     * User responsible of expense approval. Should be Expense approver.
+     * Select the user responsible for approving "Expenses" of this employee.
+     * If empty, the approval is done by an Administrator or Approver (determined in settings/users).
      * ---
      * Relation : many2one (res.users)
      * @see \Flux\OdooApiClient\Model\Object\Res\Users
@@ -1085,6 +1055,19 @@ final class Users extends Partner
      * @var OdooRelation|null
      */
     private $expense_manager_id;
+
+    /**
+     * Default Warehouse
+     * ---
+     * Relation : many2one (stock.warehouse)
+     * @see \Flux\OdooApiClient\Model\Object\Stock\Warehouse
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $property_warehouse_id;
 
     /**
      * A warning can be set on a partner (Account)
@@ -1125,6 +1108,26 @@ final class Users extends Partner
      * @var bool|null
      */
     private $in_group_32;
+
+    /**
+     * Access to Private Addresses
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $in_group_10;
+
+    /**
+     * Access to export feature
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $in_group_61;
 
     /**
      * Addresses in Sales Orders
@@ -1347,6 +1350,16 @@ final class Users extends Partner
     private $in_group_33;
 
     /**
+     * Purchase Receipt
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $in_group_64;
+
+    /**
      * Quotation Templates
      * ---
      * Searchable : no
@@ -1355,6 +1368,36 @@ final class Users extends Partner
      * @var bool|null
      */
     private $in_group_34;
+
+    /**
+     * Require a signature on your delivery orders
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $in_group_65;
+
+    /**
+     * Sale Receipt
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $in_group_63;
+
+    /**
+     * Send an automatic reminder email to confirm delivery
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $in_group_66;
 
     /**
      * Tax display B2B
@@ -1394,6 +1437,22 @@ final class Users extends Partner
      * @var string|null
      */
     private $sel_groups_2_3;
+
+    /**
+     * Expenses
+     * ---
+     * Selection :
+     *     ->  ()
+     *     -> 38 (Team Approver)
+     *     -> 39 (All Approver)
+     *     -> 40 (Administrator)
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $sel_groups_38_39_40;
 
     /**
      * Documents
@@ -1450,6 +1509,7 @@ final class Users extends Partner
      * ---
      * Selection :
      *     ->  ()
+     *     -> 62 (Auditor)
      *     -> 19 (Billing)
      *     -> 22 (Accountant)
      *     -> 23 (Advisor)
@@ -1459,7 +1519,24 @@ final class Users extends Partner
      *
      * @var string|null
      */
-    private $sel_groups_19_22_23;
+    private $sel_groups_62_19_22_23;
+
+    /**
+     * Accounting
+     * ---
+     * Selection :
+     *     ->  ()
+     *     -> 19 (Billing)
+     *     -> 62 (Auditor)
+     *     -> 22 (Accountant)
+     *     -> 23 (Advisor)
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $sel_groups_19_62_22_23;
 
     /**
      * Purchase
@@ -1529,22 +1606,6 @@ final class Users extends Partner
     private $sel_groups_37;
 
     /**
-     * Expenses
-     * ---
-     * Selection :
-     *     ->  ()
-     *     -> 38 (Team Approver)
-     *     -> 39 (All Approver)
-     *     -> 40 (Administrator)
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $sel_groups_38_39_40;
-
-    /**
      * Sign
      * ---
      * Selection :
@@ -1601,16 +1662,6 @@ final class Users extends Partner
     private $in_group_6;
 
     /**
-     * Access to Private Addresses
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $in_group_10;
-
-    /**
      * @param OdooRelation $partner_id Related Partner
      *        ---
      *        Partner-related data of the user
@@ -1647,19 +1698,6 @@ final class Users extends Partner
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param string $odoobot_state OdooBot Status
-     *        ---
-     *        Selection :
-     *            -> not_initialized (Not initialized)
-     *            -> onboarding_emoji (Onboarding emoji)
-     *            -> onboarding_attachement (Onboarding attachement)
-     *            -> onboarding_command (Onboarding command)
-     *            -> onboarding_ping (Onboarding ping)
-     *            -> idle (Idle)
-     *            -> disabled (Disabled)
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
      * @param OdooRelation $property_account_payable_id Account Payable
      *        ---
      *        This account will be used instead of the default one as the payable account for the current partner
@@ -1684,7 +1722,6 @@ final class Users extends Partner
         string $login,
         OdooRelation $company_id,
         string $notification_type,
-        string $odoobot_state,
         OdooRelation $property_account_payable_id,
         OdooRelation $property_account_receivable_id
     ) {
@@ -1692,36 +1729,105 @@ final class Users extends Partner
         $this->login = $login;
         $this->company_id = $company_id;
         $this->notification_type = $notification_type;
-        $this->odoobot_state = $odoobot_state;
         parent::__construct($property_account_payable_id, $property_account_receivable_id);
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("document_ids")
+     * @param OdooRelation|null $property_warehouse_id
      */
-    public function getDocumentIds(): ?array
+    public function setPropertyWarehouseId(?OdooRelation $property_warehouse_id): void
     {
-        return $this->document_ids;
+        $this->property_warehouse_id = $property_warehouse_id;
     }
 
     /**
-     * @param int|null $sign_request_count
+     * @param bool|null $in_group_58
      */
-    public function setSignRequestCount(?int $sign_request_count): void
+    public function setInGroup58(?bool $in_group_58): void
     {
-        $this->sign_request_count = $sign_request_count;
+        $this->in_group_58 = $in_group_58;
     }
 
     /**
-     * @return int|null
+     * @return bool|null
      *
-     * @SerializedName("sign_request_count")
+     * @SerializedName("in_group_58")
      */
-    public function getSignRequestCount(): ?int
+    public function isInGroup58(): ?bool
     {
-        return $this->sign_request_count;
+        return $this->in_group_58;
+    }
+
+    /**
+     * @param bool|null $in_group_55
+     */
+    public function setInGroup55(?bool $in_group_55): void
+    {
+        $this->in_group_55 = $in_group_55;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("in_group_55")
+     */
+    public function isInGroup55(): ?bool
+    {
+        return $this->in_group_55;
+    }
+
+    /**
+     * @param bool|null $in_group_24
+     */
+    public function setInGroup24(?bool $in_group_24): void
+    {
+        $this->in_group_24 = $in_group_24;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("in_group_24")
+     */
+    public function isInGroup24(): ?bool
+    {
+        return $this->in_group_24;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("property_warehouse_id")
+     */
+    public function getPropertyWarehouseId(): ?OdooRelation
+    {
+        return $this->property_warehouse_id;
+    }
+
+    /**
+     * @param bool|null $in_group_32
+     */
+    public function setInGroup32(?bool $in_group_32): void
+    {
+        $this->in_group_32 = $in_group_32;
+    }
+
+    /**
+     * @param OdooRelation|null $expense_manager_id
+     */
+    public function setExpenseManagerId(?OdooRelation $expense_manager_id): void
+    {
+        $this->expense_manager_id = $expense_manager_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("expense_manager_id")
+     */
+    public function getExpenseManagerId(): ?OdooRelation
+    {
+        return $this->expense_manager_id;
     }
 
     /**
@@ -1778,117 +1884,43 @@ final class Users extends Partner
     }
 
     /**
-     * @param mixed|null $sign_initials
-     */
-    public function setSignInitials($sign_initials): void
-    {
-        $this->sign_initials = $sign_initials;
-    }
-
-    /**
-     * @param OdooRelation|null $expense_manager_id
-     */
-    public function setExpenseManagerId(?OdooRelation $expense_manager_id): void
-    {
-        $this->expense_manager_id = $expense_manager_id;
-    }
-
-    /**
-     * @return mixed|null
+     * @return OdooRelation[]|null
      *
-     * @SerializedName("sign_initials")
+     * @SerializedName("document_ids")
      */
-    public function getSignInitials()
+    public function getDocumentIds(): ?array
     {
-        return $this->sign_initials;
-    }
-
-    /**
-     * @param mixed|null $sign_signature
-     */
-    public function setSignSignature($sign_signature): void
-    {
-        $this->sign_signature = $sign_signature;
-    }
-
-    /**
-     * @return mixed|null
-     *
-     * @SerializedName("sign_signature")
-     */
-    public function getSignSignature()
-    {
-        return $this->sign_signature;
-    }
-
-    /**
-     * @param OdooRelation|null $bank_account_id
-     */
-    public function setBankAccountId(?OdooRelation $bank_account_id): void
-    {
-        $this->bank_account_id = $bank_account_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("bank_account_id")
-     */
-    public function getBankAccountId(): ?OdooRelation
-    {
-        return $this->bank_account_id;
-    }
-
-    /**
-     * @param string|null $vehicle
-     */
-    public function setVehicle(?string $vehicle): void
-    {
-        $this->vehicle = $vehicle;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("expense_manager_id")
-     */
-    public function getExpenseManagerId(): ?OdooRelation
-    {
-        return $this->expense_manager_id;
+        return $this->document_ids;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("in_group_24")
+     * @SerializedName("in_group_32")
      */
-    public function isInGroup24(): ?bool
+    public function isInGroup32(): ?bool
     {
-        return $this->in_group_24;
+        return $this->in_group_32;
     }
 
     /**
-     * @param DateTimeInterface|null $medic_exam
+     * @return bool|null
+     *
+     * @SerializedName("in_group_10")
      */
-    public function setMedicExam(?DateTimeInterface $medic_exam): void
+    public function isInGroup10(): ?bool
     {
-        $this->medic_exam = $medic_exam;
+        return $this->in_group_10;
     }
 
     /**
-     * @param bool|null $in_group_31
+     * @return int|null
+     *
+     * @SerializedName("sign_request_count")
      */
-    public function setInGroup31(?bool $in_group_31): void
+    public function getSignRequestCount(): ?int
     {
-        $this->in_group_31 = $in_group_31;
-    }
-
-    /**
-     * @param bool|null $in_group_26
-     */
-    public function setInGroup26(?bool $in_group_26): void
-    {
-        $this->in_group_26 = $in_group_26;
+        return $this->sign_request_count;
     }
 
     /**
@@ -1902,11 +1934,73 @@ final class Users extends Partner
     }
 
     /**
+     * @return bool|null
+     *
+     * @SerializedName("in_group_14")
+     */
+    public function isInGroup14(): ?bool
+    {
+        return $this->in_group_14;
+    }
+
+    /**
+     * @param bool|null $in_group_13
+     */
+    public function setInGroup13(?bool $in_group_13): void
+    {
+        $this->in_group_13 = $in_group_13;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("in_group_13")
+     */
+    public function isInGroup13(): ?bool
+    {
+        return $this->in_group_13;
+    }
+
+    /**
+     * @param bool|null $in_group_12
+     */
+    public function setInGroup12(?bool $in_group_12): void
+    {
+        $this->in_group_12 = $in_group_12;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("in_group_12")
+     */
+    public function isInGroup12(): ?bool
+    {
+        return $this->in_group_12;
+    }
+
+    /**
+     * @param bool|null $in_group_26
+     */
+    public function setInGroup26(?bool $in_group_26): void
+    {
+        $this->in_group_26 = $in_group_26;
+    }
+
+    /**
      * @param bool|null $in_group_25
      */
     public function setInGroup25(?bool $in_group_25): void
     {
         $this->in_group_25 = $in_group_25;
+    }
+
+    /**
+     * @param bool|null $in_group_10
+     */
+    public function setInGroup10(?bool $in_group_10): void
+    {
+        $this->in_group_10 = $in_group_10;
     }
 
     /**
@@ -1938,6 +2032,14 @@ final class Users extends Partner
     }
 
     /**
+     * @param bool|null $in_group_31
+     */
+    public function setInGroup31(?bool $in_group_31): void
+    {
+        $this->in_group_31 = $in_group_31;
+    }
+
+    /**
      * @return bool|null
      *
      * @SerializedName("in_group_31")
@@ -1948,247 +2050,127 @@ final class Users extends Partner
     }
 
     /**
-     * @param bool|null $in_group_24
+     * @param bool|null $in_group_61
      */
-    public function setInGroup24(?bool $in_group_24): void
+    public function setInGroup61(?bool $in_group_61): void
     {
-        $this->in_group_24 = $in_group_24;
-    }
-
-    /**
-     * @param bool|null $in_group_32
-     */
-    public function setInGroup32(?bool $in_group_32): void
-    {
-        $this->in_group_32 = $in_group_32;
+        $this->in_group_61 = $in_group_61;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("in_group_32")
+     * @SerializedName("in_group_61")
      */
-    public function isInGroup32(): ?bool
+    public function isInGroup61(): ?bool
     {
-        return $this->in_group_32;
+        return $this->in_group_61;
     }
 
     /**
-     * @param bool|null $in_group_58
+     * @param int|null $sign_request_count
      */
-    public function setInGroup58(?bool $in_group_58): void
+    public function setSignRequestCount(?int $sign_request_count): void
     {
-        $this->in_group_58 = $in_group_58;
+        $this->sign_request_count = $sign_request_count;
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("in_group_58")
+     * @param mixed|null $sign_initials
      */
-    public function isInGroup58(): ?bool
+    public function setSignInitials($sign_initials): void
     {
-        return $this->in_group_58;
-    }
-
-    /**
-     * @param bool|null $in_group_55
-     */
-    public function setInGroup55(?bool $in_group_55): void
-    {
-        $this->in_group_55 = $in_group_55;
+        $this->sign_initials = $sign_initials;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("in_group_55")
+     * @SerializedName("in_group_18")
      */
-    public function isInGroup55(): ?bool
+    public function isInGroup18(): ?bool
     {
-        return $this->in_group_55;
+        return $this->in_group_18;
+    }
+
+    /**
+     * @param string|null $odoobot_state
+     */
+    public function setOdoobotState(?string $odoobot_state): void
+    {
+        $this->odoobot_state = $odoobot_state;
+    }
+
+    /**
+     * @param OdooRelation|null $oauth_provider_id
+     */
+    public function setOauthProviderId(?OdooRelation $oauth_provider_id): void
+    {
+        $this->oauth_provider_id = $oauth_provider_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("oauth_provider_id")
+     */
+    public function getOauthProviderId(): ?OdooRelation
+    {
+        return $this->oauth_provider_id;
+    }
+
+    /**
+     * @param OdooRelation|null $sale_team_id
+     */
+    public function setSaleTeamId(?OdooRelation $sale_team_id): void
+    {
+        $this->sale_team_id = $sale_team_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("sale_team_id")
+     */
+    public function getSaleTeamId(): ?OdooRelation
+    {
+        return $this->sale_team_id;
+    }
+
+    /**
+     * @param bool|null $odoobot_failed
+     */
+    public function setOdoobotFailed(?bool $odoobot_failed): void
+    {
+        $this->odoobot_failed = $odoobot_failed;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("odoobot_failed")
+     */
+    public function isOdoobotFailed(): ?bool
+    {
+        return $this->odoobot_failed;
     }
 
     /**
      * @return string|null
      *
-     * @SerializedName("vehicle")
+     * @SerializedName("odoobot_state")
      */
-    public function getVehicle(): ?string
+    public function getOdoobotState(): ?string
     {
-        return $this->vehicle;
+        return $this->odoobot_state;
     }
 
     /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("medic_exam")
+     * @param string|null $oauth_uid
      */
-    public function getMedicExam(): ?DateTimeInterface
+    public function setOauthUid(?string $oauth_uid): void
     {
-        return $this->medic_exam;
-    }
-
-    /**
-     * @param bool|null $in_group_12
-     */
-    public function setInGroup12(?bool $in_group_12): void
-    {
-        $this->in_group_12 = $in_group_12;
-    }
-
-    /**
-     * @param string|null $visa_no
-     */
-    public function setVisaNo(?string $visa_no): void
-    {
-        $this->visa_no = $visa_no;
-    }
-
-    /**
-     * @param string|null $additional_note
-     */
-    public function setAdditionalNote(?string $additional_note): void
-    {
-        $this->additional_note = $additional_note;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("additional_note")
-     */
-    public function getAdditionalNote(): ?string
-    {
-        return $this->additional_note;
-    }
-
-    /**
-     * @param DateTimeInterface|null $visa_expire
-     */
-    public function setVisaExpire(?DateTimeInterface $visa_expire): void
-    {
-        $this->visa_expire = $visa_expire;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("visa_expire")
-     */
-    public function getVisaExpire(): ?DateTimeInterface
-    {
-        return $this->visa_expire;
-    }
-
-    /**
-     * @param string|null $permit_no
-     */
-    public function setPermitNo(?string $permit_no): void
-    {
-        $this->permit_no = $permit_no;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("permit_no")
-     */
-    public function getPermitNo(): ?string
-    {
-        return $this->permit_no;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("visa_no")
-     */
-    public function getVisaNo(): ?string
-    {
-        return $this->visa_no;
-    }
-
-    /**
-     * @param string|null $barcode
-     */
-    public function setBarcode(?string $barcode): void
-    {
-        $this->barcode = $barcode;
-    }
-
-    /**
-     * @param string|null $emergency_phone
-     */
-    public function setEmergencyPhone(?string $emergency_phone): void
-    {
-        $this->emergency_phone = $emergency_phone;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("emergency_phone")
-     */
-    public function getEmergencyPhone(): ?string
-    {
-        return $this->emergency_phone;
-    }
-
-    /**
-     * @param string|null $emergency_contact
-     */
-    public function setEmergencyContact(?string $emergency_contact): void
-    {
-        $this->emergency_contact = $emergency_contact;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("emergency_contact")
-     */
-    public function getEmergencyContact(): ?string
-    {
-        return $this->emergency_contact;
-    }
-
-    /**
-     * @param int|null $children
-     */
-    public function setChildren(?int $children): void
-    {
-        $this->children = $children;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("children")
-     */
-    public function getChildren(): ?int
-    {
-        return $this->children;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("barcode")
-     */
-    public function getBarcode(): ?string
-    {
-        return $this->barcode;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("pin")
-     */
-    public function getPin(): ?string
-    {
-        return $this->pin;
+        $this->oauth_uid = $oauth_uid;
     }
 
     /**
@@ -2197,16 +2179,6 @@ final class Users extends Partner
     public function setCanEdit(?bool $can_edit): void
     {
         $this->can_edit = $can_edit;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("hr_presence_state")
-     */
-    public function getHrPresenceState(): ?string
-    {
-        return $this->hr_presence_state;
     }
 
     /**
@@ -2264,195 +2236,209 @@ final class Users extends Partner
     }
 
     /**
-     * @param int|null $employee_count
-     */
-    public function setEmployeeCount(?int $employee_count): void
-    {
-        $this->employee_count = $employee_count;
-    }
-
-    /**
-     * @param string|null $pin
-     */
-    public function setPin(?string $pin): void
-    {
-        $this->pin = $pin;
-    }
-
-    /**
-     * @return int|null
+     * @return string|null
      *
-     * @SerializedName("employee_count")
+     * @SerializedName("oauth_uid")
      */
-    public function getEmployeeCount(): ?int
+    public function getOauthUid(): ?string
     {
-        return $this->employee_count;
-    }
-
-    /**
-     * @param string|null $study_school
-     */
-    public function setStudySchool(?string $study_school): void
-    {
-        $this->study_school = $study_school;
+        return $this->oauth_uid;
     }
 
     /**
      * @return string|null
      *
-     * @SerializedName("study_school")
+     * @SerializedName("oauth_access_token")
      */
-    public function getStudySchool(): ?string
+    public function getOauthAccessToken(): ?string
     {
-        return $this->study_school;
+        return $this->oauth_access_token;
     }
 
     /**
-     * @param string|null $study_field
+     * @return mixed|null
+     *
+     * @SerializedName("sign_initials")
      */
-    public function setStudyField(?string $study_field): void
+    public function getSignInitials()
     {
-        $this->study_field = $study_field;
+        return $this->sign_initials;
     }
 
     /**
      * @return string|null
      *
-     * @SerializedName("study_field")
+     * @SerializedName("google_calendar_cal_id")
      */
-    public function getStudyField(): ?string
+    public function getGoogleCalendarCalId(): ?string
     {
-        return $this->study_field;
+        return $this->google_calendar_cal_id;
     }
 
     /**
-     * @param string|null $certificate
+     * @param mixed|null $sign_signature
      */
-    public function setCertificate(?string $certificate): void
+    public function setSignSignature($sign_signature): void
     {
-        $this->certificate = $certificate;
+        $this->sign_signature = $sign_signature;
+    }
+
+    /**
+     * @return mixed|null
+     *
+     * @SerializedName("sign_signature")
+     */
+    public function getSignSignature()
+    {
+        return $this->sign_signature;
+    }
+
+    /**
+     * @param OdooRelation|null $bank_account_id
+     */
+    public function setBankAccountId(?OdooRelation $bank_account_id): void
+    {
+        $this->bank_account_id = $bank_account_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("bank_account_id")
+     */
+    public function getBankAccountId(): ?OdooRelation
+    {
+        return $this->bank_account_id;
+    }
+
+    /**
+     * @param string|null $vehicle
+     */
+    public function setVehicle(?string $vehicle): void
+    {
+        $this->vehicle = $vehicle;
     }
 
     /**
      * @return string|null
      *
-     * @SerializedName("certificate")
+     * @SerializedName("vehicle")
      */
-    public function getCertificate(): ?string
+    public function getVehicle(): ?string
     {
-        return $this->certificate;
+        return $this->vehicle;
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("in_group_12")
+     * @param string|null $google_calendar_cal_id
      */
-    public function isInGroup12(): ?bool
+    public function setGoogleCalendarCalId(?string $google_calendar_cal_id): void
     {
-        return $this->in_group_12;
+        $this->google_calendar_cal_id = $google_calendar_cal_id;
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("in_group_13")
+     * @param string|null $google_calendar_sync_token
      */
-    public function isInGroup13(): ?bool
+    public function setGoogleCalendarSyncToken(?string $google_calendar_sync_token): void
     {
-        return $this->in_group_13;
+        $this->google_calendar_sync_token = $google_calendar_sync_token;
+    }
+
+    /**
+     * @param string|null $oauth_access_token
+     */
+    public function setOauthAccessToken(?string $oauth_access_token): void
+    {
+        $this->oauth_access_token = $oauth_access_token;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("google_calendar_sync_token")
+     */
+    public function getGoogleCalendarSyncToken(): ?string
+    {
+        return $this->google_calendar_sync_token;
+    }
+
+    /**
+     * @param DateTimeInterface|null $google_calendar_token_validity
+     */
+    public function setGoogleCalendarTokenValidity(?DateTimeInterface $google_calendar_token_validity): void
+    {
+        $this->google_calendar_token_validity = $google_calendar_token_validity;
     }
 
     /**
      * @return DateTimeInterface|null
      *
-     * @SerializedName("spouse_birthdate")
+     * @SerializedName("google_calendar_token_validity")
      */
-    public function getSpouseBirthdate(): ?DateTimeInterface
+    public function getGoogleCalendarTokenValidity(): ?DateTimeInterface
     {
-        return $this->spouse_birthdate;
+        return $this->google_calendar_token_validity;
+    }
+
+    /**
+     * @param string|null $google_calendar_token
+     */
+    public function setGoogleCalendarToken(?string $google_calendar_token): void
+    {
+        $this->google_calendar_token = $google_calendar_token;
     }
 
     /**
      * @return string|null
      *
-     * @SerializedName("sel_groups_48_49")
+     * @SerializedName("google_calendar_token")
      */
-    public function getSelGroups4849(): ?string
+    public function getGoogleCalendarToken(): ?string
     {
-        return $this->sel_groups_48_49;
+        return $this->google_calendar_token;
+    }
+
+    /**
+     * @param string|null $google_calendar_rtoken
+     */
+    public function setGoogleCalendarRtoken(?string $google_calendar_rtoken): void
+    {
+        $this->google_calendar_rtoken = $google_calendar_rtoken;
     }
 
     /**
      * @return string|null
      *
-     * @SerializedName("sel_groups_35_36")
+     * @SerializedName("google_calendar_rtoken")
      */
-    public function getSelGroups3536(): ?string
+    public function getGoogleCalendarRtoken(): ?string
     {
-        return $this->sel_groups_35_36;
+        return $this->google_calendar_rtoken;
     }
 
     /**
-     * @param string|null $sel_groups_56_57
+     * @param bool|null $in_group_14
      */
-    public function setSelGroups5657(?string $sel_groups_56_57): void
+    public function setInGroup14(?bool $in_group_14): void
     {
-        $this->sel_groups_56_57 = $sel_groups_56_57;
+        $this->in_group_14 = $in_group_14;
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("sel_groups_56_57")
+     * @param bool|null $in_group_18
      */
-    public function getSelGroups5657(): ?string
+    public function setInGroup18(?bool $in_group_18): void
     {
-        return $this->sel_groups_56_57;
+        $this->in_group_18 = $in_group_18;
     }
 
     /**
-     * @param string|null $sel_groups_19_22_23
+     * @param int|null $employee_count
      */
-    public function setSelGroups192223(?string $sel_groups_19_22_23): void
+    public function setEmployeeCount(?int $employee_count): void
     {
-        $this->sel_groups_19_22_23 = $sel_groups_19_22_23;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("sel_groups_19_22_23")
-     */
-    public function getSelGroups192223(): ?string
-    {
-        return $this->sel_groups_19_22_23;
-    }
-
-    /**
-     * @param string|null $sel_groups_48_49
-     */
-    public function setSelGroups4849(?string $sel_groups_48_49): void
-    {
-        $this->sel_groups_48_49 = $sel_groups_48_49;
-    }
-
-    /**
-     * @param string|null $sel_groups_27_28_29
-     */
-    public function setSelGroups272829(?string $sel_groups_27_28_29): void
-    {
-        $this->sel_groups_27_28_29 = $sel_groups_27_28_29;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("sel_groups_1_8_9")
-     */
-    public function getSelGroups189(): ?string
-    {
-        return $this->sel_groups_1_8_9;
+        $this->employee_count = $employee_count;
     }
 
     /**
@@ -2466,6 +2452,60 @@ final class Users extends Partner
     }
 
     /**
+     * @return string|null
+     *
+     * @SerializedName("sel_groups_19_62_22_23")
+     */
+    public function getSelGroups19622223(): ?string
+    {
+        return $this->sel_groups_19_62_22_23;
+    }
+
+    /**
+     * @param string|null $sel_groups_62_19_22_23
+     */
+    public function setSelGroups62192223(?string $sel_groups_62_19_22_23): void
+    {
+        $this->sel_groups_62_19_22_23 = $sel_groups_62_19_22_23;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("sel_groups_62_19_22_23")
+     */
+    public function getSelGroups62192223(): ?string
+    {
+        return $this->sel_groups_62_19_22_23;
+    }
+
+    /**
+     * @param string|null $sel_groups_48_49
+     */
+    public function setSelGroups4849(?string $sel_groups_48_49): void
+    {
+        $this->sel_groups_48_49 = $sel_groups_48_49;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("sel_groups_48_49")
+     */
+    public function getSelGroups4849(): ?string
+    {
+        return $this->sel_groups_48_49;
+    }
+
+    /**
+     * @param string|null $sel_groups_27_28_29
+     */
+    public function setSelGroups272829(?string $sel_groups_27_28_29): void
+    {
+        $this->sel_groups_27_28_29 = $sel_groups_27_28_29;
+    }
+
+    /**
      * @param string|null $sel_groups_44_45
      */
     public function setSelGroups4445(?string $sel_groups_44_45): void
@@ -2476,11 +2516,39 @@ final class Users extends Partner
     /**
      * @return string|null
      *
+     * @SerializedName("sel_groups_56_57")
+     */
+    public function getSelGroups5657(): ?string
+    {
+        return $this->sel_groups_56_57;
+    }
+
+    /**
+     * @return string|null
+     *
      * @SerializedName("sel_groups_44_45")
      */
     public function getSelGroups4445(): ?string
     {
         return $this->sel_groups_44_45;
+    }
+
+    /**
+     * @param string|null $sel_groups_38_39_40
+     */
+    public function setSelGroups383940(?string $sel_groups_38_39_40): void
+    {
+        $this->sel_groups_38_39_40 = $sel_groups_38_39_40;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("sel_groups_38_39_40")
+     */
+    public function getSelGroups383940(): ?string
+    {
+        return $this->sel_groups_38_39_40;
     }
 
     /**
@@ -2510,53 +2578,47 @@ final class Users extends Partner
     }
 
     /**
-     * @param string|null $sel_groups_35_36
+     * @return bool|null
+     *
+     * @SerializedName("in_group_21")
      */
-    public function setSelGroups3536(?string $sel_groups_35_36): void
+    public function isInGroup21(): ?bool
     {
-        $this->sel_groups_35_36 = $sel_groups_35_36;
+        return $this->in_group_21;
     }
 
     /**
-     * @param string|null $sel_groups_1_8_9
+     * @param string|null $sel_groups_19_62_22_23
      */
-    public function setSelGroups189(?string $sel_groups_1_8_9): void
+    public function setSelGroups19622223(?string $sel_groups_19_62_22_23): void
     {
-        $this->sel_groups_1_8_9 = $sel_groups_1_8_9;
+        $this->sel_groups_19_62_22_23 = $sel_groups_19_62_22_23;
     }
 
     /**
-     * @param bool|null $in_group_20
+     * @param string|null $sel_groups_56_57
      */
-    public function setInGroup20(?bool $in_group_20): void
+    public function setSelGroups5657(?string $sel_groups_56_57): void
     {
-        $this->in_group_20 = $in_group_20;
-    }
-
-    /**
-     * @param bool|null $in_group_4
-     */
-    public function setInGroup4(?bool $in_group_4): void
-    {
-        $this->in_group_4 = $in_group_4;
-    }
-
-    /**
-     * @param bool|null $in_group_10
-     */
-    public function setInGroup10(?bool $in_group_10): void
-    {
-        $this->in_group_10 = $in_group_10;
+        $this->sel_groups_56_57 = $sel_groups_56_57;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("in_group_10")
+     * @SerializedName("in_group_20")
      */
-    public function isInGroup10(): ?bool
+    public function isInGroup20(): ?bool
     {
-        return $this->in_group_10;
+        return $this->in_group_20;
+    }
+
+    /**
+     * @param bool|null $in_group_7
+     */
+    public function setInGroup7(?bool $in_group_7): void
+    {
+        $this->in_group_7 = $in_group_7;
     }
 
     /**
@@ -2596,6 +2658,14 @@ final class Users extends Partner
     }
 
     /**
+     * @param bool|null $in_group_4
+     */
+    public function setInGroup4(?bool $in_group_4): void
+    {
+        $this->in_group_4 = $in_group_4;
+    }
+
+    /**
      * @return bool|null
      *
      * @SerializedName("in_group_4")
@@ -2606,24 +2676,6 @@ final class Users extends Partner
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("sel_groups_37")
-     */
-    public function getSelGroups37(): ?string
-    {
-        return $this->sel_groups_37;
-    }
-
-    /**
-     * @param bool|null $in_group_7
-     */
-    public function setInGroup7(?bool $in_group_7): void
-    {
-        $this->in_group_7 = $in_group_7;
-    }
-
-    /**
      * @return bool|null
      *
      * @SerializedName("in_group_7")
@@ -2631,6 +2683,16 @@ final class Users extends Partner
     public function isInGroup7(): ?bool
     {
         return $this->in_group_7;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("sel_groups_35_36")
+     */
+    public function getSelGroups3536(): ?string
+    {
+        return $this->sel_groups_35_36;
     }
 
     /**
@@ -2652,24 +2714,6 @@ final class Users extends Partner
     }
 
     /**
-     * @param string|null $sel_groups_38_39_40
-     */
-    public function setSelGroups383940(?string $sel_groups_38_39_40): void
-    {
-        $this->sel_groups_38_39_40 = $sel_groups_38_39_40;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("sel_groups_38_39_40")
-     */
-    public function getSelGroups383940(): ?string
-    {
-        return $this->sel_groups_38_39_40;
-    }
-
-    /**
      * @param string|null $sel_groups_37
      */
     public function setSelGroups37(?string $sel_groups_37): void
@@ -2678,39 +2722,65 @@ final class Users extends Partner
     }
 
     /**
+     * @return string|null
+     *
+     * @SerializedName("sel_groups_37")
+     */
+    public function getSelGroups37(): ?string
+    {
+        return $this->sel_groups_37;
+    }
+
+    /**
+     * @param string|null $sel_groups_1_8_9
+     */
+    public function setSelGroups189(?string $sel_groups_1_8_9): void
+    {
+        $this->sel_groups_1_8_9 = $sel_groups_1_8_9;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("sel_groups_1_8_9")
+     */
+    public function getSelGroups189(): ?string
+    {
+        return $this->sel_groups_1_8_9;
+    }
+
+    /**
+     * @param string|null $sel_groups_35_36
+     */
+    public function setSelGroups3536(?string $sel_groups_35_36): void
+    {
+        $this->sel_groups_35_36 = $sel_groups_35_36;
+    }
+
+    /**
+     * @param bool|null $in_group_20
+     */
+    public function setInGroup20(?bool $in_group_20): void
+    {
+        $this->in_group_20 = $in_group_20;
+    }
+
+    /**
+     * @param bool|null $in_group_66
+     */
+    public function setInGroup66(?bool $in_group_66): void
+    {
+        $this->in_group_66 = $in_group_66;
+    }
+
+    /**
      * @return bool|null
      *
-     * @SerializedName("in_group_21")
+     * @SerializedName("in_group_51")
      */
-    public function isInGroup21(): ?bool
+    public function isInGroup51(): ?bool
     {
-        return $this->in_group_21;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("in_group_20")
-     */
-    public function isInGroup20(): ?bool
-    {
-        return $this->in_group_20;
-    }
-
-    /**
-     * @param bool|null $in_group_13
-     */
-    public function setInGroup13(?bool $in_group_13): void
-    {
-        $this->in_group_13 = $in_group_13;
-    }
-
-    /**
-     * @param bool|null $in_group_60
-     */
-    public function setInGroup60(?bool $in_group_60): void
-    {
-        $this->in_group_60 = $in_group_60;
+        return $this->in_group_51;
     }
 
     /**
@@ -2722,6 +2792,60 @@ final class Users extends Partner
     }
 
     /**
+     * @param bool|null $in_group_11
+     */
+    public function setInGroup11(?bool $in_group_11): void
+    {
+        $this->in_group_11 = $in_group_11;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("in_group_11")
+     */
+    public function isInGroup11(): ?bool
+    {
+        return $this->in_group_11;
+    }
+
+    /**
+     * @param bool|null $in_group_46
+     */
+    public function setInGroup46(?bool $in_group_46): void
+    {
+        $this->in_group_46 = $in_group_46;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("in_group_46")
+     */
+    public function isInGroup46(): ?bool
+    {
+        return $this->in_group_46;
+    }
+
+    /**
+     * @param bool|null $in_group_50
+     */
+    public function setInGroup50(?bool $in_group_50): void
+    {
+        $this->in_group_50 = $in_group_50;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("in_group_50")
+     */
+    public function isInGroup50(): ?bool
+    {
+        return $this->in_group_50;
+    }
+
+    /**
      * @return bool|null
      *
      * @SerializedName("in_group_54")
@@ -2729,6 +2853,14 @@ final class Users extends Partner
     public function isInGroup54(): ?bool
     {
         return $this->in_group_54;
+    }
+
+    /**
+     * @param bool|null $in_group_47
+     */
+    public function setInGroup47(?bool $in_group_47): void
+    {
+        $this->in_group_47 = $in_group_47;
     }
 
     /**
@@ -2768,6 +2900,14 @@ final class Users extends Partner
     }
 
     /**
+     * @param bool|null $in_group_60
+     */
+    public function setInGroup60(?bool $in_group_60): void
+    {
+        $this->in_group_60 = $in_group_60;
+    }
+
+    /**
      * @return bool|null
      *
      * @SerializedName("in_group_60")
@@ -2775,14 +2915,6 @@ final class Users extends Partner
     public function isInGroup60(): ?bool
     {
         return $this->in_group_60;
-    }
-
-    /**
-     * @param bool|null $in_group_50
-     */
-    public function setInGroup50(?bool $in_group_50): void
-    {
-        $this->in_group_50 = $in_group_50;
     }
 
     /**
@@ -2796,67 +2928,77 @@ final class Users extends Partner
     /**
      * @return bool|null
      *
-     * @SerializedName("in_group_51")
+     * @SerializedName("in_group_47")
      */
-    public function isInGroup51(): ?bool
+    public function isInGroup47(): ?bool
     {
-        return $this->in_group_51;
-    }
-
-    /**
-     * @param bool|null $in_group_18
-     */
-    public function setInGroup18(?bool $in_group_18): void
-    {
-        $this->in_group_18 = $in_group_18;
+        return $this->in_group_47;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("in_group_18")
+     * @SerializedName("in_group_52")
      */
-    public function isInGroup18(): ?bool
+    public function isInGroup52(): ?bool
     {
-        return $this->in_group_18;
-    }
-
-    /**
-     * @param bool|null $in_group_14
-     */
-    public function setInGroup14(?bool $in_group_14): void
-    {
-        $this->in_group_14 = $in_group_14;
+        return $this->in_group_52;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("in_group_14")
+     * @SerializedName("in_group_66")
      */
-    public function isInGroup14(): ?bool
+    public function isInGroup66(): ?bool
     {
-        return $this->in_group_14;
+        return $this->in_group_66;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("in_group_50")
+     * @SerializedName("in_group_64")
      */
-    public function isInGroup50(): ?bool
+    public function isInGroup64(): ?bool
     {
-        return $this->in_group_50;
+        return $this->in_group_64;
+    }
+
+    /**
+     * @param bool|null $in_group_63
+     */
+    public function setInGroup63(?bool $in_group_63): void
+    {
+        $this->in_group_63 = $in_group_63;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("in_group_46")
+     * @SerializedName("in_group_63")
      */
-    public function isInGroup46(): ?bool
+    public function isInGroup63(): ?bool
     {
-        return $this->in_group_46;
+        return $this->in_group_63;
+    }
+
+    /**
+     * @param bool|null $in_group_65
+     */
+    public function setInGroup65(?bool $in_group_65): void
+    {
+        $this->in_group_65 = $in_group_65;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("in_group_65")
+     */
+    public function isInGroup65(): ?bool
+    {
+        return $this->in_group_65;
     }
 
     /**
@@ -2870,16 +3012,6 @@ final class Users extends Partner
     /**
      * @return bool|null
      *
-     * @SerializedName("in_group_17")
-     */
-    public function isInGroup17(): ?bool
-    {
-        return $this->in_group_17;
-    }
-
-    /**
-     * @return bool|null
-     *
      * @SerializedName("in_group_34")
      */
     public function isInGroup34(): ?bool
@@ -2888,11 +3020,27 @@ final class Users extends Partner
     }
 
     /**
+     * @param bool|null $in_group_64
+     */
+    public function setInGroup64(?bool $in_group_64): void
+    {
+        $this->in_group_64 = $in_group_64;
+    }
+
+    /**
      * @param bool|null $in_group_33
      */
     public function setInGroup33(?bool $in_group_33): void
     {
         $this->in_group_33 = $in_group_33;
+    }
+
+    /**
+     * @param bool|null $in_group_52
+     */
+    public function setInGroup52(?bool $in_group_52): void
+    {
+        $this->in_group_52 = $in_group_52;
     }
 
     /**
@@ -2932,19 +3080,21 @@ final class Users extends Partner
     }
 
     /**
+     * @return bool|null
+     *
+     * @SerializedName("in_group_17")
+     */
+    public function isInGroup17(): ?bool
+    {
+        return $this->in_group_17;
+    }
+
+    /**
      * @param bool|null $in_group_16
      */
     public function setInGroup16(?bool $in_group_16): void
     {
         $this->in_group_16 = $in_group_16;
-    }
-
-    /**
-     * @param bool|null $in_group_46
-     */
-    public function setInGroup46(?bool $in_group_46): void
-    {
-        $this->in_group_46 = $in_group_46;
     }
 
     /**
@@ -2958,73 +3108,23 @@ final class Users extends Partner
     }
 
     /**
-     * @param bool|null $in_group_52
-     */
-    public function setInGroup52(?bool $in_group_52): void
-    {
-        $this->in_group_52 = $in_group_52;
-    }
-
-    /**
-     * @return bool|null
+     * @return string|null
      *
-     * @SerializedName("in_group_52")
+     * @SerializedName("hr_presence_state")
      */
-    public function isInGroup52(): ?bool
+    public function getHrPresenceState(): ?string
     {
-        return $this->in_group_52;
+        return $this->hr_presence_state;
     }
 
     /**
-     * @param bool|null $in_group_47
-     */
-    public function setInGroup47(?bool $in_group_47): void
-    {
-        $this->in_group_47 = $in_group_47;
-    }
-
-    /**
-     * @return bool|null
+     * @return int|null
      *
-     * @SerializedName("in_group_47")
+     * @SerializedName("employee_count")
      */
-    public function isInGroup47(): ?bool
+    public function getEmployeeCount(): ?int
     {
-        return $this->in_group_47;
-    }
-
-    /**
-     * @param bool|null $in_group_11
-     */
-    public function setInGroup11(?bool $in_group_11): void
-    {
-        $this->in_group_11 = $in_group_11;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("in_group_11")
-     */
-    public function isInGroup11(): ?bool
-    {
-        return $this->in_group_11;
-    }
-
-    /**
-     * @param DateTimeInterface|null $spouse_birthdate
-     */
-    public function setSpouseBirthdate(?DateTimeInterface $spouse_birthdate): void
-    {
-        $this->spouse_birthdate = $spouse_birthdate;
-    }
-
-    /**
-     * @param string|null $spouse_complete_name
-     */
-    public function setSpouseCompleteName(?string $spouse_complete_name): void
-    {
-        $this->spouse_complete_name = $spouse_complete_name;
+        return $this->employee_count;
     }
 
     /**
@@ -3038,54 +3138,13 @@ final class Users extends Partner
     }
 
     /**
-     * @param OdooRelation $item
-     */
-    public function removeResourceIds(OdooRelation $item): void
-    {
-        if (null === $this->resource_ids) {
-            $this->resource_ids = [];
-        }
-
-        if ($this->hasResourceIds($item)) {
-            $index = array_search($item, $this->resource_ids);
-            unset($this->resource_ids[$index]);
-        }
-    }
-
-    /**
-     * @param string|null $alias_contact
-     */
-    public function setAliasContact(?string $alias_contact): void
-    {
-        $this->alias_contact = $alias_contact;
-    }
-
-    /**
-     * @return string|null
+     * @return OdooRelation[]|null
      *
-     * @SerializedName("alias_contact")
+     * @SerializedName("resource_ids")
      */
-    public function getAliasContact(): ?string
+    public function getResourceIds(): ?array
     {
-        return $this->alias_contact;
-    }
-
-    /**
-     * @param OdooRelation|null $alias_id
-     */
-    public function setAliasId(?OdooRelation $alias_id): void
-    {
-        $this->alias_id = $alias_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("alias_id")
-     */
-    public function getAliasId(): ?OdooRelation
-    {
-        return $this->alias_id;
+        return $this->resource_ids;
     }
 
     /**
@@ -3109,6 +3168,21 @@ final class Users extends Partner
     /**
      * @param OdooRelation $item
      */
+    public function removeResourceIds(OdooRelation $item): void
+    {
+        if (null === $this->resource_ids) {
+            $this->resource_ids = [];
+        }
+
+        if ($this->hasResourceIds($item)) {
+            $index = array_search($item, $this->resource_ids);
+            unset($this->resource_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
     public function addResourceIds(OdooRelation $item): void
     {
         if ($this->hasResourceIds($item)) {
@@ -3120,14 +3194,6 @@ final class Users extends Partner
         }
 
         $this->resource_ids[] = $item;
-    }
-
-    /**
-     * @param string $notification_type
-     */
-    public function setNotificationType(string $notification_type): void
-    {
-        $this->notification_type = $notification_type;
     }
 
     /**
@@ -3153,13 +3219,92 @@ final class Users extends Partner
     }
 
     /**
+     * @param bool|null $totp_enabled
+     */
+    public function setTotpEnabled(?bool $totp_enabled): void
+    {
+        $this->totp_enabled = $totp_enabled;
+    }
+
+    /**
+     * @param string $notification_type
+     */
+    public function setNotificationType(string $notification_type): void
+    {
+        $this->notification_type = $notification_type;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("totp_enabled")
+     */
+    public function isTotpEnabled(): ?bool
+    {
+        return $this->totp_enabled;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeApiKeyIds(OdooRelation $item): void
+    {
+        if (null === $this->api_key_ids) {
+            $this->api_key_ids = [];
+        }
+
+        if ($this->hasApiKeyIds($item)) {
+            $index = array_search($item, $this->api_key_ids);
+            unset($this->api_key_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addApiKeyIds(OdooRelation $item): void
+    {
+        if ($this->hasApiKeyIds($item)) {
+            return;
+        }
+
+        if (null === $this->api_key_ids) {
+            $this->api_key_ids = [];
+        }
+
+        $this->api_key_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasApiKeyIds(OdooRelation $item): bool
+    {
+        if (null === $this->api_key_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->api_key_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $api_key_ids
+     */
+    public function setApiKeyIds(?array $api_key_ids): void
+    {
+        $this->api_key_ids = $api_key_ids;
+    }
+
+    /**
      * @return OdooRelation[]|null
      *
-     * @SerializedName("resource_ids")
+     * @SerializedName("api_key_ids")
      */
-    public function getResourceIds(): ?array
+    public function getApiKeyIds(): ?array
     {
-        return $this->resource_ids;
+        return $this->api_key_ids;
     }
 
     /**
@@ -3168,24 +3313,6 @@ final class Users extends Partner
     public function setGroupsCount(?int $groups_count): void
     {
         $this->groups_count = $groups_count;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("groups_count")
-     */
-    public function getGroupsCount(): ?int
-    {
-        return $this->groups_count;
-    }
-
-    /**
-     * @param int|null $rules_count
-     */
-    public function setRulesCount(?int $rules_count): void
-    {
-        $this->rules_count = $rules_count;
     }
 
     /**
@@ -3209,55 +3336,11 @@ final class Users extends Partner
     }
 
     /**
-     * @param int|null $accesses_count
+     * @param int|null $rules_count
      */
-    public function setAccessesCount(?int $accesses_count): void
+    public function setRulesCount(?int $rules_count): void
     {
-        $this->accesses_count = $accesses_count;
-    }
-
-    /**
-     * @param string|null $out_of_office_message
-     */
-    public function setOutOfOfficeMessage(?string $out_of_office_message): void
-    {
-        $this->out_of_office_message = $out_of_office_message;
-    }
-
-    /**
-     * @param OdooRelation|null $sale_team_id
-     */
-    public function setSaleTeamId(?OdooRelation $sale_team_id): void
-    {
-        $this->sale_team_id = $sale_team_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("sale_team_id")
-     */
-    public function getSaleTeamId(): ?OdooRelation
-    {
-        return $this->sale_team_id;
-    }
-
-    /**
-     * @param string $odoobot_state
-     */
-    public function setOdoobotState(string $odoobot_state): void
-    {
-        $this->odoobot_state = $odoobot_state;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("odoobot_state")
-     */
-    public function getOdoobotState(): string
-    {
-        return $this->odoobot_state;
+        $this->rules_count = $rules_count;
     }
 
     /**
@@ -3269,6 +3352,79 @@ final class Users extends Partner
     }
 
     /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("employee_id")
+     */
+    public function getEmployeeId(): ?OdooRelation
+    {
+        return $this->employee_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeEmployeeIds(OdooRelation $item): void
+    {
+        if (null === $this->employee_ids) {
+            $this->employee_ids = [];
+        }
+
+        if ($this->hasEmployeeIds($item)) {
+            $index = array_search($item, $this->employee_ids);
+            unset($this->employee_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addEmployeeIds(OdooRelation $item): void
+    {
+        if ($this->hasEmployeeIds($item)) {
+            return;
+        }
+
+        if (null === $this->employee_ids) {
+            $this->employee_ids = [];
+        }
+
+        $this->employee_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasEmployeeIds(OdooRelation $item): bool
+    {
+        if (null === $this->employee_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->employee_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $employee_ids
+     */
+    public function setEmployeeIds(?array $employee_ids): void
+    {
+        $this->employee_ids = $employee_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("employee_ids")
+     */
+    public function getEmployeeIds(): ?array
+    {
+        return $this->employee_ids;
+    }
+
+    /**
      * @return string|null
      *
      * @SerializedName("state")
@@ -3276,16 +3432,6 @@ final class Users extends Partner
     public function getState(): ?string
     {
         return $this->state;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("out_of_office_message")
-     */
-    public function getOutOfOfficeMessage(): ?string
-    {
-        return $this->out_of_office_message;
     }
 
     /**
@@ -3380,6 +3526,16 @@ final class Users extends Partner
     /**
      * @return int|null
      *
+     * @SerializedName("groups_count")
+     */
+    public function getGroupsCount(): ?int
+    {
+        return $this->groups_count;
+    }
+
+    /**
+     * @return int|null
+     *
      * @SerializedName("rules_count")
      */
     public function getRulesCount(): ?int
@@ -3388,31 +3544,29 @@ final class Users extends Partner
     }
 
     /**
-     * @return int|null
-     *
-     * @SerializedName("accesses_count")
-     */
-    public function getAccessesCount(): ?int
-    {
-        return $this->accesses_count;
-    }
-
-    /**
-     * @param OdooRelation|null $oauth_provider_id
-     */
-    public function setOauthProviderId(?OdooRelation $oauth_provider_id): void
-    {
-        $this->oauth_provider_id = $oauth_provider_id;
-    }
-
-    /**
      * @return string|null
      *
-     * @SerializedName("signature")
+     * @SerializedName("job_title")
      */
-    public function getSignature(): ?string
+    public function getJobTitle(): ?string
     {
-        return $this->signature;
+        return $this->job_title;
+    }
+
+    /**
+     * @param string|null $signature
+     */
+    public function setSignature(?string $signature): void
+    {
+        $this->signature = $signature;
+    }
+
+    /**
+     * @param OdooRelation[]|null $groups_id
+     */
+    public function setGroupsId(?array $groups_id): void
+    {
+        $this->groups_id = $groups_id;
     }
 
     /**
@@ -3462,11 +3616,29 @@ final class Users extends Partner
     }
 
     /**
-     * @param string|null $signature
+     * @return string|null
+     *
+     * @SerializedName("signature")
      */
-    public function setSignature(?string $signature): void
+    public function getSignature(): ?string
     {
-        $this->signature = $signature;
+        return $this->signature;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addGroupsId(OdooRelation $item): void
+    {
+        if ($this->hasGroupsId($item)) {
+            return;
+        }
+
+        if (null === $this->groups_id) {
+            $this->groups_id = [];
+        }
+
+        $this->groups_id[] = $item;
     }
 
     /**
@@ -3475,20 +3647,6 @@ final class Users extends Partner
     public function setNewPassword(?string $new_password): void
     {
         $this->new_password = $new_password;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasGroupsId(OdooRelation $item): bool
-    {
-        if (null === $this->groups_id) {
-            return false;
-        }
-
-        return in_array($item, $this->groups_id);
     }
 
     /**
@@ -3546,27 +3704,60 @@ final class Users extends Partner
     }
 
     /**
-     * @param OdooRelation[]|null $groups_id
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setGroupsId(?array $groups_id): void
+    public function hasGroupsId(OdooRelation $item): bool
     {
-        $this->groups_id = $groups_id;
+        if (null === $this->groups_id) {
+            return false;
+        }
+
+        return in_array($item, $this->groups_id);
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function addGroupsId(OdooRelation $item): void
+    public function removeGroupsId(OdooRelation $item): void
     {
-        if ($this->hasGroupsId($item)) {
-            return;
-        }
-
         if (null === $this->groups_id) {
             $this->groups_id = [];
         }
 
-        $this->groups_id[] = $item;
+        if ($this->hasGroupsId($item)) {
+            $index = array_search($item, $this->groups_id);
+            unset($this->groups_id[$index]);
+        }
+    }
+
+    /**
+     * @param int|null $accesses_count
+     */
+    public function setAccessesCount(?int $accesses_count): void
+    {
+        $this->accesses_count = $accesses_count;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("companies_count")
+     */
+    public function getCompaniesCount(): ?int
+    {
+        return $this->companies_count;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("accesses_count")
+     */
+    public function getAccessesCount(): ?int
+    {
+        return $this->accesses_count;
     }
 
     /**
@@ -3582,14 +3773,6 @@ final class Users extends Partner
             $index = array_search($item, $this->company_ids);
             unset($this->company_ids[$index]);
         }
-    }
-
-    /**
-     * @param bool|null $share
-     */
-    public function setShare(?bool $share): void
-    {
-        $this->share = $share;
     }
 
     /**
@@ -3649,13 +3832,21 @@ final class Users extends Partner
     }
 
     /**
-     * @return int|null
-     *
-     * @SerializedName("companies_count")
+     * @param bool|null $share
      */
-    public function getCompaniesCount(): ?int
+    public function setShare(?bool $share): void
     {
-        return $this->companies_count;
+        $this->share = $share;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("log_ids")
+     */
+    public function getLogIds(): ?array
+    {
+        return $this->log_ids;
     }
 
     /**
@@ -3666,21 +3857,6 @@ final class Users extends Partner
     public function isShare(): ?bool
     {
         return $this->share;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeGroupsId(OdooRelation $item): void
-    {
-        if (null === $this->groups_id) {
-            $this->groups_id = [];
-        }
-
-        if ($this->hasGroupsId($item)) {
-            $index = array_search($item, $this->groups_id);
-            unset($this->groups_id[$index]);
-        }
     }
 
     /**
@@ -3755,33 +3931,79 @@ final class Users extends Partner
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("log_ids")
+     * @param OdooRelation|null $employee_id
      */
-    public function getLogIds(): ?array
+    public function setEmployeeId(?OdooRelation $employee_id): void
     {
-        return $this->log_ids;
+        $this->employee_id = $employee_id;
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("oauth_provider_id")
+     * @param string|null $job_title
      */
-    public function getOauthProviderId(): ?OdooRelation
+    public function setJobTitle(?string $job_title): void
     {
-        return $this->oauth_provider_id;
+        $this->job_title = $job_title;
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("oauth_uid")
+     * @param string|null $study_school
      */
-    public function getOauthUid(): ?string
+    public function setStudySchool(?string $study_school): void
     {
-        return $this->oauth_uid;
+        $this->study_school = $study_school;
+    }
+
+    /**
+     * @param string|null $marital
+     */
+    public function setMarital(?string $marital): void
+    {
+        $this->marital = $marital;
+    }
+
+    /**
+     * @param int|null $children
+     */
+    public function setChildren(?int $children): void
+    {
+        $this->children = $children;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("children")
+     */
+    public function getChildren(): ?int
+    {
+        return $this->children;
+    }
+
+    /**
+     * @param DateTimeInterface|null $spouse_birthdate
+     */
+    public function setSpouseBirthdate(?DateTimeInterface $spouse_birthdate): void
+    {
+        $this->spouse_birthdate = $spouse_birthdate;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("spouse_birthdate")
+     */
+    public function getSpouseBirthdate(): ?DateTimeInterface
+    {
+        return $this->spouse_birthdate;
+    }
+
+    /**
+     * @param string|null $spouse_complete_name
+     */
+    public function setSpouseCompleteName(?string $spouse_complete_name): void
+    {
+        $this->spouse_complete_name = $spouse_complete_name;
     }
 
     /**
@@ -3795,182 +4017,6 @@ final class Users extends Partner
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("address_home_id")
-     */
-    public function getAddressHomeId(): ?OdooRelation
-    {
-        return $this->address_home_id;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("km_home_work")
-     */
-    public function getKmHomeWork(): ?int
-    {
-        return $this->km_home_work;
-    }
-
-    /**
-     * @param string|null $private_email
-     */
-    public function setPrivateEmail(?string $private_email): void
-    {
-        $this->private_email = $private_email;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("private_email")
-     */
-    public function getPrivateEmail(): ?string
-    {
-        return $this->private_email;
-    }
-
-    /**
-     * @param bool|null $is_address_home_a_company
-     */
-    public function setIsAddressHomeACompany(?bool $is_address_home_a_company): void
-    {
-        $this->is_address_home_a_company = $is_address_home_a_company;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("is_address_home_a_company")
-     */
-    public function isIsAddressHomeACompany(): ?bool
-    {
-        return $this->is_address_home_a_company;
-    }
-
-    /**
-     * @param OdooRelation|null $address_home_id
-     */
-    public function setAddressHomeId(?OdooRelation $address_home_id): void
-    {
-        $this->address_home_id = $address_home_id;
-    }
-
-    /**
-     * @param OdooRelation|null $coach_id
-     */
-    public function setCoachId(?OdooRelation $coach_id): void
-    {
-        $this->coach_id = $coach_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("employee_bank_account_id")
-     */
-    public function getEmployeeBankAccountId(): ?OdooRelation
-    {
-        return $this->employee_bank_account_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("coach_id")
-     */
-    public function getCoachId(): ?OdooRelation
-    {
-        return $this->coach_id;
-    }
-
-    /**
-     * @param OdooRelation|null $employee_parent_id
-     */
-    public function setEmployeeParentId(?OdooRelation $employee_parent_id): void
-    {
-        $this->employee_parent_id = $employee_parent_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("employee_parent_id")
-     */
-    public function getEmployeeParentId(): ?OdooRelation
-    {
-        return $this->employee_parent_id;
-    }
-
-    /**
-     * @param string|null $work_location
-     */
-    public function setWorkLocation(?string $work_location): void
-    {
-        $this->work_location = $work_location;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("work_location")
-     */
-    public function getWorkLocation(): ?string
-    {
-        return $this->work_location;
-    }
-
-    /**
-     * @param OdooRelation|null $address_id
-     */
-    public function setAddressId(?OdooRelation $address_id): void
-    {
-        $this->address_id = $address_id;
-    }
-
-    /**
-     * @param int|null $km_home_work
-     */
-    public function setKmHomeWork(?int $km_home_work): void
-    {
-        $this->km_home_work = $km_home_work;
-    }
-
-    /**
-     * @param OdooRelation|null $employee_bank_account_id
-     */
-    public function setEmployeeBankAccountId(?OdooRelation $employee_bank_account_id): void
-    {
-        $this->employee_bank_account_id = $employee_bank_account_id;
-    }
-
-    /**
-     * @param OdooRelation|null $department_id
-     */
-    public function setDepartmentId(?OdooRelation $department_id): void
-    {
-        $this->department_id = $department_id;
-    }
-
-    /**
-     * @param DateTimeInterface|null $birthday
-     */
-    public function setBirthday(?DateTimeInterface $birthday): void
-    {
-        $this->birthday = $birthday;
-    }
-
-    /**
-     * @param string|null $marital
-     */
-    public function setMarital(?string $marital): void
-    {
-        $this->marital = $marital;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("marital")
@@ -3978,6 +4024,14 @@ final class Users extends Partner
     public function getMarital(): ?string
     {
         return $this->marital;
+    }
+
+    /**
+     * @param string|null $emergency_contact
+     */
+    public function setEmergencyContact(?string $emergency_contact): void
+    {
+        $this->emergency_contact = $emergency_contact;
     }
 
     /**
@@ -4017,6 +4071,14 @@ final class Users extends Partner
     }
 
     /**
+     * @param DateTimeInterface|null $birthday
+     */
+    public function setBirthday(?DateTimeInterface $birthday): void
+    {
+        $this->birthday = $birthday;
+    }
+
+    /**
      * @return DateTimeInterface|null
      *
      * @SerializedName("birthday")
@@ -4024,16 +4086,6 @@ final class Users extends Partner
     public function getBirthday(): ?DateTimeInterface
     {
         return $this->birthday;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("employee_country_id")
-     */
-    public function getEmployeeCountryId(): ?OdooRelation
-    {
-        return $this->employee_country_id;
     }
 
     /**
@@ -4047,11 +4099,21 @@ final class Users extends Partner
     /**
      * @return string|null
      *
-     * @SerializedName("gender")
+     * @SerializedName("emergency_contact")
      */
-    public function getGender(): ?string
+    public function getEmergencyContact(): ?string
     {
-        return $this->gender;
+        return $this->emergency_contact;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("emergency_phone")
+     */
+    public function getEmergencyPhone(): ?string
+    {
+        return $this->emergency_phone;
     }
 
     /**
@@ -4065,6 +4127,160 @@ final class Users extends Partner
     /**
      * @return string|null
      *
+     * @SerializedName("pin")
+     */
+    public function getPin(): ?string
+    {
+        return $this->pin;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("study_school")
+     */
+    public function getStudySchool(): ?string
+    {
+        return $this->study_school;
+    }
+
+    /**
+     * @param string|null $study_field
+     */
+    public function setStudyField(?string $study_field): void
+    {
+        $this->study_field = $study_field;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("study_field")
+     */
+    public function getStudyField(): ?string
+    {
+        return $this->study_field;
+    }
+
+    /**
+     * @param string|null $certificate
+     */
+    public function setCertificate(?string $certificate): void
+    {
+        $this->certificate = $certificate;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("certificate")
+     */
+    public function getCertificate(): ?string
+    {
+        return $this->certificate;
+    }
+
+    /**
+     * @param string|null $pin
+     */
+    public function setPin(?string $pin): void
+    {
+        $this->pin = $pin;
+    }
+
+    /**
+     * @param string|null $additional_note
+     */
+    public function setAdditionalNote(?string $additional_note): void
+    {
+        $this->additional_note = $additional_note;
+    }
+
+    /**
+     * @param string|null $emergency_phone
+     */
+    public function setEmergencyPhone(?string $emergency_phone): void
+    {
+        $this->emergency_phone = $emergency_phone;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("additional_note")
+     */
+    public function getAdditionalNote(): ?string
+    {
+        return $this->additional_note;
+    }
+
+    /**
+     * @param DateTimeInterface|null $visa_expire
+     */
+    public function setVisaExpire(?DateTimeInterface $visa_expire): void
+    {
+        $this->visa_expire = $visa_expire;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("visa_expire")
+     */
+    public function getVisaExpire(): ?DateTimeInterface
+    {
+        return $this->visa_expire;
+    }
+
+    /**
+     * @param string|null $permit_no
+     */
+    public function setPermitNo(?string $permit_no): void
+    {
+        $this->permit_no = $permit_no;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("permit_no")
+     */
+    public function getPermitNo(): ?string
+    {
+        return $this->permit_no;
+    }
+
+    /**
+     * @param string|null $visa_no
+     */
+    public function setVisaNo(?string $visa_no): void
+    {
+        $this->visa_no = $visa_no;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("visa_no")
+     */
+    public function getVisaNo(): ?string
+    {
+        return $this->visa_no;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("gender")
+     */
+    public function getGender(): ?string
+    {
+        return $this->gender;
+    }
+
+    /**
+     * @return string|null
+     *
      * @SerializedName("passport_id")
      */
     public function getPassportId(): ?string
@@ -4073,29 +4289,21 @@ final class Users extends Partner
     }
 
     /**
-     * @param string|null $identification_id
-     */
-    public function setIdentificationId(?string $identification_id): void
-    {
-        $this->identification_id = $identification_id;
-    }
-
-    /**
      * @return string|null
      *
-     * @SerializedName("identification_id")
+     * @SerializedName("work_phone")
      */
-    public function getIdentificationId(): ?string
+    public function getWorkPhone(): ?string
     {
-        return $this->identification_id;
+        return $this->work_phone;
     }
 
     /**
-     * @param OdooRelation|null $employee_country_id
+     * @param OdooRelation[]|null $category_ids
      */
-    public function setEmployeeCountryId(?OdooRelation $employee_country_id): void
+    public function setCategoryIds(?array $category_ids): void
     {
-        $this->employee_country_id = $employee_country_id;
+        $this->category_ids = $category_ids;
     }
 
     /**
@@ -4109,6 +4317,14 @@ final class Users extends Partner
     }
 
     /**
+     * @param OdooRelation|null $department_id
+     */
+    public function setDepartmentId(?OdooRelation $department_id): void
+    {
+        $this->department_id = $department_id;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("department_id")
@@ -4116,185 +4332,6 @@ final class Users extends Partner
     public function getDepartmentId(): ?OdooRelation
     {
         return $this->department_id;
-    }
-
-    /**
-     * @param string|null $oauth_uid
-     */
-    public function setOauthUid(?string $oauth_uid): void
-    {
-        $this->oauth_uid = $oauth_uid;
-    }
-
-    /**
-     * @param DateTimeInterface|null $google_calendar_token_validity
-     */
-    public function setGoogleCalendarTokenValidity(?DateTimeInterface $google_calendar_token_validity): void
-    {
-        $this->google_calendar_token_validity = $google_calendar_token_validity;
-    }
-
-    /**
-     * @param OdooRelation[]|null $employee_ids
-     */
-    public function setEmployeeIds(?array $employee_ids): void
-    {
-        $this->employee_ids = $employee_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("employee_ids")
-     */
-    public function getEmployeeIds(): ?array
-    {
-        return $this->employee_ids;
-    }
-
-    /**
-     * @param string|null $google_calendar_cal_id
-     */
-    public function setGoogleCalendarCalId(?string $google_calendar_cal_id): void
-    {
-        $this->google_calendar_cal_id = $google_calendar_cal_id;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("google_calendar_cal_id")
-     */
-    public function getGoogleCalendarCalId(): ?string
-    {
-        return $this->google_calendar_cal_id;
-    }
-
-    /**
-     * @param DateTimeInterface|null $google_calendar_last_sync_date
-     */
-    public function setGoogleCalendarLastSyncDate(?DateTimeInterface $google_calendar_last_sync_date): void
-    {
-        $this->google_calendar_last_sync_date = $google_calendar_last_sync_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("google_calendar_last_sync_date")
-     */
-    public function getGoogleCalendarLastSyncDate(): ?DateTimeInterface
-    {
-        return $this->google_calendar_last_sync_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("google_calendar_token_validity")
-     */
-    public function getGoogleCalendarTokenValidity(): ?DateTimeInterface
-    {
-        return $this->google_calendar_token_validity;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addEmployeeIds(OdooRelation $item): void
-    {
-        if ($this->hasEmployeeIds($item)) {
-            return;
-        }
-
-        if (null === $this->employee_ids) {
-            $this->employee_ids = [];
-        }
-
-        $this->employee_ids[] = $item;
-    }
-
-    /**
-     * @param string|null $google_calendar_token
-     */
-    public function setGoogleCalendarToken(?string $google_calendar_token): void
-    {
-        $this->google_calendar_token = $google_calendar_token;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("google_calendar_token")
-     */
-    public function getGoogleCalendarToken(): ?string
-    {
-        return $this->google_calendar_token;
-    }
-
-    /**
-     * @param string|null $google_calendar_rtoken
-     */
-    public function setGoogleCalendarRtoken(?string $google_calendar_rtoken): void
-    {
-        $this->google_calendar_rtoken = $google_calendar_rtoken;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("google_calendar_rtoken")
-     */
-    public function getGoogleCalendarRtoken(): ?string
-    {
-        return $this->google_calendar_rtoken;
-    }
-
-    /**
-     * @param string|null $oauth_access_token
-     */
-    public function setOauthAccessToken(?string $oauth_access_token): void
-    {
-        $this->oauth_access_token = $oauth_access_token;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("oauth_access_token")
-     */
-    public function getOauthAccessToken(): ?string
-    {
-        return $this->oauth_access_token;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasEmployeeIds(OdooRelation $item): bool
-    {
-        if (null === $this->employee_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->employee_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeEmployeeIds(OdooRelation $item): void
-    {
-        if (null === $this->employee_ids) {
-            $this->employee_ids = [];
-        }
-
-        if ($this->hasEmployeeIds($item)) {
-            $index = array_search($item, $this->employee_ids);
-            unset($this->employee_ids[$index]);
-        }
     }
 
     /**
@@ -4310,14 +4347,6 @@ final class Users extends Partner
             $index = array_search($item, $this->category_ids);
             unset($this->category_ids[$index]);
         }
-    }
-
-    /**
-     * @param string|null $employee_phone
-     */
-    public function setEmployeePhone(?string $employee_phone): void
-    {
-        $this->employee_phone = $employee_phone;
     }
 
     /**
@@ -4351,14 +4380,6 @@ final class Users extends Partner
     }
 
     /**
-     * @param OdooRelation[]|null $category_ids
-     */
-    public function setCategoryIds(?array $category_ids): void
-    {
-        $this->category_ids = $category_ids;
-    }
-
-    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("category_ids")
@@ -4366,6 +4387,16 @@ final class Users extends Partner
     public function getCategoryIds(): ?array
     {
         return $this->category_ids;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("work_location")
+     */
+    public function getWorkLocation(): ?string
+    {
+        return $this->work_location;
     }
 
     /**
@@ -4387,6 +4418,14 @@ final class Users extends Partner
     }
 
     /**
+     * @param string|null $employee_phone
+     */
+    public function setEmployeePhone(?string $employee_phone): void
+    {
+        $this->employee_phone = $employee_phone;
+    }
+
+    /**
      * @return string|null
      *
      * @SerializedName("employee_phone")
@@ -4394,16 +4433,6 @@ final class Users extends Partner
     public function getEmployeePhone(): ?string
     {
         return $this->employee_phone;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("employee_id")
-     */
-    public function getEmployeeId(): ?OdooRelation
-    {
-        return $this->employee_id;
     }
 
     /**
@@ -4433,39 +4462,181 @@ final class Users extends Partner
     }
 
     /**
+     * @param OdooRelation|null $address_id
+     */
+    public function setAddressId(?OdooRelation $address_id): void
+    {
+        $this->address_id = $address_id;
+    }
+
+    /**
+     * @param string|null $work_location
+     */
+    public function setWorkLocation(?string $work_location): void
+    {
+        $this->work_location = $work_location;
+    }
+
+    /**
+     * @param string|null $identification_id
+     */
+    public function setIdentificationId(?string $identification_id): void
+    {
+        $this->identification_id = $identification_id;
+    }
+
+    /**
+     * @param string|null $private_email
+     */
+    public function setPrivateEmail(?string $private_email): void
+    {
+        $this->private_email = $private_email;
+    }
+
+    /**
      * @return string|null
      *
-     * @SerializedName("work_phone")
+     * @SerializedName("identification_id")
      */
-    public function getWorkPhone(): ?string
+    public function getIdentificationId(): ?string
     {
-        return $this->work_phone;
+        return $this->identification_id;
     }
 
     /**
-     * @param string|null $job_title
+     * @param OdooRelation|null $employee_country_id
      */
-    public function setJobTitle(?string $job_title): void
+    public function setEmployeeCountryId(?OdooRelation $employee_country_id): void
     {
-        $this->job_title = $job_title;
+        $this->employee_country_id = $employee_country_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("employee_country_id")
+     */
+    public function getEmployeeCountryId(): ?OdooRelation
+    {
+        return $this->employee_country_id;
+    }
+
+    /**
+     * @param OdooRelation|null $employee_bank_account_id
+     */
+    public function setEmployeeBankAccountId(?OdooRelation $employee_bank_account_id): void
+    {
+        $this->employee_bank_account_id = $employee_bank_account_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("employee_bank_account_id")
+     */
+    public function getEmployeeBankAccountId(): ?OdooRelation
+    {
+        return $this->employee_bank_account_id;
+    }
+
+    /**
+     * @param int|null $km_home_work
+     */
+    public function setKmHomeWork(?int $km_home_work): void
+    {
+        $this->km_home_work = $km_home_work;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("km_home_work")
+     */
+    public function getKmHomeWork(): ?int
+    {
+        return $this->km_home_work;
     }
 
     /**
      * @return string|null
      *
-     * @SerializedName("job_title")
+     * @SerializedName("private_email")
      */
-    public function getJobTitle(): ?string
+    public function getPrivateEmail(): ?string
     {
-        return $this->job_title;
+        return $this->private_email;
     }
 
     /**
-     * @param OdooRelation|null $employee_id
+     * @return OdooRelation|null
+     *
+     * @SerializedName("employee_parent_id")
      */
-    public function setEmployeeId(?OdooRelation $employee_id): void
+    public function getEmployeeParentId(): ?OdooRelation
     {
-        $this->employee_id = $employee_id;
+        return $this->employee_parent_id;
+    }
+
+    /**
+     * @param bool|null $is_address_home_a_company
+     */
+    public function setIsAddressHomeACompany(?bool $is_address_home_a_company): void
+    {
+        $this->is_address_home_a_company = $is_address_home_a_company;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("is_address_home_a_company")
+     */
+    public function isIsAddressHomeACompany(): ?bool
+    {
+        return $this->is_address_home_a_company;
+    }
+
+    /**
+     * @param OdooRelation|null $address_home_id
+     */
+    public function setAddressHomeId(?OdooRelation $address_home_id): void
+    {
+        $this->address_home_id = $address_home_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("address_home_id")
+     */
+    public function getAddressHomeId(): ?OdooRelation
+    {
+        return $this->address_home_id;
+    }
+
+    /**
+     * @param OdooRelation|null $coach_id
+     */
+    public function setCoachId(?OdooRelation $coach_id): void
+    {
+        $this->coach_id = $coach_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("coach_id")
+     */
+    public function getCoachId(): ?OdooRelation
+    {
+        return $this->coach_id;
+    }
+
+    /**
+     * @param OdooRelation|null $employee_parent_id
+     */
+    public function setEmployeeParentId(?OdooRelation $employee_parent_id): void
+    {
+        $this->employee_parent_id = $employee_parent_id;
     }
 
     /**

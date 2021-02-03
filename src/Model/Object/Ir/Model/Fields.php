@@ -44,7 +44,7 @@ final class Fields extends Base
     private $complete_name;
 
     /**
-     * Object Name
+     * Model Name
      * ---
      * The technical name of the model this field belongs to
      * ---
@@ -56,7 +56,7 @@ final class Fields extends Base
     private $model;
 
     /**
-     * Object Relation
+     * Related Model
      * ---
      * For relationship fields, the technical name of the target model
      * ---
@@ -325,6 +325,22 @@ final class Fields extends Base
     private $groups;
 
     /**
+     * Expand Groups
+     * ---
+     * If checked, all the records of the target model will be included
+     * in a grouped result (e.g. 'Group By' filters, Kanban columns, etc.).
+     * Note that it can significantly reduce performance if the target model
+     * of the field contains a lot of records; usually used on models with
+     * few records (e.g. Stages, Job Positions, Event Types, etc.).
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $group_expand;
+
+    /**
      * Selectable
      * ---
      * Searchable : yes
@@ -490,7 +506,7 @@ final class Fields extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param string $model Object Name
+     * @param string $model Model Name
      *        ---
      *        The technical name of the model this field belongs to
      *        ---
@@ -558,16 +574,17 @@ final class Fields extends Base
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasGroups(OdooRelation $item): bool
+    public function removeGroups(OdooRelation $item): void
     {
         if (null === $this->groups) {
-            return false;
+            $this->groups = [];
         }
 
-        return in_array($item, $this->groups);
+        if ($this->hasGroups($item)) {
+            $index = array_search($item, $this->groups);
+            unset($this->groups[$index]);
+        }
     }
 
     /**
@@ -617,18 +634,21 @@ final class Fields extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @param bool|null $group_expand
      */
-    public function removeGroups(OdooRelation $item): void
+    public function setGroupExpand(?bool $group_expand): void
     {
-        if (null === $this->groups) {
-            $this->groups = [];
-        }
+        $this->group_expand = $group_expand;
+    }
 
-        if ($this->hasGroups($item)) {
-            $index = array_search($item, $this->groups);
-            unset($this->groups[$index]);
-        }
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("group_expand")
+     */
+    public function isGroupExpand(): ?bool
+    {
+        return $this->group_expand;
     }
 
     /**
@@ -648,14 +668,6 @@ final class Fields extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $groups
-     */
-    public function setGroups(?array $groups): void
-    {
-        $this->groups = $groups;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("column1")
@@ -663,6 +675,28 @@ final class Fields extends Base
     public function getColumn1(): ?string
     {
         return $this->column1;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasGroups(OdooRelation $item): bool
+    {
+        if (null === $this->groups) {
+            return false;
+        }
+
+        return in_array($item, $this->groups);
+    }
+
+    /**
+     * @param OdooRelation[]|null $groups
+     */
+    public function setGroups(?array $groups): void
+    {
+        $this->groups = $groups;
     }
 
     /**
@@ -720,16 +754,6 @@ final class Fields extends Base
     }
 
     /**
-     * @return string
-     *
-     * @SerializedName("state")
-     */
-    public function getState(): string
-    {
-        return $this->state;
-    }
-
-    /**
      * @param string|null $relation_table
      */
     public function setRelationTable(?string $relation_table): void
@@ -746,13 +770,11 @@ final class Fields extends Base
     }
 
     /**
-     * @return int|null
-     *
-     * @SerializedName("size")
+     * @param int|null $size
      */
-    public function getSize(): ?int
+    public function setSize(?int $size): void
     {
-        return $this->size;
+        $this->size = $size;
     }
 
     /**
@@ -918,19 +940,23 @@ final class Fields extends Base
     }
 
     /**
-     * @param int|null $size
+     * @return string
+     *
+     * @SerializedName("state")
      */
-    public function setSize(?int $size): void
+    public function getState(): string
     {
-        $this->size = $size;
+        return $this->state;
     }
 
     /**
-     * @param bool|null $translate
+     * @return int|null
+     *
+     * @SerializedName("size")
      */
-    public function setTranslate(?bool $translate): void
+    public function getSize(): ?int
     {
-        $this->translate = $translate;
+        return $this->size;
     }
 
     /**
@@ -1124,13 +1150,11 @@ final class Fields extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("translate")
+     * @param bool|null $translate
      */
-    public function isTranslate(): ?bool
+    public function setTranslate(?bool $translate): void
     {
-        return $this->translate;
+        $this->translate = $translate;
     }
 
     /**
@@ -1141,6 +1165,16 @@ final class Fields extends Base
     public function getRelatedFieldId(): ?OdooRelation
     {
         return $this->related_field_id;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("translate")
+     */
+    public function isTranslate(): ?bool
+    {
+        return $this->translate;
     }
 
     /**

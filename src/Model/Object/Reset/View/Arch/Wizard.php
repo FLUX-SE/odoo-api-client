@@ -15,7 +15,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  * Name : reset.view.arch.wizard
  * ---
  * Info :
- * A wizard to reset views architecture.
+ * A wizard to compare and reset views architecture.
  */
 final class Wizard extends Base
 {
@@ -43,6 +43,16 @@ final class Wizard extends Base
     private $view_name;
 
     /**
+     * Has Diff
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $has_diff;
+
+    /**
      * Architecture Diff
      * ---
      * Searchable : no
@@ -55,11 +65,10 @@ final class Wizard extends Base
     /**
      * Reset Mode
      * ---
-     * You might want to try a soft reset first.
-     * ---
      * Selection :
      *     -> soft (Restore previous version (soft reset).)
      *     -> hard (Reset to file version (hard reset).)
+     *     -> other_view (Reset to another view.)
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -67,6 +76,29 @@ final class Wizard extends Base
      * @var string
      */
     private $reset_mode;
+
+    /**
+     * Compare To View
+     * ---
+     * Relation : many2one (ir.ui.view)
+     * @see \Flux\OdooApiClient\Model\Object\Ir\Ui\View
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $compare_view_id;
+
+    /**
+     * Arch To Compare To
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $arch_to_compare;
 
     /**
      * Created by
@@ -117,11 +149,10 @@ final class Wizard extends Base
     /**
      * @param string $reset_mode Reset Mode
      *        ---
-     *        You might want to try a soft reset first.
-     *        ---
      *        Selection :
      *            -> soft (Restore previous version (soft reset).)
      *            -> hard (Reset to file version (hard reset).)
+     *            -> other_view (Reset to another view.)
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -132,11 +163,13 @@ final class Wizard extends Base
     }
 
     /**
-     * @param OdooRelation|null $create_uid
+     * @return string|null
+     *
+     * @SerializedName("arch_to_compare")
      */
-    public function setCreateUid(?OdooRelation $create_uid): void
+    public function getArchToCompare(): ?string
     {
-        $this->create_uid = $create_uid;
+        return $this->arch_to_compare;
     }
 
     /**
@@ -194,6 +227,14 @@ final class Wizard extends Base
     }
 
     /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("create_uid")
@@ -204,6 +245,22 @@ final class Wizard extends Base
     }
 
     /**
+     * @param string|null $arch_to_compare
+     */
+    public function setArchToCompare(?string $arch_to_compare): void
+    {
+        $this->arch_to_compare = $arch_to_compare;
+    }
+
+    /**
+     * @param OdooRelation|null $compare_view_id
+     */
+    public function setCompareViewId(?OdooRelation $compare_view_id): void
+    {
+        $this->compare_view_id = $compare_view_id;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("view_id")
@@ -211,6 +268,16 @@ final class Wizard extends Base
     public function getViewId(): ?OdooRelation
     {
         return $this->view_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("compare_view_id")
+     */
+    public function getCompareViewId(): ?OdooRelation
+    {
+        return $this->compare_view_id;
     }
 
     /**
@@ -247,6 +314,24 @@ final class Wizard extends Base
     public function getArchDiff(): ?string
     {
         return $this->arch_diff;
+    }
+
+    /**
+     * @param bool|null $has_diff
+     */
+    public function setHasDiff(?bool $has_diff): void
+    {
+        $this->has_diff = $has_diff;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("has_diff")
+     */
+    public function isHasDiff(): ?bool
+    {
+        return $this->has_diff;
     }
 
     /**

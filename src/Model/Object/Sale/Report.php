@@ -416,14 +416,18 @@ final class Report extends Base
     private $order_id;
 
     /**
-     * Days To Confirm
+     * Average Days To Confirm
      * ---
-     * Searchable : yes
-     * Sortable : yes
+     * Average days to confirm a sales order after its creation. Due to a hack needed to calculate this,             
+     * every record will show the same average value, therefore only use this as an aggregated value with
+     * group_operator=avg
+     * ---
+     * Searchable : no
+     * Sortable : no
      *
      * @var float|null
      */
-    private $days_to_confirm;
+    private $avg_days_to_confirm;
 
     /**
      * Invoice Status
@@ -669,21 +673,21 @@ final class Report extends Base
     }
 
     /**
-     * @param float|null $days_to_confirm
+     * @param float|null $avg_days_to_confirm
      */
-    public function setDaysToConfirm(?float $days_to_confirm): void
+    public function setAvgDaysToConfirm(?float $avg_days_to_confirm): void
     {
-        $this->days_to_confirm = $days_to_confirm;
+        $this->avg_days_to_confirm = $avg_days_to_confirm;
     }
 
     /**
      * @return float|null
      *
-     * @SerializedName("days_to_confirm")
+     * @SerializedName("avg_days_to_confirm")
      */
-    public function getDaysToConfirm(): ?float
+    public function getAvgDaysToConfirm(): ?float
     {
-        return $this->days_to_confirm;
+        return $this->avg_days_to_confirm;
     }
 
     /**

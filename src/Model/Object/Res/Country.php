@@ -42,7 +42,7 @@ final class Country extends Base
     /**
      * Country Code
      * ---
-     * The ISO country code in two chars.
+     * The ISO country code in two chars. 
      * You can use this field for quick search.
      * ---
      * Searchable : yes
@@ -102,14 +102,16 @@ final class Country extends Base
     private $currency_id;
 
     /**
-     * Image
+     * Flag
      * ---
-     * Searchable : yes
+     * Url of static flag image
+     * ---
+     * Searchable : no
      * Sortable : no
      *
-     * @var mixed|null
+     * @var string|null
      */
-    private $image;
+    private $image_url;
 
     /**
      * Country Calling Code
@@ -176,6 +178,26 @@ final class Country extends Base
     private $vat_label;
 
     /**
+     * State Required
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $state_required;
+
+    /**
+     * Zip Required
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $zip_required;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -235,41 +257,13 @@ final class Country extends Base
     }
 
     /**
-     * @param string|null $vat_label
-     */
-    public function setVatLabel(?string $vat_label): void
-    {
-        $this->vat_label = $vat_label;
-    }
-
-    /**
-     * @param OdooRelation $item
+     * @return bool|null
      *
-     * @return bool
+     * @SerializedName("zip_required")
      */
-    public function hasStateIds(OdooRelation $item): bool
+    public function isZipRequired(): ?bool
     {
-        if (null === $this->state_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->state_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addStateIds(OdooRelation $item): void
-    {
-        if ($this->hasStateIds($item)) {
-            return;
-        }
-
-        if (null === $this->state_ids) {
-            $this->state_ids = [];
-        }
-
-        $this->state_ids[] = $item;
+        return $this->zip_required;
     }
 
     /**
@@ -316,6 +310,54 @@ final class Country extends Base
     }
 
     /**
+     * @param string|null $vat_label
+     */
+    public function setVatLabel(?string $vat_label): void
+    {
+        $this->vat_label = $vat_label;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("state_required")
+     */
+    public function isStateRequired(): ?bool
+    {
+        return $this->state_required;
+    }
+
+    /**
+     * @param bool|null $state_required
+     */
+    public function setStateRequired(?bool $state_required): void
+    {
+        $this->state_required = $state_required;
+    }
+
+    /**
+     * @param bool|null $zip_required
+     */
+    public function setZipRequired(?bool $zip_required): void
+    {
+        $this->zip_required = $zip_required;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasStateIds(OdooRelation $item): bool
+    {
+        if (null === $this->state_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->state_ids);
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("create_uid")
@@ -323,16 +365,6 @@ final class Country extends Base
     public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("state_ids")
-     */
-    public function getStateIds(): ?array
-    {
-        return $this->state_ids;
     }
 
     /**
@@ -398,26 +430,27 @@ final class Country extends Base
     }
 
     /**
+     * @param OdooRelation $item
+     */
+    public function addStateIds(OdooRelation $item): void
+    {
+        if ($this->hasStateIds($item)) {
+            return;
+        }
+
+        if (null === $this->state_ids) {
+            $this->state_ids = [];
+        }
+
+        $this->state_ids[] = $item;
+    }
+
+    /**
      * @param OdooRelation[]|null $state_ids
      */
     public function setStateIds(?array $state_ids): void
     {
         $this->state_ids = $state_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeCountryGroupIds(OdooRelation $item): void
-    {
-        if (null === $this->country_group_ids) {
-            $this->country_group_ids = [];
-        }
-
-        if ($this->hasCountryGroupIds($item)) {
-            $index = array_search($item, $this->country_group_ids);
-            unset($this->country_group_ids[$index]);
-        }
     }
 
     /**
@@ -431,13 +464,11 @@ final class Country extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("currency_id")
+     * @param OdooRelation|null $currency_id
      */
-    public function getCurrencyId(): ?OdooRelation
+    public function setCurrencyId(?OdooRelation $currency_id): void
     {
-        return $this->currency_id;
+        $this->currency_id = $currency_id;
     }
 
     /**
@@ -503,45 +534,41 @@ final class Country extends Base
     }
 
     /**
-     * @param OdooRelation|null $currency_id
-     */
-    public function setCurrencyId(?OdooRelation $currency_id): void
-    {
-        $this->currency_id = $currency_id;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addCountryGroupIds(OdooRelation $item): void
-    {
-        if ($this->hasCountryGroupIds($item)) {
-            return;
-        }
-
-        if (null === $this->country_group_ids) {
-            $this->country_group_ids = [];
-        }
-
-        $this->country_group_ids[] = $item;
-    }
-
-    /**
-     * @return mixed|null
+     * @return OdooRelation|null
      *
-     * @SerializedName("image")
+     * @SerializedName("currency_id")
      */
-    public function getImage()
+    public function getCurrencyId(): ?OdooRelation
     {
-        return $this->image;
+        return $this->currency_id;
     }
 
     /**
-     * @param mixed|null $image
+     * @return string|null
+     *
+     * @SerializedName("image_url")
      */
-    public function setImage($image): void
+    public function getImageUrl(): ?string
     {
-        $this->image = $image;
+        return $this->image_url;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("state_ids")
+     */
+    public function getStateIds(): ?array
+    {
+        return $this->state_ids;
+    }
+
+    /**
+     * @param string|null $image_url
+     */
+    public function setImageUrl(?string $image_url): void
+    {
+        $this->image_url = $image_url;
     }
 
     /**
@@ -592,6 +619,37 @@ final class Country extends Base
         }
 
         return in_array($item, $this->country_group_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addCountryGroupIds(OdooRelation $item): void
+    {
+        if ($this->hasCountryGroupIds($item)) {
+            return;
+        }
+
+        if (null === $this->country_group_ids) {
+            $this->country_group_ids = [];
+        }
+
+        $this->country_group_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeCountryGroupIds(OdooRelation $item): void
+    {
+        if (null === $this->country_group_ids) {
+            $this->country_group_ids = [];
+        }
+
+        if ($this->hasCountryGroupIds($item)) {
+            $index = array_search($item, $this->country_group_ids);
+            unset($this->country_group_ids[$index]);
+        }
     }
 
     /**

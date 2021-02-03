@@ -15,9 +15,11 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  * Name : hr.employee.base
  * ---
  * Info :
- * The base model, which is implicitly inherited by all models.
+ * Updates the base class to support setting xids directly in create by
+ *         providing an "id" key (otherwise stripped by create) during an import
+ *         (which should strip 'id' from the input data anyway)
  */
-abstract class Base extends BaseAlias
+final class Base extends BaseAlias
 {
     /**
      * Name
@@ -27,7 +29,7 @@ abstract class Base extends BaseAlias
      *
      * @var string|null
      */
-    protected $name;
+    private $name;
 
     /**
      * Active
@@ -37,7 +39,7 @@ abstract class Base extends BaseAlias
      *
      * @var bool|null
      */
-    protected $active;
+    private $active;
 
     /**
      * Color Index
@@ -47,7 +49,7 @@ abstract class Base extends BaseAlias
      *
      * @var int|null
      */
-    protected $color;
+    private $color;
 
     /**
      * Department
@@ -60,7 +62,7 @@ abstract class Base extends BaseAlias
      *
      * @var OdooRelation|null
      */
-    protected $department_id;
+    private $department_id;
 
     /**
      * Job Position
@@ -73,7 +75,7 @@ abstract class Base extends BaseAlias
      *
      * @var OdooRelation|null
      */
-    protected $job_id;
+    private $job_id;
 
     /**
      * Job Title
@@ -83,7 +85,7 @@ abstract class Base extends BaseAlias
      *
      * @var string|null
      */
-    protected $job_title;
+    private $job_title;
 
     /**
      * Company
@@ -96,7 +98,7 @@ abstract class Base extends BaseAlias
      *
      * @var OdooRelation|null
      */
-    protected $company_id;
+    private $company_id;
 
     /**
      * Work Address
@@ -109,7 +111,7 @@ abstract class Base extends BaseAlias
      *
      * @var OdooRelation|null
      */
-    protected $address_id;
+    private $address_id;
 
     /**
      * Work Phone
@@ -119,7 +121,7 @@ abstract class Base extends BaseAlias
      *
      * @var string|null
      */
-    protected $work_phone;
+    private $work_phone;
 
     /**
      * Work Mobile
@@ -129,7 +131,7 @@ abstract class Base extends BaseAlias
      *
      * @var string|null
      */
-    protected $mobile_phone;
+    private $mobile_phone;
 
     /**
      * Work Email
@@ -139,7 +141,7 @@ abstract class Base extends BaseAlias
      *
      * @var string|null
      */
-    protected $work_email;
+    private $work_email;
 
     /**
      * Work Location
@@ -149,7 +151,7 @@ abstract class Base extends BaseAlias
      *
      * @var string|null
      */
-    protected $work_location;
+    private $work_location;
 
     /**
      * User
@@ -162,7 +164,7 @@ abstract class Base extends BaseAlias
      *
      * @var OdooRelation|null
      */
-    protected $user_id;
+    private $user_id;
 
     /**
      * Resource
@@ -175,7 +177,7 @@ abstract class Base extends BaseAlias
      *
      * @var OdooRelation|null
      */
-    protected $resource_id;
+    private $resource_id;
 
     /**
      * Resource Calendar
@@ -188,7 +190,7 @@ abstract class Base extends BaseAlias
      *
      * @var OdooRelation|null
      */
-    protected $resource_calendar_id;
+    private $resource_calendar_id;
 
     /**
      * Manager
@@ -201,10 +203,13 @@ abstract class Base extends BaseAlias
      *
      * @var OdooRelation|null
      */
-    protected $parent_id;
+    private $parent_id;
 
     /**
      * Coach
+     * ---
+     * Select the "Employee" who is the coach of this employee.
+     * The "Coach" has no specific rights or responsibilities by default.
      * ---
      * Relation : many2one (hr.employee)
      * @see \Flux\OdooApiClient\Model\Object\Hr\Employee
@@ -214,7 +219,7 @@ abstract class Base extends BaseAlias
      *
      * @var OdooRelation|null
      */
-    protected $coach_id;
+    private $coach_id;
 
     /**
      * Timezone
@@ -397,7 +402,6 @@ abstract class Base extends BaseAlias
      *     -> America/North_Dakota/Beulah (America/North_Dakota/Beulah)
      *     -> America/North_Dakota/Center (America/North_Dakota/Center)
      *     -> America/North_Dakota/New_Salem (America/North_Dakota/New_Salem)
-     *     -> America/Nuuk (America/Nuuk)
      *     -> America/Ojinaga (America/Ojinaga)
      *     -> America/Panama (America/Panama)
      *     -> America/Pangnirtung (America/Pangnirtung)
@@ -821,7 +825,7 @@ abstract class Base extends BaseAlias
      *
      * @var string|null
      */
-    protected $tz;
+    private $tz;
 
     /**
      * Hr Presence State
@@ -836,7 +840,7 @@ abstract class Base extends BaseAlias
      *
      * @var string|null
      */
-    protected $hr_presence_state;
+    private $hr_presence_state;
 
     /**
      * Last Activity
@@ -846,7 +850,7 @@ abstract class Base extends BaseAlias
      *
      * @var DateTimeInterface|null
      */
-    protected $last_activity;
+    private $last_activity;
 
     /**
      * Last Activity Time
@@ -856,17 +860,34 @@ abstract class Base extends BaseAlias
      *
      * @var string|null
      */
-    protected $last_activity_time;
+    private $last_activity_time;
 
     /**
-     * Indirect Surbordinates Count
+     * Hr Icon Display
+     * ---
+     * Selection :
+     *     -> presence_present (Present)
+     *     -> presence_absent_active (Present but not active)
+     *     -> presence_absent (Absent)
+     *     -> presence_to_define (To define)
+     *     -> presence_undetermined (Undetermined)
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $hr_icon_display;
+
+    /**
+     * Indirect Subordinates Count
      * ---
      * Searchable : no
      * Sortable : no
      *
      * @var int|null
      */
-    protected $child_all_count;
+    private $child_all_count;
 
     /**
      * @return string|null
@@ -879,19 +900,11 @@ abstract class Base extends BaseAlias
     }
 
     /**
-     * @param OdooRelation|null $coach_id
+     * @param string|null $tz
      */
-    public function setCoachId(?OdooRelation $coach_id): void
+    public function setTz(?string $tz): void
     {
-        $this->coach_id = $coach_id;
-    }
-
-    /**
-     * @param OdooRelation|null $user_id
-     */
-    public function setUserId(?OdooRelation $user_id): void
-    {
-        $this->user_id = $user_id;
+        $this->tz = $tz;
     }
 
     /**
@@ -959,6 +972,14 @@ abstract class Base extends BaseAlias
     }
 
     /**
+     * @param OdooRelation|null $coach_id
+     */
+    public function setCoachId(?OdooRelation $coach_id): void
+    {
+        $this->coach_id = $coach_id;
+    }
+
+    /**
      * @return string|null
      *
      * @SerializedName("tz")
@@ -969,22 +990,6 @@ abstract class Base extends BaseAlias
     }
 
     /**
-     * @param string|null $work_location
-     */
-    public function setWorkLocation(?string $work_location): void
-    {
-        $this->work_location = $work_location;
-    }
-
-    /**
-     * @param string|null $tz
-     */
-    public function setTz(?string $tz): void
-    {
-        $this->tz = $tz;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("hr_presence_state")
@@ -992,6 +997,16 @@ abstract class Base extends BaseAlias
     public function getHrPresenceState(): ?string
     {
         return $this->hr_presence_state;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("user_id")
+     */
+    public function getUserId(): ?OdooRelation
+    {
+        return $this->user_id;
     }
 
     /**
@@ -1039,6 +1054,24 @@ abstract class Base extends BaseAlias
     }
 
     /**
+     * @return string|null
+     *
+     * @SerializedName("hr_icon_display")
+     */
+    public function getHrIconDisplay(): ?string
+    {
+        return $this->hr_icon_display;
+    }
+
+    /**
+     * @param string|null $hr_icon_display
+     */
+    public function setHrIconDisplay(?string $hr_icon_display): void
+    {
+        $this->hr_icon_display = $hr_icon_display;
+    }
+
+    /**
      * @return int|null
      *
      * @SerializedName("child_all_count")
@@ -1057,23 +1090,19 @@ abstract class Base extends BaseAlias
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("user_id")
+     * @param OdooRelation|null $user_id
      */
-    public function getUserId(): ?OdooRelation
+    public function setUserId(?OdooRelation $user_id): void
     {
-        return $this->user_id;
+        $this->user_id = $user_id;
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("work_location")
+     * @param string|null $work_location
      */
-    public function getWorkLocation(): ?string
+    public function setWorkLocation(?string $work_location): void
     {
-        return $this->work_location;
+        $this->work_location = $work_location;
     }
 
     /**
@@ -1085,13 +1114,11 @@ abstract class Base extends BaseAlias
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("job_title")
+     * @param string|null $job_title
      */
-    public function getJobTitle(): ?string
+    public function setJobTitle(?string $job_title): void
     {
-        return $this->job_title;
+        $this->job_title = $job_title;
     }
 
     /**
@@ -1167,19 +1194,13 @@ abstract class Base extends BaseAlias
     }
 
     /**
-     * @param string|null $job_title
+     * @return string|null
+     *
+     * @SerializedName("job_title")
      */
-    public function setJobTitle(?string $job_title): void
+    public function getJobTitle(): ?string
     {
-        $this->job_title = $job_title;
-    }
-
-    /**
-     * @param string|null $work_email
-     */
-    public function setWorkEmail(?string $work_email): void
-    {
-        $this->work_email = $work_email;
+        return $this->job_title;
     }
 
     /**
@@ -1190,6 +1211,16 @@ abstract class Base extends BaseAlias
     public function getCompanyId(): ?OdooRelation
     {
         return $this->company_id;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("work_location")
+     */
+    public function getWorkLocation(): ?string
+    {
+        return $this->work_location;
     }
 
     /**
@@ -1262,6 +1293,14 @@ abstract class Base extends BaseAlias
     public function getWorkEmail(): ?string
     {
         return $this->work_email;
+    }
+
+    /**
+     * @param string|null $work_email
+     */
+    public function setWorkEmail(?string $work_email): void
+    {
+        $this->work_email = $work_email;
     }
 
     /**

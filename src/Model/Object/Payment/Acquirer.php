@@ -348,7 +348,9 @@ final class Acquirer extends Base
     private $fees_active;
 
     /**
-     * Use SEPA QR Code
+     * Enable QR Codes
+     * ---
+     * Enable the use of QR-codes for payments made on this provider.
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -438,7 +440,7 @@ final class Acquirer extends Base
     private $payment_flow;
 
     /**
-     * For Incoming Payments
+     * Inbound Payment Methods
      * ---
      * Manual: Get paid by cash, check or any other method outside of Odoo.
      * Electronic: Get paid automatically through a payment acquirer by requesting a transaction on a card saved by
@@ -562,6 +564,19 @@ final class Acquirer extends Base
      * @var string|null
      */
     private $stripe_publishable_key;
+
+    /**
+     * Stripe Webhook Secret
+     * ---
+     * If you enable webhooks, this secret is used to verify the electronic signature of events sent by Stripe to
+     * Odoo. Failing to set this field in Odoo will disable the webhook system for this acquirer entirely.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $stripe_webhook_secret;
 
     /**
      * Checkout Image URL
@@ -717,11 +732,25 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $inbound_payment_method_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setInboundPaymentMethodIds(?array $inbound_payment_method_ids): void
+    public function hasInboundPaymentMethodIds(OdooRelation $item): bool
     {
-        $this->inbound_payment_method_ids = $inbound_payment_method_ids;
+        if (null === $this->inbound_payment_method_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->inbound_payment_method_ids);
+    }
+
+    /**
+     * @param string|null $paypal_pdt_token
+     */
+    public function setPaypalPdtToken(?string $paypal_pdt_token): void
+    {
+        $this->paypal_pdt_token = $paypal_pdt_token;
     }
 
     /**
@@ -820,17 +849,19 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param OdooRelation[]|null $inbound_payment_method_ids
      */
-    public function hasInboundPaymentMethodIds(OdooRelation $item): bool
+    public function setInboundPaymentMethodIds(?array $inbound_payment_method_ids): void
     {
-        if (null === $this->inbound_payment_method_ids) {
-            return false;
-        }
+        $this->inbound_payment_method_ids = $inbound_payment_method_ids;
+    }
 
-        return in_array($item, $this->inbound_payment_method_ids);
+    /**
+     * @param float|null $fees_dom_fixed
+     */
+    public function setFeesDomFixed(?float $fees_dom_fixed): void
+    {
+        $this->fees_dom_fixed = $fees_dom_fixed;
     }
 
     /**
@@ -841,16 +872,6 @@ final class Acquirer extends Base
     public function getInboundPaymentMethodIds(): ?array
     {
         return $this->inbound_payment_method_ids;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("fees_dom_fixed")
-     */
-    public function getFeesDomFixed(): ?float
-    {
-        return $this->fees_dom_fixed;
     }
 
     /**
@@ -961,47 +982,41 @@ final class Acquirer extends Base
     }
 
     /**
-     * @return bool|null
+     * @return float|null
      *
-     * @SerializedName("module_to_buy")
+     * @SerializedName("fees_dom_fixed")
      */
-    public function isModuleToBuy(): ?bool
+    public function getFeesDomFixed(): ?float
     {
-        return $this->module_to_buy;
+        return $this->fees_dom_fixed;
     }
 
     /**
-     * @param string|null $paypal_pdt_token
-     */
-    public function setPaypalPdtToken(?string $paypal_pdt_token): void
-    {
-        $this->paypal_pdt_token = $paypal_pdt_token;
-    }
-
-    /**
-     * @param float|null $fees_dom_fixed
-     */
-    public function setFeesDomFixed(?float $fees_dom_fixed): void
-    {
-        $this->fees_dom_fixed = $fees_dom_fixed;
-    }
-
-    /**
-     * @return string|null
+     * @return float|null
      *
-     * @SerializedName("module_state")
+     * @SerializedName("fees_dom_var")
      */
-    public function getModuleState(): ?string
+    public function getFeesDomVar(): ?float
     {
-        return $this->module_state;
+        return $this->fees_dom_var;
     }
 
     /**
-     * @param string $provider
+     * @param string|null $module_state
      */
-    public function setProvider(string $provider): void
+    public function setModuleState(?string $module_state): void
     {
-        $this->provider = $provider;
+        $this->module_state = $module_state;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("provider")
+     */
+    public function getProvider(): string
+    {
+        return $this->provider;
     }
 
     /**
@@ -1095,23 +1110,11 @@ final class Acquirer extends Base
     }
 
     /**
-     * @return string
-     *
-     * @SerializedName("provider")
+     * @param string $provider
      */
-    public function getProvider(): string
+    public function setProvider(string $provider): void
     {
-        return $this->provider;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("fees_dom_var")
-     */
-    public function getFeesDomVar(): ?float
-    {
-        return $this->fees_dom_var;
+        $this->provider = $provider;
     }
 
     /**
@@ -1123,6 +1126,14 @@ final class Acquirer extends Base
     }
 
     /**
+     * @param float|null $fees_dom_var
+     */
+    public function setFeesDomVar(?float $fees_dom_var): void
+    {
+        $this->fees_dom_var = $fees_dom_var;
+    }
+
+    /**
      * @return string|null
      *
      * @SerializedName("stripe_image_url")
@@ -1130,6 +1141,24 @@ final class Acquirer extends Base
     public function getStripeImageUrl(): ?string
     {
         return $this->stripe_image_url;
+    }
+
+    /**
+     * @param string|null $stripe_webhook_secret
+     */
+    public function setStripeWebhookSecret(?string $stripe_webhook_secret): void
+    {
+        $this->stripe_webhook_secret = $stripe_webhook_secret;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("stripe_webhook_secret")
+     */
+    public function getStripeWebhookSecret(): ?string
+    {
+        return $this->stripe_webhook_secret;
     }
 
     /**
@@ -1205,27 +1234,23 @@ final class Acquirer extends Base
     }
 
     /**
-     * @param float|null $fees_dom_var
+     * @return bool|null
+     *
+     * @SerializedName("module_to_buy")
      */
-    public function setFeesDomVar(?float $fees_dom_var): void
+    public function isModuleToBuy(): ?bool
     {
-        $this->fees_dom_var = $fees_dom_var;
+        return $this->module_to_buy;
     }
 
     /**
-     * @param string|null $module_state
+     * @return string|null
+     *
+     * @SerializedName("module_state")
      */
-    public function setModuleState(?string $module_state): void
+    public function getModuleState(): ?string
     {
-        $this->module_state = $module_state;
-    }
-
-    /**
-     * @param OdooRelation|null $module_id
-     */
-    public function setModuleId(?OdooRelation $module_id): void
-    {
-        $this->module_id = $module_id;
+        return $this->module_state;
     }
 
     /**
@@ -1477,13 +1502,11 @@ final class Acquirer extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("module_id")
+     * @param OdooRelation|null $module_id
      */
-    public function getModuleId(): ?OdooRelation
+    public function setModuleId(?OdooRelation $module_id): void
     {
-        return $this->module_id;
+        $this->module_id = $module_id;
     }
 
     /**
@@ -1492,6 +1515,16 @@ final class Acquirer extends Base
     public function setSaveToken(?string $save_token): void
     {
         $this->save_token = $save_token;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("module_id")
+     */
+    public function getModuleId(): ?OdooRelation
+    {
+        return $this->module_id;
     }
 
     /**

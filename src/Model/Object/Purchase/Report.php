@@ -30,7 +30,7 @@ final class Report extends Base
     /**
      * Order Date
      * ---
-     * Date on which this document has been created
+     * Depicts the date when the Quotation should be validated and converted into a purchase order.
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -40,7 +40,7 @@ final class Report extends Base
     private $date_order;
 
     /**
-     * Order Status
+     * Status
      * ---
      * Selection :
      *     -> draft (Draft RFQ)
@@ -148,6 +148,8 @@ final class Report extends Base
     /**
      * Days to Confirm
      * ---
+     * Amount of time between purchase approval and order by date.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
@@ -158,12 +160,28 @@ final class Report extends Base
     /**
      * Days to Receive
      * ---
+     * Amount of time between date planned and order by date for each purchase order line.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
      * @var float|null
      */
     private $delay_pass;
+
+    /**
+     * Average Days to Purchase
+     * ---
+     * Amount of time between purchase approval and document creation date. Due to a hack needed to calculate this,  
+     * every record will show the same average value, therefore only use this as an aggregated value with
+     * group_operator=avg
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var float|null
+     */
+    private $avg_days_to_purchase;
 
     /**
      * Total
@@ -370,6 +388,30 @@ final class Report extends Base
     private $picking_type_id;
 
     /**
+     * Average Receipt Delay
+     * ---
+     * Amount of time between expected and effective receipt date. Due to a hack needed to calculate this,           
+     * every record will show the same average value, therefore only use this as an aggregated value with
+     * group_operator=avg
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var float|null
+     */
+    private $avg_receipt_delay;
+
+    /**
+     * Effective Date
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var DateTimeInterface|null
+     */
+    private $effective_date;
+
+    /**
      * @param OdooRelation $product_uom Reference Unit of Measure
      *        ---
      *        Relation : many2one (uom.uom)
@@ -384,23 +426,13 @@ final class Report extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @return float|null
      *
-     * @SerializedName("order_id")
+     * @SerializedName("untaxed_total")
      */
-    public function getOrderId(): ?OdooRelation
+    public function getUntaxedTotal(): ?float
     {
-        return $this->order_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("country_id")
-     */
-    public function getCountryId(): ?OdooRelation
-    {
-        return $this->country_id;
+        return $this->untaxed_total;
     }
 
     /**
@@ -502,6 +534,16 @@ final class Report extends Base
     }
 
     /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("order_id")
+     */
+    public function getOrderId(): ?OdooRelation
+    {
+        return $this->order_id;
+    }
+
+    /**
      * @param OdooRelation|null $order_id
      */
     public function setOrderId(?OdooRelation $order_id): void
@@ -510,31 +552,19 @@ final class Report extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("product_tmpl_id")
-     */
-    public function getProductTmplId(): ?OdooRelation
-    {
-        return $this->product_tmpl_id;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("untaxed_total")
-     */
-    public function getUntaxedTotal(): ?float
-    {
-        return $this->untaxed_total;
-    }
-
-    /**
      * @param float|null $untaxed_total
      */
     public function setUntaxedTotal(?float $untaxed_total): void
     {
         $this->untaxed_total = $untaxed_total;
+    }
+
+    /**
+     * @param OdooRelation|null $product_tmpl_id
+     */
+    public function setProductTmplId(?OdooRelation $product_tmpl_id): void
+    {
+        $this->product_tmpl_id = $product_tmpl_id;
     }
 
     /**
@@ -628,19 +658,59 @@ final class Report extends Base
     }
 
     /**
-     * @param OdooRelation|null $product_tmpl_id
+     * @return float|null
+     *
+     * @SerializedName("avg_receipt_delay")
      */
-    public function setProductTmplId(?OdooRelation $product_tmpl_id): void
+    public function getAvgReceiptDelay(): ?float
     {
-        $this->product_tmpl_id = $product_tmpl_id;
+        return $this->avg_receipt_delay;
     }
 
     /**
-     * @param OdooRelation|null $category_id
+     * @param float|null $avg_receipt_delay
      */
-    public function setCategoryId(?OdooRelation $category_id): void
+    public function setAvgReceiptDelay(?float $avg_receipt_delay): void
     {
-        $this->category_id = $category_id;
+        $this->avg_receipt_delay = $avg_receipt_delay;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("effective_date")
+     */
+    public function getEffectiveDate(): ?DateTimeInterface
+    {
+        return $this->effective_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $effective_date
+     */
+    public function setEffectiveDate(?DateTimeInterface $effective_date): void
+    {
+        $this->effective_date = $effective_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("country_id")
+     */
+    public function getCountryId(): ?OdooRelation
+    {
+        return $this->country_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("product_tmpl_id")
+     */
+    public function getProductTmplId(): ?OdooRelation
+    {
+        return $this->product_tmpl_id;
     }
 
     /**
@@ -654,11 +724,11 @@ final class Report extends Base
     }
 
     /**
-     * @param OdooRelation|null $company_id
+     * @param OdooRelation|null $currency_id
      */
-    public function setCompanyId(?OdooRelation $company_id): void
+    public function setCurrencyId(?OdooRelation $currency_id): void
     {
-        $this->company_id = $company_id;
+        $this->currency_id = $currency_id;
     }
 
     /**
@@ -770,6 +840,14 @@ final class Report extends Base
     }
 
     /**
+     * @param OdooRelation|null $company_id
+     */
+    public function setCompanyId(?OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("currency_id")
@@ -782,29 +860,19 @@ final class Report extends Base
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("category_id")
-     */
-    public function getCategoryId(): ?OdooRelation
-    {
-        return $this->category_id;
-    }
-
-    /**
-     * @param OdooRelation|null $currency_id
-     */
-    public function setCurrencyId(?OdooRelation $currency_id): void
-    {
-        $this->currency_id = $currency_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
      * @SerializedName("user_id")
      */
     public function getUserId(): ?OdooRelation
     {
         return $this->user_id;
+    }
+
+    /**
+     * @param OdooRelation|null $category_id
+     */
+    public function setCategoryId(?OdooRelation $category_id): void
+    {
+        $this->category_id = $category_id;
     }
 
     /**
@@ -849,6 +917,24 @@ final class Report extends Base
     public function setDelayPass(?float $delay_pass): void
     {
         $this->delay_pass = $delay_pass;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("avg_days_to_purchase")
+     */
+    public function getAvgDaysToPurchase(): ?float
+    {
+        return $this->avg_days_to_purchase;
+    }
+
+    /**
+     * @param float|null $avg_days_to_purchase
+     */
+    public function setAvgDaysToPurchase(?float $avg_days_to_purchase): void
+    {
+        $this->avg_days_to_purchase = $avg_days_to_purchase;
     }
 
     /**
@@ -903,6 +989,16 @@ final class Report extends Base
     public function setNbrLines(?int $nbr_lines): void
     {
         $this->nbr_lines = $nbr_lines;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("category_id")
+     */
+    public function getCategoryId(): ?OdooRelation
+    {
+        return $this->category_id;
     }
 
     /**

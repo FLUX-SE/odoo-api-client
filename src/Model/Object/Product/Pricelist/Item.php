@@ -83,7 +83,7 @@ final class Item extends Base
      * Searchable : yes
      * Sortable : yes
      *
-     * @var int|null
+     * @var float|null
      */
     private $min_quantity;
 
@@ -252,7 +252,8 @@ final class Item extends Base
     /**
      * Start Date
      * ---
-     * Starting date for the pricelist item validation
+     * Starting datetime for the pricelist item validation
+     * The displayed value depends on the timezone set in your preferences.
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -264,7 +265,8 @@ final class Item extends Base
     /**
      * End Date
      * ---
-     * Ending valid for the pricelist item validation
+     * Ending datetime for the pricelist item validation
+     * The displayed value depends on the timezone set in your preferences.
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -741,19 +743,19 @@ final class Item extends Base
     }
 
     /**
-     * @return int|null
+     * @return float|null
      *
      * @SerializedName("min_quantity")
      */
-    public function getMinQuantity(): ?int
+    public function getMinQuantity(): ?float
     {
         return $this->min_quantity;
     }
 
     /**
-     * @param int|null $min_quantity
+     * @param float|null $min_quantity
      */
-    public function setMinQuantity(?int $min_quantity): void
+    public function setMinQuantity(?float $min_quantity): void
     {
         $this->min_quantity = $min_quantity;
     }

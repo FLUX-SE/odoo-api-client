@@ -62,6 +62,18 @@ final class Method extends Base
     private $payment_type;
 
     /**
+     * Sequence
+     * ---
+     * Used to order Methods in the form view
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var int|null
+     */
+    private $sequence;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -133,70 +145,6 @@ final class Method extends Base
     }
 
     /**
-     * @return string
-     *
-     * @SerializedName("name")
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("code")
-     */
-    public function getCode(): string
-    {
-        return $this->code;
-    }
-
-    /**
-     * @param string $code
-     */
-    public function setCode(string $code): void
-    {
-        $this->code = $code;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("payment_type")
-     */
-    public function getPaymentType(): string
-    {
-        return $this->payment_type;
-    }
-
-    /**
-     * @param string $payment_type
-     */
-    public function setPaymentType(string $payment_type): void
-    {
-        $this->payment_type = $payment_type;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
-     */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
-    }
-
-    /**
      * @param OdooRelation|null $create_uid
      */
     public function setCreateUid(?OdooRelation $create_uid): void
@@ -205,39 +153,11 @@ final class Method extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("create_date")
+     * @param DateTimeInterface|null $write_date
      */
-    public function getCreateDate(): ?DateTimeInterface
+    public function setWriteDate(?DateTimeInterface $write_date): void
     {
-        return $this->create_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("write_uid")
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
+        $this->write_date = $write_date;
     }
 
     /**
@@ -251,11 +171,121 @@ final class Method extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $write_date
+     * @param OdooRelation|null $write_uid
      */
-    public function setWriteDate(?DateTimeInterface $write_date): void
+    public function setWriteUid(?OdooRelation $write_uid): void
     {
-        $this->write_date = $write_date;
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("name")
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param int|null $sequence
+     */
+    public function setSequence(?int $sequence): void
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("sequence")
+     */
+    public function getSequence(): ?int
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * @param string $payment_type
+     */
+    public function setPaymentType(string $payment_type): void
+    {
+        $this->payment_type = $payment_type;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("payment_type")
+     */
+    public function getPaymentType(): string
+    {
+        return $this->payment_type;
+    }
+
+    /**
+     * @param string $code
+     */
+    public function setCode(string $code): void
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("code")
+     */
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 
     /**

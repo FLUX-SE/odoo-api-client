@@ -38,6 +38,29 @@ final class Transfer extends Base
     private $pick_ids;
 
     /**
+     * Show Transfers
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $show_transfers;
+
+    /**
+     * Immediate Transfer Lines
+     * ---
+     * Relation : one2many (stock.immediate.transfer.line -> immediate_transfer_id)
+     * @see \Flux\OdooApiClient\Model\Object\Stock\Immediate\Transfer\Line
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $immediate_transfer_line_ids;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -94,6 +117,109 @@ final class Transfer extends Base
     }
 
     /**
+     * @param OdooRelation $item
+     */
+    public function removeImmediateTransferLineIds(OdooRelation $item): void
+    {
+        if (null === $this->immediate_transfer_line_ids) {
+            $this->immediate_transfer_line_ids = [];
+        }
+
+        if ($this->hasImmediateTransferLineIds($item)) {
+            $index = array_search($item, $this->immediate_transfer_line_ids);
+            unset($this->immediate_transfer_line_ids[$index]);
+        }
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("create_uid")
+     */
+    public function getCreateUid(): ?OdooRelation
+    {
+        return $this->create_uid;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addImmediateTransferLineIds(OdooRelation $item): void
+    {
+        if ($this->hasImmediateTransferLineIds($item)) {
+            return;
+        }
+
+        if (null === $this->immediate_transfer_line_ids) {
+            $this->immediate_transfer_line_ids = [];
+        }
+
+        $this->immediate_transfer_line_ids[] = $item;
+    }
+
+    /**
      * @param OdooRelation[]|null $pick_ids
      */
     public function setPickIds(?array $pick_ids): void
@@ -106,13 +232,64 @@ final class Transfer extends Base
      *
      * @return bool
      */
-    public function hasPickIds(OdooRelation $item): bool
+    public function hasImmediateTransferLineIds(OdooRelation $item): bool
     {
-        if (null === $this->pick_ids) {
+        if (null === $this->immediate_transfer_line_ids) {
             return false;
         }
 
-        return in_array($item, $this->pick_ids);
+        return in_array($item, $this->immediate_transfer_line_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $immediate_transfer_line_ids
+     */
+    public function setImmediateTransferLineIds(?array $immediate_transfer_line_ids): void
+    {
+        $this->immediate_transfer_line_ids = $immediate_transfer_line_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("immediate_transfer_line_ids")
+     */
+    public function getImmediateTransferLineIds(): ?array
+    {
+        return $this->immediate_transfer_line_ids;
+    }
+
+    /**
+     * @param bool|null $show_transfers
+     */
+    public function setShowTransfers(?bool $show_transfers): void
+    {
+        $this->show_transfers = $show_transfers;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("show_transfers")
+     */
+    public function isShowTransfers(): ?bool
+    {
+        return $this->show_transfers;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removePickIds(OdooRelation $item): void
+    {
+        if (null === $this->pick_ids) {
+            $this->pick_ids = [];
+        }
+
+        if ($this->hasPickIds($item)) {
+            $index = array_search($item, $this->pick_ids);
+            unset($this->pick_ids[$index]);
+        }
     }
 
     /**
@@ -133,89 +310,16 @@ final class Transfer extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removePickIds(OdooRelation $item): void
+    public function hasPickIds(OdooRelation $item): bool
     {
         if (null === $this->pick_ids) {
-            $this->pick_ids = [];
+            return false;
         }
 
-        if ($this->hasPickIds($item)) {
-            $index = array_search($item, $this->pick_ids);
-            unset($this->pick_ids[$index]);
-        }
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
-     */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $create_uid
-     */
-    public function setCreateUid(?OdooRelation $create_uid): void
-    {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("create_date")
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("write_uid")
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("write_date")
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $write_date
-     */
-    public function setWriteDate(?DateTimeInterface $write_date): void
-    {
-        $this->write_date = $write_date;
+        return in_array($item, $this->pick_ids);
     }
 
     /**

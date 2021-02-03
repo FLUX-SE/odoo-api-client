@@ -111,7 +111,7 @@ final class Inv extends Base
     private $currency_id;
 
     /**
-     * Down Payment Amount(Fixed)
+     * Down Payment Amount (Fixed)
      * ---
      * The fixed amount to be invoiced in advance, taxes excluded.
      * ---

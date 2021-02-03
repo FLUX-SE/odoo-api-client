@@ -241,6 +241,19 @@ final class Request extends Base
     private $sign_log_ids;
 
     /**
+     * Template Tags
+     * ---
+     * Relation : many2many (sign.template.tag)
+     * @see \Flux\OdooApiClient\Model\Object\Sign\Template\Tag
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $template_tags;
+
+    /**
      * Activities
      * ---
      * Relation : one2many (mail.activity -> res_id)
@@ -298,6 +311,18 @@ final class Request extends Base
      * @var OdooRelation|null
      */
     private $activity_type_id;
+
+    /**
+     * Activity Type Icon
+     * ---
+     * Font awesome icon e.g. fa-tasks
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $activity_type_icon;
 
     /**
      * Next Activity Deadline
@@ -604,32 +629,13 @@ final class Request extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return OdooRelation[]|null
      *
-     * @return bool
+     * @SerializedName("message_partner_ids")
      */
-    public function hasMessagePartnerIds(OdooRelation $item): bool
+    public function getMessagePartnerIds(): ?array
     {
-        if (null === $this->message_partner_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_partner_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMessageIds(OdooRelation $item): void
-    {
-        if (null === $this->message_ids) {
-            $this->message_ids = [];
-        }
-
-        if ($this->hasMessageIds($item)) {
-            $index = array_search($item, $this->message_ids);
-            unset($this->message_ids[$index]);
-        }
+        return $this->message_partner_ids;
     }
 
     /**
@@ -775,29 +781,25 @@ final class Request extends Base
     }
 
     /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMessagePartnerIds(OdooRelation $item): bool
+    {
+        if (null === $this->message_partner_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_partner_ids);
+    }
+
+    /**
      * @param OdooRelation[]|null $message_partner_ids
      */
     public function setMessagePartnerIds(?array $message_partner_ids): void
     {
         $this->message_partner_ids = $message_partner_ids;
-    }
-
-    /**
-     * @param bool|null $message_unread
-     */
-    public function setMessageUnread(?bool $message_unread): void
-    {
-        $this->message_unread = $message_unread;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("message_partner_ids")
-     */
-    public function getMessagePartnerIds(): ?array
-    {
-        return $this->message_partner_ids;
     }
 
     /**
@@ -813,6 +815,16 @@ final class Request extends Base
             $index = array_search($item, $this->message_follower_ids);
             unset($this->message_follower_ids[$index]);
         }
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("message_unread")
+     */
+    public function isMessageUnread(): ?bool
+    {
+        return $this->message_unread;
     }
 
     /**
@@ -918,23 +930,11 @@ final class Request extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("message_unread")
+     * @param string|null $activity_summary
      */
-    public function isMessageUnread(): ?bool
+    public function setActivitySummary(?string $activity_summary): void
     {
-        return $this->message_unread;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("message_unread_counter")
-     */
-    public function getMessageUnreadCounter(): ?int
-    {
-        return $this->message_unread_counter;
+        $this->activity_summary = $activity_summary;
     }
 
     /**
@@ -948,17 +948,50 @@ final class Request extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param DateTimeInterface|null $activity_date_deadline
      */
-    public function hasWebsiteMessageIds(OdooRelation $item): bool
+    public function setActivityDateDeadline(?DateTimeInterface $activity_date_deadline): void
     {
-        if (null === $this->website_message_ids) {
-            return false;
+        $this->activity_date_deadline = $activity_date_deadline;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMessageIds(OdooRelation $item): void
+    {
+        if (null === $this->message_ids) {
+            $this->message_ids = [];
         }
 
-        return in_array($item, $this->website_message_ids);
+        if ($this->hasMessageIds($item)) {
+            $index = array_search($item, $this->message_ids);
+            unset($this->message_ids[$index]);
+        }
+    }
+
+    /**
+     * @param bool|null $message_unread
+     */
+    public function setMessageUnread(?bool $message_unread): void
+    {
+        $this->message_unread = $message_unread;
+    }
+
+    /**
+     * @param string|null $activity_type_icon
+     */
+    public function setActivityTypeIcon(?string $activity_type_icon): void
+    {
+        $this->activity_type_icon = $activity_type_icon;
+    }
+
+    /**
+     * @param OdooRelation[]|null $website_message_ids
+     */
+    public function setWebsiteMessageIds(?array $website_message_ids): void
+    {
+        $this->website_message_ids = $website_message_ids;
     }
 
     /**
@@ -1083,19 +1116,17 @@ final class Request extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $website_message_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setWebsiteMessageIds(?array $website_message_ids): void
+    public function hasWebsiteMessageIds(OdooRelation $item): bool
     {
-        $this->website_message_ids = $website_message_ids;
-    }
+        if (null === $this->website_message_ids) {
+            return false;
+        }
 
-    /**
-     * @param int|null $message_unread_counter
-     */
-    public function setMessageUnreadCounter(?int $message_unread_counter): void
-    {
-        $this->message_unread_counter = $message_unread_counter;
+        return in_array($item, $this->website_message_ids);
     }
 
     /**
@@ -1106,6 +1137,16 @@ final class Request extends Base
     public function getWebsiteMessageIds(): ?array
     {
         return $this->website_message_ids;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("message_unread_counter")
+     */
+    public function getMessageUnreadCounter(): ?int
+    {
+        return $this->message_unread_counter;
     }
 
     /**
@@ -1217,19 +1258,31 @@ final class Request extends Base
     }
 
     /**
-     * @param string|null $activity_summary
+     * @param int|null $message_unread_counter
      */
-    public function setActivitySummary(?string $activity_summary): void
+    public function setMessageUnreadCounter(?int $message_unread_counter): void
     {
-        $this->activity_summary = $activity_summary;
+        $this->message_unread_counter = $message_unread_counter;
     }
 
     /**
-     * @param DateTimeInterface|null $activity_date_deadline
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("activity_date_deadline")
      */
-    public function setActivityDateDeadline(?DateTimeInterface $activity_date_deadline): void
+    public function getActivityDateDeadline(): ?DateTimeInterface
     {
-        $this->activity_date_deadline = $activity_date_deadline;
+        return $this->activity_date_deadline;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("activity_type_icon")
+     */
+    public function getActivityTypeIcon(): ?string
+    {
+        return $this->activity_type_icon;
     }
 
     /**
@@ -1243,11 +1296,31 @@ final class Request extends Base
     }
 
     /**
-     * @param mixed|null $completed_document
+     * @return int|null
+     *
+     * @SerializedName("nb_wait")
      */
-    public function setCompletedDocument($completed_document): void
+    public function getNbWait(): ?int
     {
-        $this->completed_document = $completed_document;
+        return $this->nb_wait;
+    }
+
+    /**
+     * @param bool|null $active
+     */
+    public function setActive(?bool $active): void
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("active")
+     */
+    public function isActive(): ?bool
+    {
+        return $this->active;
     }
 
     /**
@@ -1349,13 +1422,19 @@ final class Request extends Base
     }
 
     /**
-     * @return int|null
-     *
-     * @SerializedName("nb_wait")
+     * @param mixed|null $completed_document
      */
-    public function getNbWait(): ?int
+    public function setCompletedDocument($completed_document): void
     {
-        return $this->nb_wait;
+        $this->completed_document = $completed_document;
+    }
+
+    /**
+     * @param OdooRelation[]|null $favorited_ids
+     */
+    public function setFavoritedIds(?array $favorited_ids): void
+    {
+        $this->favorited_ids = $favorited_ids;
     }
 
     /**
@@ -1366,14 +1445,6 @@ final class Request extends Base
     public function getCompletedDocument()
     {
         return $this->completed_document;
-    }
-
-    /**
-     * @param bool|null $active
-     */
-    public function setActive(?bool $active): void
-    {
-        $this->active = $active;
     }
 
     /**
@@ -1502,16 +1573,6 @@ final class Request extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("active")
-     */
-    public function isActive(): ?bool
-    {
-        return $this->active;
-    }
-
-    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("favorited_ids")
@@ -1522,29 +1583,17 @@ final class Request extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("activity_date_deadline")
-     */
-    public function getActivityDateDeadline(): ?DateTimeInterface
-    {
-        return $this->activity_date_deadline;
-    }
-
-    /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function addSignLogIds(OdooRelation $item): void
+    public function hasFavoritedIds(OdooRelation $item): bool
     {
-        if ($this->hasSignLogIds($item)) {
-            return;
+        if (null === $this->favorited_ids) {
+            return false;
         }
 
-        if (null === $this->sign_log_ids) {
-            $this->sign_log_ids = [];
-        }
-
-        $this->sign_log_ids[] = $item;
+        return in_array($item, $this->favorited_ids);
     }
 
     /**
@@ -1553,6 +1602,14 @@ final class Request extends Base
     public function setActivityTypeId(?OdooRelation $activity_type_id): void
     {
         $this->activity_type_id = $activity_type_id;
+    }
+
+    /**
+     * @param OdooRelation[]|null $template_tags
+     */
+    public function setTemplateTags(?array $template_tags): void
+    {
+        $this->template_tags = $template_tags;
     }
 
     /**
@@ -1667,6 +1724,77 @@ final class Request extends Base
     /**
      * @param OdooRelation $item
      */
+    public function removeTemplateTags(OdooRelation $item): void
+    {
+        if (null === $this->template_tags) {
+            $this->template_tags = [];
+        }
+
+        if ($this->hasTemplateTags($item)) {
+            $index = array_search($item, $this->template_tags);
+            unset($this->template_tags[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addTemplateTags(OdooRelation $item): void
+    {
+        if ($this->hasTemplateTags($item)) {
+            return;
+        }
+
+        if (null === $this->template_tags) {
+            $this->template_tags = [];
+        }
+
+        $this->template_tags[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasTemplateTags(OdooRelation $item): bool
+    {
+        if (null === $this->template_tags) {
+            return false;
+        }
+
+        return in_array($item, $this->template_tags);
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("template_tags")
+     */
+    public function getTemplateTags(): ?array
+    {
+        return $this->template_tags;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addFavoritedIds(OdooRelation $item): void
+    {
+        if ($this->hasFavoritedIds($item)) {
+            return;
+        }
+
+        if (null === $this->favorited_ids) {
+            $this->favorited_ids = [];
+        }
+
+        $this->favorited_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
     public function removeSignLogIds(OdooRelation $item): void
     {
         if (null === $this->sign_log_ids) {
@@ -1681,6 +1809,22 @@ final class Request extends Base
 
     /**
      * @param OdooRelation $item
+     */
+    public function addSignLogIds(OdooRelation $item): void
+    {
+        if ($this->hasSignLogIds($item)) {
+            return;
+        }
+
+        if (null === $this->sign_log_ids) {
+            $this->sign_log_ids = [];
+        }
+
+        $this->sign_log_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
      *
      * @return bool
      */
@@ -1691,14 +1835,6 @@ final class Request extends Base
         }
 
         return in_array($item, $this->sign_log_ids);
-    }
-
-    /**
-     * @param OdooRelation[]|null $favorited_ids
-     */
-    public function setFavoritedIds(?array $favorited_ids): void
-    {
-        $this->favorited_ids = $favorited_ids;
     }
 
     /**
@@ -1804,36 +1940,6 @@ final class Request extends Base
             $index = array_search($item, $this->favorited_ids);
             unset($this->favorited_ids[$index]);
         }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addFavoritedIds(OdooRelation $item): void
-    {
-        if ($this->hasFavoritedIds($item)) {
-            return;
-        }
-
-        if (null === $this->favorited_ids) {
-            $this->favorited_ids = [];
-        }
-
-        $this->favorited_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasFavoritedIds(OdooRelation $item): bool
-    {
-        if (null === $this->favorited_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->favorited_ids);
     }
 
     /**

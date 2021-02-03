@@ -28,7 +28,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 final class Tax extends Base
 {
     /**
-     * Tax Scope
+     * Tax Type
      * ---
      * Determines where the tax is selectable. Note : 'None' means a tax can't be used by itself, however it can
      * still be used in a group. 'adjustment' is used to perform tax adjustment.
@@ -46,18 +46,34 @@ final class Tax extends Base
     private $type_tax_use;
 
     /**
+     * Tax Scope
+     * ---
+     * Restrict the use of taxes to a type of product.
+     * ---
+     * Selection :
+     *     -> service (Services)
+     *     -> consu (Goods)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $tax_scope;
+
+    /**
      * Tax Computation
      * ---
      *
      *         - Group of Taxes: The tax is a set of sub taxes.
      *         - Fixed: The tax amount stays the same whatever the price.
      *         - Percentage of Price: The tax amount is a % of the price:
-     *                 e.g 100 * 10% = 110 (not price included)
+     *                 e.g 100 * (1 + 10%) = 110 (not price included)
      *                 e.g 110 / (1 + 10%) = 100 (price included)
      *         - Percentage of Price Tax Included: The tax amount is a division of the price:
      *                 e.g 180 / (1 - 10%) = 200 (not price included)
      *                 e.g 200 * (1 - 10%) = 180 (price included)
-     *
+     *                 
      * ---
      * Selection :
      *     -> group (Group of Taxes)
@@ -227,25 +243,9 @@ final class Tax extends Base
     private $cash_basis_transition_account_id;
 
     /**
-     * Base Tax Received Account
+     * Distribution for Invoices
      * ---
-     * Account that will be set on lines created in cash basis journal entry and used to keep track of the tax base
-     * amount.
-     * ---
-     * Relation : many2one (account.account)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Account
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $cash_basis_base_account_id;
-
-    /**
-     * Repartition for Invoices
-     * ---
-     * Repartition when the tax is used on an invoice
+     * Distribution when the tax is used on an invoice
      * ---
      * Relation : one2many (account.tax.repartition.line -> invoice_tax_id)
      * @see \Flux\OdooApiClient\Model\Object\Account\Tax\Repartition\Line
@@ -258,9 +258,9 @@ final class Tax extends Base
     private $invoice_repartition_line_ids;
 
     /**
-     * Repartition for Refund Invoices
+     * Distribution for Refund Invoices
      * ---
-     * Repartition when the tax is used on a refund
+     * Distribution when the tax is used on a refund
      * ---
      * Relation : one2many (account.tax.repartition.line -> refund_tax_id)
      * @see \Flux\OdooApiClient\Model\Object\Account\Tax\Repartition\Line
@@ -273,19 +273,32 @@ final class Tax extends Base
     private $refund_repartition_line_ids;
 
     /**
-     * Country
+     * Fiscal Country
      * ---
      * Technical field used to restrict the domain of account tags for tax repartition lines created for this tax.
      * ---
      * Relation : many2one (res.country)
      * @see \Flux\OdooApiClient\Model\Object\Res\Country
      * ---
-     * Searchable : no
+     * Searchable : yes
      * Sortable : no
      *
      * @var OdooRelation|null
      */
-    private $country_id;
+    private $tax_fiscal_country_id;
+
+    /**
+     * Country Code
+     * ---
+     * The ISO country code in two chars. 
+     * You can use this field for quick search.
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $country_code;
 
     /**
      * Tax Name
@@ -354,7 +367,7 @@ final class Tax extends Base
     private $write_date;
 
     /**
-     * @param string $type_tax_use Tax Scope
+     * @param string $type_tax_use Tax Type
      *        ---
      *        Determines where the tax is selectable. Note : 'None' means a tax can't be used by itself, however it can
      *        still be used in a group. 'adjustment' is used to perform tax adjustment.
@@ -368,16 +381,16 @@ final class Tax extends Base
      *        Sortable : yes
      * @param string $amount_type Tax Computation
      *        ---
-     *
+     *       
      *                - Group of Taxes: The tax is a set of sub taxes.
      *                - Fixed: The tax amount stays the same whatever the price.
      *                - Percentage of Price: The tax amount is a % of the price:
-     *                        e.g 100 * 10% = 110 (not price included)
+     *                        e.g 100 * (1 + 10%) = 110 (not price included)
      *                        e.g 110 / (1 + 10%) = 100 (price included)
      *                - Percentage of Price Tax Included: The tax amount is a division of the price:
      *                        e.g 180 / (1 - 10%) = 200 (not price included)
      *                        e.g 200 * (1 - 10%) = 180 (price included)
-     *
+     *                        
      *        ---
      *        Selection :
      *            -> group (Group of Taxes)
@@ -435,31 +448,19 @@ final class Tax extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("country_id")
+     * @param OdooRelation|null $tax_fiscal_country_id
      */
-    public function getCountryId(): ?OdooRelation
+    public function setTaxFiscalCountryId(?OdooRelation $tax_fiscal_country_id): void
     {
-        return $this->country_id;
+        $this->tax_fiscal_country_id = $tax_fiscal_country_id;
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("cash_basis_base_account_id")
+     * @param OdooRelation|null $cash_basis_transition_account_id
      */
-    public function getCashBasisBaseAccountId(): ?OdooRelation
+    public function setCashBasisTransitionAccountId(?OdooRelation $cash_basis_transition_account_id): void
     {
-        return $this->cash_basis_base_account_id;
-    }
-
-    /**
-     * @param OdooRelation|null $cash_basis_base_account_id
-     */
-    public function setCashBasisBaseAccountId(?OdooRelation $cash_basis_base_account_id): void
-    {
-        $this->cash_basis_base_account_id = $cash_basis_base_account_id;
+        $this->cash_basis_transition_account_id = $cash_basis_transition_account_id;
     }
 
     /**
@@ -589,21 +590,39 @@ final class Tax extends Base
     }
 
     /**
-     * @param OdooRelation|null $country_id
+     * @return OdooRelation|null
+     *
+     * @SerializedName("tax_fiscal_country_id")
      */
-    public function setCountryId(?OdooRelation $country_id): void
+    public function getTaxFiscalCountryId(): ?OdooRelation
     {
-        $this->country_id = $country_id;
+        return $this->tax_fiscal_country_id;
     }
 
     /**
-     * @return OdooRelation|null
+     * @return string|null
      *
-     * @SerializedName("cash_basis_transition_account_id")
+     * @SerializedName("country_code")
      */
-    public function getCashBasisTransitionAccountId(): ?OdooRelation
+    public function getCountryCode(): ?string
     {
-        return $this->cash_basis_transition_account_id;
+        return $this->country_code;
+    }
+
+    /**
+     * @param string|null $tax_exigibility
+     */
+    public function setTaxExigibility(?string $tax_exigibility): void
+    {
+        $this->tax_exigibility = $tax_exigibility;
+    }
+
+    /**
+     * @param string|null $country_code
+     */
+    public function setCountryCode(?string $country_code): void
+    {
+        $this->country_code = $country_code;
     }
 
     /**
@@ -715,19 +734,23 @@ final class Tax extends Base
     }
 
     /**
-     * @param OdooRelation|null $cash_basis_transition_account_id
+     * @return OdooRelation|null
+     *
+     * @SerializedName("cash_basis_transition_account_id")
      */
-    public function setCashBasisTransitionAccountId(?OdooRelation $cash_basis_transition_account_id): void
+    public function getCashBasisTransitionAccountId(): ?OdooRelation
     {
-        $this->cash_basis_transition_account_id = $cash_basis_transition_account_id;
+        return $this->cash_basis_transition_account_id;
     }
 
     /**
-     * @param string|null $tax_exigibility
+     * @return string|null
+     *
+     * @SerializedName("tax_exigibility")
      */
-    public function setTaxExigibility(?string $tax_exigibility): void
+    public function getTaxExigibility(): ?string
     {
-        $this->tax_exigibility = $tax_exigibility;
+        return $this->tax_exigibility;
     }
 
     /**
@@ -741,13 +764,19 @@ final class Tax extends Base
     }
 
     /**
-     * @return int
-     *
-     * @SerializedName("sequence")
+     * @param OdooRelation $item
      */
-    public function getSequence(): int
+    public function addChildrenTaxIds(OdooRelation $item): void
     {
-        return $this->sequence;
+        if ($this->hasChildrenTaxIds($item)) {
+            return;
+        }
+
+        if (null === $this->children_tax_ids) {
+            $this->children_tax_ids = [];
+        }
+
+        $this->children_tax_ids[] = $item;
     }
 
     /**
@@ -756,6 +785,24 @@ final class Tax extends Base
     public function setTypeTaxUse(string $type_tax_use): void
     {
         $this->type_tax_use = $type_tax_use;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("tax_scope")
+     */
+    public function getTaxScope(): ?string
+    {
+        return $this->tax_scope;
+    }
+
+    /**
+     * @param string|null $tax_scope
+     */
+    public function setTaxScope(?string $tax_scope): void
+    {
+        $this->tax_scope = $tax_scope;
     }
 
     /**
@@ -847,22 +894,6 @@ final class Tax extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addChildrenTaxIds(OdooRelation $item): void
-    {
-        if ($this->hasChildrenTaxIds($item)) {
-            return;
-        }
-
-        if (null === $this->children_tax_ids) {
-            $this->children_tax_ids = [];
-        }
-
-        $this->children_tax_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
     public function removeChildrenTaxIds(OdooRelation $item): void
     {
         if (null === $this->children_tax_ids) {
@@ -876,21 +907,29 @@ final class Tax extends Base
     }
 
     /**
+     * @param bool|null $hide_tax_exigibility
+     */
+    public function setHideTaxExigibility(?bool $hide_tax_exigibility): void
+    {
+        $this->hide_tax_exigibility = $hide_tax_exigibility;
+    }
+
+    /**
+     * @return int
+     *
+     * @SerializedName("sequence")
+     */
+    public function getSequence(): int
+    {
+        return $this->sequence;
+    }
+
+    /**
      * @param int $sequence
      */
     public function setSequence(int $sequence): void
     {
         $this->sequence = $sequence;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("tax_exigibility")
-     */
-    public function getTaxExigibility(): ?string
-    {
-        return $this->tax_exigibility;
     }
 
     /**
@@ -991,14 +1030,6 @@ final class Tax extends Base
     public function isHideTaxExigibility(): ?bool
     {
         return $this->hide_tax_exigibility;
-    }
-
-    /**
-     * @param bool|null $hide_tax_exigibility
-     */
-    public function setHideTaxExigibility(?bool $hide_tax_exigibility): void
-    {
-        $this->hide_tax_exigibility = $hide_tax_exigibility;
     }
 
     /**

@@ -258,6 +258,16 @@ final class Line extends Base
     private $product_uom_category_id;
 
     /**
+     * Product Uom Readonly
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $product_uom_readonly;
+
+    /**
      * Custom Values
      * ---
      * Relation : one2many (product.attribute.custom.value -> sale_order_line_id)
@@ -492,6 +502,16 @@ final class Line extends Base
     private $display_type;
 
     /**
+     * Is a program reward line
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $is_reward_line;
+
+    /**
      * Optional Products Lines
      * ---
      * Relation : one2many (sale.order.option -> line_id)
@@ -630,6 +650,16 @@ final class Line extends Base
     private $scheduled_date;
 
     /**
+     * Forecast Expected Date
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var DateTimeInterface|null
+     */
+    private $forecast_expected_date;
+
+    /**
      * Free Qty Today
      * ---
      * Searchable : no
@@ -655,7 +685,7 @@ final class Line extends Base
      * Relation : many2one (stock.warehouse)
      * @see \Flux\OdooApiClient\Model\Object\Stock\Warehouse
      * ---
-     * Searchable : no
+     * Searchable : yes
      * Sortable : no
      *
      * @var OdooRelation|null
@@ -691,16 +721,6 @@ final class Line extends Base
      * @var bool|null
      */
     private $display_qty_widget;
-
-    /**
-     * Is a program reward line
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $is_reward_line;
 
     /**
      * Created by
@@ -790,13 +810,19 @@ final class Line extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("purchase_line_ids")
+     * @param OdooRelation $item
      */
-    public function getPurchaseLineIds(): ?array
+    public function addSaleOrderOptionIds(OdooRelation $item): void
     {
-        return $this->purchase_line_ids;
+        if ($this->hasSaleOrderOptionIds($item)) {
+            return;
+        }
+
+        if (null === $this->sale_order_option_ids) {
+            $this->sale_order_option_ids = [];
+        }
+
+        $this->sale_order_option_ids[] = $item;
     }
 
     /**
@@ -805,6 +831,24 @@ final class Line extends Base
     public function setDisplayType(?string $display_type): void
     {
         $this->display_type = $display_type;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("is_reward_line")
+     */
+    public function isIsRewardLine(): ?bool
+    {
+        return $this->is_reward_line;
+    }
+
+    /**
+     * @param bool|null $is_reward_line
+     */
+    public function setIsRewardLine(?bool $is_reward_line): void
+    {
+        $this->is_reward_line = $is_reward_line;
     }
 
     /**
@@ -842,22 +886,6 @@ final class Line extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addSaleOrderOptionIds(OdooRelation $item): void
-    {
-        if ($this->hasSaleOrderOptionIds($item)) {
-            return;
-        }
-
-        if (null === $this->sale_order_option_ids) {
-            $this->sale_order_option_ids = [];
-        }
-
-        $this->sale_order_option_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
     public function removeSaleOrderOptionIds(OdooRelation $item): void
     {
         if (null === $this->sale_order_option_ids) {
@@ -871,19 +899,29 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $purchase_line_ids
-     */
-    public function setPurchaseLineIds(?array $purchase_line_ids): void
-    {
-        $this->purchase_line_ids = $purchase_line_ids;
-    }
-
-    /**
      * @param float $customer_lead
      */
     public function setCustomerLead(float $customer_lead): void
     {
         $this->customer_lead = $customer_lead;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("purchase_line_ids")
+     */
+    public function getPurchaseLineIds(): ?array
+    {
+        return $this->purchase_line_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $purchase_line_ids
+     */
+    public function setPurchaseLineIds(?array $purchase_line_ids): void
+    {
+        $this->purchase_line_ids = $purchase_line_ids;
     }
 
     /**
@@ -952,16 +990,6 @@ final class Line extends Base
     /**
      * @return string|null
      *
-     * @SerializedName("qty_delivered_method")
-     */
-    public function getQtyDeliveredMethod(): ?string
-    {
-        return $this->qty_delivered_method;
-    }
-
-    /**
-     * @return string|null
-     *
      * @SerializedName("display_type")
      */
     public function getDisplayType(): ?string
@@ -980,13 +1008,11 @@ final class Line extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("product_packaging")
+     * @param string|null $qty_delivered_method
      */
-    public function getProductPackaging(): ?OdooRelation
+    public function setQtyDeliveredMethod(?string $qty_delivered_method): void
     {
-        return $this->product_packaging;
+        $this->qty_delivered_method = $qty_delivered_method;
     }
 
     /**
@@ -1170,19 +1196,23 @@ final class Line extends Base
     }
 
     /**
-     * @param string|null $qty_delivered_method
+     * @return string|null
+     *
+     * @SerializedName("qty_delivered_method")
      */
-    public function setQtyDeliveredMethod(?string $qty_delivered_method): void
+    public function getQtyDeliveredMethod(): ?string
     {
-        $this->qty_delivered_method = $qty_delivered_method;
+        return $this->qty_delivered_method;
     }
 
     /**
-     * @param OdooRelation|null $product_packaging
+     * @return OdooRelation|null
+     *
+     * @SerializedName("product_packaging")
      */
-    public function setProductPackaging(?OdooRelation $product_packaging): void
+    public function getProductPackaging(): ?OdooRelation
     {
-        $this->product_packaging = $product_packaging;
+        return $this->product_packaging;
     }
 
     /**
@@ -1196,11 +1226,29 @@ final class Line extends Base
     }
 
     /**
-     * @param bool|null $is_reward_line
+     * @param bool|null $display_qty_widget
      */
-    public function setIsRewardLine(?bool $is_reward_line): void
+    public function setDisplayQtyWidget(?bool $display_qty_widget): void
     {
-        $this->is_reward_line = $is_reward_line;
+        $this->display_qty_widget = $display_qty_widget;
+    }
+
+    /**
+     * @param OdooRelation|null $warehouse_id
+     */
+    public function setWarehouseId(?OdooRelation $warehouse_id): void
+    {
+        $this->warehouse_id = $warehouse_id;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("qty_to_deliver")
+     */
+    public function getQtyToDeliver(): ?float
+    {
+        return $this->qty_to_deliver;
     }
 
     /**
@@ -1240,24 +1288,6 @@ final class Line extends Base
     }
 
     /**
-     * @param bool|null $display_qty_widget
-     */
-    public function setDisplayQtyWidget(?bool $display_qty_widget): void
-    {
-        $this->display_qty_widget = $display_qty_widget;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("is_reward_line")
-     */
-    public function isIsRewardLine(): ?bool
-    {
-        return $this->is_reward_line;
-    }
-
-    /**
      * @return OdooRelation|null
      *
      * @SerializedName("create_uid")
@@ -1268,11 +1298,11 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation|null $warehouse_id
+     * @param float|null $qty_available_today
      */
-    public function setWarehouseId(?OdooRelation $warehouse_id): void
+    public function setQtyAvailableToday(?float $qty_available_today): void
     {
-        $this->warehouse_id = $warehouse_id;
+        $this->qty_available_today = $qty_available_today;
     }
 
     /**
@@ -1338,16 +1368,6 @@ final class Line extends Base
     }
 
     /**
-     * @return float|null
-     *
-     * @SerializedName("qty_to_deliver")
-     */
-    public function getQtyToDeliver(): ?float
-    {
-        return $this->qty_to_deliver;
-    }
-
-    /**
      * @return OdooRelation|null
      *
      * @SerializedName("warehouse_id")
@@ -1358,13 +1378,21 @@ final class Line extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @return float|null
      *
-     * @SerializedName("route_id")
+     * @SerializedName("qty_available_today")
      */
-    public function getRouteId(): ?OdooRelation
+    public function getQtyAvailableToday(): ?float
     {
-        return $this->route_id;
+        return $this->qty_available_today;
+    }
+
+    /**
+     * @param OdooRelation|null $product_packaging
+     */
+    public function setProductPackaging(?OdooRelation $product_packaging): void
+    {
+        $this->product_packaging = $product_packaging;
     }
 
     /**
@@ -1375,6 +1403,16 @@ final class Line extends Base
     public function getProductType(): ?string
     {
         return $this->product_type;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("route_id")
+     */
+    public function getRouteId(): ?OdooRelation
+    {
+        return $this->route_id;
     }
 
     /**
@@ -1457,11 +1495,11 @@ final class Line extends Base
     }
 
     /**
-     * @param float|null $qty_available_today
+     * @param float|null $free_qty_today
      */
-    public function setQtyAvailableToday(?float $qty_available_today): void
+    public function setFreeQtyToday(?float $free_qty_today): void
     {
-        $this->qty_available_today = $qty_available_today;
+        $this->free_qty_today = $free_qty_today;
     }
 
     /**
@@ -1501,6 +1539,24 @@ final class Line extends Base
     }
 
     /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("forecast_expected_date")
+     */
+    public function getForecastExpectedDate(): ?DateTimeInterface
+    {
+        return $this->forecast_expected_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $forecast_expected_date
+     */
+    public function setForecastExpectedDate(?DateTimeInterface $forecast_expected_date): void
+    {
+        $this->forecast_expected_date = $forecast_expected_date;
+    }
+
+    /**
      * @return float|null
      *
      * @SerializedName("free_qty_today")
@@ -1508,24 +1564,6 @@ final class Line extends Base
     public function getFreeQtyToday(): ?float
     {
         return $this->free_qty_today;
-    }
-
-    /**
-     * @param float|null $free_qty_today
-     */
-    public function setFreeQtyToday(?float $free_qty_today): void
-    {
-        $this->free_qty_today = $free_qty_today;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("qty_available_today")
-     */
-    public function getQtyAvailableToday(): ?float
-    {
-        return $this->qty_available_today;
     }
 
     /**
@@ -1706,6 +1744,16 @@ final class Line extends Base
     }
 
     /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("product_id")
+     */
+    public function getProductId(): ?OdooRelation
+    {
+        return $this->product_id;
+    }
+
+    /**
      * @return float|null
      *
      * @SerializedName("price_total")
@@ -1726,11 +1774,13 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation|null $product_id
+     * @return OdooRelation|null
+     *
+     * @SerializedName("product_template_id")
      */
-    public function setProductId(?OdooRelation $product_id): void
+    public function getProductTemplateId(): ?OdooRelation
     {
-        $this->product_id = $product_id;
+        return $this->product_template_id;
     }
 
     /**
@@ -1895,23 +1945,19 @@ final class Line extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("product_id")
+     * @param OdooRelation|null $product_id
      */
-    public function getProductId(): ?OdooRelation
+    public function setProductId(?OdooRelation $product_id): void
     {
-        return $this->product_id;
+        $this->product_id = $product_id;
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("product_template_id")
+     * @param OdooRelation|null $product_template_id
      */
-    public function getProductTemplateId(): ?OdooRelation
+    public function setProductTemplateId(?OdooRelation $product_template_id): void
     {
-        return $this->product_template_id;
+        $this->product_template_id = $product_template_id;
     }
 
     /**
@@ -2100,24 +2146,6 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation|null $product_template_id
-     */
-    public function setProductTemplateId(?OdooRelation $product_template_id): void
-    {
-        $this->product_template_id = $product_template_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("product_uom_category_id")
-     */
-    public function getProductUomCategoryId(): ?OdooRelation
-    {
-        return $this->product_uom_category_id;
-    }
-
-    /**
      * @return bool|null
      *
      * @SerializedName("product_updatable")
@@ -2125,6 +2153,16 @@ final class Line extends Base
     public function isProductUpdatable(): ?bool
     {
         return $this->product_updatable;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("product_uom_readonly")
+     */
+    public function isProductUomReadonly(): ?bool
+    {
+        return $this->product_uom_readonly;
     }
 
     /**
@@ -2172,11 +2210,29 @@ final class Line extends Base
     }
 
     /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("product_uom_category_id")
+     */
+    public function getProductUomCategoryId(): ?OdooRelation
+    {
+        return $this->product_uom_category_id;
+    }
+
+    /**
      * @param OdooRelation|null $product_uom_category_id
      */
     public function setProductUomCategoryId(?OdooRelation $product_uom_category_id): void
     {
         $this->product_uom_category_id = $product_uom_category_id;
+    }
+
+    /**
+     * @param bool|null $product_uom_readonly
+     */
+    public function setProductUomReadonly(?bool $product_uom_readonly): void
+    {
+        $this->product_uom_readonly = $product_uom_readonly;
     }
 
     /**

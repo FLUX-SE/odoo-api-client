@@ -46,7 +46,8 @@ final class Creation extends Journal
      *        Sortable : yes
      * @param string $code Short Code
      *        ---
-     *        The journal entries of this journal will be named using this prefix.
+     *        Shorter name used for display. The journal entries of this journal will also be named using this prefix by
+     *        default.
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -63,15 +64,6 @@ final class Creation extends Journal
      *            -> cash (Cash)
      *            -> bank (Bank)
      *            -> general (Miscellaneous)
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
-     * @param OdooRelation $sequence_id Entry Sequence
-     *        ---
-     *        This field contains the information related to the numbering of the journal entries of this journal.
-     *        ---
-     *        Relation : many2one (ir.sequence)
-     *        @see \Flux\OdooApiClient\Model\Object\Ir\Sequence
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -115,7 +107,6 @@ final class Creation extends Journal
         OdooRelation $journal_id,
         string $code,
         string $type,
-        OdooRelation $sequence_id,
         string $invoice_reference_type,
         string $invoice_reference_model,
         OdooRelation $company_id,
@@ -123,12 +114,11 @@ final class Creation extends Journal
     ) {
         $this->journal_id = $journal_id;
         parent::__construct(
-            $code,
-            $type,
-            $sequence_id,
-            $invoice_reference_type,
-            $invoice_reference_model,
-            $company_id,
+            $code, 
+            $type, 
+            $invoice_reference_type, 
+            $invoice_reference_model, 
+            $company_id, 
             $name
         );
     }

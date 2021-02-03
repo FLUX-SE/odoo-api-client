@@ -41,7 +41,7 @@ final class Template extends Base
     private $chart_template_id;
 
     /**
-     * Tax Scope
+     * Tax Type
      * ---
      * Determines where the tax is selectable. Note : 'None' means a tax can't be used by itself, however it can
      * still be used in a group.
@@ -57,6 +57,22 @@ final class Template extends Base
      * @var string
      */
     private $type_tax_use;
+
+    /**
+     * Tax Scope
+     * ---
+     * Restrict the use of taxes to a type of product.
+     * ---
+     * Selection :
+     *     -> service (Service)
+     *     -> consu (Consumable)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $tax_scope;
 
     /**
      * Tax Computation
@@ -236,22 +252,6 @@ final class Template extends Base
     private $cash_basis_transition_account_id;
 
     /**
-     * Base Tax Received Account
-     * ---
-     * Account that will be set on lines created in cash basis journal entry and used to keep track of the tax base
-     * amount.
-     * ---
-     * Relation : many2one (account.account.template)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Account\Template
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $cash_basis_base_account_id;
-
-    /**
      * Tax Name
      * ---
      * Searchable : yes
@@ -325,7 +325,7 @@ final class Template extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param string $type_tax_use Tax Scope
+     * @param string $type_tax_use Tax Type
      *        ---
      *        Determines where the tax is selectable. Note : 'None' means a tax can't be used by itself, however it can
      *        still be used in a group.
@@ -379,11 +379,36 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation|null $cash_basis_base_account_id
+     * @param OdooRelation|null $cash_basis_transition_account_id
      */
-    public function setCashBasisBaseAccountId(?OdooRelation $cash_basis_base_account_id): void
+    public function setCashBasisTransitionAccountId(?OdooRelation $cash_basis_transition_account_id): void
     {
-        $this->cash_basis_base_account_id = $cash_basis_base_account_id;
+        $this->cash_basis_transition_account_id = $cash_basis_transition_account_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeInvoiceRepartitionLineIds(OdooRelation $item): void
+    {
+        if (null === $this->invoice_repartition_line_ids) {
+            $this->invoice_repartition_line_ids = [];
+        }
+
+        if ($this->hasInvoiceRepartitionLineIds($item)) {
+            $index = array_search($item, $this->invoice_repartition_line_ids);
+            unset($this->invoice_repartition_line_ids[$index]);
+        }
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("refund_repartition_line_ids")
+     */
+    public function getRefundRepartitionLineIds(): ?array
+    {
+        return $this->refund_repartition_line_ids;
     }
 
     /**
@@ -486,24 +511,6 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation|null $cash_basis_transition_account_id
-     */
-    public function setCashBasisTransitionAccountId(?OdooRelation $cash_basis_transition_account_id): void
-    {
-        $this->cash_basis_transition_account_id = $cash_basis_transition_account_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("cash_basis_base_account_id")
-     */
-    public function getCashBasisBaseAccountId(): ?OdooRelation
-    {
-        return $this->cash_basis_base_account_id;
-    }
-
-    /**
      * @return string
      *
      * @SerializedName("name")
@@ -515,17 +522,16 @@ final class Template extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removeInvoiceRepartitionLineIds(OdooRelation $item): void
+    public function hasInvoiceRepartitionLineIds(OdooRelation $item): bool
     {
         if (null === $this->invoice_repartition_line_ids) {
-            $this->invoice_repartition_line_ids = [];
+            return false;
         }
 
-        if ($this->hasInvoiceRepartitionLineIds($item)) {
-            $index = array_search($item, $this->invoice_repartition_line_ids);
-            unset($this->invoice_repartition_line_ids[$index]);
-        }
+        return in_array($item, $this->invoice_repartition_line_ids);
     }
 
     /**
@@ -627,16 +633,6 @@ final class Template extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("refund_repartition_line_ids")
-     */
-    public function getRefundRepartitionLineIds(): ?array
-    {
-        return $this->refund_repartition_line_ids;
-    }
-
-    /**
      * @param OdooRelation $item
      */
     public function addInvoiceRepartitionLineIds(OdooRelation $item): void
@@ -653,6 +649,14 @@ final class Template extends Base
     }
 
     /**
+     * @param OdooRelation[]|null $invoice_repartition_line_ids
+     */
+    public function setInvoiceRepartitionLineIds(?array $invoice_repartition_line_ids): void
+    {
+        $this->invoice_repartition_line_ids = $invoice_repartition_line_ids;
+    }
+
+    /**
      * @return OdooRelation
      *
      * @SerializedName("chart_template_id")
@@ -664,17 +668,16 @@ final class Template extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function removeChildrenTaxIds(OdooRelation $item): void
+    public function hasChildrenTaxIds(OdooRelation $item): bool
     {
         if (null === $this->children_tax_ids) {
-            $this->children_tax_ids = [];
+            return false;
         }
 
-        if ($this->hasChildrenTaxIds($item)) {
-            $index = array_search($item, $this->children_tax_ids);
-            unset($this->children_tax_ids[$index]);
-        }
+        return in_array($item, $this->children_tax_ids);
     }
 
     /**
@@ -701,6 +704,24 @@ final class Template extends Base
     public function setTypeTaxUse(string $type_tax_use): void
     {
         $this->type_tax_use = $type_tax_use;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("tax_scope")
+     */
+    public function getTaxScope(): ?string
+    {
+        return $this->tax_scope;
+    }
+
+    /**
+     * @param string|null $tax_scope
+     */
+    public function setTaxScope(?string $tax_scope): void
+    {
+        $this->tax_scope = $tax_scope;
     }
 
     /**
@@ -759,20 +780,6 @@ final class Template extends Base
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasChildrenTaxIds(OdooRelation $item): bool
-    {
-        if (null === $this->children_tax_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->children_tax_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
      */
     public function addChildrenTaxIds(OdooRelation $item): void
     {
@@ -788,6 +795,31 @@ final class Template extends Base
     }
 
     /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("invoice_repartition_line_ids")
+     */
+    public function getInvoiceRepartitionLineIds(): ?array
+    {
+        return $this->invoice_repartition_line_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeChildrenTaxIds(OdooRelation $item): void
+    {
+        if (null === $this->children_tax_ids) {
+            $this->children_tax_ids = [];
+        }
+
+        if ($this->hasChildrenTaxIds($item)) {
+            $index = array_search($item, $this->children_tax_ids);
+            unset($this->children_tax_ids[$index]);
+        }
+    }
+
+    /**
      * @return int
      *
      * @SerializedName("sequence")
@@ -795,20 +827,6 @@ final class Template extends Base
     public function getSequence(): int
     {
         return $this->sequence;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasInvoiceRepartitionLineIds(OdooRelation $item): bool
-    {
-        if (null === $this->invoice_repartition_line_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->invoice_repartition_line_ids);
     }
 
     /**
@@ -889,24 +907,6 @@ final class Template extends Base
     public function setAnalytic(?bool $analytic): void
     {
         $this->analytic = $analytic;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("invoice_repartition_line_ids")
-     */
-    public function getInvoiceRepartitionLineIds(): ?array
-    {
-        return $this->invoice_repartition_line_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $invoice_repartition_line_ids
-     */
-    public function setInvoiceRepartitionLineIds(?array $invoice_repartition_line_ids): void
-    {
-        $this->invoice_repartition_line_ids = $invoice_repartition_line_ids;
     }
 
     /**

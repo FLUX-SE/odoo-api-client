@@ -28,8 +28,12 @@ final class Translations extends Base
      * Language
      * ---
      * Selection :
+     *     -> en_GB (English (UK))
      *     -> en_US (English (US))
      *     -> fr_FR (French / Français)
+     *     -> de_DE (German / Deutsch)
+     *     -> ja_JP (Japanese / 日本語)
+     *     -> es_ES (Spanish / Español)
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -88,8 +92,12 @@ final class Translations extends Base
      * @param string $lang Language
      *        ---
      *        Selection :
+     *            -> en_GB (English (UK))
      *            -> en_US (English (US))
      *            -> fr_FR (French / Français)
+     *            -> de_DE (German / Deutsch)
+     *            -> ja_JP (Japanese / 日本語)
+     *            -> es_ES (Spanish / Español)
      *        ---
      *        Searchable : yes
      *        Sortable : yes

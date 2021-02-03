@@ -72,7 +72,7 @@ final class Composer extends Base
     /**
      * Visible records count
      * ---
-     * UX field computing the number of recipients in mass mode without active domain
+     * Number of recipients that will receive the SMS if sent in mass mode, without applying the Active Domain value
      * ---
      * Searchable : no
      * Sortable : no
@@ -104,7 +104,7 @@ final class Composer extends Base
     /**
      * Active records count
      * ---
-     * UX field computing the number of recipients in mass mode based on given active domain
+     * Number of records found when searching with the value in Active Domain
      * ---
      * Searchable : no
      * Sortable : no
@@ -112,6 +112,18 @@ final class Composer extends Base
      * @var int|null
      */
     private $active_domain_count;
+
+    /**
+     * Single Mode
+     * ---
+     * Indicates if the SMS composer targets a single specific recipient
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $comment_single_recipient;
 
     /**
      * Keep a note on document
@@ -144,16 +156,6 @@ final class Composer extends Base
     private $mass_use_blacklist;
 
     /**
-     * Recipients (Partners)
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $recipient_description;
-
-    /**
      * # Valid recipients
      * ---
      * Searchable : no
@@ -161,7 +163,7 @@ final class Composer extends Base
      *
      * @var int|null
      */
-    private $recipient_count;
+    private $recipient_valid_count;
 
     /**
      * # Invalid recipients
@@ -174,7 +176,49 @@ final class Composer extends Base
     private $recipient_invalid_count;
 
     /**
-     * Field holding number
+     * Recipients (Partners)
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $recipient_single_description;
+
+    /**
+     * Stored Recipient Number
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $recipient_single_number;
+
+    /**
+     * Recipient Number
+     * ---
+     * UX field allowing to edit the recipient number. If changed it will be stored onto the recipient.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $recipient_single_number_itf;
+
+    /**
+     * Is valid
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $recipient_single_valid;
+
+    /**
+     * Number Field
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -182,19 +226,6 @@ final class Composer extends Base
      * @var string|null
      */
     private $number_field_name;
-
-    /**
-     * Partner
-     * ---
-     * Relation : many2many (res.partner)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Partner
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $partner_ids;
 
     /**
      * Recipients (Numbers)
@@ -317,6 +348,60 @@ final class Composer extends Base
     /**
      * @return string|null
      *
+     * @SerializedName("recipient_single_number")
+     */
+    public function getRecipientSingleNumber(): ?string
+    {
+        return $this->recipient_single_number;
+    }
+
+    /**
+     * @param string|null $recipient_single_number
+     */
+    public function setRecipientSingleNumber(?string $recipient_single_number): void
+    {
+        $this->recipient_single_number = $recipient_single_number;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("recipient_single_number_itf")
+     */
+    public function getRecipientSingleNumberItf(): ?string
+    {
+        return $this->recipient_single_number_itf;
+    }
+
+    /**
+     * @param string|null $recipient_single_number_itf
+     */
+    public function setRecipientSingleNumberItf(?string $recipient_single_number_itf): void
+    {
+        $this->recipient_single_number_itf = $recipient_single_number_itf;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("recipient_single_valid")
+     */
+    public function isRecipientSingleValid(): ?bool
+    {
+        return $this->recipient_single_valid;
+    }
+
+    /**
+     * @param bool|null $recipient_single_valid
+     */
+    public function setRecipientSingleValid(?bool $recipient_single_valid): void
+    {
+        $this->recipient_single_valid = $recipient_single_valid;
+    }
+
+    /**
+     * @return string|null
+     *
      * @SerializedName("number_field_name")
      */
     public function getNumberFieldName(): ?string
@@ -330,69 +415,6 @@ final class Composer extends Base
     public function setNumberFieldName(?string $number_field_name): void
     {
         $this->number_field_name = $number_field_name;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("partner_ids")
-     */
-    public function getPartnerIds(): ?array
-    {
-        return $this->partner_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $partner_ids
-     */
-    public function setPartnerIds(?array $partner_ids): void
-    {
-        $this->partner_ids = $partner_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasPartnerIds(OdooRelation $item): bool
-    {
-        if (null === $this->partner_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->partner_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addPartnerIds(OdooRelation $item): void
-    {
-        if ($this->hasPartnerIds($item)) {
-            return;
-        }
-
-        if (null === $this->partner_ids) {
-            $this->partner_ids = [];
-        }
-
-        $this->partner_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removePartnerIds(OdooRelation $item): void
-    {
-        if (null === $this->partner_ids) {
-            $this->partner_ids = [];
-        }
-
-        if ($this->hasPartnerIds($item)) {
-            $index = array_search($item, $this->partner_ids);
-            unset($this->partner_ids[$index]);
-        }
     }
 
     /**
@@ -434,13 +456,13 @@ final class Composer extends Base
     }
 
     /**
-     * @return int|null
+     * @return string|null
      *
-     * @SerializedName("recipient_invalid_count")
+     * @SerializedName("recipient_single_description")
      */
-    public function getRecipientInvalidCount(): ?int
+    public function getRecipientSingleDescription(): ?string
     {
-        return $this->recipient_invalid_count;
+        return $this->recipient_single_description;
     }
 
     /**
@@ -542,19 +564,19 @@ final class Composer extends Base
     }
 
     /**
+     * @param string|null $recipient_single_description
+     */
+    public function setRecipientSingleDescription(?string $recipient_single_description): void
+    {
+        $this->recipient_single_description = $recipient_single_description;
+    }
+
+    /**
      * @param int|null $recipient_invalid_count
      */
     public function setRecipientInvalidCount(?int $recipient_invalid_count): void
     {
         $this->recipient_invalid_count = $recipient_invalid_count;
-    }
-
-    /**
-     * @param int|null $recipient_count
-     */
-    public function setRecipientCount(?int $recipient_count): void
-    {
-        $this->recipient_count = $recipient_count;
     }
 
     /**
@@ -568,11 +590,13 @@ final class Composer extends Base
     }
 
     /**
-     * @param bool|null $use_active_domain
+     * @return string|null
+     *
+     * @SerializedName("active_domain")
      */
-    public function setUseActiveDomain(?bool $use_active_domain): void
+    public function getActiveDomain(): ?string
     {
-        $this->use_active_domain = $use_active_domain;
+        return $this->active_domain;
     }
 
     /**
@@ -666,23 +690,11 @@ final class Composer extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("active_domain")
+     * @param bool|null $use_active_domain
      */
-    public function getActiveDomain(): ?string
+    public function setUseActiveDomain(?bool $use_active_domain): void
     {
-        return $this->active_domain;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("recipient_count")
-     */
-    public function getRecipientCount(): ?int
-    {
-        return $this->recipient_count;
+        $this->use_active_domain = $use_active_domain;
     }
 
     /**
@@ -691,6 +703,16 @@ final class Composer extends Base
     public function setActiveDomain(?string $active_domain): void
     {
         $this->active_domain = $active_domain;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("recipient_invalid_count")
+     */
+    public function getRecipientInvalidCount(): ?int
+    {
+        return $this->recipient_invalid_count;
     }
 
     /**
@@ -709,6 +731,24 @@ final class Composer extends Base
     public function setActiveDomainCount(?int $active_domain_count): void
     {
         $this->active_domain_count = $active_domain_count;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("comment_single_recipient")
+     */
+    public function isCommentSingleRecipient(): ?bool
+    {
+        return $this->comment_single_recipient;
+    }
+
+    /**
+     * @param bool|null $comment_single_recipient
+     */
+    public function setCommentSingleRecipient(?bool $comment_single_recipient): void
+    {
+        $this->comment_single_recipient = $comment_single_recipient;
     }
 
     /**
@@ -766,21 +806,21 @@ final class Composer extends Base
     }
 
     /**
-     * @return string|null
+     * @return int|null
      *
-     * @SerializedName("recipient_description")
+     * @SerializedName("recipient_valid_count")
      */
-    public function getRecipientDescription(): ?string
+    public function getRecipientValidCount(): ?int
     {
-        return $this->recipient_description;
+        return $this->recipient_valid_count;
     }
 
     /**
-     * @param string|null $recipient_description
+     * @param int|null $recipient_valid_count
      */
-    public function setRecipientDescription(?string $recipient_description): void
+    public function setRecipientValidCount(?int $recipient_valid_count): void
     {
-        $this->recipient_description = $recipient_description;
+        $this->recipient_valid_count = $recipient_valid_count;
     }
 
     /**

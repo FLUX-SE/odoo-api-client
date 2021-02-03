@@ -72,6 +72,13 @@ final class Recipient extends Base
      *     -> sms_number_format (Wrong Number Format)
      *     -> sms_credit (Insufficient Credit)
      *     -> sms_server (Server Error)
+     *     -> sms_acc (Unregistered Account)
+     *     -> sn_credit (Snailmail Credit Error)
+     *     -> sn_trial (Snailmail Trial Error)
+     *     -> sn_price (Snailmail No Price Available)
+     *     -> sn_fields (Snailmail Missing Required Fields)
+     *     -> sn_format (Snailmail Format Error)
+     *     -> sn_error (Snailmail Unknown Error)
      * ---
      * Searchable : yes
      * Sortable : no

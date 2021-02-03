@@ -96,6 +96,38 @@ final class Category extends Base
     private $product_count;
 
     /**
+     * Income Account
+     * ---
+     * This account will be used when validating a customer invoice.
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $property_account_income_categ_id;
+
+    /**
+     * Expense Account
+     * ---
+     * The expense is accounted for when a vendor bill is validated, except in anglo-saxon accounting with perpetual
+     * inventory valuation in which case the expense (Cost of Goods Sold account) is recognized at the customer
+     * invoice validation.
+     * ---
+     * Relation : many2one (account.account)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Account
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $property_account_expense_categ_id;
+
+    /**
      * Routes
      * ---
      * Relation : many2many (stock.location.route)
@@ -150,38 +182,6 @@ final class Category extends Base
     private $putaway_rule_ids;
 
     /**
-     * Income Account
-     * ---
-     * This account will be used when validating a customer invoice.
-     * ---
-     * Relation : many2one (account.account)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Account
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation|null
-     */
-    private $property_account_income_categ_id;
-
-    /**
-     * Expense Account
-     * ---
-     * The expense is accounted for when a vendor bill is validated, except in anglo-saxon accounting with perpetual
-     * inventory valuation in which case the expense (Cost of Goods Sold account) is recognized at the customer
-     * invoice validation.
-     * ---
-     * Relation : many2one (account.account)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Account
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation|null
-     */
-    private $property_account_expense_categ_id;
-
-    /**
      * Price Difference Account
      * ---
      * This account will be used to value price difference between purchase price and accounting cost.
@@ -202,7 +202,7 @@ final class Category extends Base
      * Manual: The accounting entries to value the inventory are not posted automatically.
      *                 Automated: An accounting entry is automatically created to value the inventory when a product
      * enters or leaves the company.
-     *
+     *                 
      * ---
      * Selection :
      *     -> manual_periodic (Manual)
@@ -222,7 +222,7 @@ final class Category extends Base
      *                 Average Cost (AVCO): The products are valued at weighted average cost.
      *                 First In First Out (FIFO): The products are valued supposing those that enter the company
      * first will also leave it first.
-     *
+     *                 
      * ---
      * Selection :
      *     -> standard (Standard Price)
@@ -255,11 +255,10 @@ final class Category extends Base
     /**
      * Stock Input Account
      * ---
-     * When doing automated inventory valuation, counterpart journal items for all incoming stock moves will be
-     * posted in this account,
-     *                                 unless there is a specific valuation account set on the source location. This
-     * is the default value for all products in this category.
-     *                                 It can also directly be set on each product.
+     * Counterpart journal items for all incoming stock moves will be posted in this account, unless there is a
+     * specific valuation account
+     *                                 set on the source location. This is the default value for all products in this
+     * category. It can also directly be set on each product.
      * ---
      * Relation : many2one (account.account)
      * @see \Flux\OdooApiClient\Model\Object\Account\Account
@@ -362,7 +361,7 @@ final class Category extends Base
      *        Manual: The accounting entries to value the inventory are not posted automatically.
      *                        Automated: An accounting entry is automatically created to value the inventory when a product
      *        enters or leaves the company.
-     *
+     *                        
      *        ---
      *        Selection :
      *            -> manual_periodic (Manual)
@@ -376,7 +375,7 @@ final class Category extends Base
      *                        Average Cost (AVCO): The products are valued at weighted average cost.
      *                        First In First Out (FIFO): The products are valued supposing those that enter the company
      *        first will also leave it first.
-     *
+     *                        
      *        ---
      *        Selection :
      *            -> standard (Standard Price)
@@ -404,39 +403,56 @@ final class Category extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @param OdooRelation[]|null $putaway_rule_ids
+     */
+    public function setPutawayRuleIds(?array $putaway_rule_ids): void
+    {
+        $this->putaway_rule_ids = $putaway_rule_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
      *
-     * @SerializedName("property_account_income_categ_id")
+     * @return bool
      */
-    public function getPropertyAccountIncomeCategId(): ?OdooRelation
+    public function hasPutawayRuleIds(OdooRelation $item): bool
     {
-        return $this->property_account_income_categ_id;
+        if (null === $this->putaway_rule_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->putaway_rule_ids);
     }
 
     /**
-     * @param OdooRelation|null $property_account_income_categ_id
+     * @param OdooRelation $item
      */
-    public function setPropertyAccountIncomeCategId(?OdooRelation $property_account_income_categ_id): void
+    public function addPutawayRuleIds(OdooRelation $item): void
     {
-        $this->property_account_income_categ_id = $property_account_income_categ_id;
+        if ($this->hasPutawayRuleIds($item)) {
+            return;
+        }
+
+        if (null === $this->putaway_rule_ids) {
+            $this->putaway_rule_ids = [];
+        }
+
+        $this->putaway_rule_ids[] = $item;
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("property_account_expense_categ_id")
+     * @param OdooRelation $item
      */
-    public function getPropertyAccountExpenseCategId(): ?OdooRelation
+    public function removePutawayRuleIds(OdooRelation $item): void
     {
-        return $this->property_account_expense_categ_id;
-    }
+        if (null === $this->putaway_rule_ids) {
+            $this->putaway_rule_ids = [];
+        }
 
-    /**
-     * @param OdooRelation|null $property_account_expense_categ_id
-     */
-    public function setPropertyAccountExpenseCategId(?OdooRelation $property_account_expense_categ_id): void
-    {
-        $this->property_account_expense_categ_id = $property_account_expense_categ_id;
+        if ($this->hasPutawayRuleIds($item)) {
+            $index = array_search($item, $this->putaway_rule_ids);
+            unset($this->putaway_rule_ids[$index]);
+        }
     }
 
     /**
@@ -524,17 +540,16 @@ final class Category extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addPutawayRuleIds(OdooRelation $item): void
+    public function removeTotalRouteIds(OdooRelation $item): void
     {
-        if ($this->hasPutawayRuleIds($item)) {
-            return;
+        if (null === $this->total_route_ids) {
+            $this->total_route_ids = [];
         }
 
-        if (null === $this->putaway_rule_ids) {
-            $this->putaway_rule_ids = [];
+        if ($this->hasTotalRouteIds($item)) {
+            $index = array_search($item, $this->total_route_ids);
+            unset($this->total_route_ids[$index]);
         }
-
-        $this->putaway_rule_ids[] = $item;
     }
 
     /**
@@ -648,32 +663,29 @@ final class Category extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("putaway_rule_ids")
      */
-    public function removePutawayRuleIds(OdooRelation $item): void
+    public function getPutawayRuleIds(): ?array
     {
-        if (null === $this->putaway_rule_ids) {
-            $this->putaway_rule_ids = [];
-        }
-
-        if ($this->hasPutawayRuleIds($item)) {
-            $index = array_search($item, $this->putaway_rule_ids);
-            unset($this->putaway_rule_ids[$index]);
-        }
+        return $this->putaway_rule_ids;
     }
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasPutawayRuleIds(OdooRelation $item): bool
+    public function addTotalRouteIds(OdooRelation $item): void
     {
-        if (null === $this->putaway_rule_ids) {
-            return false;
+        if ($this->hasTotalRouteIds($item)) {
+            return;
         }
 
-        return in_array($item, $this->putaway_rule_ids);
+        if (null === $this->total_route_ids) {
+            $this->total_route_ids = [];
+        }
+
+        $this->total_route_ids[] = $item;
     }
 
     /**
@@ -830,11 +842,53 @@ final class Category extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $putaway_rule_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setPutawayRuleIds(?array $putaway_rule_ids): void
+    public function hasTotalRouteIds(OdooRelation $item): bool
     {
-        $this->putaway_rule_ids = $putaway_rule_ids;
+        if (null === $this->total_route_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->total_route_ids);
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("property_account_income_categ_id")
+     */
+    public function getPropertyAccountIncomeCategId(): ?OdooRelation
+    {
+        return $this->property_account_income_categ_id;
+    }
+
+    /**
+     * @param OdooRelation|null $property_account_income_categ_id
+     */
+    public function setPropertyAccountIncomeCategId(?OdooRelation $property_account_income_categ_id): void
+    {
+        $this->property_account_income_categ_id = $property_account_income_categ_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("property_account_expense_categ_id")
+     */
+    public function getPropertyAccountExpenseCategId(): ?OdooRelation
+    {
+        return $this->property_account_expense_categ_id;
+    }
+
+    /**
+     * @param OdooRelation|null $property_account_expense_categ_id
+     */
+    public function setPropertyAccountExpenseCategId(?OdooRelation $property_account_expense_categ_id): void
+    {
+        $this->property_account_expense_categ_id = $property_account_expense_categ_id;
     }
 
     /**
@@ -934,61 +988,6 @@ final class Category extends Base
     public function setTotalRouteIds(?array $total_route_ids): void
     {
         $this->total_route_ids = $total_route_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasTotalRouteIds(OdooRelation $item): bool
-    {
-        if (null === $this->total_route_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->total_route_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addTotalRouteIds(OdooRelation $item): void
-    {
-        if ($this->hasTotalRouteIds($item)) {
-            return;
-        }
-
-        if (null === $this->total_route_ids) {
-            $this->total_route_ids = [];
-        }
-
-        $this->total_route_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeTotalRouteIds(OdooRelation $item): void
-    {
-        if (null === $this->total_route_ids) {
-            $this->total_route_ids = [];
-        }
-
-        if ($this->hasTotalRouteIds($item)) {
-            $index = array_search($item, $this->total_route_ids);
-            unset($this->total_route_ids[$index]);
-        }
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("putaway_rule_ids")
-     */
-    public function getPutawayRuleIds(): ?array
-    {
-        return $this->putaway_rule_ids;
     }
 
     /**

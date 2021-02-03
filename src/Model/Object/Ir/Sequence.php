@@ -48,7 +48,7 @@ final class Sequence extends Base
      * ---
      * While assigning a sequence number to a record, the 'no gap' sequence implementation ensures that each previous
      * sequence number has been assigned already. While this sequence implementation will not skip any sequence
-     * number upon assignation, there can still be gaps in the sequence if records are deleted. The 'no gap'
+     * number upon assignment, there can still be gaps in the sequence if records are deleted. The 'no gap'
      * implementation is slower than the standard one.
      * ---
      * Selection :
@@ -236,7 +236,7 @@ final class Sequence extends Base
      *        ---
      *        While assigning a sequence number to a record, the 'no gap' sequence implementation ensures that each previous
      *        sequence number has been assigned already. While this sequence implementation will not skip any sequence
-     *        number upon assignation, there can still be gaps in the sequence if records are deleted. The 'no gap'
+     *        number upon assignment, there can still be gaps in the sequence if records are deleted. The 'no gap'
      *        implementation is slower than the standard one.
      *        ---
      *        Selection :

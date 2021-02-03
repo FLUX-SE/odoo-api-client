@@ -52,6 +52,18 @@ class Message extends Base
     protected $body;
 
     /**
+     * Short description
+     * ---
+     * Message description: either the subject, or the beginning of the body
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    protected $description;
+
+    /**
      * Attachments
      * ---
      * Attachments are linked to a document through model / res_id and to the message through this field.
@@ -151,6 +163,18 @@ class Message extends Base
      * @var OdooRelation|null
      */
     protected $mail_activity_type_id;
+
+    /**
+     * Employee Only
+     * ---
+     * Hide to public / portal users, independently from subtype configuration.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    protected $is_internal;
 
     /**
      * From
@@ -425,6 +449,18 @@ class Message extends Base
     protected $canned_response_ids;
 
     /**
+     * Has SMS error
+     * ---
+     * Has error
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    protected $has_sms_error;
+
+    /**
      * Snailmail message in error
      * ---
      * Searchable : yes
@@ -433,16 +469,6 @@ class Message extends Base
      * @var bool|null
      */
     protected $snailmail_error;
-
-    /**
-     * Snailmail Status
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    protected $snailmail_status;
 
     /**
      * Letter
@@ -468,8 +494,8 @@ class Message extends Base
      *     -> comment (Comment)
      *     -> notification (System notification)
      *     -> user_notification (User Specific Notification)
-     *     -> snailmail (Snailmail)
      *     -> sms (SMS)
+     *     -> snailmail (Snailmail)
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -477,18 +503,6 @@ class Message extends Base
      * @var string
      */
     protected $message_type;
-
-    /**
-     * Has SMS error
-     * ---
-     * Has error
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    protected $has_sms_error;
 
     /**
      * Created by
@@ -547,8 +561,8 @@ class Message extends Base
      *            -> comment (Comment)
      *            -> notification (System notification)
      *            -> user_notification (User Specific Notification)
-     *            -> snailmail (Snailmail)
      *            -> sms (SMS)
+     *            -> snailmail (Snailmail)
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -559,39 +573,11 @@ class Message extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("moderation_status")
+     * @param string|null $reply_to
      */
-    public function getModerationStatus(): ?string
+    public function setReplyTo(?string $reply_to): void
     {
-        return $this->moderation_status;
-    }
-
-    /**
-     * @param OdooRelation[]|null $mail_ids
-     */
-    public function setMailIds(?array $mail_ids): void
-    {
-        $this->mail_ids = $mail_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("mail_ids")
-     */
-    public function getMailIds(): ?array
-    {
-        return $this->mail_ids;
-    }
-
-    /**
-     * @param bool|null $add_sign
-     */
-    public function setAddSign(?bool $add_sign): void
-    {
-        $this->add_sign = $add_sign;
+        $this->reply_to = $reply_to;
     }
 
     /**
@@ -667,27 +653,21 @@ class Message extends Base
     }
 
     /**
+     * @return string|null
+     *
+     * @SerializedName("moderation_status")
+     */
+    public function getModerationStatus(): ?string
+    {
+        return $this->moderation_status;
+    }
+
+    /**
      * @param OdooRelation|null $mail_server_id
      */
     public function setMailServerId(?OdooRelation $mail_server_id): void
     {
         $this->mail_server_id = $mail_server_id;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addMailIds(OdooRelation $item): void
-    {
-        if ($this->hasMailIds($item)) {
-            return;
-        }
-
-        if (null === $this->mail_ids) {
-            $this->mail_ids = [];
-        }
-
-        $this->mail_ids[] = $item;
     }
 
     /**
@@ -701,14 +681,6 @@ class Message extends Base
     }
 
     /**
-     * @param string|null $reply_to
-     */
-    public function setReplyTo(?string $reply_to): void
-    {
-        $this->reply_to = $reply_to;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("reply_to")
@@ -716,6 +688,16 @@ class Message extends Base
     public function getReplyTo(): ?string
     {
         return $this->reply_to;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("mail_ids")
+     */
+    public function getMailIds(): ?array
+    {
+        return $this->mail_ids;
     }
 
     /**
@@ -818,32 +800,11 @@ class Message extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param OdooRelation[]|null $starred_partner_ids
      */
-    public function hasMailIds(OdooRelation $item): bool
+    public function setStarredPartnerIds(?array $starred_partner_ids): void
     {
-        if (null === $this->mail_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->mail_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMailIds(OdooRelation $item): void
-    {
-        if (null === $this->mail_ids) {
-            $this->mail_ids = [];
-        }
-
-        if ($this->hasMailIds($item)) {
-            $index = array_search($item, $this->mail_ids);
-            unset($this->mail_ids[$index]);
-        }
+        $this->starred_partner_ids = $starred_partner_ids;
     }
 
     /**
@@ -857,13 +818,62 @@ class Message extends Base
     }
 
     /**
-     * @return string
-     *
-     * @SerializedName("message_type")
+     * @param OdooRelation $item
      */
-    public function getMessageType(): string
+    public function removeNotificationIds(OdooRelation $item): void
     {
-        return $this->message_type;
+        if (null === $this->notification_ids) {
+            $this->notification_ids = [];
+        }
+
+        if ($this->hasNotificationIds($item)) {
+            $index = array_search($item, $this->notification_ids);
+            unset($this->notification_ids[$index]);
+        }
+    }
+
+    /**
+     * @param bool|null $add_sign
+     */
+    public function setAddSign(?bool $add_sign): void
+    {
+        $this->add_sign = $add_sign;
+    }
+
+    /**
+     * @param OdooRelation[]|null $mail_ids
+     */
+    public function setMailIds(?array $mail_ids): void
+    {
+        $this->mail_ids = $mail_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasNotificationIds(OdooRelation $item): bool
+    {
+        if (null === $this->notification_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->notification_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasLetterIds(OdooRelation $item): bool
+    {
+        if (null === $this->letter_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->letter_ids);
     }
 
     /**
@@ -939,29 +949,21 @@ class Message extends Base
     }
 
     /**
-     * @param bool|null $has_sms_error
-     */
-    public function setHasSmsError(?bool $has_sms_error): void
-    {
-        $this->has_sms_error = $has_sms_error;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("has_sms_error")
-     */
-    public function isHasSmsError(): ?bool
-    {
-        return $this->has_sms_error;
-    }
-
-    /**
      * @param string $message_type
      */
     public function setMessageType(string $message_type): void
     {
         $this->message_type = $message_type;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("message_type")
+     */
+    public function getMessageType(): string
+    {
+        return $this->message_type;
     }
 
     /**
@@ -977,16 +979,6 @@ class Message extends Base
             $index = array_search($item, $this->letter_ids);
             unset($this->letter_ids[$index]);
         }
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("canned_response_ids")
-     */
-    public function getCannedResponseIds(): ?array
-    {
-        return $this->canned_response_ids;
     }
 
     /**
@@ -1006,25 +998,25 @@ class Message extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasLetterIds(OdooRelation $item): bool
-    {
-        if (null === $this->letter_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->letter_ids);
-    }
-
-    /**
      * @param OdooRelation[]|null $letter_ids
      */
     public function setLetterIds(?array $letter_ids): void
     {
         $this->letter_ids = $letter_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMailIds(OdooRelation $item): bool
+    {
+        if (null === $this->mail_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->mail_ids);
     }
 
     /**
@@ -1035,24 +1027,6 @@ class Message extends Base
     public function getLetterIds(): ?array
     {
         return $this->letter_ids;
-    }
-
-    /**
-     * @param string|null $snailmail_status
-     */
-    public function setSnailmailStatus(?string $snailmail_status): void
-    {
-        $this->snailmail_status = $snailmail_status;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("snailmail_status")
-     */
-    public function getSnailmailStatus(): ?string
-    {
-        return $this->snailmail_status;
     }
 
     /**
@@ -1071,6 +1045,24 @@ class Message extends Base
     public function isSnailmailError(): ?bool
     {
         return $this->snailmail_error;
+    }
+
+    /**
+     * @param bool|null $has_sms_error
+     */
+    public function setHasSmsError(?bool $has_sms_error): void
+    {
+        $this->has_sms_error = $has_sms_error;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("has_sms_error")
+     */
+    public function isHasSmsError(): ?bool
+    {
+        return $this->has_sms_error;
     }
 
     /**
@@ -1127,26 +1119,68 @@ class Message extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $starred_partner_ids
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("canned_response_ids")
      */
-    public function setStarredPartnerIds(?array $starred_partner_ids): void
+    public function getCannedResponseIds(): ?array
     {
-        $this->starred_partner_ids = $starred_partner_ids;
+        return $this->canned_response_ids;
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function removeNotificationIds(OdooRelation $item): void
+    public function removeMailIds(OdooRelation $item): void
     {
+        if (null === $this->mail_ids) {
+            $this->mail_ids = [];
+        }
+
+        if ($this->hasMailIds($item)) {
+            $index = array_search($item, $this->mail_ids);
+            unset($this->mail_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMailIds(OdooRelation $item): void
+    {
+        if ($this->hasMailIds($item)) {
+            return;
+        }
+
+        if (null === $this->mail_ids) {
+            $this->mail_ids = [];
+        }
+
+        $this->mail_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addNotificationIds(OdooRelation $item): void
+    {
+        if ($this->hasNotificationIds($item)) {
+            return;
+        }
+
         if (null === $this->notification_ids) {
             $this->notification_ids = [];
         }
 
-        if ($this->hasNotificationIds($item)) {
-            $index = array_search($item, $this->notification_ids);
-            unset($this->notification_ids[$index]);
-        }
+        $this->notification_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation[]|null $notification_ids
+     */
+    public function setNotificationIds(?array $notification_ids): void
+    {
+        $this->notification_ids = $notification_ids;
     }
 
     /**
@@ -1160,19 +1194,11 @@ class Message extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $child_ids
+     * @param OdooRelation|null $parent_id
      */
-    public function setChildIds(?array $child_ids): void
+    public function setParentId(?OdooRelation $parent_id): void
     {
-        $this->child_ids = $child_ids;
-    }
-
-    /**
-     * @param OdooRelation|null $subtype_id
-     */
-    public function setSubtypeId(?OdooRelation $subtype_id): void
-    {
-        $this->subtype_id = $subtype_id;
+        $this->parent_id = $parent_id;
     }
 
     /**
@@ -1285,6 +1311,14 @@ class Message extends Base
     }
 
     /**
+     * @param OdooRelation[]|null $child_ids
+     */
+    public function setChildIds(?array $child_ids): void
+    {
+        $this->child_ids = $child_ids;
+    }
+
+    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("child_ids")
@@ -1295,22 +1329,6 @@ class Message extends Base
     }
 
     /**
-     * @param OdooRelation|null $mail_activity_type_id
-     */
-    public function setMailActivityTypeId(?OdooRelation $mail_activity_type_id): void
-    {
-        $this->mail_activity_type_id = $mail_activity_type_id;
-    }
-
-    /**
-     * @param OdooRelation|null $parent_id
-     */
-    public function setParentId(?OdooRelation $parent_id): void
-    {
-        $this->parent_id = $parent_id;
-    }
-
-    /**
      * @return OdooRelation|null
      *
      * @SerializedName("parent_id")
@@ -1318,6 +1336,16 @@ class Message extends Base
     public function getParentId(): ?OdooRelation
     {
         return $this->parent_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("mail_activity_type_id")
+     */
+    public function getMailActivityTypeId(): ?OdooRelation
+    {
+        return $this->mail_activity_type_id;
     }
 
     /**
@@ -1384,6 +1412,24 @@ class Message extends Base
     }
 
     /**
+     * @param string|null $description
+     */
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("description")
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
      * @param string|null $body
      */
     public function setBody(?string $body): void
@@ -1428,76 +1474,19 @@ class Message extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("mail_activity_type_id")
+     * @param OdooRelation|null $subtype_id
      */
-    public function getMailActivityTypeId(): ?OdooRelation
+    public function setSubtypeId(?OdooRelation $subtype_id): void
     {
-        return $this->mail_activity_type_id;
+        $this->subtype_id = $subtype_id;
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("email_from")
+     * @param OdooRelation|null $mail_activity_type_id
      */
-    public function getEmailFrom(): ?string
+    public function setMailActivityTypeId(?OdooRelation $mail_activity_type_id): void
     {
-        return $this->email_from;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addNotificationIds(OdooRelation $item): void
-    {
-        if ($this->hasNotificationIds($item)) {
-            return;
-        }
-
-        if (null === $this->notification_ids) {
-            $this->notification_ids = [];
-        }
-
-        $this->notification_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeNotifiedPartnerIds(OdooRelation $item): void
-    {
-        if (null === $this->notified_partner_ids) {
-            $this->notified_partner_ids = [];
-        }
-
-        if ($this->hasNotifiedPartnerIds($item)) {
-            $index = array_search($item, $this->notified_partner_ids);
-            unset($this->notified_partner_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasNotificationIds(OdooRelation $item): bool
-    {
-        if (null === $this->notification_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->notification_ids);
-    }
-
-    /**
-     * @param OdooRelation[]|null $notification_ids
-     */
-    public function setNotificationIds(?array $notification_ids): void
-    {
-        $this->notification_ids = $notification_ids;
+        $this->mail_activity_type_id = $mail_activity_type_id;
     }
 
     /**
@@ -1508,6 +1497,14 @@ class Message extends Base
     public function getNotificationIds(): ?array
     {
         return $this->notification_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $notified_partner_ids
+     */
+    public function setNotifiedPartnerIds(?array $notified_partner_ids): void
+    {
+        $this->notified_partner_ids = $notified_partner_ids;
     }
 
     /**
@@ -1612,6 +1609,21 @@ class Message extends Base
     /**
      * @param OdooRelation $item
      */
+    public function removeNotifiedPartnerIds(OdooRelation $item): void
+    {
+        if (null === $this->notified_partner_ids) {
+            $this->notified_partner_ids = [];
+        }
+
+        if ($this->hasNotifiedPartnerIds($item)) {
+            $index = array_search($item, $this->notified_partner_ids);
+            unset($this->notified_partner_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
     public function addNotifiedPartnerIds(OdooRelation $item): void
     {
         if ($this->hasNotifiedPartnerIds($item)) {
@@ -1623,14 +1635,6 @@ class Message extends Base
         }
 
         $this->notified_partner_ids[] = $item;
-    }
-
-    /**
-     * @param string|null $email_from
-     */
-    public function setEmailFrom(?string $email_from): void
-    {
-        $this->email_from = $email_from;
     }
 
     /**
@@ -1648,14 +1652,6 @@ class Message extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $notified_partner_ids
-     */
-    public function setNotifiedPartnerIds(?array $notified_partner_ids): void
-    {
-        $this->notified_partner_ids = $notified_partner_ids;
-    }
-
-    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("notified_partner_ids")
@@ -1663,6 +1659,16 @@ class Message extends Base
     public function getNotifiedPartnerIds(): ?array
     {
         return $this->notified_partner_ids;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("is_internal")
+     */
+    public function isIsInternal(): ?bool
+    {
+        return $this->is_internal;
     }
 
     /**
@@ -1762,6 +1768,32 @@ class Message extends Base
     public function getAuthorId(): ?OdooRelation
     {
         return $this->author_id;
+    }
+
+    /**
+     * @param string|null $email_from
+     */
+    public function setEmailFrom(?string $email_from): void
+    {
+        $this->email_from = $email_from;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("email_from")
+     */
+    public function getEmailFrom(): ?string
+    {
+        return $this->email_from;
+    }
+
+    /**
+     * @param bool|null $is_internal
+     */
+    public function setIsInternal(?bool $is_internal): void
+    {
+        $this->is_internal = $is_internal;
     }
 
     /**

@@ -13,7 +13,7 @@ namespace Flux\OdooApiClient\Model\Object;
  * Abstract model used as a substitute for relational fields with an unknown
  *         comodel.
  */
-abstract class Unknown extends Base
+final class Unknown extends Base
 {
     /**
      * @return string

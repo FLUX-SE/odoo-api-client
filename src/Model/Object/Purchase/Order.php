@@ -38,6 +38,20 @@ final class Order extends Base
     private $name;
 
     /**
+     * Priority
+     * ---
+     * Selection :
+     *     -> 0 (Normal)
+     *     -> 1 (Urgent)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $priority;
+
+    /**
      * Source Document
      * ---
      * Reference of the document that generated this purchase order request (e.g. a sales order)
@@ -63,9 +77,9 @@ final class Order extends Base
     private $partner_ref;
 
     /**
-     * Order Date
+     * Order Deadline
      * ---
-     * Depicts the date where the Quotation should be validated and converted into a purchase order.
+     * Depicts the date within which the Quotation should be confirmed and converted into a purchase order.
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -210,12 +224,24 @@ final class Order extends Base
     /**
      * Receipt Date
      * ---
+     * Delivery date promised by vendor. This date is used to determine expected arrival of products.
+     * ---
      * Searchable : yes
      * Sortable : yes
      *
      * @var DateTimeInterface|null
      */
     private $date_planned;
+
+    /**
+     * Date Calendar Start
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var DateTimeInterface|null
+     */
+    private $date_calendar_start;
 
     /**
      * Untaxed Amount
@@ -325,6 +351,55 @@ final class Order extends Base
     private $currency_rate;
 
     /**
+     * Reminder Confirmed
+     * ---
+     * True if the reminder email is confirmed by the vendor.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $mail_reminder_confirmed;
+
+    /**
+     * Reception Confirmed
+     * ---
+     * True if PO reception is confirmed by the vendor.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $mail_reception_confirmed;
+
+    /**
+     * Receipt Reminder Email
+     * ---
+     * Automatically send a confirmation email to the vendor X days before the expected receipt date, asking him to
+     * confirm the exact date.
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $receipt_reminder_email;
+
+    /**
+     * Days Before Receipt
+     * ---
+     * Number of days to send reminder email before the promised receipt date
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    private $reminder_date_before_receipt;
+
+    /**
      * Incoterm
      * ---
      * International Commercial Terms are a series of predefined commercial terms used in international transactions.
@@ -422,6 +497,40 @@ final class Order extends Base
     private $is_shipped;
 
     /**
+     * Effective Date
+     * ---
+     * Completion date of the first receipt order.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var DateTimeInterface|null
+     */
+    private $effective_date;
+
+    /**
+     * On-Time Delivery Rate
+     * ---
+     * Over the past 12 months; the number of products received on time divided by the number of ordered products.
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var float|null
+     */
+    private $on_time_rate;
+
+    /**
+     * Number of Source Sale
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    private $sale_order_count;
+
+    /**
      * Auto Generated Purchase Order
      * ---
      * Searchable : yes
@@ -502,6 +611,18 @@ final class Order extends Base
      * @var OdooRelation|null
      */
     private $activity_type_id;
+
+    /**
+     * Activity Type Icon
+     * ---
+     * Font awesome icon e.g. fa-tasks
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $activity_type_icon;
 
     /**
      * Next Activity Deadline
@@ -818,9 +939,9 @@ final class Order extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param DateTimeInterface $date_order Order Date
+     * @param DateTimeInterface $date_order Order Deadline
      *        ---
-     *        Depicts the date where the Quotation should be validated and converted into a purchase order.
+     *        Depicts the date within which the Quotation should be confirmed and converted into a purchase order.
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -876,21 +997,6 @@ final class Order extends Base
     /**
      * @param OdooRelation $item
      */
-    public function removeMessagePartnerIds(OdooRelation $item): void
-    {
-        if (null === $this->message_partner_ids) {
-            $this->message_partner_ids = [];
-        }
-
-        if ($this->hasMessagePartnerIds($item)) {
-            $index = array_search($item, $this->message_partner_ids);
-            unset($this->message_partner_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
     public function addMessageFollowerIds(OdooRelation $item): void
     {
         if ($this->hasMessageFollowerIds($item)) {
@@ -902,6 +1008,82 @@ final class Order extends Base
         }
 
         $this->message_follower_ids[] = $item;
+    }
+
+    /**
+     * @param string|null $activity_exception_decoration
+     */
+    public function setActivityExceptionDecoration(?string $activity_exception_decoration): void
+    {
+        $this->activity_exception_decoration = $activity_exception_decoration;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("activity_exception_icon")
+     */
+    public function getActivityExceptionIcon(): ?string
+    {
+        return $this->activity_exception_icon;
+    }
+
+    /**
+     * @param string|null $activity_exception_icon
+     */
+    public function setActivityExceptionIcon(?string $activity_exception_icon): void
+    {
+        $this->activity_exception_icon = $activity_exception_icon;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("message_is_follower")
+     */
+    public function isMessageIsFollower(): ?bool
+    {
+        return $this->message_is_follower;
+    }
+
+    /**
+     * @param bool|null $message_is_follower
+     */
+    public function setMessageIsFollower(?bool $message_is_follower): void
+    {
+        $this->message_is_follower = $message_is_follower;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_follower_ids")
+     */
+    public function getMessageFollowerIds(): ?array
+    {
+        return $this->message_follower_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_follower_ids
+     */
+    public function setMessageFollowerIds(?array $message_follower_ids): void
+    {
+        $this->message_follower_ids = $message_follower_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMessageFollowerIds(OdooRelation $item): bool
+    {
+        if (null === $this->message_follower_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_follower_ids);
     }
 
     /**
@@ -917,6 +1099,14 @@ final class Order extends Base
             $index = array_search($item, $this->message_follower_ids);
             unset($this->message_follower_ids[$index]);
         }
+    }
+
+    /**
+     * @param string|null $activity_summary
+     */
+    public function setActivitySummary(?string $activity_summary): void
+    {
+        $this->activity_summary = $activity_summary;
     }
 
     /**
@@ -968,6 +1158,21 @@ final class Order extends Base
     }
 
     /**
+     * @param OdooRelation $item
+     */
+    public function removeMessagePartnerIds(OdooRelation $item): void
+    {
+        if (null === $this->message_partner_ids) {
+            $this->message_partner_ids = [];
+        }
+
+        if ($this->hasMessagePartnerIds($item)) {
+            $index = array_search($item, $this->message_partner_ids);
+            unset($this->message_partner_ids[$index]);
+        }
+    }
+
+    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("message_channel_ids")
@@ -975,14 +1180,6 @@ final class Order extends Base
     public function getMessageChannelIds(): ?array
     {
         return $this->message_channel_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $message_follower_ids
-     */
-    public function setMessageFollowerIds(?array $message_follower_ids): void
-    {
-        $this->message_follower_ids = $message_follower_ids;
     }
 
     /**
@@ -1008,19 +1205,23 @@ final class Order extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return string|null
+     *
+     * @SerializedName("activity_exception_decoration")
      */
-    public function addMessageChannelIds(OdooRelation $item): void
+    public function getActivityExceptionDecoration(): ?string
     {
-        if ($this->hasMessageChannelIds($item)) {
-            return;
-        }
+        return $this->activity_exception_decoration;
+    }
 
-        if (null === $this->message_channel_ids) {
-            $this->message_channel_ids = [];
-        }
-
-        $this->message_channel_ids[] = $item;
+    /**
+     * @return string|null
+     *
+     * @SerializedName("activity_summary")
+     */
+    public function getActivitySummary(): ?string
+    {
+        return $this->activity_summary;
     }
 
     /**
@@ -1039,87 +1240,6 @@ final class Order extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("message_ids")
-     */
-    public function getMessageIds(): ?array
-    {
-        return $this->message_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $message_ids
-     */
-    public function setMessageIds(?array $message_ids): void
-    {
-        $this->message_ids = $message_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasMessageIds(OdooRelation $item): bool
-    {
-        if (null === $this->message_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasMessageFollowerIds(OdooRelation $item): bool
-    {
-        if (null === $this->message_follower_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_follower_ids);
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("message_follower_ids")
-     */
-    public function getMessageFollowerIds(): ?array
-    {
-        return $this->message_follower_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMessageIds(OdooRelation $item): void
-    {
-        if (null === $this->message_ids) {
-            $this->message_ids = [];
-        }
-
-        if ($this->hasMessageIds($item)) {
-            $index = array_search($item, $this->message_ids);
-            unset($this->message_ids[$index]);
-        }
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("activity_date_deadline")
-     */
-    public function getActivityDateDeadline(): ?DateTimeInterface
-    {
-        return $this->activity_date_deadline;
-    }
-
-    /**
      * @param OdooRelation $item
      */
     public function removeActivityIds(OdooRelation $item): void
@@ -1135,6 +1255,90 @@ final class Order extends Base
     }
 
     /**
+     * @return bool|null
+     *
+     * @SerializedName("auto_generated")
+     */
+    public function isAutoGenerated(): ?bool
+    {
+        return $this->auto_generated;
+    }
+
+    /**
+     * @param bool|null $auto_generated
+     */
+    public function setAutoGenerated(?bool $auto_generated): void
+    {
+        $this->auto_generated = $auto_generated;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("auto_sale_order_id")
+     */
+    public function getAutoSaleOrderId(): ?OdooRelation
+    {
+        return $this->auto_sale_order_id;
+    }
+
+    /**
+     * @param OdooRelation|null $auto_sale_order_id
+     */
+    public function setAutoSaleOrderId(?OdooRelation $auto_sale_order_id): void
+    {
+        $this->auto_sale_order_id = $auto_sale_order_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("activity_ids")
+     */
+    public function getActivityIds(): ?array
+    {
+        return $this->activity_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $activity_ids
+     */
+    public function setActivityIds(?array $activity_ids): void
+    {
+        $this->activity_ids = $activity_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasActivityIds(OdooRelation $item): bool
+    {
+        if (null === $this->activity_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->activity_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addActivityIds(OdooRelation $item): void
+    {
+        if ($this->hasActivityIds($item)) {
+            return;
+        }
+
+        if (null === $this->activity_ids) {
+            $this->activity_ids = [];
+        }
+
+        $this->activity_ids[] = $item;
+    }
+
+    /**
      * @return string|null
      *
      * @SerializedName("activity_state")
@@ -1142,6 +1346,14 @@ final class Order extends Base
     public function getActivityState(): ?string
     {
         return $this->activity_state;
+    }
+
+    /**
+     * @param DateTimeInterface|null $activity_date_deadline
+     */
+    public function setActivityDateDeadline(?DateTimeInterface $activity_date_deadline): void
+    {
+        $this->activity_date_deadline = $activity_date_deadline;
     }
 
     /**
@@ -1189,131 +1401,118 @@ final class Order extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $activity_date_deadline
-     */
-    public function setActivityDateDeadline(?DateTimeInterface $activity_date_deadline): void
-    {
-        $this->activity_date_deadline = $activity_date_deadline;
-    }
-
-    /**
-     * @param bool|null $message_is_follower
-     */
-    public function setMessageIsFollower(?bool $message_is_follower): void
-    {
-        $this->message_is_follower = $message_is_follower;
-    }
-
-    /**
      * @return string|null
      *
-     * @SerializedName("activity_summary")
+     * @SerializedName("activity_type_icon")
      */
-    public function getActivitySummary(): ?string
+    public function getActivityTypeIcon(): ?string
     {
-        return $this->activity_summary;
+        return $this->activity_type_icon;
     }
 
     /**
-     * @param string|null $activity_summary
+     * @param string|null $activity_type_icon
      */
-    public function setActivitySummary(?string $activity_summary): void
+    public function setActivityTypeIcon(?string $activity_type_icon): void
     {
-        $this->activity_summary = $activity_summary;
+        $this->activity_type_icon = $activity_type_icon;
     }
 
     /**
-     * @return string|null
+     * @return DateTimeInterface|null
      *
-     * @SerializedName("activity_exception_decoration")
+     * @SerializedName("activity_date_deadline")
      */
-    public function getActivityExceptionDecoration(): ?string
+    public function getActivityDateDeadline(): ?DateTimeInterface
     {
-        return $this->activity_exception_decoration;
-    }
-
-    /**
-     * @param string|null $activity_exception_decoration
-     */
-    public function setActivityExceptionDecoration(?string $activity_exception_decoration): void
-    {
-        $this->activity_exception_decoration = $activity_exception_decoration;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("activity_exception_icon")
-     */
-    public function getActivityExceptionIcon(): ?string
-    {
-        return $this->activity_exception_icon;
-    }
-
-    /**
-     * @param string|null $activity_exception_icon
-     */
-    public function setActivityExceptionIcon(?string $activity_exception_icon): void
-    {
-        $this->activity_exception_icon = $activity_exception_icon;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("message_is_follower")
-     */
-    public function isMessageIsFollower(): ?bool
-    {
-        return $this->message_is_follower;
+        return $this->activity_date_deadline;
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function addMessageIds(OdooRelation $item): void
+    public function addMessageChannelIds(OdooRelation $item): void
     {
-        if ($this->hasMessageIds($item)) {
+        if ($this->hasMessageChannelIds($item)) {
             return;
         }
 
-        if (null === $this->message_ids) {
-            $this->message_ids = [];
+        if (null === $this->message_channel_ids) {
+            $this->message_channel_ids = [];
         }
 
-        $this->message_ids[] = $item;
+        $this->message_channel_ids[] = $item;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_ids")
+     */
+    public function getMessageIds(): ?array
+    {
+        return $this->message_ids;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("sale_order_count")
+     */
+    public function getSaleOrderCount(): ?int
+    {
+        return $this->sale_order_count;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("access_warning")
+     */
+    public function getAccessWarning(): ?string
+    {
+        return $this->access_warning;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addWebsiteMessageIds(OdooRelation $item): void
+    {
+        if ($this->hasWebsiteMessageIds($item)) {
+            return;
+        }
+
+        if (null === $this->website_message_ids) {
+            $this->website_message_ids = [];
+        }
+
+        $this->website_message_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeWebsiteMessageIds(OdooRelation $item): void
+    {
+        if (null === $this->website_message_ids) {
+            $this->website_message_ids = [];
+        }
+
+        if ($this->hasWebsiteMessageIds($item)) {
+            $index = array_search($item, $this->website_message_ids);
+            unset($this->website_message_ids[$index]);
+        }
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("message_unread")
+     * @SerializedName("message_has_sms_error")
      */
-    public function isMessageUnread(): ?bool
+    public function isMessageHasSmsError(): ?bool
     {
-        return $this->message_unread;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasActivityIds(OdooRelation $item): bool
-    {
-        if (null === $this->activity_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->activity_ids);
-    }
-
-    /**
-     * @param string|null $access_warning
-     */
-    public function setAccessWarning(?string $access_warning): void
-    {
-        $this->access_warning = $access_warning;
+        return $this->message_has_sms_error;
     }
 
     /**
@@ -1361,13 +1560,19 @@ final class Order extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("access_warning")
+     * @param string|null $access_warning
      */
-    public function getAccessWarning(): ?string
+    public function setAccessWarning(?string $access_warning): void
     {
-        return $this->access_warning;
+        $this->access_warning = $access_warning;
+    }
+
+    /**
+     * @param OdooRelation[]|null $website_message_ids
+     */
+    public function setWebsiteMessageIds(?array $website_message_ids): void
+    {
+        $this->website_message_ids = $website_message_ids;
     }
 
     /**
@@ -1378,21 +1583,6 @@ final class Order extends Base
     public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeWebsiteMessageIds(OdooRelation $item): void
-    {
-        if (null === $this->website_message_ids) {
-            $this->website_message_ids = [];
-        }
-
-        if ($this->hasWebsiteMessageIds($item)) {
-            $index = array_search($item, $this->website_message_ids);
-            unset($this->website_message_ids[$index]);
-        }
     }
 
     /**
@@ -1458,29 +1648,98 @@ final class Order extends Base
     }
 
     /**
-     * @return bool|null
+     * @param OdooRelation $item
      *
-     * @SerializedName("message_has_sms_error")
+     * @return bool
      */
-    public function isMessageHasSmsError(): ?bool
+    public function hasWebsiteMessageIds(OdooRelation $item): bool
     {
-        return $this->message_has_sms_error;
+        if (null === $this->website_message_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->website_message_ids);
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("website_message_ids")
+     */
+    public function getWebsiteMessageIds(): ?array
+    {
+        return $this->website_message_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_ids
+     */
+    public function setMessageIds(?array $message_ids): void
+    {
+        $this->message_ids = $message_ids;
+    }
+
+    /**
+     * @param bool|null $message_needaction
+     */
+    public function setMessageNeedaction(?bool $message_needaction): void
+    {
+        $this->message_needaction = $message_needaction;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMessageIds(OdooRelation $item): bool
+    {
+        if (null === $this->message_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_ids);
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function addWebsiteMessageIds(OdooRelation $item): void
+    public function addMessageIds(OdooRelation $item): void
     {
-        if ($this->hasWebsiteMessageIds($item)) {
+        if ($this->hasMessageIds($item)) {
             return;
         }
 
-        if (null === $this->website_message_ids) {
-            $this->website_message_ids = [];
+        if (null === $this->message_ids) {
+            $this->message_ids = [];
         }
 
-        $this->website_message_ids[] = $item;
+        $this->message_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMessageIds(OdooRelation $item): void
+    {
+        if (null === $this->message_ids) {
+            $this->message_ids = [];
+        }
+
+        if ($this->hasMessageIds($item)) {
+            $index = array_search($item, $this->message_ids);
+            unset($this->message_ids[$index]);
+        }
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("message_unread")
+     */
+    public function isMessageUnread(): ?bool
+    {
+        return $this->message_unread;
     }
 
     /**
@@ -1489,14 +1748,6 @@ final class Order extends Base
     public function setMessageUnread(?bool $message_unread): void
     {
         $this->message_unread = $message_unread;
-    }
-
-    /**
-     * @param bool|null $message_has_error
-     */
-    public function setMessageHasError(?bool $message_has_error): void
-    {
-        $this->message_has_error = $message_has_error;
     }
 
     /**
@@ -1528,14 +1779,6 @@ final class Order extends Base
     }
 
     /**
-     * @param bool|null $message_needaction
-     */
-    public function setMessageNeedaction(?bool $message_needaction): void
-    {
-        $this->message_needaction = $message_needaction;
-    }
-
-    /**
      * @return int|null
      *
      * @SerializedName("message_needaction_counter")
@@ -1543,6 +1786,14 @@ final class Order extends Base
     public function getMessageNeedactionCounter(): ?int
     {
         return $this->message_needaction_counter;
+    }
+
+    /**
+     * @param OdooRelation|null $message_main_attachment_id
+     */
+    public function setMessageMainAttachmentId(?OdooRelation $message_main_attachment_id): void
+    {
+        $this->message_main_attachment_id = $message_main_attachment_id;
     }
 
     /**
@@ -1564,6 +1815,14 @@ final class Order extends Base
     }
 
     /**
+     * @param bool|null $message_has_error
+     */
+    public function setMessageHasError(?bool $message_has_error): void
+    {
+        $this->message_has_error = $message_has_error;
+    }
+
+    /**
      * @return int|null
      *
      * @SerializedName("message_has_error_counter")
@@ -1571,20 +1830,6 @@ final class Order extends Base
     public function getMessageHasErrorCounter(): ?int
     {
         return $this->message_has_error_counter;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasWebsiteMessageIds(OdooRelation $item): bool
-    {
-        if (null === $this->website_message_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->website_message_ids);
     }
 
     /**
@@ -1624,53 +1869,19 @@ final class Order extends Base
     }
 
     /**
-     * @param OdooRelation|null $message_main_attachment_id
+     * @param int|null $sale_order_count
      */
-    public function setMessageMainAttachmentId(?OdooRelation $message_main_attachment_id): void
+    public function setSaleOrderCount(?int $sale_order_count): void
     {
-        $this->message_main_attachment_id = $message_main_attachment_id;
+        $this->sale_order_count = $sale_order_count;
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("website_message_ids")
+     * @param float|null $on_time_rate
      */
-    public function getWebsiteMessageIds(): ?array
+    public function setOnTimeRate(?float $on_time_rate): void
     {
-        return $this->website_message_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $website_message_ids
-     */
-    public function setWebsiteMessageIds(?array $website_message_ids): void
-    {
-        $this->website_message_ids = $website_message_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addActivityIds(OdooRelation $item): void
-    {
-        if ($this->hasActivityIds($item)) {
-            return;
-        }
-
-        if (null === $this->activity_ids) {
-            $this->activity_ids = [];
-        }
-
-        $this->activity_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation[]|null $activity_ids
-     */
-    public function setActivityIds(?array $activity_ids): void
-    {
-        $this->activity_ids = $activity_ids;
+        $this->on_time_rate = $on_time_rate;
     }
 
     /**
@@ -1684,13 +1895,17 @@ final class Order extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @param OdooRelation $item
      *
-     * @SerializedName("invoice_ids")
+     * @return bool
      */
-    public function getInvoiceIds(): ?array
+    public function hasInvoiceIds(OdooRelation $item): bool
     {
-        return $this->invoice_ids;
+        if (null === $this->invoice_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->invoice_ids);
     }
 
     /**
@@ -1761,33 +1976,21 @@ final class Order extends Base
     }
 
     /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("invoice_ids")
+     */
+    public function getInvoiceIds(): ?array
+    {
+        return $this->invoice_ids;
+    }
+
+    /**
      * @param OdooRelation[]|null $invoice_ids
      */
     public function setInvoiceIds(?array $invoice_ids): void
     {
         $this->invoice_ids = $invoice_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $order_line
-     */
-    public function setOrderLine(?array $order_line): void
-    {
-        $this->order_line = $order_line;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasInvoiceIds(OdooRelation $item): bool
-    {
-        if (null === $this->invoice_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->invoice_ids);
     }
 
     /**
@@ -1804,6 +2007,14 @@ final class Order extends Base
         }
 
         $this->invoice_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation[]|null $order_line
+     */
+    public function setOrderLine(?array $order_line): void
+    {
+        $this->order_line = $order_line;
     }
 
     /**
@@ -1858,6 +2069,34 @@ final class Order extends Base
     }
 
     /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("date_calendar_start")
+     */
+    public function getDateCalendarStart(): ?DateTimeInterface
+    {
+        return $this->date_calendar_start;
+    }
+
+    /**
+     * @param DateTimeInterface|null $date_calendar_start
+     */
+    public function setDateCalendarStart(?DateTimeInterface $date_calendar_start): void
+    {
+        $this->date_calendar_start = $date_calendar_start;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("amount_untaxed")
+     */
+    public function getAmountUntaxed(): ?float
+    {
+        return $this->amount_untaxed;
+    }
+
+    /**
      * @param OdooRelation $item
      *
      * @return bool
@@ -1882,21 +2121,21 @@ final class Order extends Base
     }
 
     /**
-     * @param float|null $amount_untaxed
+     * @return float|null
+     *
+     * @SerializedName("amount_tax")
      */
-    public function setAmountUntaxed(?float $amount_untaxed): void
+    public function getAmountTax(): ?float
     {
-        $this->amount_untaxed = $amount_untaxed;
+        return $this->amount_tax;
     }
 
     /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("date_approve")
+     * @param DateTimeInterface $date_order
      */
-    public function getDateApprove(): ?DateTimeInterface
+    public function setDateOrder(DateTimeInterface $date_order): void
     {
-        return $this->date_approve;
+        $this->date_order = $date_order;
     }
 
     /**
@@ -1905,6 +2144,24 @@ final class Order extends Base
     public function setName(string $name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("priority")
+     */
+    public function getPriority(): ?string
+    {
+        return $this->priority;
+    }
+
+    /**
+     * @param string|null $priority
+     */
+    public function setPriority(?string $priority): void
+    {
+        $this->priority = $priority;
     }
 
     /**
@@ -1954,19 +2211,13 @@ final class Order extends Base
     }
 
     /**
-     * @param DateTimeInterface $date_order
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("date_approve")
      */
-    public function setDateOrder(DateTimeInterface $date_order): void
+    public function getDateApprove(): ?DateTimeInterface
     {
-        $this->date_order = $date_order;
-    }
-
-    /**
-     * @param DateTimeInterface|null $date_approve
-     */
-    public function setDateApprove(?DateTimeInterface $date_approve): void
-    {
-        $this->date_approve = $date_approve;
+        return $this->date_approve;
     }
 
     /**
@@ -1975,6 +2226,14 @@ final class Order extends Base
     public function setState(?string $state): void
     {
         $this->state = $state;
+    }
+
+    /**
+     * @param DateTimeInterface|null $date_approve
+     */
+    public function setDateApprove(?DateTimeInterface $date_approve): void
+    {
+        $this->date_approve = $date_approve;
     }
 
     /**
@@ -2042,41 +2301,83 @@ final class Order extends Base
     }
 
     /**
-     * @return float|null
-     *
-     * @SerializedName("amount_untaxed")
+     * @param float|null $amount_untaxed
      */
-    public function getAmountUntaxed(): ?float
+    public function setAmountUntaxed(?float $amount_untaxed): void
     {
-        return $this->amount_untaxed;
+        $this->amount_untaxed = $amount_untaxed;
+    }
+
+    /**
+     * @param float|null $amount_tax
+     */
+    public function setAmountTax(?float $amount_tax): void
+    {
+        $this->amount_tax = $amount_tax;
     }
 
     /**
      * @return float|null
      *
-     * @SerializedName("amount_tax")
+     * @SerializedName("on_time_rate")
      */
-    public function getAmountTax(): ?float
+    public function getOnTimeRate(): ?float
     {
-        return $this->amount_tax;
+        return $this->on_time_rate;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("picking_type_id")
+     */
+    public function getPickingTypeId(): OdooRelation
+    {
+        return $this->picking_type_id;
+    }
+
+    /**
+     * @param OdooRelation|null $incoterm_id
+     */
+    public function setIncotermId(?OdooRelation $incoterm_id): void
+    {
+        $this->incoterm_id = $incoterm_id;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("picking_count")
+     */
+    public function getPickingCount(): ?int
+    {
+        return $this->picking_count;
+    }
+
+    /**
+     * @param int|null $picking_count
+     */
+    public function setPickingCount(?int $picking_count): void
+    {
+        $this->picking_count = $picking_count;
     }
 
     /**
      * @return OdooRelation[]|null
      *
-     * @SerializedName("activity_ids")
+     * @SerializedName("picking_ids")
      */
-    public function getActivityIds(): ?array
+    public function getPickingIds(): ?array
     {
-        return $this->activity_ids;
+        return $this->picking_ids;
     }
 
     /**
-     * @param string|null $default_location_dest_id_usage
+     * @param OdooRelation[]|null $picking_ids
      */
-    public function setDefaultLocationDestIdUsage(?string $default_location_dest_id_usage): void
+    public function setPickingIds(?array $picking_ids): void
     {
-        $this->default_location_dest_id_usage = $default_location_dest_id_usage;
+        $this->picking_ids = $picking_ids;
     }
 
     /**
@@ -2125,21 +2426,19 @@ final class Order extends Base
     }
 
     /**
-     * @return OdooRelation
-     *
-     * @SerializedName("picking_type_id")
-     */
-    public function getPickingTypeId(): OdooRelation
-    {
-        return $this->picking_type_id;
-    }
-
-    /**
      * @param OdooRelation $picking_type_id
      */
     public function setPickingTypeId(OdooRelation $picking_type_id): void
     {
         $this->picking_type_id = $picking_type_id;
+    }
+
+    /**
+     * @param int|null $reminder_date_before_receipt
+     */
+    public function setReminderDateBeforeReceipt(?int $reminder_date_before_receipt): void
+    {
+        $this->reminder_date_before_receipt = $reminder_date_before_receipt;
     }
 
     /**
@@ -2153,6 +2452,14 @@ final class Order extends Base
     }
 
     /**
+     * @param string|null $default_location_dest_id_usage
+     */
+    public function setDefaultLocationDestIdUsage(?string $default_location_dest_id_usage): void
+    {
+        $this->default_location_dest_id_usage = $default_location_dest_id_usage;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("group_id")
@@ -2160,16 +2467,6 @@ final class Order extends Base
     public function getGroupId(): ?OdooRelation
     {
         return $this->group_id;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("picking_ids")
-     */
-    public function getPickingIds(): ?array
-    {
-        return $this->picking_ids;
     }
 
     /**
@@ -2199,71 +2496,41 @@ final class Order extends Base
     }
 
     /**
-     * @return bool|null
+     * @return DateTimeInterface|null
      *
-     * @SerializedName("auto_generated")
+     * @SerializedName("effective_date")
      */
-    public function isAutoGenerated(): ?bool
+    public function getEffectiveDate(): ?DateTimeInterface
     {
-        return $this->auto_generated;
+        return $this->effective_date;
     }
 
     /**
-     * @param bool|null $auto_generated
+     * @param DateTimeInterface|null $effective_date
      */
-    public function setAutoGenerated(?bool $auto_generated): void
+    public function setEffectiveDate(?DateTimeInterface $effective_date): void
     {
-        $this->auto_generated = $auto_generated;
+        $this->effective_date = $effective_date;
     }
 
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("auto_sale_order_id")
+     * @SerializedName("incoterm_id")
      */
-    public function getAutoSaleOrderId(): ?OdooRelation
+    public function getIncotermId(): ?OdooRelation
     {
-        return $this->auto_sale_order_id;
+        return $this->incoterm_id;
     }
 
     /**
-     * @param OdooRelation|null $auto_sale_order_id
+     * @return int|null
+     *
+     * @SerializedName("reminder_date_before_receipt")
      */
-    public function setAutoSaleOrderId(?OdooRelation $auto_sale_order_id): void
+    public function getReminderDateBeforeReceipt(): ?int
     {
-        $this->auto_sale_order_id = $auto_sale_order_id;
-    }
-
-    /**
-     * @param OdooRelation[]|null $picking_ids
-     */
-    public function setPickingIds(?array $picking_ids): void
-    {
-        $this->picking_ids = $picking_ids;
-    }
-
-    /**
-     * @param int|null $picking_count
-     */
-    public function setPickingCount(?int $picking_count): void
-    {
-        $this->picking_count = $picking_count;
-    }
-
-    /**
-     * @param float|null $amount_tax
-     */
-    public function setAmountTax(?float $amount_tax): void
-    {
-        $this->amount_tax = $amount_tax;
-    }
-
-    /**
-     * @param OdooRelation|null $product_id
-     */
-    public function setProductId(?OdooRelation $product_id): void
-    {
-        $this->product_id = $product_id;
+        return $this->reminder_date_before_receipt;
     }
 
     /**
@@ -2274,6 +2541,14 @@ final class Order extends Base
     public function getAmountTotal(): ?float
     {
         return $this->amount_total;
+    }
+
+    /**
+     * @param OdooRelation|null $user_id
+     */
+    public function setUserId(?OdooRelation $user_id): void
+    {
+        $this->user_id = $user_id;
     }
 
     /**
@@ -2331,6 +2606,14 @@ final class Order extends Base
     }
 
     /**
+     * @param OdooRelation|null $product_id
+     */
+    public function setProductId(?OdooRelation $product_id): void
+    {
+        $this->product_id = $product_id;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("user_id")
@@ -2341,24 +2624,6 @@ final class Order extends Base
     }
 
     /**
-     * @return int|null
-     *
-     * @SerializedName("picking_count")
-     */
-    public function getPickingCount(): ?int
-    {
-        return $this->picking_count;
-    }
-
-    /**
-     * @param OdooRelation|null $user_id
-     */
-    public function setUserId(?OdooRelation $user_id): void
-    {
-        $this->user_id = $user_id;
-    }
-
-    /**
      * @return OdooRelation
      *
      * @SerializedName("company_id")
@@ -2366,6 +2631,14 @@ final class Order extends Base
     public function getCompanyId(): OdooRelation
     {
         return $this->company_id;
+    }
+
+    /**
+     * @param bool|null $receipt_reminder_email
+     */
+    public function setReceiptReminderEmail(?bool $receipt_reminder_email): void
+    {
+        $this->receipt_reminder_email = $receipt_reminder_email;
     }
 
     /**
@@ -2395,21 +2668,49 @@ final class Order extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @return bool|null
      *
-     * @SerializedName("incoterm_id")
+     * @SerializedName("mail_reminder_confirmed")
      */
-    public function getIncotermId(): ?OdooRelation
+    public function isMailReminderConfirmed(): ?bool
     {
-        return $this->incoterm_id;
+        return $this->mail_reminder_confirmed;
     }
 
     /**
-     * @param OdooRelation|null $incoterm_id
+     * @param bool|null $mail_reminder_confirmed
      */
-    public function setIncotermId(?OdooRelation $incoterm_id): void
+    public function setMailReminderConfirmed(?bool $mail_reminder_confirmed): void
     {
-        $this->incoterm_id = $incoterm_id;
+        $this->mail_reminder_confirmed = $mail_reminder_confirmed;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("mail_reception_confirmed")
+     */
+    public function isMailReceptionConfirmed(): ?bool
+    {
+        return $this->mail_reception_confirmed;
+    }
+
+    /**
+     * @param bool|null $mail_reception_confirmed
+     */
+    public function setMailReceptionConfirmed(?bool $mail_reception_confirmed): void
+    {
+        $this->mail_reception_confirmed = $mail_reception_confirmed;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("receipt_reminder_email")
+     */
+    public function isReceiptReminderEmail(): ?bool
+    {
+        return $this->receipt_reminder_email;
     }
 
     /**

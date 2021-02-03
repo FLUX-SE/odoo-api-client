@@ -17,7 +17,7 @@ use Flux\OdooApiClient\Model\Object\Base;
  *         Override this mixin's methods to specify an owner, a folder or tags
  *         for the document.
  */
-abstract class Mixin extends Base
+final class Mixin extends Base
 {
     /**
      * @return string

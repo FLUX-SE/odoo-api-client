@@ -25,30 +25,17 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 final class Sms extends Base
 {
     /**
-     * Picking
+     * Pick
      * ---
-     * Relation : many2one (stock.picking)
+     * Relation : many2many (stock.picking)
      * @see \Flux\OdooApiClient\Model\Object\Stock\Picking
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation
-     */
-    private $picking_id;
-
-    /**
-     * Company
-     * ---
-     * Relation : many2one (res.company)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : no
      *
-     * @var OdooRelation
+     * @var OdooRelation[]|null
      */
-    private $company_id;
+    private $pick_ids;
 
     /**
      * Created by
@@ -97,61 +84,66 @@ final class Sms extends Base
     private $write_date;
 
     /**
-     * @param OdooRelation $picking_id Picking
-     *        ---
-     *        Relation : many2one (stock.picking)
-     *        @see \Flux\OdooApiClient\Model\Object\Stock\Picking
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
-     * @param OdooRelation $company_id Company
-     *        ---
-     *        Relation : many2one (res.company)
-     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
-     *        ---
-     *        Searchable : yes
-     *        Sortable : no
-     */
-    public function __construct(OdooRelation $picking_id, OdooRelation $company_id)
-    {
-        $this->picking_id = $picking_id;
-        $this->company_id = $company_id;
-    }
-
-    /**
-     * @return OdooRelation
+     * @return OdooRelation[]|null
      *
-     * @SerializedName("picking_id")
+     * @SerializedName("pick_ids")
      */
-    public function getPickingId(): OdooRelation
+    public function getPickIds(): ?array
     {
-        return $this->picking_id;
+        return $this->pick_ids;
     }
 
     /**
-     * @param OdooRelation $picking_id
+     * @param OdooRelation[]|null $pick_ids
      */
-    public function setPickingId(OdooRelation $picking_id): void
+    public function setPickIds(?array $pick_ids): void
     {
-        $this->picking_id = $picking_id;
+        $this->pick_ids = $pick_ids;
     }
 
     /**
-     * @return OdooRelation
+     * @param OdooRelation $item
      *
-     * @SerializedName("company_id")
+     * @return bool
      */
-    public function getCompanyId(): OdooRelation
+    public function hasPickIds(OdooRelation $item): bool
     {
-        return $this->company_id;
+        if (null === $this->pick_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->pick_ids);
     }
 
     /**
-     * @param OdooRelation $company_id
+     * @param OdooRelation $item
      */
-    public function setCompanyId(OdooRelation $company_id): void
+    public function addPickIds(OdooRelation $item): void
     {
-        $this->company_id = $company_id;
+        if ($this->hasPickIds($item)) {
+            return;
+        }
+
+        if (null === $this->pick_ids) {
+            $this->pick_ids = [];
+        }
+
+        $this->pick_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removePickIds(OdooRelation $item): void
+    {
+        if (null === $this->pick_ids) {
+            $this->pick_ids = [];
+        }
+
+        if ($this->hasPickIds($item)) {
+            $index = array_search($item, $this->pick_ids);
+            unset($this->pick_ids[$index]);
+        }
     }
 
     /**

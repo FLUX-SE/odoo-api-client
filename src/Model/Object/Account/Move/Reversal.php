@@ -20,17 +20,44 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 final class Reversal extends Base
 {
     /**
-     * Journal Entry
+     * Move
      * ---
-     * Relation : many2one (account.move)
+     * Relation : many2many (account.move)
      * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $move_ids;
+
+    /**
+     * New Move
+     * ---
+     * Relation : many2many (account.move)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Move
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $new_move_ids;
+
+    /**
+     * Date Mode
+     * ---
+     * Selection :
+     *     -> custom (Specific)
+     *     -> entry (Journal Entry Date)
      * ---
      * Searchable : yes
      * Sortable : yes
      *
-     * @var OdooRelation|null
+     * @var string
      */
-    private $move_id;
+    private $date_mode;
 
     /**
      * Reversal date
@@ -38,7 +65,7 @@ final class Reversal extends Base
      * Searchable : yes
      * Sortable : yes
      *
-     * @var DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $date;
 
@@ -84,6 +111,19 @@ final class Reversal extends Base
      * @var OdooRelation|null
      */
     private $journal_id;
+
+    /**
+     * Company
+     * ---
+     * Relation : many2one (res.company)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Company
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation
+     */
+    private $company_id;
 
     /**
      * Residual
@@ -165,7 +205,11 @@ final class Reversal extends Base
     private $write_date;
 
     /**
-     * @param DateTimeInterface $date Reversal date
+     * @param string $date_mode Date Mode
+     *        ---
+     *        Selection :
+     *            -> custom (Specific)
+     *            -> entry (Journal Entry Date)
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -181,91 +225,19 @@ final class Reversal extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param OdooRelation $company_id Company
+     *        ---
+     *        Relation : many2one (res.company)
+     *        @see \Flux\OdooApiClient\Model\Object\Res\Company
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(DateTimeInterface $date, string $refund_method)
+    public function __construct(string $date_mode, string $refund_method, OdooRelation $company_id)
     {
-        $this->date = $date;
+        $this->date_mode = $date_mode;
         $this->refund_method = $refund_method;
-    }
-
-    /**
-     * @param OdooRelation|null $currency_id
-     */
-    public function setCurrencyId(?OdooRelation $currency_id): void
-    {
-        $this->currency_id = $currency_id;
-    }
-
-    /**
-     * @param DateTimeInterface|null $write_date
-     */
-    public function setWriteDate(?DateTimeInterface $write_date): void
-    {
-        $this->write_date = $write_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("write_date")
-     */
-    public function getWriteDate(): ?DateTimeInterface
-    {
-        return $this->write_date;
-    }
-
-    /**
-     * @param OdooRelation|null $write_uid
-     */
-    public function setWriteUid(?OdooRelation $write_uid): void
-    {
-        $this->write_uid = $write_uid;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("write_uid")
-     */
-    public function getWriteUid(): ?OdooRelation
-    {
-        return $this->write_uid;
-    }
-
-    /**
-     * @param DateTimeInterface|null $create_date
-     */
-    public function setCreateDate(?DateTimeInterface $create_date): void
-    {
-        $this->create_date = $create_date;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("create_date")
-     */
-    public function getCreateDate(): ?DateTimeInterface
-    {
-        return $this->create_date;
-    }
-
-    /**
-     * @param OdooRelation|null $create_uid
-     */
-    public function setCreateUid(?OdooRelation $create_uid): void
-    {
-        $this->create_uid = $create_uid;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("create_uid")
-     */
-    public function getCreateUid(): ?OdooRelation
-    {
-        return $this->create_uid;
+        $this->company_id = $company_id;
     }
 
     /**
@@ -274,6 +246,50 @@ final class Reversal extends Base
     public function setMoveType(?string $move_type): void
     {
         $this->move_type = $move_type;
+    }
+
+    /**
+     * @param OdooRelation $company_id
+     */
+    public function setCompanyId(OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("residual")
+     */
+    public function getResidual(): ?float
+    {
+        return $this->residual;
+    }
+
+    /**
+     * @param float|null $residual
+     */
+    public function setResidual(?float $residual): void
+    {
+        $this->residual = $residual;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("currency_id")
+     */
+    public function getCurrencyId(): ?OdooRelation
+    {
+        return $this->currency_id;
+    }
+
+    /**
+     * @param OdooRelation|null $currency_id
+     */
+    public function setCurrencyId(?OdooRelation $currency_id): void
+    {
+        $this->currency_id = $currency_id;
     }
 
     /**
@@ -289,39 +305,11 @@ final class Reversal extends Base
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("currency_id")
+     * @SerializedName("create_uid")
      */
-    public function getCurrencyId(): ?OdooRelation
+    public function getCreateUid(): ?OdooRelation
     {
-        return $this->currency_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("move_id")
-     */
-    public function getMoveId(): ?OdooRelation
-    {
-        return $this->move_id;
-    }
-
-    /**
-     * @param float|null $residual
-     */
-    public function setResidual(?float $residual): void
-    {
-        $this->residual = $residual;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("residual")
-     */
-    public function getResidual(): ?float
-    {
-        return $this->residual;
+        return $this->create_uid;
     }
 
     /**
@@ -330,6 +318,78 @@ final class Reversal extends Base
     public function setJournalId(?OdooRelation $journal_id): void
     {
         $this->journal_id = $journal_id;
+    }
+
+    /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("create_date")
+     */
+    public function getCreateDate(): ?DateTimeInterface
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $create_date
+     */
+    public function setCreateDate(?DateTimeInterface $create_date): void
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("write_uid")
+     */
+    public function getWriteUid(): ?OdooRelation
+    {
+        return $this->write_uid;
+    }
+
+    /**
+     * @param OdooRelation|null $write_uid
+     */
+    public function setWriteUid(?OdooRelation $write_uid): void
+    {
+        $this->write_uid = $write_uid;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("write_date")
+     */
+    public function getWriteDate(): ?DateTimeInterface
+    {
+        return $this->write_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $write_date
+     */
+    public function setWriteDate(?DateTimeInterface $write_date): void
+    {
+        $this->write_date = $write_date;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("company_id")
+     */
+    public function getCompanyId(): OdooRelation
+    {
+        return $this->company_id;
     }
 
     /**
@@ -343,6 +403,132 @@ final class Reversal extends Base
     }
 
     /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("move_ids")
+     */
+    public function getMoveIds(): ?array
+    {
+        return $this->move_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addNewMoveIds(OdooRelation $item): void
+    {
+        if ($this->hasNewMoveIds($item)) {
+            return;
+        }
+
+        if (null === $this->new_move_ids) {
+            $this->new_move_ids = [];
+        }
+
+        $this->new_move_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation[]|null $move_ids
+     */
+    public function setMoveIds(?array $move_ids): void
+    {
+        $this->move_ids = $move_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMoveIds(OdooRelation $item): bool
+    {
+        if (null === $this->move_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->move_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMoveIds(OdooRelation $item): void
+    {
+        if ($this->hasMoveIds($item)) {
+            return;
+        }
+
+        if (null === $this->move_ids) {
+            $this->move_ids = [];
+        }
+
+        $this->move_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMoveIds(OdooRelation $item): void
+    {
+        if (null === $this->move_ids) {
+            $this->move_ids = [];
+        }
+
+        if ($this->hasMoveIds($item)) {
+            $index = array_search($item, $this->move_ids);
+            unset($this->move_ids[$index]);
+        }
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("new_move_ids")
+     */
+    public function getNewMoveIds(): ?array
+    {
+        return $this->new_move_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $new_move_ids
+     */
+    public function setNewMoveIds(?array $new_move_ids): void
+    {
+        $this->new_move_ids = $new_move_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasNewMoveIds(OdooRelation $item): bool
+    {
+        if (null === $this->new_move_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->new_move_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeNewMoveIds(OdooRelation $item): void
+    {
+        if (null === $this->new_move_ids) {
+            $this->new_move_ids = [];
+        }
+
+        if ($this->hasNewMoveIds($item)) {
+            $index = array_search($item, $this->new_move_ids);
+            unset($this->new_move_ids[$index]);
+        }
+    }
+
+    /**
      * @param string $refund_method
      */
     public function setRefundMethod(string $refund_method): void
@@ -353,19 +539,37 @@ final class Reversal extends Base
     /**
      * @return string
      *
-     * @SerializedName("refund_method")
+     * @SerializedName("date_mode")
      */
-    public function getRefundMethod(): string
+    public function getDateMode(): string
     {
-        return $this->refund_method;
+        return $this->date_mode;
     }
 
     /**
-     * @param string|null $reason
+     * @param string $date_mode
      */
-    public function setReason(?string $reason): void
+    public function setDateMode(string $date_mode): void
     {
-        $this->reason = $reason;
+        $this->date_mode = $date_mode;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("date")
+     */
+    public function getDate(): ?DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $date
+     */
+    public function setDate(?DateTimeInterface $date): void
+    {
+        $this->date = $date;
     }
 
     /**
@@ -379,29 +583,21 @@ final class Reversal extends Base
     }
 
     /**
-     * @param DateTimeInterface $date
+     * @param string|null $reason
      */
-    public function setDate(DateTimeInterface $date): void
+    public function setReason(?string $reason): void
     {
-        $this->date = $date;
+        $this->reason = $reason;
     }
 
     /**
-     * @return DateTimeInterface
+     * @return string
      *
-     * @SerializedName("date")
+     * @SerializedName("refund_method")
      */
-    public function getDate(): DateTimeInterface
+    public function getRefundMethod(): string
     {
-        return $this->date;
-    }
-
-    /**
-     * @param OdooRelation|null $move_id
-     */
-    public function setMoveId(?OdooRelation $move_id): void
-    {
-        $this->move_id = $move_id;
+        return $this->refund_method;
     }
 
     /**

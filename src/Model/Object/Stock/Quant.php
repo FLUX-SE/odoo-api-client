@@ -174,6 +174,18 @@ final class Quant extends Base
     private $reserved_quantity;
 
     /**
+     * Available Quantity
+     * ---
+     * On hand quantity which hasn't been reserved on a transfer, in the default unit of measure of the product
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var float|null
+     */
+    private $available_quantity;
+
+    /**
      * Incoming Date
      * ---
      * Searchable : yes
@@ -322,6 +334,16 @@ final class Quant extends Base
     }
 
     /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("in_date")
+     */
+    public function getInDate(): ?DateTimeInterface
+    {
+        return $this->in_date;
+    }
+
+    /**
      * @param DateTimeInterface|null $in_date
      */
     public function setInDate(?DateTimeInterface $in_date): void
@@ -392,11 +414,13 @@ final class Quant extends Base
     }
 
     /**
-     * @param float $reserved_quantity
+     * @return float|null
+     *
+     * @SerializedName("available_quantity")
      */
-    public function setReservedQuantity(float $reserved_quantity): void
+    public function getAvailableQuantity(): ?float
     {
-        $this->reserved_quantity = $reserved_quantity;
+        return $this->available_quantity;
     }
 
     /**
@@ -472,23 +496,19 @@ final class Quant extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("in_date")
+     * @param float|null $available_quantity
      */
-    public function getInDate(): ?DateTimeInterface
+    public function setAvailableQuantity(?float $available_quantity): void
     {
-        return $this->in_date;
+        $this->available_quantity = $available_quantity;
     }
 
     /**
-     * @return float
-     *
-     * @SerializedName("reserved_quantity")
+     * @param float $reserved_quantity
      */
-    public function getReservedQuantity(): float
+    public function setReservedQuantity(float $reserved_quantity): void
     {
-        return $this->reserved_quantity;
+        $this->reserved_quantity = $reserved_quantity;
     }
 
     /**
@@ -592,11 +612,13 @@ final class Quant extends Base
     }
 
     /**
-     * @param float|null $inventory_quantity
+     * @return float
+     *
+     * @SerializedName("reserved_quantity")
      */
-    public function setInventoryQuantity(?float $inventory_quantity): void
+    public function getReservedQuantity(): float
     {
-        $this->inventory_quantity = $inventory_quantity;
+        return $this->reserved_quantity;
     }
 
     /**
@@ -669,6 +691,14 @@ final class Quant extends Base
     public function getInventoryQuantity(): ?float
     {
         return $this->inventory_quantity;
+    }
+
+    /**
+     * @param float|null $inventory_quantity
+     */
+    public function setInventoryQuantity(?float $inventory_quantity): void
+    {
+        $this->inventory_quantity = $inventory_quantity;
     }
 
     /**

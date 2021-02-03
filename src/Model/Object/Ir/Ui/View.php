@@ -105,7 +105,7 @@ final class View extends Base
      * Arch Filename
      * ---
      * File from where the view originates.
-     *
+     *                                                                                                               
      * Useful to (hard) reset broken views or to read arch from file in dev-xml mode.
      * ---
      * Searchable : yes
@@ -129,7 +129,7 @@ final class View extends Base
      * Previous View Architecture
      * ---
      * This field will save the current `arch_db` before writing on it.
-     *
+     *                                                                                                               
      * Useful to (soft) reset a broken view.
      * ---
      * Searchable : yes
@@ -217,19 +217,6 @@ final class View extends Base
     private $groups_id;
 
     /**
-     * Models
-     * ---
-     * Relation : one2many (ir.model.data -> res_id)
-     * @see \Flux\OdooApiClient\Model\Object\Ir\Model\Data
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $model_ids;
-
-    /**
      * View inheritance mode
      * ---
      * Only applies if this view inherits from an other one (inherit_id is not False/Null).
@@ -260,7 +247,7 @@ final class View extends Base
      * If this view is inherited,
      * * if True, the view always extends its parent
      * * if False, the view currently does not extend its parent but can be enabled
-     *
+     *                   
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -278,7 +265,6 @@ final class View extends Base
      *     -> graph (Graph)
      *     -> pivot (Pivot)
      *     -> calendar (Calendar)
-     *     -> diagram (Diagram)
      *     -> gantt (Gantt)
      *     -> kanban (Kanban)
      *     -> search (Search)
@@ -295,6 +281,16 @@ final class View extends Base
      * @var string|null
      */
     private $type;
+
+    /**
+     * Show As Optional Inherit
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $customize_show;
 
     /**
      * Created by
@@ -354,7 +350,7 @@ final class View extends Base
      * @param string $mode View inheritance mode
      *        ---
      *        Only applies if this view inherits from an other one (inherit_id is not False/Null).
-     *
+     *       
      *        * if extension (default), if this view is requested the closest primary view
      *        is looked up (via inherit_id), then all views inheriting from it with this
      *        view's model are applied
@@ -362,7 +358,7 @@ final class View extends Base
      *        different model than this one), then this view's inheritance specs
      *        (<xpath/>) are applied, and the result is used as if it were this view's
      *        actual arch.
-     *
+     *       
      *        ---
      *        Selection :
      *            -> primary (Base view)
@@ -379,13 +375,19 @@ final class View extends Base
     }
 
     /**
-     * @return string
-     *
-     * @SerializedName("mode")
+     * @param bool|null $active
      */
-    public function getMode(): string
+    public function setActive(?bool $active): void
     {
-        return $this->mode;
+        $this->active = $active;
+    }
+
+    /**
+     * @param OdooRelation|null $model_data_id
+     */
+    public function setModelDataId(?OdooRelation $model_data_id): void
+    {
+        $this->model_data_id = $model_data_id;
     }
 
     /**
@@ -470,66 +472,13 @@ final class View extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @return string
      *
-     * @SerializedName("model_ids")
+     * @SerializedName("mode")
      */
-    public function getModelIds(): ?array
+    public function getMode(): string
     {
-        return $this->model_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $model_ids
-     */
-    public function setModelIds(?array $model_ids): void
-    {
-        $this->model_ids = $model_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasModelIds(OdooRelation $item): bool
-    {
-        if (null === $this->model_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->model_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addModelIds(OdooRelation $item): void
-    {
-        if ($this->hasModelIds($item)) {
-            return;
-        }
-
-        if (null === $this->model_ids) {
-            $this->model_ids = [];
-        }
-
-        $this->model_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeModelIds(OdooRelation $item): void
-    {
-        if (null === $this->model_ids) {
-            $this->model_ids = [];
-        }
-
-        if ($this->hasModelIds($item)) {
-            $index = array_search($item, $this->model_ids);
-            unset($this->model_ids[$index]);
-        }
+        return $this->mode;
     }
 
     /**
@@ -538,16 +487,6 @@ final class View extends Base
     public function setMode(string $mode): void
     {
         $this->mode = $mode;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("model_data_id")
-     */
-    public function getModelDataId(): ?OdooRelation
-    {
-        return $this->model_data_id;
     }
 
     /**
@@ -561,14 +500,6 @@ final class View extends Base
     }
 
     /**
-     * @param bool|null $active
-     */
-    public function setActive(?bool $active): void
-    {
-        $this->active = $active;
-    }
-
-    /**
      * @return string|null
      *
      * @SerializedName("type")
@@ -579,11 +510,37 @@ final class View extends Base
     }
 
     /**
+     * @param string|null $field_parent
+     */
+    public function setFieldParent(?string $field_parent): void
+    {
+        $this->field_parent = $field_parent;
+    }
+
+    /**
      * @param string|null $type
      */
     public function setType(?string $type): void
     {
         $this->type = $type;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("customize_show")
+     */
+    public function isCustomizeShow(): ?bool
+    {
+        return $this->customize_show;
+    }
+
+    /**
+     * @param bool|null $customize_show
+     */
+    public function setCustomizeShow(?bool $customize_show): void
+    {
+        $this->customize_show = $customize_show;
     }
 
     /**
@@ -659,19 +616,23 @@ final class View extends Base
     }
 
     /**
-     * @param OdooRelation|null $model_data_id
+     * @return OdooRelation|null
+     *
+     * @SerializedName("model_data_id")
      */
-    public function setModelDataId(?OdooRelation $model_data_id): void
+    public function getModelDataId(): ?OdooRelation
     {
-        $this->model_data_id = $model_data_id;
+        return $this->model_data_id;
     }
 
     /**
-     * @param string|null $field_parent
+     * @return string|null
+     *
+     * @SerializedName("field_parent")
      */
-    public function setFieldParent(?string $field_parent): void
+    public function getFieldParent(): ?string
     {
-        $this->field_parent = $field_parent;
+        return $this->field_parent;
     }
 
     /**
@@ -685,11 +646,13 @@ final class View extends Base
     }
 
     /**
-     * @param string|null $arch_db
+     * @return string|null
+     *
+     * @SerializedName("arch_db")
      */
-    public function setArchDb(?string $arch_db): void
+    public function getArchDb(): ?string
     {
-        $this->arch_db = $arch_db;
+        return $this->arch_db;
     }
 
     /**
@@ -791,13 +754,26 @@ final class View extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("arch_db")
+     * @param string|null $arch_db
      */
-    public function getArchDb(): ?string
+    public function setArchDb(?string $arch_db): void
     {
-        return $this->arch_db;
+        $this->arch_db = $arch_db;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeInheritChildrenIds(OdooRelation $item): void
+    {
+        if (null === $this->inherit_children_ids) {
+            $this->inherit_children_ids = [];
+        }
+
+        if ($this->hasInheritChildrenIds($item)) {
+            $index = array_search($item, $this->inherit_children_ids);
+            unset($this->inherit_children_ids[$index]);
+        }
     }
 
     /**
@@ -808,16 +784,6 @@ final class View extends Base
     public function getArchFs(): ?string
     {
         return $this->arch_fs;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("field_parent")
-     */
-    public function getFieldParent(): ?string
-    {
-        return $this->field_parent;
     }
 
     /**
@@ -928,21 +894,6 @@ final class View extends Base
         }
 
         $this->inherit_children_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeInheritChildrenIds(OdooRelation $item): void
-    {
-        if (null === $this->inherit_children_ids) {
-            $this->inherit_children_ids = [];
-        }
-
-        if ($this->hasInheritChildrenIds($item)) {
-            $index = array_search($item, $this->inherit_children_ids);
-            unset($this->inherit_children_ids[$index]);
-        }
     }
 
     /**

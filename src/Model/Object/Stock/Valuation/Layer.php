@@ -20,18 +20,6 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 final class Layer extends Base
 {
     /**
-     * Active
-     * ---
-     * If unchecked, it will allow you to hide the product without removing it.
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var bool|null
-     */
-    private $active;
-
-    /**
      * Company
      * ---
      * Relation : many2one (res.company)
@@ -326,14 +314,6 @@ final class Layer extends Base
     }
 
     /**
-     * @param string|null $description
-     */
-    public function setDescription(?string $description): void
-    {
-        $this->description = $description;
-    }
-
-    /**
      * @return OdooRelation|null
      *
      * @SerializedName("stock_valuation_layer_id")
@@ -435,11 +415,13 @@ final class Layer extends Base
     }
 
     /**
-     * @param float|null $remaining_value
+     * @return string|null
+     *
+     * @SerializedName("description")
      */
-    public function setRemainingValue(?float $remaining_value): void
+    public function getDescription(): ?string
     {
-        $this->remaining_value = $remaining_value;
+        return $this->description;
     }
 
     /**
@@ -523,51 +505,19 @@ final class Layer extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("description")
+     * @param string|null $description
      */
-    public function getDescription(): ?string
+    public function setDescription(?string $description): void
     {
-        return $this->description;
+        $this->description = $description;
     }
 
     /**
-     * @return float|null
-     *
-     * @SerializedName("remaining_value")
+     * @param float|null $remaining_value
      */
-    public function getRemainingValue(): ?float
+    public function setRemainingValue(?float $remaining_value): void
     {
-        return $this->remaining_value;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("active")
-     */
-    public function isActive(): ?bool
-    {
-        return $this->active;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("quantity")
-     */
-    public function getQuantity(): ?float
-    {
-        return $this->quantity;
-    }
-
-    /**
-     * @param bool|null $active
-     */
-    public function setActive(?bool $active): void
-    {
-        $this->active = $active;
+        $this->remaining_value = $remaining_value;
     }
 
     /**
@@ -578,6 +528,14 @@ final class Layer extends Base
     public function getCompanyId(): OdooRelation
     {
         return $this->company_id;
+    }
+
+    /**
+     * @param float|null $quantity
+     */
+    public function setQuantity(?float $quantity): void
+    {
+        $this->quantity = $quantity;
     }
 
     /**
@@ -643,19 +601,13 @@ final class Layer extends Base
     }
 
     /**
-     * @param float|null $quantity
+     * @return float|null
+     *
+     * @SerializedName("quantity")
      */
-    public function setQuantity(?float $quantity): void
+    public function getQuantity(): ?float
     {
-        $this->quantity = $quantity;
-    }
-
-    /**
-     * @param float|null $remaining_qty
-     */
-    public function setRemainingQty(?float $remaining_qty): void
-    {
-        $this->remaining_qty = $remaining_qty;
+        return $this->quantity;
     }
 
     /**
@@ -666,6 +618,16 @@ final class Layer extends Base
     public function getUomId(): OdooRelation
     {
         return $this->uom_id;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("remaining_value")
+     */
+    public function getRemainingValue(): ?float
+    {
+        return $this->remaining_value;
     }
 
     /**
@@ -738,6 +700,14 @@ final class Layer extends Base
     public function getRemainingQty(): ?float
     {
         return $this->remaining_qty;
+    }
+
+    /**
+     * @param float|null $remaining_qty
+     */
+    public function setRemainingQty(?float $remaining_qty): void
+    {
+        $this->remaining_qty = $remaining_qty;
     }
 
     /**

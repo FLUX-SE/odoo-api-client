@@ -50,17 +50,14 @@ final class Wizard extends Base
     private $departure_description;
 
     /**
-     * Plan
-     * ---
-     * Relation : many2one (hr.plan)
-     * @see \Flux\OdooApiClient\Model\Object\Hr\Plan
+     * Departure Date
      * ---
      * Searchable : yes
      * Sortable : yes
      *
-     * @var OdooRelation|null
+     * @var DateTimeInterface
      */
-    private $plan_id;
+    private $departure_date;
 
     /**
      * Employee
@@ -74,6 +71,26 @@ final class Wizard extends Base
      * @var OdooRelation
      */
     private $employee_id;
+
+    /**
+     * Archive Private Address
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $archive_private_address;
+
+    /**
+     * Set Contract End Date
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $set_date_end;
 
     /**
      * Created by
@@ -122,6 +139,10 @@ final class Wizard extends Base
     private $write_date;
 
     /**
+     * @param DateTimeInterface $departure_date Departure Date
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      * @param OdooRelation $employee_id Employee
      *        ---
      *        Relation : many2one (hr.employee)
@@ -130,17 +151,18 @@ final class Wizard extends Base
      *        Searchable : yes
      *        Sortable : yes
      */
-    public function __construct(OdooRelation $employee_id)
+    public function __construct(DateTimeInterface $departure_date, OdooRelation $employee_id)
     {
+        $this->departure_date = $departure_date;
         $this->employee_id = $employee_id;
     }
 
     /**
-     * @param OdooRelation|null $create_uid
+     * @param bool|null $set_date_end
      */
-    public function setCreateUid(?OdooRelation $create_uid): void
+    public function setSetDateEnd(?bool $set_date_end): void
     {
-        $this->create_uid = $create_uid;
+        $this->set_date_end = $set_date_end;
     }
 
     /**
@@ -198,6 +220,14 @@ final class Wizard extends Base
     }
 
     /**
+     * @param OdooRelation|null $create_uid
+     */
+    public function setCreateUid(?OdooRelation $create_uid): void
+    {
+        $this->create_uid = $create_uid;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("create_uid")
@@ -208,6 +238,16 @@ final class Wizard extends Base
     }
 
     /**
+     * @return bool|null
+     *
+     * @SerializedName("set_date_end")
+     */
+    public function isSetDateEnd(): ?bool
+    {
+        return $this->set_date_end;
+    }
+
+    /**
      * @return string|null
      *
      * @SerializedName("departure_reason")
@@ -215,6 +255,24 @@ final class Wizard extends Base
     public function getDepartureReason(): ?string
     {
         return $this->departure_reason;
+    }
+
+    /**
+     * @param bool|null $archive_private_address
+     */
+    public function setArchivePrivateAddress(?bool $archive_private_address): void
+    {
+        $this->archive_private_address = $archive_private_address;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("archive_private_address")
+     */
+    public function isArchivePrivateAddress(): ?bool
+    {
+        return $this->archive_private_address;
     }
 
     /**
@@ -236,21 +294,21 @@ final class Wizard extends Base
     }
 
     /**
-     * @param OdooRelation|null $plan_id
+     * @param DateTimeInterface $departure_date
      */
-    public function setPlanId(?OdooRelation $plan_id): void
+    public function setDepartureDate(DateTimeInterface $departure_date): void
     {
-        $this->plan_id = $plan_id;
+        $this->departure_date = $departure_date;
     }
 
     /**
-     * @return OdooRelation|null
+     * @return DateTimeInterface
      *
-     * @SerializedName("plan_id")
+     * @SerializedName("departure_date")
      */
-    public function getPlanId(): ?OdooRelation
+    public function getDepartureDate(): DateTimeInterface
     {
-        return $this->plan_id;
+        return $this->departure_date;
     }
 
     /**

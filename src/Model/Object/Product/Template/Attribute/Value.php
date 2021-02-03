@@ -79,6 +79,19 @@ final class Value extends Base
     private $price_extra;
 
     /**
+     * Currency
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $currency_id;
+
+    /**
      * Exclude for
      * ---
      * Make this attribute value not compatible with other values of the product or some attribute values of optional
@@ -244,11 +257,27 @@ final class Value extends Base
     }
 
     /**
-     * @param string|null $display_type
+     * @return string|null
+     *
+     * @SerializedName("display_type")
      */
-    public function setDisplayType(?string $display_type): void
+    public function getDisplayType(): ?string
     {
-        $this->display_type = $display_type;
+        return $this->display_type;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasPtavProductVariantIds(OdooRelation $item): bool
+    {
+        if (null === $this->ptav_product_variant_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->ptav_product_variant_ids);
     }
 
     /**
@@ -319,13 +348,21 @@ final class Value extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("display_type")
+     * @param string|null $display_type
      */
-    public function getDisplayType(): ?string
+    public function setDisplayType(?string $display_type): void
     {
-        return $this->display_type;
+        $this->display_type = $display_type;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("ptav_product_variant_ids")
+     */
+    public function getPtavProductVariantIds(): ?array
+    {
+        return $this->ptav_product_variant_ids;
     }
 
     /**
@@ -336,14 +373,6 @@ final class Value extends Base
     public function getCreateUid(): ?OdooRelation
     {
         return $this->create_uid;
-    }
-
-    /**
-     * @param OdooRelation[]|null $ptav_product_variant_ids
-     */
-    public function setPtavProductVariantIds(?array $ptav_product_variant_ids): void
-    {
-        $this->ptav_product_variant_ids = $ptav_product_variant_ids;
     }
 
     /**
@@ -409,27 +438,19 @@ final class Value extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param OdooRelation[]|null $ptav_product_variant_ids
      */
-    public function hasPtavProductVariantIds(OdooRelation $item): bool
+    public function setPtavProductVariantIds(?array $ptav_product_variant_ids): void
     {
-        if (null === $this->ptav_product_variant_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->ptav_product_variant_ids);
+        $this->ptav_product_variant_ids = $ptav_product_variant_ids;
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("ptav_product_variant_ids")
+     * @param OdooRelation|null $attribute_id
      */
-    public function getPtavProductVariantIds(): ?array
+    public function setAttributeId(?OdooRelation $attribute_id): void
     {
-        return $this->ptav_product_variant_ids;
+        $this->attribute_id = $attribute_id;
     }
 
     /**
@@ -443,13 +464,11 @@ final class Value extends Base
     }
 
     /**
-     * @return float|null
-     *
-     * @SerializedName("price_extra")
+     * @param float|null $price_extra
      */
-    public function getPriceExtra(): ?float
+    public function setPriceExtra(?float $price_extra): void
     {
-        return $this->price_extra;
+        $this->price_extra = $price_extra;
     }
 
     /**
@@ -515,19 +534,41 @@ final class Value extends Base
     }
 
     /**
-     * @param float|null $price_extra
+     * @return float|null
+     *
+     * @SerializedName("price_extra")
      */
-    public function setPriceExtra(?float $price_extra): void
+    public function getPriceExtra(): ?float
     {
-        $this->price_extra = $price_extra;
+        return $this->price_extra;
     }
 
     /**
-     * @param OdooRelation|null $attribute_id
+     * @return OdooRelation|null
+     *
+     * @SerializedName("currency_id")
      */
-    public function setAttributeId(?OdooRelation $attribute_id): void
+    public function getCurrencyId(): ?OdooRelation
     {
-        $this->attribute_id = $attribute_id;
+        return $this->currency_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("attribute_id")
+     */
+    public function getAttributeId(): ?OdooRelation
+    {
+        return $this->attribute_id;
+    }
+
+    /**
+     * @param OdooRelation|null $currency_id
+     */
+    public function setCurrencyId(?OdooRelation $currency_id): void
+    {
+        $this->currency_id = $currency_id;
     }
 
     /**
@@ -609,16 +650,6 @@ final class Value extends Base
     public function setProductTmplId(?OdooRelation $product_tmpl_id): void
     {
         $this->product_tmpl_id = $product_tmpl_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("attribute_id")
-     */
-    public function getAttributeId(): ?OdooRelation
-    {
-        return $this->attribute_id;
     }
 
     /**

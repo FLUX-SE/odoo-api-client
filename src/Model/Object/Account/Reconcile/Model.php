@@ -28,6 +28,16 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 final class Model extends Base
 {
     /**
+     * Active
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $active;
+
+    /**
      * Name
      * ---
      * Searchable : yes
@@ -64,9 +74,9 @@ final class Model extends Base
      * Type
      * ---
      * Selection :
-     *     -> writeoff_button (Manually create a write-off on clicked button.)
-     *     -> writeoff_suggestion (Suggest counterpart values.)
-     *     -> invoice_matching (Match existing invoices/bills.)
+     *     -> writeoff_button (Manually create a write-off on clicked button)
+     *     -> writeoff_suggestion (Suggest counterpart values)
+     *     -> invoice_matching (Match existing invoices/bills)
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -90,7 +100,7 @@ final class Model extends Base
     /**
      * To Check
      * ---
-     * This matching rule is used when the user is not certain of all the informations of the counterpart.
+     * This matching rule is used when the user is not certain of all the information of the counterpart.
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -98,6 +108,56 @@ final class Model extends Base
      * @var bool|null
      */
     private $to_check;
+
+    /**
+     * Matching Order
+     * ---
+     * Selection :
+     *     -> old_first (Oldest first)
+     *     -> new_first (Newest first)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    private $matching_order;
+
+    /**
+     * Match Text Location Label
+     * ---
+     * Search in the Statement's Label to find the Invoice/Payment's reference
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $match_text_location_label;
+
+    /**
+     * Match Text Location Note
+     * ---
+     * Search in the Statement's Note to find the Invoice/Payment's reference
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $match_text_location_note;
+
+    /**
+     * Match Text Location Reference
+     * ---
+     * Search in the Statement's Reference to find the Invoice/Payment's reference
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $match_text_location_reference;
 
     /**
      * Journals
@@ -341,109 +401,47 @@ final class Model extends Base
     private $match_partner_category_ids;
 
     /**
-     * Account
+     * Line
      * ---
-     * Relation : many2one (account.account)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Account
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $account_id;
-
-    /**
-     * Journal
-     * ---
-     * This field is ignored in a bank statement reconciliation.
-     * ---
-     * Relation : many2one (account.journal)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
+     * Relation : one2many (account.reconcile.model.line -> model_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Reconcile\Model\Line
      * ---
      * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $journal_id;
-
-    /**
-     * Journal Item Label
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $label;
-
-    /**
-     * Amount Type
-     * ---
-     * Selection :
-     *     -> fixed (Fixed)
-     *     -> percentage (Percentage of balance)
-     *     -> regex (From label)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string
-     */
-    private $amount_type;
-
-    /**
-     * Show Force Tax Included
-     * ---
-     * Technical field used to show the force tax included button
-     * ---
-     * Searchable : no
      * Sortable : no
      *
-     * @var bool|null
+     * @var OdooRelation[]|null
      */
-    private $show_force_tax_included;
+    private $line_ids;
 
     /**
-     * Tax Included in Price
+     * Partner Mapping Lines
      * ---
-     * Force the tax to be managed as a price included tax.
+     * The mapping uses regular expressions.
+     * - To Match the text at the beginning of the line (in label or notes), simply fill in your text.
+     * - To Match the text anywhere (in label or notes), put your text between .*
+     *     e.g: .*N°48748 abc123.*
+     * ---
+     * Relation : one2many (account.reconcile.model.partner.mapping -> model_id)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Reconcile\Model\Partner\Mapping
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $partner_mapping_line_ids;
+
+    /**
+     * Past Months Limit
+     * ---
+     * Number of months in the past to consider entries from when applying this model.
      * ---
      * Searchable : yes
      * Sortable : yes
      *
-     * @var bool|null
+     * @var int|null
      */
-    private $force_tax_included;
-
-    /**
-     * Write-off Amount
-     * ---
-     * Fixed amount will count as a debit if it is negative, as a credit if it is positive.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var float
-     */
-    private $amount;
-
-    /**
-     * Amount from Label (regex)
-     * ---
-     * There is no need for regex delimiter, only the regex is needed. For instance if you want to extract the amount
-     * from
-     * R:9672938 10/07 AX 9415126318 T:5L:NA BRT: 3358,07 C:
-     * You could enter
-     * BRT: ([\d,]+)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $amount_from_label_regex;
+    private $past_months_limit;
 
     /**
      * Decimal Separator
@@ -458,191 +456,16 @@ final class Model extends Base
     private $decimal_separator;
 
     /**
-     * Taxes
+     * Show Decimal Separator
      * ---
-     * Relation : many2many (account.tax)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Tax
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $tax_ids;
-
-    /**
-     * Analytic Account
-     * ---
-     * Relation : many2one (account.analytic.account)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Account
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $analytic_account_id;
-
-    /**
-     * Analytic Tags
-     * ---
-     * Relation : many2many (account.analytic.tag)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Tag
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $analytic_tag_ids;
-
-    /**
-     * Add a second line
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $has_second_line;
-
-    /**
-     * Second Account
-     * ---
-     * Relation : many2one (account.account)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Account
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $second_account_id;
-
-    /**
-     * Second Journal
-     * ---
-     * This field is ignored in a bank statement reconciliation.
-     * ---
-     * Relation : many2one (account.journal)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Journal
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $second_journal_id;
-
-    /**
-     * Second Journal Item Label
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $second_label;
-
-    /**
-     * Second Amount type
-     * ---
-     * Selection :
-     *     -> fixed (Fixed)
-     *     -> percentage (Percentage of balance)
-     *     -> regex (From label)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string
-     */
-    private $second_amount_type;
-
-    /**
-     * Show Second Force Tax Included
-     * ---
-     * Technical field used to show the force tax included button
+     * Technical field to decide if we should show the decimal separator for the regex matching field.
      * ---
      * Searchable : no
      * Sortable : no
      *
      * @var bool|null
      */
-    private $show_second_force_tax_included;
-
-    /**
-     * Second Tax Included in Price
-     * ---
-     * Force the second tax to be managed as a price included tax.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var bool|null
-     */
-    private $force_second_tax_included;
-
-    /**
-     * Second Write-off Amount
-     * ---
-     * Fixed amount will count as a debit if it is negative, as a credit if it is positive.
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var float
-     */
-    private $second_amount;
-
-    /**
-     * Second Amount from Label (regex)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $second_amount_from_label_regex;
-
-    /**
-     * Second Taxes
-     * ---
-     * Relation : many2many (account.tax)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Tax
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $second_tax_ids;
-
-    /**
-     * Second Analytic Account
-     * ---
-     * Relation : many2one (account.analytic.account)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Account
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $second_analytic_account_id;
-
-    /**
-     * Second Analytic Tags
-     * ---
-     * Relation : many2many (account.analytic.tag)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Analytic\Tag
-     * ---
-     * Searchable : yes
-     * Sortable : no
-     *
-     * @var OdooRelation[]|null
-     */
-    private $second_analytic_tag_ids;
+    private $show_decimal_separator;
 
     /**
      * Number of entries related to this model
@@ -732,9 +555,17 @@ final class Model extends Base
      * @param string $rule_type Type
      *        ---
      *        Selection :
-     *            -> writeoff_button (Manually create a write-off on clicked button.)
-     *            -> writeoff_suggestion (Suggest counterpart values.)
-     *            -> invoice_matching (Match existing invoices/bills.)
+     *            -> writeoff_button (Manually create a write-off on clicked button)
+     *            -> writeoff_suggestion (Suggest counterpart values)
+     *            -> invoice_matching (Match existing invoices/bills)
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $matching_order Matching Order
+     *        ---
+     *        Selection :
+     *            -> old_first (Oldest first)
+     *            -> new_first (Newest first)
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -752,180 +583,52 @@ final class Model extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
-     * @param string $amount_type Amount Type
-     *        ---
-     *        Selection :
-     *            -> fixed (Fixed)
-     *            -> percentage (Percentage of balance)
-     *            -> regex (From label)
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
-     * @param float $amount Write-off Amount
-     *        ---
-     *        Fixed amount will count as a debit if it is negative, as a credit if it is positive.
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
-     * @param string $second_amount_type Second Amount type
-     *        ---
-     *        Selection :
-     *            -> fixed (Fixed)
-     *            -> percentage (Percentage of balance)
-     *            -> regex (From label)
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
-     * @param float $second_amount Second Write-off Amount
-     *        ---
-     *        Fixed amount will count as a debit if it is negative, as a credit if it is positive.
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
      */
     public function __construct(
         string $name,
         int $sequence,
         OdooRelation $company_id,
         string $rule_type,
-        string $match_nature,
-        string $amount_type,
-        float $amount,
-        string $second_amount_type,
-        float $second_amount
+        string $matching_order,
+        string $match_nature
     ) {
         $this->name = $name;
         $this->sequence = $sequence;
         $this->company_id = $company_id;
         $this->rule_type = $rule_type;
+        $this->matching_order = $matching_order;
         $this->match_nature = $match_nature;
-        $this->amount_type = $amount_type;
-        $this->amount = $amount;
-        $this->second_amount_type = $second_amount_type;
-        $this->second_amount = $second_amount;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("analytic_tag_ids")
-     */
-    public function getAnalyticTagIds(): ?array
-    {
-        return $this->analytic_tag_ids;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("second_amount_type")
-     */
-    public function getSecondAmountType(): string
-    {
-        return $this->second_amount_type;
-    }
-
-    /**
-     * @param string|null $second_label
-     */
-    public function setSecondLabel(?string $second_label): void
-    {
-        $this->second_label = $second_label;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("second_label")
-     */
-    public function getSecondLabel(): ?string
-    {
-        return $this->second_label;
-    }
-
-    /**
-     * @param OdooRelation|null $second_journal_id
-     */
-    public function setSecondJournalId(?OdooRelation $second_journal_id): void
-    {
-        $this->second_journal_id = $second_journal_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("second_journal_id")
-     */
-    public function getSecondJournalId(): ?OdooRelation
-    {
-        return $this->second_journal_id;
-    }
-
-    /**
-     * @param OdooRelation|null $second_account_id
-     */
-    public function setSecondAccountId(?OdooRelation $second_account_id): void
-    {
-        $this->second_account_id = $second_account_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("second_account_id")
-     */
-    public function getSecondAccountId(): ?OdooRelation
-    {
-        return $this->second_account_id;
-    }
-
-    /**
-     * @param bool|null $has_second_line
-     */
-    public function setHasSecondLine(?bool $has_second_line): void
-    {
-        $this->has_second_line = $has_second_line;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("has_second_line")
-     */
-    public function isHasSecondLine(): ?bool
-    {
-        return $this->has_second_line;
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function removeAnalyticTagIds(OdooRelation $item): void
+    public function removeMatchPartnerIds(OdooRelation $item): void
     {
-        if (null === $this->analytic_tag_ids) {
-            $this->analytic_tag_ids = [];
+        if (null === $this->match_partner_ids) {
+            $this->match_partner_ids = [];
         }
 
-        if ($this->hasAnalyticTagIds($item)) {
-            $index = array_search($item, $this->analytic_tag_ids);
-            unset($this->analytic_tag_ids[$index]);
+        if ($this->hasMatchPartnerIds($item)) {
+            $index = array_search($item, $this->match_partner_ids);
+            unset($this->match_partner_ids[$index]);
         }
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function addAnalyticTagIds(OdooRelation $item): void
+    public function addLineIds(OdooRelation $item): void
     {
-        if ($this->hasAnalyticTagIds($item)) {
+        if ($this->hasLineIds($item)) {
             return;
         }
 
-        if (null === $this->analytic_tag_ids) {
-            $this->analytic_tag_ids = [];
+        if (null === $this->line_ids) {
+            $this->line_ids = [];
         }
 
-        $this->analytic_tag_ids[] = $item;
+        $this->line_ids[] = $item;
     }
 
     /**
@@ -933,80 +636,62 @@ final class Model extends Base
      *
      * @return bool
      */
-    public function hasAnalyticTagIds(OdooRelation $item): bool
+    public function hasLineIds(OdooRelation $item): bool
     {
-        if (null === $this->analytic_tag_ids) {
+        if (null === $this->line_ids) {
             return false;
         }
 
-        return in_array($item, $this->analytic_tag_ids);
+        return in_array($item, $this->line_ids);
     }
 
     /**
-     * @param OdooRelation[]|null $analytic_tag_ids
+     * @param OdooRelation[]|null $line_ids
      */
-    public function setAnalyticTagIds(?array $analytic_tag_ids): void
+    public function setLineIds(?array $line_ids): void
     {
-        $this->analytic_tag_ids = $analytic_tag_ids;
+        $this->line_ids = $line_ids;
     }
 
     /**
-     * @param OdooRelation|null $analytic_account_id
-     */
-    public function setAnalyticAccountId(?OdooRelation $analytic_account_id): void
-    {
-        $this->analytic_account_id = $analytic_account_id;
-    }
-
-    /**
-     * @return bool|null
+     * @return OdooRelation[]|null
      *
-     * @SerializedName("show_second_force_tax_included")
+     * @SerializedName("line_ids")
      */
-    public function isShowSecondForceTaxIncluded(): ?bool
+    public function getLineIds(): ?array
     {
-        return $this->show_second_force_tax_included;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("analytic_account_id")
-     */
-    public function getAnalyticAccountId(): ?OdooRelation
-    {
-        return $this->analytic_account_id;
+        return $this->line_ids;
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function removeTaxIds(OdooRelation $item): void
+    public function removeMatchPartnerCategoryIds(OdooRelation $item): void
     {
-        if (null === $this->tax_ids) {
-            $this->tax_ids = [];
+        if (null === $this->match_partner_category_ids) {
+            $this->match_partner_category_ids = [];
         }
 
-        if ($this->hasTaxIds($item)) {
-            $index = array_search($item, $this->tax_ids);
-            unset($this->tax_ids[$index]);
+        if ($this->hasMatchPartnerCategoryIds($item)) {
+            $index = array_search($item, $this->match_partner_category_ids);
+            unset($this->match_partner_category_ids[$index]);
         }
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function addTaxIds(OdooRelation $item): void
+    public function addMatchPartnerCategoryIds(OdooRelation $item): void
     {
-        if ($this->hasTaxIds($item)) {
+        if ($this->hasMatchPartnerCategoryIds($item)) {
             return;
         }
 
-        if (null === $this->tax_ids) {
-            $this->tax_ids = [];
+        if (null === $this->match_partner_category_ids) {
+            $this->match_partner_category_ids = [];
         }
 
-        $this->tax_ids[] = $item;
+        $this->match_partner_category_ids[] = $item;
     }
 
     /**
@@ -1014,133 +699,186 @@ final class Model extends Base
      *
      * @return bool
      */
-    public function hasTaxIds(OdooRelation $item): bool
+    public function hasMatchPartnerCategoryIds(OdooRelation $item): bool
     {
-        if (null === $this->tax_ids) {
+        if (null === $this->match_partner_category_ids) {
             return false;
         }
 
-        return in_array($item, $this->tax_ids);
+        return in_array($item, $this->match_partner_category_ids);
     }
 
     /**
-     * @param OdooRelation[]|null $tax_ids
+     * @param OdooRelation[]|null $match_partner_category_ids
      */
-    public function setTaxIds(?array $tax_ids): void
+    public function setMatchPartnerCategoryIds(?array $match_partner_category_ids): void
     {
-        $this->tax_ids = $tax_ids;
+        $this->match_partner_category_ids = $match_partner_category_ids;
     }
 
     /**
      * @return OdooRelation[]|null
      *
-     * @SerializedName("tax_ids")
+     * @SerializedName("match_partner_category_ids")
      */
-    public function getTaxIds(): ?array
+    public function getMatchPartnerCategoryIds(): ?array
     {
-        return $this->tax_ids;
-    }
-
-    /**
-     * @param string|null $decimal_separator
-     */
-    public function setDecimalSeparator(?string $decimal_separator): void
-    {
-        $this->decimal_separator = $decimal_separator;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("decimal_separator")
-     */
-    public function getDecimalSeparator(): ?string
-    {
-        return $this->decimal_separator;
-    }
-
-    /**
-     * @param string|null $amount_from_label_regex
-     */
-    public function setAmountFromLabelRegex(?string $amount_from_label_regex): void
-    {
-        $this->amount_from_label_regex = $amount_from_label_regex;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("amount_from_label_regex")
-     */
-    public function getAmountFromLabelRegex(): ?string
-    {
-        return $this->amount_from_label_regex;
-    }
-
-    /**
-     * @param float $amount
-     */
-    public function setAmount(float $amount): void
-    {
-        $this->amount = $amount;
-    }
-
-    /**
-     * @return float
-     *
-     * @SerializedName("amount")
-     */
-    public function getAmount(): float
-    {
-        return $this->amount;
-    }
-
-    /**
-     * @param bool|null $force_tax_included
-     */
-    public function setForceTaxIncluded(?bool $force_tax_included): void
-    {
-        $this->force_tax_included = $force_tax_included;
-    }
-
-    /**
-     * @param string $second_amount_type
-     */
-    public function setSecondAmountType(string $second_amount_type): void
-    {
-        $this->second_amount_type = $second_amount_type;
-    }
-
-    /**
-     * @param bool|null $show_second_force_tax_included
-     */
-    public function setShowSecondForceTaxIncluded(?bool $show_second_force_tax_included): void
-    {
-        $this->show_second_force_tax_included = $show_second_force_tax_included;
-    }
-
-    /**
-     * @param bool|null $show_force_tax_included
-     */
-    public function setShowForceTaxIncluded(?bool $show_force_tax_included): void
-    {
-        $this->show_force_tax_included = $show_force_tax_included;
+        return $this->match_partner_category_ids;
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function addSecondAnalyticTagIds(OdooRelation $item): void
+    public function addMatchPartnerIds(OdooRelation $item): void
     {
-        if ($this->hasSecondAnalyticTagIds($item)) {
+        if ($this->hasMatchPartnerIds($item)) {
             return;
         }
 
-        if (null === $this->second_analytic_tag_ids) {
-            $this->second_analytic_tag_ids = [];
+        if (null === $this->match_partner_ids) {
+            $this->match_partner_ids = [];
         }
 
-        $this->second_analytic_tag_ids[] = $item;
+        $this->match_partner_ids[] = $item;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("partner_mapping_line_ids")
+     */
+    public function getPartnerMappingLineIds(): ?array
+    {
+        return $this->partner_mapping_line_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMatchPartnerIds(OdooRelation $item): bool
+    {
+        if (null === $this->match_partner_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->match_partner_ids);
+    }
+
+    /**
+     * @param OdooRelation[]|null $match_partner_ids
+     */
+    public function setMatchPartnerIds(?array $match_partner_ids): void
+    {
+        $this->match_partner_ids = $match_partner_ids;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("match_partner_ids")
+     */
+    public function getMatchPartnerIds(): ?array
+    {
+        return $this->match_partner_ids;
+    }
+
+    /**
+     * @param bool|null $match_partner
+     */
+    public function setMatchPartner(?bool $match_partner): void
+    {
+        $this->match_partner = $match_partner;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("match_partner")
+     */
+    public function isMatchPartner(): ?bool
+    {
+        return $this->match_partner;
+    }
+
+    /**
+     * @param float|null $match_total_amount_param
+     */
+    public function setMatchTotalAmountParam(?float $match_total_amount_param): void
+    {
+        $this->match_total_amount_param = $match_total_amount_param;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("match_total_amount_param")
+     */
+    public function getMatchTotalAmountParam(): ?float
+    {
+        return $this->match_total_amount_param;
+    }
+
+    /**
+     * @param bool|null $match_total_amount
+     */
+    public function setMatchTotalAmount(?bool $match_total_amount): void
+    {
+        $this->match_total_amount = $match_total_amount;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("match_total_amount")
+     */
+    public function isMatchTotalAmount(): ?bool
+    {
+        return $this->match_total_amount;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeLineIds(OdooRelation $item): void
+    {
+        if (null === $this->line_ids) {
+            $this->line_ids = [];
+        }
+
+        if ($this->hasLineIds($item)) {
+            $index = array_search($item, $this->line_ids);
+            unset($this->line_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation[]|null $partner_mapping_line_ids
+     */
+    public function setPartnerMappingLineIds(?array $partner_mapping_line_ids): void
+    {
+        $this->partner_mapping_line_ids = $partner_mapping_line_ids;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("match_same_currency")
+     */
+    public function isMatchSameCurrency(): ?bool
+    {
+        return $this->match_same_currency;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("activity_type_id")
+     */
+    public function getActivityTypeId(): ?OdooRelation
+    {
+        return $this->activity_type_id;
     }
 
     /**
@@ -1224,21 +962,25 @@ final class Model extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("activity_type_id")
-     */
-    public function getActivityTypeId(): ?OdooRelation
-    {
-        return $this->activity_type_id;
-    }
-
-    /**
      * @param int|null $number_entries
      */
     public function setNumberEntries(?int $number_entries): void
     {
         $this->number_entries = $number_entries;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasPartnerMappingLineIds(OdooRelation $item): bool
+    {
+        if (null === $this->partner_mapping_line_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->partner_mapping_line_ids);
     }
 
     /**
@@ -1252,205 +994,286 @@ final class Model extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @param bool|null $show_decimal_separator
      */
-    public function removeSecondAnalyticTagIds(OdooRelation $item): void
+    public function setShowDecimalSeparator(?bool $show_decimal_separator): void
     {
-        if (null === $this->second_analytic_tag_ids) {
-            $this->second_analytic_tag_ids = [];
-        }
-
-        if ($this->hasSecondAnalyticTagIds($item)) {
-            $index = array_search($item, $this->second_analytic_tag_ids);
-            unset($this->second_analytic_tag_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasSecondAnalyticTagIds(OdooRelation $item): bool
-    {
-        if (null === $this->second_analytic_tag_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->second_analytic_tag_ids);
+        $this->show_decimal_separator = $show_decimal_separator;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("force_second_tax_included")
+     * @SerializedName("show_decimal_separator")
      */
-    public function isForceSecondTaxIncluded(): ?bool
+    public function isShowDecimalSeparator(): ?bool
     {
-        return $this->force_second_tax_included;
+        return $this->show_decimal_separator;
     }
 
     /**
-     * @param OdooRelation[]|null $second_analytic_tag_ids
+     * @param string|null $decimal_separator
      */
-    public function setSecondAnalyticTagIds(?array $second_analytic_tag_ids): void
+    public function setDecimalSeparator(?string $decimal_separator): void
     {
-        $this->second_analytic_tag_ids = $second_analytic_tag_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("second_analytic_tag_ids")
-     */
-    public function getSecondAnalyticTagIds(): ?array
-    {
-        return $this->second_analytic_tag_ids;
-    }
-
-    /**
-     * @param OdooRelation|null $second_analytic_account_id
-     */
-    public function setSecondAnalyticAccountId(?OdooRelation $second_analytic_account_id): void
-    {
-        $this->second_analytic_account_id = $second_analytic_account_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("second_analytic_account_id")
-     */
-    public function getSecondAnalyticAccountId(): ?OdooRelation
-    {
-        return $this->second_analytic_account_id;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeSecondTaxIds(OdooRelation $item): void
-    {
-        if (null === $this->second_tax_ids) {
-            $this->second_tax_ids = [];
-        }
-
-        if ($this->hasSecondTaxIds($item)) {
-            $index = array_search($item, $this->second_tax_ids);
-            unset($this->second_tax_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addSecondTaxIds(OdooRelation $item): void
-    {
-        if ($this->hasSecondTaxIds($item)) {
-            return;
-        }
-
-        if (null === $this->second_tax_ids) {
-            $this->second_tax_ids = [];
-        }
-
-        $this->second_tax_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasSecondTaxIds(OdooRelation $item): bool
-    {
-        if (null === $this->second_tax_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->second_tax_ids);
-    }
-
-    /**
-     * @param OdooRelation[]|null $second_tax_ids
-     */
-    public function setSecondTaxIds(?array $second_tax_ids): void
-    {
-        $this->second_tax_ids = $second_tax_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("second_tax_ids")
-     */
-    public function getSecondTaxIds(): ?array
-    {
-        return $this->second_tax_ids;
-    }
-
-    /**
-     * @param string|null $second_amount_from_label_regex
-     */
-    public function setSecondAmountFromLabelRegex(?string $second_amount_from_label_regex): void
-    {
-        $this->second_amount_from_label_regex = $second_amount_from_label_regex;
+        $this->decimal_separator = $decimal_separator;
     }
 
     /**
      * @return string|null
      *
-     * @SerializedName("second_amount_from_label_regex")
+     * @SerializedName("decimal_separator")
      */
-    public function getSecondAmountFromLabelRegex(): ?string
+    public function getDecimalSeparator(): ?string
     {
-        return $this->second_amount_from_label_regex;
+        return $this->decimal_separator;
     }
 
     /**
-     * @param float $second_amount
+     * @param int|null $past_months_limit
      */
-    public function setSecondAmount(float $second_amount): void
+    public function setPastMonthsLimit(?int $past_months_limit): void
     {
-        $this->second_amount = $second_amount;
+        $this->past_months_limit = $past_months_limit;
     }
 
     /**
-     * @return float
+     * @return int|null
      *
-     * @SerializedName("second_amount")
+     * @SerializedName("past_months_limit")
      */
-    public function getSecondAmount(): float
+    public function getPastMonthsLimit(): ?int
     {
-        return $this->second_amount;
+        return $this->past_months_limit;
     }
 
     /**
-     * @param bool|null $force_second_tax_included
+     * @param OdooRelation $item
      */
-    public function setForceSecondTaxIncluded(?bool $force_second_tax_included): void
+    public function removePartnerMappingLineIds(OdooRelation $item): void
     {
-        $this->force_second_tax_included = $force_second_tax_included;
+        if (null === $this->partner_mapping_line_ids) {
+            $this->partner_mapping_line_ids = [];
+        }
+
+        if ($this->hasPartnerMappingLineIds($item)) {
+            $index = array_search($item, $this->partner_mapping_line_ids);
+            unset($this->partner_mapping_line_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addPartnerMappingLineIds(OdooRelation $item): void
+    {
+        if ($this->hasPartnerMappingLineIds($item)) {
+            return;
+        }
+
+        if (null === $this->partner_mapping_line_ids) {
+            $this->partner_mapping_line_ids = [];
+        }
+
+        $this->partner_mapping_line_ids[] = $item;
+    }
+
+    /**
+     * @param bool|null $match_same_currency
+     */
+    public function setMatchSameCurrency(?bool $match_same_currency): void
+    {
+        $this->match_same_currency = $match_same_currency;
+    }
+
+    /**
+     * @param string|null $match_transaction_type_param
+     */
+    public function setMatchTransactionTypeParam(?string $match_transaction_type_param): void
+    {
+        $this->match_transaction_type_param = $match_transaction_type_param;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("force_tax_included")
+     * @SerializedName("active")
      */
-    public function isForceTaxIncluded(): ?bool
+    public function isActive(): ?bool
     {
-        return $this->force_tax_included;
+        return $this->active;
+    }
+
+    /**
+     * @param bool|null $auto_reconcile
+     */
+    public function setAutoReconcile(?bool $auto_reconcile): void
+    {
+        $this->auto_reconcile = $auto_reconcile;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("show_force_tax_included")
+     * @SerializedName("match_text_location_reference")
      */
-    public function isShowForceTaxIncluded(): ?bool
+    public function isMatchTextLocationReference(): ?bool
     {
-        return $this->show_force_tax_included;
+        return $this->match_text_location_reference;
+    }
+
+    /**
+     * @param bool|null $match_text_location_note
+     */
+    public function setMatchTextLocationNote(?bool $match_text_location_note): void
+    {
+        $this->match_text_location_note = $match_text_location_note;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("match_text_location_note")
+     */
+    public function isMatchTextLocationNote(): ?bool
+    {
+        return $this->match_text_location_note;
+    }
+
+    /**
+     * @param bool|null $match_text_location_label
+     */
+    public function setMatchTextLocationLabel(?bool $match_text_location_label): void
+    {
+        $this->match_text_location_label = $match_text_location_label;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("match_text_location_label")
+     */
+    public function isMatchTextLocationLabel(): ?bool
+    {
+        return $this->match_text_location_label;
+    }
+
+    /**
+     * @param string $matching_order
+     */
+    public function setMatchingOrder(string $matching_order): void
+    {
+        $this->matching_order = $matching_order;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("matching_order")
+     */
+    public function getMatchingOrder(): string
+    {
+        return $this->matching_order;
+    }
+
+    /**
+     * @param bool|null $to_check
+     */
+    public function setToCheck(?bool $to_check): void
+    {
+        $this->to_check = $to_check;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("to_check")
+     */
+    public function isToCheck(): ?bool
+    {
+        return $this->to_check;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("auto_reconcile")
+     */
+    public function isAutoReconcile(): ?bool
+    {
+        return $this->auto_reconcile;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("match_journal_ids")
+     */
+    public function getMatchJournalIds(): ?array
+    {
+        return $this->match_journal_ids;
+    }
+
+    /**
+     * @param string $rule_type
+     */
+    public function setRuleType(string $rule_type): void
+    {
+        $this->rule_type = $rule_type;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("rule_type")
+     */
+    public function getRuleType(): string
+    {
+        return $this->rule_type;
+    }
+
+    /**
+     * @param OdooRelation $company_id
+     */
+    public function setCompanyId(OdooRelation $company_id): void
+    {
+        $this->company_id = $company_id;
+    }
+
+    /**
+     * @return OdooRelation
+     *
+     * @SerializedName("company_id")
+     */
+    public function getCompanyId(): OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param int $sequence
+     */
+    public function setSequence(int $sequence): void
+    {
+        $this->sequence = $sequence;
+    }
+
+    /**
+     * @return int
+     *
+     * @SerializedName("sequence")
+     */
+    public function getSequence(): int
+    {
+        return $this->sequence;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 
     /**
@@ -1464,19 +1287,101 @@ final class Model extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @param bool|null $active
      */
-    public function addMatchJournalIds(OdooRelation $item): void
+    public function setActive(?bool $active): void
     {
-        if ($this->hasMatchJournalIds($item)) {
-            return;
-        }
+        $this->active = $active;
+    }
 
-        if (null === $this->match_journal_ids) {
-            $this->match_journal_ids = [];
-        }
+    /**
+     * @param bool|null $match_text_location_reference
+     */
+    public function setMatchTextLocationReference(?bool $match_text_location_reference): void
+    {
+        $this->match_text_location_reference = $match_text_location_reference;
+    }
 
-        $this->match_journal_ids[] = $item;
+    /**
+     * @param OdooRelation[]|null $match_journal_ids
+     */
+    public function setMatchJournalIds(?array $match_journal_ids): void
+    {
+        $this->match_journal_ids = $match_journal_ids;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("match_transaction_type_param")
+     */
+    public function getMatchTransactionTypeParam(): ?string
+    {
+        return $this->match_transaction_type_param;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("match_label")
+     */
+    public function getMatchLabel(): ?string
+    {
+        return $this->match_label;
+    }
+
+    /**
+     * @param string|null $match_transaction_type
+     */
+    public function setMatchTransactionType(?string $match_transaction_type): void
+    {
+        $this->match_transaction_type = $match_transaction_type;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("match_transaction_type")
+     */
+    public function getMatchTransactionType(): ?string
+    {
+        return $this->match_transaction_type;
+    }
+
+    /**
+     * @param string|null $match_note_param
+     */
+    public function setMatchNoteParam(?string $match_note_param): void
+    {
+        $this->match_note_param = $match_note_param;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("match_note_param")
+     */
+    public function getMatchNoteParam(): ?string
+    {
+        return $this->match_note_param;
+    }
+
+    /**
+     * @param string|null $match_note
+     */
+    public function setMatchNote(?string $match_note): void
+    {
+        $this->match_note = $match_note;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("match_note")
+     */
+    public function getMatchNote(): ?string
+    {
+        return $this->match_note;
     }
 
     /**
@@ -1506,21 +1411,25 @@ final class Model extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("match_label")
-     */
-    public function getMatchLabel(): ?string
-    {
-        return $this->match_label;
-    }
-
-    /**
      * @param float|null $match_amount_max
      */
     public function setMatchAmountMax(?float $match_amount_max): void
     {
         $this->match_amount_max = $match_amount_max;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMatchJournalIds(OdooRelation $item): bool
+    {
+        if (null === $this->match_journal_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->match_journal_ids);
     }
 
     /**
@@ -1604,474 +1513,18 @@ final class Model extends Base
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasMatchJournalIds(OdooRelation $item): bool
+    public function addMatchJournalIds(OdooRelation $item): void
     {
+        if ($this->hasMatchJournalIds($item)) {
+            return;
+        }
+
         if (null === $this->match_journal_ids) {
-            return false;
+            $this->match_journal_ids = [];
         }
 
-        return in_array($item, $this->match_journal_ids);
-    }
-
-    /**
-     * @param string|null $match_note
-     */
-    public function setMatchNote(?string $match_note): void
-    {
-        $this->match_note = $match_note;
-    }
-
-    /**
-     * @param OdooRelation[]|null $match_journal_ids
-     */
-    public function setMatchJournalIds(?array $match_journal_ids): void
-    {
-        $this->match_journal_ids = $match_journal_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("match_journal_ids")
-     */
-    public function getMatchJournalIds(): ?array
-    {
-        return $this->match_journal_ids;
-    }
-
-    /**
-     * @param bool|null $to_check
-     */
-    public function setToCheck(?bool $to_check): void
-    {
-        $this->to_check = $to_check;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("to_check")
-     */
-    public function isToCheck(): ?bool
-    {
-        return $this->to_check;
-    }
-
-    /**
-     * @param bool|null $auto_reconcile
-     */
-    public function setAutoReconcile(?bool $auto_reconcile): void
-    {
-        $this->auto_reconcile = $auto_reconcile;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("auto_reconcile")
-     */
-    public function isAutoReconcile(): ?bool
-    {
-        return $this->auto_reconcile;
-    }
-
-    /**
-     * @param string $rule_type
-     */
-    public function setRuleType(string $rule_type): void
-    {
-        $this->rule_type = $rule_type;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("rule_type")
-     */
-    public function getRuleType(): string
-    {
-        return $this->rule_type;
-    }
-
-    /**
-     * @param OdooRelation $company_id
-     */
-    public function setCompanyId(OdooRelation $company_id): void
-    {
-        $this->company_id = $company_id;
-    }
-
-    /**
-     * @return OdooRelation
-     *
-     * @SerializedName("company_id")
-     */
-    public function getCompanyId(): OdooRelation
-    {
-        return $this->company_id;
-    }
-
-    /**
-     * @param int $sequence
-     */
-    public function setSequence(int $sequence): void
-    {
-        $this->sequence = $sequence;
-    }
-
-    /**
-     * @return int
-     *
-     * @SerializedName("sequence")
-     */
-    public function getSequence(): int
-    {
-        return $this->sequence;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("match_note")
-     */
-    public function getMatchNote(): ?string
-    {
-        return $this->match_note;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("match_note_param")
-     */
-    public function getMatchNoteParam(): ?string
-    {
-        return $this->match_note_param;
-    }
-
-    /**
-     * @param string $amount_type
-     */
-    public function setAmountType(string $amount_type): void
-    {
-        $this->amount_type = $amount_type;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addMatchPartnerIds(OdooRelation $item): void
-    {
-        if ($this->hasMatchPartnerIds($item)) {
-            return;
-        }
-
-        if (null === $this->match_partner_ids) {
-            $this->match_partner_ids = [];
-        }
-
-        $this->match_partner_ids[] = $item;
-    }
-
-    /**
-     * @return string
-     *
-     * @SerializedName("amount_type")
-     */
-    public function getAmountType(): string
-    {
-        return $this->amount_type;
-    }
-
-    /**
-     * @param string|null $label
-     */
-    public function setLabel(?string $label): void
-    {
-        $this->label = $label;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("label")
-     */
-    public function getLabel(): ?string
-    {
-        return $this->label;
-    }
-
-    /**
-     * @param OdooRelation|null $journal_id
-     */
-    public function setJournalId(?OdooRelation $journal_id): void
-    {
-        $this->journal_id = $journal_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("journal_id")
-     */
-    public function getJournalId(): ?OdooRelation
-    {
-        return $this->journal_id;
-    }
-
-    /**
-     * @param OdooRelation|null $account_id
-     */
-    public function setAccountId(?OdooRelation $account_id): void
-    {
-        $this->account_id = $account_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("account_id")
-     */
-    public function getAccountId(): ?OdooRelation
-    {
-        return $this->account_id;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMatchPartnerCategoryIds(OdooRelation $item): void
-    {
-        if (null === $this->match_partner_category_ids) {
-            $this->match_partner_category_ids = [];
-        }
-
-        if ($this->hasMatchPartnerCategoryIds($item)) {
-            $index = array_search($item, $this->match_partner_category_ids);
-            unset($this->match_partner_category_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addMatchPartnerCategoryIds(OdooRelation $item): void
-    {
-        if ($this->hasMatchPartnerCategoryIds($item)) {
-            return;
-        }
-
-        if (null === $this->match_partner_category_ids) {
-            $this->match_partner_category_ids = [];
-        }
-
-        $this->match_partner_category_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasMatchPartnerCategoryIds(OdooRelation $item): bool
-    {
-        if (null === $this->match_partner_category_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->match_partner_category_ids);
-    }
-
-    /**
-     * @param OdooRelation[]|null $match_partner_category_ids
-     */
-    public function setMatchPartnerCategoryIds(?array $match_partner_category_ids): void
-    {
-        $this->match_partner_category_ids = $match_partner_category_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("match_partner_category_ids")
-     */
-    public function getMatchPartnerCategoryIds(): ?array
-    {
-        return $this->match_partner_category_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMatchPartnerIds(OdooRelation $item): void
-    {
-        if (null === $this->match_partner_ids) {
-            $this->match_partner_ids = [];
-        }
-
-        if ($this->hasMatchPartnerIds($item)) {
-            $index = array_search($item, $this->match_partner_ids);
-            unset($this->match_partner_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasMatchPartnerIds(OdooRelation $item): bool
-    {
-        if (null === $this->match_partner_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->match_partner_ids);
-    }
-
-    /**
-     * @param string|null $match_note_param
-     */
-    public function setMatchNoteParam(?string $match_note_param): void
-    {
-        $this->match_note_param = $match_note_param;
-    }
-
-    /**
-     * @param OdooRelation[]|null $match_partner_ids
-     */
-    public function setMatchPartnerIds(?array $match_partner_ids): void
-    {
-        $this->match_partner_ids = $match_partner_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("match_partner_ids")
-     */
-    public function getMatchPartnerIds(): ?array
-    {
-        return $this->match_partner_ids;
-    }
-
-    /**
-     * @param bool|null $match_partner
-     */
-    public function setMatchPartner(?bool $match_partner): void
-    {
-        $this->match_partner = $match_partner;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("match_partner")
-     */
-    public function isMatchPartner(): ?bool
-    {
-        return $this->match_partner;
-    }
-
-    /**
-     * @param float|null $match_total_amount_param
-     */
-    public function setMatchTotalAmountParam(?float $match_total_amount_param): void
-    {
-        $this->match_total_amount_param = $match_total_amount_param;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("match_total_amount_param")
-     */
-    public function getMatchTotalAmountParam(): ?float
-    {
-        return $this->match_total_amount_param;
-    }
-
-    /**
-     * @param bool|null $match_total_amount
-     */
-    public function setMatchTotalAmount(?bool $match_total_amount): void
-    {
-        $this->match_total_amount = $match_total_amount;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("match_total_amount")
-     */
-    public function isMatchTotalAmount(): ?bool
-    {
-        return $this->match_total_amount;
-    }
-
-    /**
-     * @param bool|null $match_same_currency
-     */
-    public function setMatchSameCurrency(?bool $match_same_currency): void
-    {
-        $this->match_same_currency = $match_same_currency;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("match_same_currency")
-     */
-    public function isMatchSameCurrency(): ?bool
-    {
-        return $this->match_same_currency;
-    }
-
-    /**
-     * @param string|null $match_transaction_type_param
-     */
-    public function setMatchTransactionTypeParam(?string $match_transaction_type_param): void
-    {
-        $this->match_transaction_type_param = $match_transaction_type_param;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("match_transaction_type_param")
-     */
-    public function getMatchTransactionTypeParam(): ?string
-    {
-        return $this->match_transaction_type_param;
-    }
-
-    /**
-     * @param string|null $match_transaction_type
-     */
-    public function setMatchTransactionType(?string $match_transaction_type): void
-    {
-        $this->match_transaction_type = $match_transaction_type;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("match_transaction_type")
-     */
-    public function getMatchTransactionType(): ?string
-    {
-        return $this->match_transaction_type;
+        $this->match_journal_ids[] = $item;
     }
 
     /**

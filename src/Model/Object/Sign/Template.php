@@ -51,7 +51,7 @@ final class Template extends Base
     private $name;
 
     /**
-     * File Content
+     * File Content (base64)
      * ---
      * Searchable : no
      * Sortable : no
@@ -94,7 +94,7 @@ final class Template extends Base
     private $active;
 
     /**
-     * Privacy
+     * Who can Sign
      * ---
      * Set who can use this template:
      * - All Users: all users of the Sign application can view and use the template
@@ -197,6 +197,39 @@ final class Template extends Base
     private $redirect_url_text;
 
     /**
+     * Signed Count
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    private $signed_count;
+
+    /**
+     * In Progress Count
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var int|null
+     */
+    private $in_progress_count;
+
+    /**
+     * Template Access Group
+     * ---
+     * Relation : many2many (res.groups)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Groups
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation[]|null
+     */
+    private $group_ids;
+
+    /**
      * Signed Document Workspace
      * ---
      * Relation : many2one (documents.folder)
@@ -283,74 +316,18 @@ final class Template extends Base
     }
 
     /**
-     * @param OdooRelation|null $folder_id
-     */
-    public function setFolderId(?OdooRelation $folder_id): void
-    {
-        $this->folder_id = $folder_id;
-    }
-
-    /**
-     * @param OdooRelation[]|null $tag_ids
-     */
-    public function setTagIds(?array $tag_ids): void
-    {
-        $this->tag_ids = $tag_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasTagIds(OdooRelation $item): bool
-    {
-        if (null === $this->tag_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->tag_ids);
-    }
-
-    /**
      * @param OdooRelation $item
      */
-    public function addTagIds(OdooRelation $item): void
+    public function removeGroupIds(OdooRelation $item): void
     {
-        if ($this->hasTagIds($item)) {
-            return;
+        if (null === $this->group_ids) {
+            $this->group_ids = [];
         }
 
-        if (null === $this->tag_ids) {
-            $this->tag_ids = [];
+        if ($this->hasGroupIds($item)) {
+            $index = array_search($item, $this->group_ids);
+            unset($this->group_ids[$index]);
         }
-
-        $this->tag_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeTagIds(OdooRelation $item): void
-    {
-        if (null === $this->tag_ids) {
-            $this->tag_ids = [];
-        }
-
-        if ($this->hasTagIds($item)) {
-            $index = array_search($item, $this->tag_ids);
-            unset($this->tag_ids[$index]);
-        }
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("color")
-     */
-    public function getColor(): ?int
-    {
-        return $this->color;
     }
 
     /**
@@ -398,6 +375,90 @@ final class Template extends Base
     }
 
     /**
+     * @return int|null
+     *
+     * @SerializedName("signed_count")
+     */
+    public function getSignedCount(): ?int
+    {
+        return $this->signed_count;
+    }
+
+    /**
+     * @param int|null $signed_count
+     */
+    public function setSignedCount(?int $signed_count): void
+    {
+        $this->signed_count = $signed_count;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("in_progress_count")
+     */
+    public function getInProgressCount(): ?int
+    {
+        return $this->in_progress_count;
+    }
+
+    /**
+     * @param int|null $in_progress_count
+     */
+    public function setInProgressCount(?int $in_progress_count): void
+    {
+        $this->in_progress_count = $in_progress_count;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("group_ids")
+     */
+    public function getGroupIds(): ?array
+    {
+        return $this->group_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $group_ids
+     */
+    public function setGroupIds(?array $group_ids): void
+    {
+        $this->group_ids = $group_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasGroupIds(OdooRelation $item): bool
+    {
+        if (null === $this->group_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->group_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addGroupIds(OdooRelation $item): void
+    {
+        if ($this->hasGroupIds($item)) {
+            return;
+        }
+
+        if (null === $this->group_ids) {
+            $this->group_ids = [];
+        }
+
+        $this->group_ids[] = $item;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("folder_id")
@@ -408,6 +469,29 @@ final class Template extends Base
     }
 
     /**
+     * @param OdooRelation $item
+     */
+    public function removeTagIds(OdooRelation $item): void
+    {
+        if (null === $this->tag_ids) {
+            $this->tag_ids = [];
+        }
+
+        if ($this->hasTagIds($item)) {
+            $index = array_search($item, $this->tag_ids);
+            unset($this->tag_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation|null $folder_id
+     */
+    public function setFolderId(?OdooRelation $folder_id): void
+    {
+        $this->folder_id = $folder_id;
+    }
+
+    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("documents_tag_ids")
@@ -415,21 +499,6 @@ final class Template extends Base
     public function getDocumentsTagIds(): ?array
     {
         return $this->documents_tag_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeSignRequestIds(OdooRelation $item): void
-    {
-        if (null === $this->sign_request_ids) {
-            $this->sign_request_ids = [];
-        }
-
-        if ($this->hasSignRequestIds($item)) {
-            $index = array_search($item, $this->sign_request_ids);
-            unset($this->sign_request_ids[$index]);
-        }
     }
 
     /**
@@ -558,29 +627,29 @@ final class Template extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
+     * @return int|null
      *
-     * @SerializedName("tag_ids")
+     * @SerializedName("color")
      */
-    public function getTagIds(): ?array
+    public function getColor(): ?int
     {
-        return $this->tag_ids;
+        return $this->color;
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function addSignRequestIds(OdooRelation $item): void
+    public function addTagIds(OdooRelation $item): void
     {
-        if ($this->hasSignRequestIds($item)) {
+        if ($this->hasTagIds($item)) {
             return;
         }
 
-        if (null === $this->sign_request_ids) {
-            $this->sign_request_ids = [];
+        if (null === $this->tag_ids) {
+            $this->tag_ids = [];
         }
 
-        $this->sign_request_ids[] = $item;
+        $this->tag_ids[] = $item;
     }
 
     /**
@@ -594,11 +663,13 @@ final class Template extends Base
     }
 
     /**
-     * @param int|null $responsible_count
+     * @return string|null
+     *
+     * @SerializedName("privacy")
      */
-    public function setResponsibleCount(?int $responsible_count): void
+    public function getPrivacy(): ?string
     {
-        $this->responsible_count = $responsible_count;
+        return $this->privacy;
     }
 
     /**
@@ -719,6 +790,14 @@ final class Template extends Base
     }
 
     /**
+     * @param int|null $responsible_count
+     */
+    public function setResponsibleCount(?int $responsible_count): void
+    {
+        $this->responsible_count = $responsible_count;
+    }
+
+    /**
      * @return bool|null
      *
      * @SerializedName("active")
@@ -726,20 +805,6 @@ final class Template extends Base
     public function isActive(): ?bool
     {
         return $this->active;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasSignRequestIds(OdooRelation $item): bool
-    {
-        if (null === $this->sign_request_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->sign_request_ids);
     }
 
     /**
@@ -751,21 +816,25 @@ final class Template extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("privacy")
-     */
-    public function getPrivacy(): ?string
-    {
-        return $this->privacy;
-    }
-
-    /**
      * @param string|null $privacy
      */
     public function setPrivacy(?string $privacy): void
     {
         $this->privacy = $privacy;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasTagIds(OdooRelation $item): bool
+    {
+        if (null === $this->tag_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->tag_ids);
     }
 
     /**
@@ -865,6 +934,69 @@ final class Template extends Base
     public function setSignRequestIds(?array $sign_request_ids): void
     {
         $this->sign_request_ids = $sign_request_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasSignRequestIds(OdooRelation $item): bool
+    {
+        if (null === $this->sign_request_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->sign_request_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addSignRequestIds(OdooRelation $item): void
+    {
+        if ($this->hasSignRequestIds($item)) {
+            return;
+        }
+
+        if (null === $this->sign_request_ids) {
+            $this->sign_request_ids = [];
+        }
+
+        $this->sign_request_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeSignRequestIds(OdooRelation $item): void
+    {
+        if (null === $this->sign_request_ids) {
+            $this->sign_request_ids = [];
+        }
+
+        if ($this->hasSignRequestIds($item)) {
+            $index = array_search($item, $this->sign_request_ids);
+            unset($this->sign_request_ids[$index]);
+        }
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("tag_ids")
+     */
+    public function getTagIds(): ?array
+    {
+        return $this->tag_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $tag_ids
+     */
+    public function setTagIds(?array $tag_ids): void
+    {
+        $this->tag_ids = $tag_ids;
     }
 
     /**

@@ -340,6 +340,16 @@ final class Module extends Base
     private $to_buy;
 
     /**
+     * Has Iap
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $has_iap;
+
+    /**
      * Imported Module
      * ---
      * Searchable : yes
@@ -409,11 +419,29 @@ final class Module extends Base
     /**
      * @return string|null
      *
-     * @SerializedName("license")
+     * @SerializedName("menus_by_module")
      */
-    public function getLicense(): ?string
+    public function getMenusByModule(): ?string
     {
-        return $this->license;
+        return $this->menus_by_module;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("application")
+     */
+    public function isApplication(): ?bool
+    {
+        return $this->application;
+    }
+
+    /**
+     * @param string|null $views_by_module
+     */
+    public function setViewsByModule(?string $views_by_module): void
+    {
+        $this->views_by_module = $views_by_module;
     }
 
     /**
@@ -453,16 +481,6 @@ final class Module extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("menus_by_module")
-     */
-    public function getMenusByModule(): ?string
-    {
-        return $this->menus_by_module;
-    }
-
-    /**
      * @param string|null $license
      */
     public function setLicense(?string $license): void
@@ -471,21 +489,31 @@ final class Module extends Base
     }
 
     /**
+     * @return string|null
+     *
+     * @SerializedName("icon")
+     */
+    public function getIcon(): ?string
+    {
+        return $this->icon;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("license")
+     */
+    public function getLicense(): ?string
+    {
+        return $this->license;
+    }
+
+    /**
      * @param bool|null $demo
      */
     public function setDemo(?bool $demo): void
     {
         $this->demo = $demo;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("application")
-     */
-    public function isApplication(): ?bool
-    {
-        return $this->application;
     }
 
     /**
@@ -535,29 +563,6 @@ final class Module extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     */
-    public function removeExclusionIds(OdooRelation $item): void
-    {
-        if (null === $this->exclusion_ids) {
-            $this->exclusion_ids = [];
-        }
-
-        if ($this->hasExclusionIds($item)) {
-            $index = array_search($item, $this->exclusion_ids);
-            unset($this->exclusion_ids[$index]);
-        }
-    }
-
-    /**
-     * @param string|null $views_by_module
-     */
-    public function setViewsByModule(?string $views_by_module): void
-    {
-        $this->views_by_module = $views_by_module;
-    }
-
-    /**
      * @param bool|null $application
      */
     public function setApplication(?bool $application): void
@@ -566,17 +571,27 @@ final class Module extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param string|null $icon
      */
-    public function hasExclusionIds(OdooRelation $item): bool
+    public function setIcon(?string $icon): void
     {
-        if (null === $this->exclusion_ids) {
-            return false;
+        $this->icon = $icon;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addExclusionIds(OdooRelation $item): void
+    {
+        if ($this->hasExclusionIds($item)) {
+            return;
         }
 
-        return in_array($item, $this->exclusion_ids);
+        if (null === $this->exclusion_ids) {
+            $this->exclusion_ids = [];
+        }
+
+        $this->exclusion_ids[] = $item;
     }
 
     /**
@@ -652,13 +667,13 @@ final class Module extends Base
     }
 
     /**
-     * @return string|null
+     * @return mixed|null
      *
-     * @SerializedName("icon")
+     * @SerializedName("icon_image")
      */
-    public function getIcon(): ?string
+    public function getIconImage()
     {
-        return $this->icon;
+        return $this->icon_image;
     }
 
     /**
@@ -677,6 +692,24 @@ final class Module extends Base
     public function isImported(): ?bool
     {
         return $this->imported;
+    }
+
+    /**
+     * @param bool|null $has_iap
+     */
+    public function setHasIap(?bool $has_iap): void
+    {
+        $this->has_iap = $has_iap;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("has_iap")
+     */
+    public function isHasIap(): ?bool
+    {
+        return $this->has_iap;
     }
 
     /**
@@ -706,45 +739,32 @@ final class Module extends Base
     }
 
     /**
-     * @return mixed|null
-     *
-     * @SerializedName("icon_image")
-     */
-    public function getIconImage()
-    {
-        return $this->icon_image;
-    }
-
-    /**
-     * @param string|null $icon
-     */
-    public function setIcon(?string $icon): void
-    {
-        $this->icon = $icon;
-    }
-
-    /**
      * @param OdooRelation $item
      */
-    public function addExclusionIds(OdooRelation $item): void
+    public function removeExclusionIds(OdooRelation $item): void
     {
-        if ($this->hasExclusionIds($item)) {
-            return;
-        }
-
         if (null === $this->exclusion_ids) {
             $this->exclusion_ids = [];
         }
 
-        $this->exclusion_ids[] = $item;
+        if ($this->hasExclusionIds($item)) {
+            $index = array_search($item, $this->exclusion_ids);
+            unset($this->exclusion_ids[$index]);
+        }
     }
 
     /**
-     * @param OdooRelation[]|null $exclusion_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setExclusionIds(?array $exclusion_ids): void
+    public function hasExclusionIds(OdooRelation $item): bool
     {
-        $this->exclusion_ids = $exclusion_ids;
+        if (null === $this->exclusion_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->exclusion_ids);
     }
 
     /**
@@ -920,13 +940,11 @@ final class Module extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("exclusion_ids")
+     * @param OdooRelation[]|null $exclusion_ids
      */
-    public function getExclusionIds(): ?array
+    public function setExclusionIds(?array $exclusion_ids): void
     {
-        return $this->exclusion_ids;
+        $this->exclusion_ids = $exclusion_ids;
     }
 
     /**
@@ -937,6 +955,16 @@ final class Module extends Base
     public function getSequence(): ?int
     {
         return $this->sequence;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("exclusion_ids")
+     */
+    public function getExclusionIds(): ?array
+    {
+        return $this->exclusion_ids;
     }
 
     /**

@@ -14,9 +14,11 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  * Name : resource.mixin
  * ---
  * Info :
- * The base model, which is implicitly inherited by all models.
+ * Updates the base class to support setting xids directly in create by
+ *         providing an "id" key (otherwise stripped by create) during an import
+ *         (which should strip 'id' from the input data anyway)
  */
-abstract class Mixin extends Base
+final class Mixin extends Base
 {
     /**
      * Resource
@@ -29,7 +31,7 @@ abstract class Mixin extends Base
      *
      * @var OdooRelation
      */
-    protected $resource_id;
+    private $resource_id;
 
     /**
      * Company
@@ -42,7 +44,7 @@ abstract class Mixin extends Base
      *
      * @var OdooRelation|null
      */
-    protected $company_id;
+    private $company_id;
 
     /**
      * Working Hours
@@ -57,7 +59,7 @@ abstract class Mixin extends Base
      *
      * @var OdooRelation|null
      */
-    protected $resource_calendar_id;
+    private $resource_calendar_id;
 
     /**
      * Timezone
@@ -240,7 +242,6 @@ abstract class Mixin extends Base
      *     -> America/North_Dakota/Beulah (America/North_Dakota/Beulah)
      *     -> America/North_Dakota/Center (America/North_Dakota/Center)
      *     -> America/North_Dakota/New_Salem (America/North_Dakota/New_Salem)
-     *     -> America/Nuuk (America/Nuuk)
      *     -> America/Ojinaga (America/Ojinaga)
      *     -> America/Panama (America/Panama)
      *     -> America/Pangnirtung (America/Pangnirtung)
@@ -664,7 +665,7 @@ abstract class Mixin extends Base
      *
      * @var string|null
      */
-    protected $tz;
+    private $tz;
 
     /**
      * @param OdooRelation $resource_id Resource

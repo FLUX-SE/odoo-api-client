@@ -39,6 +39,18 @@ final class Calendar extends Base
     private $name;
 
     /**
+     * Active
+     * ---
+     * If the active field is set to false, it will allow you to hide the Working Time without removing it.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $active;
+
+    /**
      * Company
      * ---
      * Relation : many2one (res.company)
@@ -283,7 +295,6 @@ final class Calendar extends Base
      *     -> America/North_Dakota/Beulah (America/North_Dakota/Beulah)
      *     -> America/North_Dakota/Center (America/North_Dakota/Center)
      *     -> America/North_Dakota/New_Salem (America/North_Dakota/New_Salem)
-     *     -> America/Nuuk (America/Nuuk)
      *     -> America/Ojinaga (America/Ojinaga)
      *     -> America/Panama (America/Panama)
      *     -> America/Pangnirtung (America/Pangnirtung)
@@ -960,7 +971,6 @@ final class Calendar extends Base
      *            -> America/North_Dakota/Beulah (America/North_Dakota/Beulah)
      *            -> America/North_Dakota/Center (America/North_Dakota/Center)
      *            -> America/North_Dakota/New_Salem (America/North_Dakota/New_Salem)
-     *            -> America/Nuuk (America/Nuuk)
      *            -> America/Ojinaga (America/Ojinaga)
      *            -> America/Panama (America/Panama)
      *            -> America/Pangnirtung (America/Pangnirtung)
@@ -1397,6 +1407,16 @@ final class Calendar extends Base
     }
 
     /**
+     * @return float|null
+     *
+     * @SerializedName("hours_per_day")
+     */
+    public function getHoursPerDay(): ?float
+    {
+        return $this->hours_per_day;
+    }
+
+    /**
      * @param float|null $hours_per_day
      */
     public function setHoursPerDay(?float $hours_per_day): void
@@ -1463,16 +1483,17 @@ final class Calendar extends Base
     /**
      * @param OdooRelation $item
      */
-    public function removeGlobalLeaveIds(OdooRelation $item): void
+    public function addGlobalLeaveIds(OdooRelation $item): void
     {
+        if ($this->hasGlobalLeaveIds($item)) {
+            return;
+        }
+
         if (null === $this->global_leave_ids) {
             $this->global_leave_ids = [];
         }
 
-        if ($this->hasGlobalLeaveIds($item)) {
-            $index = array_search($item, $this->global_leave_ids);
-            unset($this->global_leave_ids[$index]);
-        }
+        $this->global_leave_ids[] = $item;
     }
 
     /**
@@ -1538,29 +1559,32 @@ final class Calendar extends Base
     }
 
     /**
-     * @return float|null
-     *
-     * @SerializedName("hours_per_day")
-     */
-    public function getHoursPerDay(): ?float
-    {
-        return $this->hours_per_day;
-    }
-
-    /**
      * @param OdooRelation $item
      */
-    public function addGlobalLeaveIds(OdooRelation $item): void
+    public function removeGlobalLeaveIds(OdooRelation $item): void
     {
-        if ($this->hasGlobalLeaveIds($item)) {
-            return;
-        }
-
         if (null === $this->global_leave_ids) {
             $this->global_leave_ids = [];
         }
 
-        $this->global_leave_ids[] = $item;
+        if ($this->hasGlobalLeaveIds($item)) {
+            $index = array_search($item, $this->global_leave_ids);
+            unset($this->global_leave_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasGlobalLeaveIds(OdooRelation $item): bool
+    {
+        if (null === $this->global_leave_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->global_leave_ids);
     }
 
     /**
@@ -1575,18 +1599,16 @@ final class Calendar extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function addAttendanceIds(OdooRelation $item): void
+    public function hasAttendanceIds(OdooRelation $item): bool
     {
-        if ($this->hasAttendanceIds($item)) {
-            return;
-        }
-
         if (null === $this->attendance_ids) {
-            $this->attendance_ids = [];
+            return false;
         }
 
-        $this->attendance_ids[] = $item;
+        return in_array($item, $this->attendance_ids);
     }
 
     /**
@@ -1595,6 +1617,24 @@ final class Calendar extends Base
     public function setName(string $name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("active")
+     */
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param bool|null $active
+     */
+    public function setActive(?bool $active): void
+    {
+        $this->active = $active;
     }
 
     /**
@@ -1635,16 +1675,26 @@ final class Calendar extends Base
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasAttendanceIds(OdooRelation $item): bool
+    public function addAttendanceIds(OdooRelation $item): void
     {
-        if (null === $this->attendance_ids) {
-            return false;
+        if ($this->hasAttendanceIds($item)) {
+            return;
         }
 
-        return in_array($item, $this->attendance_ids);
+        if (null === $this->attendance_ids) {
+            $this->attendance_ids = [];
+        }
+
+        $this->attendance_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation[]|null $global_leave_ids
+     */
+    public function setGlobalLeaveIds(?array $global_leave_ids): void
+    {
+        $this->global_leave_ids = $global_leave_ids;
     }
 
     /**
@@ -1660,20 +1710,6 @@ final class Calendar extends Base
             $index = array_search($item, $this->attendance_ids);
             unset($this->attendance_ids[$index]);
         }
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasGlobalLeaveIds(OdooRelation $item): bool
-    {
-        if (null === $this->global_leave_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->global_leave_ids);
     }
 
     /**
@@ -1747,14 +1783,6 @@ final class Calendar extends Base
     public function getGlobalLeaveIds(): ?array
     {
         return $this->global_leave_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $global_leave_ids
-     */
-    public function setGlobalLeaveIds(?array $global_leave_ids): void
-    {
-        $this->global_leave_ids = $global_leave_ids;
     }
 
     /**

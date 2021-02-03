@@ -48,6 +48,19 @@ final class Contract extends Base
     private $active;
 
     /**
+     * Salary Structure Type
+     * ---
+     * Relation : many2one (hr.payroll.structure.type)
+     * @see \Flux\OdooApiClient\Model\Object\Hr\Payroll\Structure\Type
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $structure_type_id;
+
+    /**
      * Employee
      * ---
      * Relation : many2one (hr.employee)
@@ -148,16 +161,6 @@ final class Contract extends Base
     private $wage;
 
     /**
-     * Advantages
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $advantages;
-
-    /**
      * Notes
      * ---
      * Searchable : yes
@@ -197,6 +200,19 @@ final class Contract extends Base
      * @var OdooRelation
      */
     private $company_id;
+
+    /**
+     * Company country
+     * ---
+     * Relation : many2one (res.country)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Country
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $company_country_id;
 
     /**
      * Kanban State
@@ -282,6 +298,16 @@ final class Contract extends Base
     private $calendar_mismatch;
 
     /**
+     * First Contract Date
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var DateTimeInterface|null
+     */
+    private $first_contract_date;
+
+    /**
      * Requested Signatures
      * ---
      * Relation : many2many (sign.request)
@@ -362,6 +388,18 @@ final class Contract extends Base
      * @var OdooRelation|null
      */
     private $activity_type_id;
+
+    /**
+     * Activity Type Icon
+     * ---
+     * Font awesome icon e.g. fa-tasks
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $activity_type_icon;
 
     /**
      * Next Activity Deadline
@@ -680,47 +718,17 @@ final class Contract extends Base
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasMessagePartnerIds(OdooRelation $item): bool
+    public function removeMessageFollowerIds(OdooRelation $item): void
     {
-        if (null === $this->message_partner_ids) {
-            return false;
+        if (null === $this->message_follower_ids) {
+            $this->message_follower_ids = [];
         }
 
-        return in_array($item, $this->message_partner_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMessageIds(OdooRelation $item): void
-    {
-        if (null === $this->message_ids) {
-            $this->message_ids = [];
+        if ($this->hasMessageFollowerIds($item)) {
+            $index = array_search($item, $this->message_follower_ids);
+            unset($this->message_follower_ids[$index]);
         }
-
-        if ($this->hasMessageIds($item)) {
-            $index = array_search($item, $this->message_ids);
-            unset($this->message_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addMessageIds(OdooRelation $item): void
-    {
-        if ($this->hasMessageIds($item)) {
-            return;
-        }
-
-        if (null === $this->message_ids) {
-            $this->message_ids = [];
-        }
-
-        $this->message_ids[] = $item;
     }
 
     /**
@@ -850,19 +858,25 @@ final class Contract extends Base
     }
 
     /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMessagePartnerIds(OdooRelation $item): bool
+    {
+        if (null === $this->message_partner_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_partner_ids);
+    }
+
+    /**
      * @param OdooRelation[]|null $message_partner_ids
      */
     public function setMessagePartnerIds(?array $message_partner_ids): void
     {
         $this->message_partner_ids = $message_partner_ids;
-    }
-
-    /**
-     * @param bool|null $message_unread
-     */
-    public function setMessageUnread(?bool $message_unread): void
-    {
-        $this->message_unread = $message_unread;
     }
 
     /**
@@ -873,21 +887,6 @@ final class Contract extends Base
     public function getMessagePartnerIds(): ?array
     {
         return $this->message_partner_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeMessageFollowerIds(OdooRelation $item): void
-    {
-        if (null === $this->message_follower_ids) {
-            $this->message_follower_ids = [];
-        }
-
-        if ($this->hasMessageFollowerIds($item)) {
-            $index = array_search($item, $this->message_follower_ids);
-            unset($this->message_follower_ids[$index]);
-        }
     }
 
     /**
@@ -904,6 +903,21 @@ final class Contract extends Base
         }
 
         $this->message_follower_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMessageIds(OdooRelation $item): void
+    {
+        if (null === $this->message_ids) {
+            $this->message_ids = [];
+        }
+
+        if ($this->hasMessageIds($item)) {
+            $index = array_search($item, $this->message_ids);
+            unset($this->message_ids[$index]);
+        }
     }
 
     /**
@@ -1001,23 +1015,13 @@ final class Contract extends Base
     }
 
     /**
-     * @return bool|null
+     * @return string|null
      *
-     * @SerializedName("message_unread")
+     * @SerializedName("activity_summary")
      */
-    public function isMessageUnread(): ?bool
+    public function getActivitySummary(): ?string
     {
-        return $this->message_unread;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("message_unread_counter")
-     */
-    public function getMessageUnreadCounter(): ?int
-    {
-        return $this->message_unread_counter;
+        return $this->activity_summary;
     }
 
     /**
@@ -1029,17 +1033,57 @@ final class Contract extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return DateTimeInterface|null
      *
-     * @return bool
+     * @SerializedName("activity_date_deadline")
      */
-    public function hasWebsiteMessageIds(OdooRelation $item): bool
+    public function getActivityDateDeadline(): ?DateTimeInterface
     {
-        if (null === $this->website_message_ids) {
-            return false;
+        return $this->activity_date_deadline;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMessageIds(OdooRelation $item): void
+    {
+        if ($this->hasMessageIds($item)) {
+            return;
         }
 
-        return in_array($item, $this->website_message_ids);
+        if (null === $this->message_ids) {
+            $this->message_ids = [];
+        }
+
+        $this->message_ids[] = $item;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("message_unread")
+     */
+    public function isMessageUnread(): ?bool
+    {
+        return $this->message_unread;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("activity_type_icon")
+     */
+    public function getActivityTypeIcon(): ?string
+    {
+        return $this->activity_type_icon;
+    }
+
+    /**
+     * @param OdooRelation[]|null $website_message_ids
+     */
+    public function setWebsiteMessageIds(?array $website_message_ids): void
+    {
+        $this->website_message_ids = $website_message_ids;
     }
 
     /**
@@ -1164,19 +1208,17 @@ final class Contract extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $website_message_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setWebsiteMessageIds(?array $website_message_ids): void
+    public function hasWebsiteMessageIds(OdooRelation $item): bool
     {
-        $this->website_message_ids = $website_message_ids;
-    }
+        if (null === $this->website_message_ids) {
+            return false;
+        }
 
-    /**
-     * @param int|null $message_unread_counter
-     */
-    public function setMessageUnreadCounter(?int $message_unread_counter): void
-    {
-        $this->message_unread_counter = $message_unread_counter;
+        return in_array($item, $this->website_message_ids);
     }
 
     /**
@@ -1187,6 +1229,14 @@ final class Contract extends Base
     public function getWebsiteMessageIds(): ?array
     {
         return $this->website_message_ids;
+    }
+
+    /**
+     * @param bool|null $message_unread
+     */
+    public function setMessageUnread(?bool $message_unread): void
+    {
+        $this->message_unread = $message_unread;
     }
 
     /**
@@ -1298,23 +1348,37 @@ final class Contract extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("activity_summary")
+     * @param int|null $message_unread_counter
      */
-    public function getActivitySummary(): ?string
+    public function setMessageUnreadCounter(?int $message_unread_counter): void
     {
-        return $this->activity_summary;
+        $this->message_unread_counter = $message_unread_counter;
     }
 
     /**
-     * @return DateTimeInterface|null
+     * @return int|null
      *
-     * @SerializedName("activity_date_deadline")
+     * @SerializedName("message_unread_counter")
      */
-    public function getActivityDateDeadline(): ?DateTimeInterface
+    public function getMessageUnreadCounter(): ?int
     {
-        return $this->activity_date_deadline;
+        return $this->message_unread_counter;
+    }
+
+    /**
+     * @param string|null $activity_type_icon
+     */
+    public function setActivityTypeIcon(?string $activity_type_icon): void
+    {
+        $this->activity_type_icon = $activity_type_icon;
+    }
+
+    /**
+     * @param OdooRelation|null $activity_type_id
+     */
+    public function setActivityTypeId(?OdooRelation $activity_type_id): void
+    {
+        $this->activity_type_id = $activity_type_id;
     }
 
     /**
@@ -1328,11 +1392,21 @@ final class Contract extends Base
     }
 
     /**
-     * @param DateTimeInterface|null $trial_date_end
+     * @param DateTimeInterface|null $date_end
      */
-    public function setTrialDateEnd(?DateTimeInterface $trial_date_end): void
+    public function setDateEnd(?DateTimeInterface $date_end): void
     {
-        $this->trial_date_end = $trial_date_end;
+        $this->date_end = $date_end;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("company_country_id")
+     */
+    public function getCompanyCountryId(): ?OdooRelation
+    {
+        return $this->company_country_id;
     }
 
     /**
@@ -1390,24 +1464,6 @@ final class Contract extends Base
     }
 
     /**
-     * @param string|null $advantages
-     */
-    public function setAdvantages(?string $advantages): void
-    {
-        $this->advantages = $advantages;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("advantages")
-     */
-    public function getAdvantages(): ?string
-    {
-        return $this->advantages;
-    }
-
-    /**
      * @param float $wage
      */
     public function setWage(float $wage): void
@@ -1444,6 +1500,14 @@ final class Contract extends Base
     }
 
     /**
+     * @param DateTimeInterface|null $trial_date_end
+     */
+    public function setTrialDateEnd(?DateTimeInterface $trial_date_end): void
+    {
+        $this->trial_date_end = $trial_date_end;
+    }
+
+    /**
      * @return DateTimeInterface|null
      *
      * @SerializedName("trial_date_end")
@@ -1454,22 +1518,6 @@ final class Contract extends Base
     }
 
     /**
-     * @param string|null $kanban_state
-     */
-    public function setKanbanState(?string $kanban_state): void
-    {
-        $this->kanban_state = $kanban_state;
-    }
-
-    /**
-     * @param DateTimeInterface|null $date_end
-     */
-    public function setDateEnd(?DateTimeInterface $date_end): void
-    {
-        $this->date_end = $date_end;
-    }
-
-    /**
      * @return DateTimeInterface|null
      *
      * @SerializedName("date_end")
@@ -1477,6 +1525,16 @@ final class Contract extends Base
     public function getDateEnd(): ?DateTimeInterface
     {
         return $this->date_end;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("kanban_state")
+     */
+    public function getKanbanState(): ?string
+    {
+        return $this->kanban_state;
     }
 
     /**
@@ -1552,6 +1610,24 @@ final class Contract extends Base
     }
 
     /**
+     * @param OdooRelation|null $structure_type_id
+     */
+    public function setStructureTypeId(?OdooRelation $structure_type_id): void
+    {
+        $this->structure_type_id = $structure_type_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("structure_type_id")
+     */
+    public function getStructureTypeId(): ?OdooRelation
+    {
+        return $this->structure_type_id;
+    }
+
+    /**
      * @param bool|null $active
      */
     public function setActive(?bool $active): void
@@ -1578,46 +1654,19 @@ final class Contract extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("kanban_state")
+     * @param OdooRelation|null $company_country_id
      */
-    public function getKanbanState(): ?string
+    public function setCompanyCountryId(?OdooRelation $company_country_id): void
     {
-        return $this->kanban_state;
+        $this->company_country_id = $company_country_id;
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("currency_id")
+     * @param string|null $kanban_state
      */
-    public function getCurrencyId(): ?OdooRelation
+    public function setKanbanState(?string $kanban_state): void
     {
-        return $this->currency_id;
-    }
-
-    /**
-     * @param OdooRelation|null $activity_type_id
-     */
-    public function setActivityTypeId(?OdooRelation $activity_type_id): void
-    {
-        $this->activity_type_id = $activity_type_id;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeSignRequestIds(OdooRelation $item): void
-    {
-        if (null === $this->sign_request_ids) {
-            $this->sign_request_ids = [];
-        }
-
-        if ($this->hasSignRequestIds($item)) {
-            $index = array_search($item, $this->sign_request_ids);
-            unset($this->sign_request_ids[$index]);
-        }
+        $this->kanban_state = $kanban_state;
     }
 
     /**
@@ -1628,6 +1677,20 @@ final class Contract extends Base
     public function getActivityTypeId(): ?OdooRelation
     {
         return $this->activity_type_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasSignRequestIds(OdooRelation $item): bool
+    {
+        if (null === $this->sign_request_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->sign_request_ids);
     }
 
     /**
@@ -1750,6 +1813,21 @@ final class Contract extends Base
     /**
      * @param OdooRelation $item
      */
+    public function removeSignRequestIds(OdooRelation $item): void
+    {
+        if (null === $this->sign_request_ids) {
+            $this->sign_request_ids = [];
+        }
+
+        if ($this->hasSignRequestIds($item)) {
+            $index = array_search($item, $this->sign_request_ids);
+            unset($this->sign_request_ids[$index]);
+        }
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
     public function addSignRequestIds(OdooRelation $item): void
     {
         if ($this->hasSignRequestIds($item)) {
@@ -1764,33 +1842,21 @@ final class Contract extends Base
     }
 
     /**
-     * @param OdooRelation|null $currency_id
-     */
-    public function setCurrencyId(?OdooRelation $currency_id): void
-    {
-        $this->currency_id = $currency_id;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasSignRequestIds(OdooRelation $item): bool
-    {
-        if (null === $this->sign_request_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->sign_request_ids);
-    }
-
-    /**
      * @param OdooRelation[]|null $sign_request_ids
      */
     public function setSignRequestIds(?array $sign_request_ids): void
     {
         $this->sign_request_ids = $sign_request_ids;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("currency_id")
+     */
+    public function getCurrencyId(): ?OdooRelation
+    {
+        return $this->currency_id;
     }
 
     /**
@@ -1801,6 +1867,24 @@ final class Contract extends Base
     public function getSignRequestIds(): ?array
     {
         return $this->sign_request_ids;
+    }
+
+    /**
+     * @param DateTimeInterface|null $first_contract_date
+     */
+    public function setFirstContractDate(?DateTimeInterface $first_contract_date): void
+    {
+        $this->first_contract_date = $first_contract_date;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("first_contract_date")
+     */
+    public function getFirstContractDate(): ?DateTimeInterface
+    {
+        return $this->first_contract_date;
     }
 
     /**
@@ -1891,6 +1975,14 @@ final class Contract extends Base
     public function getPermitNo(): ?string
     {
         return $this->permit_no;
+    }
+
+    /**
+     * @param OdooRelation|null $currency_id
+     */
+    public function setCurrencyId(?OdooRelation $currency_id): void
+    {
+        $this->currency_id = $currency_id;
     }
 
     /**

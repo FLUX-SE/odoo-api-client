@@ -38,23 +38,6 @@ final class Category extends Base
     private $name;
 
     /**
-     * Type of Measure
-     * ---
-     * Selection :
-     *     -> unit (Default Units)
-     *     -> weight (Default Weight)
-     *     -> working_time (Default Working Time)
-     *     -> length (Default Length)
-     *     -> volume (Default Volume)
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $measure_type;
-
-    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -127,24 +110,6 @@ final class Category extends Base
     public function setName(string $name): void
     {
         $this->name = $name;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("measure_type")
-     */
-    public function getMeasureType(): ?string
-    {
-        return $this->measure_type;
-    }
-
-    /**
-     * @param string|null $measure_type
-     */
-    public function setMeasureType(?string $measure_type): void
-    {
-        $this->measure_type = $measure_type;
     }
 
     /**

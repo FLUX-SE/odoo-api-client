@@ -67,6 +67,18 @@ final class Item extends Base
     private $sign_item_value_ids;
 
     /**
+     * Document Name
+     * ---
+     * This is how the document will be named in the mail
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $reference;
+
+    /**
      * Security Token
      * ---
      * Searchable : yes
@@ -144,7 +156,7 @@ final class Item extends Base
      * ---
      * Selection :
      *     -> draft (Draft)
-     *     -> sent (Waiting for completion)
+     *     -> sent (To Sign)
      *     -> completed (Completed)
      * ---
      * Searchable : yes
@@ -183,6 +195,28 @@ final class Item extends Base
      * @var float|null
      */
     private $longitude;
+
+    /**
+     * Portal Access URL
+     * ---
+     * Customer Portal URL
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $access_url;
+
+    /**
+     * Access warning
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $access_warning;
 
     /**
      * Created by
@@ -250,21 +284,11 @@ final class Item extends Base
     }
 
     /**
-     * @return float|null
-     *
-     * @SerializedName("longitude")
+     * @param string|null $access_url
      */
-    public function getLongitude(): ?float
+    public function setAccessUrl(?string $access_url): void
     {
-        return $this->longitude;
-    }
-
-    /**
-     * @param DateTimeInterface|null $signing_date
-     */
-    public function setSigningDate(?DateTimeInterface $signing_date): void
-    {
-        $this->signing_date = $signing_date;
+        $this->access_url = $access_url;
     }
 
     /**
@@ -322,6 +346,16 @@ final class Item extends Base
     }
 
     /**
+     * @return float|null
+     *
+     * @SerializedName("longitude")
+     */
+    public function getLongitude(): ?float
+    {
+        return $this->longitude;
+    }
+
+    /**
      * @param float|null $longitude
      */
     public function setLongitude(?float $longitude): void
@@ -330,11 +364,41 @@ final class Item extends Base
     }
 
     /**
-     * @param mixed|null $signature
+     * @return string|null
+     *
+     * @SerializedName("access_url")
      */
-    public function setSignature($signature): void
+    public function getAccessUrl(): ?string
     {
-        $this->signature = $signature;
+        return $this->access_url;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("access_warning")
+     */
+    public function getAccessWarning(): ?string
+    {
+        return $this->access_warning;
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("signing_date")
+     */
+    public function getSigningDate(): ?DateTimeInterface
+    {
+        return $this->signing_date;
+    }
+
+    /**
+     * @param string|null $access_warning
+     */
+    public function setAccessWarning(?string $access_warning): void
+    {
+        $this->access_warning = $access_warning;
     }
 
     /**
@@ -410,23 +474,19 @@ final class Item extends Base
     }
 
     /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("signing_date")
+     * @param DateTimeInterface|null $signing_date
      */
-    public function getSigningDate(): ?DateTimeInterface
+    public function setSigningDate(?DateTimeInterface $signing_date): void
     {
-        return $this->signing_date;
+        $this->signing_date = $signing_date;
     }
 
     /**
-     * @return mixed|null
-     *
-     * @SerializedName("signature")
+     * @param mixed|null $signature
      */
-    public function getSignature()
+    public function setSignature($signature): void
     {
-        return $this->signature;
+        $this->signature = $signature;
     }
 
     /**
@@ -440,18 +500,11 @@ final class Item extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @param string|null $reference
      */
-    public function removeSignItemValueIds(OdooRelation $item): void
+    public function setReference(?string $reference): void
     {
-        if (null === $this->sign_item_value_ids) {
-            $this->sign_item_value_ids = [];
-        }
-
-        if ($this->hasSignItemValueIds($item)) {
-            $index = array_search($item, $this->sign_item_value_ids);
-            unset($this->sign_item_value_ids[$index]);
-        }
+        $this->reference = $reference;
     }
 
     /**
@@ -529,6 +582,31 @@ final class Item extends Base
     }
 
     /**
+     * @param OdooRelation $item
+     */
+    public function removeSignItemValueIds(OdooRelation $item): void
+    {
+        if (null === $this->sign_item_value_ids) {
+            $this->sign_item_value_ids = [];
+        }
+
+        if ($this->hasSignItemValueIds($item)) {
+            $index = array_search($item, $this->sign_item_value_ids);
+            unset($this->sign_item_value_ids[$index]);
+        }
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("reference")
+     */
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+
+    /**
      * @return string
      *
      * @SerializedName("access_token")
@@ -539,11 +617,13 @@ final class Item extends Base
     }
 
     /**
-     * @param string|null $sms_token
+     * @return mixed|null
+     *
+     * @SerializedName("signature")
      */
-    public function setSmsToken(?string $sms_token): void
+    public function getSignature()
     {
-        $this->sms_token = $sms_token;
+        return $this->signature;
     }
 
     /**
@@ -616,6 +696,14 @@ final class Item extends Base
     public function getSmsToken(): ?string
     {
         return $this->sms_token;
+    }
+
+    /**
+     * @param string|null $sms_token
+     */
+    public function setSmsToken(?string $sms_token): void
+    {
+        $this->sms_token = $sms_token;
     }
 
     /**

@@ -115,7 +115,7 @@ final class Position extends Base
     /**
      * Country
      * ---
-     * Apply only if delivery or invoicing country match.
+     * Apply only if delivery country matches.
      * ---
      * Relation : many2one (res.country)
      * @see \Flux\OdooApiClient\Model\Object\Res\Country
@@ -130,7 +130,7 @@ final class Position extends Base
     /**
      * Country Group
      * ---
-     * Apply only if delivery or invoicing country match the group.
+     * Apply only if delivery country matches the group.
      * ---
      * Relation : many2one (res.country.group)
      * @see \Flux\OdooApiClient\Model\Object\Res\Country\Group

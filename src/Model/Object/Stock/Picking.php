@@ -151,10 +151,8 @@ final class Picking extends Base
      * Products will be reserved first for the transfers with the highest priorities.
      * ---
      * Selection :
-     *     -> 0 (Not urgent)
-     *     -> 1 (Normal)
-     *     -> 2 (Urgent)
-     *     -> 3 (Very Urgent)
+     *     -> 0 (Normal)
+     *     -> 1 (Urgent)
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -175,6 +173,30 @@ final class Picking extends Base
      * @var DateTimeInterface|null
      */
     private $scheduled_date;
+
+    /**
+     * Deadline
+     * ---
+     * Date Promise to the customer on the top level document (SO/PO)
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var DateTimeInterface|null
+     */
+    private $date_deadline;
+
+    /**
+     * Is late
+     * ---
+     * Is late or will be late depending on the deadline and scheduled date
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var bool|null
+     */
+    private $has_deadline_issue;
 
     /**
      * Creation Date
@@ -199,6 +221,26 @@ final class Picking extends Base
      * @var DateTimeInterface|null
      */
     private $date_done;
+
+    /**
+     * Delay Alert Date
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var DateTimeInterface|null
+     */
+    private $delay_alert_date;
+
+    /**
+     * JSON data for the popover widget
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $json_popover;
 
     /**
      * Source Location
@@ -301,6 +343,16 @@ final class Picking extends Base
      * @var bool|null
      */
     private $picking_type_entire_packs;
+
+    /**
+     * Hide Picking Type
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $hide_picking_type;
 
     /**
      * Contact
@@ -407,7 +459,7 @@ final class Picking extends Base
     /**
      * Show Check Availability
      * ---
-     * Technical field used to compute whether the check availability button should be shown.
+     * Technical field used to compute whether the button "Check Availability" should be displayed.
      * ---
      * Searchable : no
      * Sortable : no
@@ -419,7 +471,7 @@ final class Picking extends Base
     /**
      * Show Mark As Todo
      * ---
-     * Technical field used to compute whether the mark as todo button should be shown.
+     * Technical field used to compute whether the button "Mark as Todo" should be displayed.
      * ---
      * Searchable : no
      * Sortable : no
@@ -431,7 +483,7 @@ final class Picking extends Base
     /**
      * Show Validate
      * ---
-     * Technical field used to compute whether the validate should be shown.
+     * Technical field used to decide whether the button "Validate" should be displayed.
      * ---
      * Searchable : no
      * Sortable : no
@@ -444,7 +496,7 @@ final class Picking extends Base
      * Create New Lots/Serial Numbers
      * ---
      * If this is checked only, it will suppose you want to create new Lots/Serial Numbers, so you can provide them
-     * in a text field.
+     * in a text field. 
      * ---
      * Searchable : yes
      * Sortable : no
@@ -477,6 +529,18 @@ final class Picking extends Base
      * @var bool|null
      */
     private $printed;
+
+    /**
+     * Signature
+     * ---
+     * Signature
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var mixed|null
+     */
+    private $signature;
 
     /**
      * Is Locked
@@ -584,6 +648,31 @@ final class Picking extends Base
     private $package_level_ids_details;
 
     /**
+     * Product Availability
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $products_availability;
+
+    /**
+     * Products Availability State
+     * ---
+     * Selection :
+     *     -> available (Available)
+     *     -> expected (Expected)
+     *     -> late (Late)
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $products_availability_state;
+
+    /**
      * Purchase Orders
      * ---
      * Relation : many2one (purchase.order)
@@ -667,6 +756,18 @@ final class Picking extends Base
      * @var OdooRelation|null
      */
     private $activity_type_id;
+
+    /**
+     * Activity Type Icon
+     * ---
+     * Font awesome icon e.g. fa-tasks
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $activity_type_icon;
 
     /**
      * Next Activity Deadline
@@ -992,11 +1093,74 @@ final class Picking extends Base
     }
 
     /**
-     * @param string|null $activity_summary
+     * @param OdooRelation|null $activity_type_id
      */
-    public function setActivitySummary(?string $activity_summary): void
+    public function setActivityTypeId(?OdooRelation $activity_type_id): void
     {
-        $this->activity_summary = $activity_summary;
+        $this->activity_type_id = $activity_type_id;
+    }
+
+    /**
+     * @param OdooRelation[]|null $activity_ids
+     */
+    public function setActivityIds(?array $activity_ids): void
+    {
+        $this->activity_ids = $activity_ids;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasActivityIds(OdooRelation $item): bool
+    {
+        if (null === $this->activity_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->activity_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addActivityIds(OdooRelation $item): void
+    {
+        if ($this->hasActivityIds($item)) {
+            return;
+        }
+
+        if (null === $this->activity_ids) {
+            $this->activity_ids = [];
+        }
+
+        $this->activity_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeActivityIds(OdooRelation $item): void
+    {
+        if (null === $this->activity_ids) {
+            $this->activity_ids = [];
+        }
+
+        if ($this->hasActivityIds($item)) {
+            $index = array_search($item, $this->activity_ids);
+            unset($this->activity_ids[$index]);
+        }
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("activity_state")
+     */
+    public function getActivityState(): ?string
+    {
+        return $this->activity_state;
     }
 
     /**
@@ -1036,11 +1200,29 @@ final class Picking extends Base
     }
 
     /**
-     * @param OdooRelation|null $activity_type_id
+     * @return string|null
+     *
+     * @SerializedName("activity_type_icon")
      */
-    public function setActivityTypeId(?OdooRelation $activity_type_id): void
+    public function getActivityTypeIcon(): ?string
     {
-        $this->activity_type_id = $activity_type_id;
+        return $this->activity_type_icon;
+    }
+
+    /**
+     * @param OdooRelation|null $sale_id
+     */
+    public function setSaleId(?OdooRelation $sale_id): void
+    {
+        $this->sale_id = $sale_id;
+    }
+
+    /**
+     * @param string|null $activity_type_icon
+     */
+    public function setActivityTypeIcon(?string $activity_type_icon): void
+    {
+        $this->activity_type_icon = $activity_type_icon;
     }
 
     /**
@@ -1072,6 +1254,14 @@ final class Picking extends Base
     }
 
     /**
+     * @param string|null $activity_summary
+     */
+    public function setActivitySummary(?string $activity_summary): void
+    {
+        $this->activity_summary = $activity_summary;
+    }
+
+    /**
      * @return string|null
      *
      * @SerializedName("activity_exception_decoration")
@@ -1079,21 +1269,6 @@ final class Picking extends Base
     public function getActivityExceptionDecoration(): ?string
     {
         return $this->activity_exception_decoration;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeActivityIds(OdooRelation $item): void
-    {
-        if (null === $this->activity_ids) {
-            $this->activity_ids = [];
-        }
-
-        if ($this->hasActivityIds($item)) {
-            $index = array_search($item, $this->activity_ids);
-            unset($this->activity_ids[$index]);
-        }
     }
 
     /**
@@ -1133,11 +1308,23 @@ final class Picking extends Base
     }
 
     /**
-     * @param bool|null $message_is_follower
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("activity_ids")
      */
-    public function setMessageIsFollower(?bool $message_is_follower): void
+    public function getActivityIds(): ?array
     {
-        $this->message_is_follower = $message_is_follower;
+        return $this->activity_ids;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("sale_id")
+     */
+    public function getSaleId(): ?OdooRelation
+    {
+        return $this->sale_id;
     }
 
     /**
@@ -1151,87 +1338,45 @@ final class Picking extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $message_follower_ids
-     */
-    public function setMessageFollowerIds(?array $message_follower_ids): void
-    {
-        $this->message_follower_ids = $message_follower_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasMessageFollowerIds(OdooRelation $item): bool
-    {
-        if (null === $this->message_follower_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_follower_ids);
-    }
-
-    /**
      * @param OdooRelation $item
      */
-    public function addMessageFollowerIds(OdooRelation $item): void
+    public function addPackageLevelIds(OdooRelation $item): void
     {
-        if ($this->hasMessageFollowerIds($item)) {
+        if ($this->hasPackageLevelIds($item)) {
             return;
         }
 
-        if (null === $this->message_follower_ids) {
-            $this->message_follower_ids = [];
+        if (null === $this->package_level_ids) {
+            $this->package_level_ids = [];
         }
 
-        $this->message_follower_ids[] = $item;
+        $this->package_level_ids[] = $item;
     }
 
     /**
-     * @return string|null
+     * @param bool|null $show_reserved
+     */
+    public function setShowReserved(?bool $show_reserved): void
+    {
+        $this->show_reserved = $show_reserved;
+    }
+
+    /**
+     * @return bool|null
      *
-     * @SerializedName("activity_state")
+     * @SerializedName("show_lots_text")
      */
-    public function getActivityState(): ?string
+    public function isShowLotsText(): ?bool
     {
-        return $this->activity_state;
+        return $this->show_lots_text;
     }
 
     /**
-     * @param OdooRelation $item
+     * @param bool|null $show_lots_text
      */
-    public function addActivityIds(OdooRelation $item): void
+    public function setShowLotsText(?bool $show_lots_text): void
     {
-        if ($this->hasActivityIds($item)) {
-            return;
-        }
-
-        if (null === $this->activity_ids) {
-            $this->activity_ids = [];
-        }
-
-        $this->activity_ids[] = $item;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("message_partner_ids")
-     */
-    public function getMessagePartnerIds(): ?array
-    {
-        return $this->message_partner_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("package_level_ids_details")
-     */
-    public function getPackageLevelIdsDetails(): ?array
-    {
-        return $this->package_level_ids_details;
+        $this->show_lots_text = $show_lots_text;
     }
 
     /**
@@ -1305,22 +1450,6 @@ final class Picking extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addPackageLevelIds(OdooRelation $item): void
-    {
-        if ($this->hasPackageLevelIds($item)) {
-            return;
-        }
-
-        if (null === $this->package_level_ids) {
-            $this->package_level_ids = [];
-        }
-
-        $this->package_level_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
     public function removePackageLevelIds(OdooRelation $item): void
     {
         if (null === $this->package_level_ids) {
@@ -1334,25 +1463,29 @@ final class Picking extends Base
     }
 
     /**
+     * @param OdooRelation|null $purchase_id
+     */
+    public function setPurchaseId(?OdooRelation $purchase_id): void
+    {
+        $this->purchase_id = $purchase_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("package_level_ids_details")
+     */
+    public function getPackageLevelIdsDetails(): ?array
+    {
+        return $this->package_level_ids_details;
+    }
+
+    /**
      * @param OdooRelation[]|null $package_level_ids_details
      */
     public function setPackageLevelIdsDetails(?array $package_level_ids_details): void
     {
         $this->package_level_ids_details = $package_level_ids_details;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasActivityIds(OdooRelation $item): bool
-    {
-        if (null === $this->activity_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->activity_ids);
     }
 
     /**
@@ -1401,6 +1534,42 @@ final class Picking extends Base
     }
 
     /**
+     * @return string|null
+     *
+     * @SerializedName("products_availability")
+     */
+    public function getProductsAvailability(): ?string
+    {
+        return $this->products_availability;
+    }
+
+    /**
+     * @param string|null $products_availability
+     */
+    public function setProductsAvailability(?string $products_availability): void
+    {
+        $this->products_availability = $products_availability;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("products_availability_state")
+     */
+    public function getProductsAvailabilityState(): ?string
+    {
+        return $this->products_availability_state;
+    }
+
+    /**
+     * @param string|null $products_availability_state
+     */
+    public function setProductsAvailabilityState(?string $products_availability_state): void
+    {
+        $this->products_availability_state = $products_availability_state;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("purchase_id")
@@ -1411,95 +1580,69 @@ final class Picking extends Base
     }
 
     /**
-     * @param OdooRelation|null $purchase_id
+     * @param bool|null $message_is_follower
      */
-    public function setPurchaseId(?OdooRelation $purchase_id): void
+    public function setMessageIsFollower(?bool $message_is_follower): void
     {
-        $this->purchase_id = $purchase_id;
+        $this->message_is_follower = $message_is_follower;
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("sale_id")
+     * @param OdooRelation[]|null $message_follower_ids
      */
-    public function getSaleId(): ?OdooRelation
+    public function setMessageFollowerIds(?array $message_follower_ids): void
     {
-        return $this->sale_id;
+        $this->message_follower_ids = $message_follower_ids;
     }
 
     /**
-     * @param OdooRelation|null $sale_id
+     * @param bool|null $show_operations
      */
-    public function setSaleId(?OdooRelation $sale_id): void
+    public function setShowOperations(?bool $show_operations): void
     {
-        $this->sale_id = $sale_id;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("activity_ids")
-     */
-    public function getActivityIds(): ?array
-    {
-        return $this->activity_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $activity_ids
-     */
-    public function setActivityIds(?array $activity_ids): void
-    {
-        $this->activity_ids = $activity_ids;
+        $this->show_operations = $show_operations;
     }
 
     /**
      * @param OdooRelation $item
      */
-    public function removeMessageFollowerIds(OdooRelation $item): void
+    public function addWebsiteMessageIds(OdooRelation $item): void
     {
-        if (null === $this->message_follower_ids) {
-            $this->message_follower_ids = [];
+        if ($this->hasWebsiteMessageIds($item)) {
+            return;
         }
 
-        if ($this->hasMessageFollowerIds($item)) {
-            $index = array_search($item, $this->message_follower_ids);
-            unset($this->message_follower_ids[$index]);
-        }
-    }
-
-    /**
-     * @param OdooRelation[]|null $message_partner_ids
-     */
-    public function setMessagePartnerIds(?array $message_partner_ids): void
-    {
-        $this->message_partner_ids = $message_partner_ids;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("show_lots_text")
-     */
-    public function isShowLotsText(): ?bool
-    {
-        return $this->show_lots_text;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function removeWebsiteMessageIds(OdooRelation $item): void
-    {
         if (null === $this->website_message_ids) {
             $this->website_message_ids = [];
         }
 
-        if ($this->hasWebsiteMessageIds($item)) {
-            $index = array_search($item, $this->website_message_ids);
-            unset($this->website_message_ids[$index]);
-        }
+        $this->website_message_ids[] = $item;
+    }
+
+    /**
+     * @param bool|null $message_has_error
+     */
+    public function setMessageHasError(?bool $message_has_error): void
+    {
+        $this->message_has_error = $message_has_error;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("message_has_error_counter")
+     */
+    public function getMessageHasErrorCounter(): ?int
+    {
+        return $this->message_has_error_counter;
+    }
+
+    /**
+     * @param int|null $message_has_error_counter
+     */
+    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
+    {
+        $this->message_has_error_counter = $message_has_error_counter;
     }
 
     /**
@@ -1573,17 +1716,24 @@ final class Picking extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addWebsiteMessageIds(OdooRelation $item): void
+    public function removeWebsiteMessageIds(OdooRelation $item): void
     {
-        if ($this->hasWebsiteMessageIds($item)) {
-            return;
-        }
-
         if (null === $this->website_message_ids) {
             $this->website_message_ids = [];
         }
 
-        $this->website_message_ids[] = $item;
+        if ($this->hasWebsiteMessageIds($item)) {
+            $index = array_search($item, $this->website_message_ids);
+            unset($this->website_message_ids[$index]);
+        }
+    }
+
+    /**
+     * @param int|null $message_needaction_counter
+     */
+    public function setMessageNeedactionCounter(?int $message_needaction_counter): void
+    {
+        $this->message_needaction_counter = $message_needaction_counter;
     }
 
     /**
@@ -1594,16 +1744,6 @@ final class Picking extends Base
     public function isMessageHasSmsError(): ?bool
     {
         return $this->message_has_sms_error;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("message_has_error_counter")
-     */
-    public function getMessageHasErrorCounter(): ?int
-    {
-        return $this->message_has_error_counter;
     }
 
     /**
@@ -1687,19 +1827,102 @@ final class Picking extends Base
     }
 
     /**
-     * @param int|null $message_has_error_counter
+     * @return bool|null
+     *
+     * @SerializedName("message_has_error")
      */
-    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
+    public function isMessageHasError(): ?bool
     {
-        $this->message_has_error_counter = $message_has_error_counter;
+        return $this->message_has_error;
     }
 
     /**
-     * @param bool|null $message_has_error
+     * @return int|null
+     *
+     * @SerializedName("message_needaction_counter")
      */
-    public function setMessageHasError(?bool $message_has_error): void
+    public function getMessageNeedactionCounter(): ?int
     {
-        $this->message_has_error = $message_has_error;
+        return $this->message_needaction_counter;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMessageFollowerIds(OdooRelation $item): bool
+    {
+        if (null === $this->message_follower_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_follower_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMessageChannelIds(OdooRelation $item): void
+    {
+        if ($this->hasMessageChannelIds($item)) {
+            return;
+        }
+
+        if (null === $this->message_channel_ids) {
+            $this->message_channel_ids = [];
+        }
+
+        $this->message_channel_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMessageFollowerIds(OdooRelation $item): void
+    {
+        if ($this->hasMessageFollowerIds($item)) {
+            return;
+        }
+
+        if (null === $this->message_follower_ids) {
+            $this->message_follower_ids = [];
+        }
+
+        $this->message_follower_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMessageFollowerIds(OdooRelation $item): void
+    {
+        if (null === $this->message_follower_ids) {
+            $this->message_follower_ids = [];
+        }
+
+        if ($this->hasMessageFollowerIds($item)) {
+            $index = array_search($item, $this->message_follower_ids);
+            unset($this->message_follower_ids[$index]);
+        }
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_partner_ids")
+     */
+    public function getMessagePartnerIds(): ?array
+    {
+        return $this->message_partner_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_partner_ids
+     */
+    public function setMessagePartnerIds(?array $message_partner_ids): void
+    {
+        $this->message_partner_ids = $message_partner_ids;
     }
 
     /**
@@ -1714,20 +1937,6 @@ final class Picking extends Base
         }
 
         return in_array($item, $this->message_partner_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasMessageIds(OdooRelation $item): bool
-    {
-        if (null === $this->message_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_ids);
     }
 
     /**
@@ -1796,22 +2005,6 @@ final class Picking extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addMessageChannelIds(OdooRelation $item): void
-    {
-        if ($this->hasMessageChannelIds($item)) {
-            return;
-        }
-
-        if (null === $this->message_channel_ids) {
-            $this->message_channel_ids = [];
-        }
-
-        $this->message_channel_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
     public function removeMessageChannelIds(OdooRelation $item): void
     {
         if (null === $this->message_channel_ids) {
@@ -1822,6 +2015,14 @@ final class Picking extends Base
             $index = array_search($item, $this->message_channel_ids);
             unset($this->message_channel_ids[$index]);
         }
+    }
+
+    /**
+     * @param bool|null $message_needaction
+     */
+    public function setMessageNeedaction(?bool $message_needaction): void
+    {
+        $this->message_needaction = $message_needaction;
     }
 
     /**
@@ -1844,6 +2045,20 @@ final class Picking extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMessageIds(OdooRelation $item): bool
+    {
+        if (null === $this->message_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
      */
     public function addMessageIds(OdooRelation $item): void
     {
@@ -1856,16 +2071,6 @@ final class Picking extends Base
         }
 
         $this->message_ids[] = $item;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("message_has_error")
-     */
-    public function isMessageHasError(): ?bool
-    {
-        return $this->message_has_error;
     }
 
     /**
@@ -1930,45 +2135,23 @@ final class Picking extends Base
     }
 
     /**
-     * @param bool|null $message_needaction
-     */
-    public function setMessageNeedaction(?bool $message_needaction): void
-    {
-        $this->message_needaction = $message_needaction;
-    }
-
-    /**
-     * @return int|null
+     * @return bool|null
      *
-     * @SerializedName("message_needaction_counter")
+     * @SerializedName("show_reserved")
      */
-    public function getMessageNeedactionCounter(): ?int
+    public function isShowReserved(): ?bool
     {
-        return $this->message_needaction_counter;
+        return $this->show_reserved;
     }
 
     /**
-     * @param int|null $message_needaction_counter
+     * @return bool|null
+     *
+     * @SerializedName("show_operations")
      */
-    public function setMessageNeedactionCounter(?int $message_needaction_counter): void
+    public function isShowOperations(): ?bool
     {
-        $this->message_needaction_counter = $message_needaction_counter;
-    }
-
-    /**
-     * @param bool|null $show_lots_text
-     */
-    public function setShowLotsText(?bool $show_lots_text): void
-    {
-        $this->show_lots_text = $show_lots_text;
-    }
-
-    /**
-     * @param bool|null $show_reserved
-     */
-    public function setShowReserved(?bool $show_reserved): void
-    {
-        $this->show_reserved = $show_reserved;
+        return $this->show_operations;
     }
 
     /**
@@ -1982,17 +2165,31 @@ final class Picking extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return OdooRelation
      *
-     * @return bool
+     * @SerializedName("location_dest_id")
      */
-    public function hasMoveLines(OdooRelation $item): bool
+    public function getLocationDestId(): OdooRelation
     {
-        if (null === $this->move_lines) {
-            return false;
-        }
+        return $this->location_dest_id;
+    }
 
-        return in_array($item, $this->move_lines);
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("date")
+     */
+    public function getDate(): ?DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $date
+     */
+    public function setDate(?DateTimeInterface $date): void
+    {
+        $this->date = $date;
     }
 
     /**
@@ -2014,6 +2211,42 @@ final class Picking extends Base
     }
 
     /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("delay_alert_date")
+     */
+    public function getDelayAlertDate(): ?DateTimeInterface
+    {
+        return $this->delay_alert_date;
+    }
+
+    /**
+     * @param DateTimeInterface|null $delay_alert_date
+     */
+    public function setDelayAlertDate(?DateTimeInterface $delay_alert_date): void
+    {
+        $this->delay_alert_date = $delay_alert_date;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("json_popover")
+     */
+    public function getJsonPopover(): ?string
+    {
+        return $this->json_popover;
+    }
+
+    /**
+     * @param string|null $json_popover
+     */
+    public function setJsonPopover(?string $json_popover): void
+    {
+        $this->json_popover = $json_popover;
+    }
+
+    /**
      * @return OdooRelation
      *
      * @SerializedName("location_id")
@@ -2032,21 +2265,21 @@ final class Picking extends Base
     }
 
     /**
-     * @return OdooRelation
-     *
-     * @SerializedName("location_dest_id")
-     */
-    public function getLocationDestId(): OdooRelation
-    {
-        return $this->location_dest_id;
-    }
-
-    /**
      * @param OdooRelation $location_dest_id
      */
     public function setLocationDestId(OdooRelation $location_dest_id): void
     {
         $this->location_dest_id = $location_dest_id;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("has_deadline_issue")
+     */
+    public function isHasDeadlineIssue(): ?bool
+    {
+        return $this->has_deadline_issue;
     }
 
     /**
@@ -2069,6 +2302,20 @@ final class Picking extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMoveLines(OdooRelation $item): bool
+    {
+        if (null === $this->move_lines) {
+            return false;
+        }
+
+        return in_array($item, $this->move_lines);
+    }
+
+    /**
+     * @param OdooRelation $item
      */
     public function addMoveLines(OdooRelation $item): void
     {
@@ -2081,16 +2328,6 @@ final class Picking extends Base
         }
 
         $this->move_lines[] = $item;
-    }
-
-    /**
-     * @return DateTimeInterface|null
-     *
-     * @SerializedName("date")
-     */
-    public function getDate(): ?DateTimeInterface
-    {
-        return $this->date;
     }
 
     /**
@@ -2172,13 +2409,19 @@ final class Picking extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("has_scrap_move")
+     * @param bool|null $has_deadline_issue
      */
-    public function isHasScrapMove(): ?bool
+    public function setHasDeadlineIssue(?bool $has_deadline_issue): void
     {
-        return $this->has_scrap_move;
+        $this->has_deadline_issue = $has_deadline_issue;
+    }
+
+    /**
+     * @param DateTimeInterface|null $date_deadline
+     */
+    public function setDateDeadline(?DateTimeInterface $date_deadline): void
+    {
+        $this->date_deadline = $date_deadline;
     }
 
     /**
@@ -2190,53 +2433,19 @@ final class Picking extends Base
     }
 
     /**
-     * @return OdooRelation
-     *
-     * @SerializedName("picking_type_id")
-     */
-    public function getPickingTypeId(): OdooRelation
-    {
-        return $this->picking_type_id;
-    }
-
-    /**
-     * @param DateTimeInterface|null $date
-     */
-    public function setDate(?DateTimeInterface $date): void
-    {
-        $this->date = $date;
-    }
-
-    /**
-     * @param DateTimeInterface|null $scheduled_date
-     */
-    public function setScheduledDate(?DateTimeInterface $scheduled_date): void
-    {
-        $this->scheduled_date = $scheduled_date;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("picking_type_code")
-     */
-    public function getPickingTypeCode(): ?string
-    {
-        return $this->picking_type_code;
-    }
-
-    /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasBackorderIds(OdooRelation $item): bool
+    public function addBackorderIds(OdooRelation $item): void
     {
-        if (null === $this->backorder_ids) {
-            return false;
+        if ($this->hasBackorderIds($item)) {
+            return;
         }
 
-        return in_array($item, $this->backorder_ids);
+        if (null === $this->backorder_ids) {
+            $this->backorder_ids = [];
+        }
+
+        $this->backorder_ids[] = $item;
     }
 
     /**
@@ -2321,28 +2530,16 @@ final class Picking extends Base
 
     /**
      * @param OdooRelation $item
-     */
-    public function addBackorderIds(OdooRelation $item): void
-    {
-        if ($this->hasBackorderIds($item)) {
-            return;
-        }
-
-        if (null === $this->backorder_ids) {
-            $this->backorder_ids = [];
-        }
-
-        $this->backorder_ids[] = $item;
-    }
-
-    /**
-     * @return DateTimeInterface|null
      *
-     * @SerializedName("scheduled_date")
+     * @return bool
      */
-    public function getScheduledDate(): ?DateTimeInterface
+    public function hasBackorderIds(OdooRelation $item): bool
     {
-        return $this->scheduled_date;
+        if (null === $this->backorder_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->backorder_ids);
     }
 
     /**
@@ -2358,6 +2555,16 @@ final class Picking extends Base
             $index = array_search($item, $this->backorder_ids);
             unset($this->backorder_ids[$index]);
         }
+    }
+
+    /**
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("date_deadline")
+     */
+    public function getDateDeadline(): ?DateTimeInterface
+    {
+        return $this->date_deadline;
     }
 
     /**
@@ -2433,37 +2640,90 @@ final class Picking extends Base
     }
 
     /**
-     * @param OdooRelation $picking_type_id
+     * @return DateTimeInterface|null
+     *
+     * @SerializedName("scheduled_date")
      */
-    public function setPickingTypeId(OdooRelation $picking_type_id): void
+    public function getScheduledDate(): ?DateTimeInterface
     {
-        $this->picking_type_id = $picking_type_id;
+        return $this->scheduled_date;
     }
 
     /**
-     * @param string|null $picking_type_code
+     * @param DateTimeInterface|null $scheduled_date
      */
-    public function setPickingTypeCode(?string $picking_type_code): void
+    public function setScheduledDate(?DateTimeInterface $scheduled_date): void
     {
-        $this->picking_type_code = $picking_type_code;
+        $this->scheduled_date = $scheduled_date;
     }
 
     /**
      * @return bool|null
      *
-     * @SerializedName("show_reserved")
+     * @SerializedName("has_scrap_move")
      */
-    public function isShowReserved(): ?bool
+    public function isHasScrapMove(): ?bool
     {
-        return $this->show_reserved;
+        return $this->has_scrap_move;
     }
 
     /**
-     * @param bool|null $use_create_lots
+     * @return OdooRelation
+     *
+     * @SerializedName("picking_type_id")
      */
-    public function setUseCreateLots(?bool $use_create_lots): void
+    public function getPickingTypeId(): OdooRelation
     {
-        $this->use_create_lots = $use_create_lots;
+        return $this->picking_type_id;
+    }
+
+    /**
+     * @param OdooRelation|null $product_id
+     */
+    public function setProductId(?OdooRelation $product_id): void
+    {
+        $this->product_id = $product_id;
+    }
+
+    /**
+     * @param bool|null $show_validate
+     */
+    public function setShowValidate(?bool $show_validate): void
+    {
+        $this->show_validate = $show_validate;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeMoveLineNosuggestIds(OdooRelation $item): void
+    {
+        if (null === $this->move_line_nosuggest_ids) {
+            $this->move_line_nosuggest_ids = [];
+        }
+
+        if ($this->hasMoveLineNosuggestIds($item)) {
+            $index = array_search($item, $this->move_line_nosuggest_ids);
+            unset($this->move_line_nosuggest_ids[$index]);
+        }
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("move_line_exist")
+     */
+    public function isMoveLineExist(): ?bool
+    {
+        return $this->move_line_exist;
+    }
+
+    /**
+     * @param bool|null $move_line_exist
+     */
+    public function setMoveLineExist(?bool $move_line_exist): void
+    {
+        $this->move_line_exist = $move_line_exist;
     }
 
     /**
@@ -2531,14 +2791,6 @@ final class Picking extends Base
     }
 
     /**
-     * @param bool|null $show_validate
-     */
-    public function setShowValidate(?bool $show_validate): void
-    {
-        $this->show_validate = $show_validate;
-    }
-
-    /**
      * @return bool|null
      *
      * @SerializedName("use_create_lots")
@@ -2549,6 +2801,28 @@ final class Picking extends Base
     }
 
     /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMoveLineNosuggestIds(OdooRelation $item): bool
+    {
+        if (null === $this->move_line_nosuggest_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->move_line_nosuggest_ids);
+    }
+
+    /**
+     * @param bool|null $use_create_lots
+     */
+    public function setUseCreateLots(?bool $use_create_lots): void
+    {
+        $this->use_create_lots = $use_create_lots;
+    }
+
+    /**
      * @return OdooRelation|null
      *
      * @SerializedName("owner_id")
@@ -2556,16 +2830,6 @@ final class Picking extends Base
     public function getOwnerId(): ?OdooRelation
     {
         return $this->owner_id;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("move_line_exist")
-     */
-    public function isMoveLineExist(): ?bool
-    {
-        return $this->move_line_exist;
     }
 
     /**
@@ -2592,6 +2856,24 @@ final class Picking extends Base
     public function setPrinted(?bool $printed): void
     {
         $this->printed = $printed;
+    }
+
+    /**
+     * @return mixed|null
+     *
+     * @SerializedName("signature")
+     */
+    public function getSignature()
+    {
+        return $this->signature;
+    }
+
+    /**
+     * @param mixed|null $signature
+     */
+    public function setSignature($signature): void
+    {
+        $this->signature = $signature;
     }
 
     /**
@@ -2623,52 +2905,63 @@ final class Picking extends Base
     }
 
     /**
-     * @param OdooRelation|null $product_id
-     */
-    public function setProductId(?OdooRelation $product_id): void
-    {
-        $this->product_id = $product_id;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("show_operations")
-     */
-    public function isShowOperations(): ?bool
-    {
-        return $this->show_operations;
-    }
-
-    /**
-     * @param bool|null $show_operations
-     */
-    public function setShowOperations(?bool $show_operations): void
-    {
-        $this->show_operations = $show_operations;
-    }
-
-    /**
-     * @param bool|null $move_line_exist
-     */
-    public function setMoveLineExist(?bool $move_line_exist): void
-    {
-        $this->move_line_exist = $move_line_exist;
-    }
-
-    /**
      * @param OdooRelation $item
      */
-    public function removeMoveLineNosuggestIds(OdooRelation $item): void
+    public function addMoveLineNosuggestIds(OdooRelation $item): void
     {
+        if ($this->hasMoveLineNosuggestIds($item)) {
+            return;
+        }
+
         if (null === $this->move_line_nosuggest_ids) {
             $this->move_line_nosuggest_ids = [];
         }
 
-        if ($this->hasMoveLineNosuggestIds($item)) {
-            $index = array_search($item, $this->move_line_nosuggest_ids);
-            unset($this->move_line_nosuggest_ids[$index]);
-        }
+        $this->move_line_nosuggest_ids[] = $item;
+    }
+
+    /**
+     * @param OdooRelation[]|null $move_line_nosuggest_ids
+     */
+    public function setMoveLineNosuggestIds(?array $move_line_nosuggest_ids): void
+    {
+        $this->move_line_nosuggest_ids = $move_line_nosuggest_ids;
+    }
+
+    /**
+     * @param OdooRelation $picking_type_id
+     */
+    public function setPickingTypeId(OdooRelation $picking_type_id): void
+    {
+        $this->picking_type_id = $picking_type_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("user_id")
+     */
+    public function getUserId(): ?OdooRelation
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("picking_type_code")
+     */
+    public function getPickingTypeCode(): ?string
+    {
+        return $this->picking_type_code;
+    }
+
+    /**
+     * @param string|null $picking_type_code
+     */
+    public function setPickingTypeCode(?string $picking_type_code): void
+    {
+        $this->picking_type_code = $picking_type_code;
     }
 
     /**
@@ -2682,25 +2975,29 @@ final class Picking extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasMoveLineIds(OdooRelation $item): bool
-    {
-        if (null === $this->move_line_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->move_line_ids);
-    }
-
-    /**
      * @param bool|null $picking_type_entire_packs
      */
     public function setPickingTypeEntirePacks(?bool $picking_type_entire_packs): void
     {
         $this->picking_type_entire_packs = $picking_type_entire_packs;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("hide_picking_type")
+     */
+    public function isHidePickingType(): ?bool
+    {
+        return $this->hide_picking_type;
+    }
+
+    /**
+     * @param bool|null $hide_picking_type
+     */
+    public function setHidePickingType(?bool $hide_picking_type): void
+    {
+        $this->hide_picking_type = $hide_picking_type;
     }
 
     /**
@@ -2740,21 +3037,21 @@ final class Picking extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("user_id")
-     */
-    public function getUserId(): ?OdooRelation
-    {
-        return $this->user_id;
-    }
-
-    /**
      * @param OdooRelation|null $user_id
      */
     public function setUserId(?OdooRelation $user_id): void
     {
         $this->user_id = $user_id;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("move_line_nosuggest_ids")
+     */
+    public function getMoveLineNosuggestIds(): ?array
+    {
+        return $this->move_line_nosuggest_ids;
     }
 
     /**
@@ -2777,6 +3074,20 @@ final class Picking extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMoveLineIds(OdooRelation $item): bool
+    {
+        if (null === $this->move_line_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->move_line_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
      */
     public function addMoveLineIds(OdooRelation $item): void
     {
@@ -2789,22 +3100,6 @@ final class Picking extends Base
         }
 
         $this->move_line_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addMoveLineNosuggestIds(OdooRelation $item): void
-    {
-        if ($this->hasMoveLineNosuggestIds($item)) {
-            return;
-        }
-
-        if (null === $this->move_line_nosuggest_ids) {
-            $this->move_line_nosuggest_ids = [];
-        }
-
-        $this->move_line_nosuggest_ids[] = $item;
     }
 
     /**
@@ -2883,38 +3178,6 @@ final class Picking extends Base
             $index = array_search($item, $this->move_line_ids_without_package);
             unset($this->move_line_ids_without_package[$index]);
         }
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("move_line_nosuggest_ids")
-     */
-    public function getMoveLineNosuggestIds(): ?array
-    {
-        return $this->move_line_nosuggest_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $move_line_nosuggest_ids
-     */
-    public function setMoveLineNosuggestIds(?array $move_line_nosuggest_ids): void
-    {
-        $this->move_line_nosuggest_ids = $move_line_nosuggest_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasMoveLineNosuggestIds(OdooRelation $item): bool
-    {
-        if (null === $this->move_line_nosuggest_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->move_line_nosuggest_ids);
     }
 
     /**

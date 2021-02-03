@@ -12,9 +12,11 @@ use Flux\OdooApiClient\Model\Object\Base;
  * Name : report.product.report_pricelist
  * ---
  * Info :
- * The base model, which is implicitly inherited by all models.
+ * Updates the base class to support setting xids directly in create by
+ *         providing an "id" key (otherwise stripped by create) during an import
+ *         (which should strip 'id' from the input data anyway)
  */
-abstract class ReportPricelist extends Base
+final class ReportPricelist extends Base
 {
     /**
      * @return string

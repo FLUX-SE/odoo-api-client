@@ -148,6 +148,16 @@ final class Sheet extends Base
     private $total_amount;
 
     /**
+     * Amount Due
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var float|null
+     */
+    private $amount_residual;
+
+    /**
      * Company
      * ---
      * Relation : many2one (res.company)
@@ -214,7 +224,7 @@ final class Sheet extends Base
     private $bank_journal_id;
 
     /**
-     * Date
+     * Accounting Date
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -327,6 +337,18 @@ final class Sheet extends Base
      * @var OdooRelation|null
      */
     private $activity_type_id;
+
+    /**
+     * Activity Type Icon
+     * ---
+     * Font awesome icon e.g. fa-tasks
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $activity_type_icon;
 
     /**
      * Next Activity Deadline
@@ -653,21 +675,18 @@ final class Sheet extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("message_channel_ids")
+     * @param OdooRelation $item
      */
-    public function getMessageChannelIds(): ?array
+    public function removeMessagePartnerIds(OdooRelation $item): void
     {
-        return $this->message_channel_ids;
-    }
+        if (null === $this->message_partner_ids) {
+            $this->message_partner_ids = [];
+        }
 
-    /**
-     * @param bool|null $message_unread
-     */
-    public function setMessageUnread(?bool $message_unread): void
-    {
-        $this->message_unread = $message_unread;
+        if ($this->hasMessagePartnerIds($item)) {
+            $index = array_search($item, $this->message_partner_ids);
+            unset($this->message_partner_ids[$index]);
+        }
     }
 
     /**
@@ -797,26 +816,13 @@ final class Sheet extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_channel_ids")
      */
-    public function removeMessagePartnerIds(OdooRelation $item): void
+    public function getMessageChannelIds(): ?array
     {
-        if (null === $this->message_partner_ids) {
-            $this->message_partner_ids = [];
-        }
-
-        if ($this->hasMessagePartnerIds($item)) {
-            $index = array_search($item, $this->message_partner_ids);
-            unset($this->message_partner_ids[$index]);
-        }
-    }
-
-    /**
-     * @param int|null $message_unread_counter
-     */
-    public function setMessageUnreadCounter(?int $message_unread_counter): void
-    {
-        $this->message_unread_counter = $message_unread_counter;
+        return $this->message_channel_ids;
     }
 
     /**
@@ -833,6 +839,16 @@ final class Sheet extends Base
         }
 
         $this->message_partner_ids[] = $item;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("message_unread_counter")
+     */
+    public function getMessageUnreadCounter(): ?int
+    {
+        return $this->message_unread_counter;
     }
 
     /**
@@ -949,23 +965,11 @@ final class Sheet extends Base
     }
 
     /**
-     * @return int|null
-     *
-     * @SerializedName("message_unread_counter")
+     * @param string|null $activity_exception_icon
      */
-    public function getMessageUnreadCounter(): ?int
+    public function setActivityExceptionIcon(?string $activity_exception_icon): void
     {
-        return $this->message_unread_counter;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("message_needaction")
-     */
-    public function isMessageNeedaction(): ?bool
-    {
-        return $this->message_needaction;
+        $this->activity_exception_icon = $activity_exception_icon;
     }
 
     /**
@@ -979,19 +983,43 @@ final class Sheet extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @param bool|null $message_unread
      */
-    public function addWebsiteMessageIds(OdooRelation $item): void
+    public function setMessageUnread(?bool $message_unread): void
     {
-        if ($this->hasWebsiteMessageIds($item)) {
-            return;
-        }
+        $this->message_unread = $message_unread;
+    }
 
+    /**
+     * @param int|null $message_unread_counter
+     */
+    public function setMessageUnreadCounter(?int $message_unread_counter): void
+    {
+        $this->message_unread_counter = $message_unread_counter;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("activity_exception_decoration")
+     */
+    public function getActivityExceptionDecoration(): ?string
+    {
+        return $this->activity_exception_decoration;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasWebsiteMessageIds(OdooRelation $item): bool
+    {
         if (null === $this->website_message_ids) {
-            $this->website_message_ids = [];
+            return false;
         }
 
-        $this->website_message_ids[] = $item;
+        return in_array($item, $this->website_message_ids);
     }
 
     /**
@@ -1101,24 +1129,18 @@ final class Sheet extends Base
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasWebsiteMessageIds(OdooRelation $item): bool
+    public function addWebsiteMessageIds(OdooRelation $item): void
     {
-        if (null === $this->website_message_ids) {
-            return false;
+        if ($this->hasWebsiteMessageIds($item)) {
+            return;
         }
 
-        return in_array($item, $this->website_message_ids);
-    }
+        if (null === $this->website_message_ids) {
+            $this->website_message_ids = [];
+        }
 
-    /**
-     * @param bool|null $message_needaction
-     */
-    public function setMessageNeedaction(?bool $message_needaction): void
-    {
-        $this->message_needaction = $message_needaction;
+        $this->website_message_ids[] = $item;
     }
 
     /**
@@ -1127,6 +1149,16 @@ final class Sheet extends Base
     public function setWebsiteMessageIds(?array $website_message_ids): void
     {
         $this->website_message_ids = $website_message_ids;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("message_needaction")
+     */
+    public function isMessageNeedaction(): ?bool
+    {
+        return $this->message_needaction;
     }
 
     /**
@@ -1230,11 +1262,11 @@ final class Sheet extends Base
     }
 
     /**
-     * @param string|null $activity_exception_icon
+     * @param bool|null $message_needaction
      */
-    public function setActivityExceptionIcon(?string $activity_exception_icon): void
+    public function setMessageNeedaction(?bool $message_needaction): void
     {
-        $this->activity_exception_icon = $activity_exception_icon;
+        $this->message_needaction = $message_needaction;
     }
 
     /**
@@ -1243,6 +1275,14 @@ final class Sheet extends Base
     public function setActivityExceptionDecoration(?string $activity_exception_decoration): void
     {
         $this->activity_exception_decoration = $activity_exception_decoration;
+    }
+
+    /**
+     * @param string|null $activity_summary
+     */
+    public function setActivitySummary(?string $activity_summary): void
+    {
+        $this->activity_summary = $activity_summary;
     }
 
     /**
@@ -1256,21 +1296,11 @@ final class Sheet extends Base
     }
 
     /**
-     * @return string|null
-     *
-     * @SerializedName("payment_mode")
+     * @param string|null $payment_mode
      */
-    public function getPaymentMode(): ?string
+    public function setPaymentMode(?string $payment_mode): void
     {
-        return $this->payment_mode;
-    }
-
-    /**
-     * @param int|null $attachment_number
-     */
-    public function setAttachmentNumber(?int $attachment_number): void
-    {
-        $this->attachment_number = $attachment_number;
+        $this->payment_mode = $payment_mode;
     }
 
     /**
@@ -1320,6 +1350,24 @@ final class Sheet extends Base
     }
 
     /**
+     * @param float|null $amount_residual
+     */
+    public function setAmountResidual(?float $amount_residual): void
+    {
+        $this->amount_residual = $amount_residual;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("amount_residual")
+     */
+    public function getAmountResidual(): ?float
+    {
+        return $this->amount_residual;
+    }
+
+    /**
      * @param float|null $total_amount
      */
     public function setTotalAmount(?float $total_amount): void
@@ -1356,11 +1404,23 @@ final class Sheet extends Base
     }
 
     /**
-     * @param string|null $payment_mode
+     * @return string|null
+     *
+     * @SerializedName("payment_mode")
      */
-    public function setPaymentMode(?string $payment_mode): void
+    public function getPaymentMode(): ?string
     {
-        $this->payment_mode = $payment_mode;
+        return $this->payment_mode;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("journal_id")
+     */
+    public function getJournalId(): ?OdooRelation
+    {
+        return $this->journal_id;
     }
 
     /**
@@ -1369,14 +1429,6 @@ final class Sheet extends Base
     public function setAddressId(?OdooRelation $address_id): void
     {
         $this->address_id = $address_id;
-    }
-
-    /**
-     * @param OdooRelation|null $journal_id
-     */
-    public function setJournalId(?OdooRelation $journal_id): void
-    {
-        $this->journal_id = $journal_id;
     }
 
     /**
@@ -1497,57 +1549,19 @@ final class Sheet extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("journal_id")
+     * @param int|null $attachment_number
      */
-    public function getJournalId(): ?OdooRelation
+    public function setAttachmentNumber(?int $attachment_number): void
     {
-        return $this->journal_id;
+        $this->attachment_number = $attachment_number;
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("bank_journal_id")
+     * @param OdooRelation|null $journal_id
      */
-    public function getBankJournalId(): ?OdooRelation
+    public function setJournalId(?OdooRelation $journal_id): void
     {
-        return $this->bank_journal_id;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("activity_exception_decoration")
-     */
-    public function getActivityExceptionDecoration(): ?string
-    {
-        return $this->activity_exception_decoration;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addActivityIds(OdooRelation $item): void
-    {
-        if ($this->hasActivityIds($item)) {
-            return;
-        }
-
-        if (null === $this->activity_ids) {
-            $this->activity_ids = [];
-        }
-
-        $this->activity_ids[] = $item;
-    }
-
-    /**
-     * @param string|null $activity_summary
-     */
-    public function setActivitySummary(?string $activity_summary): void
-    {
-        $this->activity_summary = $activity_summary;
+        $this->journal_id = $journal_id;
     }
 
     /**
@@ -1558,6 +1572,20 @@ final class Sheet extends Base
     public function getActivitySummary(): ?string
     {
         return $this->activity_summary;
+    }
+
+    /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasActivityIds(OdooRelation $item): bool
+    {
+        if (null === $this->activity_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->activity_ids);
     }
 
     /**
@@ -1576,6 +1604,24 @@ final class Sheet extends Base
     public function getActivityDateDeadline(): ?DateTimeInterface
     {
         return $this->activity_date_deadline;
+    }
+
+    /**
+     * @param string|null $activity_type_icon
+     */
+    public function setActivityTypeIcon(?string $activity_type_icon): void
+    {
+        $this->activity_type_icon = $activity_type_icon;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("activity_type_icon")
+     */
+    public function getActivityTypeIcon(): ?string
+    {
+        return $this->activity_type_icon;
     }
 
     /**
@@ -1649,24 +1695,18 @@ final class Sheet extends Base
 
     /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasActivityIds(OdooRelation $item): bool
+    public function addActivityIds(OdooRelation $item): void
     {
-        if (null === $this->activity_ids) {
-            return false;
+        if ($this->hasActivityIds($item)) {
+            return;
         }
 
-        return in_array($item, $this->activity_ids);
-    }
+        if (null === $this->activity_ids) {
+            $this->activity_ids = [];
+        }
 
-    /**
-     * @param OdooRelation|null $bank_journal_id
-     */
-    public function setBankJournalId(?OdooRelation $bank_journal_id): void
-    {
-        $this->bank_journal_id = $bank_journal_id;
+        $this->activity_ids[] = $item;
     }
 
     /**
@@ -1675,6 +1715,16 @@ final class Sheet extends Base
     public function setActivityIds(?array $activity_ids): void
     {
         $this->activity_ids = $activity_ids;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("bank_journal_id")
+     */
+    public function getBankJournalId(): ?OdooRelation
+    {
+        return $this->bank_journal_id;
     }
 
     /**
@@ -1775,6 +1825,14 @@ final class Sheet extends Base
     public function getAccountingDate(): ?DateTimeInterface
     {
         return $this->accounting_date;
+    }
+
+    /**
+     * @param OdooRelation|null $bank_journal_id
+     */
+    public function setBankJournalId(?OdooRelation $bank_journal_id): void
+    {
+        $this->bank_journal_id = $bank_journal_id;
     }
 
     /**

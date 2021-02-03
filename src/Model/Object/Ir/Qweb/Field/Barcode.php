@@ -16,7 +16,7 @@ use Flux\OdooApiClient\Model\Object\Base;
  *         document. May be overridden by e.g. the website module to generate links
  *         instead.
  */
-abstract class Barcode extends Base
+final class Barcode extends Base
 {
     /**
      * @return string

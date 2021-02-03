@@ -77,6 +77,26 @@ final class Scrap extends Base
     private $quant_ids;
 
     /**
+     * Quantity
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var float
+     */
+    private $quantity;
+
+    /**
+     * Unit of Measure
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    private $product_uom_name;
+
+    /**
      * Created by
      * ---
      * Relation : many2one (res.users)
@@ -137,26 +157,33 @@ final class Scrap extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param float $quantity Quantity
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $product_uom_name Unit of Measure
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(OdooRelation $product_id, OdooRelation $location_id)
-    {
+    public function __construct(
+        OdooRelation $product_id,
+        OdooRelation $location_id,
+        float $quantity,
+        string $product_uom_name
+    ) {
         $this->product_id = $product_id;
         $this->location_id = $location_id;
+        $this->quantity = $quantity;
+        $this->product_uom_name = $product_uom_name;
     }
 
     /**
-     * @param OdooRelation $item
+     * @param float $quantity
      */
-    public function removeQuantIds(OdooRelation $item): void
+    public function setQuantity(float $quantity): void
     {
-        if (null === $this->quant_ids) {
-            $this->quant_ids = [];
-        }
-
-        if ($this->hasQuantIds($item)) {
-            $index = array_search($item, $this->quant_ids);
-            unset($this->quant_ids[$index]);
-        }
+        $this->quantity = $quantity;
     }
 
     /**
@@ -232,6 +259,59 @@ final class Scrap extends Base
     }
 
     /**
+     * @param string $product_uom_name
+     */
+    public function setProductUomName(string $product_uom_name): void
+    {
+        $this->product_uom_name = $product_uom_name;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("product_uom_name")
+     */
+    public function getProductUomName(): string
+    {
+        return $this->product_uom_name;
+    }
+
+    /**
+     * @return float
+     *
+     * @SerializedName("quantity")
+     */
+    public function getQuantity(): float
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("scrap_id")
+     */
+    public function getScrapId(): ?OdooRelation
+    {
+        return $this->scrap_id;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function removeQuantIds(OdooRelation $item): void
+    {
+        if (null === $this->quant_ids) {
+            $this->quant_ids = [];
+        }
+
+        if ($this->hasQuantIds($item)) {
+            $index = array_search($item, $this->quant_ids);
+            unset($this->quant_ids[$index]);
+        }
+    }
+
+    /**
      * @param OdooRelation $item
      */
     public function addQuantIds(OdooRelation $item): void
@@ -245,16 +325,6 @@ final class Scrap extends Base
         }
 
         $this->quant_ids[] = $item;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("scrap_id")
-     */
-    public function getScrapId(): ?OdooRelation
-    {
-        return $this->scrap_id;
     }
 
     /**

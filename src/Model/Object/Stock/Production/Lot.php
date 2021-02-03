@@ -241,6 +241,18 @@ final class Lot extends Base
     private $activity_type_id;
 
     /**
+     * Activity Type Icon
+     * ---
+     * Font awesome icon e.g. fa-tasks
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $activity_type_icon;
+
+    /**
      * Next Activity Deadline
      * ---
      * Searchable : yes
@@ -548,17 +560,11 @@ final class Lot extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     *
-     * @return bool
+     * @param OdooRelation[]|null $message_channel_ids
      */
-    public function hasMessageChannelIds(OdooRelation $item): bool
+    public function setMessageChannelIds(?array $message_channel_ids): void
     {
-        if (null === $this->message_channel_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_channel_ids);
+        $this->message_channel_ids = $message_channel_ids;
     }
 
     /**
@@ -684,21 +690,17 @@ final class Lot extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $message_channel_ids
-     */
-    public function setMessageChannelIds(?array $message_channel_ids): void
-    {
-        $this->message_channel_ids = $message_channel_ids;
-    }
-
-    /**
-     * @return bool|null
+     * @param OdooRelation $item
      *
-     * @SerializedName("message_needaction")
+     * @return bool
      */
-    public function isMessageNeedaction(): ?bool
+    public function hasMessageChannelIds(OdooRelation $item): bool
     {
-        return $this->message_needaction;
+        if (null === $this->message_channel_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_channel_ids);
     }
 
     /**
@@ -709,6 +711,16 @@ final class Lot extends Base
     public function getMessageChannelIds(): ?array
     {
         return $this->message_channel_ids;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("message_needaction")
+     */
+    public function isMessageNeedaction(): ?bool
+    {
+        return $this->message_needaction;
     }
 
     /**
@@ -838,6 +850,14 @@ final class Lot extends Base
     }
 
     /**
+     * @param bool|null $message_is_follower
+     */
+    public function setMessageIsFollower(?bool $message_is_follower): void
+    {
+        $this->message_is_follower = $message_is_follower;
+    }
+
+    /**
      * @param int|null $message_unread_counter
      */
     public function setMessageUnreadCounter(?int $message_unread_counter): void
@@ -854,13 +874,11 @@ final class Lot extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("message_is_follower")
+     * @param string|null $activity_exception_icon
      */
-    public function isMessageIsFollower(): ?bool
+    public function setActivityExceptionIcon(?string $activity_exception_icon): void
     {
-        return $this->message_is_follower;
+        $this->activity_exception_icon = $activity_exception_icon;
     }
 
     /**
@@ -1107,19 +1125,23 @@ final class Lot extends Base
     }
 
     /**
-     * @param bool|null $message_is_follower
+     * @return bool|null
+     *
+     * @SerializedName("message_is_follower")
      */
-    public function setMessageIsFollower(?bool $message_is_follower): void
+    public function isMessageIsFollower(): ?bool
     {
-        $this->message_is_follower = $message_is_follower;
+        return $this->message_is_follower;
     }
 
     /**
-     * @param string|null $activity_exception_icon
+     * @return string|null
+     *
+     * @SerializedName("activity_exception_icon")
      */
-    public function setActivityExceptionIcon(?string $activity_exception_icon): void
+    public function getActivityExceptionIcon(): ?string
     {
-        $this->activity_exception_icon = $activity_exception_icon;
+        return $this->activity_exception_icon;
     }
 
     /**
@@ -1140,6 +1162,22 @@ final class Lot extends Base
     public function getProductQty(): ?float
     {
         return $this->product_qty;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addPurchaseOrderIds(OdooRelation $item): void
+    {
+        if ($this->hasPurchaseOrderIds($item)) {
+            return;
+        }
+
+        if (null === $this->purchase_order_ids) {
+            $this->purchase_order_ids = [];
+        }
+
+        $this->purchase_order_ids[] = $item;
     }
 
     /**
@@ -1252,18 +1290,13 @@ final class Lot extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @return int|null
+     *
+     * @SerializedName("purchase_order_count")
      */
-    public function removePurchaseOrderIds(OdooRelation $item): void
+    public function getPurchaseOrderCount(): ?int
     {
-        if (null === $this->purchase_order_ids) {
-            $this->purchase_order_ids = [];
-        }
-
-        if ($this->hasPurchaseOrderIds($item)) {
-            $index = array_search($item, $this->purchase_order_ids);
-            unset($this->purchase_order_ids[$index]);
-        }
+        return $this->purchase_order_count;
     }
 
     /**
@@ -1379,47 +1412,24 @@ final class Lot extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addPurchaseOrderIds(OdooRelation $item): void
+    public function removePurchaseOrderIds(OdooRelation $item): void
     {
-        if ($this->hasPurchaseOrderIds($item)) {
-            return;
-        }
-
         if (null === $this->purchase_order_ids) {
             $this->purchase_order_ids = [];
         }
 
-        $this->purchase_order_ids[] = $item;
+        if ($this->hasPurchaseOrderIds($item)) {
+            $index = array_search($item, $this->purchase_order_ids);
+            unset($this->purchase_order_ids[$index]);
+        }
     }
 
     /**
-     * @return int|null
-     *
-     * @SerializedName("purchase_order_count")
+     * @param int|null $purchase_order_count
      */
-    public function getPurchaseOrderCount(): ?int
+    public function setPurchaseOrderCount(?int $purchase_order_count): void
     {
-        return $this->purchase_order_count;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("activity_exception_icon")
-     */
-    public function getActivityExceptionIcon(): ?string
-    {
-        return $this->activity_exception_icon;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("activity_state")
-     */
-    public function getActivityState(): ?string
-    {
-        return $this->activity_state;
+        $this->purchase_order_count = $purchase_order_count;
     }
 
     /**
@@ -1428,6 +1438,14 @@ final class Lot extends Base
     public function setActivityExceptionDecoration(?string $activity_exception_decoration): void
     {
         $this->activity_exception_decoration = $activity_exception_decoration;
+    }
+
+    /**
+     * @param string|null $activity_state
+     */
+    public function setActivityState(?string $activity_state): void
+    {
+        $this->activity_state = $activity_state;
     }
 
     /**
@@ -1477,6 +1495,24 @@ final class Lot extends Base
     }
 
     /**
+     * @param string|null $activity_type_icon
+     */
+    public function setActivityTypeIcon(?string $activity_type_icon): void
+    {
+        $this->activity_type_icon = $activity_type_icon;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("activity_type_icon")
+     */
+    public function getActivityTypeIcon(): ?string
+    {
+        return $this->activity_type_icon;
+    }
+
+    /**
      * @param OdooRelation|null $activity_type_id
      */
     public function setActivityTypeId(?OdooRelation $activity_type_id): void
@@ -1513,11 +1549,23 @@ final class Lot extends Base
     }
 
     /**
-     * @param string|null $activity_state
+     * @return string|null
+     *
+     * @SerializedName("activity_state")
      */
-    public function setActivityState(?string $activity_state): void
+    public function getActivityState(): ?string
     {
-        $this->activity_state = $activity_state;
+        return $this->activity_state;
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("sale_order_ids")
+     */
+    public function getSaleOrderIds(): ?array
+    {
+        return $this->sale_order_ids;
     }
 
     /**
@@ -1533,14 +1581,6 @@ final class Lot extends Base
             $index = array_search($item, $this->activity_ids);
             unset($this->activity_ids[$index]);
         }
-    }
-
-    /**
-     * @param int|null $purchase_order_count
-     */
-    public function setPurchaseOrderCount(?int $purchase_order_count): void
-    {
-        $this->purchase_order_count = $purchase_order_count;
     }
 
     /**
@@ -1660,16 +1700,6 @@ final class Lot extends Base
     public function setSaleOrderIds(?array $sale_order_ids): void
     {
         $this->sale_order_ids = $sale_order_ids;
-    }
-
-    /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("sale_order_ids")
-     */
-    public function getSaleOrderIds(): ?array
-    {
-        return $this->sale_order_ids;
     }
 
     /**

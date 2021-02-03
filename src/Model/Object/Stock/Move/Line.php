@@ -28,7 +28,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 final class Line extends Base
 {
     /**
-     * Stock Picking
+     * Transfer
      * ---
      * The stock operation where the packing has been made
      * ---
@@ -95,6 +95,22 @@ final class Line extends Base
      * @var OdooRelation
      */
     private $product_uom_id;
+
+    /**
+     * Category
+     * ---
+     * Conversion between Units of Measure can only occur if they belong to the same category. The conversion will be
+     * made based on the ratios.
+     * ---
+     * Relation : many2one (uom.category)
+     * @see \Flux\OdooApiClient\Model\Object\Uom\Category
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var OdooRelation|null
+     */
+    private $product_uom_category_id;
 
     /**
      * Real Reserved Quantity
@@ -270,7 +286,7 @@ final class Line extends Base
      * Create New Lots/Serial Numbers
      * ---
      * If this is checked only, it will suppose you want to create new Lots/Serial Numbers, so you can provide them
-     * in a text field.
+     * in a text field. 
      * ---
      * Searchable : yes
      * Sortable : no
@@ -283,7 +299,7 @@ final class Line extends Base
      * Use Existing Lots/Serial Numbers
      * ---
      * If this is checked, you will be able to choose the Lots/Serial Numbers. You can also decide to not put lots in
-     * this operation type.  This means it will create stock with no lot or not put a restriction on the lot taken.
+     * this operation type.  This means it will create stock with no lot or not put a restriction on the lot taken. 
      * ---
      * Searchable : yes
      * Sortable : no
@@ -342,7 +358,7 @@ final class Line extends Base
     /**
      * Consume Line
      * ---
-     * Technical link to see who consumed what.
+     * Technical link to see who consumed what. 
      * ---
      * Relation : many2many (stock.move.line)
      * @see \Flux\OdooApiClient\Model\Object\Stock\Move\Line
@@ -357,7 +373,7 @@ final class Line extends Base
     /**
      * Produce Line
      * ---
-     * Technical link to see which line was produced with this.
+     * Technical link to see which line was produced with this. 
      * ---
      * Relation : many2many (stock.move.line)
      * @see \Flux\OdooApiClient\Model\Object\Stock\Move\Line
@@ -529,11 +545,13 @@ final class Line extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $consume_line_ids
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("consume_line_ids")
      */
-    public function setConsumeLineIds(?array $consume_line_ids): void
+    public function getConsumeLineIds(): ?array
     {
-        $this->consume_line_ids = $consume_line_ids;
+        return $this->consume_line_ids;
     }
 
     /**
@@ -614,13 +632,19 @@ final class Line extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("consume_line_ids")
+     * @param OdooRelation[]|null $consume_line_ids
      */
-    public function getConsumeLineIds(): ?array
+    public function setConsumeLineIds(?array $consume_line_ids): void
     {
-        return $this->consume_line_ids;
+        $this->consume_line_ids = $consume_line_ids;
+    }
+
+    /**
+     * @param bool|null $is_locked
+     */
+    public function setIsLocked(?bool $is_locked): void
+    {
+        $this->is_locked = $is_locked;
     }
 
     /**
@@ -636,14 +660,6 @@ final class Line extends Base
             $index = array_search($item, $this->produce_line_ids);
             unset($this->produce_line_ids[$index]);
         }
-    }
-
-    /**
-     * @param bool|null $is_locked
-     */
-    public function setIsLocked(?bool $is_locked): void
-    {
-        $this->is_locked = $is_locked;
     }
 
     /**
@@ -701,6 +717,16 @@ final class Line extends Base
     }
 
     /**
+     * @return bool|null
+     *
+     * @SerializedName("picking_type_use_existing_lots")
+     */
+    public function isPickingTypeUseExistingLots(): ?bool
+    {
+        return $this->picking_type_use_existing_lots;
+    }
+
+    /**
      * @param OdooRelation $item
      */
     public function addProduceLineIds(OdooRelation $item): void
@@ -727,11 +753,13 @@ final class Line extends Base
     }
 
     /**
-     * @param bool|null $picking_type_use_create_lots
+     * @return bool|null
+     *
+     * @SerializedName("picking_type_use_create_lots")
      */
-    public function setPickingTypeUseCreateLots(?bool $picking_type_use_create_lots): void
+    public function isPickingTypeUseCreateLots(): ?bool
     {
-        $this->picking_type_use_create_lots = $picking_type_use_create_lots;
+        return $this->picking_type_use_create_lots;
     }
 
     /**
@@ -887,23 +915,19 @@ final class Line extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("picking_type_use_existing_lots")
+     * @param bool|null $picking_type_use_create_lots
      */
-    public function isPickingTypeUseExistingLots(): ?bool
+    public function setPickingTypeUseCreateLots(?bool $picking_type_use_create_lots): void
     {
-        return $this->picking_type_use_existing_lots;
+        $this->picking_type_use_create_lots = $picking_type_use_create_lots;
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("picking_type_use_create_lots")
+     * @param string|null $picking_code
      */
-    public function isPickingTypeUseCreateLots(): ?bool
+    public function setPickingCode(?string $picking_code): void
     {
-        return $this->picking_type_use_create_lots;
+        $this->picking_code = $picking_code;
     }
 
     /**
@@ -922,24 +946,6 @@ final class Line extends Base
     public function setProductUomId(OdooRelation $product_uom_id): void
     {
         $this->product_uom_id = $product_uom_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("package_id")
-     */
-    public function getPackageId(): ?OdooRelation
-    {
-        return $this->package_id;
-    }
-
-    /**
-     * @param float|null $qty_done
-     */
-    public function setQtyDone(?float $qty_done): void
-    {
-        $this->qty_done = $qty_done;
     }
 
     /**
@@ -989,6 +995,24 @@ final class Line extends Base
     }
 
     /**
+     * @param OdooRelation|null $product_uom_category_id
+     */
+    public function setProductUomCategoryId(?OdooRelation $product_uom_category_id): void
+    {
+        $this->product_uom_category_id = $product_uom_category_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("product_uom_category_id")
+     */
+    public function getProductUomCategoryId(): ?OdooRelation
+    {
+        return $this->product_uom_category_id;
+    }
+
+    /**
      * @return OdooRelation
      *
      * @SerializedName("product_uom_id")
@@ -1001,11 +1025,11 @@ final class Line extends Base
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("package_level_id")
+     * @SerializedName("package_id")
      */
-    public function getPackageLevelId(): ?OdooRelation
+    public function getPackageId(): ?OdooRelation
     {
-        return $this->package_level_id;
+        return $this->package_id;
     }
 
     /**
@@ -1071,35 +1095,19 @@ final class Line extends Base
     }
 
     /**
+     * @param float|null $qty_done
+     */
+    public function setQtyDone(?float $qty_done): void
+    {
+        $this->qty_done = $qty_done;
+    }
+
+    /**
      * @param OdooRelation|null $package_id
      */
     public function setPackageId(?OdooRelation $package_id): void
     {
         $this->package_id = $package_id;
-    }
-
-    /**
-     * @param OdooRelation|null $package_level_id
-     */
-    public function setPackageLevelId(?OdooRelation $package_level_id): void
-    {
-        $this->package_level_id = $package_level_id;
-    }
-
-    /**
-     * @param string|null $picking_code
-     */
-    public function setPickingCode(?string $picking_code): void
-    {
-        $this->picking_code = $picking_code;
-    }
-
-    /**
-     * @param OdooRelation|null $owner_id
-     */
-    public function setOwnerId(?OdooRelation $owner_id): void
-    {
-        $this->owner_id = $owner_id;
     }
 
     /**
@@ -1110,6 +1118,16 @@ final class Line extends Base
     public function getPickingCode(): ?string
     {
         return $this->picking_code;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("owner_id")
+     */
+    public function getOwnerId(): ?OdooRelation
+    {
+        return $this->owner_id;
     }
 
     /**
@@ -1167,23 +1185,11 @@ final class Line extends Base
     }
 
     /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("owner_id")
+     * @param OdooRelation|null $owner_id
      */
-    public function getOwnerId(): ?OdooRelation
+    public function setOwnerId(?OdooRelation $owner_id): void
     {
-        return $this->owner_id;
-    }
-
-    /**
-     * @return OdooRelation|null
-     *
-     * @SerializedName("lot_id")
-     */
-    public function getLotId(): ?OdooRelation
-    {
-        return $this->lot_id;
+        $this->owner_id = $owner_id;
     }
 
     /**
@@ -1192,6 +1198,16 @@ final class Line extends Base
     public function setDate(DateTimeInterface $date): void
     {
         $this->date = $date;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("package_level_id")
+     */
+    public function getPackageLevelId(): ?OdooRelation
+    {
+        return $this->package_level_id;
     }
 
     /**
@@ -1246,6 +1262,24 @@ final class Line extends Base
     public function setLotId(?OdooRelation $lot_id): void
     {
         $this->lot_id = $lot_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("lot_id")
+     */
+    public function getLotId(): ?OdooRelation
+    {
+        return $this->lot_id;
+    }
+
+    /**
+     * @param OdooRelation|null $package_level_id
+     */
+    public function setPackageLevelId(?OdooRelation $package_level_id): void
+    {
+        $this->package_level_id = $package_level_id;
     }
 
     /**

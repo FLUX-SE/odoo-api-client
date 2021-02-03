@@ -62,16 +62,6 @@ final class Config extends Bank
     private $linked_journal_id;
 
     /**
-     * Code
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string
-     */
-    private $new_journal_code;
-
-    /**
      * Num Journals Without Account
      * ---
      * Searchable : yes
@@ -80,20 +70,6 @@ final class Config extends Bank
      * @var int|null
      */
     private $num_journals_without_account;
-
-    /**
-     * Account Type
-     * ---
-     * Selection :
-     *     -> bank (Normal)
-     *     -> iban (IBAN)
-     * ---
-     * Searchable : no
-     * Sortable : no
-     *
-     * @var string|null
-     */
-    private $related_acc_type;
 
     /**
      * @param OdooRelation $res_partner_bank_id Res Partner Bank
@@ -106,10 +82,6 @@ final class Config extends Bank
      * @param string $new_journal_name New Journal Name
      *        ---
      *        Will be used to name the Journal related to this bank account
-     *        ---
-     *        Searchable : yes
-     *        Sortable : yes
-     * @param string $new_journal_code Code
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -128,13 +100,11 @@ final class Config extends Bank
     public function __construct(
         OdooRelation $res_partner_bank_id,
         string $new_journal_name,
-        string $new_journal_code,
         string $acc_number,
         OdooRelation $partner_id
     ) {
         $this->res_partner_bank_id = $res_partner_bank_id;
         $this->new_journal_name = $new_journal_name;
-        $this->new_journal_code = $new_journal_code;
         parent::__construct($acc_number, $partner_id);
     }
 
@@ -193,24 +163,6 @@ final class Config extends Bank
     }
 
     /**
-     * @return string
-     *
-     * @SerializedName("new_journal_code")
-     */
-    public function getNewJournalCode(): string
-    {
-        return $this->new_journal_code;
-    }
-
-    /**
-     * @param string $new_journal_code
-     */
-    public function setNewJournalCode(string $new_journal_code): void
-    {
-        $this->new_journal_code = $new_journal_code;
-    }
-
-    /**
      * @return int|null
      *
      * @SerializedName("num_journals_without_account")
@@ -226,24 +178,6 @@ final class Config extends Bank
     public function setNumJournalsWithoutAccount(?int $num_journals_without_account): void
     {
         $this->num_journals_without_account = $num_journals_without_account;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("related_acc_type")
-     */
-    public function getRelatedAccType(): ?string
-    {
-        return $this->related_acc_type;
-    }
-
-    /**
-     * @param string|null $related_acc_type
-     */
-    public function setRelatedAccType(?string $related_acc_type): void
-    {
-        $this->related_acc_type = $related_acc_type;
     }
 
     /**

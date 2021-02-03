@@ -173,6 +173,18 @@ final class Budget extends Base
     private $activity_type_id;
 
     /**
+     * Activity Type Icon
+     * ---
+     * Font awesome icon e.g. fa-tasks
+     * ---
+     * Searchable : yes
+     * Sortable : no
+     *
+     * @var string|null
+     */
+    private $activity_type_icon;
+
+    /**
      * Next Activity Deadline
      * ---
      * Searchable : yes
@@ -499,24 +511,17 @@ final class Budget extends Base
     /**
      * @param OdooRelation $item
      */
-    public function removeMessageIds(OdooRelation $item): void
+    public function addMessageIds(OdooRelation $item): void
     {
+        if ($this->hasMessageIds($item)) {
+            return;
+        }
+
         if (null === $this->message_ids) {
             $this->message_ids = [];
         }
 
-        if ($this->hasMessageIds($item)) {
-            $index = array_search($item, $this->message_ids);
-            unset($this->message_ids[$index]);
-        }
-    }
-
-    /**
-     * @param int|null $message_needaction_counter
-     */
-    public function setMessageNeedactionCounter(?int $message_needaction_counter): void
-    {
-        $this->message_needaction_counter = $message_needaction_counter;
+        $this->message_ids[] = $item;
     }
 
     /**
@@ -586,25 +591,16 @@ final class Budget extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addMessageIds(OdooRelation $item): void
+    public function removeMessageIds(OdooRelation $item): void
     {
-        if ($this->hasMessageIds($item)) {
-            return;
-        }
-
         if (null === $this->message_ids) {
             $this->message_ids = [];
         }
 
-        $this->message_ids[] = $item;
-    }
-
-    /**
-     * @param bool|null $message_has_error
-     */
-    public function setMessageHasError(?bool $message_has_error): void
-    {
-        $this->message_has_error = $message_has_error;
+        if ($this->hasMessageIds($item)) {
+            $index = array_search($item, $this->message_ids);
+            unset($this->message_ids[$index]);
+        }
     }
 
     /**
@@ -619,6 +615,16 @@ final class Budget extends Base
         }
 
         return in_array($item, $this->message_ids);
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("message_has_error")
+     */
+    public function isMessageHasError(): ?bool
+    {
+        return $this->message_has_error;
     }
 
     /**
@@ -718,45 +724,53 @@ final class Budget extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("message_has_error")
-     */
-    public function isMessageHasError(): ?bool
-    {
-        return $this->message_has_error;
-    }
-
-    /**
-     * @return int|null
-     *
-     * @SerializedName("message_has_error_counter")
-     */
-    public function getMessageHasErrorCounter(): ?int
-    {
-        return $this->message_has_error_counter;
-    }
-
-    /**
      * @param OdooRelation $item
-     *
-     * @return bool
      */
-    public function hasMessagePartnerIds(OdooRelation $item): bool
+    public function addMessagePartnerIds(OdooRelation $item): void
     {
-        if (null === $this->message_partner_ids) {
-            return false;
+        if ($this->hasMessagePartnerIds($item)) {
+            return;
         }
 
-        return in_array($item, $this->message_partner_ids);
+        if (null === $this->message_partner_ids) {
+            $this->message_partner_ids = [];
+        }
+
+        $this->message_partner_ids[] = $item;
     }
 
     /**
-     * @param bool|null $message_has_sms_error
+     * @param int|null $message_needaction_counter
      */
-    public function setMessageHasSmsError(?bool $message_has_sms_error): void
+    public function setMessageNeedactionCounter(?int $message_needaction_counter): void
     {
-        $this->message_has_sms_error = $message_has_sms_error;
+        $this->message_needaction_counter = $message_needaction_counter;
+    }
+
+    /**
+     * @param bool|null $message_has_error
+     */
+    public function setMessageHasError(?bool $message_has_error): void
+    {
+        $this->message_has_error = $message_has_error;
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_partner_ids
+     */
+    public function setMessagePartnerIds(?array $message_partner_ids): void
+    {
+        $this->message_partner_ids = $message_partner_ids;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("message_has_sms_error")
+     */
+    public function isMessageHasSmsError(): ?bool
+    {
+        return $this->message_has_sms_error;
     }
 
     /**
@@ -832,21 +846,11 @@ final class Budget extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("message_has_sms_error")
+     * @param bool|null $message_has_sms_error
      */
-    public function isMessageHasSmsError(): ?bool
+    public function setMessageHasSmsError(?bool $message_has_sms_error): void
     {
-        return $this->message_has_sms_error;
-    }
-
-    /**
-     * @param int|null $message_has_error_counter
-     */
-    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
-    {
-        $this->message_has_error_counter = $message_has_error_counter;
+        $this->message_has_sms_error = $message_has_sms_error;
     }
 
     /**
@@ -862,6 +866,16 @@ final class Budget extends Base
             $index = array_search($item, $this->website_message_ids);
             unset($this->website_message_ids[$index]);
         }
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("message_has_error_counter")
+     */
+    public function getMessageHasErrorCounter(): ?int
+    {
+        return $this->message_has_error_counter;
     }
 
     /**
@@ -949,27 +963,35 @@ final class Budget extends Base
     }
 
     /**
-     * @param OdooRelation $item
+     * @param int|null $message_has_error_counter
      */
-    public function addMessagePartnerIds(OdooRelation $item): void
+    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
     {
-        if ($this->hasMessagePartnerIds($item)) {
-            return;
-        }
-
-        if (null === $this->message_partner_ids) {
-            $this->message_partner_ids = [];
-        }
-
-        $this->message_partner_ids[] = $item;
+        $this->message_has_error_counter = $message_has_error_counter;
     }
 
     /**
-     * @param OdooRelation[]|null $message_partner_ids
+     * @param OdooRelation $item
+     *
+     * @return bool
      */
-    public function setMessagePartnerIds(?array $message_partner_ids): void
+    public function hasMessagePartnerIds(OdooRelation $item): bool
     {
-        $this->message_partner_ids = $message_partner_ids;
+        if (null === $this->message_partner_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_partner_ids);
+    }
+
+    /**
+     * @return OdooRelation[]|null
+     *
+     * @SerializedName("message_partner_ids")
+     */
+    public function getMessagePartnerIds(): ?array
+    {
+        return $this->message_partner_ids;
     }
 
     /**
@@ -1217,26 +1239,6 @@ final class Budget extends Base
     }
 
     /**
-     * @return OdooRelation[]|null
-     *
-     * @SerializedName("message_partner_ids")
-     */
-    public function getMessagePartnerIds(): ?array
-    {
-        return $this->message_partner_ids;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("activity_exception_icon")
-     */
-    public function getActivityExceptionIcon(): ?string
-    {
-        return $this->activity_exception_icon;
-    }
-
-    /**
      * @param OdooRelation $item
      */
     public function removeMessageFollowerIds(OdooRelation $item): void
@@ -1249,6 +1251,16 @@ final class Budget extends Base
             $index = array_search($item, $this->message_follower_ids);
             unset($this->message_follower_ids[$index]);
         }
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("activity_exception_decoration")
+     */
+    public function getActivityExceptionDecoration(): ?string
+    {
+        return $this->activity_exception_decoration;
     }
 
     /**
@@ -1326,6 +1338,16 @@ final class Budget extends Base
     }
 
     /**
+     * @return string|null
+     *
+     * @SerializedName("activity_exception_icon")
+     */
+    public function getActivityExceptionIcon(): ?string
+    {
+        return $this->activity_exception_icon;
+    }
+
+    /**
      * @param string|null $activity_exception_decoration
      */
     public function setActivityExceptionDecoration(?string $activity_exception_decoration): void
@@ -1334,29 +1356,19 @@ final class Budget extends Base
     }
 
     /**
-     * @param string|null $activity_state
-     */
-    public function setActivityState(?string $activity_state): void
-    {
-        $this->activity_state = $activity_state;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("activity_exception_decoration")
-     */
-    public function getActivityExceptionDecoration(): ?string
-    {
-        return $this->activity_exception_decoration;
-    }
-
-    /**
      * @param string|null $activity_summary
      */
     public function setActivitySummary(?string $activity_summary): void
     {
         $this->activity_summary = $activity_summary;
+    }
+
+    /**
+     * @param string|null $activity_state
+     */
+    public function setActivityState(?string $activity_state): void
+    {
+        $this->activity_state = $activity_state;
     }
 
     /**
@@ -1385,6 +1397,24 @@ final class Budget extends Base
     public function getActivityDateDeadline(): ?DateTimeInterface
     {
         return $this->activity_date_deadline;
+    }
+
+    /**
+     * @param string|null $activity_type_icon
+     */
+    public function setActivityTypeIcon(?string $activity_type_icon): void
+    {
+        $this->activity_type_icon = $activity_type_icon;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("activity_type_icon")
+     */
+    public function getActivityTypeIcon(): ?string
+    {
+        return $this->activity_type_icon;
     }
 
     /**

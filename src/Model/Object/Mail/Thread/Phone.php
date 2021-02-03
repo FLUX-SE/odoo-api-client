@@ -30,7 +30,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  *             * ``_phone_reset_blacklisted``: reactivate recordset (even if not blacklisted
  *                 this method can be called safely);
  */
-abstract class Phone extends Base
+final class Phone extends Base
 {
     /**
      * Sanitized Number
@@ -42,19 +42,46 @@ abstract class Phone extends Base
      *
      * @var string|null
      */
-    protected $phone_sanitized;
+    private $phone_sanitized;
 
     /**
      * Phone Blacklisted
      * ---
-     * If the email address is on the blacklist, the contact won't receive mass mailing anymore, from any list
+     * If the sanitized phone number is on the blacklist, the contact won't receive mass mailing sms anymore, from
+     * any list
      * ---
      * Searchable : yes
      * Sortable : no
      *
      * @var bool|null
      */
-    protected $phone_blacklisted;
+    private $phone_sanitized_blacklisted;
+
+    /**
+     * Blacklisted Phone is Phone
+     * ---
+     * Indicates if a blacklisted sanitized phone number is a phone number. Helps distinguish which number is
+     * blacklisted             when there is both a mobile and phone field in a model.
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $phone_blacklisted;
+
+    /**
+     * Blacklisted Phone Is Mobile
+     * ---
+     * Indicates if a blacklisted sanitized phone number is a mobile number. Helps distinguish which number is
+     * blacklisted             when there is both a mobile and phone field in a model.
+     * ---
+     * Searchable : no
+     * Sortable : no
+     *
+     * @var bool|null
+     */
+    private $mobile_blacklisted;
 
     /**
      * Is Follower
@@ -64,7 +91,7 @@ abstract class Phone extends Base
      *
      * @var bool|null
      */
-    protected $message_is_follower;
+    private $message_is_follower;
 
     /**
      * Followers
@@ -77,7 +104,7 @@ abstract class Phone extends Base
      *
      * @var OdooRelation[]|null
      */
-    protected $message_follower_ids;
+    private $message_follower_ids;
 
     /**
      * Followers (Partners)
@@ -90,7 +117,7 @@ abstract class Phone extends Base
      *
      * @var OdooRelation[]|null
      */
-    protected $message_partner_ids;
+    private $message_partner_ids;
 
     /**
      * Followers (Channels)
@@ -103,7 +130,7 @@ abstract class Phone extends Base
      *
      * @var OdooRelation[]|null
      */
-    protected $message_channel_ids;
+    private $message_channel_ids;
 
     /**
      * Messages
@@ -116,7 +143,7 @@ abstract class Phone extends Base
      *
      * @var OdooRelation[]|null
      */
-    protected $message_ids;
+    private $message_ids;
 
     /**
      * Unread Messages
@@ -128,7 +155,7 @@ abstract class Phone extends Base
      *
      * @var bool|null
      */
-    protected $message_unread;
+    private $message_unread;
 
     /**
      * Unread Messages Counter
@@ -140,7 +167,7 @@ abstract class Phone extends Base
      *
      * @var int|null
      */
-    protected $message_unread_counter;
+    private $message_unread_counter;
 
     /**
      * Action Needed
@@ -152,7 +179,7 @@ abstract class Phone extends Base
      *
      * @var bool|null
      */
-    protected $message_needaction;
+    private $message_needaction;
 
     /**
      * Number of Actions
@@ -164,7 +191,7 @@ abstract class Phone extends Base
      *
      * @var int|null
      */
-    protected $message_needaction_counter;
+    private $message_needaction_counter;
 
     /**
      * Message Delivery error
@@ -176,7 +203,7 @@ abstract class Phone extends Base
      *
      * @var bool|null
      */
-    protected $message_has_error;
+    private $message_has_error;
 
     /**
      * Number of errors
@@ -188,7 +215,7 @@ abstract class Phone extends Base
      *
      * @var int|null
      */
-    protected $message_has_error_counter;
+    private $message_has_error_counter;
 
     /**
      * Attachment Count
@@ -198,7 +225,7 @@ abstract class Phone extends Base
      *
      * @var int|null
      */
-    protected $message_attachment_count;
+    private $message_attachment_count;
 
     /**
      * Main Attachment
@@ -211,7 +238,7 @@ abstract class Phone extends Base
      *
      * @var OdooRelation|null
      */
-    protected $message_main_attachment_id;
+    private $message_main_attachment_id;
 
     /**
      * Website Messages
@@ -226,7 +253,7 @@ abstract class Phone extends Base
      *
      * @var OdooRelation[]|null
      */
-    protected $website_message_ids;
+    private $website_message_ids;
 
     /**
      * SMS Delivery error
@@ -238,7 +265,7 @@ abstract class Phone extends Base
      *
      * @var bool|null
      */
-    protected $message_has_sms_error;
+    private $message_has_sms_error;
 
     /**
      * @return string|null
@@ -251,11 +278,31 @@ abstract class Phone extends Base
     }
 
     /**
-     * @param int|null $message_has_error_counter
+     * @return int|null
+     *
+     * @SerializedName("message_has_error_counter")
      */
-    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
+    public function getMessageHasErrorCounter(): ?int
     {
-        $this->message_has_error_counter = $message_has_error_counter;
+        return $this->message_has_error_counter;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("message_unread")
+     */
+    public function isMessageUnread(): ?bool
+    {
+        return $this->message_unread;
+    }
+
+    /**
+     * @param bool|null $message_unread
+     */
+    public function setMessageUnread(?bool $message_unread): void
+    {
+        $this->message_unread = $message_unread;
     }
 
     /**
@@ -331,13 +378,27 @@ abstract class Phone extends Base
     }
 
     /**
-     * @return int|null
-     *
-     * @SerializedName("message_has_error_counter")
+     * @param int|null $message_has_error_counter
      */
-    public function getMessageHasErrorCounter(): ?int
+    public function setMessageHasErrorCounter(?int $message_has_error_counter): void
     {
-        return $this->message_has_error_counter;
+        $this->message_has_error_counter = $message_has_error_counter;
+    }
+
+    /**
+     * @param OdooRelation $item
+     */
+    public function addMessageIds(OdooRelation $item): void
+    {
+        if ($this->hasMessageIds($item)) {
+            return;
+        }
+
+        if (null === $this->message_ids) {
+            $this->message_ids = [];
+        }
+
+        $this->message_ids[] = $item;
     }
 
     /**
@@ -348,16 +409,6 @@ abstract class Phone extends Base
     public function getMessageAttachmentCount(): ?int
     {
         return $this->message_attachment_count;
-    }
-
-    /**
-     * @return bool|null
-     *
-     * @SerializedName("message_unread")
-     */
-    public function isMessageUnread(): ?bool
-    {
-        return $this->message_unread;
     }
 
     /**
@@ -468,14 +519,6 @@ abstract class Phone extends Base
     }
 
     /**
-     * @param bool|null $message_unread
-     */
-    public function setMessageUnread(?bool $message_unread): void
-    {
-        $this->message_unread = $message_unread;
-    }
-
-    /**
      * @param OdooRelation $item
      */
     public function removeMessageIds(OdooRelation $item): void
@@ -491,6 +534,20 @@ abstract class Phone extends Base
     }
 
     /**
+     * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasMessageIds(OdooRelation $item): bool
+    {
+        if (null === $this->message_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->message_ids);
+    }
+
+    /**
      * @param string|null $phone_sanitized
      */
     public function setPhoneSanitized(?string $phone_sanitized): void
@@ -499,11 +556,37 @@ abstract class Phone extends Base
     }
 
     /**
-     * @param OdooRelation[]|null $message_partner_ids
+     * @param OdooRelation $item
      */
-    public function setMessagePartnerIds(?array $message_partner_ids): void
+    public function addMessageFollowerIds(OdooRelation $item): void
     {
-        $this->message_partner_ids = $message_partner_ids;
+        if ($this->hasMessageFollowerIds($item)) {
+            return;
+        }
+
+        if (null === $this->message_follower_ids) {
+            $this->message_follower_ids = [];
+        }
+
+        $this->message_follower_ids[] = $item;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("phone_sanitized_blacklisted")
+     */
+    public function isPhoneSanitizedBlacklisted(): ?bool
+    {
+        return $this->phone_sanitized_blacklisted;
+    }
+
+    /**
+     * @param bool|null $phone_sanitized_blacklisted
+     */
+    public function setPhoneSanitizedBlacklisted(?bool $phone_sanitized_blacklisted): void
+    {
+        $this->phone_sanitized_blacklisted = $phone_sanitized_blacklisted;
     }
 
     /**
@@ -522,6 +605,24 @@ abstract class Phone extends Base
     public function setPhoneBlacklisted(?bool $phone_blacklisted): void
     {
         $this->phone_blacklisted = $phone_blacklisted;
+    }
+
+    /**
+     * @return bool|null
+     *
+     * @SerializedName("mobile_blacklisted")
+     */
+    public function isMobileBlacklisted(): ?bool
+    {
+        return $this->mobile_blacklisted;
+    }
+
+    /**
+     * @param bool|null $mobile_blacklisted
+     */
+    public function setMobileBlacklisted(?bool $mobile_blacklisted): void
+    {
+        $this->mobile_blacklisted = $mobile_blacklisted;
     }
 
     /**
@@ -577,22 +678,6 @@ abstract class Phone extends Base
     /**
      * @param OdooRelation $item
      */
-    public function addMessageFollowerIds(OdooRelation $item): void
-    {
-        if ($this->hasMessageFollowerIds($item)) {
-            return;
-        }
-
-        if (null === $this->message_follower_ids) {
-            $this->message_follower_ids = [];
-        }
-
-        $this->message_follower_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
     public function removeMessageFollowerIds(OdooRelation $item): void
     {
         if (null === $this->message_follower_ids) {
@@ -606,6 +691,14 @@ abstract class Phone extends Base
     }
 
     /**
+     * @param OdooRelation[]|null $message_ids
+     */
+    public function setMessageIds(?array $message_ids): void
+    {
+        $this->message_ids = $message_ids;
+    }
+
+    /**
      * @return OdooRelation[]|null
      *
      * @SerializedName("message_partner_ids")
@@ -613,6 +706,14 @@ abstract class Phone extends Base
     public function getMessagePartnerIds(): ?array
     {
         return $this->message_partner_ids;
+    }
+
+    /**
+     * @param OdooRelation[]|null $message_partner_ids
+     */
+    public function setMessagePartnerIds(?array $message_partner_ids): void
+    {
+        $this->message_partner_ids = $message_partner_ids;
     }
 
     /**
@@ -627,22 +728,6 @@ abstract class Phone extends Base
         }
 
         return in_array($item, $this->message_partner_ids);
-    }
-
-    /**
-     * @param OdooRelation $item
-     */
-    public function addMessageIds(OdooRelation $item): void
-    {
-        if ($this->hasMessageIds($item)) {
-            return;
-        }
-
-        if (null === $this->message_ids) {
-            $this->message_ids = [];
-        }
-
-        $this->message_ids[] = $item;
     }
 
     /**
@@ -747,28 +832,6 @@ abstract class Phone extends Base
     public function getMessageIds(): ?array
     {
         return $this->message_ids;
-    }
-
-    /**
-     * @param OdooRelation[]|null $message_ids
-     */
-    public function setMessageIds(?array $message_ids): void
-    {
-        $this->message_ids = $message_ids;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasMessageIds(OdooRelation $item): bool
-    {
-        if (null === $this->message_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->message_ids);
     }
 
     /**

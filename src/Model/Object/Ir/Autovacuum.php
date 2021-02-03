@@ -12,9 +12,9 @@ use Flux\OdooApiClient\Model\Object\Base;
  * Name : ir.autovacuum
  * ---
  * Info :
- * Expose the vacuum method to the cron jobs mechanism.
+ * Helper model to the ``@api.autovacuum`` method decorator.
  */
-abstract class Autovacuum extends Base
+final class Autovacuum extends Base
 {
     /**
      * @return string

@@ -111,7 +111,7 @@ class Server extends Base
     protected $child_ids;
 
     /**
-     * Create/Write Target Model
+     * Target Model
      * ---
      * Model for record creation / update. Set this field only to specify a different model than the base model.
      * ---
@@ -126,7 +126,7 @@ class Server extends Base
     protected $crud_model_id;
 
     /**
-     * Target Model
+     * Target Model Name
      * ---
      * Searchable : yes
      * Sortable : no
@@ -136,9 +136,9 @@ class Server extends Base
     protected $crud_model_name;
 
     /**
-     * Link using field
+     * Link Field
      * ---
-     * Provide the field used to link the newly created record on the record on used by the server action.
+     * Provide the field used to link the newly created record on the record used by the server action.
      * ---
      * Relation : many2one (ir.model.fields)
      * @see \Flux\OdooApiClient\Model\Object\Ir\Model\Fields
@@ -373,7 +373,7 @@ class Server extends Base
     protected $sms_template_id;
 
     /**
-     * Log a note
+     * Log as Note
      * ---
      * Searchable : yes
      * Sortable : yes

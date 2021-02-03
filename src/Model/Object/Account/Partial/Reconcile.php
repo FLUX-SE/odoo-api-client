@@ -54,39 +54,17 @@ final class Reconcile extends Base
     private $credit_move_id;
 
     /**
-     * Amount
+     * Full Reconcile
      * ---
-     * Amount concerned by this matching. Assumed to be always positive
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var float|null
-     */
-    private $amount;
-
-    /**
-     * Amount in Currency
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var float|null
-     */
-    private $amount_currency;
-
-    /**
-     * Currency
-     * ---
-     * Relation : many2one (res.currency)
-     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * Relation : many2one (account.full.reconcile)
+     * @see \Flux\OdooApiClient\Model\Object\Account\Full\Reconcile
      * ---
      * Searchable : yes
      * Sortable : yes
      *
      * @var OdooRelation|null
      */
-    private $currency_id;
+    private $full_reconcile_id;
 
     /**
      * Company Currency
@@ -104,6 +82,68 @@ final class Reconcile extends Base
     private $company_currency_id;
 
     /**
+     * Currency of the debit journal item.
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $debit_currency_id;
+
+    /**
+     * Currency of the credit journal item.
+     * ---
+     * Relation : many2one (res.currency)
+     * @see \Flux\OdooApiClient\Model\Object\Res\Currency
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var OdooRelation|null
+     */
+    private $credit_currency_id;
+
+    /**
+     * Amount
+     * ---
+     * Always positive amount concerned by this matching expressed in the company currency.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var float|null
+     */
+    private $amount;
+
+    /**
+     * Debit Amount Currency
+     * ---
+     * Always positive amount concerned by this matching expressed in the debit line foreign currency.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var float|null
+     */
+    private $debit_amount_currency;
+
+    /**
+     * Credit Amount Currency
+     * ---
+     * Always positive amount concerned by this matching expressed in the credit line foreign currency.
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var float|null
+     */
+    private $credit_amount_currency;
+
+    /**
      * Company
      * ---
      * Company related to this journal
@@ -117,19 +157,6 @@ final class Reconcile extends Base
      * @var OdooRelation|null
      */
     private $company_id;
-
-    /**
-     * Full Reconcile
-     * ---
-     * Relation : many2one (account.full.reconcile)
-     * @see \Flux\OdooApiClient\Model\Object\Account\Full\Reconcile
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var OdooRelation|null
-     */
-    private $full_reconcile_id;
 
     /**
      * Max Date of Matched Lines
@@ -213,13 +240,13 @@ final class Reconcile extends Base
     }
 
     /**
-     * @return OdooRelation|null
+     * @return float|null
      *
-     * @SerializedName("full_reconcile_id")
+     * @SerializedName("credit_amount_currency")
      */
-    public function getFullReconcileId(): ?OdooRelation
+    public function getCreditAmountCurrency(): ?float
     {
-        return $this->full_reconcile_id;
+        return $this->credit_amount_currency;
     }
 
     /**
@@ -313,19 +340,37 @@ final class Reconcile extends Base
     }
 
     /**
-     * @param OdooRelation|null $full_reconcile_id
-     */
-    public function setFullReconcileId(?OdooRelation $full_reconcile_id): void
-    {
-        $this->full_reconcile_id = $full_reconcile_id;
-    }
-
-    /**
      * @param OdooRelation|null $company_id
      */
     public function setCompanyId(?OdooRelation $company_id): void
     {
         $this->company_id = $company_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("company_id")
+     */
+    public function getCompanyId(): ?OdooRelation
+    {
+        return $this->company_id;
+    }
+
+    /**
+     * @param float|null $credit_amount_currency
+     */
+    public function setCreditAmountCurrency(?float $credit_amount_currency): void
+    {
+        $this->credit_amount_currency = $credit_amount_currency;
+    }
+
+    /**
+     * @param float|null $debit_amount_currency
+     */
+    public function setDebitAmountCurrency(?float $debit_amount_currency): void
+    {
+        $this->debit_amount_currency = $debit_amount_currency;
     }
 
     /**
@@ -339,13 +384,67 @@ final class Reconcile extends Base
     }
 
     /**
+     * @return float|null
+     *
+     * @SerializedName("debit_amount_currency")
+     */
+    public function getDebitAmountCurrency(): ?float
+    {
+        return $this->debit_amount_currency;
+    }
+
+    /**
+     * @param float|null $amount
+     */
+    public function setAmount(?float $amount): void
+    {
+        $this->amount = $amount;
+    }
+
+    /**
+     * @return float|null
+     *
+     * @SerializedName("amount")
+     */
+    public function getAmount(): ?float
+    {
+        return $this->amount;
+    }
+
+    /**
+     * @param OdooRelation|null $credit_currency_id
+     */
+    public function setCreditCurrencyId(?OdooRelation $credit_currency_id): void
+    {
+        $this->credit_currency_id = $credit_currency_id;
+    }
+
+    /**
      * @return OdooRelation|null
      *
-     * @SerializedName("company_id")
+     * @SerializedName("credit_currency_id")
      */
-    public function getCompanyId(): ?OdooRelation
+    public function getCreditCurrencyId(): ?OdooRelation
     {
-        return $this->company_id;
+        return $this->credit_currency_id;
+    }
+
+    /**
+     * @param OdooRelation|null $debit_currency_id
+     */
+    public function setDebitCurrencyId(?OdooRelation $debit_currency_id): void
+    {
+        $this->debit_currency_id = $debit_currency_id;
+    }
+
+    /**
+     * @return OdooRelation|null
+     *
+     * @SerializedName("debit_currency_id")
+     */
+    public function getDebitCurrencyId(): ?OdooRelation
+    {
+        return $this->debit_currency_id;
     }
 
     /**
@@ -367,57 +466,21 @@ final class Reconcile extends Base
     }
 
     /**
-     * @param OdooRelation|null $currency_id
+     * @param OdooRelation|null $full_reconcile_id
      */
-    public function setCurrencyId(?OdooRelation $currency_id): void
+    public function setFullReconcileId(?OdooRelation $full_reconcile_id): void
     {
-        $this->currency_id = $currency_id;
+        $this->full_reconcile_id = $full_reconcile_id;
     }
 
     /**
      * @return OdooRelation|null
      *
-     * @SerializedName("currency_id")
+     * @SerializedName("full_reconcile_id")
      */
-    public function getCurrencyId(): ?OdooRelation
+    public function getFullReconcileId(): ?OdooRelation
     {
-        return $this->currency_id;
-    }
-
-    /**
-     * @param float|null $amount_currency
-     */
-    public function setAmountCurrency(?float $amount_currency): void
-    {
-        $this->amount_currency = $amount_currency;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("amount_currency")
-     */
-    public function getAmountCurrency(): ?float
-    {
-        return $this->amount_currency;
-    }
-
-    /**
-     * @param float|null $amount
-     */
-    public function setAmount(?float $amount): void
-    {
-        $this->amount = $amount;
-    }
-
-    /**
-     * @return float|null
-     *
-     * @SerializedName("amount")
-     */
-    public function getAmount(): ?float
-    {
-        return $this->amount;
+        return $this->full_reconcile_id;
     }
 
     /**

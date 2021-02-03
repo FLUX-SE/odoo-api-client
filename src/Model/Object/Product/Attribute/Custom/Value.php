@@ -51,6 +51,16 @@ final class Value extends Base
     private $custom_product_template_attribute_value_id;
 
     /**
+     * Custom Value
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string|null
+     */
+    private $custom_value;
+
+    /**
      * Sales Order Line
      * ---
      * Relation : many2one (sale.order.line)
@@ -62,16 +72,6 @@ final class Value extends Base
      * @var OdooRelation
      */
     private $sale_order_line_id;
-
-    /**
-     * Custom Value
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var string|null
-     */
-    private $custom_value;
 
     /**
      * Created by
@@ -226,24 +226,6 @@ final class Value extends Base
     }
 
     /**
-     * @param string|null $custom_value
-     */
-    public function setCustomValue(?string $custom_value): void
-    {
-        $this->custom_value = $custom_value;
-    }
-
-    /**
-     * @return string|null
-     *
-     * @SerializedName("custom_value")
-     */
-    public function getCustomValue(): ?string
-    {
-        return $this->custom_value;
-    }
-
-    /**
      * @param OdooRelation $sale_order_line_id
      */
     public function setSaleOrderLineId(OdooRelation $sale_order_line_id): void
@@ -259,6 +241,24 @@ final class Value extends Base
     public function getSaleOrderLineId(): OdooRelation
     {
         return $this->sale_order_line_id;
+    }
+
+    /**
+     * @param string|null $custom_value
+     */
+    public function setCustomValue(?string $custom_value): void
+    {
+        $this->custom_value = $custom_value;
+    }
+
+    /**
+     * @return string|null
+     *
+     * @SerializedName("custom_value")
+     */
+    public function getCustomValue(): ?string
+    {
+        return $this->custom_value;
     }
 
     /**

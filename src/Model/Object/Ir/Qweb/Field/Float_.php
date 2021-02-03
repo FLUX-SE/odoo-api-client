@@ -12,10 +12,16 @@ use Flux\OdooApiClient\Model\Object\Base;
  * Name : ir.qweb.field.float
  * ---
  * Info :
- * Override qweb.field.float to add a `decimal_precision` domain option
- *         and use that instead of the column's own value if it is specified
+ * Used to convert a t-field specification into an output HTML field.
+ *
+ *         :meth:`~.to_html` is the entry point of this conversion from QWeb, it:
+ *
+ *         * converts the record value to html using :meth:`~.record_to_html`
+ *         * generates the metadata attributes (``data-oe-``) to set on the root
+ *             result node
+ *         * generates the root result node itself through :meth:`~.render_element`
  */
-abstract class Float_ extends Base
+final class Float_ extends Base
 {
     /**
      * @return string

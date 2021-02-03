@@ -114,6 +114,18 @@ final class Team extends Base
     private $member_ids;
 
     /**
+     * Color Index
+     * ---
+     * The color of the channel
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var int|null
+     */
+    private $color;
+
+    /**
      * Favorite Members
      * ---
      * Relation : many2many (res.users)
@@ -137,18 +149,6 @@ final class Team extends Base
      * @var bool|null
      */
     private $is_favorite;
-
-    /**
-     * Color Index
-     * ---
-     * The color of the channel
-     * ---
-     * Searchable : yes
-     * Sortable : yes
-     *
-     * @var int|null
-     */
-    private $color;
 
     /**
      * Dashboard Button
@@ -191,7 +191,7 @@ final class Team extends Base
      * Searchable : no
      * Sortable : no
      *
-     * @var int|null
+     * @var float|null
      */
     private $invoiced;
 
@@ -203,7 +203,7 @@ final class Team extends Base
      * Searchable : yes
      * Sortable : yes
      *
-     * @var int|null
+     * @var float|null
      */
     private $invoiced_target;
 
@@ -223,7 +223,7 @@ final class Team extends Base
      * Searchable : no
      * Sortable : no
      *
-     * @var int|null
+     * @var float|null
      */
     private $quotations_amount;
 
@@ -1014,36 +1014,6 @@ final class Team extends Base
     }
 
     /**
-     * @param OdooRelation $item
-     */
-    public function addFavoriteUserIds(OdooRelation $item): void
-    {
-        if ($this->hasFavoriteUserIds($item)) {
-            return;
-        }
-
-        if (null === $this->favorite_user_ids) {
-            $this->favorite_user_ids = [];
-        }
-
-        $this->favorite_user_ids[] = $item;
-    }
-
-    /**
-     * @param OdooRelation $item
-     *
-     * @return bool
-     */
-    public function hasFavoriteUserIds(OdooRelation $item): bool
-    {
-        if (null === $this->favorite_user_ids) {
-            return false;
-        }
-
-        return in_array($item, $this->favorite_user_ids);
-    }
-
-    /**
      * @param OdooRelation[]|null $favorite_user_ids
      */
     public function setFavoriteUserIds(?array $favorite_user_ids): void
@@ -1059,6 +1029,24 @@ final class Team extends Base
     public function getFavoriteUserIds(): ?array
     {
         return $this->favorite_user_ids;
+    }
+
+    /**
+     * @param int|null $color
+     */
+    public function setColor(?int $color): void
+    {
+        $this->color = $color;
+    }
+
+    /**
+     * @return int|null
+     *
+     * @SerializedName("color")
+     */
+    public function getColor(): ?int
+    {
+        return $this->color;
     }
 
     /**
@@ -1135,13 +1123,19 @@ final class Team extends Base
     }
 
     /**
-     * @return bool|null
-     *
-     * @SerializedName("is_favorite")
+     * @param OdooRelation $item
      */
-    public function isIsFavorite(): ?bool
+    public function addFavoriteUserIds(OdooRelation $item): void
     {
-        return $this->is_favorite;
+        if ($this->hasFavoriteUserIds($item)) {
+            return;
+        }
+
+        if (null === $this->favorite_user_ids) {
+            $this->favorite_user_ids = [];
+        }
+
+        $this->favorite_user_ids[] = $item;
     }
 
     /**
@@ -1226,6 +1220,20 @@ final class Team extends Base
 
     /**
      * @param OdooRelation $item
+     *
+     * @return bool
+     */
+    public function hasFavoriteUserIds(OdooRelation $item): bool
+    {
+        if (null === $this->favorite_user_ids) {
+            return false;
+        }
+
+        return in_array($item, $this->favorite_user_ids);
+    }
+
+    /**
+     * @param OdooRelation $item
      */
     public function removeFavoriteUserIds(OdooRelation $item): void
     {
@@ -1237,14 +1245,6 @@ final class Team extends Base
             $index = array_search($item, $this->favorite_user_ids);
             unset($this->favorite_user_ids[$index]);
         }
-    }
-
-    /**
-     * @param bool|null $is_favorite
-     */
-    public function setIsFavorite(?bool $is_favorite): void
-    {
-        $this->is_favorite = $is_favorite;
     }
 
     /**
@@ -1326,19 +1326,19 @@ final class Team extends Base
     }
 
     /**
-     * @param int|null $quotations_amount
+     * @param float|null $quotations_amount
      */
-    public function setQuotationsAmount(?int $quotations_amount): void
+    public function setQuotationsAmount(?float $quotations_amount): void
     {
         $this->quotations_amount = $quotations_amount;
     }
 
     /**
-     * @return int|null
+     * @return float|null
      *
      * @SerializedName("quotations_amount")
      */
-    public function getQuotationsAmount(): ?int
+    public function getQuotationsAmount(): ?float
     {
         return $this->quotations_amount;
     }
@@ -1352,47 +1352,47 @@ final class Team extends Base
     }
 
     /**
-     * @param int|null $invoiced_target
+     * @param float|null $invoiced_target
      */
-    public function setInvoicedTarget(?int $invoiced_target): void
+    public function setInvoicedTarget(?float $invoiced_target): void
     {
         $this->invoiced_target = $invoiced_target;
     }
 
     /**
-     * @return int|null
+     * @return bool|null
      *
-     * @SerializedName("color")
+     * @SerializedName("is_favorite")
      */
-    public function getColor(): ?int
+    public function isIsFavorite(): ?bool
     {
-        return $this->color;
+        return $this->is_favorite;
     }
 
     /**
-     * @return int|null
+     * @return float|null
      *
      * @SerializedName("invoiced_target")
      */
-    public function getInvoicedTarget(): ?int
+    public function getInvoicedTarget(): ?float
     {
         return $this->invoiced_target;
     }
 
     /**
-     * @param int|null $invoiced
+     * @param float|null $invoiced
      */
-    public function setInvoiced(?int $invoiced): void
+    public function setInvoiced(?float $invoiced): void
     {
         $this->invoiced = $invoiced;
     }
 
     /**
-     * @return int|null
+     * @return float|null
      *
      * @SerializedName("invoiced")
      */
-    public function getInvoiced(): ?int
+    public function getInvoiced(): ?float
     {
         return $this->invoiced;
     }
@@ -1452,11 +1452,11 @@ final class Team extends Base
     }
 
     /**
-     * @param int|null $color
+     * @param bool|null $is_favorite
      */
-    public function setColor(?int $color): void
+    public function setIsFavorite(?bool $is_favorite): void
     {
-        $this->color = $color;
+        $this->is_favorite = $is_favorite;
     }
 
     /**

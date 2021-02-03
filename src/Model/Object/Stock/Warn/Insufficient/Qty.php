@@ -14,9 +14,11 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
  * Name : stock.warn.insufficient.qty
  * ---
  * Info :
- * The base model, which is implicitly inherited by all models.
+ * Updates the base class to support setting xids directly in create by
+ *         providing an "id" key (otherwise stripped by create) during an import
+ *         (which should strip 'id' from the input data anyway)
  */
-abstract class Qty extends Base
+final class Qty extends Base
 {
     /**
      * Product
@@ -29,7 +31,7 @@ abstract class Qty extends Base
      *
      * @var OdooRelation
      */
-    protected $product_id;
+    private $product_id;
 
     /**
      * Location
@@ -42,7 +44,7 @@ abstract class Qty extends Base
      *
      * @var OdooRelation
      */
-    protected $location_id;
+    private $location_id;
 
     /**
      * Quant
@@ -55,7 +57,27 @@ abstract class Qty extends Base
      *
      * @var OdooRelation[]|null
      */
-    protected $quant_ids;
+    private $quant_ids;
+
+    /**
+     * Quantity
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var float
+     */
+    private $quantity;
+
+    /**
+     * Unit of Measure
+     * ---
+     * Searchable : yes
+     * Sortable : yes
+     *
+     * @var string
+     */
+    private $product_uom_name;
 
     /**
      * @param OdooRelation $product_id Product
@@ -72,11 +94,25 @@ abstract class Qty extends Base
      *        ---
      *        Searchable : yes
      *        Sortable : yes
+     * @param float $quantity Quantity
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
+     * @param string $product_uom_name Unit of Measure
+     *        ---
+     *        Searchable : yes
+     *        Sortable : yes
      */
-    public function __construct(OdooRelation $product_id, OdooRelation $location_id)
-    {
+    public function __construct(
+        OdooRelation $product_id,
+        OdooRelation $location_id,
+        float $quantity,
+        string $product_uom_name
+    ) {
         $this->product_id = $product_id;
         $this->location_id = $location_id;
+        $this->quantity = $quantity;
+        $this->product_uom_name = $product_uom_name;
     }
 
     /**
@@ -176,6 +212,42 @@ abstract class Qty extends Base
             $index = array_search($item, $this->quant_ids);
             unset($this->quant_ids[$index]);
         }
+    }
+
+    /**
+     * @return float
+     *
+     * @SerializedName("quantity")
+     */
+    public function getQuantity(): float
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * @param float $quantity
+     */
+    public function setQuantity(float $quantity): void
+    {
+        $this->quantity = $quantity;
+    }
+
+    /**
+     * @return string
+     *
+     * @SerializedName("product_uom_name")
+     */
+    public function getProductUomName(): string
+    {
+        return $this->product_uom_name;
+    }
+
+    /**
+     * @param string $product_uom_name
+     */
+    public function setProductUomName(string $product_uom_name): void
+    {
+        $this->product_uom_name = $product_uom_name;
     }
 
     /**
