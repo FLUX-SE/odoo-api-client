@@ -55,4 +55,16 @@ interface OdooApiClientBuilderInterface
     public function getBasePath(): string;
 
     public function setBasePath(string $basePath): void;
+
+    public function setOdooHttpClientFactory(OdooHttpClientFactoryInterface $odooHttpClientFactory): void;
+
+    public function setOdooApiRequestMaker(OdooApiRequestMakerInterface $odooApiRequestMaker): void;
+
+    public function setSerializer(?Serializer $serializer): void;
+
+    public function setXmlRpcSerializerHelper(?XmlRpcSerializerHelperInterface $xmlRpcSerializerHelper): void;
+
+    public function setHttpClient(?ClientInterface $httpClient): void;
+
+    public function setRequestBodyFactory(?RequestBodyFactoryInterface $requestBodyFactory): void;
 }

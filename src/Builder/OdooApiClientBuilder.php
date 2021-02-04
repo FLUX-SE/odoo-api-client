@@ -245,4 +245,34 @@ final class OdooApiClientBuilder implements OdooApiClientBuilderInterface
     {
         $this->basePath = $basePath;
     }
+
+    public function setOdooHttpClientFactory(OdooHttpClientFactoryInterface $odooHttpClientFactory): void
+    {
+        $this->odooHttpClientFactory = $odooHttpClientFactory;
+    }
+
+    public function setOdooApiRequestMaker(OdooApiRequestMakerInterface $odooApiRequestMaker): void
+    {
+        $this->odooApiRequestMaker = $odooApiRequestMaker;
+    }
+
+    public function setXmlRpcSerializerHelper(?XmlRpcSerializerHelperInterface $xmlRpcSerializerHelper): void
+    {
+        $this->xmlRpcSerializerHelper = $xmlRpcSerializerHelper;
+    }
+
+    public function setHttpClient(?ClientInterface $httpClient): void
+    {
+        $this->httpClient = $httpClient;
+    }
+
+    public function setSerializer(?Serializer $serializer): void
+    {
+        $this->serializer = $serializer;
+    }
+
+    public function setRequestBodyFactory(?RequestBodyFactoryInterface $requestBodyFactory): void
+    {
+        $this->requestBodyFactory = $requestBodyFactory;
+    }
 }
