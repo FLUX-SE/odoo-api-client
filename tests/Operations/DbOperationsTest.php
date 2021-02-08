@@ -47,14 +47,14 @@ class DbOperationsTest extends TestCase
             $dbs = $this->dbOperations->list();
             $this->assertIsArray($dbs);
         } catch (ClientErrorException $e) {
-            $this->assertStringContainsString('Access denied', $e->getMessage());
+            $this->assertStringContainsStringIgnoringCase('Access denied', $e->getMessage());
         }
 
         try {
             $dbs = $this->dbOperations->list(true);
             $this->assertIsArray($dbs);
         } catch (ClientErrorException $e) {
-            $this->assertStringContainsString('Access denied', $e->getMessage());
+            $this->assertStringContainsStringIgnoringCase('Access denied', $e->getMessage());
         }
     }
 
@@ -64,7 +64,7 @@ class DbOperationsTest extends TestCase
             $countries = $this->dbOperations->list_countries('admin');
             $this->assertIsArray($countries);
         } catch (ClientErrorException $e) {
-            $this->assertStringContainsString('Access denied', $e->getMessage());
+            $this->assertStringContainsStringIgnoringCase('Access denied', $e->getMessage());
         }
     }
 
