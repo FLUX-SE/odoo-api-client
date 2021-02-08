@@ -6,7 +6,7 @@ namespace Tests\Flux\OdooApiClient\Manager;
 
 use Flux\OdooApiClient\Manager\ModelListManager;
 use Flux\OdooApiClient\Manager\ModelManagerInterface;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
+use Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
 use PHPUnit\Framework\TestCase;

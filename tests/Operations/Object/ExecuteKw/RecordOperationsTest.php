@@ -4,18 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Flux\OdooApiClient\Operations\Object\ExecuteKw;
 
-use DateTime;
-use Flux\OdooApiClient\Manager\ModelManager;
-use Flux\OdooApiClient\Model\Object\Account\Account;
-use Flux\OdooApiClient\Model\Object\Account\Journal;
-use Flux\OdooApiClient\Model\Object\Account\Move;
-use Flux\OdooApiClient\Model\Object\Account\Move\Line;
-use Flux\OdooApiClient\Model\Object\Account\Tax;
-use Flux\OdooApiClient\Model\Object\Product\Pricelist;
-use Flux\OdooApiClient\Model\Object\Product\Product;
-use Flux\OdooApiClient\Model\Object\Res\Company;
-use Flux\OdooApiClient\Model\Object\Res\Currency;
-use Flux\OdooApiClient\Model\OdooRelation;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
@@ -23,7 +11,9 @@ use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordOperations;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordOperationsInterface;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Tests\Flux\OdooApiClient\TestModel\Object\Product\Category;
+use Tests\Flux\OdooApiClient\TestModel\Object\Product\Template;
+use Tests\Flux\OdooApiClient\TestModel\Object\Uom\Uom;
 
 class RecordOperationsTest extends TestCase
 {
@@ -31,135 +21,74 @@ class RecordOperationsTest extends TestCase
 
     /** @var RecordListOperations */
     private $recordListOperations;
-    /** @var ModelManager */
-    private $modelManager;
+
+    /** @var RecordOperationsInterface */
+    private $recordOperations;
 
     protected function setUp(): void
     {
+        $this->recordOperations = $this->buildExecuteKwOperations(RecordOperations::class);
         $this->recordListOperations = $this->buildExecuteKwOperations(RecordListOperations::class);
-        /** @var RecordOperationsInterface $recordOperations */
-        $recordOperations = $this->buildExecuteKwOperations(RecordOperations::class);
-        $this->modelManager = new ModelManager(
-            $recordOperations->getObjectOperations()->getXmlRpcSerializerHelper()->getSerializer(),
-            $recordOperations
-        );
     }
 
-    /**
-     * @throws ExceptionInterface
-     */
-    public function testCreate(): void
+    private function retrieveUom(string $name): array
+    {
+        $searchDomains = new SearchDomains();
+        $searchDomains->addCriterion(Criterion::equal('name', $name));
+
+        $searchReadOptions = new SearchReadOptions();
+        $searchReadOptions->setLimit(1);
+
+        $results = $this->recordListOperations->search_read(
+            Uom::getOdooModelName(),
+            $searchDomains,
+            $searchReadOptions
+        );
+
+        $this->assertNotEmpty($results, sprintf(
+            'Unable to find the the uom named "%s" !',
+            $name
+        ));
+
+        return $results[0];
+    }
+
+    private function retrieveFirstCategory(): array
     {
         $searchReadOptions = new SearchReadOptions();
         $searchReadOptions->setLimit(1);
 
-        // 1 - Retrieve Accounts
-        $searchDomains = new SearchDomains();
-        $searchDomains->addCriterion(Criterion::equal('code', '411100'));
-        $accountPayable = $this->recordListOperations->search_read(
-            Account::getOdooModelName(),
-            $searchDomains,
+        $results = $this->recordListOperations->search_read(
+            Category::getOdooModelName(),
+            null,
             $searchReadOptions
-        )[0];
+        );
 
-        $searchDomains = new SearchDomains();
-        $searchDomains->addCriterion(Criterion::equal('code', '401100'));
-        $accountReceivable = $this->recordListOperations->search_read(
-            Account::getOdooModelName(),
-            $searchDomains,
-            $searchReadOptions
-        )[0];
+        $this->assertNotEmpty($results, 'Please create at least one category in ODOO !');
 
-        $searchDomains = new SearchDomains();
-        $searchDomains->addCriterion(Criterion::equal('code', '707100'));
-        $account = $this->recordListOperations->search_read(
-            Account::getOdooModelName(),
-            $searchDomains,
-            $searchReadOptions
-        )[0];
+        return $results[0];
+    }
 
-        // 2 - create or retrieve Partner
-        $partner = [
-            'id' => 7,
+    public function testCreateProduct()
+    {
+        $uom = $this->retrieveUom('Units');
+        $category = $this->retrieveFirstCategory();
+
+        $template = [
+            // required
+            'name' => 'test',
+            'type' => 'consu',
+            'categ_id' => $category['id'],
+            'uom_id' => $uom['id'],
+            'uom_po_id' => $uom['id'],
+            'product_variant_ids' => [],
+            // mandatory
+            'active' => true,
+            'default_code' => sprintf('TESTRAW_%d', time()),
         ];
 
-        // 3 - retrieve the PriceList
-        $priceList = $this->recordListOperations->search_read(
-            Pricelist::getOdooModelName(),
-            null,
-            $searchReadOptions
-        )[0];
+        $templateId = $this->recordOperations->create(Template::getOdooModelName(), [$template]);
 
-        // 4 - retrieve the Journal
-        $journal = $this->recordListOperations->search_read(
-            Journal::getOdooModelName(),
-            null,
-            $searchReadOptions
-        )[0];
-
-        // 4 - retrieve currency
-        $searchDomains = new SearchDomains();
-        $searchDomains->addCriterion(Criterion::equal('name', 'EUR'));
-        $currency = $this->recordListOperations->search_read(
-            Currency::getOdooModelName(),
-            $searchDomains,
-            $searchReadOptions
-        )[0];
-
-        // 5 - retrieve the company owning the sale
-        $company = $this->recordListOperations->read(Company::getOdooModelName(), [1])[0];
-
-        // 6 - retrieve the product
-        $products = $this->recordListOperations->search_read(
-            Product::getOdooModelName(),
-            null,
-            $searchReadOptions
-        );
-        $product = count($products) === 0 ? null : $products[0];
-
-        $searchDomains = new SearchDomains();
-        $searchDomains->addCriterion(Criterion::equal_like('description', '% 20_'));
-        $tax = $this->recordListOperations->search_read(
-            Tax::getOdooModelName(),
-            null,
-            $searchReadOptions
-        )[0];
-
-        $partner = new OdooRelation($partner['id']);
-        $currency_id = new OdooRelation($currency['id']);
-        $move = new Move(
-            new DateTime(),
-            'draft',
-            'out_invoice',
-            new OdooRelation($journal['id']),
-             $currency_id,
-            'no_extract_requested'
-        );
-        $move->setRef('TEST_I000000');
-
-        $line = new Line(new OdooRelation(), new OdooRelation());
-        $line->setAccountId(new OdooRelation($account['id']));
-        $line->setQuantity(2);
-        $line->setPriceUnit(10);
-        $line->setCredit(20);
-        $line->addTaxIds(new OdooRelation($tax['id']));
-        $line->setProductId(new OdooRelation($product['id'] ?? null));
-        $line->setName('test article');
-        $line->setDiscount(100);
-        $relation = new OdooRelation();
-        $relation->buildAdd($line);
-        $move->addInvoiceLineIds($relation);
-
-        $line2 = new Line(new OdooRelation(), $currency_id);
-        $line2->setAccountId(new OdooRelation(false));
-        $line2->setDisplayType('line_note');
-        $line2->setName('test');
-        $relation2 = new OdooRelation();
-        $relation2->buildAdd($line2);
-        $move->addInvoiceLineIds($relation2);
-
-        $moveId = $this->modelManager->persist($move);
-
-        $this->assertIsInt($moveId);
+        $this->assertIsInt($templateId);
     }
 }
