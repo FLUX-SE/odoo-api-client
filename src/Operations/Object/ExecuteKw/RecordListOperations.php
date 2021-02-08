@@ -4,40 +4,13 @@ declare(strict_types=1);
 
 namespace Flux\OdooApiClient\Operations\Object\ExecuteKw;
 
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\ArgumentsInterface;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomainsInterface;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\OptionsInterface;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\ReadOptionsInterface;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchOptionsInterface;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptionsInterface;
-use Psr\Http\Message\ResponseInterface;
 
 final class RecordListOperations extends AbstractOperations implements RecordListOperationsInterface
 {
-    public function execute_kw(
-        string $modelName,
-        string $methodName,
-        ?ArgumentsInterface $arguments = null,
-        ?OptionsInterface $options = null
-    ): ResponseInterface {
-        $rawArguments = [];
-        if (null !== $arguments) {
-            $rawArguments = $arguments->toArray();
-        }
-
-        $rawOptions = [];
-        if (null !== $options) {
-            $rawOptions = $options->toArray();
-        }
-
-        return $this->getObjectOperations()->execute_kw(
-            $modelName,
-            $methodName,
-            [$rawArguments],
-            $rawOptions
-        );
-    }
-
     public function search(
         string $modelName,
         ?SearchDomainsInterface $searchDomains = null,
@@ -54,12 +27,14 @@ final class RecordListOperations extends AbstractOperations implements RecordLis
 
     public function search_count(
         string $modelName,
-        ?SearchDomainsInterface $searchDomains = null
+        ?SearchDomainsInterface $searchDomains = null,
+        ?SearchOptionsInterface $searchOptions = null
     ): int {
         $response = $this->execute_kw(
             $modelName,
             __FUNCTION__,
-            $searchDomains
+            $searchDomains,
+            $searchOptions
         );
         return $this->getObjectOperations()->deserializeInteger($response);
     }

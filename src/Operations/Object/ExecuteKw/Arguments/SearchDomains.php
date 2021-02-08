@@ -17,4 +17,9 @@ final class SearchDomains extends AbstractArguments implements SearchDomainsInte
 
         return $this;
     }
+
+    public function toArray(): array
+    {
+        return [parent::toArray()];
+    }
 }

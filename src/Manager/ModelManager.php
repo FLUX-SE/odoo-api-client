@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Flux\OdooApiClient\Manager;
 
 use Flux\OdooApiClient\Model\BaseInterface;
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\OptionsInterface;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordOperationsInterface;
 use LogicException;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
@@ -26,37 +27,18 @@ final class ModelManager implements ModelManagerInterface
     }
 
     /**
-     * @param BaseInterface $model
-     *
-     * @return int
      * @throws ExceptionInterface
      */
-    public function persist(BaseInterface $model): int
+    public function persist(BaseInterface $model, ?OptionsInterface $options = null): int
     {
         $normalizedModel = $this->serializer->normalize($model);
-        return $this->recordOperations->create($model::getOdooModelName(), [$normalizedModel]);
-    }
-
-    public function delete(BaseInterface $model): bool
-    {
-        if (null === $model->getId()) {
-            throw new LogicException('The model id should not be null !');
-        }
-
-        if (false === $model->getId()) {
-            throw new LogicException('The model id should not be false !');
-        }
-
-        return $this->recordOperations->unlink($model::getOdooModelName(), [$model->getId()]);
+        return $this->recordOperations->create($model::getOdooModelName(), [$normalizedModel], $options);
     }
 
     /**
-     * @param BaseInterface $model
-     *
-     * @return bool
      * @throws ExceptionInterface
      */
-    public function update(BaseInterface $model): bool
+    public function update(BaseInterface $model, ?OptionsInterface $options = null): bool
     {
         if (null === $model->getId()) {
             throw new LogicException('The model id should not be null !');
@@ -70,8 +52,25 @@ final class ModelManager implements ModelManagerInterface
         return $this->recordOperations->write(
             $model::getOdooModelName(),
             [$model->getId()],
-            $normalizedModel
+            $normalizedModel,
+            $options
         );
+    }
+
+    /**
+     * @throws ExceptionInterface
+     */
+    public function delete(BaseInterface $model, ?OptionsInterface $options = null): bool
+    {
+        if (null === $model->getId()) {
+            throw new LogicException('The model id should not be null !');
+        }
+
+        if (false === $model->getId()) {
+            throw new LogicException('The model id should not be false !');
+        }
+
+        return $this->recordOperations->unlink($model::getOdooModelName(), [$model->getId()], $options);
     }
 
     public function getRecordOperations(): RecordOperationsInterface

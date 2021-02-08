@@ -4,24 +4,19 @@ declare(strict_types=1);
 
 namespace Flux\OdooApiClient\Operations\Object\ExecuteKw;
 
+use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\OptionsInterface;
+
 interface RecordOperationsInterface extends OperationsInterface
 {
-    public function create(string $modelName, array $model): int;
+    public function create(string $modelName, array $model, ?OptionsInterface $options = null): int;
 
     /**
-     * @param string $modelName
      * @param int[] $ids
-     * @param array $model
-     *
-     * @return bool
      */
-    public function write(string $modelName, array $ids, array $model): bool;
+    public function write(string $modelName, array $ids, array $model, ?OptionsInterface $options = null): bool;
 
     /**
-     * @param string $modelName
      * @param int[] $ids
-     *
-     * @return bool
      */
-    public function unlink(string $modelName, array $ids): bool;
+    public function unlink(string $modelName, array $ids, ?OptionsInterface $options = null): bool;
 }
