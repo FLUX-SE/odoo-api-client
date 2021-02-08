@@ -1,0 +1,27 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Tests\Flux\OdooApiClient\TestModel\Object;
+
+use Flux\OdooApiClient\Model\Object\Base;
+
+/**
+ * Odoo model : _unknown
+ * ---
+ * Name : _unknown
+ * ---
+ * Info :
+ * Abstract model used as a substitute for relational fields with an unknown
+ *         comodel.
+ */
+final class Unknown extends Base
+{
+    /**
+     * @return string
+     */
+    public static function getOdooModelName(): string
+    {
+        return '_unknown';
+    }
+}

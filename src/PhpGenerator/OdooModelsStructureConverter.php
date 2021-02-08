@@ -6,6 +6,7 @@ namespace Flux\OdooApiClient\PhpGenerator;
 
 use Exception;
 use Flux\OdooApiClient\Model\BaseInterface;
+use Flux\OdooApiClient\Model\Object\Base;
 use Flux\OdooApiClient\Model\OdooRelation;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\InspectionOperationsInterface;
 use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\FieldsGetOptions;
@@ -60,8 +61,6 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
     public function convert(string $baseModelNamespace): array
     {
         $config = [];
-        $baseClass = $this->buildClassNameFormModelName(self::BASE_MODEL_NAME);
-        $baseModelClass = sprintf('%s\\%s', $baseModelNamespace, $baseClass);
 
         $searchReadOptions = new SearchReadOptions();
         $searchReadOptions->setFields([
@@ -83,7 +82,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             $config[] = $this->convertModel(
                 $baseModelNamespace,
                 $item,
-                $baseModelClass
+                Base::class
             );
         }
 
