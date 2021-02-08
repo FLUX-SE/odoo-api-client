@@ -42,7 +42,7 @@ final class Bill extends Message
      * Selection :
      *     -> sample (Try a sample vendor bill)
      *     -> upload (Upload your own bill)
-     *     -> email (Or send a bill to False@fluxse-master-staging-2033774.dev.odoo.com)
+     *     -> email (Or send a bill to False@dev.odoo.com)
      * ---
      * Searchable : yes
      * Sortable : yes
