@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Ir;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Ir;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -23,7 +23,7 @@ final class Default_ extends Base
      * Field
      * ---
      * Relation : many2one (ir.model.fields)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model\Fields
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model\Fields
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -38,7 +38,7 @@ final class Default_ extends Base
      * If set, action binding only applies for this user.
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -53,7 +53,7 @@ final class Default_ extends Base
      * If set, action binding only applies for this company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -88,7 +88,7 @@ final class Default_ extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -111,7 +111,7 @@ final class Default_ extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -134,7 +134,7 @@ final class Default_ extends Base
      * @param OdooRelation $field_id Field
      *        ---
      *        Relation : many2one (ir.model.fields)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model\Fields
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model\Fields
      *        ---
      *        Searchable : yes
      *        Sortable : yes

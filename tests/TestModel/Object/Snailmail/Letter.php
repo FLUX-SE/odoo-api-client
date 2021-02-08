@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Snailmail;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Snailmail;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -31,7 +31,7 @@ final class Letter extends Base
      * Sent by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -64,7 +64,7 @@ final class Letter extends Base
      * Recipient
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -77,7 +77,7 @@ final class Letter extends Base
      * Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -90,7 +90,7 @@ final class Letter extends Base
      * Optional report to print and attach
      * ---
      * Relation : many2one (ir.actions.report)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Actions\Report
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Actions\Report
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -103,7 +103,7 @@ final class Letter extends Base
      * Attachment
      * ---
      * Relation : many2one (ir.attachment)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Attachment
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Attachment
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -224,7 +224,7 @@ final class Letter extends Base
      * Snailmail Status Message
      * ---
      * Relation : many2one (mail.message)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -237,7 +237,7 @@ final class Letter extends Base
      * Notifications
      * ---
      * Relation : one2many (mail.notification -> letter_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Notification
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Notification
      * ---
      * Searchable : yes
      * Sortable : no
@@ -290,7 +290,7 @@ final class Letter extends Base
      * State
      * ---
      * Relation : many2one (res.country.state)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country\State
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country\State
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -303,7 +303,7 @@ final class Letter extends Base
      * Country
      * ---
      * Relation : many2one (res.country)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -316,7 +316,7 @@ final class Letter extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -339,7 +339,7 @@ final class Letter extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -370,14 +370,14 @@ final class Letter extends Base
      * @param OdooRelation $partner_id Recipient
      *        ---
      *        Relation : many2one (res.partner)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $company_id Company
      *        ---
      *        Relation : many2one (res.company)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      *        ---
      *        Searchable : yes
      *        Sortable : yes

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Sms;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Sms;
 
-use Flux\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\Object\Base;
 
 /**
  * Odoo model : sms.api

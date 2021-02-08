@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Res\Country;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -41,7 +41,7 @@ final class Group extends Base
      * Countries
      * ---
      * Relation : many2many (res.country)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country
      * ---
      * Searchable : yes
      * Sortable : no
@@ -54,7 +54,7 @@ final class Group extends Base
      * Pricelists
      * ---
      * Relation : many2many (product.pricelist)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Pricelist
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Pricelist
      * ---
      * Searchable : yes
      * Sortable : no
@@ -67,7 +67,7 @@ final class Group extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -90,7 +90,7 @@ final class Group extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

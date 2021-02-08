@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Hr\User\Work\Entry;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\User\Work\Entry;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -23,7 +23,7 @@ final class Employee extends Base
      * Me
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -36,7 +36,7 @@ final class Employee extends Base
      * Employee
      * ---
      * Relation : many2one (hr.employee)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Employee
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Employee
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -59,7 +59,7 @@ final class Employee extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -82,7 +82,7 @@ final class Employee extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -105,14 +105,14 @@ final class Employee extends Base
      * @param OdooRelation $user_id Me
      *        ---
      *        Relation : many2one (res.users)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $employee_id Employee
      *        ---
      *        Relation : many2one (hr.employee)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Employee
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Employee
      *        ---
      *        Searchable : yes
      *        Sortable : yes

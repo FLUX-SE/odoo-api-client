@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Mail\Resend;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Resend;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -28,7 +28,7 @@ final class Message extends Base
      * Message
      * ---
      * Relation : many2one (mail.message)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -41,7 +41,7 @@ final class Message extends Base
      * Recipients
      * ---
      * Relation : one2many (mail.resend.partner -> resend_wizard_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Resend\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Resend\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -54,7 +54,7 @@ final class Message extends Base
      * Notifications
      * ---
      * Relation : many2many (mail.notification)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Notification
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Notification
      * ---
      * Searchable : yes
      * Sortable : no
@@ -87,7 +87,7 @@ final class Message extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -110,7 +110,7 @@ final class Message extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

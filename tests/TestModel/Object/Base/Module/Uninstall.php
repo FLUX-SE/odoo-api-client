@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Base\Module;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Base\Module;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -38,7 +38,7 @@ final class Uninstall extends Base
      * Module
      * ---
      * Relation : many2one (ir.module.module)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Module\Module
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Module\Module
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -51,7 +51,7 @@ final class Uninstall extends Base
      * Impacted modules
      * ---
      * Relation : many2many (ir.module.module)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Module\Module
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Module\Module
      * ---
      * Searchable : no
      * Sortable : no
@@ -64,7 +64,7 @@ final class Uninstall extends Base
      * Impacted data models
      * ---
      * Relation : many2many (ir.model)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model
      * ---
      * Searchable : no
      * Sortable : no
@@ -77,7 +77,7 @@ final class Uninstall extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -100,7 +100,7 @@ final class Uninstall extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -123,7 +123,7 @@ final class Uninstall extends Base
      * @param OdooRelation $module_id Module
      *        ---
      *        Relation : many2one (ir.module.module)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Module\Module
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Module\Module
      *        ---
      *        Searchable : yes
      *        Sortable : yes

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Hr\Employee;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Employee;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -61,7 +61,7 @@ final class Public_ extends Base
      * Department
      * ---
      * Relation : many2one (hr.department)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Department
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Department
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -74,7 +74,7 @@ final class Public_ extends Base
      * Job Position
      * ---
      * Relation : many2one (hr.job)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Job
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Job
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -97,7 +97,7 @@ final class Public_ extends Base
      * Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -110,7 +110,7 @@ final class Public_ extends Base
      * Work Address
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -163,7 +163,7 @@ final class Public_ extends Base
      * User
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -176,7 +176,7 @@ final class Public_ extends Base
      * Resource
      * ---
      * Relation : many2one (resource.resource)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Resource_\Resource_
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Resource_\Resource_
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -189,7 +189,7 @@ final class Public_ extends Base
      * Resource Calendar
      * ---
      * Relation : many2one (resource.calendar)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Resource_\Calendar
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Resource_\Calendar
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -818,7 +818,7 @@ final class Public_ extends Base
      * Direct subordinates
      * ---
      * Relation : one2many (hr.employee.public -> parent_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Employee\Public_
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Employee\Public_
      * ---
      * Searchable : yes
      * Sortable : no
@@ -881,7 +881,7 @@ final class Public_ extends Base
      * Manager
      * ---
      * Relation : many2one (hr.employee.public)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Employee\Public_
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Employee\Public_
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -897,7 +897,7 @@ final class Public_ extends Base
      * The "Coach" has no specific rights or responsibilities by default.
      * ---
      * Relation : many2one (hr.employee.public)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Employee\Public_
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Employee\Public_
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -912,7 +912,7 @@ final class Public_ extends Base
      * Partner-related data of the user
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -927,7 +927,7 @@ final class Public_ extends Base
      * Direct and indirect subordinates
      * ---
      * Relation : one2many (hr.employee.public)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Employee\Public_
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Employee\Public_
      * ---
      * Searchable : no
      * Sortable : no
@@ -1002,7 +1002,7 @@ final class Public_ extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1015,7 +1015,7 @@ final class Public_ extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model\Fields;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model\Fields;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -31,7 +31,7 @@ final class Selection extends Base
      * Field
      * ---
      * Relation : many2one (ir.model.fields)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model\Fields
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model\Fields
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -74,7 +74,7 @@ final class Selection extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -97,7 +97,7 @@ final class Selection extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -120,7 +120,7 @@ final class Selection extends Base
      * @param OdooRelation $field_id Field
      *        ---
      *        Relation : many2one (ir.model.fields)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model\Fields
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model\Fields
      *        ---
      *        Searchable : yes
      *        Sortable : yes

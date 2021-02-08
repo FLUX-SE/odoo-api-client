@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Automatic\Entry;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Automatic\Entry;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -66,7 +66,7 @@ final class Wizard extends Base
      * Move Line
      * ---
      * Relation : many2many (account.move.line)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Move\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move\Line
      * ---
      * Searchable : yes
      * Sortable : no
@@ -89,7 +89,7 @@ final class Wizard extends Base
      * Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -102,7 +102,7 @@ final class Wizard extends Base
      * Currency
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : yes
      * Sortable : no
@@ -141,7 +141,7 @@ final class Wizard extends Base
      * Journal where to create the entry.
      * ---
      * Relation : many2one (account.journal)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Journal
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal
      * ---
      * Searchable : yes
      * Sortable : no
@@ -170,7 +170,7 @@ final class Wizard extends Base
      * Account used to move the period of an expense
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : no
@@ -185,7 +185,7 @@ final class Wizard extends Base
      * Account used to move the period of a revenue
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : no
@@ -200,7 +200,7 @@ final class Wizard extends Base
      * Account to transfer to.
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -226,7 +226,7 @@ final class Wizard extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -249,7 +249,7 @@ final class Wizard extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -284,7 +284,7 @@ final class Wizard extends Base
      * @param OdooRelation $company_id Company
      *        ---
      *        Relation : many2one (res.company)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -293,7 +293,7 @@ final class Wizard extends Base
      *        Journal where to create the entry.
      *        ---
      *        Relation : many2one (account.journal)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Journal
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal
      *        ---
      *        Searchable : yes
      *        Sortable : no

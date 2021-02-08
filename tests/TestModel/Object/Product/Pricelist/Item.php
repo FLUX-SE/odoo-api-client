@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Product\Pricelist;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Pricelist;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -33,7 +33,7 @@ final class Item extends Base
      * Specify a template if this rule only applies to one product template. Keep empty otherwise.
      * ---
      * Relation : many2one (product.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -48,7 +48,7 @@ final class Item extends Base
      * Specify a product if this rule only applies to one product. Keep empty otherwise.
      * ---
      * Relation : many2one (product.product)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Product
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Product
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -64,7 +64,7 @@ final class Item extends Base
      * categories. Keep empty otherwise.
      * ---
      * Relation : many2one (product.category)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Category
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Category
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -129,7 +129,7 @@ final class Item extends Base
      * Other Pricelist
      * ---
      * Relation : many2one (product.pricelist)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Pricelist
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Pricelist
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -142,7 +142,7 @@ final class Item extends Base
      * Pricelist
      * ---
      * Relation : many2one (product.pricelist)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Pricelist
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Pricelist
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -215,7 +215,7 @@ final class Item extends Base
      * Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -228,7 +228,7 @@ final class Item extends Base
      * Currency
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -338,7 +338,7 @@ final class Item extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -361,7 +361,7 @@ final class Item extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -410,7 +410,7 @@ final class Item extends Base
      * @param OdooRelation $pricelist_id Pricelist
      *        ---
      *        Relation : many2one (product.pricelist)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Pricelist
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Pricelist
      *        ---
      *        Searchable : yes
      *        Sortable : yes

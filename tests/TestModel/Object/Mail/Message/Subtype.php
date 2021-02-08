@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -67,7 +67,7 @@ final class Subtype extends Base
      * the parent_id of project subtypes refers to task-related subtypes.
      * ---
      * Relation : many2one (mail.message.subtype)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message\Subtype
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message\Subtype
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -141,7 +141,7 @@ final class Subtype extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -164,7 +164,7 @@ final class Subtype extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Hr;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Hr;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -39,7 +39,7 @@ final class Employee extends Base
      * Related user name for the resource to manage its access.
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -54,7 +54,7 @@ final class Employee extends Base
      * Partner-related data of the user
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -79,7 +79,7 @@ final class Employee extends Base
      * Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -94,7 +94,7 @@ final class Employee extends Base
      * Enter here the private address of the employee, not the one linked to your company.
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -127,7 +127,7 @@ final class Employee extends Base
      * Nationality (Country)
      * ---
      * Relation : many2one (res.country)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -212,7 +212,7 @@ final class Employee extends Base
      * Country of Birth
      * ---
      * Relation : many2one (res.country)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -281,7 +281,7 @@ final class Employee extends Base
      * Employee bank salary account
      * ---
      * Relation : many2one (res.partner.bank)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner\Bank
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner\Bank
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -421,7 +421,7 @@ final class Employee extends Base
      * Direct subordinates
      * ---
      * Relation : one2many (hr.employee -> parent_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Employee
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Employee
      * ---
      * Searchable : yes
      * Sortable : no
@@ -434,7 +434,7 @@ final class Employee extends Base
      * Tags
      * ---
      * Relation : many2many (hr.employee.category)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Employee\Category
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Employee\Category
      * ---
      * Searchable : yes
      * Sortable : no
@@ -526,7 +526,7 @@ final class Employee extends Base
      * Main Attachment
      * ---
      * Relation : many2one (ir.attachment)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Attachment
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Attachment
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -549,7 +549,7 @@ final class Employee extends Base
      * Employee Contracts
      * ---
      * Relation : one2many (hr.contract -> employee_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Contract
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Contract
      * ---
      * Searchable : yes
      * Sortable : no
@@ -564,7 +564,7 @@ final class Employee extends Base
      * Current contract of the employee
      * ---
      * Relation : many2one (hr.contract)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Contract
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Contract
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -619,7 +619,7 @@ final class Employee extends Base
      * Direct and indirect subordinates
      * ---
      * Relation : one2many (hr.employee)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Employee
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Employee
      * ---
      * Searchable : no
      * Sortable : no
@@ -632,7 +632,7 @@ final class Employee extends Base
      * Payslips
      * ---
      * Relation : one2many (hr.payslip -> employee_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Payslip
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Payslip
      * ---
      * Searchable : yes
      * Sortable : no
@@ -705,7 +705,7 @@ final class Employee extends Base
      * Activities
      * ---
      * Relation : one2many (mail.activity -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Activity
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Activity
      * ---
      * Searchable : yes
      * Sortable : no
@@ -738,7 +738,7 @@ final class Employee extends Base
      * Responsible User
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : no
@@ -751,7 +751,7 @@ final class Employee extends Base
      * Next Activity Type
      * ---
      * Relation : many2one (mail.activity.type)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Activity\Type
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Activity\Type
      * ---
      * Searchable : yes
      * Sortable : no
@@ -834,7 +834,7 @@ final class Employee extends Base
      * Followers
      * ---
      * Relation : one2many (mail.followers -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Followers
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Followers
      * ---
      * Searchable : yes
      * Sortable : no
@@ -847,7 +847,7 @@ final class Employee extends Base
      * Followers (Partners)
      * ---
      * Relation : many2many (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -860,7 +860,7 @@ final class Employee extends Base
      * Followers (Channels)
      * ---
      * Relation : many2many (mail.channel)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Channel
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Channel
      * ---
      * Searchable : yes
      * Sortable : no
@@ -873,7 +873,7 @@ final class Employee extends Base
      * Messages
      * ---
      * Relation : one2many (mail.message -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      * ---
      * Searchable : yes
      * Sortable : no
@@ -970,7 +970,7 @@ final class Employee extends Base
      * Website communication history
      * ---
      * Relation : one2many (mail.message -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      * ---
      * Searchable : yes
      * Sortable : no
@@ -995,7 +995,7 @@ final class Employee extends Base
      * Department
      * ---
      * Relation : many2one (hr.department)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Department
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Department
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1008,7 +1008,7 @@ final class Employee extends Base
      * Job Position
      * ---
      * Relation : many2one (hr.job)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Job
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Job
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1031,7 +1031,7 @@ final class Employee extends Base
      * Work Address
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1084,7 +1084,7 @@ final class Employee extends Base
      * Resource
      * ---
      * Relation : many2one (resource.resource)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Resource_\Resource_
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Resource_\Resource_
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1099,7 +1099,7 @@ final class Employee extends Base
      * Define the schedule of resource
      * ---
      * Relation : many2one (resource.calendar)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Resource_\Calendar
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Resource_\Calendar
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1112,7 +1112,7 @@ final class Employee extends Base
      * Manager
      * ---
      * Relation : many2one (hr.employee)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Employee
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Employee
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1128,7 +1128,7 @@ final class Employee extends Base
      * The "Coach" has no specific rights or responsibilities by default.
      * ---
      * Relation : many2one (hr.employee)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Employee
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Employee
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1809,7 +1809,7 @@ final class Employee extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1832,7 +1832,7 @@ final class Employee extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1855,14 +1855,14 @@ final class Employee extends Base
      * @param OdooRelation $company_id Company
      *        ---
      *        Relation : many2one (res.company)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $resource_id Resource
      *        ---
      *        Relation : many2one (resource.resource)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Resource_\Resource_
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Resource_\Resource_
      *        ---
      *        Searchable : yes
      *        Sortable : yes

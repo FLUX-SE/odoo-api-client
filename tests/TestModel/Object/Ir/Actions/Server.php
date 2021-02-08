@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Ir\Actions;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Actions;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -72,7 +72,7 @@ class Server extends Base
      * Model on which the server action runs.
      * ---
      * Relation : many2one (ir.model)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -111,7 +111,7 @@ class Server extends Base
      * global return value.
      * ---
      * Relation : many2many (ir.actions.server)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Actions\Server
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Actions\Server
      * ---
      * Searchable : yes
      * Sortable : no
@@ -126,7 +126,7 @@ class Server extends Base
      * Model for record creation / update. Set this field only to specify a different model than the base model.
      * ---
      * Relation : many2one (ir.model)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -151,7 +151,7 @@ class Server extends Base
      * Provide the field used to link the newly created record on the record used by the server action.
      * ---
      * Relation : many2one (ir.model.fields)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model\Fields
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model\Fields
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -164,7 +164,7 @@ class Server extends Base
      * Value Mapping
      * ---
      * Relation : one2many (ir.server.object.lines -> server_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Server\Object_\Lines
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Server\Object_\Lines
      * ---
      * Searchable : yes
      * Sortable : no
@@ -177,7 +177,7 @@ class Server extends Base
      * Groups
      * ---
      * Relation : many2many (res.groups)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Groups
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Groups
      * ---
      * Searchable : yes
      * Sortable : no
@@ -190,7 +190,7 @@ class Server extends Base
      * Add Followers
      * ---
      * Relation : many2many (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -203,7 +203,7 @@ class Server extends Base
      * Add Channels
      * ---
      * Relation : many2many (mail.channel)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Channel
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Channel
      * ---
      * Searchable : yes
      * Sortable : no
@@ -216,7 +216,7 @@ class Server extends Base
      * Email Template
      * ---
      * Relation : many2one (mail.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -229,7 +229,7 @@ class Server extends Base
      * Activity
      * ---
      * Relation : many2one (mail.activity.type)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Activity\Type
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Activity\Type
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -304,7 +304,7 @@ class Server extends Base
      * Responsible
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -358,7 +358,7 @@ class Server extends Base
      * SMS Template
      * ---
      * Relation : many2one (sms.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Sms\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Sms\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -405,7 +405,7 @@ class Server extends Base
      * Setting a value makes this action available in the sidebar for the given model.
      * ---
      * Relation : many2one (ir.model)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -442,7 +442,7 @@ class Server extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -465,7 +465,7 @@ class Server extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -506,7 +506,7 @@ class Server extends Base
      *        Model on which the server action runs.
      *        ---
      *        Relation : many2one (ir.model)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model
      *        ---
      *        Searchable : yes
      *        Sortable : yes

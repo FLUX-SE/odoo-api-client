@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -114,7 +114,7 @@ final class Tax extends Base
      * Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -127,7 +127,7 @@ final class Tax extends Base
      * Children Taxes
      * ---
      * Relation : many2many (account.tax)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax
      * ---
      * Searchable : yes
      * Sortable : no
@@ -209,7 +209,7 @@ final class Tax extends Base
      * Tax Group
      * ---
      * Relation : many2one (account.tax.group)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax\Group
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax\Group
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -253,7 +253,7 @@ final class Tax extends Base
      * the regular tax account.
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -268,7 +268,7 @@ final class Tax extends Base
      * Distribution when the tax is used on an invoice
      * ---
      * Relation : one2many (account.tax.repartition.line -> invoice_tax_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax\Repartition\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax\Repartition\Line
      * ---
      * Searchable : yes
      * Sortable : no
@@ -283,7 +283,7 @@ final class Tax extends Base
      * Distribution when the tax is used on a refund
      * ---
      * Relation : one2many (account.tax.repartition.line -> refund_tax_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax\Repartition\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax\Repartition\Line
      * ---
      * Searchable : yes
      * Sortable : no
@@ -298,7 +298,7 @@ final class Tax extends Base
      * Technical field used to restrict the domain of account tags for tax repartition lines created for this tax.
      * ---
      * Relation : many2one (res.country)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country
      * ---
      * Searchable : yes
      * Sortable : no
@@ -324,7 +324,7 @@ final class Tax extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -347,7 +347,7 @@ final class Tax extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -407,7 +407,7 @@ final class Tax extends Base
      * @param OdooRelation $company_id Company
      *        ---
      *        Relation : many2one (res.company)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -424,7 +424,7 @@ final class Tax extends Base
      * @param OdooRelation $tax_group_id Tax Group
      *        ---
      *        Relation : many2one (account.tax.group)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax\Group
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax\Group
      *        ---
      *        Searchable : yes
      *        Sortable : yes

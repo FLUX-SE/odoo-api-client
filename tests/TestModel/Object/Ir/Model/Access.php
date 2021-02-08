@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -54,7 +54,7 @@ final class Access extends Base
      * Model
      * ---
      * Relation : many2one (ir.model)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -67,7 +67,7 @@ final class Access extends Base
      * Group
      * ---
      * Relation : many2one (res.groups)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Groups
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Groups
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -120,7 +120,7 @@ final class Access extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -143,7 +143,7 @@ final class Access extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -170,7 +170,7 @@ final class Access extends Base
      * @param OdooRelation $model_id Model
      *        ---
      *        Relation : many2one (ir.model)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model
      *        ---
      *        Searchable : yes
      *        Sortable : yes

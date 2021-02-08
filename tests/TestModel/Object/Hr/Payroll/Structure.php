@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Hr\Payroll;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Payroll;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -51,7 +51,7 @@ final class Structure extends Base
      * Type
      * ---
      * Relation : many2one (hr.payroll.structure.type)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Payroll\Structure\Type
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Payroll\Structure\Type
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -64,7 +64,7 @@ final class Structure extends Base
      * Country
      * ---
      * Relation : many2one (res.country)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -87,7 +87,7 @@ final class Structure extends Base
      * Salary Rules
      * ---
      * Relation : one2many (hr.salary.rule -> struct_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Salary\Rule
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Salary\Rule
      * ---
      * Searchable : yes
      * Sortable : no
@@ -100,7 +100,7 @@ final class Structure extends Base
      * Report
      * ---
      * Relation : many2one (ir.actions.report)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Actions\Report
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Actions\Report
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -125,7 +125,7 @@ final class Structure extends Base
      * Unpaid Work Entry Type
      * ---
      * Relation : many2many (hr.work.entry.type)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Work\Entry\Type
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Work\Entry\Type
      * ---
      * Searchable : yes
      * Sortable : no
@@ -171,7 +171,7 @@ final class Structure extends Base
      * Other Input Line
      * ---
      * Relation : many2many (hr.payslip.input.type)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Payslip\Input\Type
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Payslip\Input\Type
      * ---
      * Searchable : yes
      * Sortable : no
@@ -184,7 +184,7 @@ final class Structure extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -207,7 +207,7 @@ final class Structure extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -234,7 +234,7 @@ final class Structure extends Base
      * @param OdooRelation $type_id Type
      *        ---
      *        Relation : many2one (hr.payroll.structure.type)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Payroll\Structure\Type
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Payroll\Structure\Type
      *        ---
      *        Searchable : yes
      *        Sortable : yes

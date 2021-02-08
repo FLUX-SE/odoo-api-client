@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Mail\Tracking;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Tracking;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -31,7 +31,7 @@ final class Value extends Base
      * Field
      * ---
      * Relation : many2one (ir.model.fields)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model\Fields
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model\Fields
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -194,7 +194,7 @@ final class Value extends Base
      * Message ID
      * ---
      * Relation : many2one (mail.message)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -217,7 +217,7 @@ final class Value extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -240,7 +240,7 @@ final class Value extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -263,7 +263,7 @@ final class Value extends Base
      * @param OdooRelation $field Field
      *        ---
      *        Relation : many2one (ir.model.fields)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model\Fields
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model\Fields
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -274,7 +274,7 @@ final class Value extends Base
      * @param OdooRelation $mail_message_id Message ID
      *        ---
      *        Relation : many2one (mail.message)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      *        ---
      *        Searchable : yes
      *        Sortable : yes

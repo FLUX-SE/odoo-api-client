@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Ir;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Ir;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -98,7 +98,7 @@ final class Attachment extends Base
      * Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -277,7 +277,7 @@ final class Attachment extends Base
      * Original (unoptimized, unresized) attachment
      * ---
      * Relation : many2one (ir.attachment)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Attachment
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Attachment
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -290,7 +290,7 @@ final class Attachment extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -313,7 +313,7 @@ final class Attachment extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

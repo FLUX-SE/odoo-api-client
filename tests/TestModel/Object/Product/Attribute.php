@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Product;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Product;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -41,7 +41,7 @@ final class Attribute extends Base
      * Values
      * ---
      * Relation : one2many (product.attribute.value -> attribute_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Attribute\Value
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Attribute\Value
      * ---
      * Searchable : yes
      * Sortable : no
@@ -66,7 +66,7 @@ final class Attribute extends Base
      * Lines
      * ---
      * Relation : one2many (product.template.attribute.line -> attribute_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Template\Attribute\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Template\Attribute\Line
      * ---
      * Searchable : yes
      * Sortable : no
@@ -111,7 +111,7 @@ final class Attribute extends Base
      * Related Products
      * ---
      * Relation : many2many (product.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Template
      * ---
      * Searchable : yes
      * Sortable : no
@@ -141,7 +141,7 @@ final class Attribute extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -164,7 +164,7 @@ final class Attribute extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

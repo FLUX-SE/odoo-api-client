@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Report\L10nFrHrPayroll;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Report\L10nFrHrPayroll;
 
-use Flux\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\Object\Base;
 
 /**
  * Odoo model : report.l10n_fr_hr_payroll.report_l10n_fr_fiche_paye

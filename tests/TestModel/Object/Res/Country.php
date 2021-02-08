@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Res;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Res;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -79,7 +79,7 @@ final class Country extends Base
      * modify the input form for addresses.
      * ---
      * Relation : many2one (ir.ui.view)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Ui\View
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Ui\View
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -92,7 +92,7 @@ final class Country extends Base
      * Currency
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -127,7 +127,7 @@ final class Country extends Base
      * Country Groups
      * ---
      * Relation : many2many (res.country.group)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country\Group
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country\Group
      * ---
      * Searchable : yes
      * Sortable : no
@@ -140,7 +140,7 @@ final class Country extends Base
      * States
      * ---
      * Relation : one2many (res.country.state -> country_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country\State
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country\State
      * ---
      * Searchable : yes
      * Sortable : no
@@ -201,7 +201,7 @@ final class Country extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -224,7 +224,7 @@ final class Country extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

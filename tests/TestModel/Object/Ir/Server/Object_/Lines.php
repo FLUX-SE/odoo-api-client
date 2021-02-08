@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Ir\Server\Object_;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Server\Object_;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -31,7 +31,7 @@ final class Lines extends Base
      * Related Server Action
      * ---
      * Relation : many2one (ir.actions.server)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Actions\Server
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Actions\Server
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -44,7 +44,7 @@ final class Lines extends Base
      * Field
      * ---
      * Relation : many2one (ir.model.fields)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model\Fields
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model\Fields
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -97,7 +97,7 @@ final class Lines extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -120,7 +120,7 @@ final class Lines extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -143,7 +143,7 @@ final class Lines extends Base
      * @param OdooRelation $col1 Field
      *        ---
      *        Relation : many2one (ir.model.fields)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model\Fields
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model\Fields
      *        ---
      *        Searchable : yes
      *        Sortable : yes

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Ir;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Ir;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -23,7 +23,7 @@ final class DemoFailure extends Base
      * Module
      * ---
      * Relation : many2one (ir.module.module)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Module\Module
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Module\Module
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -46,7 +46,7 @@ final class DemoFailure extends Base
      * Wizard
      * ---
      * Relation : many2one (ir.demo_failure.wizard)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\DemoFailure\Wizard
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\DemoFailure\Wizard
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -59,7 +59,7 @@ final class DemoFailure extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -82,7 +82,7 @@ final class DemoFailure extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -105,7 +105,7 @@ final class DemoFailure extends Base
      * @param OdooRelation $module_id Module
      *        ---
      *        Relation : many2one (ir.module.module)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Module\Module
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Module\Module
      *        ---
      *        Searchable : yes
      *        Sortable : yes

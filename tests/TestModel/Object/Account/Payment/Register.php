@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Payment;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -72,7 +72,7 @@ final class Register extends Base
      * The payment's currency.
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -85,7 +85,7 @@ final class Register extends Base
      * Journal
      * ---
      * Relation : many2one (account.journal)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Journal
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -98,7 +98,7 @@ final class Register extends Base
      * Recipient Bank Account
      * ---
      * Relation : many2one (res.partner.bank)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner\Bank
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner\Bank
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -111,7 +111,7 @@ final class Register extends Base
      * Company Currency
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : yes
      * Sortable : no
@@ -124,7 +124,7 @@ final class Register extends Base
      * Journal items
      * ---
      * Relation : many2many (account.move.line)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Move\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move\Line
      * ---
      * Searchable : yes
      * Sortable : no
@@ -187,7 +187,7 @@ final class Register extends Base
      * The payment's currency.
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -224,7 +224,7 @@ final class Register extends Base
      * Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -237,7 +237,7 @@ final class Register extends Base
      * Customer/Vendor
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -260,7 +260,7 @@ final class Register extends Base
      * transfer, module account_sepa must be installed 
      * ---
      * Relation : many2one (account.payment.method)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Payment\Method
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment\Method
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -273,7 +273,7 @@ final class Register extends Base
      * Available Payment Method
      * ---
      * Relation : many2many (account.payment.method)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Payment\Method
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment\Method
      * ---
      * Searchable : no
      * Sortable : no
@@ -323,7 +323,7 @@ final class Register extends Base
      * Difference Account
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -390,7 +390,7 @@ final class Register extends Base
      * available.
      * ---
      * Relation : many2one (payment.token)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Payment\Token
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Payment\Token
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -403,7 +403,7 @@ final class Register extends Base
      * Suitable Payment Token Partner
      * ---
      * Relation : many2many (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : no
      * Sortable : no
@@ -426,7 +426,7 @@ final class Register extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -449,7 +449,7 @@ final class Register extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

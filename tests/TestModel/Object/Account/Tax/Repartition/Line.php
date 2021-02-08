@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax\Repartition;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax\Repartition;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -73,7 +73,7 @@ final class Line extends Base
      * Account on which to post the tax amount
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -86,7 +86,7 @@ final class Line extends Base
      * Tax Grids
      * ---
      * Relation : many2many (account.account.tag)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Tag
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Tag
      * ---
      * Searchable : yes
      * Sortable : no
@@ -101,7 +101,7 @@ final class Line extends Base
      * The tax set to apply this distribution on invoices. Mutually exclusive with refund_tax_id
      * ---
      * Relation : many2one (account.tax)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -116,7 +116,7 @@ final class Line extends Base
      * The tax set to apply this distribution on refund invoices. Mutually exclusive with invoice_tax_id
      * ---
      * Relation : many2one (account.tax)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -129,7 +129,7 @@ final class Line extends Base
      * Tax
      * ---
      * Relation : many2one (account.tax)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax
      * ---
      * Searchable : no
      * Sortable : no
@@ -144,7 +144,7 @@ final class Line extends Base
      * Technical field used to restrict tags domain in form view.
      * ---
      * Relation : many2one (res.country)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country
      * ---
      * Searchable : yes
      * Sortable : no
@@ -159,7 +159,7 @@ final class Line extends Base
      * The company this distribution line belongs to.
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -196,7 +196,7 @@ final class Line extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -219,7 +219,7 @@ final class Line extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

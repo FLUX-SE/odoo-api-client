@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Hr\Departure;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Departure;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -63,7 +63,7 @@ final class Wizard extends Base
      * Employee
      * ---
      * Relation : many2one (hr.employee)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Employee
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Employee
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -96,7 +96,7 @@ final class Wizard extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -119,7 +119,7 @@ final class Wizard extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -146,7 +146,7 @@ final class Wizard extends Base
      * @param OdooRelation $employee_id Employee
      *        ---
      *        Relation : many2one (hr.employee)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Employee
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Employee
      *        ---
      *        Searchable : yes
      *        Sortable : yes

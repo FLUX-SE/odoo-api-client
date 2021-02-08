@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Chart;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Chart;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -41,7 +41,7 @@ final class Template extends Base
      * Parent Chart Template
      * ---
      * Relation : many2one (account.chart.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Chart\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Chart\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -80,7 +80,7 @@ final class Template extends Base
      * Currency
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -116,7 +116,7 @@ final class Template extends Base
      * Associated Account Templates
      * ---
      * Relation : one2many (account.account.template -> chart_template_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : no
@@ -131,7 +131,7 @@ final class Template extends Base
      * List of all the taxes that have to be installed by the wizard
      * ---
      * Relation : one2many (account.tax.template -> chart_template_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax\Template
      * ---
      * Searchable : yes
      * Sortable : no
@@ -174,7 +174,7 @@ final class Template extends Base
      * Gain Exchange Rate Account
      * ---
      * Relation : many2one (account.account.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -187,7 +187,7 @@ final class Template extends Base
      * Loss Exchange Rate Account
      * ---
      * Relation : many2one (account.account.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -200,7 +200,7 @@ final class Template extends Base
      * Journal Suspense Account
      * ---
      * Relation : many2one (account.account.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -213,7 +213,7 @@ final class Template extends Base
      * Cash Difference Income Account
      * ---
      * Relation : many2one (account.account.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -226,7 +226,7 @@ final class Template extends Base
      * Cash Difference Expense Account
      * ---
      * Relation : many2one (account.account.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -239,7 +239,7 @@ final class Template extends Base
      * PoS receivable account
      * ---
      * Relation : many2one (account.account.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -252,7 +252,7 @@ final class Template extends Base
      * Receivable Account
      * ---
      * Relation : many2one (account.account.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -265,7 +265,7 @@ final class Template extends Base
      * Payable Account
      * ---
      * Relation : many2one (account.account.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -278,7 +278,7 @@ final class Template extends Base
      * Category of Expense Account
      * ---
      * Relation : many2one (account.account.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -291,7 +291,7 @@ final class Template extends Base
      * Category of Income Account
      * ---
      * Relation : many2one (account.account.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -304,7 +304,7 @@ final class Template extends Base
      * Expense Account on Product Template
      * ---
      * Relation : many2one (account.account.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -317,7 +317,7 @@ final class Template extends Base
      * Income Account on Product Template
      * ---
      * Relation : many2one (account.account.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -330,7 +330,7 @@ final class Template extends Base
      * Input Account for Stock Valuation
      * ---
      * Relation : many2one (account.account.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -343,7 +343,7 @@ final class Template extends Base
      * Output Account for Stock Valuation
      * ---
      * Relation : many2one (account.account.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -356,7 +356,7 @@ final class Template extends Base
      * Account Template for Stock Valuation
      * ---
      * Relation : many2one (account.account.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -369,7 +369,7 @@ final class Template extends Base
      * Tax current account (payable)
      * ---
      * Relation : many2one (account.account.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -382,7 +382,7 @@ final class Template extends Base
      * Tax current account (receivable)
      * ---
      * Relation : many2one (account.account.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -395,7 +395,7 @@ final class Template extends Base
      * Advance tax payment account
      * ---
      * Relation : many2one (account.account.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -411,7 +411,7 @@ final class Template extends Base
      * amount.
      * ---
      * Relation : many2one (account.account.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -424,7 +424,7 @@ final class Template extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -447,7 +447,7 @@ final class Template extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -480,7 +480,7 @@ final class Template extends Base
      * @param OdooRelation $currency_id Currency
      *        ---
      *        Relation : many2one (res.currency)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      *        ---
      *        Searchable : yes
      *        Sortable : yes

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Ir;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Ir;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\Object\Base;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**

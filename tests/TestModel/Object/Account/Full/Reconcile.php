@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Full;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Full;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -41,7 +41,7 @@ final class Reconcile extends Base
      * Reconciliation Parts
      * ---
      * Relation : one2many (account.partial.reconcile -> full_reconcile_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Partial\Reconcile
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Partial\Reconcile
      * ---
      * Searchable : yes
      * Sortable : no
@@ -54,7 +54,7 @@ final class Reconcile extends Base
      * Matched Journal Items
      * ---
      * Relation : one2many (account.move.line -> full_reconcile_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Move\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move\Line
      * ---
      * Searchable : yes
      * Sortable : no
@@ -67,7 +67,7 @@ final class Reconcile extends Base
      * Exchange Move
      * ---
      * Relation : many2one (account.move)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Move
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -80,7 +80,7 @@ final class Reconcile extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -103,7 +103,7 @@ final class Reconcile extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

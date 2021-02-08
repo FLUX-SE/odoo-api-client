@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Sms;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Sms;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -251,7 +251,7 @@ final class Composer extends Base
      * Use Template
      * ---
      * Relation : many2one (sms.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Sms\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Sms\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -274,7 +274,7 @@ final class Composer extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -297,7 +297,7 @@ final class Composer extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

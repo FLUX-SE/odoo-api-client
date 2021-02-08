@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Format\Address;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Format\Address;
 
-use Flux\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\Object\Base;
 
 /**
  * Odoo model : format.address.mixin

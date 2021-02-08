@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Mail\Alias;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Alias;
 
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
-use Tests\Flux\OdooApiClient\TestModel\Object\Mail\Alias;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Alias;
 
 /**
  * Odoo model : mail.alias.mixin
@@ -24,7 +24,7 @@ final class Mixin extends Alias
      * Alias
      * ---
      * Relation : many2one (mail.alias)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Alias
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Alias
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -37,7 +37,7 @@ final class Mixin extends Alias
      * @param OdooRelation $alias_id Alias
      *        ---
      *        Relation : many2one (mail.alias)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Alias
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Alias
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -47,7 +47,7 @@ final class Mixin extends Alias
      *        existing record will cause the creation of a new record of this model (e.g. a Project Task)
      *        ---
      *        Relation : many2one (ir.model)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model
      *        ---
      *        Searchable : yes
      *        Sortable : yes

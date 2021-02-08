@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Ir\Actions;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Actions;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -75,7 +75,7 @@ final class Report extends Base
      * Model
      * ---
      * Relation : many2one (ir.model)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model
      * ---
      * Searchable : yes
      * Sortable : no
@@ -129,7 +129,7 @@ final class Report extends Base
      * Groups
      * ---
      * Relation : many2many (res.groups)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Groups
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Groups
      * ---
      * Searchable : yes
      * Sortable : no
@@ -154,7 +154,7 @@ final class Report extends Base
      * Paper Format
      * ---
      * Relation : many2one (report.paperformat)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Report\Paperformat
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Report\Paperformat
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -229,7 +229,7 @@ final class Report extends Base
      * Setting a value makes this action available in the sidebar for the given model.
      * ---
      * Relation : many2one (ir.model)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -252,7 +252,7 @@ final class Report extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -275,7 +275,7 @@ final class Report extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

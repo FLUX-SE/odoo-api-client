@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Ir\Sequence;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Sequence;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -51,7 +51,7 @@ final class DateRange extends Base
      * Main Sequence
      * ---
      * Relation : many2one (ir.sequence)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Sequence
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Sequence
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -89,7 +89,7 @@ final class DateRange extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -112,7 +112,7 @@ final class DateRange extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -143,7 +143,7 @@ final class DateRange extends Base
      * @param OdooRelation $sequence_id Main Sequence
      *        ---
      *        Relation : many2one (ir.sequence)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Sequence
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Sequence
      *        ---
      *        Searchable : yes
      *        Sortable : yes

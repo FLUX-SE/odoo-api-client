@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Product\Template\Attribute;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Template\Attribute;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -44,7 +44,7 @@ final class Value extends Base
      * Attribute Value
      * ---
      * Relation : many2one (product.attribute.value)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Attribute\Value
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Attribute\Value
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -57,7 +57,7 @@ final class Value extends Base
      * Attribute Line
      * ---
      * Relation : many2one (product.template.attribute.line)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Template\Attribute\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Template\Attribute\Line
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -82,7 +82,7 @@ final class Value extends Base
      * Currency
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : no
      * Sortable : no
@@ -98,7 +98,7 @@ final class Value extends Base
      * and accessory products.
      * ---
      * Relation : one2many (product.template.attribute.exclusion -> product_template_attribute_value_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Template\Attribute\Exclusion
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Template\Attribute\Exclusion
      * ---
      * Searchable : yes
      * Sortable : no
@@ -111,7 +111,7 @@ final class Value extends Base
      * Product Template
      * ---
      * Relation : many2one (product.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -124,7 +124,7 @@ final class Value extends Base
      * Attribute
      * ---
      * Relation : many2one (product.attribute)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Attribute
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Attribute
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -137,7 +137,7 @@ final class Value extends Base
      * Related Variants
      * ---
      * Relation : many2many (product.product)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Product
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Product
      * ---
      * Searchable : yes
      * Sortable : no
@@ -192,7 +192,7 @@ final class Value extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -215,7 +215,7 @@ final class Value extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -238,14 +238,14 @@ final class Value extends Base
      * @param OdooRelation $product_attribute_value_id Attribute Value
      *        ---
      *        Relation : many2one (product.attribute.value)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Attribute\Value
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Attribute\Value
      *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $attribute_line_id Attribute Line
      *        ---
      *        Relation : many2one (product.template.attribute.line)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Template\Attribute\Line
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Template\Attribute\Line
      *        ---
      *        Searchable : yes
      *        Sortable : yes

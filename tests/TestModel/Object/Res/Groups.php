@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Res;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Res;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -35,7 +35,7 @@ final class Groups extends Base
      * Users
      * ---
      * Relation : many2many (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : no
@@ -48,7 +48,7 @@ final class Groups extends Base
      * Access Controls
      * ---
      * Relation : one2many (ir.model.access -> group_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model\Access
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model\Access
      * ---
      * Searchable : yes
      * Sortable : no
@@ -61,7 +61,7 @@ final class Groups extends Base
      * Rules
      * ---
      * Relation : many2many (ir.rule)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Rule
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Rule
      * ---
      * Searchable : yes
      * Sortable : no
@@ -74,7 +74,7 @@ final class Groups extends Base
      * Access Menu
      * ---
      * Relation : many2many (ir.ui.menu)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Ui\Menu
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Ui\Menu
      * ---
      * Searchable : yes
      * Sortable : no
@@ -87,7 +87,7 @@ final class Groups extends Base
      * Views
      * ---
      * Relation : many2many (ir.ui.view)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Ui\View
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Ui\View
      * ---
      * Searchable : yes
      * Sortable : no
@@ -110,7 +110,7 @@ final class Groups extends Base
      * Application
      * ---
      * Relation : many2one (ir.module.category)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Module\Category
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Module\Category
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -157,7 +157,7 @@ final class Groups extends Base
      * Users of this group automatically inherit those groups
      * ---
      * Relation : many2many (res.groups)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Groups
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Groups
      * ---
      * Searchable : yes
      * Sortable : no
@@ -170,7 +170,7 @@ final class Groups extends Base
      * Transitively inherits
      * ---
      * Relation : many2many (res.groups)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Groups
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Groups
      * ---
      * Searchable : no
      * Sortable : no
@@ -183,7 +183,7 @@ final class Groups extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -206,7 +206,7 @@ final class Groups extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

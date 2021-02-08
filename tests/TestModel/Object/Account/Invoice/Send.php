@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Invoice;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Invoice;
 
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
-use Tests\Flux\OdooApiClient\TestModel\Object\Mail\Compose\Message;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Compose\Message;
 
 /**
  * Odoo model : account.invoice.send
@@ -67,7 +67,7 @@ final class Send extends Message
      * Invoices
      * ---
      * Relation : many2many (account.move)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Move
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move
      * ---
      * Searchable : yes
      * Sortable : no
@@ -80,7 +80,7 @@ final class Send extends Message
      * Composer
      * ---
      * Relation : many2one (mail.compose.message)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Compose\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Compose\Message
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -95,7 +95,7 @@ final class Send extends Message
      * Send XML/EDI invoices
      * ---
      * Relation : many2many (account.edi.format)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Edi\Format
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Edi\Format
      * ---
      * Searchable : yes
      * Sortable : no
@@ -108,7 +108,7 @@ final class Send extends Message
      * Partner
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : no
      * Sortable : no
@@ -153,7 +153,7 @@ final class Send extends Message
      * Invalid Addresses
      * ---
      * Relation : many2many (account.move)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Move
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move
      * ---
      * Searchable : no
      * Sortable : no
@@ -166,7 +166,7 @@ final class Send extends Message
      * @param OdooRelation $composer_id Composer
      *        ---
      *        Relation : many2one (mail.compose.message)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Compose\Message
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Compose\Message
      *        ---
      *        Searchable : yes
      *        Sortable : yes

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Res;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Res;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -44,7 +44,7 @@ class Partner extends Base
      * Title
      * ---
      * Relation : many2one (res.partner.title)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner\Title
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner\Title
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -57,7 +57,7 @@ class Partner extends Base
      * Related Company
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -80,7 +80,7 @@ class Partner extends Base
      * Contact
      * ---
      * Relation : one2many (res.partner -> parent_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -759,7 +759,7 @@ class Partner extends Base
      * Partner with same Tax ID
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : no
      * Sortable : no
@@ -772,7 +772,7 @@ class Partner extends Base
      * Banks
      * ---
      * Relation : one2many (res.partner.bank -> partner_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner\Bank
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner\Bank
      * ---
      * Searchable : yes
      * Sortable : no
@@ -805,7 +805,7 @@ class Partner extends Base
      * Tags
      * ---
      * Relation : many2many (res.partner.category)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner\Category
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner\Category
      * ---
      * Searchable : yes
      * Sortable : no
@@ -919,7 +919,7 @@ class Partner extends Base
      * State
      * ---
      * Relation : many2one (res.country.state)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country\State
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country\State
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -932,7 +932,7 @@ class Partner extends Base
      * Country
      * ---
      * Relation : many2one (res.country)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -999,7 +999,7 @@ class Partner extends Base
      * Industry
      * ---
      * Relation : many2one (res.partner.industry)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner\Industry
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner\Industry
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1026,7 +1026,7 @@ class Partner extends Base
      * Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1049,7 +1049,7 @@ class Partner extends Base
      * Users
      * ---
      * Relation : one2many (res.users -> partner_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1085,7 +1085,7 @@ class Partner extends Base
      * Commercial Entity
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1130,7 +1130,7 @@ class Partner extends Base
      * Self
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : no
      * Sortable : no
@@ -1153,7 +1153,7 @@ class Partner extends Base
      * Activities
      * ---
      * Relation : one2many (mail.activity -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Activity
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Activity
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1186,7 +1186,7 @@ class Partner extends Base
      * Responsible User
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1199,7 +1199,7 @@ class Partner extends Base
      * Next Activity Type
      * ---
      * Relation : many2one (mail.activity.type)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Activity\Type
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Activity\Type
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1282,7 +1282,7 @@ class Partner extends Base
      * Followers
      * ---
      * Relation : one2many (mail.followers -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Followers
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Followers
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1295,7 +1295,7 @@ class Partner extends Base
      * Followers (Partners)
      * ---
      * Relation : many2many (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1308,7 +1308,7 @@ class Partner extends Base
      * Followers (Channels)
      * ---
      * Relation : many2many (mail.channel)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Channel
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Channel
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1321,7 +1321,7 @@ class Partner extends Base
      * Messages
      * ---
      * Relation : one2many (mail.message -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1416,7 +1416,7 @@ class Partner extends Base
      * Main Attachment
      * ---
      * Relation : many2one (ir.attachment)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Attachment
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Attachment
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1486,7 +1486,7 @@ class Partner extends Base
      * Channels
      * ---
      * Relation : many2many (mail.channel)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Channel
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Channel
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1501,7 +1501,7 @@ class Partner extends Base
      * The internal user in charge of this contact.
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1637,7 +1637,7 @@ class Partner extends Base
      * This pricelist will be used, instead of the default one, for sales to the current partner
      * ---
      * Relation : many2one (product.pricelist)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Pricelist
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Pricelist
      * ---
      * Searchable : no
      * Sortable : no
@@ -1684,7 +1684,7 @@ class Partner extends Base
      * Website communication history
      * ---
      * Relation : one2many (mail.message -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1755,7 +1755,7 @@ class Partner extends Base
      * Utility field to express amount currency
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : no
      * Sortable : no
@@ -1780,7 +1780,7 @@ class Partner extends Base
      * This account will be used instead of the default one as the payable account for the current partner
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1795,7 +1795,7 @@ class Partner extends Base
      * This account will be used instead of the default one as the receivable account for the current partner
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1810,7 +1810,7 @@ class Partner extends Base
      * The fiscal position determines the taxes/accounts used for this contact.
      * ---
      * Relation : many2one (account.fiscal.position)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Fiscal\Position
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Fiscal\Position
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1825,7 +1825,7 @@ class Partner extends Base
      * This payment term will be used instead of the default one for sales orders and customer invoices
      * ---
      * Relation : many2one (account.payment.term)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Payment\Term
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment\Term
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1840,7 +1840,7 @@ class Partner extends Base
      * This payment term will be used instead of the default one for purchase orders and vendor bills
      * ---
      * Relation : many2one (account.payment.term)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Payment\Term
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment\Term
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1853,7 +1853,7 @@ class Partner extends Base
      * Companies that refers to partner
      * ---
      * Relation : one2many (res.company -> partner_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1892,7 +1892,7 @@ class Partner extends Base
      * Invoices
      * ---
      * Relation : one2many (account.move -> partner_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Move
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1905,7 +1905,7 @@ class Partner extends Base
      * Partner Contracts
      * ---
      * Relation : one2many (account.analytic.account -> partner_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Analytic\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Analytic\Account
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1994,7 +1994,7 @@ class Partner extends Base
      * method to register payments in mass. Use cases: create bank files for batch wires, check runs.
      * ---
      * Relation : many2one (account.payment.method)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Payment\Method
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment\Method
      * ---
      * Searchable : yes
      * Sortable : no
@@ -2031,7 +2031,7 @@ class Partner extends Base
      * Payment Tokens
      * ---
      * Relation : one2many (payment.token -> partner_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Payment\Token
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Payment\Token
      * ---
      * Searchable : yes
      * Sortable : no
@@ -2124,7 +2124,7 @@ class Partner extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -2147,7 +2147,7 @@ class Partner extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -2172,7 +2172,7 @@ class Partner extends Base
      *        This account will be used instead of the default one as the payable account for the current partner
      *        ---
      *        Relation : many2one (account.account)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      *        ---
      *        Searchable : yes
      *        Sortable : no
@@ -2181,7 +2181,7 @@ class Partner extends Base
      *        This account will be used instead of the default one as the receivable account for the current partner
      *        ---
      *        Relation : many2one (account.account)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      *        ---
      *        Searchable : yes
      *        Sortable : no

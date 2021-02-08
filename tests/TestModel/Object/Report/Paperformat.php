@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Report;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Report;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -202,7 +202,7 @@ final class Paperformat extends Base
      * Explicitly associated reports
      * ---
      * Relation : one2many (ir.actions.report -> paperformat_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Actions\Report
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Actions\Report
      * ---
      * Searchable : yes
      * Sortable : no
@@ -235,7 +235,7 @@ final class Paperformat extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -258,7 +258,7 @@ final class Paperformat extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Mail;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Mail;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -31,7 +31,7 @@ final class Notification extends Base
      * Message
      * ---
      * Relation : many2one (mail.message)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -46,7 +46,7 @@ final class Notification extends Base
      * Optional mail_mail ID. Used mainly to optimize searches.
      * ---
      * Relation : many2one (mail.mail)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Mail
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Mail
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -59,7 +59,7 @@ final class Notification extends Base
      * Recipient
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -119,7 +119,7 @@ final class Notification extends Base
      * SMS
      * ---
      * Relation : many2one (sms.sms)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Sms\Sms
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Sms\Sms
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -158,7 +158,7 @@ final class Notification extends Base
      * Snailmail Letter
      * ---
      * Relation : many2one (snailmail.letter)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Snailmail\Letter
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Snailmail\Letter
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -198,7 +198,7 @@ final class Notification extends Base
      * @param OdooRelation $mail_message_id Message
      *        ---
      *        Relation : many2one (mail.message)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      *        ---
      *        Searchable : yes
      *        Sortable : yes

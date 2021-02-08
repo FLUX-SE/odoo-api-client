@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Bank\Statement;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Bank\Statement;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
-use Tests\Flux\OdooApiClient\TestModel\Object\Account\Move;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move;
 
 /**
  * Odoo model : account.bank.statement.line
@@ -31,7 +31,7 @@ final class Line extends Move
      * Journal Entry
      * ---
      * Relation : many2one (account.move)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Move
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -44,7 +44,7 @@ final class Line extends Move
      * Statement
      * ---
      * Relation : many2one (account.bank.statement)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Bank\Statement
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Bank\Statement
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -138,7 +138,7 @@ final class Line extends Move
      * The optional other currency if it is a multi-currency entry.
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -153,7 +153,7 @@ final class Line extends Move
      * Payments generated during the reconciliation of this bank statement lines.
      * ---
      * Relation : many2many (account.payment)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Payment
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment
      * ---
      * Searchable : yes
      * Sortable : no
@@ -232,7 +232,7 @@ final class Line extends Move
      * Online Account
      * ---
      * Relation : many2one (account.online.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Online\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Online\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -245,7 +245,7 @@ final class Line extends Move
      * Account Online Link
      * ---
      * Relation : many2one (account.online.link)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Online\Link
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Online\Link
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -258,14 +258,14 @@ final class Line extends Move
      * @param OdooRelation $move_id Journal Entry
      *        ---
      *        Relation : many2one (account.move)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Move
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move
      *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $statement_id Statement
      *        ---
      *        Relation : many2one (account.bank.statement)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Bank\Statement
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Bank\Statement
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -276,7 +276,7 @@ final class Line extends Move
      * @param OdooRelation|null $currency_id Journal Currency
      *        ---
      *        Relation : many2one (res.currency)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -313,7 +313,7 @@ final class Line extends Move
      * @param OdooRelation $journal_id Journal
      *        ---
      *        Relation : many2one (account.journal)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Journal
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal
      *        ---
      *        Searchable : yes
      *        Sortable : yes

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax\Report;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax\Report;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -45,7 +45,7 @@ final class Line extends Base
      * Tax tags populating this line
      * ---
      * Relation : many2many (account.account.tag)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Tag
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Tag
      * ---
      * Searchable : yes
      * Sortable : no
@@ -60,7 +60,7 @@ final class Line extends Base
      * The optional action to call when clicking on this line in accounting reports.
      * ---
      * Relation : many2one (ir.actions.act_window)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Actions\ActWindow
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Actions\ActWindow
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -75,7 +75,7 @@ final class Line extends Base
      * Lines that should be rendered as children of this one
      * ---
      * Relation : one2many (account.tax.report.line -> parent_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax\Report\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax\Report\Line
      * ---
      * Searchable : yes
      * Sortable : no
@@ -88,7 +88,7 @@ final class Line extends Base
      * Parent Line
      * ---
      * Relation : many2one (account.tax.report.line)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax\Report\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax\Report\Line
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -126,7 +126,7 @@ final class Line extends Base
      * The parent tax report of this line
      * ---
      * Relation : many2one (account.tax.report)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax\Report
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax\Report
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -179,7 +179,7 @@ final class Line extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -202,7 +202,7 @@ final class Line extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -240,7 +240,7 @@ final class Line extends Base
      *        The parent tax report of this line
      *        ---
      *        Relation : many2one (account.tax.report)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax\Report
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax\Report
      *        ---
      *        Searchable : yes
      *        Sortable : yes

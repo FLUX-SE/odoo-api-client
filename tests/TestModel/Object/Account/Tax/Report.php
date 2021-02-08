@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -45,7 +45,7 @@ final class Report extends Base
      * Country for which this report is available.
      * ---
      * Relation : many2one (res.country)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -60,7 +60,7 @@ final class Report extends Base
      * Content of this tax report
      * ---
      * Relation : one2many (account.tax.report.line -> report_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax\Report\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax\Report\Line
      * ---
      * Searchable : yes
      * Sortable : no
@@ -75,7 +75,7 @@ final class Report extends Base
      * Subset of line_ids, containing the lines at the root of the report.
      * ---
      * Relation : one2many (account.tax.report.line -> report_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax\Report\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax\Report\Line
      * ---
      * Searchable : yes
      * Sortable : no
@@ -88,7 +88,7 @@ final class Report extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -111,7 +111,7 @@ final class Report extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -142,7 +142,7 @@ final class Report extends Base
      *        Country for which this report is available.
      *        ---
      *        Relation : many2one (res.country)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country
      *        ---
      *        Searchable : yes
      *        Sortable : yes

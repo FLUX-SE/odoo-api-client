@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Ir\Actions\ActWindow;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Actions\ActWindow;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -41,7 +41,7 @@ final class View extends Base
      * View
      * ---
      * Relation : many2one (ir.ui.view)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Ui\View
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Ui\View
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -54,7 +54,7 @@ final class View extends Base
      * Action
      * ---
      * Relation : many2one (ir.actions.act_window)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Actions\ActWindow
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Actions\ActWindow
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -104,7 +104,7 @@ final class View extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -127,7 +127,7 @@ final class View extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

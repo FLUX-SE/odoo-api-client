@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Payment;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Payment;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -53,7 +53,7 @@ final class Token extends Base
      * Partner
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -66,7 +66,7 @@ final class Token extends Base
      * Acquirer Account
      * ---
      * Relation : many2one (payment.acquirer)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Payment\Acquirer
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Payment\Acquirer
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -79,7 +79,7 @@ final class Token extends Base
      * Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -112,7 +112,7 @@ final class Token extends Base
      * Payment Transactions
      * ---
      * Relation : one2many (payment.transaction -> payment_token_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Payment\Transaction
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Payment\Transaction
      * ---
      * Searchable : yes
      * Sortable : no
@@ -135,7 +135,7 @@ final class Token extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -158,7 +158,7 @@ final class Token extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -181,14 +181,14 @@ final class Token extends Base
      * @param OdooRelation $partner_id Partner
      *        ---
      *        Relation : many2one (res.partner)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $acquirer_id Acquirer Account
      *        ---
      *        Relation : many2one (payment.acquirer)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Payment\Acquirer
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Payment\Acquirer
      *        ---
      *        Searchable : yes
      *        Sortable : yes

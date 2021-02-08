@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -31,7 +31,7 @@ final class Template extends Base
      * Chart Template
      * ---
      * Relation : many2one (account.chart.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Chart\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Chart\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -116,7 +116,7 @@ final class Template extends Base
      * Children Taxes
      * ---
      * Relation : many2many (account.tax.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax\Template
      * ---
      * Searchable : yes
      * Sortable : no
@@ -200,7 +200,7 @@ final class Template extends Base
      * Repartition when the tax is used on an invoice
      * ---
      * Relation : one2many (account.tax.repartition.line.template -> invoice_tax_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax\Repartition\Line\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax\Repartition\Line\Template
      * ---
      * Searchable : yes
      * Sortable : no
@@ -215,7 +215,7 @@ final class Template extends Base
      * Repartition when the tax is used on a refund
      * ---
      * Relation : one2many (account.tax.repartition.line.template -> refund_tax_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax\Repartition\Line\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax\Repartition\Line\Template
      * ---
      * Searchable : yes
      * Sortable : no
@@ -228,7 +228,7 @@ final class Template extends Base
      * Tax Group
      * ---
      * Relation : many2one (account.tax.group)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax\Group
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax\Group
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -262,7 +262,7 @@ final class Template extends Base
      * the regular tax account.
      * ---
      * Relation : many2one (account.account.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -275,7 +275,7 @@ final class Template extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -298,7 +298,7 @@ final class Template extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -321,7 +321,7 @@ final class Template extends Base
      * @param OdooRelation $chart_template_id Chart Template
      *        ---
      *        Relation : many2one (account.chart.template)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Chart\Template
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Chart\Template
      *        ---
      *        Searchable : yes
      *        Sortable : yes

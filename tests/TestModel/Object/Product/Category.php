@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Product;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Product;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -51,7 +51,7 @@ final class Category extends Base
      * Parent Category
      * ---
      * Relation : many2one (product.category)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Category
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Category
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -74,7 +74,7 @@ final class Category extends Base
      * Child Categories
      * ---
      * Relation : one2many (product.category -> parent_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Category
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Category
      * ---
      * Searchable : yes
      * Sortable : no
@@ -101,7 +101,7 @@ final class Category extends Base
      * This account will be used when validating a customer invoice.
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : no
@@ -118,7 +118,7 @@ final class Category extends Base
      * invoice validation.
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : no
@@ -131,7 +131,7 @@ final class Category extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -154,7 +154,7 @@ final class Category extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

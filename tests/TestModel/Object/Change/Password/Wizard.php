@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Change\Password;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Change\Password;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -23,7 +23,7 @@ final class Wizard extends Base
      * Users
      * ---
      * Relation : one2many (change.password.user -> wizard_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Change\Password\User
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Change\Password\User
      * ---
      * Searchable : yes
      * Sortable : no
@@ -36,7 +36,7 @@ final class Wizard extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -59,7 +59,7 @@ final class Wizard extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

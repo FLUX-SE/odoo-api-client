@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Payment;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Payment;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -46,7 +46,7 @@ final class Transaction extends Base
      * Acquirer
      * ---
      * Relation : many2one (payment.acquirer)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Payment\Acquirer
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Payment\Acquirer
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -141,7 +141,7 @@ final class Transaction extends Base
      * Currency
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -178,7 +178,7 @@ final class Transaction extends Base
      * Customer
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -254,7 +254,7 @@ final class Transaction extends Base
      * Country
      * ---
      * Relation : many2one (res.country)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -287,7 +287,7 @@ final class Transaction extends Base
      * Callback Document Model
      * ---
      * Relation : many2one (ir.model)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -350,7 +350,7 @@ final class Transaction extends Base
      * Payment Token
      * ---
      * Relation : many2one (payment.token)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Payment\Token
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Payment\Token
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -363,7 +363,7 @@ final class Transaction extends Base
      * Payment
      * ---
      * Relation : many2one (account.payment)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Payment
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -376,7 +376,7 @@ final class Transaction extends Base
      * Invoices
      * ---
      * Relation : many2many (account.move)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Move
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move
      * ---
      * Searchable : yes
      * Sortable : no
@@ -399,7 +399,7 @@ final class Transaction extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -422,7 +422,7 @@ final class Transaction extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -445,7 +445,7 @@ final class Transaction extends Base
      * @param OdooRelation $acquirer_id Acquirer
      *        ---
      *        Relation : many2one (payment.acquirer)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Payment\Acquirer
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Payment\Acquirer
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -478,7 +478,7 @@ final class Transaction extends Base
      * @param OdooRelation $currency_id Currency
      *        ---
      *        Relation : many2one (res.currency)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -491,7 +491,7 @@ final class Transaction extends Base
      * @param OdooRelation $partner_country_id Country
      *        ---
      *        Relation : many2one (res.country)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country
      *        ---
      *        Searchable : yes
      *        Sortable : yes

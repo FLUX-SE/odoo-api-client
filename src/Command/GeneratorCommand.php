@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Command;
+namespace FluxSE\OdooApiClient\Command;
 
-use Flux\OdooApiClient\Api\OdooApiRequestMakerInterface;
-use Flux\OdooApiClient\Operations\ObjectOperationsInterface;
-use Flux\OdooApiClient\PhpGenerator\OdooModelsStructureConverterInterface;
-use Flux\OdooApiClient\PhpGenerator\OdooPhpClassesGeneratorInterface;
+use FluxSE\OdooApiClient\Api\OdooApiRequestMakerInterface;
+use FluxSE\OdooApiClient\Operations\ObjectOperationsInterface;
+use FluxSE\OdooApiClient\PhpGenerator\OdooModelsStructureConverterInterface;
+use FluxSE\OdooApiClient\PhpGenerator\OdooPhpClassesGeneratorInterface;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -48,9 +48,6 @@ final class GeneratorCommand extends Command
         parent::__construct($name);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function configure(): void
     {
         $this
@@ -58,8 +55,8 @@ final class GeneratorCommand extends Command
             ->addArgument('database', InputArgument::REQUIRED, 'Your Odoo database name.')
             ->addArgument('username', InputArgument::REQUIRED, 'Your Odoo account username.')
             ->addArgument('password', InputArgument::REQUIRED, 'Your Odoo account password')
-            ->addArgument('basePath', InputArgument::OPTIONAL, 'The path where classes will be generated', dirname(__DIR__) . '/Model/Object')
-            ->addArgument('baseNamespace', InputArgument::OPTIONAL, 'The base namespace of the generated classes', 'Flux\\OdooApiClient\\Model\\Object')
+            ->addArgument('basePath', InputArgument::REQUIRED, 'The path where classes will be generated (ex: ./src/OdooModel/Object)')
+            ->addArgument('baseNamespace', InputArgument::REQUIRED, 'The base namespace of the generated classes (ex: "App\\OdooModel\\Object")')
         ;
     }
 

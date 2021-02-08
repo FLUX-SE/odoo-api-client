@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Portal\Wizard;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Portal\Wizard;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -23,7 +23,7 @@ final class User extends Base
      * Wizard
      * ---
      * Relation : many2one (portal.wizard)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Portal\Wizard
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Portal\Wizard
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -36,7 +36,7 @@ final class User extends Base
      * Contact
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -69,7 +69,7 @@ final class User extends Base
      * Login User
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -82,7 +82,7 @@ final class User extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -105,7 +105,7 @@ final class User extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -128,14 +128,14 @@ final class User extends Base
      * @param OdooRelation $wizard_id Wizard
      *        ---
      *        Relation : many2one (portal.wizard)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Portal\Wizard
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Portal\Wizard
      *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $partner_id Contact
      *        ---
      *        Relation : many2one (res.partner)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      *        ---
      *        Searchable : yes
      *        Sortable : yes

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Product;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Product;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -106,7 +106,7 @@ class Template extends Base
      * Select category for the current product
      * ---
      * Relation : many2one (product.category)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Category
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Category
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -119,7 +119,7 @@ class Template extends Base
      * Currency
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : no
      * Sortable : no
@@ -132,7 +132,7 @@ class Template extends Base
      * Cost Currency
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : no
      * Sortable : no
@@ -256,7 +256,7 @@ class Template extends Base
      * Technical field. Used for searching on pricelists, not stored in database.
      * ---
      * Relation : many2one (product.pricelist)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Pricelist
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Pricelist
      * ---
      * Searchable : no
      * Sortable : no
@@ -271,7 +271,7 @@ class Template extends Base
      * Default unit of measure used for all stock operations.
      * ---
      * Relation : many2one (uom.uom)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Uom\Uom
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Uom\Uom
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -297,7 +297,7 @@ class Template extends Base
      * measure.
      * ---
      * Relation : many2one (uom.uom)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Uom\Uom
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Uom\Uom
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -310,7 +310,7 @@ class Template extends Base
      * Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -325,7 +325,7 @@ class Template extends Base
      * Gives the different ways to package the same product.
      * ---
      * Relation : one2many (product.packaging)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Packaging
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Packaging
      * ---
      * Searchable : no
      * Sortable : no
@@ -340,7 +340,7 @@ class Template extends Base
      * Define vendor pricelists.
      * ---
      * Relation : one2many (product.supplierinfo -> product_tmpl_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Supplierinfo
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Supplierinfo
      * ---
      * Searchable : yes
      * Sortable : no
@@ -353,7 +353,7 @@ class Template extends Base
      * Variant Seller
      * ---
      * Relation : one2many (product.supplierinfo -> product_tmpl_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Supplierinfo
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Supplierinfo
      * ---
      * Searchable : yes
      * Sortable : no
@@ -398,7 +398,7 @@ class Template extends Base
      * Product Attributes
      * ---
      * Relation : one2many (product.template.attribute.line -> product_tmpl_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Template\Attribute\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Template\Attribute\Line
      * ---
      * Searchable : yes
      * Sortable : no
@@ -413,7 +413,7 @@ class Template extends Base
      * Technical compute
      * ---
      * Relation : many2many (product.template.attribute.line)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Template\Attribute\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Template\Attribute\Line
      * ---
      * Searchable : no
      * Sortable : no
@@ -426,7 +426,7 @@ class Template extends Base
      * Products
      * ---
      * Relation : one2many (product.product -> product_tmpl_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Product
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Product
      * ---
      * Searchable : yes
      * Sortable : no
@@ -439,7 +439,7 @@ class Template extends Base
      * Product
      * ---
      * Relation : many2one (product.product)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Product
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Product
      * ---
      * Searchable : no
      * Sortable : no
@@ -514,7 +514,7 @@ class Template extends Base
      * Default taxes used when selling the product.
      * ---
      * Relation : many2many (account.tax)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax
      * ---
      * Searchable : yes
      * Sortable : no
@@ -529,7 +529,7 @@ class Template extends Base
      * Default taxes used when buying the product.
      * ---
      * Relation : many2many (account.tax)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax
      * ---
      * Searchable : yes
      * Sortable : no
@@ -544,7 +544,7 @@ class Template extends Base
      * Keep this field empty to use the default value from the product category.
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : no
@@ -560,7 +560,7 @@ class Template extends Base
      * automated valuation method is configured, the expense account on the product category will be used.
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : no
@@ -623,7 +623,7 @@ class Template extends Base
      * Activities
      * ---
      * Relation : one2many (mail.activity -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Activity
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Activity
      * ---
      * Searchable : yes
      * Sortable : no
@@ -656,7 +656,7 @@ class Template extends Base
      * Responsible User
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : no
@@ -669,7 +669,7 @@ class Template extends Base
      * Next Activity Type
      * ---
      * Relation : many2one (mail.activity.type)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Activity\Type
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Activity\Type
      * ---
      * Searchable : yes
      * Sortable : no
@@ -752,7 +752,7 @@ class Template extends Base
      * Followers
      * ---
      * Relation : one2many (mail.followers -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Followers
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Followers
      * ---
      * Searchable : yes
      * Sortable : no
@@ -765,7 +765,7 @@ class Template extends Base
      * Followers (Partners)
      * ---
      * Relation : many2many (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -778,7 +778,7 @@ class Template extends Base
      * Followers (Channels)
      * ---
      * Relation : many2many (mail.channel)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Channel
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Channel
      * ---
      * Searchable : yes
      * Sortable : no
@@ -791,7 +791,7 @@ class Template extends Base
      * Messages
      * ---
      * Relation : one2many (mail.message -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      * ---
      * Searchable : yes
      * Sortable : no
@@ -886,7 +886,7 @@ class Template extends Base
      * Main Attachment
      * ---
      * Relation : many2one (ir.attachment)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Attachment
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Attachment
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -901,7 +901,7 @@ class Template extends Base
      * Website communication history
      * ---
      * Relation : one2many (mail.message -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      * ---
      * Searchable : yes
      * Sortable : no
@@ -926,7 +926,7 @@ class Template extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -949,7 +949,7 @@ class Template extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -990,7 +990,7 @@ class Template extends Base
      *        Select category for the current product
      *        ---
      *        Relation : many2one (product.category)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Category
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Category
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -999,7 +999,7 @@ class Template extends Base
      *        Default unit of measure used for all stock operations.
      *        ---
      *        Relation : many2one (uom.uom)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Uom\Uom
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Uom\Uom
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -1009,14 +1009,14 @@ class Template extends Base
      *        measure.
      *        ---
      *        Relation : many2one (uom.uom)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Uom\Uom
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Uom\Uom
      *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation[] $product_variant_ids Products
      *        ---
      *        Relation : one2many (product.product -> product_tmpl_id)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Product
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Product
      *        ---
      *        Searchable : yes
      *        Sortable : no

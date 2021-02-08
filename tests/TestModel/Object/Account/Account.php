@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -43,7 +43,7 @@ final class Account extends Base
      * Forces all moves for this account to have this account currency.
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -89,7 +89,7 @@ final class Account extends Base
      * close a fiscal year and generate opening entries.
      * ---
      * Relation : many2one (account.account.type)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Type
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Type
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -153,7 +153,7 @@ final class Account extends Base
      * Default Taxes
      * ---
      * Relation : many2many (account.tax)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax
      * ---
      * Searchable : yes
      * Sortable : no
@@ -176,7 +176,7 @@ final class Account extends Base
      * Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -191,7 +191,7 @@ final class Account extends Base
      * Optional tags you may want to assign for custom reporting
      * ---
      * Relation : many2many (account.account.tag)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Tag
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Tag
      * ---
      * Searchable : yes
      * Sortable : no
@@ -204,7 +204,7 @@ final class Account extends Base
      * Group
      * ---
      * Relation : many2one (account.group)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Group
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Group
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -217,7 +217,7 @@ final class Account extends Base
      * Root
      * ---
      * Relation : many2one (account.root)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Root
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Root
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -232,7 +232,7 @@ final class Account extends Base
      * Define in which journals this account can be used. If empty, can be used in all journals.
      * ---
      * Relation : many2many (account.journal)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Journal
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal
      * ---
      * Searchable : yes
      * Sortable : no
@@ -291,7 +291,7 @@ final class Account extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -314,7 +314,7 @@ final class Account extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -348,14 +348,14 @@ final class Account extends Base
      *        close a fiscal year and generate opening entries.
      *        ---
      *        Relation : many2one (account.account.type)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Type
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Type
      *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $company_id Company
      *        ---
      *        Relation : many2one (res.company)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      *        ---
      *        Searchable : yes
      *        Sortable : yes

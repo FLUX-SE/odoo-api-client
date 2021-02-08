@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Hr\Payroll\Edit\Payslip;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Payroll\Edit\Payslip;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -58,7 +58,7 @@ final class Line extends Base
      * Rule
      * ---
      * Relation : many2one (hr.salary.rule)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Salary\Rule
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Salary\Rule
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -84,7 +84,7 @@ final class Line extends Base
      * Contract
      * ---
      * Relation : many2one (hr.contract)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Contract
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Contract
      * ---
      * Searchable : yes
      * Sortable : no
@@ -97,7 +97,7 @@ final class Line extends Base
      * Employee
      * ---
      * Relation : many2one (hr.employee)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Employee
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Employee
      * ---
      * Searchable : yes
      * Sortable : no
@@ -150,7 +150,7 @@ final class Line extends Base
      * Pay Slip
      * ---
      * Relation : many2one (hr.payslip)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Payslip
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Payslip
      * ---
      * Searchable : yes
      * Sortable : no
@@ -167,7 +167,7 @@ final class Line extends Base
      * contracts will be applied.
      * ---
      * Relation : many2one (hr.payroll.structure)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Payroll\Structure
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Payroll\Structure
      * ---
      * Searchable : yes
      * Sortable : no
@@ -180,7 +180,7 @@ final class Line extends Base
      * Category
      * ---
      * Relation : many2one (hr.salary.rule.category)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Salary\Rule\Category
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Salary\Rule\Category
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -193,7 +193,7 @@ final class Line extends Base
      * Edit Payslip Lines Wizard
      * ---
      * Relation : many2one (hr.payroll.edit.payslip.lines.wizard)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Payroll\Edit\Payslip\Lines\Wizard
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Payroll\Edit\Payslip\Lines\Wizard
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -206,7 +206,7 @@ final class Line extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -229,7 +229,7 @@ final class Line extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -252,7 +252,7 @@ final class Line extends Base
      * @param OdooRelation $edit_payslip_lines_wizard_id Edit Payslip Lines Wizard
      *        ---
      *        Relation : many2one (hr.payroll.edit.payslip.lines.wizard)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Payroll\Edit\Payslip\Lines\Wizard
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Payroll\Edit\Payslip\Lines\Wizard
      *        ---
      *        Searchable : yes
      *        Sortable : yes

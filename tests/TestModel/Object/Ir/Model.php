@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Ir;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Ir;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -73,7 +73,7 @@ final class Model extends Base
      * Fields
      * ---
      * Relation : one2many (ir.model.fields -> model_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model\Fields
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model\Fields
      * ---
      * Searchable : yes
      * Sortable : no
@@ -88,7 +88,7 @@ final class Model extends Base
      * The list of models that extends the current model.
      * ---
      * Relation : many2many (ir.model)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model
      * ---
      * Searchable : no
      * Sortable : no
@@ -115,7 +115,7 @@ final class Model extends Base
      * Access
      * ---
      * Relation : one2many (ir.model.access -> model_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model\Access
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model\Access
      * ---
      * Searchable : yes
      * Sortable : no
@@ -128,7 +128,7 @@ final class Model extends Base
      * Record Rules
      * ---
      * Relation : one2many (ir.rule -> model_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Rule
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Rule
      * ---
      * Searchable : yes
      * Sortable : no
@@ -163,7 +163,7 @@ final class Model extends Base
      * Views
      * ---
      * Relation : one2many (ir.ui.view)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Ui\View
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Ui\View
      * ---
      * Searchable : no
      * Sortable : no
@@ -236,7 +236,7 @@ final class Model extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -259,7 +259,7 @@ final class Model extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -296,7 +296,7 @@ final class Model extends Base
      * @param OdooRelation[] $field_id Fields
      *        ---
      *        Relation : one2many (ir.model.fields -> model_id)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model\Fields
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model\Fields
      *        ---
      *        Searchable : yes
      *        Sortable : no

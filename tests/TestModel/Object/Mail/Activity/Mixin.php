@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Mail\Activity;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Activity;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -44,7 +44,7 @@ final class Mixin extends Base
      * Activities
      * ---
      * Relation : one2many (mail.activity -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Activity
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Activity
      * ---
      * Searchable : yes
      * Sortable : no
@@ -77,7 +77,7 @@ final class Mixin extends Base
      * Responsible User
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : no
@@ -90,7 +90,7 @@ final class Mixin extends Base
      * Next Activity Type
      * ---
      * Relation : many2one (mail.activity.type)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Activity\Type
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Activity\Type
      * ---
      * Searchable : yes
      * Sortable : no

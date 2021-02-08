@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Reconcile;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Reconcile;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -61,7 +61,7 @@ final class Model extends Base
      * Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -165,7 +165,7 @@ final class Model extends Base
      * The reconciliation model will only be available from the selected journals.
      * ---
      * Relation : many2many (account.journal)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Journal
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal
      * ---
      * Searchable : yes
      * Sortable : no
@@ -376,7 +376,7 @@ final class Model extends Base
      * The reconciliation model will only be applied to the selected customers/vendors.
      * ---
      * Relation : many2many (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -391,7 +391,7 @@ final class Model extends Base
      * The reconciliation model will only be applied to the selected customer/vendor categories.
      * ---
      * Relation : many2many (res.partner.category)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner\Category
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner\Category
      * ---
      * Searchable : yes
      * Sortable : no
@@ -404,7 +404,7 @@ final class Model extends Base
      * Line
      * ---
      * Relation : one2many (account.reconcile.model.line -> model_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Reconcile\Model\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Reconcile\Model\Line
      * ---
      * Searchable : yes
      * Sortable : no
@@ -422,7 +422,7 @@ final class Model extends Base
      *     e.g: .*N°48748 abc123.*
      * ---
      * Relation : one2many (account.reconcile.model.partner.mapping -> model_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Reconcile\Model\Partner\Mapping
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Reconcile\Model\Partner\Mapping
      * ---
      * Searchable : yes
      * Sortable : no
@@ -481,7 +481,7 @@ final class Model extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -504,7 +504,7 @@ final class Model extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -535,7 +535,7 @@ final class Model extends Base
      * @param OdooRelation $company_id Company
      *        ---
      *        Relation : many2one (res.company)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      *        ---
      *        Searchable : yes
      *        Sortable : yes

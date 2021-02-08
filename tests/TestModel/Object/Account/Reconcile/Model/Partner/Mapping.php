@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Reconcile\Model\Partner;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Reconcile\Model\Partner;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -31,7 +31,7 @@ final class Mapping extends Base
      * Model
      * ---
      * Relation : many2one (account.reconcile.model)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Reconcile\Model
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Reconcile\Model
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -44,7 +44,7 @@ final class Mapping extends Base
      * Partner
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -77,7 +77,7 @@ final class Mapping extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -100,7 +100,7 @@ final class Mapping extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -123,14 +123,14 @@ final class Mapping extends Base
      * @param OdooRelation $model_id Model
      *        ---
      *        Relation : many2one (account.reconcile.model)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Reconcile\Model
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Reconcile\Model
      *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $partner_id Partner
      *        ---
      *        Relation : many2one (res.partner)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      *        ---
      *        Searchable : yes
      *        Sortable : yes

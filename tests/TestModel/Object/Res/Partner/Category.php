@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -51,7 +51,7 @@ final class Category extends Base
      * Parent Category
      * ---
      * Relation : many2one (res.partner.category)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner\Category
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner\Category
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -64,7 +64,7 @@ final class Category extends Base
      * Child Tags
      * ---
      * Relation : one2many (res.partner.category -> parent_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner\Category
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner\Category
      * ---
      * Searchable : yes
      * Sortable : no
@@ -99,7 +99,7 @@ final class Category extends Base
      * Partners
      * ---
      * Relation : many2many (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -112,7 +112,7 @@ final class Category extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -135,7 +135,7 @@ final class Category extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

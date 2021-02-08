@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax\Repartition\Line;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax\Repartition\Line;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -61,7 +61,7 @@ final class Template extends Base
      * Account on which to post the tax amount
      * ---
      * Relation : many2one (account.account.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -76,7 +76,7 @@ final class Template extends Base
      * The tax set to apply this distribution on invoices. Mutually exclusive with refund_tax_id
      * ---
      * Relation : many2one (account.tax.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -91,7 +91,7 @@ final class Template extends Base
      * The tax set to apply this distribution on refund invoices. Mutually exclusive with invoice_tax_id
      * ---
      * Relation : many2one (account.tax.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -106,7 +106,7 @@ final class Template extends Base
      * Additional tags that will be assigned by this repartition line for use in financial reports
      * ---
      * Relation : many2many (account.account.tag)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Tag
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Tag
      * ---
      * Searchable : yes
      * Sortable : no
@@ -131,7 +131,7 @@ final class Template extends Base
      * Tax report lines whose '+' tag will be assigned to move lines by this repartition line
      * ---
      * Relation : many2many (account.tax.report.line)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax\Report\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax\Report\Line
      * ---
      * Searchable : yes
      * Sortable : no
@@ -146,7 +146,7 @@ final class Template extends Base
      * Tax report lines whose '-' tag will be assigned to move lines by this repartition line
      * ---
      * Relation : many2many (account.tax.report.line)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax\Report\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax\Report\Line
      * ---
      * Searchable : yes
      * Sortable : no
@@ -159,7 +159,7 @@ final class Template extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -182,7 +182,7 @@ final class Template extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

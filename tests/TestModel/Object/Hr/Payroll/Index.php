@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Hr\Payroll;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Payroll;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -50,7 +50,7 @@ final class Index extends Base
      * Contracts
      * ---
      * Relation : many2many (hr.contract)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Contract
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Contract
      * ---
      * Searchable : yes
      * Sortable : no
@@ -73,7 +73,7 @@ final class Index extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -96,7 +96,7 @@ final class Index extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

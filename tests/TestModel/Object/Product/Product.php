@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Product;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Product;
 
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -61,7 +61,7 @@ final class Product extends Template
      * Product Template
      * ---
      * Relation : many2one (product.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -74,7 +74,7 @@ final class Product extends Template
      * Attribute Values
      * ---
      * Relation : many2many (product.template.attribute.value)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Template\Attribute\Value
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Template\Attribute\Value
      * ---
      * Searchable : yes
      * Sortable : no
@@ -157,7 +157,7 @@ final class Product extends Template
      * @param OdooRelation $product_tmpl_id Product Template
      *        ---
      *        Relation : many2one (product.template)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Template
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Template
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -182,7 +182,7 @@ final class Product extends Template
      *        Select category for the current product
      *        ---
      *        Relation : many2one (product.category)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Category
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Category
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -191,7 +191,7 @@ final class Product extends Template
      *        Default unit of measure used for all stock operations.
      *        ---
      *        Relation : many2one (uom.uom)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Uom\Uom
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Uom\Uom
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -201,14 +201,14 @@ final class Product extends Template
      *        measure.
      *        ---
      *        Relation : many2one (uom.uom)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Uom\Uom
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Uom\Uom
      *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation[] $product_variant_ids Products
      *        ---
      *        Relation : one2many (product.product)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Product
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Product
      *        ---
      *        Searchable : yes
      *        Sortable : no

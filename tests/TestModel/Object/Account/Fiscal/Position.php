@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Fiscal;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Fiscal;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -63,7 +63,7 @@ final class Position extends Base
      * Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -76,7 +76,7 @@ final class Position extends Base
      * Account Mapping
      * ---
      * Relation : one2many (account.fiscal.position.account -> position_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Fiscal\Position\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Fiscal\Position\Account
      * ---
      * Searchable : yes
      * Sortable : no
@@ -89,7 +89,7 @@ final class Position extends Base
      * Tax Mapping
      * ---
      * Relation : one2many (account.fiscal.position.tax -> position_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Fiscal\Position\Tax
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Fiscal\Position\Tax
      * ---
      * Searchable : yes
      * Sortable : no
@@ -140,7 +140,7 @@ final class Position extends Base
      * Apply only if delivery country matches.
      * ---
      * Relation : many2one (res.country)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -155,7 +155,7 @@ final class Position extends Base
      * Apply only if delivery country matches the group.
      * ---
      * Relation : many2one (res.country.group)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country\Group
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country\Group
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -168,7 +168,7 @@ final class Position extends Base
      * Federal States
      * ---
      * Relation : many2many (res.country.state)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country\State
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country\State
      * ---
      * Searchable : yes
      * Sortable : no
@@ -211,7 +211,7 @@ final class Position extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -234,7 +234,7 @@ final class Position extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -261,7 +261,7 @@ final class Position extends Base
      * @param OdooRelation $company_id Company
      *        ---
      *        Relation : many2one (res.company)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      *        ---
      *        Searchable : yes
      *        Sortable : yes

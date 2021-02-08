@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Hr\Employee;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Employee;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base as BaseAlias;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base as BaseAlias;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -55,7 +55,7 @@ final class Base extends BaseAlias
      * Department
      * ---
      * Relation : many2one (hr.department)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Department
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Department
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -68,7 +68,7 @@ final class Base extends BaseAlias
      * Job Position
      * ---
      * Relation : many2one (hr.job)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Job
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Job
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -91,7 +91,7 @@ final class Base extends BaseAlias
      * Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -104,7 +104,7 @@ final class Base extends BaseAlias
      * Work Address
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -157,7 +157,7 @@ final class Base extends BaseAlias
      * User
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -170,7 +170,7 @@ final class Base extends BaseAlias
      * Resource
      * ---
      * Relation : many2one (resource.resource)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Resource_\Resource_
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Resource_\Resource_
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -183,7 +183,7 @@ final class Base extends BaseAlias
      * Resource Calendar
      * ---
      * Relation : many2one (resource.calendar)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Resource_\Calendar
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Resource_\Calendar
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -196,7 +196,7 @@ final class Base extends BaseAlias
      * Manager
      * ---
      * Relation : many2one (hr.employee)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Employee
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Employee
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -212,7 +212,7 @@ final class Base extends BaseAlias
      * The "Coach" has no specific rights or responsibilities by default.
      * ---
      * Relation : many2one (hr.employee)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Employee
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Employee
      * ---
      * Searchable : yes
      * Sortable : yes

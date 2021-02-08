@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Hr\Payroll\Edit\Payslip\Lines;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Payroll\Edit\Payslip\Lines;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -28,7 +28,7 @@ final class Wizard extends Base
      * Payslip
      * ---
      * Relation : many2one (hr.payslip)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Payslip
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Payslip
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -41,7 +41,7 @@ final class Wizard extends Base
      * Payslip Lines
      * ---
      * Relation : one2many (hr.payroll.edit.payslip.line -> edit_payslip_lines_wizard_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Payroll\Edit\Payslip\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Payroll\Edit\Payslip\Line
      * ---
      * Searchable : yes
      * Sortable : no
@@ -54,7 +54,7 @@ final class Wizard extends Base
      * Worked Days Lines
      * ---
      * Relation : one2many (hr.payroll.edit.payslip.worked.days.line -> edit_payslip_lines_wizard_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Payroll\Edit\Payslip\Worked\Days\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Payroll\Edit\Payslip\Worked\Days\Line
      * ---
      * Searchable : yes
      * Sortable : no
@@ -67,7 +67,7 @@ final class Wizard extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -90,7 +90,7 @@ final class Wizard extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -113,7 +113,7 @@ final class Wizard extends Base
      * @param OdooRelation $payslip_id Payslip
      *        ---
      *        Relation : many2one (hr.payslip)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Payslip
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Payslip
      *        ---
      *        Searchable : yes
      *        Sortable : yes

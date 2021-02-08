@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Account;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -43,7 +43,7 @@ final class Template extends Base
      * Forces all moves for this account to have this secondary currency.
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -69,7 +69,7 @@ final class Template extends Base
      * its specificities.
      * ---
      * Relation : many2one (account.account.type)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Type
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Type
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -104,7 +104,7 @@ final class Template extends Base
      * Default Taxes
      * ---
      * Relation : many2many (account.tax.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax\Template
      * ---
      * Searchable : yes
      * Sortable : no
@@ -133,7 +133,7 @@ final class Template extends Base
      * it with few new accounts (You don't need to define the whole structure that is common to both several times).
      * ---
      * Relation : many2one (account.chart.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Chart\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Chart\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -148,7 +148,7 @@ final class Template extends Base
      * Optional tags you may want to assign for custom reporting
      * ---
      * Relation : many2many (account.account.tag)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Tag
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Tag
      * ---
      * Searchable : yes
      * Sortable : no
@@ -161,7 +161,7 @@ final class Template extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -184,7 +184,7 @@ final class Template extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -218,7 +218,7 @@ final class Template extends Base
      *        its specificities.
      *        ---
      *        Relation : many2one (account.account.type)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Type
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Type
      *        ---
      *        Searchable : yes
      *        Sortable : yes

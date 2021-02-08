@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Analytic;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Analytic;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -31,7 +31,7 @@ final class Distribution extends Base
      * Analytic Account
      * ---
      * Relation : many2one (account.analytic.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Analytic\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Analytic\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -64,7 +64,7 @@ final class Distribution extends Base
      * Parent tag
      * ---
      * Relation : many2one (account.analytic.tag)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Analytic\Tag
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Analytic\Tag
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -77,7 +77,7 @@ final class Distribution extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -100,7 +100,7 @@ final class Distribution extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -123,7 +123,7 @@ final class Distribution extends Base
      * @param OdooRelation $account_id Analytic Account
      *        ---
      *        Relation : many2one (account.analytic.account)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Analytic\Account
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Analytic\Account
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -134,7 +134,7 @@ final class Distribution extends Base
      * @param OdooRelation $tag_id Parent tag
      *        ---
      *        Relation : many2one (account.analytic.tag)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Analytic\Tag
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Analytic\Tag
      *        ---
      *        Searchable : yes
      *        Sortable : yes

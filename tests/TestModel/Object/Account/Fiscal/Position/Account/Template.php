@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Fiscal\Position\Account;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Fiscal\Position\Account;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -31,7 +31,7 @@ final class Template extends Base
      * Fiscal Mapping
      * ---
      * Relation : many2one (account.fiscal.position.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Fiscal\Position\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Fiscal\Position\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -44,7 +44,7 @@ final class Template extends Base
      * Account Source
      * ---
      * Relation : many2one (account.account.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -57,7 +57,7 @@ final class Template extends Base
      * Account Destination
      * ---
      * Relation : many2one (account.account.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -70,7 +70,7 @@ final class Template extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -93,7 +93,7 @@ final class Template extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -116,21 +116,21 @@ final class Template extends Base
      * @param OdooRelation $position_id Fiscal Mapping
      *        ---
      *        Relation : many2one (account.fiscal.position.template)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Fiscal\Position\Template
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Fiscal\Position\Template
      *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $account_src_id Account Source
      *        ---
      *        Relation : many2one (account.account.template)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $account_dest_id Account Destination
      *        ---
      *        Relation : many2one (account.account.template)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Template
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Template
      *        ---
      *        Searchable : yes
      *        Sortable : yes

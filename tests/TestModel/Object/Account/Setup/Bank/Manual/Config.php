@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Setup\Bank\Manual;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Setup\Bank\Manual;
 
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
-use Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner\Bank;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner\Bank;
 
 /**
  * Odoo model : account.setup.bank.manual.config
@@ -27,7 +27,7 @@ final class Config extends Bank
      * Res Partner Bank
      * ---
      * Relation : many2one (res.partner.bank)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner\Bank
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner\Bank
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -52,7 +52,7 @@ final class Config extends Bank
      * Journal
      * ---
      * Relation : many2one (account.journal)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Journal
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal
      * ---
      * Searchable : no
      * Sortable : no
@@ -75,7 +75,7 @@ final class Config extends Bank
      * @param OdooRelation $res_partner_bank_id Res Partner Bank
      *        ---
      *        Relation : many2one (res.partner.bank)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner\Bank
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner\Bank
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -92,7 +92,7 @@ final class Config extends Bank
      * @param OdooRelation $partner_id Account Holder
      *        ---
      *        Relation : many2one (res.partner)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      *        ---
      *        Searchable : yes
      *        Sortable : yes

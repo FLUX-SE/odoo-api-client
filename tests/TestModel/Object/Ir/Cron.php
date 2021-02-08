@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Ir;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Ir;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
-use Tests\Flux\OdooApiClient\TestModel\Object\Ir\Actions\Server;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Actions\Server;
 
 /**
  * Odoo model : ir.cron
@@ -23,7 +23,7 @@ final class Cron extends Server
      * Server action
      * ---
      * Relation : many2one (ir.actions.server)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Actions\Server
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Actions\Server
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -46,7 +46,7 @@ final class Cron extends Server
      * Scheduler User
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -159,14 +159,14 @@ final class Cron extends Server
      * @param OdooRelation $ir_actions_server_id Server action
      *        ---
      *        Relation : many2one (ir.actions.server)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Actions\Server
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Actions\Server
      *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $user_id Scheduler User
      *        ---
      *        Relation : many2one (res.users)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -197,7 +197,7 @@ final class Cron extends Server
      *        Model on which the server action runs.
      *        ---
      *        Relation : many2one (ir.model)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model
      *        ---
      *        Searchable : yes
      *        Sortable : yes

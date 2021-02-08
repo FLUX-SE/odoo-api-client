@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Mail;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Mail;
 
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -22,7 +22,7 @@ final class Mail extends Message
      * Message
      * ---
      * Relation : many2one (mail.message)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -105,7 +105,7 @@ final class Mail extends Message
      * To (Partners)
      * ---
      * Relation : many2many (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -174,7 +174,7 @@ final class Mail extends Message
      * Inbound Mail Server
      * ---
      * Relation : many2one (fetchmail.server)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Fetchmail\Server
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Fetchmail\Server
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -187,7 +187,7 @@ final class Mail extends Message
      * @param OdooRelation $mail_message_id Message
      *        ---
      *        Relation : many2one (mail.message)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      *        ---
      *        Searchable : yes
      *        Sortable : yes

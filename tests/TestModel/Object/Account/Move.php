@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -160,7 +160,7 @@ class Move extends Base
      * Journal
      * ---
      * Relation : many2one (account.journal)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Journal
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -173,7 +173,7 @@ class Move extends Base
      * Suitable Journal
      * ---
      * Relation : many2many (account.journal)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Journal
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal
      * ---
      * Searchable : no
      * Sortable : no
@@ -188,7 +188,7 @@ class Move extends Base
      * Company related to this journal
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -201,7 +201,7 @@ class Move extends Base
      * Company Currency
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : yes
      * Sortable : no
@@ -214,7 +214,7 @@ class Move extends Base
      * Currency
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -227,7 +227,7 @@ class Move extends Base
      * Journal Items
      * ---
      * Relation : one2many (account.move.line -> move_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Move\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move\Line
      * ---
      * Searchable : yes
      * Sortable : no
@@ -240,7 +240,7 @@ class Move extends Base
      * Partner
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -253,7 +253,7 @@ class Move extends Base
      * Commercial Entity
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -281,7 +281,7 @@ class Move extends Base
      * Technical field used to fit the generic behavior in mail templates.
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : no
@@ -309,7 +309,7 @@ class Move extends Base
      * Vendor Credit Note, otherwise a Partner bank account number.
      * ---
      * Relation : many2one (res.partner.bank)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner\Bank
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner\Bank
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -334,7 +334,7 @@ class Move extends Base
      * Payment
      * ---
      * Relation : many2one (account.payment)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Payment
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -347,7 +347,7 @@ class Move extends Base
      * Statement Line
      * ---
      * Relation : many2one (account.bank.statement.line)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Bank\Statement\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Bank\Statement\Line
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -473,7 +473,7 @@ class Move extends Base
      * source: it will post the inverse journal entry to cancel that part too.
      * ---
      * Relation : many2one (account.partial.reconcile)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Partial\Reconcile
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Partial\Reconcile
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -488,7 +488,7 @@ class Move extends Base
      * The journal entry from which this tax cash basis journal entry has been created.
      * ---
      * Relation : many2one (account.move)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Move
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -513,7 +513,7 @@ class Move extends Base
      * Reversal of
      * ---
      * Relation : many2one (account.move)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Move
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -526,7 +526,7 @@ class Move extends Base
      * Reversal Move
      * ---
      * Relation : one2many (account.move -> reversed_entry_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Move
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move
      * ---
      * Searchable : yes
      * Sortable : no
@@ -542,7 +542,7 @@ class Move extends Base
      * default value comes from the customer.
      * ---
      * Relation : many2one (account.fiscal.position)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Fiscal\Position
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Fiscal\Position
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -555,7 +555,7 @@ class Move extends Base
      * Salesperson
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -600,7 +600,7 @@ class Move extends Base
      * Payment Terms
      * ---
      * Relation : many2one (account.payment.term)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Payment\Term
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment\Term
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -613,7 +613,7 @@ class Move extends Base
      * Invoice lines
      * ---
      * Relation : one2many (account.move.line -> move_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Move\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move\Line
      * ---
      * Searchable : yes
      * Sortable : no
@@ -628,7 +628,7 @@ class Move extends Base
      * International Commercial Terms are a series of predefined commercial terms used in international transactions.
      * ---
      * Relation : many2one (account.incoterms)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Incoterms
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Incoterms
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -699,7 +699,7 @@ class Move extends Base
      * Auto-complete from a past bill.
      * ---
      * Relation : many2one (account.move)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Move
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move
      * ---
      * Searchable : no
      * Sortable : no
@@ -734,7 +734,7 @@ class Move extends Base
      * Defines the smallest coinage of the currency that can be used to pay by cash.
      * ---
      * Relation : many2one (account.cash.rounding)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Cash\Rounding
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Cash\Rounding
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -761,7 +761,7 @@ class Move extends Base
      * Technical field to get the domain on the bank
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : no
      * Sortable : no
@@ -862,7 +862,7 @@ class Move extends Base
      * Preferred Payment Method
      * ---
      * Relation : many2one (account.payment.method)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Payment\Method
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment\Method
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -875,7 +875,7 @@ class Move extends Base
      * Edi Document
      * ---
      * Relation : one2many (account.edi.document -> move_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Edi\Document
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Edi\Document
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1001,7 +1001,7 @@ class Move extends Base
      * Extract Word
      * ---
      * Relation : one2many (account.invoice_extract.words -> invoice_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\InvoiceExtract\Words
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\InvoiceExtract\Words
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1034,7 +1034,7 @@ class Move extends Base
      * Transactions
      * ---
      * Relation : many2many (payment.transaction)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Payment\Transaction
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Payment\Transaction
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1047,7 +1047,7 @@ class Move extends Base
      * Authorized Transactions
      * ---
      * Relation : many2many (payment.transaction)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Payment\Transaction
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Payment\Transaction
      * ---
      * Searchable : no
      * Sortable : no
@@ -1060,7 +1060,7 @@ class Move extends Base
      * Activities
      * ---
      * Relation : one2many (mail.activity -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Activity
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Activity
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1093,7 +1093,7 @@ class Move extends Base
      * Responsible User
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1106,7 +1106,7 @@ class Move extends Base
      * Next Activity Type
      * ---
      * Relation : many2one (mail.activity.type)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Activity\Type
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Activity\Type
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1189,7 +1189,7 @@ class Move extends Base
      * Followers
      * ---
      * Relation : one2many (mail.followers -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Followers
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Followers
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1202,7 +1202,7 @@ class Move extends Base
      * Followers (Partners)
      * ---
      * Relation : many2many (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1215,7 +1215,7 @@ class Move extends Base
      * Followers (Channels)
      * ---
      * Relation : many2many (mail.channel)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Channel
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Channel
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1228,7 +1228,7 @@ class Move extends Base
      * Messages
      * ---
      * Relation : one2many (mail.message -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1323,7 +1323,7 @@ class Move extends Base
      * Main Attachment
      * ---
      * Relation : many2one (ir.attachment)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Attachment
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Attachment
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1338,7 +1338,7 @@ class Move extends Base
      * Website communication history
      * ---
      * Relation : one2many (mail.message -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1415,7 +1415,7 @@ class Move extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1438,7 +1438,7 @@ class Move extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1487,14 +1487,14 @@ class Move extends Base
      * @param OdooRelation $journal_id Journal
      *        ---
      *        Relation : many2one (account.journal)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Journal
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal
      *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $currency_id Currency
      *        ---
      *        Relation : many2one (res.currency)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      *        ---
      *        Searchable : yes
      *        Sortable : yes

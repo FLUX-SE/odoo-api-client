@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Payment;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Payment;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -101,7 +101,7 @@ final class Acquirer extends Base
      * Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -127,7 +127,7 @@ final class Acquirer extends Base
      * context: the current context dictionary
      * ---
      * Relation : many2one (ir.ui.view)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Ui\View
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Ui\View
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -142,7 +142,7 @@ final class Acquirer extends Base
      * Template for method registration
      * ---
      * Relation : many2one (ir.ui.view)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Ui\View
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Ui\View
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -189,7 +189,7 @@ final class Acquirer extends Base
      * Journal where the successful transactions will be posted
      * ---
      * Relation : many2one (account.journal)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Journal
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -219,7 +219,7 @@ final class Acquirer extends Base
      * countries.
      * ---
      * Relation : many2many (res.country)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country
      * ---
      * Searchable : yes
      * Sortable : no
@@ -403,7 +403,7 @@ final class Acquirer extends Base
      * Corresponding Module
      * ---
      * Relation : many2one (ir.module.module)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Module\Module
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Module\Module
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -454,7 +454,7 @@ final class Acquirer extends Base
      * Supported Payment Icons
      * ---
      * Relation : many2many (payment.icon)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Payment\Icon
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Payment\Icon
      * ---
      * Searchable : yes
      * Sortable : no
@@ -490,7 +490,7 @@ final class Acquirer extends Base
      * deposit. Enable this option from the settings.
      * ---
      * Relation : many2many (account.payment.method)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Payment\Method
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment\Method
      * ---
      * Searchable : yes
      * Sortable : no
@@ -517,7 +517,7 @@ final class Acquirer extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -540,7 +540,7 @@ final class Acquirer extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -567,7 +567,7 @@ final class Acquirer extends Base
      * @param OdooRelation $company_id Company
      *        ---
      *        Relation : many2one (res.company)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      *        ---
      *        Searchable : yes
      *        Sortable : yes

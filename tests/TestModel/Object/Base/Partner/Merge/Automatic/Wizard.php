@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Base\Partner\Merge\Automatic;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Base\Partner\Merge\Automatic;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -100,7 +100,7 @@ final class Wizard extends Base
      * Current Line
      * ---
      * Relation : many2one (base.partner.merge.line)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Base\Partner\Merge\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Base\Partner\Merge\Line
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -113,7 +113,7 @@ final class Wizard extends Base
      * Lines
      * ---
      * Relation : one2many (base.partner.merge.line -> wizard_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Base\Partner\Merge\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Base\Partner\Merge\Line
      * ---
      * Searchable : yes
      * Sortable : no
@@ -126,7 +126,7 @@ final class Wizard extends Base
      * Contacts
      * ---
      * Relation : many2many (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -139,7 +139,7 @@ final class Wizard extends Base
      * Destination Contact
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -182,7 +182,7 @@ final class Wizard extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -205,7 +205,7 @@ final class Wizard extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

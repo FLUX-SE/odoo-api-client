@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Group;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Group;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -31,7 +31,7 @@ final class Template extends Base
      * Parent
      * ---
      * Relation : many2one (account.group.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Group\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Group\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -74,7 +74,7 @@ final class Template extends Base
      * Chart Template
      * ---
      * Relation : many2one (account.chart.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Chart\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Chart\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -87,7 +87,7 @@ final class Template extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -110,7 +110,7 @@ final class Template extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -137,7 +137,7 @@ final class Template extends Base
      * @param OdooRelation $chart_template_id Chart Template
      *        ---
      *        Relation : many2one (account.chart.template)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Chart\Template
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Chart\Template
      *        ---
      *        Searchable : yes
      *        Sortable : yes

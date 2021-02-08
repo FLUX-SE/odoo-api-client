@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Hr\Rule;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Rule;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -63,7 +63,7 @@ final class Parameter extends Base
      * Country
      * ---
      * Relation : many2one (res.country)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -76,7 +76,7 @@ final class Parameter extends Base
      * Versions
      * ---
      * Relation : one2many (hr.rule.parameter.value -> rule_parameter_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Rule\Parameter\Value
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Rule\Parameter\Value
      * ---
      * Searchable : yes
      * Sortable : no
@@ -89,7 +89,7 @@ final class Parameter extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -112,7 +112,7 @@ final class Parameter extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

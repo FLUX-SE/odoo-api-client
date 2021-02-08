@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Link\Journal;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Link\Journal;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -42,7 +42,7 @@ final class Line extends Base
      * Journal
      * ---
      * Relation : many2one (account.journal)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Journal
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -55,7 +55,7 @@ final class Line extends Base
      * Currency
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -68,7 +68,7 @@ final class Line extends Base
      * Online Account
      * ---
      * Relation : many2one (account.online.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Online\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Online\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -105,7 +105,7 @@ final class Line extends Base
      * Account Online Wizard
      * ---
      * Relation : many2one (account.link.journal)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Link\Journal
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Link\Journal
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -147,7 +147,7 @@ final class Line extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -170,7 +170,7 @@ final class Line extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

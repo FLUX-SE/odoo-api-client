@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Tour\Upload;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tour\Upload;
 
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
-use Tests\Flux\OdooApiClient\TestModel\Object\Mail\Compose\Message;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Compose\Message;
 
 /**
  * Odoo model : account.tour.upload.bill
@@ -27,7 +27,7 @@ final class Bill extends Message
      * Composer
      * ---
      * Relation : many2one (mail.compose.message)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Compose\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Compose\Message
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -65,7 +65,7 @@ final class Bill extends Message
      * @param OdooRelation $composer_id Composer
      *        ---
      *        Relation : many2one (mail.compose.message)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Compose\Message
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Compose\Message
      *        ---
      *        Searchable : yes
      *        Sortable : yes

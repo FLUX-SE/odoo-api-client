@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Mail;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Mail;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -69,7 +69,7 @@ class Message extends Base
      * Attachments are linked to a document through model / res_id and to the message through this field.
      * ---
      * Relation : many2many (ir.attachment)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Attachment
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Attachment
      * ---
      * Searchable : yes
      * Sortable : no
@@ -84,7 +84,7 @@ class Message extends Base
      * Initial thread message.
      * ---
      * Relation : many2one (mail.message)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -97,7 +97,7 @@ class Message extends Base
      * Child Messages
      * ---
      * Relation : one2many (mail.message -> parent_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      * ---
      * Searchable : yes
      * Sortable : no
@@ -142,7 +142,7 @@ class Message extends Base
      * Subtype
      * ---
      * Relation : many2one (mail.message.subtype)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message\Subtype
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message\Subtype
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -155,7 +155,7 @@ class Message extends Base
      * Mail Activity Type
      * ---
      * Relation : many2one (mail.activity.type)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Activity\Type
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Activity\Type
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -195,7 +195,7 @@ class Message extends Base
      * Author of the message. If not set, email_from may hold an email address that did not match any partner.
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -218,7 +218,7 @@ class Message extends Base
      * Recipients
      * ---
      * Relation : many2many (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -231,7 +231,7 @@ class Message extends Base
      * Partners with Need Action
      * ---
      * Relation : many2many (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -268,7 +268,7 @@ class Message extends Base
      * Channels
      * ---
      * Relation : many2many (mail.channel)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Channel
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Channel
      * ---
      * Searchable : yes
      * Sortable : no
@@ -281,7 +281,7 @@ class Message extends Base
      * Notifications
      * ---
      * Relation : one2many (mail.notification -> mail_message_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Notification
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Notification
      * ---
      * Searchable : yes
      * Sortable : no
@@ -294,7 +294,7 @@ class Message extends Base
      * Favorited By
      * ---
      * Relation : many2many (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -355,7 +355,7 @@ class Message extends Base
      * Outgoing mail server
      * ---
      * Relation : many2one (ir.mail_server)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\MailServer
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\MailServer
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -383,7 +383,7 @@ class Message extends Base
      * Moderated By
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -426,7 +426,7 @@ class Message extends Base
      * Mails
      * ---
      * Relation : one2many (mail.mail -> mail_message_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Mail
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Mail
      * ---
      * Searchable : yes
      * Sortable : no
@@ -439,7 +439,7 @@ class Message extends Base
      * Canned Responses
      * ---
      * Relation : one2many (mail.shortcode -> message_ids)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Shortcode
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Shortcode
      * ---
      * Searchable : no
      * Sortable : no
@@ -474,7 +474,7 @@ class Message extends Base
      * Letter
      * ---
      * Relation : one2many (snailmail.letter -> message_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Snailmail\Letter
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Snailmail\Letter
      * ---
      * Searchable : yes
      * Sortable : no
@@ -508,7 +508,7 @@ class Message extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -531,7 +531,7 @@ class Message extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

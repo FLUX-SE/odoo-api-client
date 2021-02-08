@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Base\Partner\Merge;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Base\Partner\Merge;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -28,7 +28,7 @@ final class Line extends Base
      * Wizard
      * ---
      * Relation : many2one (base.partner.merge.automatic.wizard)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Base\Partner\Merge\Automatic\Wizard
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Base\Partner\Merge\Automatic\Wizard
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -61,7 +61,7 @@ final class Line extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -84,7 +84,7 @@ final class Line extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

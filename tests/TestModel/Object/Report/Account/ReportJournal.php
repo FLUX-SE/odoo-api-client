@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Report\Account;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Report\Account;
 
-use Flux\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\Object\Base;
 
 /**
  * Odoo model : report.account.report_journal

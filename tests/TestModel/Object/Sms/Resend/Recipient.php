@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Sms\Resend;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Sms\Resend;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -28,7 +28,7 @@ final class Recipient extends Base
      * Sms Resend
      * ---
      * Relation : many2one (sms.resend)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Sms\Resend
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Sms\Resend
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -41,7 +41,7 @@ final class Recipient extends Base
      * Notification
      * ---
      * Relation : many2one (mail.notification)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Notification
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Notification
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -91,7 +91,7 @@ final class Recipient extends Base
      * Partner
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -124,7 +124,7 @@ final class Recipient extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -147,7 +147,7 @@ final class Recipient extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -170,14 +170,14 @@ final class Recipient extends Base
      * @param OdooRelation $sms_resend_id Sms Resend
      *        ---
      *        Relation : many2one (sms.resend)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Sms\Resend
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Sms\Resend
      *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $notification_id Notification
      *        ---
      *        Relation : many2one (mail.notification)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Notification
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Notification
      *        ---
      *        Searchable : yes
      *        Sortable : yes

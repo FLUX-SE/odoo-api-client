@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Res;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Res;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -53,7 +53,7 @@ final class Company extends Base
      * Parent Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -66,7 +66,7 @@ final class Company extends Base
      * Child Companies
      * ---
      * Relation : one2many (res.company -> parent_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : no
@@ -79,7 +79,7 @@ final class Company extends Base
      * Partner
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -136,7 +136,7 @@ final class Company extends Base
      * Currency
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -149,7 +149,7 @@ final class Company extends Base
      * Accepted Users
      * ---
      * Relation : many2many (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : no
@@ -202,7 +202,7 @@ final class Company extends Base
      * Fed. State
      * ---
      * Relation : many2one (res.country.state)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country\State
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country\State
      * ---
      * Searchable : no
      * Sortable : no
@@ -217,7 +217,7 @@ final class Company extends Base
      * Bank accounts related to this company
      * ---
      * Relation : one2many (res.partner.bank -> company_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner\Bank
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner\Bank
      * ---
      * Searchable : yes
      * Sortable : no
@@ -230,7 +230,7 @@ final class Company extends Base
      * Country
      * ---
      * Relation : many2one (res.country)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country
      * ---
      * Searchable : no
      * Sortable : no
@@ -296,7 +296,7 @@ final class Company extends Base
      * Paper format
      * ---
      * Relation : many2one (report.paperformat)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Report\Paperformat
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Report\Paperformat
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -309,7 +309,7 @@ final class Company extends Base
      * Document Template
      * ---
      * Relation : many2one (ir.ui.view)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Ui\View
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Ui\View
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -387,7 +387,7 @@ final class Company extends Base
      * Working Hours
      * ---
      * Relation : one2many (resource.calendar -> company_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Resource_\Calendar
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Resource_\Calendar
      * ---
      * Searchable : yes
      * Sortable : no
@@ -400,7 +400,7 @@ final class Company extends Base
      * Default Working Hours
      * ---
      * Relation : many2one (resource.calendar)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Resource_\Calendar
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Resource_\Calendar
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -577,7 +577,7 @@ final class Company extends Base
      * Intermediary account used when moving money from a liquidity account to another
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -602,7 +602,7 @@ final class Company extends Base
      * The chart template for the company (if any)
      * ---
      * Relation : many2one (account.chart.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Chart\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Chart\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -635,7 +635,7 @@ final class Company extends Base
      * Cash Difference Income Account
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -648,7 +648,7 @@ final class Company extends Base
      * Cash Difference Expense Account
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -661,7 +661,7 @@ final class Company extends Base
      * Journal Suspense Account
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -684,7 +684,7 @@ final class Company extends Base
      * Default Sale Tax
      * ---
      * Relation : many2one (account.tax)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -697,7 +697,7 @@ final class Company extends Base
      * Default Purchase Tax
      * ---
      * Relation : many2one (account.tax)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -724,7 +724,7 @@ final class Company extends Base
      * Exchange Gain or Loss Journal
      * ---
      * Relation : many2one (account.journal)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Journal
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -737,7 +737,7 @@ final class Company extends Base
      * Gain Exchange Rate Account
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -750,7 +750,7 @@ final class Company extends Base
      * Loss Exchange Rate Account
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -773,7 +773,7 @@ final class Company extends Base
      * Input Account for Stock Valuation
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -786,7 +786,7 @@ final class Company extends Base
      * Output Account for Stock Valuation
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -799,7 +799,7 @@ final class Company extends Base
      * Account Template for Stock Valuation
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -812,7 +812,7 @@ final class Company extends Base
      * Bank Journals
      * ---
      * Relation : one2many (account.journal -> company_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Journal
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal
      * ---
      * Searchable : yes
      * Sortable : no
@@ -837,7 +837,7 @@ final class Company extends Base
      * The country to use the tax reports from for this company
      * ---
      * Relation : many2one (res.country)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -852,7 +852,7 @@ final class Company extends Base
      * International Commercial Terms are a series of predefined commercial terms used in international transactions.
      * ---
      * Relation : many2one (account.incoterms)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Incoterms
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Incoterms
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -897,7 +897,7 @@ final class Company extends Base
      * The journal entry containing the initial balance of all this company's accounts.
      * ---
      * Relation : many2one (account.move)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Move
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -912,7 +912,7 @@ final class Company extends Base
      * Journal where the opening entry of this company's accounting has been posted.
      * ---
      * Relation : many2one (account.journal)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Journal
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1084,7 +1084,7 @@ final class Company extends Base
      * Default PoS Receivable Account
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1099,7 +1099,7 @@ final class Company extends Base
      * Account used to move the period of an expense
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1114,7 +1114,7 @@ final class Company extends Base
      * Account used to move the period of a revenue
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1129,7 +1129,7 @@ final class Company extends Base
      * Journal used by default for moving the period of an entry
      * ---
      * Relation : many2one (account.journal)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Journal
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1155,7 +1155,7 @@ final class Company extends Base
      * Cash Basis Journal
      * ---
      * Relation : many2one (account.journal)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Journal
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1171,7 +1171,7 @@ final class Company extends Base
      * amount.
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1422,7 +1422,7 @@ final class Company extends Base
      * Sequence to use to build sale closings
      * ---
      * Relation : many2one (ir.sequence)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Sequence
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Sequence
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1505,7 +1505,7 @@ final class Company extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1528,7 +1528,7 @@ final class Company extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1555,14 +1555,14 @@ final class Company extends Base
      * @param OdooRelation $partner_id Partner
      *        ---
      *        Relation : many2one (res.partner)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $currency_id Currency
      *        ---
      *        Relation : many2one (res.currency)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      *        ---
      *        Searchable : yes
      *        Sortable : yes

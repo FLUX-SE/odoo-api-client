@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Invoice;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Invoice;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -31,7 +31,7 @@ final class Report extends Base
      * Move
      * ---
      * Relation : many2one (account.move)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Move
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -44,7 +44,7 @@ final class Report extends Base
      * Journal
      * ---
      * Relation : many2one (account.journal)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Journal
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -57,7 +57,7 @@ final class Report extends Base
      * Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -70,7 +70,7 @@ final class Report extends Base
      * Company Currency
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -83,7 +83,7 @@ final class Report extends Base
      * Partner
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -98,7 +98,7 @@ final class Report extends Base
      * Commercial Entity
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -111,7 +111,7 @@ final class Report extends Base
      * Country
      * ---
      * Relation : many2one (res.country)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -124,7 +124,7 @@ final class Report extends Base
      * Salesperson
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -183,7 +183,7 @@ final class Report extends Base
      * Fiscal Position
      * ---
      * Relation : many2one (account.fiscal.position)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Fiscal\Position
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Fiscal\Position
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -216,7 +216,7 @@ final class Report extends Base
      * Product
      * ---
      * Relation : many2one (product.product)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Product
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Product
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -229,7 +229,7 @@ final class Report extends Base
      * Unit of Measure
      * ---
      * Relation : many2one (uom.uom)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Uom\Uom
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Uom\Uom
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -242,7 +242,7 @@ final class Report extends Base
      * Product Category
      * ---
      * Relation : many2one (product.category)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Category
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Category
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -265,7 +265,7 @@ final class Report extends Base
      * Revenue/Expense Account
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes

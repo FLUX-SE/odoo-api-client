@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Report\HrPayroll;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Report\HrPayroll;
 
-use Flux\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\Object\Base;
 
 /**
  * Odoo model : report.hr_payroll.contribution_register

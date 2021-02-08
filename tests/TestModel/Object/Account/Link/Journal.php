@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Link;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Link;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -58,7 +58,7 @@ final class Journal extends Base
      * Synchronized accounts
      * ---
      * Relation : one2many (account.link.journal.line -> account_online_wizard_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Link\Journal\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Link\Journal\Line
      * ---
      * Searchable : yes
      * Sortable : no
@@ -71,7 +71,7 @@ final class Journal extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -94,7 +94,7 @@ final class Journal extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

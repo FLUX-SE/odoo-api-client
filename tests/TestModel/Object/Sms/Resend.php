@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Sms;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Sms;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -28,7 +28,7 @@ final class Resend extends Base
      * Message
      * ---
      * Relation : many2one (mail.message)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -41,7 +41,7 @@ final class Resend extends Base
      * Recipients
      * ---
      * Relation : one2many (sms.resend.recipient -> sms_resend_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Sms\Resend\Recipient
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Sms\Resend\Recipient
      * ---
      * Searchable : yes
      * Sortable : no
@@ -84,7 +84,7 @@ final class Resend extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -107,7 +107,7 @@ final class Resend extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -130,7 +130,7 @@ final class Resend extends Base
      * @param OdooRelation $mail_message_id Message
      *        ---
      *        Relation : many2one (mail.message)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      *        ---
      *        Searchable : yes
      *        Sortable : yes

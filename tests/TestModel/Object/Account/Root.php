@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account;
 
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -40,7 +40,7 @@ final class Root extends Base
      * Parent
      * ---
      * Relation : many2one (account.root)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Root
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Root
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -53,7 +53,7 @@ final class Root extends Base
      * Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes

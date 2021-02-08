@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Hr\Contract\Employee;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Contract\Employee;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -31,7 +31,7 @@ final class Report extends Base
      * Contract
      * ---
      * Relation : many2one (hr.contract)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Contract
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Contract
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -44,7 +44,7 @@ final class Report extends Base
      * Employee
      * ---
      * Relation : many2one (hr.employee)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Employee
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Employee
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -57,7 +57,7 @@ final class Report extends Base
      * Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -70,7 +70,7 @@ final class Report extends Base
      * Department
      * ---
      * Relation : many2one (hr.department)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Department
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Department
      * ---
      * Searchable : yes
      * Sortable : yes

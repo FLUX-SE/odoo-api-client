@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Resource_;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Resource_;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -54,7 +54,7 @@ final class Calendar extends Base
      * Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -67,7 +67,7 @@ final class Calendar extends Base
      * Working Time
      * ---
      * Relation : one2many (resource.calendar.attendance -> calendar_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Resource_\Calendar\Attendance
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Resource_\Calendar\Attendance
      * ---
      * Searchable : yes
      * Sortable : no
@@ -80,7 +80,7 @@ final class Calendar extends Base
      * Time Off
      * ---
      * Relation : one2many (resource.calendar.leaves -> calendar_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Resource_\Calendar\Leaves
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Resource_\Calendar\Leaves
      * ---
      * Searchable : yes
      * Sortable : no
@@ -93,7 +93,7 @@ final class Calendar extends Base
      * Global Time Off
      * ---
      * Relation : one2many (resource.calendar.leaves -> calendar_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Resource_\Calendar\Leaves
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Resource_\Calendar\Leaves
      * ---
      * Searchable : yes
      * Sortable : no
@@ -788,7 +788,7 @@ final class Calendar extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -811,7 +811,7 @@ final class Calendar extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

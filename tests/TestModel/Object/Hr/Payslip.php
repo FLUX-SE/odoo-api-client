@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Hr;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Hr;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -35,7 +35,7 @@ final class Payslip extends Base
      * contracts will be applied.
      * ---
      * Relation : many2one (hr.payroll.structure)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Payroll\Structure
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Payroll\Structure
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -48,7 +48,7 @@ final class Payslip extends Base
      * Type
      * ---
      * Relation : many2one (hr.payroll.structure.type)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Payroll\Structure\Type
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Payroll\Structure\Type
      * ---
      * Searchable : yes
      * Sortable : no
@@ -95,7 +95,7 @@ final class Payslip extends Base
      * Employee
      * ---
      * Relation : many2one (hr.employee)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Employee
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Employee
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -152,7 +152,7 @@ final class Payslip extends Base
      * Payslip Lines
      * ---
      * Relation : one2many (hr.payslip.line -> slip_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Payslip\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Payslip\Line
      * ---
      * Searchable : yes
      * Sortable : no
@@ -165,7 +165,7 @@ final class Payslip extends Base
      * Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -178,7 +178,7 @@ final class Payslip extends Base
      * Payslip Worked Days
      * ---
      * Relation : one2many (hr.payslip.worked_days -> payslip_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Payslip\WorkedDays
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Payslip\WorkedDays
      * ---
      * Searchable : yes
      * Sortable : no
@@ -191,7 +191,7 @@ final class Payslip extends Base
      * Payslip Inputs
      * ---
      * Relation : one2many (hr.payslip.input -> payslip_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Payslip\Input
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Payslip\Input
      * ---
      * Searchable : yes
      * Sortable : no
@@ -224,7 +224,7 @@ final class Payslip extends Base
      * Contract
      * ---
      * Relation : many2one (hr.contract)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Contract
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Contract
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -249,7 +249,7 @@ final class Payslip extends Base
      * Batch Name
      * ---
      * Relation : many2one (hr.payslip.run)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Payslip\Run
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Payslip\Run
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -314,7 +314,7 @@ final class Payslip extends Base
      * Currency
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : yes
      * Sortable : no
@@ -367,7 +367,7 @@ final class Payslip extends Base
      * Activities
      * ---
      * Relation : one2many (mail.activity -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Activity
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Activity
      * ---
      * Searchable : yes
      * Sortable : no
@@ -400,7 +400,7 @@ final class Payslip extends Base
      * Responsible User
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : no
@@ -413,7 +413,7 @@ final class Payslip extends Base
      * Next Activity Type
      * ---
      * Relation : many2one (mail.activity.type)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Activity\Type
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Activity\Type
      * ---
      * Searchable : yes
      * Sortable : no
@@ -508,7 +508,7 @@ final class Payslip extends Base
      * Followers
      * ---
      * Relation : one2many (mail.followers -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Followers
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Followers
      * ---
      * Searchable : yes
      * Sortable : no
@@ -521,7 +521,7 @@ final class Payslip extends Base
      * Followers (Partners)
      * ---
      * Relation : many2many (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -534,7 +534,7 @@ final class Payslip extends Base
      * Followers (Channels)
      * ---
      * Relation : many2many (mail.channel)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Channel
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Channel
      * ---
      * Searchable : yes
      * Sortable : no
@@ -547,7 +547,7 @@ final class Payslip extends Base
      * Messages
      * ---
      * Relation : one2many (mail.message -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      * ---
      * Searchable : yes
      * Sortable : no
@@ -642,7 +642,7 @@ final class Payslip extends Base
      * Main Attachment
      * ---
      * Relation : many2one (ir.attachment)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Attachment
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Attachment
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -657,7 +657,7 @@ final class Payslip extends Base
      * Website communication history
      * ---
      * Relation : one2many (mail.message -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      * ---
      * Searchable : yes
      * Sortable : no
@@ -682,7 +682,7 @@ final class Payslip extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -705,7 +705,7 @@ final class Payslip extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -732,7 +732,7 @@ final class Payslip extends Base
      * @param OdooRelation $employee_id Employee
      *        ---
      *        Relation : many2one (hr.employee)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Employee
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Employee
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -747,7 +747,7 @@ final class Payslip extends Base
      * @param OdooRelation $company_id Company
      *        ---
      *        Relation : many2one (res.company)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      *        ---
      *        Searchable : yes
      *        Sortable : yes

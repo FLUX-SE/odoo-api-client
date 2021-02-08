@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Product\Attribute\Custom;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Attribute\Custom;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -41,7 +41,7 @@ final class Value extends Base
      * Attribute Value
      * ---
      * Relation : many2one (product.template.attribute.value)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Template\Attribute\Value
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Template\Attribute\Value
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -64,7 +64,7 @@ final class Value extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -87,7 +87,7 @@ final class Value extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -110,7 +110,7 @@ final class Value extends Base
      * @param OdooRelation $custom_product_template_attribute_value_id Attribute Value
      *        ---
      *        Relation : many2one (product.template.attribute.value)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Template\Attribute\Value
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Template\Attribute\Value
      *        ---
      *        Searchable : yes
      *        Sortable : yes

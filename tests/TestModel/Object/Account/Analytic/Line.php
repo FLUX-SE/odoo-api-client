@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Analytic;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Analytic;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -71,7 +71,7 @@ final class Line extends Base
      * Unit of Measure
      * ---
      * Relation : many2one (uom.uom)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Uom\Uom
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Uom\Uom
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -87,7 +87,7 @@ final class Line extends Base
      * made based on the ratios.
      * ---
      * Relation : many2one (uom.category)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Uom\Category
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Uom\Category
      * ---
      * Searchable : yes
      * Sortable : no
@@ -100,7 +100,7 @@ final class Line extends Base
      * Analytic Account
      * ---
      * Relation : many2one (account.analytic.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Analytic\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Analytic\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -113,7 +113,7 @@ final class Line extends Base
      * Partner
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -126,7 +126,7 @@ final class Line extends Base
      * User
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -139,7 +139,7 @@ final class Line extends Base
      * Tags
      * ---
      * Relation : many2many (account.analytic.tag)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Analytic\Tag
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Analytic\Tag
      * ---
      * Searchable : yes
      * Sortable : no
@@ -152,7 +152,7 @@ final class Line extends Base
      * Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -165,7 +165,7 @@ final class Line extends Base
      * Currency
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -178,7 +178,7 @@ final class Line extends Base
      * Group
      * ---
      * Relation : many2one (account.analytic.group)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Analytic\Group
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Analytic\Group
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -191,7 +191,7 @@ final class Line extends Base
      * Product
      * ---
      * Relation : many2one (product.product)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Product\Product
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Product
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -204,7 +204,7 @@ final class Line extends Base
      * Financial Account
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -217,7 +217,7 @@ final class Line extends Base
      * Journal Item
      * ---
      * Relation : many2one (account.move.line)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Move\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move\Line
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -250,7 +250,7 @@ final class Line extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -273,7 +273,7 @@ final class Line extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -308,14 +308,14 @@ final class Line extends Base
      * @param OdooRelation $account_id Analytic Account
      *        ---
      *        Relation : many2one (account.analytic.account)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Analytic\Account
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Analytic\Account
      *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $company_id Company
      *        ---
      *        Relation : many2one (res.company)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      *        ---
      *        Searchable : yes
      *        Sortable : yes

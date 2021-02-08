@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Reconcile\Model;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Reconcile\Model;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -31,7 +31,7 @@ final class Template extends Base
      * Chart Template
      * ---
      * Relation : many2one (account.chart.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Chart\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Chart\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -155,7 +155,7 @@ final class Template extends Base
      * The reconciliation model will only be available from the selected journals.
      * ---
      * Relation : many2many (account.journal)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Journal
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal
      * ---
      * Searchable : yes
      * Sortable : no
@@ -366,7 +366,7 @@ final class Template extends Base
      * The reconciliation model will only be applied to the selected customers/vendors.
      * ---
      * Relation : many2many (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -381,7 +381,7 @@ final class Template extends Base
      * The reconciliation model will only be applied to the selected customer/vendor categories.
      * ---
      * Relation : many2many (res.partner.category)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner\Category
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner\Category
      * ---
      * Searchable : yes
      * Sortable : no
@@ -394,7 +394,7 @@ final class Template extends Base
      * Line
      * ---
      * Relation : one2many (account.reconcile.model.line.template -> model_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Reconcile\Model\Line\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Reconcile\Model\Line\Template
      * ---
      * Searchable : yes
      * Sortable : no
@@ -419,7 +419,7 @@ final class Template extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -442,7 +442,7 @@ final class Template extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -465,7 +465,7 @@ final class Template extends Base
      * @param OdooRelation $chart_template_id Chart Template
      *        ---
      *        Relation : many2one (account.chart.template)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Chart\Template
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Chart\Template
      *        ---
      *        Searchable : yes
      *        Sortable : yes

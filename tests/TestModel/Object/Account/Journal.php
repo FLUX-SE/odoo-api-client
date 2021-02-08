@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -88,7 +88,7 @@ final class Journal extends Base
      * Allowed account types
      * ---
      * Relation : many2many (account.account.type)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Type
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Type
      * ---
      * Searchable : yes
      * Sortable : no
@@ -101,7 +101,7 @@ final class Journal extends Base
      * Allowed accounts
      * ---
      * Relation : many2many (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : no
@@ -114,7 +114,7 @@ final class Journal extends Base
      * Default Account Type
      * ---
      * Relation : many2one (account.account.type)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account\Type
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account\Type
      * ---
      * Searchable : no
      * Sortable : no
@@ -127,7 +127,7 @@ final class Journal extends Base
      * Default Account
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -145,7 +145,7 @@ final class Journal extends Base
      * account.
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -163,7 +163,7 @@ final class Journal extends Base
      * account.
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -179,7 +179,7 @@ final class Journal extends Base
      * finding the right account.
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -253,7 +253,7 @@ final class Journal extends Base
      * The currency used to enter statement
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -268,7 +268,7 @@ final class Journal extends Base
      * Company related to this journal
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -331,7 +331,7 @@ final class Journal extends Base
      * deposit. Enable this option from the settings.
      * ---
      * Relation : many2many (account.payment.method)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Payment\Method
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment\Method
      * ---
      * Searchable : yes
      * Sortable : no
@@ -349,7 +349,7 @@ final class Journal extends Base
      * from the settings.
      * ---
      * Relation : many2many (account.payment.method)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Payment\Method
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment\Method
      * ---
      * Searchable : yes
      * Sortable : no
@@ -384,7 +384,7 @@ final class Journal extends Base
      * Used to register a profit when the ending balance of a cash register differs from what the system computes
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -399,7 +399,7 @@ final class Journal extends Base
      * Used to register a loss when the ending balance of a cash register differs from what the system computes
      * ---
      * Relation : many2one (account.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -412,7 +412,7 @@ final class Journal extends Base
      * Account Holder
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -425,7 +425,7 @@ final class Journal extends Base
      * Bank Account
      * ---
      * Relation : many2one (res.partner.bank)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner\Bank
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner\Bank
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -464,7 +464,7 @@ final class Journal extends Base
      * Bank
      * ---
      * Relation : many2one (res.bank)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Bank
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Bank
      * ---
      * Searchable : yes
      * Sortable : no
@@ -479,7 +479,7 @@ final class Journal extends Base
      * Activity will be automatically scheduled on payment due date, improving collection process.
      * ---
      * Relation : many2one (mail.activity.type)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Activity\Type
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Activity\Type
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -494,7 +494,7 @@ final class Journal extends Base
      * Leave empty to assign the Salesperson of the invoice.
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -523,7 +523,7 @@ final class Journal extends Base
      * Only PDF and XML files will be interpreted by Odoo
      * ---
      * Relation : many2one (mail.alias)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Alias
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Alias
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -558,7 +558,7 @@ final class Journal extends Base
      * Journal Groups
      * ---
      * Relation : many2many (account.journal.group)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Journal\Group
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal\Group
      * ---
      * Searchable : yes
      * Sortable : no
@@ -573,7 +573,7 @@ final class Journal extends Base
      * Sequence to use to ensure the securisation of data
      * ---
      * Relation : many2one (ir.sequence)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Sequence
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Sequence
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -652,7 +652,7 @@ final class Journal extends Base
      * Checks numbering sequence.
      * ---
      * Relation : many2one (ir.sequence)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Sequence
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Sequence
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -691,7 +691,7 @@ final class Journal extends Base
      * Send XML/EDI invoices
      * ---
      * Relation : many2many (account.edi.format)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Edi\Format
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Edi\Format
      * ---
      * Searchable : yes
      * Sortable : no
@@ -706,7 +706,7 @@ final class Journal extends Base
      * EDI format that support moves in this journal
      * ---
      * Relation : many2many (account.edi.format)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Edi\Format
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Edi\Format
      * ---
      * Searchable : no
      * Sortable : no
@@ -729,7 +729,7 @@ final class Journal extends Base
      * Account Online Journal
      * ---
      * Relation : many2one (account.online.journal)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Online\Journal
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Online\Journal
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -742,7 +742,7 @@ final class Journal extends Base
      * Account Online Provider
      * ---
      * Relation : many2one (account.online.provider)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Online\Provider
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Online\Provider
      * ---
      * Searchable : yes
      * Sortable : no
@@ -800,7 +800,7 @@ final class Journal extends Base
      * Account Online Account
      * ---
      * Relation : many2one (account.online.account)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Online\Account
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Online\Account
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -813,7 +813,7 @@ final class Journal extends Base
      * Account Online Link
      * ---
      * Relation : many2one (account.online.link)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Online\Link
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Online\Link
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -860,7 +860,7 @@ final class Journal extends Base
      * Activities
      * ---
      * Relation : one2many (mail.activity -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Activity
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Activity
      * ---
      * Searchable : yes
      * Sortable : no
@@ -893,7 +893,7 @@ final class Journal extends Base
      * Responsible User
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : no
@@ -906,7 +906,7 @@ final class Journal extends Base
      * Next Activity Type
      * ---
      * Relation : many2one (mail.activity.type)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Activity\Type
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Activity\Type
      * ---
      * Searchable : yes
      * Sortable : no
@@ -989,7 +989,7 @@ final class Journal extends Base
      * Followers
      * ---
      * Relation : one2many (mail.followers -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Followers
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Followers
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1002,7 +1002,7 @@ final class Journal extends Base
      * Followers (Partners)
      * ---
      * Relation : many2many (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1015,7 +1015,7 @@ final class Journal extends Base
      * Followers (Channels)
      * ---
      * Relation : many2many (mail.channel)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Channel
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Channel
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1028,7 +1028,7 @@ final class Journal extends Base
      * Messages
      * ---
      * Relation : one2many (mail.message -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1123,7 +1123,7 @@ final class Journal extends Base
      * Main Attachment
      * ---
      * Relation : many2one (ir.attachment)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Attachment
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Attachment
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1138,7 +1138,7 @@ final class Journal extends Base
      * Website communication history
      * ---
      * Relation : one2many (mail.message -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      * ---
      * Searchable : yes
      * Sortable : no
@@ -1163,7 +1163,7 @@ final class Journal extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1186,7 +1186,7 @@ final class Journal extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -1260,7 +1260,7 @@ final class Journal extends Base
      *        Company related to this journal
      *        ---
      *        Relation : many2one (res.company)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      *        ---
      *        Searchable : yes
      *        Sortable : yes

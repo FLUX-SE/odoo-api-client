@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Wizard\Ir\Model\Menu;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Wizard\Ir\Model\Menu;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -28,7 +28,7 @@ final class Create extends Base
      * Parent Menu
      * ---
      * Relation : many2one (ir.ui.menu)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Ui\Menu
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Ui\Menu
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -51,7 +51,7 @@ final class Create extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -74,7 +74,7 @@ final class Create extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -97,7 +97,7 @@ final class Create extends Base
      * @param OdooRelation $menu_id Parent Menu
      *        ---
      *        Relation : many2one (ir.ui.menu)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Ui\Menu
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Ui\Menu
      *        ---
      *        Searchable : yes
      *        Sortable : yes

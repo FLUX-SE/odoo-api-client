@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Fetchmail;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Fetchmail;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -165,7 +165,7 @@ final class Server extends Base
      * documents for new conversations, or attach follow-up emails to the existing conversations (documents).
      * ---
      * Relation : many2one (ir.model)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -190,7 +190,7 @@ final class Server extends Base
      * Messages
      * ---
      * Relation : one2many (mail.mail -> fetchmail_server_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Mail
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Mail
      * ---
      * Searchable : yes
      * Sortable : no
@@ -223,7 +223,7 @@ final class Server extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -246,7 +246,7 @@ final class Server extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

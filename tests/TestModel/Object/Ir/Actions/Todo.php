@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Ir\Actions;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Actions;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -23,7 +23,7 @@ final class Todo extends Base
      * Action
      * ---
      * Relation : many2one (ir.actions.actions)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Actions\Actions
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Actions\Actions
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -70,7 +70,7 @@ final class Todo extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -93,7 +93,7 @@ final class Todo extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -116,7 +116,7 @@ final class Todo extends Base
      * @param OdooRelation $action_id Action
      *        ---
      *        Relation : many2one (ir.actions.actions)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Actions\Actions
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Actions\Actions
      *        ---
      *        Searchable : yes
      *        Sortable : yes

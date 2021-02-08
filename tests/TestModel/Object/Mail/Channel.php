@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Mail;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Mail;
 
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -98,7 +98,7 @@ final class Channel extends Alias
      * Last Seen
      * ---
      * Relation : one2many (mail.channel.partner -> channel_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Channel\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Channel\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -111,7 +111,7 @@ final class Channel extends Alias
      * Listeners
      * ---
      * Relation : many2many (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -124,7 +124,7 @@ final class Channel extends Alias
      * Channel Message
      * ---
      * Relation : many2many (mail.message)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      * ---
      * Searchable : yes
      * Sortable : no
@@ -164,7 +164,7 @@ final class Channel extends Alias
      * Authorized Group
      * ---
      * Relation : many2one (res.groups)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Groups
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Groups
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -180,7 +180,7 @@ final class Channel extends Alias
      * subscription manually if necessary.
      * ---
      * Relation : many2many (res.groups)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Groups
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Groups
      * ---
      * Searchable : yes
      * Sortable : no
@@ -223,7 +223,7 @@ final class Channel extends Alias
      * Moderators
      * ---
      * Relation : many2many (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : no
@@ -248,7 +248,7 @@ final class Channel extends Alias
      * Moderated Emails
      * ---
      * Relation : one2many (mail.moderation -> channel_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Moderation
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Moderation
      * ---
      * Searchable : yes
      * Sortable : no
@@ -317,7 +317,7 @@ final class Channel extends Alias
      * Automatically subscribe members of those departments to the channel.
      * ---
      * Relation : many2many (hr.department)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Department
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Department
      * ---
      * Searchable : yes
      * Sortable : no
@@ -330,7 +330,7 @@ final class Channel extends Alias
      * Alias
      * ---
      * Relation : many2one (mail.alias)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Alias
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Alias
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -353,7 +353,7 @@ final class Channel extends Alias
      * Followers
      * ---
      * Relation : one2many (mail.followers -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Followers
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Followers
      * ---
      * Searchable : yes
      * Sortable : no
@@ -366,7 +366,7 @@ final class Channel extends Alias
      * Followers (Partners)
      * ---
      * Relation : many2many (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : no
@@ -379,7 +379,7 @@ final class Channel extends Alias
      * Followers (Channels)
      * ---
      * Relation : many2many (mail.channel)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Channel
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Channel
      * ---
      * Searchable : yes
      * Sortable : no
@@ -392,7 +392,7 @@ final class Channel extends Alias
      * Messages
      * ---
      * Relation : one2many (mail.message -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      * ---
      * Searchable : yes
      * Sortable : no
@@ -487,7 +487,7 @@ final class Channel extends Alias
      * Main Attachment
      * ---
      * Relation : many2one (ir.attachment)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Attachment
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Attachment
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -502,7 +502,7 @@ final class Channel extends Alias
      * Website communication history
      * ---
      * Relation : one2many (mail.message -> res_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message
      * ---
      * Searchable : yes
      * Sortable : no
@@ -542,7 +542,7 @@ final class Channel extends Alias
      * @param OdooRelation $alias_id Alias
      *        ---
      *        Relation : many2one (mail.alias)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Alias
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Alias
      *        ---
      *        Searchable : yes
      *        Sortable : yes
@@ -552,7 +552,7 @@ final class Channel extends Alias
      *        existing record will cause the creation of a new record of this model (e.g. a Project Task)
      *        ---
      *        Relation : many2one (ir.model)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Ir\Model
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Ir\Model
      *        ---
      *        Searchable : yes
      *        Sortable : yes

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Uom;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Uom;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -44,7 +44,7 @@ final class Uom extends Base
      * made based on the ratios.
      * ---
      * Relation : many2one (uom.category)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Uom\Category
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Uom\Category
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -123,7 +123,7 @@ final class Uom extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -146,7 +146,7 @@ final class Uom extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -176,7 +176,7 @@ final class Uom extends Base
      *        made based on the ratios.
      *        ---
      *        Relation : many2one (uom.category)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Uom\Category
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Uom\Category
      *        ---
      *        Searchable : yes
      *        Sortable : yes

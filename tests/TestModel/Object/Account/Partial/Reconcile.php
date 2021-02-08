@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Partial;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Partial;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -31,7 +31,7 @@ final class Reconcile extends Base
      * Debit Move
      * ---
      * Relation : many2one (account.move.line)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Move\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move\Line
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -44,7 +44,7 @@ final class Reconcile extends Base
      * Credit Move
      * ---
      * Relation : many2one (account.move.line)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Move\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move\Line
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -57,7 +57,7 @@ final class Reconcile extends Base
      * Full Reconcile
      * ---
      * Relation : many2one (account.full.reconcile)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Full\Reconcile
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Full\Reconcile
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -72,7 +72,7 @@ final class Reconcile extends Base
      * Utility field to express amount currency
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : yes
      * Sortable : no
@@ -85,7 +85,7 @@ final class Reconcile extends Base
      * Currency of the debit journal item.
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -98,7 +98,7 @@ final class Reconcile extends Base
      * Currency of the credit journal item.
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -149,7 +149,7 @@ final class Reconcile extends Base
      * Company related to this journal
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -175,7 +175,7 @@ final class Reconcile extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -198,7 +198,7 @@ final class Reconcile extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -221,14 +221,14 @@ final class Reconcile extends Base
      * @param OdooRelation $debit_move_id Debit Move
      *        ---
      *        Relation : many2one (account.move.line)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Move\Line
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move\Line
      *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $credit_move_id Credit Move
      *        ---
      *        Relation : many2one (account.move.line)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Move\Line
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move\Line
      *        ---
      *        Searchable : yes
      *        Sortable : yes

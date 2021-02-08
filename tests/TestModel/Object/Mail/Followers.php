@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Mail;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Mail;
 
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -50,7 +50,7 @@ final class Followers extends Base
      * Related Partner
      * ---
      * Relation : many2one (res.partner)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -63,7 +63,7 @@ final class Followers extends Base
      * Listener
      * ---
      * Relation : many2one (mail.channel)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Channel
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Channel
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -78,7 +78,7 @@ final class Followers extends Base
      * Message subtypes followed, meaning subtypes that will be pushed onto the user's Wall.
      * ---
      * Relation : many2many (mail.message.subtype)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Mail\Message\Subtype
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Mail\Message\Subtype
      * ---
      * Searchable : yes
      * Sortable : no

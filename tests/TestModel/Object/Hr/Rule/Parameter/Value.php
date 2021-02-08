@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Hr\Rule\Parameter;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Rule\Parameter;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -31,7 +31,7 @@ final class Value extends Base
      * Rule Parameter
      * ---
      * Relation : many2one (hr.rule.parameter)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Rule\Parameter
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Rule\Parameter
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -78,7 +78,7 @@ final class Value extends Base
      * Country
      * ---
      * Relation : many2one (res.country)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country
      * ---
      * Searchable : yes
      * Sortable : no
@@ -91,7 +91,7 @@ final class Value extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -114,7 +114,7 @@ final class Value extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -137,7 +137,7 @@ final class Value extends Base
      * @param OdooRelation $rule_parameter_id Rule Parameter
      *        ---
      *        Relation : many2one (hr.rule.parameter)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Hr\Rule\Parameter
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Hr\Rule\Parameter
      *        ---
      *        Searchable : yes
      *        Sortable : yes

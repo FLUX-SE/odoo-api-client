@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Fiscal\Position;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Fiscal\Position;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -31,7 +31,7 @@ final class Tax extends Base
      * Fiscal Position
      * ---
      * Relation : many2one (account.fiscal.position)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Fiscal\Position
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Fiscal\Position
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -44,7 +44,7 @@ final class Tax extends Base
      * Company
      * ---
      * Relation : many2one (res.company)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Company
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -57,7 +57,7 @@ final class Tax extends Base
      * Tax on Product
      * ---
      * Relation : many2one (account.tax)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -70,7 +70,7 @@ final class Tax extends Base
      * Tax to Apply
      * ---
      * Relation : many2one (account.tax)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -83,7 +83,7 @@ final class Tax extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -106,7 +106,7 @@ final class Tax extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -129,14 +129,14 @@ final class Tax extends Base
      * @param OdooRelation $position_id Fiscal Position
      *        ---
      *        Relation : many2one (account.fiscal.position)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Fiscal\Position
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Fiscal\Position
      *        ---
      *        Searchable : yes
      *        Sortable : yes
      * @param OdooRelation $tax_src_id Tax on Product
      *        ---
      *        Relation : many2one (account.tax)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax
      *        ---
      *        Searchable : yes
      *        Sortable : yes

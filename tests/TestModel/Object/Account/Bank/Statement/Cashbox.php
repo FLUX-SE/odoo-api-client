@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Bank\Statement;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Bank\Statement;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -23,7 +23,7 @@ final class Cashbox extends Base
      * Cashbox Lines
      * ---
      * Relation : one2many (account.cashbox.line -> cashbox_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Cashbox\Line
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Cashbox\Line
      * ---
      * Searchable : yes
      * Sortable : no
@@ -36,7 +36,7 @@ final class Cashbox extends Base
      * Start Bank Stmt
      * ---
      * Relation : one2many (account.bank.statement -> cashbox_start_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Bank\Statement
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Bank\Statement
      * ---
      * Searchable : yes
      * Sortable : no
@@ -49,7 +49,7 @@ final class Cashbox extends Base
      * End Bank Stmt
      * ---
      * Relation : one2many (account.bank.statement -> cashbox_end_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Bank\Statement
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Bank\Statement
      * ---
      * Searchable : yes
      * Sortable : no
@@ -72,7 +72,7 @@ final class Cashbox extends Base
      * Currency
      * ---
      * Relation : many2one (res.currency)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency
      * ---
      * Searchable : no
      * Sortable : no
@@ -85,7 +85,7 @@ final class Cashbox extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -108,7 +108,7 @@ final class Cashbox extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

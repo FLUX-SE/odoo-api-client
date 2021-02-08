@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\BaseImport\Tests\Models\O2m;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\BaseImport\Tests\Models\O2m;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -31,7 +31,7 @@ final class Child extends Base
      * Parent
      * ---
      * Relation : many2one (base_import.tests.models.o2m)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\BaseImport\Tests\Models\O2m
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\BaseImport\Tests\Models\O2m
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -54,7 +54,7 @@ final class Child extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -77,7 +77,7 @@ final class Child extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes

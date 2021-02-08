@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\TestModel\Object\Account\Fiscal\Position;
+namespace Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Fiscal\Position;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
@@ -51,7 +51,7 @@ final class Template extends Base
      * Chart Template
      * ---
      * Relation : many2one (account.chart.template)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Chart\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Chart\Template
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -64,7 +64,7 @@ final class Template extends Base
      * Account Mapping
      * ---
      * Relation : one2many (account.fiscal.position.account.template -> position_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Fiscal\Position\Account\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Fiscal\Position\Account\Template
      * ---
      * Searchable : yes
      * Sortable : no
@@ -77,7 +77,7 @@ final class Template extends Base
      * Tax Mapping
      * ---
      * Relation : one2many (account.fiscal.position.tax.template -> position_id)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Fiscal\Position\Tax\Template
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Fiscal\Position\Tax\Template
      * ---
      * Searchable : yes
      * Sortable : no
@@ -126,7 +126,7 @@ final class Template extends Base
      * Apply only if delivery country matches.
      * ---
      * Relation : many2one (res.country)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -141,7 +141,7 @@ final class Template extends Base
      * Apply only if delivery country matches the group.
      * ---
      * Relation : many2one (res.country.group)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country\Group
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country\Group
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -154,7 +154,7 @@ final class Template extends Base
      * Federal States
      * ---
      * Relation : many2many (res.country.state)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Country\State
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Country\State
      * ---
      * Searchable : yes
      * Sortable : no
@@ -187,7 +187,7 @@ final class Template extends Base
      * Created by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -210,7 +210,7 @@ final class Template extends Base
      * Last Updated by
      * ---
      * Relation : many2one (res.users)
-     * @see \Tests\Flux\OdooApiClient\TestModel\Object\Res\Users
+     * @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Users
      * ---
      * Searchable : yes
      * Sortable : yes
@@ -237,7 +237,7 @@ final class Template extends Base
      * @param OdooRelation $chart_template_id Chart Template
      *        ---
      *        Relation : many2one (account.chart.template)
-     *        @see \Tests\Flux\OdooApiClient\TestModel\Object\Account\Chart\Template
+     *        @see \Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Chart\Template
      *        ---
      *        Searchable : yes
      *        Sortable : yes
