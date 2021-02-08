@@ -9,15 +9,53 @@ This library allow communication trough Odoo XMLRPC API.
 Documentation about it can be found here :
 https://www.odoo.com/documentation/master/webservices/odoo.html
 
+This library will allows you to :
+
+ * Generate PHP model classes based on the info available into your Odoo database to ease your calls to the API
+ * Send requests to your Odoo instance through the XMLRPC API
+ * Make raw requests like [Ripcord](https://github.com/poef/ripcord) was doing it but using newer libs like :
+    * `php-http` to make http requests
+    * `symfony/serializer` to handle the XMLRPC format and to transform resulting array to dedicated object classes.
+
 ## Installation
+
+### Composer
 
 Install using Composer :
 
-```
-$ composer require flux-se/odoo-api-client php-http/guzzle6-adapter http-interop/http-factory-guzzle
+```shell
+composer require flux-se/odoo-api-client php-http/guzzle6-adapter http-interop/http-factory-guzzle
 ```
 > `php-http/guzzle6-adapter` and `http-interop/http-factory-guzzle` are 2 requirements which can be chosen among
 > [php-http/client-implementation](https://packagist.org/providers/php-http/client-implementation) and [psr/http-factory-implementation](https://packagist.org/providers/psr/http-factory-implementation)
+
+### Object models generation
+
+Depending on your instance the object models available will be different.
+That's why you can generate model classes using this cli command :
+
+```shell
+#> vendor/bin/odoo-model-classes-generator --help
+Usage:
+  ./vendor/bin/odoo-api-client-generator <baseUrl> <database> <username> <password> <basePath> <baseNamespace>
+
+Arguments:
+  baseUrl               Your Odoo base URL (ex: https://myinstance.odoo.com.
+  database              Your Odoo database name.
+  username              Your Odoo account username.
+  password              Your Odoo account password
+  basePath              The path where classes will be generated (ex: ./src/OdooModel/Object)
+  baseNamespace         The base namespace of the generated classes (ex: "App\\OdooModel\\Object")
+
+Example :
+  ./vendor/bin/odoo-api-client-generator \
+      https://myinstance.odoo.com \
+      myinstance-master-1234567 \
+      admin \
+      admin \
+      ./src/OdooModel/Object \
+      "App\\OdooModel\\Object"
+```
 
 ## Introduction
 
@@ -35,25 +73,9 @@ The authentication is not standard (compare to other APIs), your username and yo
 This uid, your password and your Odoo database name are required to make every request calls to the
 `/xmlrpc/2/object` endpoint.
 
-## How to generate your own project object model classes ?
-
-Into this library you will found a little extraction of the Odoo object models (`src/Model/Object/*`).
-If you want to use your own Odoo object model class, you can use the following command line
-to generate all of them.
-
-```bash
-./bin/generator -vvv \
-    https://myodoo-master-12345600.odoo.com \
-    myodoo-db-master-12345600 \
-    admin \
-    admin \
-    /my_path/my_project/src/Model/Object \
-    MyVendor\\MyApp\\Model\\Object
-```
-
 ## Usage example
 
-Using this library you will be able to use two ways of consuming the Odoo API :
+Using this library you will be able to use two ways of consuming the Odoo XMLRPC API :
 
 1. using array
 2. using object model classes

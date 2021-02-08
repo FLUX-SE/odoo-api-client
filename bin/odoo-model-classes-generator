@@ -3,15 +3,19 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/../vendor/autoload.php';
+if (is_file(__DIR__.'/../autoload.php') === true) {
+    require __DIR__.'/../autoload.php';
+} else {
+    require __DIR__ . '/../vendor/autoload.php';
+}
 
-use Flux\OdooApiClient\Builder\OdooApiClientBuilder;
-use Flux\OdooApiClient\Command\GeneratorCommand;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\InspectionOperations;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
-use Flux\OdooApiClient\PhpGenerator\Builder\SerializableClassBuilder;
-use Flux\OdooApiClient\PhpGenerator\OdooModelsStructureConverter;
-use Flux\OdooApiClient\PhpGenerator\OdooPhpClassesGenerator;
+use FluxSE\OdooApiClient\Builder\OdooApiClientBuilder;
+use FluxSE\OdooApiClient\Command\GeneratorCommand;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\InspectionOperations;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
+use FluxSE\OdooApiClient\PhpGenerator\Builder\SerializableClassBuilder;
+use FluxSE\OdooApiClient\PhpGenerator\OdooModelsStructureConverter;
+use FluxSE\OdooApiClient\PhpGenerator\OdooPhpClassesGenerator;
 use Prometee\PhpClassGenerator\Builder\Model\ModelFactoryBuilder;
 use Prometee\PhpClassGenerator\Builder\View\ViewFactoryBuilder;
 use Prometee\PhpClassGenerator\Helper\PhpReservedWordsHelper;
@@ -56,7 +60,7 @@ $command = new GeneratorCommand(
     $inspectionOperations->getObjectOperations(),
     $odooModelsStructureConverter,
     $phpGenerator,
-    'bin/generator'
+    'vendor/bin/odoo-api-client-generator'
 );
 
 $application->add($command);
