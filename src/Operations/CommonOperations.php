@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Operations;
+namespace FluxSE\OdooApiClient\Operations;
 
-use Flux\OdooApiClient\Model\Common\Version;
-use Flux\OdooApiClient\Operations\Exception\AuthenticationFailedException;
+use FluxSE\OdooApiClient\Model\Common\Version;
+use FluxSE\OdooApiClient\Operations\Exception\AuthenticationFailedException;
 use Webmozart\Assert\Assert;
 
 final class CommonOperations extends AbstractOperations implements CommonOperationsInterface

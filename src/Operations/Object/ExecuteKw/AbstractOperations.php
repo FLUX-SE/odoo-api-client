@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Operations\Object\ExecuteKw;
+namespace FluxSE\OdooApiClient\Operations\Object\ExecuteKw;
 
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\ArgumentsInterface;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\OptionsInterface;
-use Flux\OdooApiClient\Operations\ObjectOperationsInterface;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\ArgumentsInterface;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\OptionsInterface;
+use FluxSE\OdooApiClient\Operations\ObjectOperationsInterface;
 use Psr\Http\Message\ResponseInterface;
 
 abstract class AbstractOperations implements OperationsInterface

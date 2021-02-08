@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Manager;
+namespace FluxSE\OdooApiClient\Manager;
 
-use Flux\OdooApiClient\Model\BaseInterface;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\OptionsInterface;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordOperationsInterface;
+use FluxSE\OdooApiClient\Model\BaseInterface;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\OptionsInterface;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordOperationsInterface;
 use LogicException;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Serializer;
@@ -32,7 +32,7 @@ final class ModelManager implements ModelManagerInterface
     public function persist(BaseInterface $model, ?OptionsInterface $options = null): int
     {
         $normalizedModel = $this->serializer->normalize($model);
-        return $this->recordOperations->create($model::getOdooModelName(), [$normalizedModel], $options);
+        return $this->recordOperations->create($model::getOdooModelName(), $normalizedModel, $options);
     }
 
     /**

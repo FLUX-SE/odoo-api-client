@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments;
+namespace Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments;
 
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomainsInterface;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomainsInterface;
 use PHPUnit\Framework\TestCase;
 
 class SearchDomainsTest extends TestCase

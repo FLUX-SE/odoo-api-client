@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Operations;
+namespace FluxSE\OdooApiClient\Operations;
 
 interface DbOperationsInterface extends OperationsInterface
 {

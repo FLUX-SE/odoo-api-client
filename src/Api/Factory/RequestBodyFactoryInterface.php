@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Api\Factory;
+namespace FluxSE\OdooApiClient\Api\Factory;
 
-use Flux\OdooApiClient\Api\RequestBodyInterface;
+use FluxSE\OdooApiClient\Api\RequestBodyInterface;
 
 interface RequestBodyFactoryInterface
 {

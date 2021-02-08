@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Serializer;
+namespace FluxSE\OdooApiClient\Serializer;
 
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
 use Symfony\Component\Serializer\Exception\UnexpectedValueException;

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\Operations;
+namespace Tests\FluxSE\OdooApiClient\Operations;
 
-use Flux\OdooApiClient\Builder\OdooApiClientBuilder;
-use Flux\OdooApiClient\Operations\DbOperations;
+use FluxSE\OdooApiClient\Builder\OdooApiClientBuilder;
+use FluxSE\OdooApiClient\Operations\DbOperations;
 use Http\Client\Common\Exception\ClientErrorException;
 use PHPUnit\Framework\TestCase;
 

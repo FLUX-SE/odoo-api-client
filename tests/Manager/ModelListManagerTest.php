@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\Manager;
+namespace Tests\FluxSE\OdooApiClient\Manager;
 
-use Flux\OdooApiClient\Manager\ModelListManager;
-use Flux\OdooApiClient\Manager\ModelManagerInterface;
-use Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
+use FluxSE\OdooApiClient\Manager\ModelListManager;
+use FluxSE\OdooApiClient\Manager\ModelManagerInterface;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
 use PHPUnit\Framework\TestCase;
-use Tests\Flux\OdooApiClient\Operations\Object\ExecuteKw\ExecuteKwOperationsTrait;
+use Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw\ExecuteKwOperationsTrait;
 
 class ModelListManagerTest extends TestCase
 {

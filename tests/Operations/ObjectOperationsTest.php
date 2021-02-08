@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\Operations;
+namespace Tests\FluxSE\OdooApiClient\Operations;
 
-use Flux\OdooApiClient\Builder\OdooApiClientBuilder;
-use Flux\OdooApiClient\Operations\ObjectOperations;
+use FluxSE\OdooApiClient\Builder\OdooApiClientBuilder;
+use FluxSE\OdooApiClient\Operations\ObjectOperations;
 use PHPUnit\Framework\TestCase;
 
 class ObjectOperationsTest extends TestCase

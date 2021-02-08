@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\Api;
+namespace Tests\FluxSE\OdooApiClient\Api;
 
-use Flux\OdooApiClient\Api\OdooApiRequestMaker;
-use Flux\OdooApiClient\Api\RequestBody;
-use Flux\OdooApiClient\Builder\OdooApiClientBuilder;
-use Flux\OdooApiClient\Serializer\XmlRpcSerializerHelperInterface;
+use FluxSE\OdooApiClient\Api\OdooApiRequestMaker;
+use FluxSE\OdooApiClient\Api\RequestBody;
+use FluxSE\OdooApiClient\Builder\OdooApiClientBuilder;
+use FluxSE\OdooApiClient\Serializer\XmlRpcSerializerHelperInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
 

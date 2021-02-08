@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Serializer;
+namespace FluxSE\OdooApiClient\Serializer;
 
 use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;

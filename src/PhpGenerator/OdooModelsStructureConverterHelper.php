@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\PhpGenerator;
+namespace FluxSE\OdooApiClient\PhpGenerator;
 
 use DateTimeInterface;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 
 final class OdooModelsStructureConverterHelper
 {

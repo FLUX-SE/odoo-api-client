@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Operations\Object\ExecuteKw;
+namespace FluxSE\OdooApiClient\Operations\Object\ExecuteKw;
 
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Arguments;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\OptionsInterface;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Arguments;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\OptionsInterface;
 
 final class RecordOperations extends AbstractOperations implements RecordOperationsInterface
 {
     public function create(string $modelName, array $model, ?OptionsInterface $options = null): int
     {
         $arguments = new Arguments();
-        $arguments->setArguments($model);
+        $arguments->addArgument($model);
 
         $response = $this->execute_kw(
             $modelName,

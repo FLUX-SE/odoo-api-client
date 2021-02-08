@@ -1,33 +1,33 @@
 <?php
 
-namespace Tests\Flux\OdooApiClient\Manager;
+namespace Tests\FluxSE\OdooApiClient\Manager;
 
 use DateTime;
-use Flux\OdooApiClient\Manager\ModelListManager;
-use Flux\OdooApiClient\Manager\ModelManager;
-use Flux\OdooApiClient\Model\OdooRelation;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Arguments;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\Options;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordOperations;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordOperationsInterface;
+use FluxSE\OdooApiClient\Manager\ModelListManager;
+use FluxSE\OdooApiClient\Manager\ModelManager;
+use FluxSE\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Arguments;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\Options;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordOperations;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordOperationsInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
-use Tests\Flux\OdooApiClient\Operations\Object\ExecuteKw\ExecuteKwOperationsTrait;
-use Tests\Flux\OdooApiClient\TestModel\Object\Account\Account;
-use Tests\Flux\OdooApiClient\TestModel\Object\Account\Journal;
-use Tests\Flux\OdooApiClient\TestModel\Object\Account\Move;
-use Tests\Flux\OdooApiClient\TestModel\Object\Account\Move\Line;
-use Tests\Flux\OdooApiClient\TestModel\Object\Account\Payment;
-use Tests\Flux\OdooApiClient\TestModel\Object\Account\Tax;
-use Tests\Flux\OdooApiClient\TestModel\Object\Product\Category;
-use Tests\Flux\OdooApiClient\TestModel\Object\Product\Product;
-use Tests\Flux\OdooApiClient\TestModel\Object\Product\Template;
-use Tests\Flux\OdooApiClient\TestModel\Object\Res\Currency;
-use Tests\Flux\OdooApiClient\TestModel\Object\Res\Partner;
-use Tests\Flux\OdooApiClient\TestModel\Object\Uom\Uom;
+use Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw\ExecuteKwOperationsTrait;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move\Line;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Category;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Product;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Template;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Uom\Uom;
 
 class ModelManagerTest extends TestCase
 {

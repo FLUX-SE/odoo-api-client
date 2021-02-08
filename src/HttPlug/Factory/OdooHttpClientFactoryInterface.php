@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\HttPlug\Factory;
+namespace FluxSE\OdooApiClient\HttPlug\Factory;
 
-use Flux\OdooApiClient\Serializer\XmlRpcSerializerHelperInterface;
+use FluxSE\OdooApiClient\Serializer\XmlRpcSerializerHelperInterface;
 use Http\Client\Common\Plugin;
 use Psr\Http\Client\ClientInterface;
 

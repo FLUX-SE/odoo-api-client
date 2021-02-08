@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Serializer;
+namespace FluxSE\OdooApiClient\Serializer;
 
-use Flux\OdooApiClient\Api\RequestBodyInterface;
+use FluxSE\OdooApiClient\Api\RequestBodyInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;

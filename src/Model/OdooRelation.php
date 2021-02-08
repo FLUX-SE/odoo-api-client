@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Model;
+namespace FluxSE\OdooApiClient\Model;
 
-use Flux\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\Object\Base;
 
 /**
  * Odoo Response wrapper to handle all

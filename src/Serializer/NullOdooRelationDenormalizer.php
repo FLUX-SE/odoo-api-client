@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Serializer;
+namespace FluxSE\OdooApiClient\Serializer;
 
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 

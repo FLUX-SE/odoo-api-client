@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\PhpGenerator\Builder;
+namespace FluxSE\OdooApiClient\PhpGenerator\Builder;
 
 use Prometee\PhpClassGenerator\Builder\ClassBuilder as BaseClassBuilder;
 use Prometee\PhpClassGenerator\Model\Method\GetterSetterInterface;

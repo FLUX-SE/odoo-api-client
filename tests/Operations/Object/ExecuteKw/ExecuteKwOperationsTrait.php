@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\Operations\Object\ExecuteKw;
+namespace Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw;
 
-use Flux\OdooApiClient\Builder\OdooApiClientBuilder;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\OperationsInterface;
+use FluxSE\OdooApiClient\Builder\OdooApiClientBuilder;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\OperationsInterface;
 
 trait ExecuteKwOperationsTrait
 {

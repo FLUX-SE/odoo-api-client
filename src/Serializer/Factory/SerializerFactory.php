@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Serializer\Factory;
+namespace FluxSE\OdooApiClient\Serializer\Factory;
 
 use Doctrine\Common\Annotations\AnnotationReader;
-use Flux\OdooApiClient\Serializer\NullOdooRelationDenormalizer;
-use Flux\OdooApiClient\Serializer\OdooNormalizer;
-use Flux\OdooApiClient\Serializer\OdooRelationDenormalizer;
-use Flux\OdooApiClient\Serializer\OdooRelationNormalizer;
-use Flux\OdooApiClient\Serializer\OdooRelationsDenormalizer;
-use Flux\OdooApiClient\Serializer\XmlRpcDecoder;
-use Flux\OdooApiClient\Serializer\XmlRpcEncoder;
+use FluxSE\OdooApiClient\Serializer\NullOdooRelationDenormalizer;
+use FluxSE\OdooApiClient\Serializer\OdooNormalizer;
+use FluxSE\OdooApiClient\Serializer\OdooRelationDenormalizer;
+use FluxSE\OdooApiClient\Serializer\OdooRelationNormalizer;
+use FluxSE\OdooApiClient\Serializer\OdooRelationsDenormalizer;
+use FluxSE\OdooApiClient\Serializer\XmlRpcDecoder;
+use FluxSE\OdooApiClient\Serializer\XmlRpcEncoder;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;

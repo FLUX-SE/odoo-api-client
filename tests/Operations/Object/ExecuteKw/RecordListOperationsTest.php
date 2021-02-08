@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\Operations\Object\ExecuteKw;
+namespace Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw;
 
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
 use PHPUnit\Framework\TestCase;
 
 class RecordListOperationsTest extends TestCase

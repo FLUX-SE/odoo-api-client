@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments;
+namespace Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments;
 
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
 use PHPUnit\Framework\TestCase;
 
 class CriterionLogicsTest extends TestCase

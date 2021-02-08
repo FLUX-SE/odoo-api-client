@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\PhpGenerator;
+namespace FluxSE\OdooApiClient\PhpGenerator;
 
 use Prometee\PhpClassGenerator\Builder\ClassBuilderInterface;
 use Prometee\PhpClassGenerator\PhpGeneratorInterface;

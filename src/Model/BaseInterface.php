@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Model;
+namespace FluxSE\OdooApiClient\Model;
 
 use DateTimeInterface;
 

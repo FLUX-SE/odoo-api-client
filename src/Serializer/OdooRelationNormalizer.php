@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Serializer;
+namespace FluxSE\OdooApiClient\Serializer;
 
-use Flux\OdooApiClient\Model\BaseInterface;
-use Flux\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Model\BaseInterface;
+use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;

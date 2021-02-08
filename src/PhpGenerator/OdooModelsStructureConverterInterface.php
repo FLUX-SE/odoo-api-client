@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\PhpGenerator;
+namespace FluxSE\OdooApiClient\PhpGenerator;
 
 interface OdooModelsStructureConverterInterface
 {

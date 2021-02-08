@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Serializer\Factory;
+namespace FluxSE\OdooApiClient\Serializer\Factory;
 
 use Symfony\Component\Serializer\Serializer;
 

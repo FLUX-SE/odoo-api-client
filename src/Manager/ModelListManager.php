@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Manager;
+namespace FluxSE\OdooApiClient\Manager;
 
-use Flux\OdooApiClient\Model\BaseInterface;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomainsInterface;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptionsInterface;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterface;
+use FluxSE\OdooApiClient\Model\BaseInterface;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomainsInterface;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptionsInterface;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterface;
 use LogicException;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Serializer;

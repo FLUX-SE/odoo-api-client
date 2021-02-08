@@ -31,11 +31,14 @@
         "http-interop/http-factory-guzzle": "^1.0",
         "symplify/easy-coding-standard": "^7.3"
     },
+    "bin": [
+        "bin/odoo-model-classes-generator"
+    ],
     "autoload": {
-        "psr-4": { "Flux\\OdooApiClient\\": "src/" }
+        "psr-4": { "FluxSE\\OdooApiClient\\": "src/" }
     },
     "autoload-dev": {
-        "psr-4": { "Tests\\Flux\\OdooApiClient\\": "tests/" }
+        "psr-4": { "Tests\\FluxSE\\OdooApiClient\\": "tests/" }
     },
     "extra": {
         "branch-alias": {

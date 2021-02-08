@@ -2,26 +2,26 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Builder;
+namespace FluxSE\OdooApiClient\Builder;
 
-use Flux\OdooApiClient\Api\Factory\RequestBodyFactory;
-use Flux\OdooApiClient\Api\Factory\RequestBodyFactoryInterface;
-use Flux\OdooApiClient\Api\OdooApiRequestMaker;
-use Flux\OdooApiClient\Api\OdooApiRequestMakerInterface;
-use Flux\OdooApiClient\Api\RequestBody;
-use Flux\OdooApiClient\HttPlug\Factory\OdooHttpClientFactory;
-use Flux\OdooApiClient\HttPlug\Factory\OdooHttpClientFactoryInterface;
-use Flux\OdooApiClient\Operations\CommonOperations;
-use Flux\OdooApiClient\Operations\CommonOperationsInterface;
-use Flux\OdooApiClient\Operations\DbOperations;
-use Flux\OdooApiClient\Operations\DbOperationsInterface;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\OperationsInterface as ExecuteKwOperationsInterface;
-use Flux\OdooApiClient\Operations\ObjectOperations;
-use Flux\OdooApiClient\Operations\ObjectOperationsInterface;
-use Flux\OdooApiClient\Operations\OperationsInterface;
-use Flux\OdooApiClient\Serializer\Factory\SerializerFactory;
-use Flux\OdooApiClient\Serializer\XmlRpcSerializerHelper;
-use Flux\OdooApiClient\Serializer\XmlRpcSerializerHelperInterface;
+use FluxSE\OdooApiClient\Api\Factory\RequestBodyFactory;
+use FluxSE\OdooApiClient\Api\Factory\RequestBodyFactoryInterface;
+use FluxSE\OdooApiClient\Api\OdooApiRequestMaker;
+use FluxSE\OdooApiClient\Api\OdooApiRequestMakerInterface;
+use FluxSE\OdooApiClient\Api\RequestBody;
+use FluxSE\OdooApiClient\HttPlug\Factory\OdooHttpClientFactory;
+use FluxSE\OdooApiClient\HttPlug\Factory\OdooHttpClientFactoryInterface;
+use FluxSE\OdooApiClient\Operations\CommonOperations;
+use FluxSE\OdooApiClient\Operations\CommonOperationsInterface;
+use FluxSE\OdooApiClient\Operations\DbOperations;
+use FluxSE\OdooApiClient\Operations\DbOperationsInterface;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\OperationsInterface as ExecuteKwOperationsInterface;
+use FluxSE\OdooApiClient\Operations\ObjectOperations;
+use FluxSE\OdooApiClient\Operations\ObjectOperationsInterface;
+use FluxSE\OdooApiClient\Operations\OperationsInterface;
+use FluxSE\OdooApiClient\Serializer\Factory\SerializerFactory;
+use FluxSE\OdooApiClient\Serializer\XmlRpcSerializerHelper;
+use FluxSE\OdooApiClient\Serializer\XmlRpcSerializerHelperInterface;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\UriInterface;

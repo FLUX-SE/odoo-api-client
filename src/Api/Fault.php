@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Api;
+namespace FluxSE\OdooApiClient\Api;
 
 final class Fault implements FaultInterface
 {

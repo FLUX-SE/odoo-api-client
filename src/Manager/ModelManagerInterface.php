@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Manager;
+namespace FluxSE\OdooApiClient\Manager;
 
-use Flux\OdooApiClient\Model\BaseInterface;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\OptionsInterface;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordOperationsInterface;
+use FluxSE\OdooApiClient\Model\BaseInterface;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\OptionsInterface;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordOperationsInterface;
 use Symfony\Component\Serializer\Serializer;
 
 interface ModelManagerInterface

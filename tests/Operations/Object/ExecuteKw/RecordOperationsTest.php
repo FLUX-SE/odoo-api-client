@@ -2,18 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\Operations\Object\ExecuteKw;
+namespace Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw;
 
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordOperations;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordOperationsInterface;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordOperations;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordOperationsInterface;
 use PHPUnit\Framework\TestCase;
-use Tests\Flux\OdooApiClient\TestModel\Object\Product\Category;
-use Tests\Flux\OdooApiClient\TestModel\Object\Product\Template;
-use Tests\Flux\OdooApiClient\TestModel\Object\Uom\Uom;
 
 class RecordOperationsTest extends TestCase
 {
@@ -40,7 +37,7 @@ class RecordOperationsTest extends TestCase
         $searchReadOptions->setLimit(1);
 
         $results = $this->recordListOperations->search_read(
-            Uom::getOdooModelName(),
+            'uom.uom',
             $searchDomains,
             $searchReadOptions
         );
@@ -59,7 +56,7 @@ class RecordOperationsTest extends TestCase
         $searchReadOptions->setLimit(1);
 
         $results = $this->recordListOperations->search_read(
-            Category::getOdooModelName(),
+            'product.category',
             null,
             $searchReadOptions
         );
@@ -87,7 +84,7 @@ class RecordOperationsTest extends TestCase
             'default_code' => sprintf('TESTRAW_%d', time()),
         ];
 
-        $templateId = $this->recordOperations->create(Template::getOdooModelName(), [$template]);
+        $templateId = $this->recordOperations->create('product.template', $template);
 
         $this->assertIsInt($templateId);
     }

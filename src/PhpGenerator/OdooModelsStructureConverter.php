@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\PhpGenerator;
+namespace FluxSE\OdooApiClient\PhpGenerator;
 
 use Exception;
-use Flux\OdooApiClient\Model\BaseInterface;
-use Flux\OdooApiClient\Model\Object\Base;
-use Flux\OdooApiClient\Model\OdooRelation;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\InspectionOperationsInterface;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\FieldsGetOptions;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterface;
-use Flux\OdooApiClient\PhpGenerator\ModelFixer\ModelFixerInterface;
+use FluxSE\OdooApiClient\Model\BaseInterface;
+use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\InspectionOperationsInterface;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\FieldsGetOptions;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterface;
+use FluxSE\OdooApiClient\PhpGenerator\ModelFixer\ModelFixerInterface;
 use LogicException;
 use Prometee\PhpClassGenerator\Builder\ClassBuilderInterface;
 use Prometee\PhpClassGenerator\Helper\PhpReservedWordsHelperInterface;

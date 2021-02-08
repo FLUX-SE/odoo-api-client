@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\PhpGenerator\ModelFixer;
+namespace FluxSE\OdooApiClient\PhpGenerator\ModelFixer;
 
 interface ModelFixerInterface
 {

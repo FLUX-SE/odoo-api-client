@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Flux\OdooApiClient\Operations\Object\ExecuteKw;
+namespace Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw;
 
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\InspectionOperations;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\FieldsGetOptions;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\InspectionOperations;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\FieldsGetOptions;
 use PHPUnit\Framework\TestCase;
 
 class InspectionOperationsTest extends TestCase

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\PhpGenerator\ModelFixer;
+namespace FluxSE\OdooApiClient\PhpGenerator\ModelFixer;
 
 abstract class AbstractModelFixer implements ModelFixerInterface
 {

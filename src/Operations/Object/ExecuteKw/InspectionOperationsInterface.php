@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Operations\Object\ExecuteKw;
+namespace FluxSE\OdooApiClient\Operations\Object\ExecuteKw;
 
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\FieldsGetOptionsInterface;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\FieldsGetOptionsInterface;
 
 interface InspectionOperationsInterface extends OperationsInterface
 {

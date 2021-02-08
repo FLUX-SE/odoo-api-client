@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Operations\Object\ExecuteKw;
+namespace FluxSE\OdooApiClient\Operations\Object\ExecuteKw;
 
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomainsInterface;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\ReadOptionsInterface;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchOptionsInterface;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptionsInterface;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomainsInterface;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\ReadOptionsInterface;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchOptionsInterface;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptionsInterface;
 
 final class RecordListOperations extends AbstractOperations implements RecordListOperationsInterface
 {

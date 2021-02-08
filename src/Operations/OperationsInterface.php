@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Operations;
+namespace FluxSE\OdooApiClient\Operations;
 
-use Flux\OdooApiClient\Api\Factory\RequestBodyFactoryInterface;
-use Flux\OdooApiClient\Api\OdooApiRequestMakerInterface;
-use Flux\OdooApiClient\Serializer\XmlRpcSerializerHelperInterface;
+use FluxSE\OdooApiClient\Api\Factory\RequestBodyFactoryInterface;
+use FluxSE\OdooApiClient\Api\OdooApiRequestMakerInterface;
+use FluxSE\OdooApiClient\Serializer\XmlRpcSerializerHelperInterface;
 use Psr\Http\Message\ResponseInterface;
 
 interface OperationsInterface

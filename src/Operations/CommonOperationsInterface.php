@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Operations;
+namespace FluxSE\OdooApiClient\Operations;
 
-use Flux\OdooApiClient\Model\Common\Version;
+use FluxSE\OdooApiClient\Model\Common\Version;
 
 interface CommonOperationsInterface extends OperationsInterface
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments;
+namespace FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments;
 
 trait SearchDomainsTrait
 {

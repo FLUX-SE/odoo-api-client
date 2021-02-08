@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Operations\Exception;
+namespace FluxSE\OdooApiClient\Operations\Exception;
 
 use Exception;
 

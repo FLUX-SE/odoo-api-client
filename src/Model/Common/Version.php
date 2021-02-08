@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Flux\OdooApiClient\Model\Common;
+namespace FluxSE\OdooApiClient\Model\Common;
 
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
