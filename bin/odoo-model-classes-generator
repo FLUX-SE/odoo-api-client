@@ -55,12 +55,12 @@ $odooModelsStructureConverter = new OdooModelsStructureConverter(
     $phpReservedWordsHelper
 );
 
-$application = new Application('odoo-api-client-generator', '1.0.0');
+$application = new Application('odoo-model-classes-generator', '1.0.0');
 $command = new GeneratorCommand(
     $inspectionOperations->getObjectOperations(),
     $odooModelsStructureConverter,
     $phpGenerator,
-    'vendor/bin/odoo-api-client-generator'
+    'vendor/bin/odoo-model-classes-generator'
 );
 
 $application->add($command);

@@ -37,7 +37,7 @@ That's why you can generate model classes using this cli command :
 ```shell
 #> vendor/bin/odoo-model-classes-generator --help
 Usage:
-  ./vendor/bin/odoo-api-client-generator <baseUrl> <database> <username> <password> <basePath> <baseNamespace>
+  ./vendor/bin/odoo-model-classes-generator <baseUrl> <database> <username> <password> <basePath> <baseNamespace>
 
 Arguments:
   baseUrl               Your Odoo base URL (ex: https://myinstance.odoo.com.
@@ -48,7 +48,7 @@ Arguments:
   baseNamespace         The base namespace of the generated classes (ex: "App\\OdooModel\\Object")
 
 Example :
-  ./vendor/bin/odoo-api-client-generator \
+  ./vendor/bin/odoo-model-classes-generator \
       https://myinstance.odoo.com \
       myinstance-master-1234567 \
       admin \
