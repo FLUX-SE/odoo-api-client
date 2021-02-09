@@ -32,10 +32,6 @@ jobs:
                 ports:
                     - 8069/tcp
                 options: >-
-                    --health-cmd "curl --fail http://localhost:8069/xmlrpc/2/object || exit 1"
-                    --health-interval 10s
-                    --health-timeout 5s
-                    --health-retries 5
                     --link db:db
                     odoo --database odoo-master --init "l10n_fr,account_accountant"
 
@@ -90,6 +86,16 @@ jobs:
             -
                 name: Run PHPStan
                 run: vendor/bin/phpstan analyse -c phpstan.neon -l max src/
+
+            -
+                name: Wait until odoo is ready
+                run: |
+                    while ! docker logs "${{ job.services.odoo.id }}" 2>&1 | grep -q "odoo.modules.loading: Modules loaded";
+                    do
+                        sleep 1
+                        echo "Checking if Odoo is fully up..."
+                    done
+                    echo "Odoo is UP !"
 
             -
                 name: Build Odoo tests model classes
