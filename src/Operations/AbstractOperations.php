@@ -6,9 +6,9 @@ namespace FluxSE\OdooApiClient\Operations;
 
 use FluxSE\OdooApiClient\Api\Factory\RequestBodyFactoryInterface;
 use FluxSE\OdooApiClient\Api\OdooApiRequestMakerInterface;
+use FluxSE\OdooApiClient\Model\BaseInterface;
 use FluxSE\OdooApiClient\Serializer\XmlRpcSerializerHelperInterface;
 use Psr\Http\Message\ResponseInterface;
-use UnexpectedValueException;
 use Webmozart\Assert\Assert;
 
 abstract class AbstractOperations implements OperationsInterface
@@ -56,9 +56,6 @@ abstract class AbstractOperations implements OperationsInterface
         return $body;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function deserializeModel(ResponseInterface $response, string $model)
     {
         $body = $this->xmlRpcSerializerHelper->deserializeResponseBody(
@@ -75,7 +72,7 @@ abstract class AbstractOperations implements OperationsInterface
         return $body;
     }
 
-    public function deserializeArrayOf(ResponseInterface $response, string $type = 'string'): array
+    public function deserializeArrayOfString(ResponseInterface $response): array
     {
         $body = $this->xmlRpcSerializerHelper->decodeResponseBody($response->getBody());
 

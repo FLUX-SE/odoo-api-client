@@ -15,7 +15,7 @@ final class DbOperations extends AbstractOperations implements DbOperationsInter
     {
         $responseBody = $this->request(__FUNCTION__, [$document]);
 
-        return $this->deserializeArrayOf($responseBody);
+        return $this->deserializeArrayOfString($responseBody);
     }
 
     public function server_version(): string
@@ -60,7 +60,7 @@ final class DbOperations extends AbstractOperations implements DbOperationsInter
             $phone,
         ]);
 
-        return $this->deserializeArrayOf($responseBody);
+        return $this->deserializeArrayOfString($responseBody);
     }
 
     public function duplicate_database(

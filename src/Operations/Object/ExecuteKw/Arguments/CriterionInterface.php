@@ -177,6 +177,4 @@ interface CriterionInterface
      * @param string|int|float|bool $value
      */
     public static function like(string $fieldName, $value): CriterionInterface;
-
-    public function hasSubCriterion(): bool;
 }

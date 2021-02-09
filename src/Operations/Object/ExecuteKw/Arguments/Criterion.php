@@ -14,7 +14,7 @@ final class Criterion implements CriterionInterface
     /** @var string|null */
     private $operator;
 
-    /** @var string|int|float|bool|null */
+    /** @var array|string|int|float|bool|null */
     private $value;
 
     /** @var string|null */
@@ -33,7 +33,7 @@ final class Criterion implements CriterionInterface
 
     public function toArray(): array
     {
-        if ($this->hasSubCriterion()) {
+        if (null !== $this->c1) {
             $arr = [$this->logic];
 
             $arr = array_merge($arr, $this->c1->toArray());
@@ -54,17 +54,8 @@ final class Criterion implements CriterionInterface
         }
     }
 
-    public function hasSubCriterion(): bool
-    {
-        if (null === $this->c1) {
-            return false;
-        }
-
-        return true;
-    }
-
     /**
-     * @param string|int|float|bool|array $value
+     * @param string|int|float|bool|array|DateTimeInterface $value
      */
     private static function build(string $fieldName, string $operator, $value): self
     {

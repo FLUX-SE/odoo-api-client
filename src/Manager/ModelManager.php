@@ -31,6 +31,7 @@ final class ModelManager implements ModelManagerInterface
      */
     public function persist(BaseInterface $model, ?OptionsInterface $options = null): int
     {
+        /** @var array $normalizedModel */
         $normalizedModel = $this->serializer->normalize($model);
         return $this->recordOperations->create($model::getOdooModelName(), $normalizedModel, $options);
     }

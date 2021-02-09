@@ -32,7 +32,7 @@ final class CommonOperations extends AbstractOperations implements CommonOperati
     {
         $responseBody = $this->request('about', [true]);
 
-        return $this->deserializeArrayOf($responseBody);
+        return $this->deserializeArrayOfString($responseBody);
     }
 
     /**

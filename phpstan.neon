@@ -5,5 +5,5 @@ parameters:
 
 
     ignoreErrors:
-        - '#Property Flux\\OdooApiClient\\Command\\GeneratorCommand::\$(baseUrl|database|username|password|basePath|baseNamespace) \(string\) does not accept .*#'
-        - '#Method Flux\\OdooApiClient\\Serializer\\NullOdooRelationDenormalizer::denormalize\(\) should return array\|object but returns null.#'
+        - '#Property FluxSE\\OdooApiClient\\Command\\GeneratorCommand::\$(baseUrl|database|username|password|basePath|baseNamespace) \(string\) does not accept .*#'
+        - '#Method FluxSE\\OdooApiClient\\Serializer\\NullOdooRelationDenormalizer::denormalize\(\) should return array\|object but returns null.#'
