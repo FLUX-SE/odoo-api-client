@@ -32,6 +32,10 @@ jobs:
                 ports:
                     - 8069/tcp
                 options: >-
+                    --health-cmd 'curl --fail http://localhost:8069/xmlrpc/2/object || exit 1'
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
                     --link db:db
                     odoo --database odoo-master --init "l10n_fr,account_accountant"
 
