@@ -45,11 +45,6 @@ jobs:
                     --health-interval 10s
                     --health-timeout 5s
                     --health-retries 5
-        env:
-            ODOO_API_HOST: http://localhost:${{ job.services.odoo.ports[8069] }}
-            ODOO_API_DATABASE: odoo
-            ODOO_API_USERNAME: admin
-            ODOO_API_PASSWORD: admin
 
         steps:
             -
@@ -93,7 +88,14 @@ jobs:
 
             -
                 name: Build Odoo tests model classes
-                run: bin/odoo-model-classes-generator ${{ env.ODOO_API_HOST }} ${{ env.ODOO_API_DATABASE }} ${{ env.ODOO_API_USERNAME }} ${{ env.ODOO_API_PASSWORD }} ./tests/TestModel/Object "Tests\\FluxSE\\OdooApiClient\\TestModel\\Object"
+                run: |
+                    bin/odoo-model-classes-generator \
+                        "http://localhost:${{ job.services.odoo.ports[8069] }}" \
+                        odoo \
+                        admin \
+                        admin \
+                        "./tests/TestModel/Object" \
+                        "Tests\\FluxSE\\OdooApiClient\\TestModel\\Object"
 
             -
                 name: Run PHPUnit
