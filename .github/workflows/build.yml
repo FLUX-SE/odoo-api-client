@@ -33,9 +33,7 @@ jobs:
                     - 8069/tcp
                 options: >-
                     --link db:db
-                    --
-                    --database odoo-master
-                    --init "l10n_fr,account_accountant"
+                    odoo --database odoo-master --init "l10n_fr,account_accountant"
 
             db:
                 image: postgres
