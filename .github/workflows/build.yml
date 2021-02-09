@@ -43,6 +43,7 @@ jobs:
             -
                 name: Install Odoo package
                 run: |
+                    pip3 install xlwt
                     wget -O - https://nightly.odoo.com/odoo.key | sudo apt-key add -
                     echo "deb http://nightly.odoo.com/${{ matrix.odoo }}.0/nightly/deb/ ./" | sudo tee /etc/apt/sources.list.d/odoo.list > /dev/null
                     sudo apt-get update && sudo apt-get install odoo wkhtmltopdf
