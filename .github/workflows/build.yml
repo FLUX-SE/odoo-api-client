@@ -13,7 +13,7 @@ jobs:
     tests:
         runs-on: ubuntu-latest
 
-        name: "PHP ${{ matrix.php }}, MySQL ${{ matrix.mysql }}"
+        name: "PHP ${{ matrix.php }}, Odoo ${{ matrix.odoo }}"
 
         strategy:
             fail-fast: false
