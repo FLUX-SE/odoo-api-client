@@ -77,7 +77,7 @@ jobs:
 
             -
                 name: Build Odoo tests model classes
-                run: bin/odoo-api-client-generator ${{ env.ODOO_API_HOST }} ${{ env.ODOO_API_DATABASE }} ${{ env.ODOO_API_USERNAME }} ${{ env.ODOO_API_PASSWORD }} ./tests/TestModel/Object "Tests\\FluxSE\\OdooApiClient\\TestModel\\Object"
+                run: php bin/odoo-api-client-generator ${{ env.ODOO_API_HOST }} ${{ env.ODOO_API_DATABASE }} ${{ env.ODOO_API_USERNAME }} ${{ env.ODOO_API_PASSWORD }} ./tests/TestModel/Object "Tests\\FluxSE\\OdooApiClient\\TestModel\\Object"
 
             -
                 name: Run PHPUnit
