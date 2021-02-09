@@ -1,6 +1,6 @@
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE)
-[![Build Status][ico-travis]][link-travis]
+[![Build Status][ico-github-actions]][link-github-actions]
 [![Quality Score][ico-code-quality]][link-code-quality]
 
 ## Odoo API client
@@ -199,10 +199,10 @@ Flux\OdooApiClient\Model\Object\Res\Partner
 
 [ico-version]: https://img.shields.io/packagist/v/flux-se/odoo-api-client.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/FLUX-SE/odoo-api-client/master.svg?style=flat-square
+[ico-github-actions]: https://github.com/FLUX-SE/odoo-api-client/workflows/Build/badge.svg
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/FLUX-SE/odoo-api-client.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/flux-se/odoo-api-client
-[link-travis]: https://travis-ci.org/FLUX-SE/odoo-api-client
+[link-github-actions]: https://github.com/FLUX-SE/odoo-api-client/actions?query=workflow%3A"Build"
 [link-scrutinizer]: https://scrutinizer-ci.com/g/FLUX-SE/odoo-api-client/code-structure
 [link-code-quality]: https://scrutinizer-ci.com/g/FLUX-SE/odoo-api-client
