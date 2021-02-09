@@ -92,6 +92,7 @@ jobs:
                 run: |
                     while ! docker logs "${{ job.services.odoo.id }}" 2>&1 | grep -q "odoo.modules.loading: Modules loaded";
                     do
+                        docker logs "${{ job.services.odoo.id }}"
                         sleep 1
                         echo "Checking if Odoo is fully up..."
                     done
