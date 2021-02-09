@@ -29,8 +29,6 @@ jobs:
                     PORT: 5432
                     USER: odoo
                     PASSWORD: odoo
-                volumes:
-                    - ./config:/etc/odoo
                 ports:
                     - 8069/tcp
                 options: >-
