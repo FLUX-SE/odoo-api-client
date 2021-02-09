@@ -20,9 +20,33 @@ jobs:
             matrix:
                 odoo: [13, 14]
                 php: [7.4, 7.3]
+        services:
+            odoo:
+                image: odoo:${{ matrix.odoo }}
+                env:
+                    # default values
+                    HOST: db
+                    PORT: 5432
+                    USER: odoo
+                    PASSWORD: odoo
+                ports:
+                    - 8069/tcp
+                options: >-
+                    --link db:db
 
+            db:
+                image: postgres
+                env:
+                    POSTGRES_DB: postgres
+                    POSTGRES_PASSWORD: odoo
+                    POSTGRES_USER: odoo
+                options: >-
+                    --health-cmd pg_isready
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
         env:
-            ODOO_API_HOST: http://localhost:8069
+            ODOO_API_HOST: http://localhost:${{ job.services.odoo.ports[8069] }}
             ODOO_API_DATABASE: odoo
             ODOO_API_USERNAME: admin
             ODOO_API_PASSWORD: admin
@@ -39,15 +63,6 @@ jobs:
                     extensions: intl, xmlrpc
                     tools: symfony
                     coverage: none
-
-            -
-                name: Install Odoo package
-                run: |
-                    pip3 install xlwt
-                    wget -O - https://nightly.odoo.com/odoo.key | sudo apt-key add -
-                    echo "deb http://nightly.odoo.com/${{ matrix.odoo }}.0/nightly/deb/ ./" | sudo tee /etc/apt/sources.list.d/odoo.list > /dev/null
-                    sudo apt-get update && sudo apt-get install odoo wkhtmltopdf
-                    sudo cat /etc/odoo/*.conf
 
             -
                 name: Get Composer cache directory
