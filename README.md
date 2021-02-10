@@ -197,6 +197,21 @@ Flux\OdooApiClient\Model\Object\Res\Partner
 **/
 ```
 
+# Development
+
+## Using docker
+
+````shell
+docker run -d -p 5432:5432 -e POSTGRES_USER=odoo -e POSTGRES_PASSWORD=odoo -e POSTGRES_DB=postgres --name db postgres
+docker run --rm -p 8069:8069 --name odoo -e "HOST=host.docker.internal" -t odoo:14 -- --database odoo-master --init "l10n_fr,account_accountant"
+# The server is fully ready to use when this log line appears
+# (v13 could take longer than v14 to reach this line) :
+# 2021-01-01 00:00:00,000 1 INFO odoo-master odoo.modules.loading: Modules loaded.
+vendor/bin/phpunit~~~~
+````
+
+Then you will be able to access this url : http://localhost:8069 
+
 [ico-version]: https://img.shields.io/packagist/v/flux-se/odoo-api-client.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
 [ico-github-actions]: https://github.com/FLUX-SE/odoo-api-client/workflows/Build/badge.svg

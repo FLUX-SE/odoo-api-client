@@ -6,6 +6,7 @@ use DateTime;
 use FluxSE\OdooApiClient\Manager\ModelListManager;
 use FluxSE\OdooApiClient\Manager\ModelManager;
 use FluxSE\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Operations\CommonOperationsInterface;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Arguments;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
@@ -45,6 +46,12 @@ class ModelManagerTest extends TestCase
     /** @var ModelListManager */
     private $modelListManager;
 
+    /** @var CommonOperationsInterface */
+    private $commonOperations;
+
+    /** @var int */
+    private $odooVersion;
+
     /**
      * {@inheritdoc}
      */
@@ -61,6 +68,10 @@ class ModelManagerTest extends TestCase
             $this->recordListOperations->getObjectOperations()->getXmlRpcSerializerHelper()->getSerializer(),
             $this->recordListOperations
         );
+
+        $this->commonOperations = $this->buildOdooApiClientBuilder()->buildCommonOperations();
+        $version = $this->commonOperations->version();
+        $this->odooVersion = $version->getServerVersionInfo()[0];
     }
 
     /**
@@ -207,17 +218,8 @@ class ModelManagerTest extends TestCase
         $this->assertNotNull($tax);
 
         $partnerRel = new OdooRelation($partner->getId());
-        $currencyRel = new OdooRelation($currency->getId());
-        $journalRel = new OdooRelation($journal->getId());
 
-        $move = new Move(
-            new DateTime(),
-            'draft',
-            'out_invoice',
-            $journalRel,
-            $currencyRel,
-            'no_extract_requested'
-        );
+        $move = $this->createMove($journal->getId(), $currency->getId());
         $move->setPartnerId($partnerRel);
         $move->setRef(sprintf('TEST_I%d', time()));
 
@@ -225,7 +227,7 @@ class ModelManagerTest extends TestCase
         $accountRel = new OdooRelation($account->getId());
         $taxRel = new OdooRelation($tax->getId());
 
-        $line1 = new Line(new OdooRelation(), new OdooRelation());
+        $line1 = $this->createMoveLine($currency->getId());
         $line1->setName('test article');
         $line1->setProductId($productRel);
         $line1->setAccountId($accountRel);
@@ -234,7 +236,7 @@ class ModelManagerTest extends TestCase
         $line1->setDiscount(50);
         $line1->addTaxIds($taxRel);
 
-        $line2 = new Line(new OdooRelation(), $currencyRel);
+        $line2 = $this->createMoveLine($currency->getId());
         $line2->setAccountId(new OdooRelation(false)); //Required...
         $line2->setDisplayType('line_note');
         $line2->setName('test');
@@ -249,14 +251,19 @@ class ModelManagerTest extends TestCase
 
         $this->assertIsInt($moveId);
 
-        $this->expectExceptionMessageMatches('#.*TypeError: cannot marshal <class \'odoo.api.account.move\'> objects.*#');
+        if (14 === $this->odooVersion) {
+            $this->expectExceptionMessageMatches('#.*TypeError: cannot marshal <class \'odoo.api.account.move\'> objects.*#');
+        }
+
         $response = $this->recordOperations->getObjectOperations()->execute_kw(
             $move::getOdooModelName(),
             'action_post',
             [$moveId]
         );
 
-        dump($response);
+        $body = $this->modelListManager->getRecordListOperations()->getObjectOperations()
+            ->getXmlRpcSerializerHelper()->decodeResponseBody($response->getBody());
+        $this->assertTrue($body);
     }
 
     /**
@@ -266,15 +273,23 @@ class ModelManagerTest extends TestCase
     {
         // 1 - Retrieve the move to pay
         $searchDomains = new SearchDomains();
+        $fieldName = 'invoice_payment_state';
+        if (14 === $this->odooVersion) {
+            $fieldName = 'payment_state';
+        }
         $searchDomains->addAndCriteria(
             Criterion::equal('state', 'posted'),
-            Criterion::equal('payment_state', 'not_paid')
+            Criterion::equal($fieldName, 'not_paid')
         );
         /** @var Move|null $move */
         $move = $this->modelListManager->findOneBy(Move::class, $searchDomains);
         $this->assertNotNull($move);
         $this->assertEquals('posted', $move->getState());
-        $this->assertEquals('not_paid', $move->getPaymentState());
+        if (14 === $this->odooVersion) {
+            $this->assertEquals('not_paid', $move->getPaymentState());
+        } else {
+            $this->assertEquals('not_paid', $move->getInvoicePaymentState());
+        }
 
         // 2 - Retrieve the right journal
         $searchDomains = new SearchDomains();
@@ -285,10 +300,25 @@ class ModelManagerTest extends TestCase
         $journal = $this->modelListManager->findOneBy(Journal::class, $searchDomains);
         $this->assertNotNull($journal);
 
-        $paymentRegister = new Payment\Register(new DateTime());
-        $paymentRegister->setJournalId(new OdooRelation($journal->getId()));
-        $paymentRegister->setAmount($move->getAmountTotal());
-        $paymentRegister->setCommunication(sprintf('PAY_%d', time()));
+        // 3 - Retrieve the paymentMethod
+        $searchDomains = new SearchDomains();
+        $searchDomains->addAndCriteria(
+            Criterion::equal('code', 'manual'),
+            Criterion::equal('payment_type', 'inbound')
+        );
+
+        /** @var Payment\Method|null $method */
+        $paymentMethod = $this->modelListManager->findOneBy(Payment\Method::class, $searchDomains);
+        $this->assertNotNull($paymentMethod);
+
+        $paymentRegister = $this->createPaymentRegister($journal->getId(), $paymentMethod->getId());
+        $ref = sprintf('PAY_%d', time());
+        if (14 === $this->odooVersion) {
+            $paymentRegister->setAmount($move->getAmountTotal());
+            $paymentRegister->setCommunication($ref);
+        } else {
+            $paymentRegister->setDisplayName($ref);
+        }
 
         $options = new Options();
         $options->addOption('context', [
@@ -298,11 +328,16 @@ class ModelManagerTest extends TestCase
         $paymentRegisterId = $this->modelManager->persist($paymentRegister, $options);
         $this->assertIsInt($paymentRegisterId);
 
+        $actionName = 'create_payments';
+        if (14 === $this->odooVersion) {
+            $actionName = 'action_create_payments';
+        }
+
         $arguments = new Arguments();
         $arguments->addArgument($paymentRegisterId);
         $response = $this->modelManager->getRecordOperations()->execute_kw(
             $paymentRegister::getOdooModelName(),
-            'action_create_payments',
+            $actionName,
             $arguments
         );
 
@@ -312,5 +347,63 @@ class ModelManagerTest extends TestCase
         $this->assertEquals(Payment::getOdooModelName(), $body['res_model']);
         $this->assertArrayHasKey('res_id', $body);
         $this->assertIsInt($body['res_id']);
+    }
+
+    private function createMove(int $journalId, int $currencyId): Move
+    {
+        $journalRel = new OdooRelation($journalId);
+        $currencyRel = new OdooRelation($currencyId);
+
+        if ( 14 === $this->odooVersion ) {
+            return new Move(
+                new DateTime(),
+                'draft',
+                'out_invoice',
+                $journalRel,
+                $currencyRel,
+                'no_extract_requested'
+            );
+        }
+
+        return new Move(
+            '/', // !important
+            new DateTime(),
+            'draft',
+            'out_invoice',
+            $journalRel,
+            $currencyRel
+        );
+    }
+
+    private function createMoveLine(int $currencyId): Line
+    {
+        $emptyMoveRel = new OdooRelation();
+        $currencyRel = new OdooRelation($currencyId);
+        if (14 === $this->odooVersion) {
+            return new Line($emptyMoveRel, $currencyRel);
+        }
+
+        $moveLine = new Line($emptyMoveRel);
+        $moveLine->setCurrencyId($currencyRel);
+        return $moveLine;
+    }
+
+    private function createPaymentRegister(int $journalId, int $paymentMethodId): Payment\Register
+    {
+        $journalRel = new OdooRelation($journalId);
+        $paymentMethodRel = new OdooRelation($paymentMethodId);
+
+        if (14 === $this->odooVersion) {
+            $paymentRegister = new Payment\Register(new DateTime());
+            $paymentRegister->setJournalId($journalRel);
+            $paymentRegister->setPaymentMethodId($paymentMethodRel);
+            return $paymentRegister;
+        }
+
+        return new Payment\Register(
+            new DateTime(),
+            $journalRel,
+            $paymentMethodRel
+        );
     }
 }

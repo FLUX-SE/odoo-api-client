@@ -7,8 +7,8 @@
          bootstrap="vendor/autoload.php"
 >
     <php>
-        <env name="ODOO_API_HOST" value="https://demo5.odoo.com" />
-        <env name="ODOO_API_DATABASE" value="demo5" />
+        <env name="ODOO_API_HOST" value="http://localhost:8069" />
+        <env name="ODOO_API_DATABASE" value="odoo-master" />
         <env name="ODOO_API_USERNAME" value="admin" />
         <env name="ODOO_API_PASSWORD" value="admin" />
     </php>
