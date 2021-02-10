@@ -207,7 +207,14 @@ docker run --rm -p 8069:8069 --name odoo -e "HOST=host.docker.internal" -t odoo:
 # The server is fully ready to use when this log line appears
 # (v13 could take longer than v14 to reach this line) :
 # 2021-01-01 00:00:00,000 1 INFO odoo-master odoo.modules.loading: Modules loaded.
-vendor/bin/phpunit~~~~
+bin/odoo-model-classes-generator -vvv \
+                        "http://localhost:8069" \
+                        odoo-master \
+                        admin \
+                        admin \
+                        "./tests/TestModel/Object" \
+                        "Tests\\FluxSE\\OdooApiClient\\TestModel\\Object"
+vendor/bin/phpunit
 ````
 
 Then you will be able to access this url : http://localhost:8069 
