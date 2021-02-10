@@ -42,11 +42,11 @@ jobs:
                     docker run \
                         --rm \
                         -p 8069:8069 \
-                        -e "HOST=localhost" \
+                        -e "HOST=host.docker.internal" \
                         -e "PORT=${{ job.services.postgres.ports['5432'] }}" \
                         --name odoo \
                         -t odoo:${{ matrix.odoo }} \
-                            -- --database odoo-master --init "l10n_fr,account_accountant" &
+                            -- --database odoo-master --init "l10n_fr,account_accountant"
 
             -
                 uses: actions/checkout@v2
