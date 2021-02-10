@@ -44,7 +44,7 @@ jobs:
                         -d \
                         --rm \
                         -p 8069:8069 \
-                        --network ${{ job.services.postgres.network }}
+                        --network ${{ job.services.postgres.network }} \
                         -e "HOST=${{ job.services.postgres.name }}" \
                         -e "PORT=${{ job.services.postgres.ports['5432'] }}" \
                         --name odoo \
