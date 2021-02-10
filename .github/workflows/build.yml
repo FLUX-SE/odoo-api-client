@@ -27,8 +27,6 @@ jobs:
                     POSTGRES_DB: postgres
                     POSTGRES_PASSWORD: odoo
                     POSTGRES_USER: odoo
-                ports:
-                    - 5432/tcp
                 options: >-
                     --health-cmd pg_isready
                     --health-interval 10s
@@ -46,11 +44,13 @@ jobs:
                         -p 8069:8069 \
                         --network ${{ job.services.postgres.network }} \
                         -e "HOST=postgres" \
-                        -e "PORT=${{ job.services.postgres.ports['5432'] }}" \
                         --name odoo \
                         -t odoo:${{ matrix.odoo }} \
                         -- \
                             --database odoo-master --init "l10n_fr,account_accountant"
+                    docker ps --all --filter id=odoo --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+                    docker port odoo
+                    docker logs odoo
 
             -
                 uses: actions/checkout@v2
