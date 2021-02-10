@@ -21,6 +21,17 @@ jobs:
                 odoo: [13, 14]
                 php: [7.4, 7.3]
         services:
+            db:
+                image: postgres
+                env:
+                    POSTGRES_DB: postgres
+                    POSTGRES_PASSWORD: odoo
+                    POSTGRES_USER: odoo
+                options: >-
+                    --health-cmd pg_isready
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
             odoo:
                 image: odoo:${{ matrix.odoo }}
                 env:
@@ -34,22 +45,11 @@ jobs:
                 options: >-
                     --link db:db
 
-            db:
-                image: postgres
-                env:
-                    POSTGRES_DB: postgres
-                    POSTGRES_PASSWORD: odoo
-                    POSTGRES_USER: odoo
-                options: >-
-                    --health-cmd pg_isready
-                    --health-interval 10s
-                    --health-timeout 5s
-                    --health-retries 5
-
         steps:
             -
                 name: Install Odoo instance
                 run: docker exec "${{ job.services.odoo.id }}" odoo --database odoo-master --init "l10n_fr,account_accountant"
+
             -
                 uses: actions/checkout@v2
 
