@@ -50,7 +50,6 @@ jobs:
                             --database odoo-master --init "l10n_fr,account_accountant"
                     docker ps --all --filter id=odoo --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
                     docker port odoo
-                    docker logs odoo
 
             -
                 uses: actions/checkout@v2
@@ -96,7 +95,6 @@ jobs:
                 run: |
                     while ! docker logs "odoo" 2>&1 | grep -q "odoo.modules.loading: Modules loaded";
                     do
-                        docker logs "odoo"
                         sleep 1
                         echo "Checking if Odoo is fully up..."
                     done
@@ -116,6 +114,11 @@ jobs:
             -
                 name: Run PHPUnit
                 run: vendor/bin/phpunit --colors=always
+                env:
+                    ODOO_API_HOST: http://localhost:8069
+                    ODOO_API_DATABASE: odoo-master
+                    ODOO_API_USERNAME: admin
+                    ODOO_API_PASSWORD: admin
 
             -
                 name: Remove Odoo instance

@@ -249,6 +249,7 @@ class ModelManagerTest extends TestCase
 
         $this->assertIsInt($moveId);
 
+        $this->expectExceptionMessageMatches('#.*TypeError: cannot marshal <class \'odoo.api.account.move\'> objects.*#');
         $response = $this->recordOperations->getObjectOperations()->execute_kw(
             $move::getOdooModelName(),
             'action_post',
