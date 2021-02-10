@@ -37,7 +37,7 @@ jobs:
             -
                 name: Docker launch Odoo instance
                 run: |
-                    docker run -d --rm -p 8069:8069 --name odoo --link db:db -t odoo:${{ matrix.odoo }} \
+                    docker run -d --rm -p 8069:8069 --name odoo --link "${{ job.services.db.id }}":db -t odoo:${{ matrix.odoo }} \
                         -- --database odoo-master --init "l10n_fr,account_accountant"
 
             -
