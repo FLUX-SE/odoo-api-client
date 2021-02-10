@@ -3,8 +3,8 @@
 
 declare(strict_types=1);
 
-if (is_file(__DIR__.'/../autoload.php') === true) {
-    require __DIR__.'/../autoload.php';
+if (is_file(__DIR__.'/../../../autoload.php') === true) {
+    require __DIR__.'/../../../autoload.php';
 } else {
     require __DIR__ . '/../vendor/autoload.php';
 }
