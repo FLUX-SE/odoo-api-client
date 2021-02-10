@@ -20,20 +20,20 @@ jobs:
             matrix:
                 odoo: [13, 14]
                 php: [7.4, 7.3]
-        services:
-            postgres:
-                image: postgres
-                env:
-                    POSTGRES_DB: postgres
-                    POSTGRES_PASSWORD: odoo
-                    POSTGRES_USER: odoo
-                ports:
-                    - 5432/tcp
-                options: >-
-                    --health-cmd pg_isready
-                    --health-interval 10s
-                    --health-timeout 5s
-                    --health-retries 5
+
+        container:
+            image: postgres
+            env:
+                POSTGRES_DB: postgres
+                POSTGRES_PASSWORD: odoo
+                POSTGRES_USER: odoo
+            ports:
+                - 5432/tcp
+            options: >-
+                --health-cmd pg_isready
+                --health-interval 10s
+                --health-timeout 5s
+                --health-retries 5
 
         steps:
             -
@@ -43,8 +43,8 @@ jobs:
                         -d \
                         --rm \
                         -p 8069:8069 \
-                        -e "HOST=host.docker.internal" \
-                        -e "PORT=${{ job.services.postgres.ports['5432'] }}" \
+                        -e "HOST=localhost" \
+                        -e "PORT=${{ job.container.ports['5432'] }}" \
                         --name odoo \
                         -t odoo:${{ matrix.odoo }} \
                             -- --database odoo-master --init "l10n_fr,account_accountant"
@@ -113,7 +113,3 @@ jobs:
             -
                 name: Run PHPUnit
                 run: vendor/bin/phpunit --colors=always
-
-            -
-                name: Remove Odoo instance
-                run: docker rm -f "odoo"
