@@ -49,8 +49,7 @@ jobs:
         steps:
             -
                 name: Install Odoo instance
-                run: |
-                    docker exec ${{ job.services.postgres.id }} odoo --database odoo-master --init "l10n_fr,account_accountant"
+                run: docker exec "${{ job.services.odoo.id }}" odoo --database odoo-master --init "l10n_fr,account_accountant"
             -
                 uses: actions/checkout@v2
 
