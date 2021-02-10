@@ -20,34 +20,37 @@ jobs:
             matrix:
                 odoo: [13, 14]
                 php: [7.4, 7.3]
-
-        container:
-            image: postgres
-            env:
-                POSTGRES_DB: postgres
-                POSTGRES_PASSWORD: odoo
-                POSTGRES_USER: odoo
-            ports:
-                - 5432/tcp
-            options: >-
-                --health-cmd pg_isready
-                --health-interval 10s
-                --health-timeout 5s
-                --health-retries 5
+        services:
+            odoo:
+                image: odoo:${{ matrix.odoo }}
+                env:
+                    # default values
+                    HOST: ${{ job.services.postgres.name }}
+                    PORT: ${{ job.services.postgres.port[5432] }}
+                    USER: odoo
+                    PASSWORD: odoo
+                ports:
+                    - 8069/tcp
+            postgres:
+                image: postgres
+                env:
+                    POSTGRES_DB: postgres
+                    POSTGRES_PASSWORD: odoo
+                    POSTGRES_USER: odoo
+                ports:
+                    - 5432/tcp
+                options: >-
+                    --health-cmd pg_isready
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
 
         steps:
             -
                 name: Docker launch Odoo instance
                 run: |
-                    docker run \
-                        -d \
-                        --rm \
-                        -p 8069:8069 \
-                        -e "HOST=localhost" \
-                        -e "PORT=${{ job.container.ports['5432'] }}" \
-                        --name odoo \
-                        -t odoo:${{ matrix.odoo }} \
-                            -- --database odoo-master --init "l10n_fr,account_accountant"
+                    docker stop "${{ job.services.odoo.id }}"
+                    docker start "${{ job.services.odoo.id }}" -- --database odoo-master --init "l10n_fr,account_accountant"
 
             -
                 uses: actions/checkout@v2
@@ -91,9 +94,9 @@ jobs:
             -
                 name: Wait until odoo is ready
                 run: |
-                    while ! docker logs "odoo" 2>&1 | grep -q "odoo.modules.loading: Modules loaded";
+                    while ! docker logs "${{ job.services.odoo.id }}" 2>&1 | grep -q "odoo.modules.loading: Modules loaded";
                     do
-                        docker logs "odoo"
+                        docker logs "${{ job.services.odoo.id }}"
                         sleep 1
                         echo "Checking if Odoo is fully up..."
                     done
@@ -103,7 +106,7 @@ jobs:
                 name: Build Odoo tests model classes
                 run: |
                     bin/odoo-model-classes-generator -vvv \
-                        "http://localhost:8069 }}" \
+                        "http://localhost:${{ job.services.odoo.port[8069] }}" \
                         odoo-master \
                         admin \
                         admin \
@@ -113,3 +116,7 @@ jobs:
             -
                 name: Run PHPUnit
                 run: vendor/bin/phpunit --colors=always
+
+            -
+                name: Remove Odoo instance
+                run: docker rm -f "odoo"
