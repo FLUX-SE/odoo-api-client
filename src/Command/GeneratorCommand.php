@@ -73,7 +73,7 @@ final class GeneratorCommand extends Command
 
         $this->generateModels($this->baseNamespace, $this->basePath);
 
-        return Command::SUCCESS;
+        return 0;
     }
 
     private function reconfigureServices(): void
