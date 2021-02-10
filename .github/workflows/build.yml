@@ -21,20 +21,6 @@ jobs:
                 odoo: [13, 14]
                 php: [7.4, 7.3]
         services:
-            odoo:
-                image: odoo:${{ matrix.odoo }}
-                env:
-                    # default values
-                    HOST: db
-                    PORT: 5432
-                    USER: odoo
-                    PASSWORD: odoo
-                ports:
-                    - 8069/tcp
-                options: >-
-                    --link db:db
-                    --entrypoint="/entrypoint.sh odoo --database odoo-master --init \"l10n_fr,account_accountant\""
-
             db:
                 image: postgres
                 env:
@@ -48,6 +34,12 @@ jobs:
                     --health-retries 5
 
         steps:
+            -
+                name: Docker launch Odoo instance
+                run: |
+                    docker run -d --rm -p 8069:8069 --name odoo --link db:db -t odoo:${{ matrix.odoo }} \
+                        -- --database odoo-master --init "l10n_fr,account_accountant"
+
             -
                 uses: actions/checkout@v2
 
@@ -90,9 +82,9 @@ jobs:
             -
                 name: Wait until odoo is ready
                 run: |
-                    while ! docker logs "${{ job.services.odoo.id }}" 2>&1 | grep -q "odoo.modules.loading: Modules loaded";
+                    while ! docker logs "odoo" 2>&1 | grep -q "odoo.modules.loading: Modules loaded";
                     do
-                        docker logs "${{ job.services.odoo.id }}"
+                        docker logs "odoo"
                         sleep 1
                         echo "Checking if Odoo is fully up..."
                     done
@@ -102,7 +94,7 @@ jobs:
                 name: Build Odoo tests model classes
                 run: |
                     bin/odoo-model-classes-generator -vvv \
-                        "http://localhost:${{ job.services.odoo.ports[8069] }}" \
+                        "http://localhost:8069 }}" \
                         odoo-master \
                         admin \
                         admin \
@@ -112,3 +104,7 @@ jobs:
             -
                 name: Run PHPUnit
                 run: vendor/bin/phpunit --colors=always
+
+            -
+                name: Remove Odoo instance
+                run: docker rm -f "odoo"
