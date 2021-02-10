@@ -21,12 +21,14 @@ jobs:
                 odoo: [13, 14]
                 php: [7.4, 7.3]
         services:
-            db:
+            postgres:
                 image: postgres
                 env:
                     POSTGRES_DB: postgres
                     POSTGRES_PASSWORD: odoo
                     POSTGRES_USER: odoo
+                ports:
+                    - 5432/tcp
                 options: >-
                     --health-cmd pg_isready
                     --health-interval 10s
@@ -37,8 +39,15 @@ jobs:
             -
                 name: Docker launch Odoo instance
                 run: |
-                    docker run -d --rm -p 8069:8069 --name odoo --link "${{ job.services.db.id }}":db -t odoo:${{ matrix.odoo }} \
-                        -- --database odoo-master --init "l10n_fr,account_accountant"
+                    docker run \
+                        -d \
+                        --rm \
+                        -p 8069:8069 \
+                        -e "HOST=localhost" \
+                        -e "PORT=${{ job.services.postgres.ports['5432'] }}" \
+                        --name odoo \
+                        -t odoo:${{ matrix.odoo }} \
+                            -- --database odoo-master --init "l10n_fr,account_accountant"
 
             -
                 uses: actions/checkout@v2
