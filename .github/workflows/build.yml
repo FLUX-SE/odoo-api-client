@@ -33,7 +33,6 @@ jobs:
                     - 8069/tcp
                 options: >-
                     --link db:db
-                    --entrypoint "/entrypoint.sh --database odoo-master --init \"l10n_fr,account_accountant\""
 
             db:
                 image: postgres
@@ -48,6 +47,10 @@ jobs:
                     --health-retries 5
 
         steps:
+            -
+                name: Install Odoo instance
+                run: |
+                    docker exec ${{ job.services.postgres.id }} odoo --database odoo-master --init "l10n_fr,account_accountant"
             -
                 uses: actions/checkout@v2
 
