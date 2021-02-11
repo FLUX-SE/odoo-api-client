@@ -20,9 +20,6 @@ final class OdooApiErrorPlugin implements Plugin
     /** @var XmlRpcSerializerHelperInterface */
     private $xmlRpcSerializerHelper;
 
-    /** @var Fault */
-    private $fault;
-
     public function __construct(
         Plugin $errorPluginDecorated,
         XmlRpcSerializerHelperInterface $xmlRpcSerializerHelper
@@ -58,31 +55,28 @@ final class OdooApiErrorPlugin implements Plugin
             return $response;
         }
 
-        if (false === $this->isFaultResponse($response)) {
+        $fault = $this->getFaultResponse($response);
+        if (null === $fault) {
             return $response;
         }
 
         throw new ClientErrorException(
             sprintf("Fault code: %s\nMessage:\n%s",
-                $this->fault->getFaultCode(),
-                $this->fault->getFaultString()
+                $fault->getFaultCode(),
+                $fault->getFaultString()
             ),
             $request,
             $response
         );
     }
 
-    private function isFaultResponse(ResponseInterface $response): bool
+    private function getFaultResponse(ResponseInterface $response): ?Fault
     {
         $body = $response->getBody()->__toString();
         if (preg_match('#.*<methodResponse>.*<fault>.*#s', $body)) {
-            $this->fault = $this->xmlRpcSerializerHelper->deserializeResponseBody($response->getBody(), Fault::class);
+            return $this->xmlRpcSerializerHelper->deserializeResponseBody($response->getBody(), Fault::class);
         }
 
-        if (null === $this->fault) {
-            return false;
-        }
-
-        return true;
+        return null;
     }
 }
