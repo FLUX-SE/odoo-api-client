@@ -90,7 +90,7 @@ final class GeneratorCommand extends Command
         $this->database = $this->getStringOption($input, 'database');
         $this->username = $this->getStringOption($input, 'username');
         $this->password = $this->getStringOption($input, 'password');
-        $this->basePath = realpath($this->getStringArgument($input, 'basePath')) ?: '';
+        $this->basePath = $this->getStringArgument($input, 'basePath');
         $this->baseNamespace = $this->getStringArgument($input, 'baseNamespace');
 
         $output->writeln('<comment>');
