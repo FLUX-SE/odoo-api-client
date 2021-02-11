@@ -31,21 +31,25 @@ $phpGenerator = new OdooPhpClassesGenerator(
     ),
 );
 
-// The hostname will be replaced by the one given through the command line
-$odooApiClientBuilder = new OdooApiClientBuilder('https://google.com');
+$odooApiHost = getenv('ODOO_API_HOST') ?: 'http://localhost:8069';
+$odooApiDatabase = getenv('ODOO_API_DATABASE') ?: 'odoo-master';
+$odooApiUsername = getenv('ODOO_API_USERNAME') ?: 'admin';
+$odooApiPassword = getenv('ODOO_API_PASSWORD') ?: 'admin';
+
+$odooApiClientBuilder = new OdooApiClientBuilder($odooApiHost);
 /** @var RecordListOperations $recordListOperations */
 $recordListOperations = $odooApiClientBuilder->buildExecuteKwOperations(
     RecordListOperations::class,
-    '',
-    '',
-    ''
+    $odooApiDatabase,
+    $odooApiUsername,
+    $odooApiPassword
 );
 /** @var InspectionOperations $inspectionOperations */
 $inspectionOperations = $odooApiClientBuilder->buildExecuteKwOperations(
     InspectionOperations::class,
-    '',
-    '',
-    ''
+    $odooApiDatabase,
+    $odooApiUsername,
+    $odooApiPassword
 );
 $phpReservedWordsHelper = new PhpReservedWordsHelper();
 

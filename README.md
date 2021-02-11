@@ -37,22 +37,30 @@ That's why you can generate model classes using this cli command :
 ```shell
 #> vendor/bin/odoo-model-classes-generator --help
 Usage:
-  ./vendor/bin/odoo-model-classes-generator <baseUrl> <database> <username> <password> <basePath> <baseNamespace>
+  vendor/bin/odoo-model-classes-generator [options] [--] <basePath> <baseNamespace>
 
 Arguments:
-  baseUrl               Your Odoo base URL (ex: https://myinstance.odoo.com.
-  database              Your Odoo database name.
-  username              Your Odoo account username.
-  password              Your Odoo account password
-  basePath              The path where classes will be generated (ex: ./src/OdooModel/Object)
-  baseNamespace         The base namespace of the generated classes (ex: "App\\OdooModel\\Object")
+  basePath                   The path where classes will be generated (ex: ./src/OdooModel/Object)
+  baseNamespace              The base namespace of the generated classes (ex: "App\OdooModel\Object")
 
+Options:
+      --host[=HOST]          Your Odoo base host (default: http://localhost:8069) [default: "http://localhost:8069"]
+      --database[=DATABASE]  Your Odoo database name (default: odoo-master) [default: "odoo-master"]
+      --username[=USERNAME]  Your Odoo account username. (default: admin) [default: "admin"]
+      --password[=PASSWORD]  Your Odoo account password (default: admin) [default: "admin"]
+  -h, --help                 Display help for the given command. When no command is given display help for the vendor/bin/odoo-model-classes-generator command
+  -q, --quiet                Do not output any message
+  -V, --version              Display this application version
+      --ansi                 Force ANSI output
+      --no-ansi              Disable ANSI output
+  -n, --no-interaction       Do not ask any interactive question
+  -v|vv|vvv, --verbose       Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 Example :
   ./vendor/bin/odoo-model-classes-generator \
-      https://myinstance.odoo.com \
-      myinstance-master-1234567 \
-      admin \
-      admin \
+      --host http://localhost:8069 \
+      --database odoo-master \
+      --username admin \
+      --password admin \
       ./src/OdooModel/Object \
       "App\\OdooModel\\Object"
 ```
@@ -201,23 +209,31 @@ Flux\OdooApiClient\Model\Object\Res\Partner
 
 ## Using docker
 
-````shell
+```shell
 docker run -d -p 5432:5432 -e POSTGRES_USER=odoo -e POSTGRES_PASSWORD=odoo -e POSTGRES_DB=postgres --name db postgres
 docker run --rm -p 8069:8069 --name odoo -e "HOST=host.docker.internal" -t odoo:14 -- --database odoo-master --init "l10n_fr,account_accountant"
-# The server is fully ready to use when this log line appears
-# (v13 could take longer than v14 to reach this line) :
-# 2021-01-01 00:00:00,000 1 INFO odoo-master odoo.modules.loading: Modules loaded.
-bin/odoo-model-classes-generator -vvv \
-                        "http://localhost:8069" \
-                        odoo-master \
-                        admin \
-                        admin \
-                        "./tests/TestModel/Object" \
-                        "Tests\\FluxSE\\OdooApiClient\\TestModel\\Object"
+```
+
+The server is fully ready to use when this log line appears
+(v13 could take longer than v14 to reach this line) :
+
+```log
+2021-01-01 00:00:00,000 1 INFO odoo-master odoo.modules.loading: Modules loaded.
+```
+
+Generate the model classes based on the docker Odoo instance :
+
+```shell
+bin/odoo-model-classes-generator \
+      "./tests/TestModel/Object" \
+      "Tests\\FluxSE\\OdooApiClient\\TestModel\\Object"
+```
+
+Test the code against the generated classes from your own Odoo instance
+
+```shell
 vendor/bin/phpunit
 ````
-
-Then you will be able to access this url : http://localhost:8069 
 
 [ico-version]: https://img.shields.io/packagist/v/flux-se/odoo-api-client.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square

@@ -110,10 +110,10 @@ jobs:
                 name: Build Odoo tests model classes
                 run: |
                     bin/odoo-model-classes-generator -vvv \
-                        "http://localhost:8069" \
-                        odoo-master \
-                        admin \
-                        admin \
+                        "$ODOO_API_HOST" \
+                        "$ODOO_API_DATABASE" \
+                        "$ODOO_API_USERNAME" \
+                        "$ODOO_API_PASSWORD" \
                         "./tests/TestModel/Object" \
                         "Tests\\FluxSE\\OdooApiClient\\TestModel\\Object"
 
