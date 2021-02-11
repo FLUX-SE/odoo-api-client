@@ -38,6 +38,7 @@ jobs:
             ODOO_API_DATABASE: odoo-master
             ODOO_API_USERNAME: admin
             ODOO_API_PASSWORD: admin
+            ODOO_API_INIT_MODULES: l10n_fr,account_accountant
 
         steps:
 
@@ -53,7 +54,7 @@ jobs:
                         --name odoo \
                         -t odoo:${{ matrix.odoo }} \
                         -- \
-                            --database odoo-master --init "l10n_fr,account_accountant"
+                            --database "$ODOO_API_DATABASE" --init "$ODOO_API_INIT_MODULES"
                     docker ps --all --filter id=odoo --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
                     docker port odoo
 
@@ -110,10 +111,6 @@ jobs:
                 name: Build Odoo tests model classes
                 run: |
                     bin/odoo-model-classes-generator -vvv \
-                        "$ODOO_API_HOST" \
-                        "$ODOO_API_DATABASE" \
-                        "$ODOO_API_USERNAME" \
-                        "$ODOO_API_PASSWORD" \
                         "./tests/TestModel/Object" \
                         "Tests\\FluxSE\\OdooApiClient\\TestModel\\Object"
 
