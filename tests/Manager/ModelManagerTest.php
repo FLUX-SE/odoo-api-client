@@ -252,7 +252,7 @@ class ModelManagerTest extends TestCase
         $this->assertIsInt($moveId);
 
         if (14 === $this->odooVersion) {
-            $this->expectExceptionMessageMatches('#.*TypeError: cannot marshal <class \'odoo.api.account.move\'> objects.*#');
+            $this->expectExceptionMessageMatches('#.*TypeError: cannot marshal (None unless allow_none is enabled|<class \'odoo\.api\.account\.move\'> objects\.).*#');
         }
 
         $response = $this->recordOperations->getObjectOperations()->execute_kw(
