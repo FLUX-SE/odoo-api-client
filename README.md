@@ -14,7 +14,7 @@ This library will allows you to :
  * Generate PHP model classes based on the info available into your Odoo database to ease your calls to the API
  * Send requests to your Odoo instance through the XMLRPC API
  * Make raw requests like [Ripcord](https://github.com/poef/ripcord) was doing it but using newer libs like :
-    * `php-http` to make http requests
+    * `php-http/httplug` to make http requests
     * `symfony/serializer` to handle the XMLRPC format and to transform resulting array to dedicated object classes.
 
 ## Installation
