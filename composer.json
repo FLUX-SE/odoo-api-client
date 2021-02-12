@@ -29,7 +29,8 @@
         "phpunit/phpunit": "^9",
         "php-http/guzzle6-adapter":     "^2.0",
         "http-interop/http-factory-guzzle": "^1.0",
-        "symplify/easy-coding-standard": "^9"
+        "symplify/easy-coding-standard": "^9",
+        "phpstan/phpstan": "^0.12.75"
     },
     "bin": [
         "bin/odoo-model-classes-generator"
