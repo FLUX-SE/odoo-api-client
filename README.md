@@ -242,5 +242,4 @@ vendor/bin/phpunit
 
 [link-packagist]: https://packagist.org/packages/flux-se/odoo-api-client
 [link-github-actions]: https://github.com/FLUX-SE/odoo-api-client/actions?query=workflow%3A"Build"
-[link-scrutinizer]: https://scrutinizer-ci.com/g/FLUX-SE/odoo-api-client/code-structure
 [link-code-quality]: https://scrutinizer-ci.com/g/FLUX-SE/odoo-api-client
