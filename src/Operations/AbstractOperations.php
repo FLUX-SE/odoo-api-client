@@ -6,7 +6,6 @@ namespace FluxSE\OdooApiClient\Operations;
 
 use FluxSE\OdooApiClient\Api\Factory\RequestBodyFactoryInterface;
 use FluxSE\OdooApiClient\Api\OdooApiRequestMakerInterface;
-use FluxSE\OdooApiClient\Model\BaseInterface;
 use FluxSE\OdooApiClient\Serializer\XmlRpcSerializerHelperInterface;
 use Psr\Http\Message\ResponseInterface;
 use Webmozart\Assert\Assert;
@@ -51,7 +50,11 @@ abstract class AbstractOperations implements OperationsInterface
             $response->getBody()
         );
 
-        Assert::isArray($body, 'The decoded value should be an array value, "%s" found !');
+        Assert::isArray($body, sprintf(
+            'The decoded value should be an array value, "%s" found ! : %s',
+            '%s',
+            print_r($body, true)
+        ));
 
         return $body;
     }
@@ -66,7 +69,11 @@ abstract class AbstractOperations implements OperationsInterface
         Assert::isInstanceOf(
             $body,
             $model,
-            'The deserialize value should be an instance of "%2$s" value, "%s" found !'
+            sprintf(
+                'The deserialize value should be an instance of "%2$s" value, "%s" found ! : %s',
+                '%s',
+                print_r($body, true)
+            )
         );
 
         return $body;
@@ -76,7 +83,11 @@ abstract class AbstractOperations implements OperationsInterface
     {
         $body = $this->xmlRpcSerializerHelper->decodeResponseBody($response->getBody());
 
-        Assert::allString($body, 'The deserialize value should be an array value, "%s" found !');
+        Assert::allString($body, sprintf(
+            'The deserialize value should be an array value, "%s" found ! : %s',
+            '%s',
+            print_r($body, true)
+        ));
 
         return $body;
     }
@@ -85,7 +96,11 @@ abstract class AbstractOperations implements OperationsInterface
     {
         $body = $this->xmlRpcSerializerHelper->decodeResponseBody($response->getBody());
 
-        Assert::boolean($body, 'The deserialize value should be a boolean value, "%s" found !');
+        Assert::boolean($body, sprintf(
+            'The deserialize value should be a boolean value, "%s" found ! : %s',
+            '%s',
+            print_r($body, true)
+        ));
 
         return $body;
     }
@@ -94,7 +109,11 @@ abstract class AbstractOperations implements OperationsInterface
     {
         $body = $this->xmlRpcSerializerHelper->decodeResponseBody($response->getBody());
 
-        Assert::integer($body, 'The deserialize value should be an integer value, "%s" found !');
+        Assert::integer($body, sprintf(
+            'The deserialize value should be an integer value, "%s" found ! : %s',
+            '%s',
+            print_r($body, true)
+        ));
 
         return $body;
     }
@@ -103,7 +122,11 @@ abstract class AbstractOperations implements OperationsInterface
     {
         $body = $this->xmlRpcSerializerHelper->decodeResponseBody($response->getBody());
 
-        Assert::float($body, 'The deserialize value should be a float value, "%s" found !');
+        Assert::float($body,  sprintf(
+            'The deserialize value should be a float value, "%s" found ! : %s',
+            '%s',
+            print_r($body, true)
+        ));
 
         return $body;
     }
@@ -112,7 +135,11 @@ abstract class AbstractOperations implements OperationsInterface
     {
         $body = $this->xmlRpcSerializerHelper->decodeResponseBody($response->getBody());
 
-        Assert::string($body, 'The deserialize value should be a string value, "%s" found !');
+        Assert::string($body, sprintf(
+            'The deserialize value should be a string value, "%s" found ! : %s',
+            '%s',
+            print_r($body, true)
+        ));
 
         return $body;
     }
