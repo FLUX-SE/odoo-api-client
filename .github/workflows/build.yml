@@ -90,8 +90,9 @@ jobs:
 
             -
                 name: Run analysis
-                run: composer validate --strict
-                # vendor/bin/ecs check .
+                run: |
+                    composer validate --strict
+                    vendor/bin/ecs check .
 
             -
                 name: Run PHPStan

@@ -354,7 +354,7 @@ class ModelManagerTest extends TestCase
         $journalRel = new OdooRelation($journalId);
         $currencyRel = new OdooRelation($currencyId);
 
-        if ( 14 === $this->odooVersion ) {
+        if (14 === $this->odooVersion) {
             return new Move(
                 new DateTime(),
                 'draft',

@@ -58,28 +58,42 @@ final class GeneratorCommand extends Command
 
         $this
             ->addArgument(
-                'basePath', InputArgument::REQUIRED,
+                'basePath',
+                InputArgument::REQUIRED,
                 'The path where classes will be generated (ex: ./src/OdooModel/Object)'
             )
             ->addArgument(
-                'baseNamespace', InputArgument::REQUIRED,
+                'baseNamespace',
+                InputArgument::REQUIRED,
                 'The base namespace of the generated classes (ex: "App\\OdooModel\\Object")'
             )
             ->addOption(
-                'host', null, InputOption::VALUE_OPTIONAL,
-                sprintf('Your Odoo base host (default: %s)', $defaultOdooApiHost), $defaultOdooApiHost
+                'host',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                sprintf('Your Odoo base host (default: %s)', $defaultOdooApiHost),
+                $defaultOdooApiHost
             )
             ->addOption(
-                'database', null, InputOption::VALUE_OPTIONAL,
-                sprintf('Your Odoo database name (default: %s)', $defaultOdooApiDatabase), $defaultOdooApiDatabase
+                'database',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                sprintf('Your Odoo database name (default: %s)', $defaultOdooApiDatabase),
+                $defaultOdooApiDatabase
             )
             ->addOption(
-                'username', null, InputOption::VALUE_OPTIONAL,
-                sprintf('Your Odoo account username. (default: %s)', $defaultOdooApiUsername), $defaultOdooApiUsername
+                'username',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                sprintf('Your Odoo account username. (default: %s)', $defaultOdooApiUsername),
+                $defaultOdooApiUsername
             )
             ->addOption(
-                'password', null, InputOption::VALUE_OPTIONAL,
-                sprintf('Your Odoo account password (default: %s)', $defaultOdooApiPassword), $defaultOdooApiPassword
+                'password',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                sprintf('Your Odoo account password (default: %s)', $defaultOdooApiPassword),
+                $defaultOdooApiPassword
             )
         ;
     }

@@ -6,11 +6,11 @@ namespace Tests\FluxSE\OdooApiClient\Manager;
 
 use FluxSE\OdooApiClient\Manager\ModelListManager;
 use FluxSE\OdooApiClient\Manager\ModelManagerInterface;
-use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
 use PHPUnit\Framework\TestCase;
 use Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw\ExecuteKwOperationsTrait;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner;
 
 class ModelListManagerTest extends TestCase
 {

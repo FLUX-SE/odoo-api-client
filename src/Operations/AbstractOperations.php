@@ -122,7 +122,7 @@ abstract class AbstractOperations implements OperationsInterface
     {
         $body = $this->xmlRpcSerializerHelper->decodeResponseBody($response->getBody());
 
-        Assert::float($body,  sprintf(
+        Assert::float($body, sprintf(
             'The deserialize value should be a float value, "%s" found ! : %s',
             '%s',
             print_r($body, true)
