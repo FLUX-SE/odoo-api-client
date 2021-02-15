@@ -89,4 +89,19 @@ final class ObjectOperations extends AbstractOperations implements ObjectOperati
     {
         $this->password = $password;
     }
+
+    public function getDatabase(): string
+    {
+        return $this->database;
+    }
+
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
 }
