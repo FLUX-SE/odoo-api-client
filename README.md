@@ -95,11 +95,11 @@ List your first partner (Contact) :
 ```php
 $loader = require_once( __DIR__.'/vendor/autoload.php');
 
-use Flux\OdooApiClient\Builder\OdooApiClientBuilder;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
+use FluxSE\OdooApiClient\Builder\OdooApiClientBuilder;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
 
 $host = 'https://myapp.odoo.com';
 $database = 'myapp';
@@ -148,11 +148,11 @@ array:1 [
 ```php
 $loader = require_once( __DIR__.'/vendor/autoload.php');
 
-use Flux\OdooApiClient\Builder\OdooApiClientBuilder;
-use Flux\OdooApiClient\Model\Object\Res\Partner;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
-use Flux\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
+use App\Odoo\Model\Object\Res\Partner;
+use FluxSE\OdooApiClient\Builder\OdooApiClientBuilder;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
 
 $host = 'https://myapp.odoo.com';
 $database = 'myapp';
@@ -186,7 +186,7 @@ $partner = $modelListManager->findOneBy(Partner::class, $searchDomains);
 dump($partner);
 
 /**
-Flux\OdooApiClient\Model\Object\Res\Partner
+App\Odoo\Model\Object\Res\Partner
 {#1234
   #name: "My test company"
   #date: DateTimeImmutable @1577880060 {#1234
