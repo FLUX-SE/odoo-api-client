@@ -8,6 +8,5 @@ interface OdooModelsStructureConverterInterface
 {
     public const BASE_MODEL_NAME = 'base';
 
-
-    public function convert(string $baseModelNamespace): array;
+    public function convert(string $modelNamespace): array;
 }
