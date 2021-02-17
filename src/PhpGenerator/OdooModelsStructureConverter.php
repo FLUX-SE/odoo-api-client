@@ -289,7 +289,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             $properties[] = [
                 'name' => $fieldName,
                 'types' => $types,
-                'default' => null,
+                'default' => $fieldInfo['default'] ?? null,
                 'description' => $description,
                 'inherited' => null !== $inheritedFieldInfo,
                 'inherited_position' => $inheritedFieldPosition,
