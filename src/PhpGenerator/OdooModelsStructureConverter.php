@@ -231,10 +231,6 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             break; // one and only extends allowed
         }
 
-        $fieldsInfo = $this->fields_get($modelName);
-
-        $properties = $this->convertModelProperties($fieldsInfo, $modelNamespace, $item);
-
         if ($item['abstract'] ?? false) {
             $classType = ClassBuilderInterface::CLASS_TYPE_ABSTRACT;
         }
@@ -248,8 +244,10 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             $implements[] = BaseInterface::class;
         }
 
-        $info = trim($item['info'], '"');
-        $info = trim($info);
+        $info = OdooModelsStructureConverterHelper::sanitizeComment($item['info']);
+
+        $fieldsInfo = $this->fields_get($modelName);
+        $properties = $this->convertModelProperties($fieldsInfo, $modelNamespace, $item);
 
         return  [
             'class' => $className,
@@ -286,7 +284,6 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             $inheritedFieldMetadata = $this->getInheritedFieldMetadata($item, $fieldName);
             $inheritedFieldInfo = $inheritedFieldMetadata['info'];
             $inheritedFieldPosition = $inheritedFieldMetadata['position'];
-            $inheritedTypes = [];
             $inheritedRequired = false;
             if (null !== $inheritedFieldInfo) {
                 $inheritedTypes = OdooModelsStructureConverterHelper::transformTypes($inheritedFieldInfo);
@@ -315,11 +312,12 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         array $types
     ): array {
         $description = [
-            $fieldInfo['string'],
+            OdooModelsStructureConverterHelper::sanitizeComment($fieldInfo['string']),
         ];
-        if (!empty($fieldInfo['help'] ?? '')) {
+        $help = $fieldInfo['help'] ?? '';
+        if (!empty($help)) {
             $description[] = '---';
-            $description[] = $fieldInfo['help'];
+            $description[] = OdooModelsStructureConverterHelper::sanitizeComment($fieldInfo['help']);
         }
 
         if ($fieldInfo['type'] === 'selection') {
@@ -327,7 +325,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             $description[] = 'Selection :';
             $description = array_merge(
                 $description,
-                OdooModelsStructureConverterHelper::prettyGetSelection($fieldInfo['selection'])
+                OdooModelsStructureConverterHelper::prettySelection($fieldInfo['selection'])
             );
         }
 

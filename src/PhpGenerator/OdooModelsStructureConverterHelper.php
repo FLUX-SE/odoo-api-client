@@ -6,6 +6,7 @@ namespace FluxSE\OdooApiClient\PhpGenerator;
 
 use DateTimeInterface;
 use FluxSE\OdooApiClient\Model\OdooRelation;
+use Webmozart\Assert\Assert;
 
 final class OdooModelsStructureConverterHelper
 {
@@ -62,13 +63,30 @@ final class OdooModelsStructureConverterHelper
         return $phpTypes;
     }
 
-    public static function prettyGetSelection(array $selection, int $deep = 0): array
+    public static function sanitizeComment(string $comment): string
+    {
+        $comment = trim($comment, '"');
+        $comment = trim($comment);
+
+        $lines = explode("\n", $comment);
+        Assert::notFalse($lines);
+        foreach ($lines as $i => $line) {
+            if (trim($line) === '') {
+                $line = '';
+            }
+            $lines[$i] = preg_replace('#([\s]{4,})#', '    ', rtrim($line));
+        }
+
+        return implode("\n", $lines);
+    }
+
+    public static function prettySelection(array $selection, int $deep = 0): array
     {
         $lines = [];
         $line = '';
         foreach ($selection as $i => $item) {
             if (is_array($item)) {
-                $lines = array_merge($lines, self::prettyGetSelection($item, $deep + 1));
+                $lines = array_merge($lines, self::prettySelection($item, $deep + 1));
                 continue;
             }
 
