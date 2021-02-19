@@ -119,11 +119,19 @@ final class GeneratorCommand extends Command
 
         $this->reconfigureServices();
 
-        $output->write('Processing ...');
-        $this->generateModels($this->baseNamespace, $this->basePath);
-        $output->writeln(' End');
+        $output->write('Converting model structure to a class generator config array ... ');
+        $config = $this->odooModelsStructureConverter->convert($this->baseNamespace);
+        $output->writeln('DONE');
 
-        return 0;
+        $output->write('Generating model classes base on the generated config ... ');
+        $this->odooPhpClassesGenerator->setBaseNamespace($this->baseNamespace);
+        $this->odooPhpClassesGenerator->setBasePath($this->basePath);
+        $this->odooPhpClassesGenerator->setClassesConfig($config);
+        $result = $this->odooPhpClassesGenerator->generate();
+
+        $output->writeln($result ? 'DONE' : 'FAIL');
+
+        return $result ? 0 : 1;
     }
 
     private function getStringOption(InputInterface $input, string $name): string
@@ -153,15 +161,5 @@ final class GeneratorCommand extends Command
 
         $this->odooPhpClassesGenerator->setBasePath($this->basePath);
         $this->odooPhpClassesGenerator->setBaseNamespace($this->baseNamespace);
-    }
-
-    protected function generateModels(string $namespace, string $path): bool
-    {
-        $config = $this->odooModelsStructureConverter->convert($namespace);
-
-        $this->odooPhpClassesGenerator->setBaseNamespace($namespace);
-        $this->odooPhpClassesGenerator->setBasePath($path);
-        $this->odooPhpClassesGenerator->setClassesConfig($config);
-        return $this->odooPhpClassesGenerator->generate();
     }
 }
