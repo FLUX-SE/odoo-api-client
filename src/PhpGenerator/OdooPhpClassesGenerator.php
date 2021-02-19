@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace FluxSE\OdooApiClient\PhpGenerator;
 
-use Exception;
 use Prometee\PhpClassGenerator\Builder\ClassBuilderInterface;
+use Webmozart\Assert\Assert;
 
 final class OdooPhpClassesGenerator implements OdooPhpClassesGeneratorInterface
 {
@@ -30,17 +30,8 @@ final class OdooPhpClassesGenerator implements OdooPhpClassesGeneratorInterface
         $this->classBuilder = $classBuilder;
     }
 
-    /**
-     * @param string|null $indent
-     * @param string|null $eol
-     *
-     * @return bool
-     * @throws Exception
-     */
-    public function generate(
-        ?string $indent = null,
-        ?string $eol = null
-    ): bool {
+    public function generate(?string $indent = null, ?string $eol = null): bool
+    {
         $indent = $indent ?? $this->classBuilder->getIndent();
         $eol = $eol ?? $this->classBuilder->getEol();
         $this->classBuilder->setIndent($indent);
@@ -54,67 +45,21 @@ final class OdooPhpClassesGenerator implements OdooPhpClassesGeneratorInterface
             $classNamespace = rtrim($classNamespace, '\\');
 
             $classPath = implode('/', $path);
-            $classFilePath = rtrim($this->basePath . '/' . $classPath, '/') . '/' . $className . '.php';
+            $classFilePath = rtrim($this->basePath . '/' . $classPath, '/')
+                . '/' . $className . '.php';
 
             $this->classBuilder->setClassType($config['type']);
             $this->classBuilder->setExtendClass($config['extends'] ?? null);
             $this->classBuilder->setImplements($config['implements'] ?? []);
 
             $constantsConfig = $config['constants'] ?? [];
-            foreach ($constantsConfig as $constantConfig) {
-                $description = $constantConfig['description'] ?? [];
-                $description = implode($eol, $description);
-                $constant = $this->classBuilder->createConstant(
-                    $constantConfig['name'],
-                    $constantConfig['types'] ?? [],
-                    $constantConfig['default'] ?? null,
-                    $description
-                );
-
-                $constant->setReadable($constantConfig['readable'] ?? false);
-                $constant->setWriteable($constantConfig['writable'] ?? false);
-                $constant->setInherited($constantConfig['inherited'] ?? false);
-
-                $this->classBuilder->addProperty($constant);
-            }
+            $this->buildConstants($constantsConfig, $eol);
 
             $propertiesConfig = $config['properties'] ?? [];
-            foreach ($propertiesConfig as $propertyConfig) {
-                $description = implode($eol, $propertyConfig['description']);
-                $property = $this->classBuilder->createProperty(
-                    $propertyConfig['name'],
-                    $propertyConfig['types'],
-                    $propertyConfig['default'],
-                    $description
-                );
-
-                if ($config['type'] !== ClassBuilderInterface::CLASS_TYPE_FINAL) {
-                    $property->setScope('protected');
-                }
-
-                $property->setReadable($propertyConfig['readable'] ?? true);
-                $property->setWriteable($propertyConfig['writable'] ?? true);
-                $property->setInherited($propertyConfig['inherited'] ?? false);
-                $property->setInheritedPosition($propertyConfig['inherited_position'] ?? null);
-                $property->setInheritedRequired($propertyConfig['inherited_required'] ?? false);
-
-                $this->classBuilder->addProperty($property);
-            }
+            $this->buildProperties($propertiesConfig, $eol);
 
             $methodsConfig = $config['methods'] ?? [];
-            foreach ($methodsConfig as $methodConfig) {
-                $method = $this->classBuilder->createMethod(
-                    $methodConfig['scope'] ?? 'public',
-                    $methodConfig['name'],
-                    $methodConfig['return_types'] ?? [],
-                    $methodConfig['static'] ?? false,
-                );
-
-                /** @var string[] $body */
-                $body = $methodConfig['body'];
-                $method->addMultipleLines(implode("\n", $body), "\n");
-                $this->classBuilder->addMethod($method);
-            }
+            $this->buildMethods($methodsConfig, $eol);
 
             $classModel = $this->classBuilder->buildClass($classNamespace, $className);
             $classModel->getPhpDoc()->setLines($config['description'] ?? []);
@@ -127,13 +72,77 @@ final class OdooPhpClassesGenerator implements OdooPhpClassesGeneratorInterface
             }
 
             $written = $this->writeClass($classContent, $classFilePath);
-
-            if (false === $written) {
-                throw new Exception(sprintf('Unable to write the file %s !', $classFilePath));
-            }
+            Assert::notFalse($written, sprintf('Unable to write the file %s !', $classFilePath));
         }
 
         return true;
+    }
+
+    private function buildConstants(array $constantsConfig, string $eol): void
+    {
+        foreach ($constantsConfig as $constantConfig) {
+            $description = $constantConfig['description'] ?? [];
+            $description = implode($eol, $description);
+            $constant = $this->classBuilder->createConstant(
+                $constantConfig['name'],
+                $constantConfig['types'] ?? [],
+                $constantConfig['default'] ?? null,
+                $description
+            );
+
+            $constant->setReadable($constantConfig['readable'] ?? false);
+            $constant->setWriteable($constantConfig['writable'] ?? false);
+            $constant->setInherited($constantConfig['inherited'] ?? false);
+
+            $this->classBuilder->addProperty($constant);
+        }
+    }
+
+    private function buildProperties(array $propertiesConfig, string $eol): void
+    {
+        foreach ($propertiesConfig as $propertyConfig) {
+            $description = implode($eol, $propertyConfig['description']);
+            Assert::nullOrString(
+                $propertyConfig['default'],
+                "default value should be a string or null (ex: '\"my_default\"', 'true', 'false', '10', null"
+            );
+
+            $property = $this->classBuilder->createProperty(
+                $propertyConfig['name'],
+                $propertyConfig['types'],
+                $propertyConfig['default'],
+                $description
+            );
+
+            if ($this->classBuilder->getClassType() !== ClassBuilderInterface::CLASS_TYPE_FINAL) {
+                $property->setScope('protected');
+            }
+
+            $property->setReadable($propertyConfig['readable'] ?? true);
+            $property->setWriteable($propertyConfig['writable'] ?? true);
+            $property->setInherited($propertyConfig['inherited'] ?? false);
+            $property->setInheritedPosition($propertyConfig['inherited_position'] ?? null);
+            $property->setInheritedRequired($propertyConfig['inherited_required'] ?? false);
+
+            $this->classBuilder->addProperty($property);
+        }
+    }
+
+    private function buildMethods(array $methodsConfig, string $eol): void
+    {
+        foreach ($methodsConfig as $methodConfig) {
+            $method = $this->classBuilder->createMethod(
+                $methodConfig['scope'] ?? 'public',
+                $methodConfig['name'],
+                $methodConfig['return_types'] ?? [],
+                $methodConfig['static'] ?? false,
+            );
+
+            /** @var string[] $body */
+            $body = $methodConfig['body'];
+            $method->addMultipleLines(implode($eol, $body), $eol);
+            $this->classBuilder->addMethod($method);
+        }
     }
 
     public function writeClass(string $classContent, string $classFilePath): bool
