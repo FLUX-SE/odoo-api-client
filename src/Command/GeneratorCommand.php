@@ -7,8 +7,8 @@ namespace FluxSE\OdooApiClient\Command;
 use FluxSE\OdooApiClient\Api\OdooApiRequestMakerInterface;
 use FluxSE\OdooApiClient\Operations\ObjectOperationsInterface;
 use FluxSE\OdooApiClient\PhpGenerator\OdooModelsStructureConverterInterface;
-use FluxSE\OdooApiClient\PhpGenerator\OdooPhpClassesGeneratorInterface;
 use Http\Discovery\Psr17FactoryDiscovery;
+use Prometee\PhpClassGenerator\PhpGeneratorInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,8 +19,8 @@ final class GeneratorCommand extends Command
 {
     /** @var ObjectOperationsInterface */
     private $objectOperations;
-    /** @var OdooPhpClassesGeneratorInterface */
-    private $odooPhpClassesGenerator;
+    /** @var PhpGeneratorInterface */
+    private $phpClassesGenerator;
     /** @var OdooModelsStructureConverterInterface */
     private $odooModelsStructureConverter;
     /** @var string */
@@ -32,19 +32,19 @@ final class GeneratorCommand extends Command
     /** @var string */
     private $password;
     /** @var string */
-    private $basePath;
+    private $path;
     /** @var string */
-    private $baseNamespace;
+    private $namespace;
 
     public function __construct(
         ObjectOperationsInterface $objectOperations,
         OdooModelsStructureConverterInterface $odooModelStructureConverter,
-        OdooPhpClassesGeneratorInterface $odooPhpClassesGenerator,
+        PhpGeneratorInterface $phpClassesGenerator,
         string $name = null
     ) {
         $this->objectOperations = $objectOperations;
         $this->odooModelsStructureConverter = $odooModelStructureConverter;
-        $this->odooPhpClassesGenerator = $odooPhpClassesGenerator;
+        $this->phpClassesGenerator = $phpClassesGenerator;
 
         parent::__construct($name);
     }
@@ -58,12 +58,12 @@ final class GeneratorCommand extends Command
 
         $this
             ->addArgument(
-                'basePath',
+                'path',
                 InputArgument::REQUIRED,
                 'The path where classes will be generated (ex: ./src/OdooModel/Object)'
             )
             ->addArgument(
-                'baseNamespace',
+                'namespace',
                 InputArgument::REQUIRED,
                 'The base namespace of the generated classes (ex: "App\\OdooModel\\Object")'
             )
@@ -104,8 +104,8 @@ final class GeneratorCommand extends Command
         $this->database = $this->getStringOption($input, 'database');
         $this->username = $this->getStringOption($input, 'username');
         $this->password = $this->getStringOption($input, 'password');
-        $this->basePath = $this->getStringArgument($input, 'basePath');
-        $this->baseNamespace = $this->getStringArgument($input, 'baseNamespace');
+        $this->path = $this->getStringArgument($input, 'path');
+        $this->namespace = $this->getStringArgument($input, 'namespace');
 
         $output->writeln('<comment>');
         $output->writeln('Generating Odoo model class from the Odoo instance :');
@@ -113,21 +113,23 @@ final class GeneratorCommand extends Command
         $output->writeln(sprintf('Database : %s', $this->database));
         $output->writeln(sprintf('Username : %s', $this->username));
         $output->writeln(sprintf('Password : %s', $this->password));
-        $output->writeln(sprintf('Base path : %s', $this->basePath));
-        $output->writeln(sprintf('Base namespace : %s', $this->baseNamespace));
+        $output->writeln(sprintf('Base path : %s', $this->path));
+        $output->writeln(sprintf('Base namespace : %s', $this->namespace));
         $output->writeln('</comment>');
 
         $this->reconfigureServices();
 
         $output->write('Converting model structure to a class generator config array ... ');
-        $config = $this->odooModelsStructureConverter->convert($this->baseNamespace);
+        $config = $this->odooModelsStructureConverter->convert($this->namespace);
         $output->writeln('DONE');
 
         $output->write('Generating model classes base on the generated config ... ');
-        $this->odooPhpClassesGenerator->setBaseNamespace($this->baseNamespace);
-        $this->odooPhpClassesGenerator->setBasePath($this->basePath);
-        $this->odooPhpClassesGenerator->setClassesConfig($config);
-        $result = $this->odooPhpClassesGenerator->generate();
+        $this->phpClassesGenerator->configure(
+            $this->path,
+            $this->namespace,
+            $config
+        );
+        $result = $this->phpClassesGenerator->generate();
 
         $output->writeln($result ? 'DONE' : 'FAIL');
 
@@ -158,8 +160,5 @@ final class GeneratorCommand extends Command
         $this->objectOperations->setDatabase($this->database);
         $this->objectOperations->setUsername($this->username);
         $this->objectOperations->setPassword($this->password);
-
-        $this->odooPhpClassesGenerator->setBasePath($this->basePath);
-        $this->odooPhpClassesGenerator->setBaseNamespace($this->baseNamespace);
     }
 }
