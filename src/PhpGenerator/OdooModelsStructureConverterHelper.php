@@ -71,6 +71,7 @@ final class OdooModelsStructureConverterHelper
         $lines = explode("\n", $comment);
         Assert::notFalse($lines);
         foreach ($lines as $i => $line) {
+            $line = (string) $line;
             if (trim($line) === '') {
                 $line = '';
             }
