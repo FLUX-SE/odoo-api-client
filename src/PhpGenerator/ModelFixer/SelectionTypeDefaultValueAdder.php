@@ -42,28 +42,16 @@ final class SelectionTypeDefaultValueAdder extends AbstractModelFixer implements
                 continue;
             }
 
-            if (false === isset($data[$fieldName])) {
+            $default = $data[$fieldName] ?? null;
+            if (null === $default) {
                 continue;
             }
 
-            if (null === $data[$fieldName]) {
+            if (false === $default) {
                 continue;
             }
 
-            if (false === $data[$fieldName]) {
-                continue;
-            }
-
-            $fieldInfo['default'] = $data[$fieldName];
-            if (is_string($fieldInfo['default'])) {
-                $fieldInfo['default'] = sprintf('"%s"', $fieldInfo['default']);
-            }
-
-            if (is_bool($fieldInfo['default'])) {
-                $fieldInfo['default'] = $fieldInfo['default'] ? 'true' : 'false';
-            }
-
-            $fieldInfo['default'] = sprintf('%s', $fieldInfo['default']);
+            $fieldInfo['default'] = sprintf('"%s"', $default);
         }
     }
 
