@@ -43,6 +43,23 @@ abstract class AbstractOperations implements OperationsInterface
         );
     }
 
+    public function execute_kw_action(
+        string $modelName,
+        string $actionName,
+        ?ArgumentsInterface $arguments = null,
+        ?OptionsInterface $options = null
+    ) {
+        $response = $this->execute_kw(
+            $modelName,
+            $actionName,
+            $arguments,
+            $options
+        );
+
+        return $this->getObjectOperations()
+            ->getXmlRpcSerializerHelper()->decodeResponseBody($response->getBody());
+    }
+
     public function getObjectOperations(): ObjectOperationsInterface
     {
         return $this->objectOperations;

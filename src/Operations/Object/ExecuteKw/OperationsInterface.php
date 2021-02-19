@@ -18,5 +18,15 @@ interface OperationsInterface
         ?OptionsInterface $options = null
     ): ResponseInterface;
 
+    /**
+     * @return mixed
+     */
+    public function execute_kw_action(
+        string $modelName,
+        string $actionName,
+        ?ArgumentsInterface $arguments = null,
+        ?OptionsInterface $options = null
+    );
+
     public function getObjectOperations(): ObjectOperationsInterface;
 }

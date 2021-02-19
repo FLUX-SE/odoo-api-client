@@ -335,18 +335,16 @@ class ModelManagerTest extends TestCase
 
         $arguments = new Arguments();
         $arguments->addArgument($paymentRegisterId);
-        $response = $this->modelManager->getRecordOperations()->execute_kw(
+        $data = $this->modelManager->getRecordOperations()->execute_kw_action(
             $paymentRegister::getOdooModelName(),
             $actionName,
             $arguments
         );
 
-        $body = $this->modelListManager->getRecordListOperations()->getObjectOperations()
-            ->getXmlRpcSerializerHelper()->decodeResponseBody($response->getBody());
-        $this->assertArrayHasKey('res_model', $body);
-        $this->assertEquals(Payment::getOdooModelName(), $body['res_model']);
-        $this->assertArrayHasKey('res_id', $body);
-        $this->assertIsInt($body['res_id']);
+        $this->assertArrayHasKey('res_model', $data);
+        $this->assertEquals(Payment::getOdooModelName(), $data['res_model']);
+        $this->assertArrayHasKey('res_id', $data);
+        $this->assertIsInt($data['res_id']);
     }
 
     private function createMove(int $journalId, int $currencyId): Move
