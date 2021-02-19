@@ -161,6 +161,7 @@ class ModelManagerTest extends TestCase
 
         $template = new Template(
             'test',
+            'consu',
             new OdooRelation($category->getId()),
             new OdooRelation($uom->getId()),
             new OdooRelation($uom->getId()),
