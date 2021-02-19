@@ -3,6 +3,7 @@
 namespace Tests\FluxSE\OdooApiClient\Manager;
 
 use DateTime;
+use DateTimeInterface;
 use FluxSE\OdooApiClient\Manager\ModelListManager;
 use FluxSE\OdooApiClient\Manager\ModelManager;
 use FluxSE\OdooApiClient\Model\OdooRelation;
@@ -160,12 +161,13 @@ class ModelManagerTest extends TestCase
 
         $template = new Template(
             'test',
-            'consu',
             new OdooRelation($category->getId()),
             new OdooRelation($uom->getId()),
             new OdooRelation($uom->getId()),
             []
         );
+
+        $template->setType('consu');
         $template->setActive(true);
         $template->setDefaultCode(sprintf('TEST_%d', time()));
 
@@ -179,6 +181,7 @@ class ModelManagerTest extends TestCase
      */
     public function testCreateMove(): void
     {
+        $date = new DateTime();
         // 1 - Retrieve Accounts
         $searchDomains = new SearchDomains();
         $searchDomains->addCriterion(Criterion::equal('code', '707100'));
@@ -219,7 +222,7 @@ class ModelManagerTest extends TestCase
 
         $partnerRel = new OdooRelation($partner->getId());
 
-        $move = $this->createMove($journal->getId(), $currency->getId());
+        $move = $this->createMove($date, $journal->getId(), $currency->getId());
         $move->setPartnerId($partnerRel);
         $move->setRef(sprintf('TEST_I%d', time()));
 
@@ -252,7 +255,9 @@ class ModelManagerTest extends TestCase
         $this->assertIsInt($moveId);
 
         if (14 === $this->odooVersion) {
-            $this->expectExceptionMessageMatches('#.*TypeError: cannot marshal (None unless allow_none is enabled|<class \'odoo\.api\.account\.move\'> objects\.).*#');
+            $this->expectExceptionMessageMatches(
+                '#.*TypeError: cannot marshal (None unless allow_none is enabled|<class \'odoo\.api\.account\.move\'> objects\.).*#'
+            );
         }
 
         $response = $this->recordOperations->getObjectOperations()->execute_kw(
@@ -271,6 +276,7 @@ class ModelManagerTest extends TestCase
      */
     public function testCreatePayment()
     {
+        $date = new DateTime();
         // 1 - Retrieve the move to pay
         $searchDomains = new SearchDomains();
         $fieldName = 'invoice_payment_state';
@@ -311,7 +317,7 @@ class ModelManagerTest extends TestCase
         $paymentMethod = $this->modelListManager->findOneBy(Payment\Method::class, $searchDomains);
         $this->assertNotNull($paymentMethod);
 
-        $paymentRegister = $this->createPaymentRegister($journal->getId(), $paymentMethod->getId());
+        $paymentRegister = $this->createPaymentRegister($date, $journal->getId(), $paymentMethod->getId());
         $ref = sprintf('PAY_%d', time());
         if (14 === $this->odooVersion) {
             $paymentRegister->setAmount($move->getAmountTotal());
@@ -347,27 +353,32 @@ class ModelManagerTest extends TestCase
         $this->assertIsInt($data['res_id']);
     }
 
-    private function createMove(int $journalId, int $currencyId): Move
-    {
+    private function createMove(
+        DateTimeInterface $date,
+        int $journalId,
+        int $currencyId,
+        string $moveType = 'out_invoice'
+    ): Move {
         $journalRel = new OdooRelation($journalId);
         $currencyRel = new OdooRelation($currencyId);
 
         if (14 === $this->odooVersion) {
             return new Move(
-                new DateTime(),
+                $date,
                 'draft',
-                'out_invoice',
+                $moveType,
                 $journalRel,
-                $currencyRel,
-                'no_extract_requested'
+                $currencyRel
             );
+            $move->setMoveType($moveType);
+            return $move;
         }
 
         return new Move(
             '/', // !important
-            new DateTime(),
+            $date,
             'draft',
-            'out_invoice',
+            $moveType,
             $journalRel,
             $currencyRel
         );
@@ -386,20 +397,20 @@ class ModelManagerTest extends TestCase
         return $moveLine;
     }
 
-    private function createPaymentRegister(int $journalId, int $paymentMethodId): Payment\Register
+    private function createPaymentRegister(DateTimeInterface $date, int $journalId, int $paymentMethodId): Payment\Register
     {
         $journalRel = new OdooRelation($journalId);
         $paymentMethodRel = new OdooRelation($paymentMethodId);
 
         if (14 === $this->odooVersion) {
-            $paymentRegister = new Payment\Register(new DateTime());
+            $paymentRegister = new Payment\Register($date);
             $paymentRegister->setJournalId($journalRel);
             $paymentRegister->setPaymentMethodId($paymentMethodRel);
             return $paymentRegister;
         }
 
         return new Payment\Register(
-            new DateTime(),
+            $date,
             $journalRel,
             $paymentMethodRel
         );
