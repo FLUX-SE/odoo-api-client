@@ -14,6 +14,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Webmozart\Assert\Assert;
 
 final class GeneratorCommand extends Command
 {
@@ -180,6 +181,8 @@ final class GeneratorCommand extends Command
     {
         $uri = $this->objectOperations->getApiRequestMaker()->getBaseUri()->__toString();
         $pattern = sprintf('#/%s$#', OdooApiRequestMakerInterface::BASE_PATH);
-        return preg_replace($pattern, '', $uri);
+        $host = preg_replace($pattern, '', $uri);
+
+        return (string) $host;
     }
 }
