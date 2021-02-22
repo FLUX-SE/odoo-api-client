@@ -19,22 +19,12 @@ final class GeneratorCommand extends Command
 {
     /** @var ObjectOperationsInterface */
     private $objectOperations;
+
     /** @var PhpGeneratorInterface */
     private $phpClassesGenerator;
+
     /** @var OdooModelsStructureConverterInterface */
     private $odooModelsStructureConverter;
-    /** @var string */
-    private $host;
-    /** @var string */
-    private $database;
-    /** @var string */
-    private $username;
-    /** @var string */
-    private $password;
-    /** @var string */
-    private $path;
-    /** @var string */
-    private $namespace;
 
     public function __construct(
         ObjectOperationsInterface $objectOperations,
@@ -51,10 +41,10 @@ final class GeneratorCommand extends Command
 
     protected function configure(): void
     {
-        $defaultOdooApiHost = getenv('ODOO_API_HOST') ?: 'http://localhost:8069';
-        $defaultOdooApiDatabase = getenv('ODOO_API_DATABASE') ?: 'odoo-master';
-        $defaultOdooApiUsername = getenv('ODOO_API_USERNAME') ?: 'admin';
-        $defaultOdooApiPassword = getenv('ODOO_API_PASSWORD') ?: 'admin';
+        $defaultHost = $this->objectOperations->getApiRequestMaker()->getBaseUri()->__toString();
+        $defaultDatabase = $this->objectOperations->getDatabase();
+        $defaultUsername = $this->objectOperations->getUsername();
+        $defaultPassword = $this->objectOperations->getPassword();
 
         $this
             ->addArgument(
@@ -71,62 +61,67 @@ final class GeneratorCommand extends Command
                 'host',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                sprintf('Your Odoo base host (default: %s)', $defaultOdooApiHost),
-                $defaultOdooApiHost
+                sprintf('Your Odoo base host (default: %s)', $defaultHost),
+                $defaultHost
             )
             ->addOption(
                 'database',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                sprintf('Your Odoo database name (default: %s)', $defaultOdooApiDatabase),
-                $defaultOdooApiDatabase
+                sprintf('Your Odoo database name (default: %s)', $defaultDatabase),
+                $defaultDatabase
             )
             ->addOption(
                 'username',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                sprintf('Your Odoo account username. (default: %s)', $defaultOdooApiUsername),
-                $defaultOdooApiUsername
+                sprintf('Your Odoo account username. (default: %s)', $defaultUsername),
+                $defaultUsername
             )
             ->addOption(
                 'password',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                sprintf('Your Odoo account password (default: %s)', $defaultOdooApiPassword),
-                $defaultOdooApiPassword
+                sprintf('Your Odoo account password (default: %s)', $defaultPassword),
+                $defaultPassword
             )
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->host = $this->getStringOption($input, 'host');
-        $this->database = $this->getStringOption($input, 'database');
-        $this->username = $this->getStringOption($input, 'username');
-        $this->password = $this->getStringOption($input, 'password');
-        $this->path = $this->getStringArgument($input, 'path');
-        $this->namespace = $this->getStringArgument($input, 'namespace');
+        $host = $this->getStringOption($input, 'host');
+        $database = $this->getStringOption($input, 'database');
+        $username = $this->getStringOption($input, 'username');
+        $password = $this->getStringOption($input, 'password');
+        $path = $this->getStringArgument($input, 'path');
+        $namespace = $this->getStringArgument($input, 'namespace');
 
         $output->writeln('<comment>');
         $output->writeln('Generating Odoo model class from the Odoo instance :');
-        $output->writeln(sprintf('Host : <href=%1$s>%1$s</>', $this->host));
-        $output->writeln(sprintf('Database : %s', $this->database));
-        $output->writeln(sprintf('Username : %s', $this->username));
-        $output->writeln(sprintf('Password : %s', $this->password));
-        $output->writeln(sprintf('Base path : %s', $this->path));
-        $output->writeln(sprintf('Base namespace : %s', $this->namespace));
+        $output->writeln(sprintf('Host : <href=%1$s>%1$s</>', $host));
+        $output->writeln(sprintf('Database : %s', $database));
+        $output->writeln(sprintf('Username : %s', $username));
+        $output->writeln(sprintf('Password : %s', $password));
+        $output->writeln(sprintf('Base path : %s', $path));
+        $output->writeln(sprintf('Base namespace : %s', $namespace));
         $output->writeln('</comment>');
 
-        $this->reconfigureServices();
+        $this->reconfigureServices(
+            $host,
+            $database,
+            $username,
+            $password
+        );
 
         $output->write('Converting model structure to a class generator config array ... ');
-        $config = $this->odooModelsStructureConverter->convert($this->namespace);
+        $config = $this->odooModelsStructureConverter->convert($namespace);
         $output->writeln('DONE');
 
         $output->write('Generating model classes base on the generated config ... ');
         $this->phpClassesGenerator->configure(
-            $this->path,
-            $this->namespace,
+            $path,
+            $namespace,
             $config
         );
         $result = $this->phpClassesGenerator->generate();
@@ -146,19 +141,23 @@ final class GeneratorCommand extends Command
         return $input->getArgument($name);
     }
 
-    private function reconfigureServices(): void
-    {
+    private function reconfigureServices(
+        string $host,
+        string $database,
+        string $username,
+        string $password
+    ): void {
         $odooApiRequestMaker = $this->objectOperations->getApiRequestMaker();
 
         $uriFactory = Psr17FactoryDiscovery::findUriFactory();
         $baseUri = $uriFactory->createUri(sprintf(
             '%s/%s',
-            $this->host,
+            $host,
             OdooApiRequestMakerInterface::BASE_PATH
         ));
         $odooApiRequestMaker->setBaseUri($baseUri);
-        $this->objectOperations->setDatabase($this->database);
-        $this->objectOperations->setUsername($this->username);
-        $this->objectOperations->setPassword($this->password);
+        $this->objectOperations->setDatabase($database);
+        $this->objectOperations->setUsername($username);
+        $this->objectOperations->setPassword($password);
     }
 }
