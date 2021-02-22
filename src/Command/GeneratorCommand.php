@@ -41,7 +41,7 @@ final class GeneratorCommand extends Command
 
     protected function configure(): void
     {
-        $defaultHost = $this->objectOperations->getApiRequestMaker()->getBaseUri()->__toString();
+        $defaultHost = $this->getDefaultHost();
         $defaultDatabase = $this->objectOperations->getDatabase();
         $defaultUsername = $this->objectOperations->getUsername();
         $defaultPassword = $this->objectOperations->getPassword();
@@ -147,7 +147,7 @@ final class GeneratorCommand extends Command
         string $username,
         string $password
     ): void {
-        $defaultHost = $this->objectOperations->getApiRequestMaker()->getBaseUri()->__toString();
+        $defaultHost = $this->getDefaultHost();
         $defaultDatabase = $this->objectOperations->getDatabase();
         $defaultUsername = $this->objectOperations->getUsername();
         $defaultPassword = $this->objectOperations->getPassword();
@@ -174,5 +174,12 @@ final class GeneratorCommand extends Command
         if ($defaultPassword !== $password) {
             $this->objectOperations->setPassword($password);
         }
+    }
+
+    private function getDefaultHost(): string
+    {
+        $uri = $this->objectOperations->getApiRequestMaker()->getBaseUri()->__toString();
+        $pattern = sprintf('#/%s$#', OdooApiRequestMakerInterface::BASE_PATH);
+        return preg_replace($pattern, '', $uri);
     }
 }
