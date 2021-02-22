@@ -147,17 +147,32 @@ final class GeneratorCommand extends Command
         string $username,
         string $password
     ): void {
-        $odooApiRequestMaker = $this->objectOperations->getApiRequestMaker();
+        $defaultHost = $this->objectOperations->getApiRequestMaker()->getBaseUri()->__toString();
+        $defaultDatabase = $this->objectOperations->getDatabase();
+        $defaultUsername = $this->objectOperations->getUsername();
+        $defaultPassword = $this->objectOperations->getPassword();
 
-        $uriFactory = Psr17FactoryDiscovery::findUriFactory();
-        $baseUri = $uriFactory->createUri(sprintf(
-            '%s/%s',
-            $host,
-            OdooApiRequestMakerInterface::BASE_PATH
-        ));
-        $odooApiRequestMaker->setBaseUri($baseUri);
-        $this->objectOperations->setDatabase($database);
-        $this->objectOperations->setUsername($username);
-        $this->objectOperations->setPassword($password);
+        if ($defaultHost !== $host) {
+            $odooApiRequestMaker = $this->objectOperations->getApiRequestMaker();
+            $uriFactory = Psr17FactoryDiscovery::findUriFactory();
+            $baseUri = $uriFactory->createUri(sprintf(
+                '%s/%s',
+                $host,
+                OdooApiRequestMakerInterface::BASE_PATH
+            ));
+            $odooApiRequestMaker->setBaseUri($baseUri);
+        }
+
+        if ($defaultDatabase !== $database) {
+            $this->objectOperations->setDatabase($database);
+        }
+
+        if ($defaultUsername !== $username) {
+            $this->objectOperations->setUsername($username);
+        }
+
+        if ($defaultPassword !== $password) {
+            $this->objectOperations->setPassword($password);
+        }
     }
 }
