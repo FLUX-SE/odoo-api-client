@@ -263,7 +263,11 @@ class ModelManagerTest extends TestCase
             $arguments
         );
 
-        $this->assertFalse($body);
+        if (14 === $this->odooVersion) {
+            $this->assertFalse($body);
+        } else {
+            $this->assertTrue($body);
+        }
     }
 
     /**
