@@ -211,7 +211,7 @@ App\Odoo\Model\Object\Res\Partner
 
 ```shell
 docker run -d -p 5432:5432 -e POSTGRES_USER=odoo -e POSTGRES_PASSWORD=odoo -e POSTGRES_DB=postgres --name db postgres
-docker run --rm -p 8069:8069 --name odoo -e "HOST=host.docker.internal" -t odoo:14 -- --database odoo-master --init "l10n_fr,account_accountant"
+docker run --rm --pull always -p 8069:8069 --name odoo -e "HOST=host.docker.internal" -t odoo:14 -- --database odoo-master --init "l10n_fr,account_accountant"
 ```
 
 The server is fully ready to use when this log line appears
