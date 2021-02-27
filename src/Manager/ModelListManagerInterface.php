@@ -12,11 +12,24 @@ use Symfony\Component\Serializer\Serializer;
 
 interface ModelListManagerInterface
 {
+    /**
+     * @template T of BaseInterface
+     * @psalm-param class-string<T> $class
+     * @return T|BaseInterface|null
+     */
     public function find(string $class, int $id): ?BaseInterface;
 
+    /**
+     * @template T of BaseInterface
+     * @psalm-param class-string<T> $class
+     * @return T|BaseInterface|null
+     */
     public function findOneBy(string $class, ?SearchDomainsInterface $searchDomains = null): ?BaseInterface;
 
     /**
+     * @template T of BaseInterface
+     * @psalm-param class-string<T> $class
+     * @psalm-return T[]|BaseInterface[]
      * @return BaseInterface[]
      */
     public function findBy(
