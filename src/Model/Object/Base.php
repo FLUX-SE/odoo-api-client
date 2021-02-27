@@ -69,7 +69,6 @@ class Base implements BaseInterface
     }
 
     /**
-     *
      * @SerializedName("display_name")
      */
     public function getDisplayName(): ?string
@@ -85,7 +84,6 @@ class Base implements BaseInterface
     }
 
     /**
-     *
      * @SerializedName("__last_update")
      */
     public function getLastUpdate(): ?DateTimeInterface

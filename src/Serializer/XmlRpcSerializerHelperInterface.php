@@ -16,13 +16,11 @@ interface XmlRpcSerializerHelperInterface
     public function serializeRequestBody(RequestBodyInterface $requestBody): StreamInterface;
 
     /**
-     *
      * @return mixed
      */
     public function deserializeResponseBody(StreamInterface $body, string $type);
 
     /**
-     *
      * @return mixed
      */
     public function decodeResponseBody(StreamInterface $body);

@@ -34,7 +34,6 @@ final class OdooApiRequestMaker implements OdooApiRequestMakerInterface
     }
 
     /**
-     *
      * @throws ClientExceptionInterface
      */
     public function request(string $operationPath, StreamInterface $body): ResponseInterface

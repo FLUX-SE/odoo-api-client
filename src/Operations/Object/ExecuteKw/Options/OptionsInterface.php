@@ -16,7 +16,6 @@ interface OptionsInterface
     public function removeOption(string $name): void;
 
     /**
-     *
      * @return array|string|bool|int|float|null
      */
     public function getOption(string $name);

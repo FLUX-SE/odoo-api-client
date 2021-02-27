@@ -29,7 +29,6 @@ final class ModelListManager implements ModelListManagerInterface
     }
 
     /**
-     *
      * @throws ExceptionInterface
      */
     public function find(string $class, int $id): ?BaseInterface
@@ -48,7 +47,6 @@ final class ModelListManager implements ModelListManagerInterface
     }
 
     /**
-     *
      * @throws ExceptionInterface
      */
     public function findOneBy(string $class, ?SearchDomainsInterface $searchDomains = null): ?BaseInterface
