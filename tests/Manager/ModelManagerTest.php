@@ -255,21 +255,15 @@ class ModelManagerTest extends TestCase
 
         $this->assertIsInt($moveId);
 
-        if (14 === $this->odooVersion) {
-            $this->expectExceptionMessageMatches(
-                '#.*TypeError: cannot marshal (None unless allow_none is enabled|<class \'odoo\.api\.account\.move\'> objects\.).*#'
-            );
-        }
-
-        $response = $this->recordOperations->getObjectOperations()->execute_kw(
+        $arguments = new Arguments();
+        $arguments->addArgument($moveId);
+        $body = $this->recordOperations->execute_kw_action(
             $move::getOdooModelName(),
             'action_post',
-            [$moveId]
+            $arguments
         );
 
-        $body = $this->modelListManager->getRecordListOperations()->getObjectOperations()
-            ->getXmlRpcSerializerHelper()->decodeResponseBody($response->getBody());
-        $this->assertTrue($body);
+        $this->assertFalse($body);
     }
 
     /**
@@ -342,7 +336,7 @@ class ModelManagerTest extends TestCase
 
         $arguments = new Arguments();
         $arguments->addArgument($paymentRegisterId);
-        $data = $this->modelManager->getRecordOperations()->execute_kw_action(
+        $data = $this->recordOperations->execute_kw_action(
             $paymentRegister::getOdooModelName(),
             $actionName,
             $arguments
