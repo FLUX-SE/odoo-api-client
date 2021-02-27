@@ -28,7 +28,7 @@ final class XmlRpcEncoder implements EncoderInterface
     }
 
     /**
-     * {@inheritDoc}
+     *
      */
     public function supportsEncoding($format)
     {
@@ -36,7 +36,7 @@ final class XmlRpcEncoder implements EncoderInterface
     }
 
     /**
-     * {@inheritDoc}
+     *
      */
     public function encode($data, $format, array $context = [])
     {

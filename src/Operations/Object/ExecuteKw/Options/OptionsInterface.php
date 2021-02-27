@@ -9,7 +9,6 @@ interface OptionsInterface
     public function toArray(): array;
 
     /**
-     * @param string $name
      * @param array|string|bool|int|float|null $option
      */
     public function addOption(string $name, $option): void;
@@ -17,7 +16,6 @@ interface OptionsInterface
     public function removeOption(string $name): void;
 
     /**
-     * @param string $name
      *
      * @return array|string|bool|int|float|null
      */

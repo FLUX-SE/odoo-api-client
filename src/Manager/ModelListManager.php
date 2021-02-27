@@ -29,7 +29,6 @@ final class ModelListManager implements ModelListManagerInterface
     }
 
     /**
-     * @return BaseInterface|null
      *
      * @throws ExceptionInterface
      */
@@ -49,7 +48,6 @@ final class ModelListManager implements ModelListManagerInterface
     }
 
     /**
-     * @return BaseInterface|null
      *
      * @throws ExceptionInterface
      */

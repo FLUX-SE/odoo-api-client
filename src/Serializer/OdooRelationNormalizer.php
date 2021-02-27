@@ -38,10 +38,7 @@ final class OdooRelationNormalizer implements NormalizerInterface, NormalizerAwa
     }
 
     /**
-     * @param OdooRelation $object
      *
-     * @param string|null $format
-     * @param array $context
      *
      * @return int|array|null|false
      *
@@ -83,7 +80,6 @@ final class OdooRelationNormalizer implements NormalizerInterface, NormalizerAwa
     }
 
     /**
-     * @param OdooRelation $object
      * @return null|BaseInterface|int[]|int $data
      */
     private function buildThirdParam(OdooRelation $object)

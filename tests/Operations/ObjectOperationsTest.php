@@ -14,7 +14,7 @@ class ObjectOperationsTest extends TestCase
     private $objectOperations;
 
     /**
-     * {@inheritdoc}
+     *
      */
     protected function setUp(): void
     {

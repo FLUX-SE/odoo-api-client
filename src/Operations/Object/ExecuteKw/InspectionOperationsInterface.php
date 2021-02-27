@@ -9,9 +9,7 @@ use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\FieldsGetOptionsInt
 interface InspectionOperationsInterface extends OperationsInterface
 {
     /**
-     * @param string $modelName
      * @param array<int, string> $fields
-     * @param FieldsGetOptionsInterface|null $fieldsGetOptions
      *
      * @return array<string, array>
      */

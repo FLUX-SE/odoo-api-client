@@ -27,7 +27,6 @@ final class RequestBody implements RequestBodyInterface
     }
 
     /**
-     * @return array
      */
     public function getParams(): array
     {
@@ -35,7 +34,6 @@ final class RequestBody implements RequestBodyInterface
     }
 
     /**
-     * @param array $params
      */
     public function setParams(array $params): void
     {

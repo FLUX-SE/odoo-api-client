@@ -15,12 +15,7 @@ interface CommonOperationsInterface extends OperationsInterface
     public function aboutExtended(): array;
 
     /**
-     * @param string $database
-     * @param string $username
-     * @param string $password
-     * @param array $userAgentEnv
      *
-     * @return int
      */
     public function authenticate(
         string $database,

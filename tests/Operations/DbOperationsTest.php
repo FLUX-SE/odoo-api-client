@@ -15,7 +15,7 @@ class DbOperationsTest extends TestCase
     private $dbOperations;
 
     /**
-     * {@inheritdoc}
+     *
      */
     protected function setUp(): void
     {

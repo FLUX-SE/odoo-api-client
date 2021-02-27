@@ -22,7 +22,7 @@ class ModelListManagerTest extends TestCase
     private $modelListManager;
 
     /**
-     * {@inheritdoc}
+     *
      */
     protected function setUp(): void
     {

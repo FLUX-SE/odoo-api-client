@@ -54,7 +54,7 @@ class ModelManagerTest extends TestCase
     private $odooVersion;
 
     /**
-     * {@inheritdoc}
+     *
      */
     protected function setUp(): void
     {

@@ -11,22 +11,17 @@ use Symfony\Component\Serializer\Serializer;
 interface XmlRpcSerializerHelperInterface
 {
     /**
-     * @param RequestBodyInterface $requestBody
      *
-     * @return StreamInterface
      */
     public function serializeRequestBody(RequestBodyInterface $requestBody): StreamInterface;
 
     /**
-     * @param StreamInterface $body
-     * @param string $type
      *
      * @return mixed
      */
     public function deserializeResponseBody(StreamInterface $body, string $type);
 
     /**
-     * @param StreamInterface $body
      *
      * @return mixed
      */

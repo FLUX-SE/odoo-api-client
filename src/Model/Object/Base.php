@@ -69,7 +69,6 @@ class Base implements BaseInterface
     }
 
     /**
-     * @return string|null
      *
      * @SerializedName("display_name")
      */
@@ -79,7 +78,6 @@ class Base implements BaseInterface
     }
 
     /**
-     * @param string|null $display_name
      */
     public function setDisplayName(?string $display_name): void
     {
@@ -87,7 +85,6 @@ class Base implements BaseInterface
     }
 
     /**
-     * @return DateTimeInterface|null
      *
      * @SerializedName("__last_update")
      */
@@ -97,7 +94,6 @@ class Base implements BaseInterface
     }
 
     /**
-     * @param DateTimeInterface|null $__last_update
      */
     public function setLastUpdate(?DateTimeInterface $__last_update): void
     {
@@ -105,7 +101,6 @@ class Base implements BaseInterface
     }
 
     /**
-     * @return string
      */
     public static function getOdooModelName(): string
     {

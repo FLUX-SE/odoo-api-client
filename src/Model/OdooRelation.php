@@ -38,7 +38,6 @@ final class OdooRelation extends Base
 
     /**
      * @param int|null|false $id
-     * @param string|null $display_name
      */
     public function __construct(
         $id = null,

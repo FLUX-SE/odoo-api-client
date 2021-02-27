@@ -12,7 +12,6 @@ final class Fault implements FaultInterface
     private $faultString = '';
 
     /**
-     * @param int $faultCode
      */
     public function setFaultCode(int $faultCode): void
     {
@@ -20,7 +19,6 @@ final class Fault implements FaultInterface
     }
 
     /**
-     * @param string $faultString
      */
     public function setFaultString(string $faultString): void
     {

@@ -36,7 +36,7 @@ final class CommonOperations extends AbstractOperations implements CommonOperati
     }
 
     /**
-     * {@inheritDoc}
+     *
      *
      * @throws AuthenticationFailedException
      */

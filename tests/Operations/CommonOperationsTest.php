@@ -15,7 +15,7 @@ class CommonOperationsTest extends TestCase
     private $commonOperations;
 
     /**
-     * {@inheritdoc}
+     *
      */
     protected function setUp(): void
     {

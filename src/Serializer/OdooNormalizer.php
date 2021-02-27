@@ -14,7 +14,6 @@ final class OdooNormalizer extends ObjectNormalizer
      * @param string $attribute
      * @param mixed $value
      * @param string|null $format
-     * @param array $context
      */
     protected function setAttributeValue($object, $attribute, $value, $format = null, array $context = []): void
     {

@@ -19,7 +19,7 @@ class OdooApiRequestMakerTest extends TestCase
     private $xmlRpcSerializerHelper;
 
     /**
-     * {@inheritdoc}
+     *
      */
     protected function setUp(): void
     {
