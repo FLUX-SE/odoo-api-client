@@ -15,14 +15,14 @@ interface ModelListManagerInterface
     /**
      * @template T of BaseInterface
      * @psalm-param class-string<T> $class
-     * @return T|BaseInterface|null
+     * @psalm-return T|BaseInterface|null
      */
     public function find(string $class, int $id): ?BaseInterface;
 
     /**
      * @template T of BaseInterface
      * @psalm-param class-string<T> $class
-     * @return T|BaseInterface|null
+     * @psalm-return T|BaseInterface|null
      */
     public function findOneBy(string $class, ?SearchDomainsInterface $searchDomains = null): ?BaseInterface;
 
