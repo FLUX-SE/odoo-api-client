@@ -18,8 +18,8 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                odoo: [13, 14]
-                php: [7.4, 7.3]
+                odoo: [13, 14, 15]
+                php: [7.3, 7.4, 8.0]
         services:
             postgres:
                 image: postgres
@@ -92,11 +92,11 @@ jobs:
                 name: Run analysis
                 run: |
                     composer validate --strict
-                    vendor/bin/ecs check .
+                    vendor/bin/ecs check src
 
             -
                 name: Run PHPStan
-                run: vendor/bin/phpstan analyse -c phpstan.neon -l max src/
+                run: vendor/bin/phpstan analyse -l max src/
 
             -
                 name: Wait until odoo is ready

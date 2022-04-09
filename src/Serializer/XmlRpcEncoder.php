@@ -27,18 +27,12 @@ final class XmlRpcEncoder implements EncoderInterface
         $this->defaultContext = array_merge($this->defaultContext, $defaultContext);
     }
 
-    /**
-     *
-     */
-    public function supportsEncoding($format)
+    public function supportsEncoding(string $format): bool
     {
         return $format === self::FORMAT;
     }
 
-    /**
-     *
-     */
-    public function encode($data, $format, array $context = [])
+    public function encode($data, string $format, array $context = []): string
     {
         if (false === is_array($data)) {
             throw new UnexpectedValueException(sprintf(

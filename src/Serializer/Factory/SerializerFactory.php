@@ -12,8 +12,6 @@ use FluxSE\OdooApiClient\Serializer\OdooRelationNormalizer;
 use FluxSE\OdooApiClient\Serializer\OdooRelationsDenormalizer;
 use FluxSE\OdooApiClient\Serializer\XmlRpcDecoder;
 use FluxSE\OdooApiClient\Serializer\XmlRpcEncoder;
-use Symfony\Component\PropertyAccess\PropertyAccess;
-use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\Extractor\SerializerExtractor;

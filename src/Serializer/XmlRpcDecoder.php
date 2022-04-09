@@ -25,12 +25,12 @@ final class XmlRpcDecoder implements ContextAwareDecoderInterface
         $this->defaultContext = array_merge($this->defaultContext, $defaultContext);
     }
 
-    public function supportsDecoding($format, array $context = [])
+    public function supportsDecoding(string $format, array $context = []): bool
     {
         return $format === self::FORMAT;
     }
 
-    public function decode($data, $format, array $context = [])
+    public function decode(string $data, string $format, array $context = [])
     {
         if ('' === trim($data)) {
             throw new UnexpectedValueException('Invalid XML data, it can not be empty.');
