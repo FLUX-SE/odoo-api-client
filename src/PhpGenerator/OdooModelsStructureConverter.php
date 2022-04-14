@@ -101,7 +101,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         $class = $builtClass;
         $i = 1;
         $modelNameToClassLowerCase = array_map('strtolower', $this->modelNameToClass);
-        while (false !== array_search(strtolower($class), $modelNameToClassLowerCase)) {
+        while (in_array(strtolower($class), $modelNameToClassLowerCase, true)) {
             $class = $builtClass . ++$i;
         }
 
@@ -161,7 +161,9 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             );
 
             foreach ($this->modelFixers as $modelFixer) {
-                $modelFixer->fix($modelName, $this->fields_getCache[$modelName]);
+                if ($modelFixer->supports($modelName, $this->fields_getCache[$modelName])) {
+                    $modelFixer->fix($modelName, $this->fields_getCache[$modelName]);
+                }
             }
         }
 
@@ -272,10 +274,6 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             $types = OdooModelsStructureConverterHelper::transformTypes($fieldInfo);
             $description = $this->buildModelPropertyDescription($fieldInfo, $modelNamespace, $types);
 
-            if ($item['model'] === 'base' && $fieldName === 'id') {
-                $types[] = 'false';
-            }
-
             $inheritedFieldMetadata = $this->getInheritedFieldMetadata($item, $fieldName);
             $inheritedFieldInfo = $inheritedFieldMetadata['info'];
             $inheritedFieldPosition = $inheritedFieldMetadata['position'];
@@ -285,6 +283,10 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
                 $inheritedRequired = false === in_array('null', $inheritedTypes);
                 $inheritedRequired = $inheritedRequired && ($inheritedFieldInfo['required'] ?? false);
                 $inheritedRequired = $inheritedRequired && !($inheritedFieldInfo['default'] ?? null);
+            }
+
+            if ($fieldName === 'id') {
+                $types[] = 'false';
             }
 
             $properties[] = [

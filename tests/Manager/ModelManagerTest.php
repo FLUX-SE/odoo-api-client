@@ -102,7 +102,7 @@ class ModelManagerTest extends TestCase
 
         $this->assertInstanceOf(Partner::class, $savedPartner);
 
-        $savedPartner->setComment('Test');
+        $savedPartner->setComment('<p>Test</p>');
 
         $result = $this->modelManager->update($savedPartner);
         $this->assertTrue($result);
@@ -316,7 +316,7 @@ class ModelManagerTest extends TestCase
         $paymentMethod = $this->modelListManager->findOneBy(Payment\Method::class, $searchDomains);
         $this->assertNotNull($paymentMethod);
 
-        $paymentRegister = $this->createPaymentRegister($date, $journal->getId(), $paymentMethod->getId());
+        $paymentRegister = $this->createPaymentRegister($date, $journal, $paymentMethod);
         $ref = sprintf('PAY_%d', time());
         if (13 === $this->odooVersion) {
             $paymentRegister->setDisplayName($ref);
@@ -395,10 +395,10 @@ class ModelManagerTest extends TestCase
         return new Line($emptyMoveRel, $currencyRel);
     }
 
-    private function createPaymentRegister(DateTimeInterface $date, int $journalId, int $paymentMethodId): Payment\Register
+    private function createPaymentRegister(DateTimeInterface $date, Journal $journal, Payment\Method $paymentMethod): Payment\Register
     {
-        $journalRel = new OdooRelation($journalId);
-        $paymentMethodRel = new OdooRelation($paymentMethodId);
+        $journalRel = new OdooRelation($journal->getId());
+        $paymentMethodRel = new OdooRelation($paymentMethod->getId());
 
         if (13 === $this->odooVersion) {
             return new Payment\Register(
@@ -410,7 +410,11 @@ class ModelManagerTest extends TestCase
 
         $paymentRegister = new Payment\Register($date);
         $paymentRegister->setJournalId($journalRel);
-        $paymentRegister->setPaymentMethodId($paymentMethodRel);
+        if (14 === $this->odooVersion) {
+            $paymentRegister->setPaymentMethodId($paymentMethodRel);
+        } else {
+            $paymentRegister->setPaymentMethodCode($paymentMethod->getCode());
+        }
         return $paymentRegister;
     }
 }

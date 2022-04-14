@@ -11,7 +11,7 @@ use Http\Client\Common\Exception\ClientErrorException;
 /**
  * @experimental This class try to get default value of Selection type fields without any context
  */
-final class SelectionTypeDefaultValueAdder extends AbstractModelFixer implements ModelFixerInterface
+final class SelectionTypeDefaultValueAdder extends AbstractModelFixer
 {
     /** @var RecordListOperationsInterface */
     private $recordListOperations;

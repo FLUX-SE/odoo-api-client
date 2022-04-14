@@ -14,6 +14,7 @@ use FluxSE\OdooApiClient\Command\GeneratorCommand;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\InspectionOperations;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
 use FluxSE\OdooApiClient\PhpGenerator\Builder\SerializableClassBuilder;
+use FluxSE\OdooApiClient\PhpGenerator\ModelFixer\BaseIdFixer;
 use FluxSE\OdooApiClient\PhpGenerator\OdooModelsStructureConverter;
 use FluxSE\OdooApiClient\PhpGenerator\OdooPhpClassesGenerator;
 use Prometee\PhpClassGenerator\Builder\Model\ModelFactoryBuilder;
@@ -53,7 +54,10 @@ $phpReservedWordsHelper = new PhpReservedWordsHelper();
 $odooModelsStructureConverter = new OdooModelsStructureConverter(
     $recordListOperations,
     $inspectionOperations,
-    $phpReservedWordsHelper
+    $phpReservedWordsHelper,
+    [
+        new BaseIdFixer(),
+    ]
 );
 
 $application = new Application('odoo-model-classes-generator', '1.0.0');
