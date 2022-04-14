@@ -19,8 +19,15 @@ jobs:
             fail-fast: false
             matrix:
                 odoo: [13, 14, 15]
-                symfony: ["^4.4", "^5.4", "^6.1"]
+                symfony: ["^4.4", "^5.4", "^6.0"]
                 php: [7.3, 7.4, 8.0]
+                exclude:
+                    - symfony: "^4.4"
+                      php: 8.0
+                    - symfony: "^6.0"
+                      php: 7.4
+                    - symfony: "^6.0"
+                      php: 7.3
         services:
             postgres:
                 image: postgres
