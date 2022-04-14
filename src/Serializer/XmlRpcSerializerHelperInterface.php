@@ -10,9 +10,6 @@ use Symfony\Component\Serializer\Serializer;
 
 interface XmlRpcSerializerHelperInterface
 {
-    /**
-     *
-     */
     public function serializeRequestBody(RequestBodyInterface $requestBody): StreamInterface;
 
     /**
