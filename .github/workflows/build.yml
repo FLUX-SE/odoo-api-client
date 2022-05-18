@@ -104,10 +104,6 @@ jobs:
                     vendor/bin/ecs check src
 
             -
-                name: Run Psalm
-                run: vendor/bin/psalm
-
-            -
                 name: Run PHPStan
                 run: vendor/bin/phpstan analyse -l max src/
 
@@ -120,7 +116,6 @@ jobs:
                         echo "Checking if Odoo is fully up..."
                     done
                     echo "Odoo is UP !"
-
             -
                 name: Build Odoo tests model classes
                 run: |
@@ -128,6 +123,10 @@ jobs:
                         "./tests/TestModel/Object" \
                         "Tests\\FluxSE\\OdooApiClient\\TestModel\\Object"
 
+            # Need classes from Odoo to be generated for the tests folder
+            -
+                name: Run Psalm
+                run: vendor/bin/psalm
             -
                 name: Run PHPUnit
                 run: vendor/bin/phpunit --colors=always

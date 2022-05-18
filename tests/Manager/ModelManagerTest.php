@@ -294,6 +294,7 @@ class ModelManagerTest extends TestCase
             /** @psalm-suppress UndefinedMethod */
             $this->assertEquals('not_paid', $move->getInvoicePaymentState());
         } else {
+            /** @psalm-suppress UndefinedMethod */
             $this->assertEquals('not_paid', $move->getPaymentState());
         }
 
@@ -322,7 +323,10 @@ class ModelManagerTest extends TestCase
         if (13 === $this->odooVersion) {
             $paymentRegister->setDisplayName($ref);
         } else {
+            /** @psalm-suppress UndefinedMethod */
             $paymentRegister->setAmount($move->getAmountTotal());
+
+            /** @psalm-suppress UndefinedMethod */
             $paymentRegister->setCommunication($ref);
         }
 
@@ -363,7 +367,7 @@ class ModelManagerTest extends TestCase
         $currencyRel = new OdooRelation($currencyId);
 
         if (13 === $this->odooVersion) {
-            /** @psalm-suppress InvalidArgument,InvalidArgument,TooManyArguments **/
+            /** @psalm-suppress InvalidArgument,TooManyArguments **/
             return new Move(
                 '/', // !important
                 $date,
@@ -374,7 +378,7 @@ class ModelManagerTest extends TestCase
             );
         }
 
-        /** @psalm-suppress TooManyArguments **/
+        /** @psalm-suppress TooManyArguments,InvalidArgument **/
         return new Move(
             $date,
             'draft',
@@ -396,6 +400,7 @@ class ModelManagerTest extends TestCase
             return $moveLine;
         }
 
+        /** @psalm-suppress TooManyArguments **/
         return new Line($emptyMoveRel, $currencyRel);
     }
 
@@ -413,12 +418,14 @@ class ModelManagerTest extends TestCase
             );
         }
 
+        /** @psalm-suppress TooFewArguments **/
         $paymentRegister = new Payment\Register($date);
         $paymentRegister->setJournalId($journalRel);
         if (14 === $this->odooVersion) {
             /** @psalm-suppress UndefinedMethod **/
             $paymentRegister->setPaymentMethodId($paymentMethodRel);
         } else {
+            /** @psalm-suppress UndefinedMethod **/
             $paymentRegister->setPaymentMethodCode($paymentMethod->getCode());
         }
         return $paymentRegister;
