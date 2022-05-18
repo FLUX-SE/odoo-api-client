@@ -19,9 +19,9 @@ interface OperationsInterface
     public function decode(ResponseInterface $response): array;
 
     /**
-     * @param class-string<object> $model
-     *
-     * @return mixed
+     * @template T of object
+     * @param class-string<T> $model
+     * @return T
      */
     public function deserializeModel(ResponseInterface $response, string $model);
 
@@ -33,8 +33,6 @@ interface OperationsInterface
     public function deserializeBoolean(ResponseInterface $response): bool;
 
     public function deserializeInteger(ResponseInterface $response): int;
-
-    public function deserializeFloat(ResponseInterface $response): float;
 
     public function deserializeString(ResponseInterface $response): string;
 

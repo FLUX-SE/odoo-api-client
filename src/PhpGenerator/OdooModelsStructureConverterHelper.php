@@ -69,13 +69,12 @@ final class OdooModelsStructureConverterHelper
         $comment = trim($comment);
 
         $lines = explode("\n", $comment);
-        Assert::notFalse($lines);
-        foreach ($lines as $i => $line) {
-            $line = (string) $line;
-            if (trim($line) === '') {
+
+        foreach ($lines as &$line) {
+            if ('' === trim($line)) {
                 $line = '';
             }
-            $lines[$i] = preg_replace('#([\s]{4,})#', '    ', rtrim($line));
+            $line = preg_replace('#([\s]{4,})#', '    ', rtrim($line));
         }
 
         return implode("\n", $lines);

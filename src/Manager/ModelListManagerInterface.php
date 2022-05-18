@@ -14,31 +14,33 @@ interface ModelListManagerInterface
 {
     /**
      * @template T of BaseInterface
-     * @psalm-param class-string<T> $class
-     * @psalm-return T|BaseInterface|null
+     * @param class-string<T> $className
+     * @return T|null
      */
-    public function find(string $class, int $id): ?BaseInterface;
+    public function find(string $className, int $id): ?BaseInterface;
 
     /**
      * @template T of BaseInterface
-     * @psalm-param class-string<T> $class
-     * @psalm-return T|BaseInterface|null
+     * @param class-string<T> $className
+     * @return T|null
      */
-    public function findOneBy(string $class, ?SearchDomainsInterface $searchDomains = null): ?BaseInterface;
+    public function findOneBy(string $className, ?SearchDomainsInterface $searchDomains = null): ?BaseInterface;
 
     /**
      * @template T of BaseInterface
-     * @psalm-param class-string<T> $class
-     * @psalm-return T[]|BaseInterface[]
-     * @return BaseInterface[]
+     * @param class-string<T> $className
+     * @return T[]
      */
     public function findBy(
-        string $class,
-        ?SearchDomainsInterface $searchDomains = null,
+        string                      $className,
+        ?SearchDomainsInterface     $searchDomains = null,
         ?SearchReadOptionsInterface $searchReadOptions = null
     ): array;
 
-    public function count(string $class, ?SearchDomainsInterface $searchDomains = null): int;
+    /**
+     * @param class-string<BaseInterface> $className
+     */
+    public function count(string $className, ?SearchDomainsInterface $searchDomains = null): int;
 
     public function getRecordListOperations(): RecordListOperationsInterface;
 

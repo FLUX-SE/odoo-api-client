@@ -7,25 +7,16 @@ namespace FluxSE\OdooApiClient\Serializer;
 use FluxSE\OdooApiClient\Api\RequestBodyInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
-use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Serializer;
 
 final class XmlRpcSerializerHelper implements XmlRpcSerializerHelperInterface
 {
-    /** @var Serializer */
-    private $serializer;
-    /** @var StreamFactoryInterface */
-    private $streamFactory;
-
-    /** @var string */
-    private $encoding = 'UTF-8';
+    private string $encoding = 'UTF-8';
 
     public function __construct(
-        Serializer $serializer,
-        StreamFactoryInterface $streamFactory
+        private Serializer $serializer,
+        private StreamFactoryInterface $streamFactory,
     ) {
-        $this->serializer = $serializer;
-        $this->streamFactory = $streamFactory;
     }
 
     public function serializeRequestBody(RequestBodyInterface $requestBody): StreamInterface

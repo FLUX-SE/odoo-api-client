@@ -14,29 +14,15 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Webmozart\Assert\Assert;
 
 final class GeneratorCommand extends Command
 {
-    /** @var ObjectOperationsInterface */
-    private $objectOperations;
-
-    /** @var PhpGeneratorInterface */
-    private $phpClassesGenerator;
-
-    /** @var OdooModelsStructureConverterInterface */
-    private $odooModelsStructureConverter;
-
     public function __construct(
-        ObjectOperationsInterface $objectOperations,
-        OdooModelsStructureConverterInterface $odooModelStructureConverter,
-        PhpGeneratorInterface $phpClassesGenerator,
-        string $name = null
+        private ObjectOperationsInterface $objectOperations,
+        private OdooModelsStructureConverterInterface $odooModelsStructureConverter,
+        private PhpGeneratorInterface $phpClassesGenerator,
+        string $name = null,
     ) {
-        $this->objectOperations = $objectOperations;
-        $this->odooModelsStructureConverter = $odooModelStructureConverter;
-        $this->phpClassesGenerator = $phpClassesGenerator;
-
         parent::__construct($name);
     }
 

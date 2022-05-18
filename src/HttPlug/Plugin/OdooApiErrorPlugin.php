@@ -14,18 +14,10 @@ use Psr\Http\Message\ResponseInterface;
 
 final class OdooApiErrorPlugin implements Plugin
 {
-    /** @var Plugin */
-    private $errorPluginDecorated;
-
-    /** @var XmlRpcSerializerHelperInterface */
-    private $xmlRpcSerializerHelper;
-
     public function __construct(
-        Plugin $errorPluginDecorated,
-        XmlRpcSerializerHelperInterface $xmlRpcSerializerHelper
+        private Plugin $errorPluginDecorated,
+        private XmlRpcSerializerHelperInterface $xmlRpcSerializerHelper
     ) {
-        $this->errorPluginDecorated = $errorPluginDecorated;
-        $this->xmlRpcSerializerHelper = $xmlRpcSerializerHelper;
     }
 
     public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise

@@ -6,38 +6,39 @@ namespace Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw;
 
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterface;
 use PHPUnit\Framework\TestCase;
 
 class RecordListOperationsTest extends TestCase
 {
     use ExecuteKwOperationsTrait;
-    /** @var RecordListOperations */
-    private $recordListOperations;
+
+    private RecordListOperationsInterface $recordListOperations;
 
     protected function setUp(): void
     {
         $this->recordListOperations = $this->buildExecuteKwOperations(RecordListOperations::class);
     }
 
-    public function testSearch_count()
+    public function testSearch_count(): void
     {
         $count = $this->recordListOperations->search_count('ir.model');
-        $this->assertIsInt($count);
+        $this->assertGreaterThan(0, $count);
     }
 
-    public function testRead()
+    public function testRead(): void
     {
         $result = $this->recordListOperations->read('ir.model', [1]);
-        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
     }
 
-    public function testSearch()
+    public function testSearch(): void
     {
         $result = $this->recordListOperations->search('ir.model');
-        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
     }
 
-    public function testSearch_read()
+    public function testSearch_read(): void
     {
         $searchReadOptions = new SearchReadOptions();
         $searchReadOptions->setLimit(1);
@@ -49,6 +50,6 @@ class RecordListOperationsTest extends TestCase
             $searchReadOptions
         );
 
-        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
     }
 }

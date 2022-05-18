@@ -53,6 +53,7 @@ final class CommonOperations extends AbstractOperations implements CommonOperati
                 $userAgentEnv,
         ]);
 
+        /** @var int|false $body */
         $body = $this->xmlRpcSerializerHelper->decodeResponseBody(
             $response->getBody()
         );

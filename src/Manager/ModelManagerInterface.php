@@ -7,7 +7,7 @@ namespace FluxSE\OdooApiClient\Manager;
 use FluxSE\OdooApiClient\Model\BaseInterface;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\OptionsInterface;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordOperationsInterface;
-use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 interface ModelManagerInterface
 {
@@ -19,5 +19,5 @@ interface ModelManagerInterface
 
     public function getRecordOperations(): RecordOperationsInterface;
 
-    public function getSerializer(): Serializer;
+    public function getNormalizer(): NormalizerInterface;
 }

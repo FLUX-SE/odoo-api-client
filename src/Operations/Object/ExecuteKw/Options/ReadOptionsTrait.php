@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options;
 
-use LogicException;
+use Webmozart\Assert\Assert;
 
 trait ReadOptionsTrait
 {
@@ -19,16 +19,16 @@ trait ReadOptionsTrait
 
     public function getFields(): array
     {
+        /** @var string[] $fields */
         $fields = $this->getOption(ReadOptionsInterface::FIELD_NAME_FIELDS);
 
-        if (is_array($fields)) {
-            return $fields;
-        }
-
-        throw new LogicException(sprintf(
-            'The fields should be an array "%s" retrieved !',
-            gettype($fields)
+        Assert::allString($fields, sprintf(
+            'The field values should be an array of strings, "%s" found ! : %s',
+            '%s',
+            print_r($fields, true)
         ));
+
+        return $fields;
     }
 
     public function setFields(array $fields): void

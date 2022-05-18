@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Tests\FluxSE\OdooApiClient\Manager;
 
 use FluxSE\OdooApiClient\Manager\ModelListManager;
+use FluxSE\OdooApiClient\Manager\ModelListManagerInterface;
 use FluxSE\OdooApiClient\Manager\ModelManagerInterface;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterface;
 use PHPUnit\Framework\TestCase;
 use Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw\ExecuteKwOperationsTrait;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner;
@@ -16,14 +18,10 @@ class ModelListManagerTest extends TestCase
 {
     use ExecuteKwOperationsTrait;
 
-    /** @var RecordListOperations */
-    private $recordListOperations;
-    /** @var ModelManagerInterface */
-    private $modelListManager;
+    private RecordListOperationsInterface $recordListOperations;
 
-    /**
-     *
-     */
+    private ModelListManagerInterface $modelListManager;
+
     protected function setUp(): void
     {
         $this->recordListOperations = $this->buildExecuteKwOperations(RecordListOperations::class);

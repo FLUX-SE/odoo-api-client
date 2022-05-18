@@ -8,6 +8,7 @@ use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterface;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordOperations;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordOperationsInterface;
 use PHPUnit\Framework\TestCase;
@@ -16,11 +17,9 @@ class RecordOperationsTest extends TestCase
 {
     use ExecuteKwOperationsTrait;
 
-    /** @var RecordListOperations */
-    private $recordListOperations;
+    private RecordListOperationsInterface $recordListOperations;
 
-    /** @var RecordOperationsInterface */
-    private $recordOperations;
+    private RecordOperationsInterface $recordOperations;
 
     protected function setUp(): void
     {
@@ -66,7 +65,7 @@ class RecordOperationsTest extends TestCase
         return $results[0];
     }
 
-    public function testCreateProduct()
+    public function testCreateProduct(): void
     {
         $uom = $this->retrieveUom('Units');
         $category = $this->retrieveFirstCategory();
@@ -86,6 +85,6 @@ class RecordOperationsTest extends TestCase
 
         $templateId = $this->recordOperations->create('product.template', $template);
 
-        $this->assertIsInt($templateId);
+        $this->assertGreaterThan(0, $templateId);
     }
 }

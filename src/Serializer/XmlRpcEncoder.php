@@ -17,7 +17,7 @@ final class XmlRpcEncoder implements EncoderInterface
     /**
      * @var string[]
      */
-    private $defaultContext = [
+    private array $defaultContext = [
         self::CTX_XMLRPC_ENCODING => 'UTF-8',
         self::CTX_XMLRPC_ESCAPING => 'markup',
     ];
@@ -32,7 +32,7 @@ final class XmlRpcEncoder implements EncoderInterface
         return $format === self::FORMAT;
     }
 
-    public function encode($data, $format, array $context = [])
+    public function encode(mixed $data, string $format, array $context = []): string
     {
         if (false === is_array($data)) {
             throw new UnexpectedValueException(sprintf(

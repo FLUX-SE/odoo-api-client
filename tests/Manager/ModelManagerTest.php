@@ -174,7 +174,7 @@ class ModelManagerTest extends TestCase
 
         $templateId = $this->modelManager->persist($template);
 
-        $this->assertIsInt($templateId);
+        $this->assertGreaterThan(0, $templateId);
     }
 
     /**
@@ -253,7 +253,7 @@ class ModelManagerTest extends TestCase
 
         $moveId = $this->modelManager->persist($move);
 
-        $this->assertIsInt($moveId);
+        $this->assertGreaterThan(0, $moveId);
 
         $arguments = new Arguments();
         $arguments->addArgument($moveId);
@@ -291,6 +291,7 @@ class ModelManagerTest extends TestCase
         $this->assertNotNull($move);
         $this->assertEquals('posted', $move->getState());
         if (13 === $this->odooVersion) {
+            /** @psalm-suppress UndefinedMethod */
             $this->assertEquals('not_paid', $move->getInvoicePaymentState());
         } else {
             $this->assertEquals('not_paid', $move->getPaymentState());
@@ -331,7 +332,7 @@ class ModelManagerTest extends TestCase
             'active_ids' => [$move->getId()],
         ]);
         $paymentRegisterId = $this->modelManager->persist($paymentRegister, $options);
-        $this->assertIsInt($paymentRegisterId);
+        $this->assertGreaterThan(0, $paymentRegisterId);
 
         $actionName = 'action_create_payments';
         if (13 === $this->odooVersion) {
@@ -362,6 +363,7 @@ class ModelManagerTest extends TestCase
         $currencyRel = new OdooRelation($currencyId);
 
         if (13 === $this->odooVersion) {
+            /** @psalm-suppress InvalidArgument,InvalidArgument,TooManyArguments **/
             return new Move(
                 '/', // !important
                 $date,
@@ -372,6 +374,7 @@ class ModelManagerTest extends TestCase
             );
         }
 
+        /** @psalm-suppress TooManyArguments **/
         return new Move(
             $date,
             'draft',
@@ -388,6 +391,7 @@ class ModelManagerTest extends TestCase
         $currencyRel = new OdooRelation($currencyId);
 
         if (13 === $this->odooVersion) {
+            /** @psalm-suppress TooFewArguments **/
             $moveLine = new Line($emptyMoveRel);
             return $moveLine;
         }
@@ -401,6 +405,7 @@ class ModelManagerTest extends TestCase
         $paymentMethodRel = new OdooRelation($paymentMethod->getId());
 
         if (13 === $this->odooVersion) {
+            /** @psalm-suppress TooManyArguments **/
             return new Payment\Register(
                 $date,
                 $journalRel,
@@ -411,6 +416,7 @@ class ModelManagerTest extends TestCase
         $paymentRegister = new Payment\Register($date);
         $paymentRegister->setJournalId($journalRel);
         if (14 === $this->odooVersion) {
+            /** @psalm-suppress UndefinedMethod **/
             $paymentRegister->setPaymentMethodId($paymentMethodRel);
         } else {
             $paymentRegister->setPaymentMethodCode($paymentMethod->getCode());

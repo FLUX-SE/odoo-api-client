@@ -33,14 +33,26 @@ interface OdooApiClientBuilderInterface
 
     public function buildRequestBodyFactory(): RequestBodyFactoryInterface;
 
+    /**
+     * @param class-string<OperationsInterface> $className
+     */
     public function buildOperations(string $className): OperationsInterface;
+
     public function buildDbOperations(): DbOperationsInterface;
+
     public function buildCommonOperations(): CommonOperationsInterface;
+
     public function buildObjectOperations(
         string $database,
         string $username,
         string $password
     ): ObjectOperationsInterface;
+
+    /**
+     * @template T of ExecuteKwOperationsInterface
+     * @param class-string<T> $className
+     * @return T
+     */
     public function buildExecuteKwOperations(
         string $className,
         string $database,
@@ -48,7 +60,7 @@ interface OdooApiClientBuilderInterface
         string $password
     ): ExecuteKwOperationsInterface;
 
-    public function setBaseHostname(string $hostname): void;
+    public function setBaseHostname(string $baseHostname): void;
 
     public function getBaseHostname(): string;
 

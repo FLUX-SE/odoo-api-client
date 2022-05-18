@@ -51,6 +51,6 @@ class CommonOperationsTest extends TestCase
             $_ENV['ODOO_API_PASSWORD']
         );
 
-        $this->assertIsInt($uid);
+        $this->assertGreaterThan(0, $uid);
     }
 }

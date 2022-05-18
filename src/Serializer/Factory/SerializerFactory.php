@@ -27,8 +27,7 @@ use Symfony\Component\Serializer\Serializer;
 
 final class SerializerFactory implements SerializerFactoryInterface
 {
-    /** @var string */
-    private $dateFormat = 'Y-m-d H:i:s';
+    private string $dateFormat = 'Y-m-d H:i:s';
 
     public function create(): Serializer
     {

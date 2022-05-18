@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options;
 
-use LogicException;
+use Webmozart\Assert\Assert;
 
 trait FieldsGetTrait
 {
@@ -19,16 +19,16 @@ trait FieldsGetTrait
 
     public function getAttributes(): array
     {
+        /** @var string[] $attributes */
         $attributes = $this->getOption(FieldsGetOptionsInterface::FIELD_NAME_ATTRIBUTES);
 
-        if (is_array($attributes)) {
-            return $attributes;
-        }
-
-        throw new LogicException(sprintf(
-            'The attributes should be an array "%s" retrieved !',
-            gettype($attributes)
+        Assert::allString($attributes, sprintf(
+            'The attribut values should be an array of strings, "%s" found ! : %s',
+            '%s',
+            print_r($attributes, true)
         ));
+
+        return $attributes;
     }
 
     public function setAttributes(array $attributes): void
@@ -52,7 +52,7 @@ trait FieldsGetTrait
     public function removeAttribute(string $attribute): bool
     {
         $attributes = $this->getAttributes();
-        $index = array_search($attribute, $attributes);
+        $index = array_search($attribute, $attributes, true);
         if (false !== $index) {
             unset($attributes[$index]);
             $this->setAttributes($attributes);
@@ -65,6 +65,6 @@ trait FieldsGetTrait
 
     public function hasAttribute(string $attribute): bool
     {
-        return in_array($attribute, $this->getAttributes());
+        return in_array($attribute, $this->getAttributes(), true);
     }
 }

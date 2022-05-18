@@ -2,12 +2,12 @@
 
 use PhpCsFixer\Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer;
 use PhpCsFixer\Fixer\PhpTag\BlankLineAfterOpeningTagFixer;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symplify\EasyCodingStandard\Config\ECSConfig;
 
-return static function (ContainerConfigurator $containerConfigurator): void {
-    $containerConfigurator->import('vendor/symplify/easy-coding-standard/config/set/psr12.php');
+return static function (ECSConfig $ECSConfig): void {
+    $ECSConfig->import('vendor/symplify/easy-coding-standard/config/set/psr12.php');
 
-    $services = $containerConfigurator->services();
+    $services = $ECSConfig->services();
 
     $services->set(BlankLineAfterOpeningTagFixer::class);
     $services->set(NoSuperfluousPhpdocTagsFixer::class)

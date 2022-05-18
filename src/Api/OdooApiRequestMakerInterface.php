@@ -16,7 +16,7 @@ interface OdooApiRequestMakerInterface
 
     public function request(string $operationPath, StreamInterface $body): ResponseInterface;
 
-    public function getLastResponse(): ResponseInterface;
+    public function getLastResponse(): ?ResponseInterface;
 
     public function getRequestFactory(): RequestFactoryInterface;
 

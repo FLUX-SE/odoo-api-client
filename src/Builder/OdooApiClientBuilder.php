@@ -30,33 +30,32 @@ use UnexpectedValueException;
 
 final class OdooApiClientBuilder implements OdooApiClientBuilderInterface
 {
-    /** @var string */
-    private $baseHostname;
-    /** @var string */
-    private $basePath;
+    private string $baseHostname;
 
-    /** @var OdooHttpClientFactoryInterface */
-    private $odooHttpClientFactory;
-    /** @var UriInterface */
-    private $baseUri;
-    /** @var OdooApiRequestMakerInterface */
-    private $odooApiRequestMaker;
-    /** @var XmlRpcSerializerHelperInterface|null */
-    private $xmlRpcSerializerHelper;
-    /** @var ClientInterface|null */
-    private $httpClient;
-    /** @var Serializer|null */
-    private $serializer;
-    /** @var RequestBodyFactoryInterface|null */
-    private $requestBodyFactory;
+    private string $basePath;
+
+    private ?OdooHttpClientFactoryInterface $odooHttpClientFactory = null;
+
+    private ?UriInterface $baseUri = null;
+
+    private ?OdooApiRequestMakerInterface $odooApiRequestMaker = null;
+
+    private ?XmlRpcSerializerHelperInterface $xmlRpcSerializerHelper = null;
+
+    private ?ClientInterface $httpClient = null;
+
+    private ?Serializer $serializer = null;
+
+    private ?RequestBodyFactoryInterface $requestBodyFactory = null;
+
     /** @var OperationsInterface[] */
-    private $operations = [];
-    /** @var ExecuteKwOperationsInterface[] */
-    private $executeKwOperations = [];
+    private array $operations = [];
+
+    private array $executeKwOperations = [];
 
     public function __construct(
         string $baseHostname,
-        string $basePath = OdooApiRequestMakerInterface::BASE_PATH
+        string $basePath = OdooApiRequestMakerInterface::BASE_PATH,
     ) {
         $this->baseHostname = rtrim($baseHostname, '/');
         $this->basePath = trim($basePath, '/');
@@ -214,16 +213,17 @@ final class OdooApiClientBuilder implements OdooApiClientBuilderInterface
     ): ExecuteKwOperationsInterface {
         $operations = $this->executeKwOperations[$className] ?? null;
         if (null === $operations) {
-            $this->executeKwOperations[$className] = new $className(
+            $operations = new $className(
                 $this->buildObjectOperations(
                     $database,
                     $username,
                     $password
                 )
             );
+            $this->executeKwOperations[$className] = $operations;
         }
 
-        return $this->executeKwOperations[$className];
+        return $operations;
     }
 
     public function getBaseHostname(): string

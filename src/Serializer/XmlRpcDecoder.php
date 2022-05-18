@@ -30,6 +30,9 @@ final class XmlRpcDecoder implements ContextAwareDecoderInterface
         return $format === self::FORMAT;
     }
 
+    /**
+     * @return array|integer|string|boolean
+     */
     public function decode($data, $format, array $context = [])
     {
         if ('' === trim($data)) {
@@ -38,6 +41,8 @@ final class XmlRpcDecoder implements ContextAwareDecoderInterface
 
         $encoding = $context[self::CTX_XMLRPC_ENCODING] ?? $this->defaultContext[self::CTX_XMLRPC_ENCODING];
 
-        return xmlrpc_decode($data, $encoding);
+        /** @var array|integer|string|boolean $decoded */
+        $decoded = xmlrpc_decode($data, $encoding);
+        return $decoded;
     }
 }

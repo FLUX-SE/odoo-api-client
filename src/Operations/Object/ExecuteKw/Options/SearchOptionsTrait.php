@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options;
 
-use LogicException;
+use Webmozart\Assert\Assert;
 
 trait SearchOptionsTrait
 {
@@ -21,16 +21,12 @@ trait SearchOptionsTrait
 
     public function getOffset(): int
     {
+        /** @var int $offset */
         $offset = $this->getOption(SearchOptionsInterface::FIELD_NAME_OFFSET);
 
-        if (is_int($offset)) {
-            return $offset;
-        }
+        Assert::integer($offset, 'The offset should be an integer "%s" retrieved !',);
 
-        throw new LogicException(sprintf(
-            'The offset should be an integer "%s" retrieved !',
-            gettype($offset)
-        ));
+        return $offset;
     }
 
     public function setOffset(int $offset): void
@@ -40,16 +36,12 @@ trait SearchOptionsTrait
 
     public function getLimit(): ?int
     {
+        /** @var int|null $limit */
         $limit = $this->getOption(SearchOptionsInterface::FIELD_NAME_LIMIT);
 
-        if (is_int($limit) || null === $limit) {
-            return $limit;
-        }
+        Assert::nullOrInteger($limit, 'The limit should be an integer or null "%s" retrieved !');
 
-        throw new LogicException(sprintf(
-            'The limit should be an integer or null "%s" retrieved !',
-            gettype($limit)
-        ));
+        return $limit;
     }
 
     public function setLimit(?int $limit): void
@@ -59,16 +51,12 @@ trait SearchOptionsTrait
 
     public function getOrder(): ?string
     {
+        /** @var string|null $order */
         $order = $this->getOption(SearchOptionsInterface::FIELD_NAME_ORDER);
 
-        if (is_string($order) || null === $order) {
-            return $order;
-        }
+        Assert::nullOrString($order, 'The order should be a string or null "%s" retrieved !');
 
-        throw new LogicException(sprintf(
-            'The order should be an integer or null "%s" retrieved !',
-            gettype($order)
-        ));
+        return $order;
     }
 
     public function setOrder(?string $order): void

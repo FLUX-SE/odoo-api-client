@@ -3,6 +3,8 @@ parameters:
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
 
+    paths:
+        - src
 
     ignoreErrors:
         - '#Method FluxSE\\OdooApiClient\\Command\\GeneratorCommand::getStringOption\(\) should return string but returns array<string>\|bool\|string\|null.#'

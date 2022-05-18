@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace FluxSE\OdooApiClient\Api;
 
-use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -13,29 +12,15 @@ use Psr\Http\Message\UriInterface;
 
 final class OdooApiRequestMaker implements OdooApiRequestMakerInterface
 {
-    /** @var ClientInterface */
-    private $httpClient;
-    /** @var RequestFactoryInterface */
-    private $requestFactory;
-    /** @var UriInterface */
-    private $baseUri;
-
-    /** @var ResponseInterface */
-    private $lastResponse;
+    private ?ResponseInterface $lastResponse = null;
 
     public function __construct(
-        ClientInterface $httpClient,
-        RequestFactoryInterface $requestFactory,
-        UriInterface $baseUri
+        private ClientInterface $httpClient,
+        private RequestFactoryInterface $requestFactory,
+        private UriInterface $baseUri,
     ) {
-        $this->httpClient = $httpClient;
-        $this->requestFactory = $requestFactory;
-        $this->baseUri = $baseUri;
     }
 
-    /**
-     * @throws ClientExceptionInterface
-     */
     public function request(string $operationPath, StreamInterface $body): ResponseInterface
     {
         $uri = $this->baseUri->withPath($this->baseUri->getPath() . $operationPath);
@@ -48,7 +33,7 @@ final class OdooApiRequestMaker implements OdooApiRequestMakerInterface
         return $this->lastResponse;
     }
 
-    public function getLastResponse(): ResponseInterface
+    public function getLastResponse(): ?ResponseInterface
     {
         return $this->lastResponse;
     }

@@ -6,20 +6,14 @@ namespace FluxSE\OdooApiClient\Api;
 
 final class Fault implements FaultInterface
 {
-    /** @var int */
-    private $faultCode = -1;
-    /** @var string */
-    private $faultString = '';
+    private int $faultCode = -1;
+    private string $faultString = '';
 
-    /**
-     */
     public function setFaultCode(int $faultCode): void
     {
         $this->faultCode = $faultCode;
     }
 
-    /**
-     */
     public function setFaultString(string $faultString): void
     {
         $this->faultString = $faultString;

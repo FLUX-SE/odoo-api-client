@@ -11,11 +11,7 @@ use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Serializer;
 
-/**
- * @property Serializer $serializer
- */
 final class OdooRelationNormalizer implements NormalizerInterface, NormalizerAwareInterface
 {
     use NormalizerAwareTrait;
@@ -38,8 +34,6 @@ final class OdooRelationNormalizer implements NormalizerInterface, NormalizerAwa
     }
 
     /**
-     *
-     *
      * @return int|array|null|false
      *
      * @throws ExceptionInterface
@@ -54,7 +48,7 @@ final class OdooRelationNormalizer implements NormalizerInterface, NormalizerAwa
         $thirdParam = $this->buildThirdParam($object);
 
         if ($thirdParam instanceof BaseInterface) {
-            $childContext = (array) $context;
+            $childContext = $context;
             unset($childContext['cache_key']);
             $thirdParam = $this->normalizer->normalize($thirdParam, $format, $childContext);
         }
@@ -72,11 +66,11 @@ final class OdooRelationNormalizer implements NormalizerInterface, NormalizerAwa
             OdooRelation::COMMAND_ADD,
             OdooRelation::COMMAND_REMOVE_ALL,
             OdooRelation::COMMAND_REPLACE_ALL,
-        ])) {
+        ], true)) {
             return 0;
-        } else {
-            return $object->getCommandId();
         }
+
+        return $object->getCommandId();
     }
 
     /**
@@ -87,7 +81,7 @@ final class OdooRelationNormalizer implements NormalizerInterface, NormalizerAwa
         if (in_array($object->getCommand(), [
             OdooRelation::COMMAND_ADD,
             OdooRelation::COMMAND_UPDATE
-        ])) {
+        ], true)) {
             return $object->getEmbedModel();
         }
 
