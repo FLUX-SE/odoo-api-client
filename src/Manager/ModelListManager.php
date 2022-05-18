@@ -13,10 +13,16 @@ use Symfony\Component\Serializer\Serializer;
 
 final class ModelListManager implements ModelListManagerInterface
 {
+    private Serializer $serializer;
+
+    private RecordListOperationsInterface $recordListOperations;
+
     public function __construct(
-        private Serializer $serializer,
-        private RecordListOperationsInterface $recordListOperations,
+        Serializer $serializer,
+        RecordListOperationsInterface $recordListOperations
     ) {
+        $this->serializer = $serializer;
+        $this->recordListOperations = $recordListOperations;
     }
 
     public function find(string $className, int $id): ?BaseInterface

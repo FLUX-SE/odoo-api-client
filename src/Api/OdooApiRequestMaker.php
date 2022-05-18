@@ -12,14 +12,24 @@ use Psr\Http\Message\UriInterface;
 
 final class OdooApiRequestMaker implements OdooApiRequestMakerInterface
 {
+    private ClientInterface $httpClient;
+
+    private RequestFactoryInterface $requestFactory;
+
+    private UriInterface $baseUri;
+
     private ?ResponseInterface $lastResponse = null;
 
     public function __construct(
-        private ClientInterface $httpClient,
-        private RequestFactoryInterface $requestFactory,
-        private UriInterface $baseUri,
+        ClientInterface $httpClient,
+        RequestFactoryInterface $requestFactory,
+        UriInterface $baseUri
     ) {
+        $this->httpClient = $httpClient;
+        $this->requestFactory = $requestFactory;
+        $this->baseUri = $baseUri;
     }
+
 
     public function request(string $operationPath, StreamInterface $body): ResponseInterface
     {

@@ -17,9 +17,11 @@ use Symfony\Component\HttpKernel\Log\Logger;
 
 final class OdooHttpClientFactory implements OdooHttpClientFactoryInterface
 {
-    public function __construct(
-        private XmlRpcSerializerHelperInterface $xmlRpcSerializerHelper,
-    ) {
+    private XmlRpcSerializerHelperInterface $xmlRpcSerializerHelper;
+
+    public function __construct(XmlRpcSerializerHelperInterface $xmlRpcSerializerHelper)
+    {
+        $this->xmlRpcSerializerHelper = $xmlRpcSerializerHelper;
     }
 
     public function create(): ClientInterface

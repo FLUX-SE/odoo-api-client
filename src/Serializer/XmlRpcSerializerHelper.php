@@ -13,10 +13,16 @@ final class XmlRpcSerializerHelper implements XmlRpcSerializerHelperInterface
 {
     private string $encoding = 'UTF-8';
 
+    private Serializer $serializer;
+
+    private StreamFactoryInterface $streamFactory;
+
     public function __construct(
-        private Serializer $serializer,
-        private StreamFactoryInterface $streamFactory,
+        Serializer $serializer,
+        StreamFactoryInterface $streamFactory
     ) {
+        $this->serializer = $serializer;
+        $this->streamFactory = $streamFactory;
     }
 
     public function serializeRequestBody(RequestBodyInterface $requestBody): StreamInterface

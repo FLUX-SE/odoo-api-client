@@ -12,10 +12,16 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 final class ModelManager implements ModelManagerInterface
 {
+    private NormalizerInterface $normalizer;
+
+    private RecordOperationsInterface $recordOperations;
+
     public function __construct(
-        private NormalizerInterface $normalizer,
-        private RecordOperationsInterface $recordOperations,
+        NormalizerInterface $normalizer,
+        RecordOperationsInterface $recordOperations
     ) {
+        $this->normalizer = $normalizer;
+        $this->recordOperations = $recordOperations;
     }
 
     public function persist(BaseInterface $model, ?OptionsInterface $options = null): int

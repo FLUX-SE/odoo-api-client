@@ -32,7 +32,7 @@ final class XmlRpcEncoder implements EncoderInterface
         return $format === self::FORMAT;
     }
 
-    public function encode(mixed $data, string $format, array $context = []): string
+    public function encode($data, string $format, array $context = [])
     {
         if (false === is_array($data)) {
             throw new UnexpectedValueException(sprintf(
