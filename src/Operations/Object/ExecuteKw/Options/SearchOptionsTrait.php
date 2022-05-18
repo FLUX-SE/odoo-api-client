@@ -24,7 +24,7 @@ trait SearchOptionsTrait
         /** @var int $offset */
         $offset = $this->getOption(SearchOptionsInterface::FIELD_NAME_OFFSET);
 
-        Assert::integer($offset, 'The offset should be an integer "%s" retrieved !',);
+        Assert::integer($offset, 'The offset should be an integer "%s" retrieved !', );
 
         return $offset;
     }
