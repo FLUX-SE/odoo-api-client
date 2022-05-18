@@ -18,7 +18,7 @@
         "php-http/discovery": "^1.7",
         "psr/http-factory-implementation": "^1.0",
         "symfony/console": "^5.4|^6.0",
-        "symfony/serializer": "^5.4|^6.0",
+        "symfony/serializer": "^5.4",
         "symfony/property-access": "^5.4|^6.0",
         "symfony/property-info": "^5.4|^6.0",
         "symfony/string": "^5.4|^6.0",
