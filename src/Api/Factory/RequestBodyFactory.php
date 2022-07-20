@@ -17,6 +17,9 @@ final class RequestBodyFactory implements RequestBodyFactoryInterface
 
     public function create(string $method): RequestBodyInterface
     {
-        return new $this->className($method);
+        /** @var RequestBodyInterface $requestBody */
+        $requestBody = new $this->className($method);
+
+        return $requestBody;
     }
 }

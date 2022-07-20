@@ -10,3 +10,6 @@ parameters:
         - '#Method FluxSE\\OdooApiClient\\Command\\GeneratorCommand::getStringOption\(\) should return string but returns array<string>\|bool\|string\|null.#'
         - '#Method FluxSE\\OdooApiClient\\Command\\GeneratorCommand::getStringArgument\(\) should return string but returns array<string>\|string\|null.#'
         - '#Method FluxSE\\OdooApiClient\\Serializer\\NullOdooRelationDenormalizer::denormalize\(\) should return array\|object but returns null.#'
+        - '#Method FluxSE\\OdooApiClient\\Manager\\ModelListManager::(find|findBy)\(\) should return (array<|\()T of FluxSE\\OdooApiClient\\Model\\BaseInterface(>|\)\|null) but returns mixed\.#'
+        - '#Method FluxSE\\OdooApiClient\\Serializer\\XmlRpcSerializerHelper::deserializeResponseBody\(\) should return T of object but returns mixed\.#'
+        - '#Method FluxSE\\OdooApiClient\\Serializer\\XmlRpcSerializerHelper::decodeResponseBody\(\) should return array\|bool\|int\|string but returns mixed\.#'

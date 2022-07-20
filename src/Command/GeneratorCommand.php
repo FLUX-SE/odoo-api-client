@@ -87,12 +87,19 @@ final class GeneratorCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $host = $this->getStringOption($input, 'host');
-        $database = $this->getStringOption($input, 'database');
-        $username = $this->getStringOption($input, 'username');
-        $password = $this->getStringOption($input, 'password');
-        $path = $this->getStringArgument($input, 'path');
-        $namespace = $this->getStringArgument($input, 'namespace');
+        /** @var string $host */
+        $host = $input->getOption('host');
+        /** @var string $database */
+        $database = $input->getOption('database');
+        /** @var string $username */
+        $username = $input->getOption('username');
+        /** @var string $password */
+        $password = $input->getOption('password');
+
+        /** @var string $path */
+        $path = $input->getArgument('path');
+        /** @var string $namespace */
+        $namespace = $input->getArgument('namespace');
 
         $output->writeln('<comment>');
         $output->writeln('Generating Odoo model class from the Odoo instance :');
@@ -126,16 +133,6 @@ final class GeneratorCommand extends Command
         $output->writeln($result ? 'DONE' : 'FAIL');
 
         return $result ? 0 : 1;
-    }
-
-    private function getStringOption(InputInterface $input, string $name): string
-    {
-        return $input->getOption($name);
-    }
-
-    private function getStringArgument(InputInterface $input, string $name): string
-    {
-        return $input->getArgument($name);
     }
 
     private function reconfigureServices(

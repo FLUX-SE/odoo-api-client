@@ -173,8 +173,11 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
     private function initConvert(array $search_read): void
     {
         // Store all model name indexed by there id
+        /** @var array $item */
         foreach ($search_read as $item) {
-            $this->modelIdToModelName[$item['id']] = $item['model'];
+            /** @var int $itemId */
+            $itemId = $item['id'];
+            $this->modelIdToModelName[$itemId] = $item['model'];
         }
 
         // Store properties cache of "base" model
@@ -192,6 +195,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             }
 
             // Avoid name collisions
+            /** @var string $modelName */
             $modelName = $item['model'];
             $this->modelNameToClass[$modelName] = $this->buildClassNameFormModelName($modelName);
         }

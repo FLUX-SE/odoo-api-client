@@ -26,6 +26,7 @@ final class SelectionTypeDefaultValueAdder extends AbstractModelFixer
         try {
             $arguments = new Arguments();
             $arguments->addArgument(array_keys($structure));
+            /** @var array $data */
             $data = $this->recordListOperations->execute_kw_action(
                 $modelName,
                 'default_get',

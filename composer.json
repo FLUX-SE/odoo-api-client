@@ -33,7 +33,7 @@
         "php-http/guzzle6-adapter": "^2.0",
         "http-interop/http-factory-guzzle": "^1.0",
         "symplify/easy-coding-standard": "^11",
-        "phpstan/phpstan": "^0.12.75",
+        "phpstan/phpstan": "^1",
         "vimeo/psalm": "^4.18"
     },
     "bin": [
