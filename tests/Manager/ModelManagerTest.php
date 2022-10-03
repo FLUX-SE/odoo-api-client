@@ -27,6 +27,7 @@ use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Category;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Product;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Template;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Uom\Uom;
@@ -183,11 +184,15 @@ class ModelManagerTest extends TestCase
     public function testCreateMove(): void
     {
         $date = new DateTime();
+        // 0 - retrieve the Company
+        $company_id = 1;
+
         // 1 - Retrieve Accounts
         $searchDomains = new SearchDomains();
         $searchDomains->addCriterion(Criterion::equal('code', '707100'));
-        $searchDomains->addCriterion(Criterion::equal('company_id', 1));
+        $searchDomains->addCriterion(Criterion::equal('company_id', $company_id));
         $account = $this->modelListManager->findOneBy(Account::class, $searchDomains);
+
         $this->assertNotNull($account);
 
         // 2 - retrieve a Partner
@@ -222,8 +227,10 @@ class ModelManagerTest extends TestCase
         $this->assertNotNull($tax);
 
         $partnerRel = new OdooRelation($partner->getId());
+        $companyRel = new OdooRelation($company_id);
 
         $move = $this->createMove($date, $journal->getId(), $currency->getId());
+        $move->setCompanyId($companyRel);
         $move->setPartnerId($partnerRel);
         $move->setRef(sprintf('TEST_I%d', time()));
 
