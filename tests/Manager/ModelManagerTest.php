@@ -160,13 +160,15 @@ class ModelManagerTest extends TestCase
         $date = new DateTime();
         // 0 - retrieve the Company
         $companyId = 2; // FR Company
+        if (13 === $this->odooVersion) {
+            $companyId = 1; // No multiple company created
+        }
 
         // 1 - Retrieve Accounts
         $searchDomains = new SearchDomains();
         $searchDomains->addCriterion(Criterion::equal('code', '707100'));
         $searchDomains->addCriterion(Criterion::equal('company_id', $companyId));
         $account = $this->modelListManager->findOneBy(Account::class, $searchDomains);
-
         $this->assertNotNull($account);
 
         // 2 - retrieve a Partner
@@ -261,6 +263,9 @@ class ModelManagerTest extends TestCase
         $date = new DateTime();
         // 0 - retrieve the Company
         $companyId = 2; // FR Company
+        if (13 === $this->odooVersion) {
+            $companyId = 1; // No multiple company created
+        }
 
         // 1 - Retrieve the move to pay
         $searchDomains = new SearchDomains();
