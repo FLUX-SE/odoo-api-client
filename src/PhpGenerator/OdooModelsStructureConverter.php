@@ -250,7 +250,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         $fieldsInfo = $this->fields_get($modelName);
         $properties = $this->convertModelProperties($fieldsInfo, $modelNamespace, $item);
 
-        return  [
+        return [
             'class' => $className,
             'type' => $classType,
             'extends' => $extends,
