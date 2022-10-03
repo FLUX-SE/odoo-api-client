@@ -7,7 +7,6 @@ use DateTimeInterface;
 use FluxSE\OdooApiClient\Manager\ModelListManager;
 use FluxSE\OdooApiClient\Manager\ModelManager;
 use FluxSE\OdooApiClient\Model\OdooRelation;
-use FluxSE\OdooApiClient\Operations\CommonOperationsInterface;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Arguments;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
@@ -27,7 +26,6 @@ use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Category;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Product;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Template;
-use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Company;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Uom\Uom;
@@ -35,9 +33,6 @@ use Tests\FluxSE\OdooApiClient\TestModel\Object\Uom\Uom;
 class ModelManagerTest extends TestCase
 {
     use ExecuteKwOperationsTrait;
-
-    /** @var RecordListOperations */
-    private $recordListOperations;
 
     /** @var RecordOperationsInterface */
     private $recordOperations;
@@ -48,15 +43,9 @@ class ModelManagerTest extends TestCase
     /** @var ModelListManager */
     private $modelListManager;
 
-    /** @var CommonOperationsInterface */
-    private $commonOperations;
-
     /** @var int */
     private $odooVersion;
 
-    /**
-     *
-     */
     protected function setUp(): void
     {
         $this->recordOperations = $this->buildExecuteKwOperations(RecordOperations::class);
@@ -65,21 +54,18 @@ class ModelManagerTest extends TestCase
             $this->recordOperations
         );
 
-        $this->recordListOperations = $this->buildExecuteKwOperations(RecordListOperations::class);
+        $recordListOperations = $this->buildExecuteKwOperations(RecordListOperations::class);
         $this->modelListManager = new ModelListManager(
-            $this->recordListOperations->getObjectOperations()->getXmlRpcSerializerHelper()->getSerializer(),
-            $this->recordListOperations
+            $recordListOperations->getObjectOperations()->getXmlRpcSerializerHelper()->getSerializer(),
+            $recordListOperations
         );
 
-        $this->commonOperations = $this->buildOdooApiClientBuilder()->buildCommonOperations();
-        $version = $this->commonOperations->version();
+        $commonOperations = $this->buildOdooApiClientBuilder()->buildCommonOperations();
+        $version = $commonOperations->version();
         $this->odooVersion = $version->getServerVersionInfo()[0];
     }
 
-    /**
-     * @throws ExceptionInterface
-     */
-    public function testManageProduct()
+    public function testManageProduct(): void
     {
         $searchDomains1 = new SearchDomains();
         $searchDomains1->addCriterion(Criterion::equal('code', '411100'));
@@ -120,9 +106,6 @@ class ModelManagerTest extends TestCase
         $this->assertTrue($result);
     }
 
-    /**
-     * @throws ExceptionInterface
-     */
     private function retrieveUom(string $name): Uom
     {
         $searchDomains = new SearchDomains();
@@ -139,9 +122,6 @@ class ModelManagerTest extends TestCase
         return $uom;
     }
 
-    /**
-     * @throws ExceptionInterface
-     */
     private function retrieveFirstCategory(): Category
     {
         /** @var Category|null $category */
@@ -152,9 +132,6 @@ class ModelManagerTest extends TestCase
         return $category;
     }
 
-    /**
-     * @throws ExceptionInterface
-     */
     public function testCreateProduct(): void
     {
         $uom = $this->retrieveUom('Units');
@@ -178,19 +155,16 @@ class ModelManagerTest extends TestCase
         $this->assertGreaterThan(0, $templateId);
     }
 
-    /**
-     * @throws ExceptionInterface
-     */
     public function testCreateMove(): void
     {
         $date = new DateTime();
         // 0 - retrieve the Company
-        $company_id = 1;
+        $companyId = 2; // FR Company
 
         // 1 - Retrieve Accounts
         $searchDomains = new SearchDomains();
         $searchDomains->addCriterion(Criterion::equal('code', '707100'));
-        $searchDomains->addCriterion(Criterion::equal('company_id', $company_id));
+        $searchDomains->addCriterion(Criterion::equal('company_id', $companyId));
         $account = $this->modelListManager->findOneBy(Account::class, $searchDomains);
 
         $this->assertNotNull($account);
@@ -203,6 +177,7 @@ class ModelManagerTest extends TestCase
         $searchDomains = new SearchDomains();
         $searchDomains->addCriterion(Criterion::equal('type', 'sale'));
         $searchDomains->addCriterion(Criterion::equal('active', true));
+        $searchDomains->addCriterion(Criterion::equal('company_id', $companyId));
         $journal = $this->modelListManager->findOneBy(Journal::class, $searchDomains);
         $this->assertNotNull($journal);
 
@@ -223,11 +198,12 @@ class ModelManagerTest extends TestCase
         $searchDomains->addCriterion(Criterion::equal('amount', 20));
         $searchDomains->addCriterion(Criterion::equal('price_include', false));
         $searchDomains->addCriterion(Criterion::equal('type_tax_use', 'sale'));
+        $searchDomains->addCriterion(Criterion::equal('company_id', $companyId));
         $tax = $this->modelListManager->findOneBy(Tax::class, $searchDomains);
         $this->assertNotNull($tax);
 
         $partnerRel = new OdooRelation($partner->getId());
-        $companyRel = new OdooRelation($company_id);
+        $companyRel = new OdooRelation($companyId);
 
         $move = $this->createMove($date, $journal->getId(), $currency->getId());
         $move->setCompanyId($companyRel);
@@ -280,19 +256,21 @@ class ModelManagerTest extends TestCase
     /**
      * @throws ExceptionInterface
      */
-    public function testCreatePayment()
+    public function testCreatePayment(): void
     {
         $date = new DateTime();
+        // 0 - retrieve the Company
+        $companyId = 2; // FR Company
+
         // 1 - Retrieve the move to pay
         $searchDomains = new SearchDomains();
         $fieldName = 'payment_state';
         if (13 === $this->odooVersion) {
             $fieldName = 'invoice_payment_state';
         }
-        $searchDomains->addAndCriteria(
-            Criterion::equal('state', 'posted'),
-            Criterion::equal($fieldName, 'not_paid')
-        );
+        $searchDomains->addCriterion(Criterion::equal('state', 'posted'));
+        $searchDomains->addCriterion(Criterion::equal($fieldName, 'not_paid'));
+        $searchDomains->addCriterion(Criterion::equal('company_id', $companyId));
         /** @var Move|null $move */
         $move = $this->modelListManager->findOneBy(Move::class, $searchDomains);
         $this->assertNotNull($move);
@@ -307,20 +285,16 @@ class ModelManagerTest extends TestCase
 
         // 2 - Retrieve the right journal
         $searchDomains = new SearchDomains();
-        $searchDomains->addAndCriteria(
-            Criterion::equal('type', 'bank'),
-            Criterion::equal('active', true)
-        );
+        $searchDomains->addCriterion(Criterion::equal('type', 'bank'));
+        $searchDomains->addCriterion(Criterion::equal('active', true));
+        $searchDomains->addCriterion(Criterion::equal('company_id', $companyId));
         $journal = $this->modelListManager->findOneBy(Journal::class, $searchDomains);
         $this->assertNotNull($journal);
 
         // 3 - Retrieve the paymentMethod
         $searchDomains = new SearchDomains();
-        $searchDomains->addAndCriteria(
-            Criterion::equal('code', 'manual'),
-            Criterion::equal('payment_type', 'inbound')
-        );
-
+        $searchDomains->addCriterion(Criterion::equal('code', 'manual'));
+        $searchDomains->addCriterion(Criterion::equal('payment_type', 'inbound'));
         /** @var Payment\Method|null $method */
         $paymentMethod = $this->modelListManager->findOneBy(Payment\Method::class, $searchDomains);
         $this->assertNotNull($paymentMethod);
@@ -335,7 +309,11 @@ class ModelManagerTest extends TestCase
 
             /** @psalm-suppress UndefinedMethod */
             $paymentRegister->setCommunication($ref);
+
+            /** @psalm-suppress UndefinedMethod */
+            $paymentRegister->setCompanyId($move->getCompanyId());
         }
+
 
         $options = new Options();
         $options->addOption('context', [
