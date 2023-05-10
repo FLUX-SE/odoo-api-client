@@ -6,6 +6,7 @@ namespace FluxSE\OdooApiClient\Serializer\Factory;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use FluxSE\OdooApiClient\Serializer\NullOdooRelationDenormalizer;
+use FluxSE\OdooApiClient\Serializer\OdooDateTimeNormalizer;
 use FluxSE\OdooApiClient\Serializer\OdooNormalizer;
 use FluxSE\OdooApiClient\Serializer\OdooRelationDenormalizer;
 use FluxSE\OdooApiClient\Serializer\OdooRelationNormalizer;
@@ -47,7 +48,7 @@ final class SerializerFactory implements SerializerFactoryInterface
 
         return [
             new ArrayDenormalizer(),
-            new DateTimeNormalizer([
+            new OdooDateTimeNormalizer([
                 DateTimeNormalizer::FORMAT_KEY => $this->dateFormat,
             ]),
             new OdooRelationNormalizer(),
