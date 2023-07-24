@@ -27,7 +27,8 @@ class ModelListManagerTest extends TestCase
         $this->recordListOperations = $this->buildExecuteKwOperations(RecordListOperations::class);
         $this->modelListManager = new ModelListManager(
             $this->recordListOperations->getObjectOperations()->getXmlRpcSerializerHelper()->getSerializer(),
-            $this->recordListOperations
+            $this->recordListOperations,
+            $this->buildModelFieldsProvider()
         );
     }
 

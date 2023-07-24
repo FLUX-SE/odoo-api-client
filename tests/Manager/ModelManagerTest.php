@@ -57,7 +57,8 @@ class ModelManagerTest extends TestCase
         $recordListOperations = $this->buildExecuteKwOperations(RecordListOperations::class);
         $this->modelListManager = new ModelListManager(
             $recordListOperations->getObjectOperations()->getXmlRpcSerializerHelper()->getSerializer(),
-            $recordListOperations
+            $recordListOperations,
+            $this->buildModelFieldsProvider()
         );
 
         $commonOperations = $this->buildOdooApiClientBuilder()->buildCommonOperations();
@@ -137,14 +138,28 @@ class ModelManagerTest extends TestCase
         $uom = $this->retrieveUom('Units');
         $category = $this->retrieveFirstCategory();
 
-        $template = new Template(
-            'test',
-            'consu',
-            new OdooRelation($category->getId()),
-            new OdooRelation($uom->getId()),
-            new OdooRelation($uom->getId()),
-            []
-        );
+        if ($this->odooVersion <= 15) {
+            /** @psalm-suppress TooFewArguments **/
+            $template = new Template(
+                'test',
+                'consu',
+                new OdooRelation($category->getId()),
+                new OdooRelation($uom->getId()),
+                new OdooRelation($uom->getId()),
+                []
+            );
+        } else {
+            /** @psalm-suppress TooManyArguments **/
+            $template = new Template(
+                'test',
+                'consu',
+                new OdooRelation($category->getId()),
+                new OdooRelation($uom->getId()),
+                new OdooRelation($uom->getId()),
+                [],
+                'warning'
+            );
+        }
 
         $template->setType('consu');
         $template->setActive(true);
@@ -357,7 +372,7 @@ class ModelManagerTest extends TestCase
         $currencyRel = new OdooRelation($currencyId);
 
         if (13 === $this->odooVersion) {
-            /** @psalm-suppress InvalidArgument,TooManyArguments **/
+            /** @psalm-suppress InvalidArgument,TooManyArguments * */
             return new Move(
                 '/', // !important
                 $date,
@@ -368,14 +383,27 @@ class ModelManagerTest extends TestCase
             );
         }
 
-        /** @psalm-suppress TooManyArguments,InvalidArgument **/
+        if ($this->odooVersion <= 15) {
+            /** @psalm-suppress TooManyArguments,InvalidArgument * */
+            return new Move(
+                $date,
+                'draft',
+                $moveType,
+                $journalRel,
+                $currencyRel,
+                'no_extract_requested'
+            );
+        }
+
+
+        /** @psalm-suppress TooManyArguments,InvalidArgument * */
         return new Move(
             $date,
             'draft',
             $moveType,
             $journalRel,
+            'no',
             $currencyRel,
-            'no_extract_requested'
         );
     }
 
@@ -390,8 +418,13 @@ class ModelManagerTest extends TestCase
             return $moveLine;
         }
 
+        if ($this->odooVersion <= 15) {
+            /** @psalm-suppress TooFewArguments,TooManyArguments * */
+            return new Line($emptyMoveRel, $currencyRel);
+        }
+
         /** @psalm-suppress TooManyArguments **/
-        return new Line($emptyMoveRel, $currencyRel);
+        return new Line($emptyMoveRel, $currencyRel, 'product');
     }
 
     private function createPaymentRegister(DateTimeInterface $date, Journal $journal, Payment\Method $paymentMethod): Payment\Register

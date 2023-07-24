@@ -154,6 +154,10 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
                 // Not accessible... 'default',
             ]);
 
+            if ($modelName === 'payment.link.wizard') {
+                $fieldGetOptions->removeAttribute('selection');
+            }
+
             $this->fields_getCache[$modelName] = $this->inspectionOperations->fields_get(
                 $modelName,
                 [],
@@ -313,20 +317,20 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         array $types
     ): array {
         $description = [
-            OdooModelsStructureConverterHelper::sanitizeComment($fieldInfo['string']),
+            OdooModelsStructureConverterHelper::sanitizeComment($fieldInfo['string'] ?? ''),
         ];
         $help = $fieldInfo['help'] ?? '';
         if (!empty($help)) {
             $description[] = '---';
-            $description[] = OdooModelsStructureConverterHelper::sanitizeComment($fieldInfo['help']);
+            $description[] = OdooModelsStructureConverterHelper::sanitizeComment($fieldInfo['help'] ?? '');
         }
 
-        if ($fieldInfo['type'] === 'selection') {
+        if (($fieldInfo['type'] ?? '') === 'selection') {
             $description[] = '---';
             $description[] = 'Selection :';
             $description = array_merge(
                 $description,
-                OdooModelsStructureConverterHelper::prettySelection($fieldInfo['selection'])
+                OdooModelsStructureConverterHelper::prettySelection($fieldInfo['selection'] ?? [])
             );
         }
 

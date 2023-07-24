@@ -9,6 +9,7 @@ use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomainsInte
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptionsInterface;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterface;
+use FluxSE\OdooApiClient\Provider\ModelFieldsProviderInterface;
 use Symfony\Component\Serializer\Serializer;
 
 final class ModelListManager implements ModelListManagerInterface
@@ -17,12 +18,16 @@ final class ModelListManager implements ModelListManagerInterface
 
     private RecordListOperationsInterface $recordListOperations;
 
+    private ModelFieldsProviderInterface $modelFieldsProvider;
+
     public function __construct(
         Serializer $serializer,
-        RecordListOperationsInterface $recordListOperations
+        RecordListOperationsInterface $recordListOperations,
+        ModelFieldsProviderInterface $modelFieldsProvider
     ) {
         $this->serializer = $serializer;
         $this->recordListOperations = $recordListOperations;
+        $this->modelFieldsProvider = $modelFieldsProvider;
     }
 
     public function find(string $className, int $id): ?BaseInterface
@@ -42,6 +47,9 @@ final class ModelListManager implements ModelListManagerInterface
     {
         $searchReadOptions = new SearchReadOptions();
         $searchReadOptions->setLimit(1);
+        $searchReadOptions->setFields($this->modelFieldsProvider->provide($className, [
+            'searchDomains' => $searchDomains,
+        ]));
 
         $results = $this->findBy($className, $searchDomains, $searchReadOptions);
 
