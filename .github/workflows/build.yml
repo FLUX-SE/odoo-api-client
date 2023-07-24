@@ -72,7 +72,7 @@ jobs:
                     docker port odoo
 
             -
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
 
             -
                 name: Setup PHP
@@ -91,12 +91,12 @@ jobs:
                     composer config extra.symfony.require "${{ matrix.symfony }}"
             -
                 name: Get Composer cache directory
+                run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_STATE
                 id: composer-cache
-                run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
             -
                 name: Cache Composer
-                uses: actions/cache@v2
+                uses: actions/cache@v3
                 with:
                     path: ${{ steps.composer-cache.outputs.dir }}
                     key: ${{ runner.os }}-php-${{ matrix.php }}-symfony-${{ matrix.symfony }}-composer-${{ hashFiles('**/composer.json') }}
