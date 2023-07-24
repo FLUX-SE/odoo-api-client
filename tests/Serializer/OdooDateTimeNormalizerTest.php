@@ -30,15 +30,6 @@ class OdooDateTimeNormalizerTest extends TestCase
         $this->assertEquals(new DateTimeImmutable('2023-07-24'), $arr);
     }
 
-    public function testDenormalizeWithFalse(): void
-    {
-        $date = false;
-
-        $arr = $this->serializer->denormalize($date, DateTimeInterface::class);
-
-        $this->assertEquals(null, $arr);
-    }
-
     public function testDenormalizeInObject(): void
     {
         $arr = [

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FluxSE\OdooApiClient\Serializer;
 
 use FluxSE\OdooApiClient\Model\OdooRelation;
+use Reflection;
 use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 

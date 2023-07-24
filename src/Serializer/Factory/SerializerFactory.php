@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace FluxSE\OdooApiClient\Serializer\Factory;
 
 use Doctrine\Common\Annotations\AnnotationReader;
+use FluxSE\OdooApiClient\Serializer\NullableDateTimeDenormalizer;
 use FluxSE\OdooApiClient\Serializer\NullOdooRelationDenormalizer;
 use FluxSE\OdooApiClient\Serializer\OdooDateTimeNormalizer;
 use FluxSE\OdooApiClient\Serializer\OdooNormalizer;
 use FluxSE\OdooApiClient\Serializer\OdooRelationDenormalizer;
 use FluxSE\OdooApiClient\Serializer\OdooRelationNormalizer;
-use FluxSE\OdooApiClient\Serializer\OdooRelationsDenormalizer;
+use FluxSE\OdooApiClient\Serializer\OdooRelationSingleDenormalizer;
 use FluxSE\OdooApiClient\Serializer\OdooRelationsNormalizer;
 use FluxSE\OdooApiClient\Serializer\XmlRpcDecoder;
 use FluxSE\OdooApiClient\Serializer\XmlRpcEncoder;
@@ -47,16 +48,18 @@ final class SerializerFactory implements SerializerFactoryInterface
     {
         $objectNormalizer = $this->setupObjectNormalizer();
 
+        $dateTimeNormalizer = new DateTimeNormalizer([
+            DateTimeNormalizer::FORMAT_KEY => $this->dateFormat,
+        ]);
         return [
             new ArrayDenormalizer(),
-            new OdooDateTimeNormalizer([
-                DateTimeNormalizer::FORMAT_KEY => $this->dateFormat,
-            ]),
+            new NullableDateTimeDenormalizer($dateTimeNormalizer),
+            $dateTimeNormalizer,
             new OdooRelationsNormalizer(),
             new OdooRelationNormalizer(),
             new NullOdooRelationDenormalizer(),
             new OdooRelationDenormalizer(),
-            new OdooRelationsDenormalizer(),
+            new OdooRelationSingleDenormalizer(),
             $objectNormalizer,
         ];
     }

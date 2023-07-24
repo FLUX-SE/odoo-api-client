@@ -31,7 +31,7 @@ final class OdooRelationDenormalizer implements DenormalizerInterface
         return true;
     }
 
-    public function denormalize($data, $type, $format = null, array $context = [])
+    public function denormalize($data, $type, $format = null, array $context = []): OdooRelation
     {
         if (false === is_array($data)) {
             throw new InvalidArgumentException('The data should be an array !');

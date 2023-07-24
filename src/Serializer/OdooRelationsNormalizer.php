@@ -6,17 +6,23 @@ namespace FluxSE\OdooApiClient\Serializer;
 
 use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
+use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-final class OdooRelationsNormalizer implements NormalizerInterface, NormalizerAwareInterface
+final class OdooRelationsNormalizer implements NormalizerInterface, NormalizerAwareInterface, ContextAwareNormalizerInterface
 {
     use NormalizerAwareTrait;
 
-    public function supportsNormalization($data, $format = null): bool
+    public function supportsNormalization($data, string $format = null, array $context = []): bool
     {
         if (false === is_array($data)) {
+            return false;
+        }
+
+        $normalizeForUpdate = $context[OdooNormalizer::NORMALIZE_FOR_UPDATE] ?? false;
+        if (!$normalizeForUpdate) {
             return false;
         }
 
@@ -29,9 +35,12 @@ final class OdooRelationsNormalizer implements NormalizerInterface, NormalizerAw
         return false;
     }
 
+    /**
+     * OdooRelation[] $object
+     */
     public function normalize($object, $format = null, array $context = [])
     {
-        if (false === $this->supportsNormalization($object, $format)) {
+        if (!is_array($object)) {
             throw new NotNormalizableValueException(sprintf(
                 'The object should be an array of item being instance of "%s" !',
                 OdooRelation::class
@@ -42,15 +51,10 @@ final class OdooRelationsNormalizer implements NormalizerInterface, NormalizerAw
             return $object;
         }
 
-        $normalizeForUpdate = $context[OdooNormalizer::NORMALIZE_FOR_UPDATE] ?? false;
         $relations = [];
-        /** @var OdooRelation[] $object */
+
         foreach ($object as $odooRelation) {
             $normalized = $this->normalizer->normalize($odooRelation, $format, $context);
-            if (!$normalizeForUpdate) {
-                $relations[] = $normalized;
-                continue;
-            }
 
             if (false === $normalized) {
                 continue;
