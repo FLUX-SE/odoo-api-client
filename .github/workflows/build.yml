@@ -89,9 +89,10 @@ jobs:
                     composer global require --no-progress --no-scripts --no-plugins "symfony/flex:^1.10"
                     composer global config --no-plugins allow-plugins.symfony/flex true
                     composer config extra.symfony.require "${{ matrix.symfony }}"
+
             -
                 name: Get Composer cache directory
-                run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_STATE
+                run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
                 id: composer-cache
 
             -
