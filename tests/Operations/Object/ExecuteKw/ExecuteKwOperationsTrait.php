@@ -7,10 +7,15 @@ namespace Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw;
 use FluxSE\OdooApiClient\Builder\OdooApiClientBuilder;
 use FluxSE\OdooApiClient\Builder\OdooApiClientBuilderInterface;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\OperationsInterface;
+use FluxSE\OdooApiClient\Provider\AccountMoveFieldsProvider;
+use FluxSE\OdooApiClient\Provider\ModelFieldsProvider;
+use FluxSE\OdooApiClient\Provider\ModelFieldsProviderInterface;
 
 trait ExecuteKwOperationsTrait
 {
     protected ?OdooApiClientBuilderInterface $odooApiClientBuilder = null;
+
+    protected ?ModelFieldsProviderInterface $modelFieldsProvider = null;
 
     /**
      * @template T of OperationsInterface
@@ -36,5 +41,14 @@ trait ExecuteKwOperationsTrait
         }
 
         return $this->odooApiClientBuilder;
+    }
+
+    protected function buildModelFieldsProvider(): ModelFieldsProviderInterface
+    {
+        if (null === $this->modelFieldsProvider) {
+            $this->modelFieldsProvider = new AccountMoveFieldsProvider(new ModelFieldsProvider());
+        }
+
+        return $this->modelFieldsProvider;
     }
 }
