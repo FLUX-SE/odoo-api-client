@@ -47,7 +47,6 @@ final class ModelListManager implements ModelListManagerInterface
     {
         $searchReadOptions = new SearchReadOptions();
         $searchReadOptions->setLimit(1);
-
         $searchReadOptions->setFields($this->modelFieldsProvider->provide($className, [
             'searchDomains' => $searchDomains,
         ]));

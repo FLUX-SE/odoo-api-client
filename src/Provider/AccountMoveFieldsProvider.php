@@ -17,11 +17,12 @@ final class AccountMoveFieldsProvider implements ModelFieldsProviderInterface
     {
         $fields = $this->decoratedModelFieldsProvider->provide($className, $context);
         if (call_user_func([$className, 'getOdooModelName']) === 'account.move') {
-            return array_filter($fields, static function (string $field): bool {
+            return array_values(array_filter($fields, static function (string $field): bool {
                 return false === in_array($field, ['needed_terms', 'tax_totals'], true);
-            });
+            }));
         }
 
+        // need to reorder keys
         return $fields;
     }
 }
