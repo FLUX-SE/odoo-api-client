@@ -111,7 +111,7 @@ jobs:
                 name: Run analysis
                 run: |
                     composer validate --strict
-                    vendor/bin/ecs check src
+                    vendor/bin/ecs check src tests
 
             -
                 name: Run PHPStan
