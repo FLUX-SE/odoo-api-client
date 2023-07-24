@@ -24,7 +24,7 @@ final class OdooRelationNormalizer implements NormalizerInterface, NormalizerAwa
     public function normalize($object, $format = null, array $context = [])
     {
         if ($object instanceof OdooRelation) {
-            return $this->buildOdooRelation($object, $format, $context);
+            return $this->normalizeRelation($object, $format, $context);
         }
 
         throw new NotNormalizableValueException(sprintf(
@@ -38,7 +38,7 @@ final class OdooRelationNormalizer implements NormalizerInterface, NormalizerAwa
      *
      * @throws ExceptionInterface
      */
-    private function buildOdooRelation(OdooRelation $object, ?string $format = null, array $context = [])
+    private function normalizeRelation(OdooRelation $object, ?string $format = null, array $context = [])
     {
         if (null === $object->getCommand()) {
             return $object->getId();

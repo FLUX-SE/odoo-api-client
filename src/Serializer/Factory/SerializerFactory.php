@@ -11,6 +11,7 @@ use FluxSE\OdooApiClient\Serializer\OdooNormalizer;
 use FluxSE\OdooApiClient\Serializer\OdooRelationDenormalizer;
 use FluxSE\OdooApiClient\Serializer\OdooRelationNormalizer;
 use FluxSE\OdooApiClient\Serializer\OdooRelationsDenormalizer;
+use FluxSE\OdooApiClient\Serializer\OdooRelationsNormalizer;
 use FluxSE\OdooApiClient\Serializer\XmlRpcDecoder;
 use FluxSE\OdooApiClient\Serializer\XmlRpcEncoder;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
@@ -51,6 +52,7 @@ final class SerializerFactory implements SerializerFactoryInterface
             new OdooDateTimeNormalizer([
                 DateTimeNormalizer::FORMAT_KEY => $this->dateFormat,
             ]),
+            new OdooRelationsNormalizer(),
             new OdooRelationNormalizer(),
             new NullOdooRelationDenormalizer(),
             new OdooRelationDenormalizer(),
