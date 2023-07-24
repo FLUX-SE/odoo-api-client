@@ -19,6 +19,7 @@ class OdooNormalizerTest extends TestCase
         $serializerFactory = new SerializerFactory();
         $this->serializer = $serializerFactory->create();
     }
+
     public function testNormalizeForUpdate(): void
     {
         $object = new Partner(

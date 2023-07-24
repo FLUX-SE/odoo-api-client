@@ -10,7 +10,6 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 final class OdooNormalizer extends ObjectNormalizer
 {
-
     public const NORMALIZE_FOR_UPDATE = 'normalize_for_update';
     /**
      * @param object $object
@@ -63,7 +62,7 @@ final class OdooNormalizer extends ObjectNormalizer
             return $value;
         }
 
-        if(null !== $value->getCommand()) {
+        if (null !== $value->getCommand()) {
             return $value;
         }
 

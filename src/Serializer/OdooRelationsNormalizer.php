@@ -44,7 +44,7 @@ final class OdooRelationsNormalizer implements NormalizerInterface, NormalizerAw
 
         $normalizeForUpdate = $context[OdooNormalizer::NORMALIZE_FOR_UPDATE] ?? false;
         $relations = [];
-        /** @var OdooRelation $odooRelation */
+        /** @var OdooRelation[] $object */
         foreach ($object as $odooRelation) {
             $normalized = $this->normalizer->normalize($odooRelation, $format, $context);
             if (!$normalizeForUpdate) {
