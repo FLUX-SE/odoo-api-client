@@ -14,9 +14,6 @@ final class XmlRpcEncoder implements EncoderInterface
     public const CTX_XMLRPC_ENCODING = 'xmlrpc_encoding';
     public const CTX_XMLRPC_ESCAPING = 'xmlrpc_escaping';
 
-    /**
-     * @var string[]
-     */
     private array $defaultContext = [
         self::CTX_XMLRPC_ENCODING => 'UTF-8',
         self::CTX_XMLRPC_ESCAPING => 'markup',

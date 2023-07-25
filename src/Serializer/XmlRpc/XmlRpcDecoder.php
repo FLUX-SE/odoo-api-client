@@ -13,10 +13,7 @@ final class XmlRpcDecoder implements ContextAwareDecoderInterface
 
     public const CTX_XMLRPC_ENCODING = 'xmlrpc_encoding';
 
-    /**
-     * @var string[]
-     */
-    private $defaultContext = [
+    private array $defaultContext = [
         self::CTX_XMLRPC_ENCODING => 'UTF-8',
     ];
 

@@ -11,8 +11,6 @@
     ],
     "require": {
         "php": "^7.4|^8.0",
-        "ext-xmlrpc": "*",
-        "ext-json": "*",
         "php-http/httplug": "^1.0|^2.0",
         "php-http/client-implementation": "^1.0",
         "php-http/client-common": "^1.3|^2.1",
@@ -30,12 +28,18 @@
         "webmozart/assert": "^1"
     },
     "require-dev": {
+        "ext-xmlrpc": "*",
+        "ext-json": "*",
         "phpunit/phpunit": "^9",
         "php-http/guzzle6-adapter": "^2.0",
         "http-interop/http-factory-guzzle": "^1.0",
         "symplify/easy-coding-standard": "^11",
         "phpstan/phpstan": "^1",
         "vimeo/psalm": "^4.18"
+    },
+    "suggest": {
+        "ext-xmlrpc": "Needed to support XML-RPC.",
+        "ext-json": "Needed to support JSON-RPC."
     },
     "bin": [
         "bin/odoo-model-classes-generator"

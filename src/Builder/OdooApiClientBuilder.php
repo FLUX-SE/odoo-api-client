@@ -21,8 +21,8 @@ use FluxSE\OdooApiClient\Operations\ObjectOperationsInterface;
 use FluxSE\OdooApiClient\Operations\OperationsInterface;
 use FluxSE\OdooApiClient\Serializer\Factory\SerializerFactory;
 use FluxSE\OdooApiClient\Serializer\JsonRpc\JsonRpcSerializerHelper;
-use FluxSE\OdooApiClient\Serializer\XmlRpc\XmlRpcSerializerHelper;
 use FluxSE\OdooApiClient\Serializer\RpcSerializerHelperInterface;
+use FluxSE\OdooApiClient\Serializer\XmlRpc\XmlRpcSerializerHelper;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\UriInterface;
@@ -123,7 +123,6 @@ final class OdooApiClientBuilder implements OdooApiClientBuilderInterface
     public function buildRpcSerializerHelper(): RpcSerializerHelperInterface
     {
         if (null === $this->rpcSerializerHelper) {
-
             $serializer = $this->buildSerializer();
             $streamFactory = Psr17FactoryDiscovery::findStreamFactory();
             $this->rpcSerializerHelper = new JsonRpcSerializerHelper($serializer, $streamFactory);

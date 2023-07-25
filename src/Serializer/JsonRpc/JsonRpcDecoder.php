@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace FluxSE\OdooApiClient\Serializer\JsonRpc;
 
 use JsonException;
-use LogicException;
 use Symfony\Component\Serializer\Encoder\ContextAwareDecoderInterface;
 use Symfony\Component\Serializer\Exception\UnexpectedValueException;
 
@@ -15,10 +14,7 @@ final class JsonRpcDecoder implements ContextAwareDecoderInterface
 
     public const CTX_JSONRPC_DECODE_DEPTH = 'jsonrpc_decode_depth';
 
-    /**
-     * @var string[]
-     */
-    private $defaultContext = [
+    private array $defaultContext = [
         self::CTX_JSONRPC_DECODE_DEPTH => 512,
     ];
 

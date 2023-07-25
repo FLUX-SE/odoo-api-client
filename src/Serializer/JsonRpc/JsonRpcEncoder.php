@@ -14,9 +14,6 @@ final class JsonRpcEncoder implements EncoderInterface
 
     public const CTX_JSONRPC_VERSION = 'jsonrpc_version';
 
-    /**
-     * @var string[]
-     */
     private array $defaultContext = [
         self::CTX_JSONRPC_VERSION => '2.0',
     ];
