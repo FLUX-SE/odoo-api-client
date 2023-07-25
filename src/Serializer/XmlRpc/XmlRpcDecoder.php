@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FluxSE\OdooApiClient\Serializer;
+namespace FluxSE\OdooApiClient\Serializer\XmlRpc;
 
 use Symfony\Component\Serializer\Encoder\ContextAwareDecoderInterface;
 use Symfony\Component\Serializer\Exception\UnexpectedValueException;

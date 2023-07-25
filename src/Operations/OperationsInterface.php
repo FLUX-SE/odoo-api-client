@@ -6,8 +6,7 @@ namespace FluxSE\OdooApiClient\Operations;
 
 use FluxSE\OdooApiClient\Api\Factory\RequestBodyFactoryInterface;
 use FluxSE\OdooApiClient\Api\OdooApiRequestMakerInterface;
-use FluxSE\OdooApiClient\Model\BaseInterface;
-use FluxSE\OdooApiClient\Serializer\XmlRpcSerializerHelperInterface;
+use FluxSE\OdooApiClient\Serializer\RpcSerializerHelperInterface;
 use Psr\Http\Message\ResponseInterface;
 
 interface OperationsInterface
@@ -15,6 +14,8 @@ interface OperationsInterface
     public function request(string $method, array $params = []): ResponseInterface;
 
     public function getEndpointPath(): string;
+
+    public function getService(): string;
 
     public function decode(ResponseInterface $response): array;
 
@@ -40,5 +41,5 @@ interface OperationsInterface
 
     public function getRequestBodyFactory(): RequestBodyFactoryInterface;
 
-    public function getXmlRpcSerializerHelper(): XmlRpcSerializerHelperInterface;
+    public function getRpcSerializerHelper(): RpcSerializerHelperInterface;
 }

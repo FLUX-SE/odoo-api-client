@@ -26,13 +26,13 @@ class ModelListManagerTest extends TestCase
     {
         $this->recordListOperations = $this->buildExecuteKwOperations(RecordListOperations::class);
         $this->modelListManager = new ModelListManager(
-            $this->recordListOperations->getObjectOperations()->getXmlRpcSerializerHelper()->getSerializer(),
+            $this->recordListOperations->getObjectOperations()->getRpcSerializerHelper()->getSerializer(),
             $this->recordListOperations,
             $this->buildModelFieldsProvider()
         );
     }
 
-    public function testFind()
+    public function testFind(): void
     {
         $searchReadOptions = new SearchReadOptions();
         $searchReadOptions->setLimit(1);
@@ -46,13 +46,13 @@ class ModelListManagerTest extends TestCase
         $this->assertInstanceOf(Partner::class, $partner);
     }
 
-    public function testFindOneBy()
+    public function testFindOneBy(): void
     {
         $partner = $this->modelListManager->findOneBy(Partner::class);
         $this->assertInstanceOf(Partner::class, $partner);
     }
 
-    public function testFindBy()
+    public function testFindBy(): void
     {
         $searchReadOptions = new SearchReadOptions();
         $searchReadOptions->setLimit(2);

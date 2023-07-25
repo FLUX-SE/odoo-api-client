@@ -12,7 +12,8 @@ use Psr\Http\Message\UriInterface;
 
 interface OdooApiRequestMakerInterface
 {
-    public const BASE_PATH = 'xmlrpc/2';
+    public const BASE_XMLRPC_PATH = 'xmlrpc/2';
+    public const BASE_JSONRPC_PATH = 'jsonrpc';
 
     public function request(string $operationPath, StreamInterface $body): ResponseInterface;
 
@@ -25,4 +26,8 @@ interface OdooApiRequestMakerInterface
     public function getBaseUri(): UriInterface;
 
     public function setBaseUri(UriInterface $baseUri): void;
+
+    public function isJsonRpc(): bool;
+
+    public function isXmlRpc(): bool;
 }

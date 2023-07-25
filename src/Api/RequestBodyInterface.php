@@ -10,11 +10,13 @@ interface RequestBodyInterface
 
     public function setMethod(string $method): void;
 
-    /**
-     */
     public function setParams(array $params): void;
 
-    /**
-     */
     public function getParams(): array;
+
+    public function setJsonParams(
+        string $service,
+        string $method,
+        array $args
+    ): void;
 }

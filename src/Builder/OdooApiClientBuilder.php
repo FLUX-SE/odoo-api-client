@@ -20,8 +20,9 @@ use FluxSE\OdooApiClient\Operations\ObjectOperations;
 use FluxSE\OdooApiClient\Operations\ObjectOperationsInterface;
 use FluxSE\OdooApiClient\Operations\OperationsInterface;
 use FluxSE\OdooApiClient\Serializer\Factory\SerializerFactory;
-use FluxSE\OdooApiClient\Serializer\XmlRpcSerializerHelper;
-use FluxSE\OdooApiClient\Serializer\XmlRpcSerializerHelperInterface;
+use FluxSE\OdooApiClient\Serializer\JsonRpc\JsonRpcSerializerHelper;
+use FluxSE\OdooApiClient\Serializer\XmlRpc\XmlRpcSerializerHelper;
+use FluxSE\OdooApiClient\Serializer\RpcSerializerHelperInterface;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\UriInterface;
@@ -40,7 +41,7 @@ final class OdooApiClientBuilder implements OdooApiClientBuilderInterface
 
     private ?OdooApiRequestMakerInterface $odooApiRequestMaker = null;
 
-    private ?XmlRpcSerializerHelperInterface $xmlRpcSerializerHelper = null;
+    private ?RpcSerializerHelperInterface $rpcSerializerHelper = null;
 
     private ?ClientInterface $httpClient = null;
 
@@ -55,7 +56,7 @@ final class OdooApiClientBuilder implements OdooApiClientBuilderInterface
 
     public function __construct(
         string $baseHostname,
-        string $basePath = OdooApiRequestMakerInterface::BASE_PATH
+        string $basePath = OdooApiRequestMakerInterface::BASE_JSONRPC_PATH
     ) {
         $this->baseHostname = rtrim($baseHostname, '/');
         $this->basePath = trim($basePath, '/');
@@ -81,7 +82,7 @@ final class OdooApiClientBuilder implements OdooApiClientBuilderInterface
             $this->baseUri = $uriFactory->createUri(sprintf(
                 '%s/%s',
                 $this->baseHostname,
-                OdooApiRequestMakerInterface::BASE_PATH
+                $this->basePath
             ));
         }
 
@@ -92,7 +93,7 @@ final class OdooApiClientBuilder implements OdooApiClientBuilderInterface
     {
         if (null === $this->odooHttpClientFactory) {
             $this->odooHttpClientFactory = new OdooHttpClientFactory(
-                $this->buildXmlRpcSerializerHelper()
+                $this->buildRpcSerializerHelper()
             );
         }
 
@@ -119,16 +120,20 @@ final class OdooApiClientBuilder implements OdooApiClientBuilderInterface
         return $this->serializer;
     }
 
-    public function buildXmlRpcSerializerHelper(): XmlRpcSerializerHelperInterface
+    public function buildRpcSerializerHelper(): RpcSerializerHelperInterface
     {
-        if (null === $this->xmlRpcSerializerHelper) {
-            $this->xmlRpcSerializerHelper = new XmlRpcSerializerHelper(
-                $this->buildSerializer(),
-                Psr17FactoryDiscovery::findStreamFactory()
-            );
+        if (null === $this->rpcSerializerHelper) {
+
+            $serializer = $this->buildSerializer();
+            $streamFactory = Psr17FactoryDiscovery::findStreamFactory();
+            $this->rpcSerializerHelper = new JsonRpcSerializerHelper($serializer, $streamFactory);
+
+            if ($this->basePath === OdooApiRequestMakerInterface::BASE_XMLRPC_PATH) {
+                $this->rpcSerializerHelper = new XmlRpcSerializerHelper($serializer, $streamFactory);
+            }
         }
 
-        return $this->xmlRpcSerializerHelper;
+        return $this->rpcSerializerHelper;
     }
 
     public function buildRequestBodyFactory(): RequestBodyFactoryInterface
@@ -147,7 +152,7 @@ final class OdooApiClientBuilder implements OdooApiClientBuilderInterface
             $this->operations[$className] = new $className(
                 $this->buildApiRequestMaker(),
                 $this->buildRequestBodyFactory(),
-                $this->buildXmlRpcSerializerHelper()
+                $this->buildRpcSerializerHelper()
             );
         }
 
@@ -256,9 +261,9 @@ final class OdooApiClientBuilder implements OdooApiClientBuilderInterface
         $this->odooApiRequestMaker = $odooApiRequestMaker;
     }
 
-    public function setXmlRpcSerializerHelper(?XmlRpcSerializerHelperInterface $xmlRpcSerializerHelper): void
+    public function setRpcSerializerHelper(?RpcSerializerHelperInterface $rpcSerializerHelper): void
     {
-        $this->xmlRpcSerializerHelper = $xmlRpcSerializerHelper;
+        $this->rpcSerializerHelper = $rpcSerializerHelper;
     }
 
     public function setHttpClient(?ClientInterface $httpClient): void

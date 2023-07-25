@@ -5,16 +5,17 @@ declare(strict_types=1);
 namespace FluxSE\OdooApiClient\Serializer\Factory;
 
 use Doctrine\Common\Annotations\AnnotationReader;
+use FluxSE\OdooApiClient\Serializer\JsonRpc\JsonRpcDecoder;
+use FluxSE\OdooApiClient\Serializer\JsonRpc\JsonRpcEncoder;
 use FluxSE\OdooApiClient\Serializer\NullableDateTimeDenormalizer;
 use FluxSE\OdooApiClient\Serializer\NullOdooRelationDenormalizer;
-use FluxSE\OdooApiClient\Serializer\OdooDateTimeNormalizer;
 use FluxSE\OdooApiClient\Serializer\OdooNormalizer;
 use FluxSE\OdooApiClient\Serializer\OdooRelationDenormalizer;
 use FluxSE\OdooApiClient\Serializer\OdooRelationNormalizer;
 use FluxSE\OdooApiClient\Serializer\OdooRelationSingleDenormalizer;
 use FluxSE\OdooApiClient\Serializer\OdooRelationsNormalizer;
-use FluxSE\OdooApiClient\Serializer\XmlRpcDecoder;
-use FluxSE\OdooApiClient\Serializer\XmlRpcEncoder;
+use FluxSE\OdooApiClient\Serializer\XmlRpc\XmlRpcDecoder;
+use FluxSE\OdooApiClient\Serializer\XmlRpc\XmlRpcEncoder;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\Extractor\SerializerExtractor;
@@ -23,6 +24,7 @@ use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
@@ -67,6 +69,8 @@ final class SerializerFactory implements SerializerFactoryInterface
     public function setupEncoders(): array
     {
         return [
+            new JsonRpcEncoder(),
+            new JsonRpcDecoder(),
             new XmlRpcEncoder(),
             new XmlRpcDecoder(),
         ];
@@ -110,7 +114,7 @@ final class SerializerFactory implements SerializerFactoryInterface
                 AbstractObjectNormalizer::DISABLE_TYPE_ENFORCEMENT => true,
                 // => model to array
                 AbstractObjectNormalizer::SKIP_NULL_VALUES => true,
-                AbstractObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+                AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
                     return $object->getId() ?? 0;
                 }
             ]

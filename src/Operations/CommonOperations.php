@@ -54,7 +54,7 @@ final class CommonOperations extends AbstractOperations implements CommonOperati
         ]);
 
         /** @var int|false $body */
-        $body = $this->xmlRpcSerializerHelper->decodeResponseBody(
+        $body = $this->rpcSerializerHelper->decodeResponseBody(
             $response->getBody()
         );
 

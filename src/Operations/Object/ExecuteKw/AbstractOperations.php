@@ -57,7 +57,7 @@ abstract class AbstractOperations implements OperationsInterface
         );
 
         return $this->getObjectOperations()
-            ->getXmlRpcSerializerHelper()->decodeResponseBody($response->getBody());
+            ->getRpcSerializerHelper()->decodeResponseBody($response->getBody());
     }
 
     public function getObjectOperations(): ObjectOperationsInterface

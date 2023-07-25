@@ -6,7 +6,8 @@ namespace FluxSE\OdooApiClient\Operations;
 
 use FluxSE\OdooApiClient\Api\Factory\RequestBodyFactoryInterface;
 use FluxSE\OdooApiClient\Api\OdooApiRequestMakerInterface;
-use FluxSE\OdooApiClient\Serializer\XmlRpcSerializerHelperInterface;
+use FluxSE\OdooApiClient\Serializer\RpcSerializerHelperInterface;
+use LogicException;
 use Psr\Http\Message\ResponseInterface;
 use Webmozart\Assert\Assert;
 
@@ -16,24 +17,51 @@ abstract class AbstractOperations implements OperationsInterface
 
     protected RequestBodyFactoryInterface $requestBodyFactory;
 
-    protected XmlRpcSerializerHelperInterface $xmlRpcSerializerHelper;
+    protected RpcSerializerHelperInterface $rpcSerializerHelper;
 
     public function __construct(
         OdooApiRequestMakerInterface $apiRequestMaker,
         RequestBodyFactoryInterface $requestBodyFactory,
-        XmlRpcSerializerHelperInterface $xmlRpcSerializerHelper
+        RpcSerializerHelperInterface $rpcSerializerHelper
     ) {
         $this->apiRequestMaker = $apiRequestMaker;
         $this->requestBodyFactory = $requestBodyFactory;
-        $this->xmlRpcSerializerHelper = $xmlRpcSerializerHelper;
+        $this->rpcSerializerHelper = $rpcSerializerHelper;
     }
 
     public function request(string $method, array $params = []): ResponseInterface
     {
+        if ($this->getApiRequestMaker()->isJsonRpc()) {
+            return $this->jsonRpcRequest($method, $params);
+        }
+
+        if ($this->getApiRequestMaker()->isXmlRpc()) {
+            return $this->xmlRpcRequest($method, $params);
+        }
+
+        throw new LogicException('The request can\'t be processed because it\'s neither a JSON nor an XML one.');
+    }
+
+    protected function jsonRpcRequest(string $method, array $params = []): ResponseInterface
+    {
+        $requestBody = $this->requestBodyFactory->create('call');
+        $requestBody->setJsonParams(
+            $this->getService(),
+            $method,
+            $params
+        );
+
+        $body = $this->rpcSerializerHelper->serializeRequestBody($requestBody);
+
+        return $this->apiRequestMaker->request('', $body);
+    }
+
+    protected function xmlRpcRequest(string $method, array $params = []): ResponseInterface
+    {
         $requestBody = $this->requestBodyFactory->create($method);
         $requestBody->setParams($params);
 
-        $body = $this->xmlRpcSerializerHelper->serializeRequestBody($requestBody);
+        $body = $this->rpcSerializerHelper->serializeRequestBody($requestBody);
 
         return $this->apiRequestMaker->request(
             $this->getEndpointPath(),
@@ -44,7 +72,7 @@ abstract class AbstractOperations implements OperationsInterface
     public function decode(ResponseInterface $response): array
     {
         /** @var array $body */
-        $body = $this->xmlRpcSerializerHelper->decodeResponseBody(
+        $body = $this->rpcSerializerHelper->decodeResponseBody(
             $response->getBody()
         );
 
@@ -59,7 +87,7 @@ abstract class AbstractOperations implements OperationsInterface
 
     public function deserializeModel(ResponseInterface $response, string $model)
     {
-        $body = $this->xmlRpcSerializerHelper->deserializeResponseBody(
+        $body = $this->rpcSerializerHelper->deserializeResponseBody(
             $response->getBody(),
             $model
         );
@@ -80,7 +108,7 @@ abstract class AbstractOperations implements OperationsInterface
     public function deserializeArrayOfString(ResponseInterface $response): array
     {
         /** @var string[] $body */
-        $body = $this->xmlRpcSerializerHelper->decodeResponseBody($response->getBody());
+        $body = $this->rpcSerializerHelper->decodeResponseBody($response->getBody());
 
         Assert::allString($body, sprintf(
             'The deserialized value should be an array value, "%s" found ! : %s',
@@ -94,7 +122,7 @@ abstract class AbstractOperations implements OperationsInterface
     public function deserializeBoolean(ResponseInterface $response): bool
     {
         /** @var bool $body */
-        $body = $this->xmlRpcSerializerHelper->decodeResponseBody($response->getBody());
+        $body = $this->rpcSerializerHelper->decodeResponseBody($response->getBody());
 
         Assert::boolean($body, sprintf(
             'The deserialized value should be a boolean value, "%s" found ! : %s',
@@ -108,7 +136,7 @@ abstract class AbstractOperations implements OperationsInterface
     public function deserializeInteger(ResponseInterface $response): int
     {
         /** @var int $body */
-        $body = $this->xmlRpcSerializerHelper->decodeResponseBody($response->getBody());
+        $body = $this->rpcSerializerHelper->decodeResponseBody($response->getBody());
 
         Assert::integer($body, sprintf(
             'The deserialized value should be an integer value, "%s" found ! : %s',
@@ -122,7 +150,7 @@ abstract class AbstractOperations implements OperationsInterface
     public function deserializeString(ResponseInterface $response): string
     {
         /** @var string $body */
-        $body = $this->xmlRpcSerializerHelper->decodeResponseBody($response->getBody());
+        $body = $this->rpcSerializerHelper->decodeResponseBody($response->getBody());
 
         Assert::string($body, sprintf(
             'The deserialized value should be a string value, "%s" found ! : %s',
@@ -131,6 +159,11 @@ abstract class AbstractOperations implements OperationsInterface
         ));
 
         return $body;
+    }
+
+    public function getService(): string
+    {
+        return trim($this->getEndpointPath(), '/');
     }
 
     public function getApiRequestMaker(): OdooApiRequestMakerInterface
@@ -143,8 +176,8 @@ abstract class AbstractOperations implements OperationsInterface
         return $this->requestBodyFactory;
     }
 
-    public function getXmlRpcSerializerHelper(): XmlRpcSerializerHelperInterface
+    public function getRpcSerializerHelper(): RpcSerializerHelperInterface
     {
-        return $this->xmlRpcSerializerHelper;
+        return $this->rpcSerializerHelper;
     }
 }

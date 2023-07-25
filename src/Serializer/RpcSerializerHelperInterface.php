@@ -8,7 +8,7 @@ use FluxSE\OdooApiClient\Api\RequestBodyInterface;
 use Psr\Http\Message\StreamInterface;
 use Symfony\Component\Serializer\Serializer;
 
-interface XmlRpcSerializerHelperInterface
+interface RpcSerializerHelperInterface
 {
     public function serializeRequestBody(RequestBodyInterface $requestBody): StreamInterface;
 
@@ -23,10 +23,6 @@ interface XmlRpcSerializerHelperInterface
      * @return array|integer|string|boolean
      */
     public function decodeResponseBody(StreamInterface $body);
-
-    public function getEncoding(): string;
-
-    public function setEncoding(string $encoding): void;
 
     public function getSerializer(): Serializer;
 }

@@ -12,7 +12,7 @@ use FluxSE\OdooApiClient\Operations\DbOperationsInterface;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\OperationsInterface as ExecuteKwOperationsInterface;
 use FluxSE\OdooApiClient\Operations\ObjectOperationsInterface;
 use FluxSE\OdooApiClient\Operations\OperationsInterface;
-use FluxSE\OdooApiClient\Serializer\XmlRpcSerializerHelperInterface;
+use FluxSE\OdooApiClient\Serializer\RpcSerializerHelperInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\UriInterface;
 use Symfony\Component\Serializer\Serializer;
@@ -29,7 +29,7 @@ interface OdooApiClientBuilderInterface
 
     public function buildSerializer(): Serializer;
 
-    public function buildXmlRpcSerializerHelper(): XmlRpcSerializerHelperInterface;
+    public function buildRpcSerializerHelper(): RpcSerializerHelperInterface;
 
     public function buildRequestBodyFactory(): RequestBodyFactoryInterface;
 
@@ -74,7 +74,7 @@ interface OdooApiClientBuilderInterface
 
     public function setSerializer(?Serializer $serializer): void;
 
-    public function setXmlRpcSerializerHelper(?XmlRpcSerializerHelperInterface $xmlRpcSerializerHelper): void;
+    public function setRpcSerializerHelper(?RpcSerializerHelperInterface $rpcSerializerHelper): void;
 
     public function setHttpClient(?ClientInterface $httpClient): void;
 

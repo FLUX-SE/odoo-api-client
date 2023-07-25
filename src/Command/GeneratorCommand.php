@@ -152,7 +152,7 @@ final class GeneratorCommand extends Command
             $baseUri = $uriFactory->createUri(sprintf(
                 '%s/%s',
                 $host,
-                OdooApiRequestMakerInterface::BASE_PATH
+                OdooApiRequestMakerInterface::BASE_JSONRPC_PATH
             ));
             $odooApiRequestMaker->setBaseUri($baseUri);
         }
@@ -173,7 +173,7 @@ final class GeneratorCommand extends Command
     private function getDefaultHost(): string
     {
         $uri = $this->objectOperations->getApiRequestMaker()->getBaseUri()->__toString();
-        $pattern = sprintf('#/%s$#', OdooApiRequestMakerInterface::BASE_PATH);
+        $pattern = sprintf('#/%s$#', OdooApiRequestMakerInterface::BASE_JSONRPC_PATH);
         $host = preg_replace($pattern, '', $uri);
 
         return (string) $host;

@@ -34,4 +34,16 @@ final class RequestBody implements RequestBodyInterface
     {
         $this->params = $params;
     }
+
+    public function setJsonParams(
+        string $service,
+        string $method,
+        array $args
+    ): void {
+        $this->params = [
+            'service' => $service,
+            'method' => $method,
+            'args' => $args,
+        ];
+    }
 }

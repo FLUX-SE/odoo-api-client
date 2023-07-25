@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FluxSE\OdooApiClient\Serializer;
+namespace FluxSE\OdooApiClient\Serializer\XmlRpc;
 
 use FluxSE\OdooApiClient\Api\RequestBodyInterface;
 use Psr\Http\Message\StreamFactoryInterface;

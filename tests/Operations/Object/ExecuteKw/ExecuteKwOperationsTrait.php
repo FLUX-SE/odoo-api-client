@@ -46,7 +46,8 @@ trait ExecuteKwOperationsTrait
     protected function buildModelFieldsProvider(): ModelFieldsProviderInterface
     {
         if (null === $this->modelFieldsProvider) {
-            $this->modelFieldsProvider = new AccountMoveFieldsProvider(new ModelFieldsProvider());
+            //$this->modelFieldsProvider = new AccountMoveFieldsProvider(new ModelFieldsProvider());
+            $this->modelFieldsProvider = new ModelFieldsProvider();
         }
 
         return $this->modelFieldsProvider;

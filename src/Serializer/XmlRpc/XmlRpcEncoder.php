@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FluxSE\OdooApiClient\Serializer;
+namespace FluxSE\OdooApiClient\Serializer\XmlRpc;
 
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
 use Symfony\Component\Serializer\Exception\UnexpectedValueException;
@@ -32,7 +32,7 @@ final class XmlRpcEncoder implements EncoderInterface
         return $format === self::FORMAT;
     }
 
-    public function encode($data, string $format, array $context = [])
+    public function encode($data, string $format, array $context = []): string
     {
         if (false === is_array($data)) {
             throw new UnexpectedValueException(sprintf(
@@ -43,7 +43,7 @@ final class XmlRpcEncoder implements EncoderInterface
 
         $method = $data['method'] ?? null;
         if (null === $method) {
-            throw new UnexpectedValueException('A "method" is required required !');
+            throw new UnexpectedValueException('A "method" is required !');
         }
 
         $encoding = $context[self::CTX_XMLRPC_ENCODING] ?? $this->defaultContext[self::CTX_XMLRPC_ENCODING];

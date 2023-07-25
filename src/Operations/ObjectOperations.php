@@ -34,7 +34,7 @@ final class ObjectOperations extends AbstractOperations implements ObjectOperati
         parent::__construct(
             $commonOperations->getApiRequestMaker(),
             $commonOperations->getRequestBodyFactory(),
-            $commonOperations->getXmlRpcSerializerHelper()
+            $commonOperations->getRpcSerializerHelper()
         );
     }
 

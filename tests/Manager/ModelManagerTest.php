@@ -50,13 +50,13 @@ class ModelManagerTest extends TestCase
     {
         $this->recordOperations = $this->buildExecuteKwOperations(RecordOperations::class);
         $this->modelManager = new ModelManager(
-            $this->recordOperations->getObjectOperations()->getXmlRpcSerializerHelper()->getSerializer(),
+            $this->recordOperations->getObjectOperations()->getRpcSerializerHelper()->getSerializer(),
             $this->recordOperations
         );
 
         $recordListOperations = $this->buildExecuteKwOperations(RecordListOperations::class);
         $this->modelListManager = new ModelListManager(
-            $recordListOperations->getObjectOperations()->getXmlRpcSerializerHelper()->getSerializer(),
+            $recordListOperations->getObjectOperations()->getRpcSerializerHelper()->getSerializer(),
             $recordListOperations,
             $this->buildModelFieldsProvider()
         );

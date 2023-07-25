@@ -67,4 +67,14 @@ final class OdooApiRequestMaker implements OdooApiRequestMakerInterface
     {
         $this->baseUri = $baseUri;
     }
+
+    public function isJsonRpc(): bool
+    {
+        return false !== preg_match('#'.self::BASE_JSONRPC_PATH.'$#', $this->baseUri->getPath());
+    }
+
+    public function isXmlRpc(): bool
+    {
+        return false !== preg_match('#'.self::BASE_XMLRPC_PATH.'$#', $this->baseUri->getPath());
+    }
 }
