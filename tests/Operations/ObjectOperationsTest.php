@@ -6,12 +6,13 @@ namespace Tests\FluxSE\OdooApiClient\Operations;
 
 use FluxSE\OdooApiClient\Builder\OdooApiClientBuilder;
 use FluxSE\OdooApiClient\Operations\ObjectOperations;
+use FluxSE\OdooApiClient\Operations\ObjectOperationsInterface;
 use PHPUnit\Framework\TestCase;
 
 class ObjectOperationsTest extends TestCase
 {
     /** @var ObjectOperations */
-    private $objectOperations;
+    private ObjectOperationsInterface $objectOperations;
 
     /**
      *

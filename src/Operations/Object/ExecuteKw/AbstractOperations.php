@@ -11,12 +11,8 @@ use Psr\Http\Message\ResponseInterface;
 
 abstract class AbstractOperations implements OperationsInterface
 {
-    /** @var ObjectOperationsInterface */
-    private $objectOperations;
-
-    public function __construct(ObjectOperationsInterface $objectOperations)
+    public function __construct(private ObjectOperationsInterface $objectOperations)
     {
-        $this->objectOperations = $objectOperations;
     }
 
     public function execute_kw(
@@ -48,7 +44,7 @@ abstract class AbstractOperations implements OperationsInterface
         string $actionName,
         ?ArgumentsInterface $arguments = null,
         ?OptionsInterface $options = null
-    ) {
+    ): string|int|bool|array {
         $response = $this->execute_kw(
             $modelName,
             $actionName,

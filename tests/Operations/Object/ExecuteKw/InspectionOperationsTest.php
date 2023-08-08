@@ -13,7 +13,7 @@ class InspectionOperationsTest extends TestCase
     use ExecuteKwOperationsTrait;
 
     /** @var InspectionOperations */
-    private $inspectionOperations;
+    private InspectionOperations $inspectionOperations;
 
     protected function setUp(): void
     {

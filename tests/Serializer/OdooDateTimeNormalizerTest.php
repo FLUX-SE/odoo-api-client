@@ -13,7 +13,7 @@ use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner;
 class OdooDateTimeNormalizerTest extends TestCase
 {
     /** @var Serializer  */
-    private $serializer;
+    private Serializer $serializer;
 
     protected function setUp(): void
     {

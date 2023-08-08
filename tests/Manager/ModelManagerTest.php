@@ -22,6 +22,8 @@ use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move\Line;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment\Method;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment\Register;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Category;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Product;
@@ -35,13 +37,13 @@ class ModelManagerTest extends TestCase
     use ExecuteKwOperationsTrait;
 
     /** @var RecordOperationsInterface */
-    private $recordOperations;
+    private RecordOperations $recordOperations;
 
     /** @var ModelManager */
-    private $modelManager;
+    private ModelManager $modelManager;
 
     /** @var ModelListManager */
-    private $modelListManager;
+    private ModelListManager $modelListManager;
 
     /** @var int */
     private $odooVersion;
@@ -316,7 +318,7 @@ class ModelManagerTest extends TestCase
         $searchDomains->addCriterion(Criterion::equal('code', 'manual'));
         $searchDomains->addCriterion(Criterion::equal('payment_type', 'inbound'));
         /** @var Payment\Method|null $method */
-        $paymentMethod = $this->modelListManager->findOneBy(Payment\Method::class, $searchDomains);
+        $paymentMethod = $this->modelListManager->findOneBy(Method::class, $searchDomains);
         $this->assertNotNull($paymentMethod);
 
         $paymentRegister = $this->createPaymentRegister($date, $journal, $paymentMethod);
@@ -427,14 +429,14 @@ class ModelManagerTest extends TestCase
         return new Line($emptyMoveRel, $currencyRel, 'product');
     }
 
-    private function createPaymentRegister(DateTimeInterface $date, Journal $journal, Payment\Method $paymentMethod): Payment\Register
+    private function createPaymentRegister(DateTimeInterface $date, Journal $journal, Method $paymentMethod): Register
     {
         $journalRel = new OdooRelation($journal->getId());
         $paymentMethodRel = new OdooRelation($paymentMethod->getId());
 
         if (13 === $this->odooVersion) {
             /** @psalm-suppress TooManyArguments **/
-            return new Payment\Register(
+            return new Register(
                 $date,
                 $journalRel,
                 $paymentMethodRel
@@ -442,7 +444,7 @@ class ModelManagerTest extends TestCase
         }
 
         /** @psalm-suppress TooFewArguments **/
-        $paymentRegister = new Payment\Register($date);
+        $paymentRegister = new Register($date);
         $paymentRegister->setJournalId($journalRel);
         if (14 === $this->odooVersion) {
             /** @psalm-suppress UndefinedMethod **/

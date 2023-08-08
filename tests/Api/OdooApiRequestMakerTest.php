@@ -14,16 +14,16 @@ use PHPUnit\Framework\TestCase;
 class OdooApiRequestMakerTest extends TestCase
 {
     /** @var OdooApiRequestMaker */
-    private $odooXmlRpcApiRequestMaker;
+    private OdooApiRequestMakerInterface $odooXmlRpcApiRequestMaker;
 
     /** @var OdooApiRequestMaker */
-    private $odooJsonRpcApiRequestMaker;
+    private OdooApiRequestMakerInterface $odooJsonRpcApiRequestMaker;
 
     /** @var RpcSerializerHelperInterface */
-    private $xmlRpcSerializerHelper;
+    private RpcSerializerHelperInterface $xmlRpcSerializerHelper;
 
     /** @var RpcSerializerHelperInterface */
-    private $jsonRpcSerializerHelper;
+    private RpcSerializerHelperInterface $jsonRpcSerializerHelper;
 
     /**
      *

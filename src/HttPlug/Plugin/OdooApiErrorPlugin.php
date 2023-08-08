@@ -16,16 +16,10 @@ use Psr\Http\Message\ResponseInterface;
 
 final class OdooApiErrorPlugin implements Plugin
 {
-    private Plugin $errorPluginDecorated;
-
-    private RpcSerializerHelperInterface $rpcSerializerHelper;
-
     public function __construct(
-        Plugin $errorPluginDecorated,
-        RpcSerializerHelperInterface $rpcSerializerHelper
+        private Plugin $errorPluginDecorated,
+        private RpcSerializerHelperInterface $rpcSerializerHelper
     ) {
-        $this->errorPluginDecorated = $errorPluginDecorated;
-        $this->rpcSerializerHelper = $rpcSerializerHelper;
     }
 
     public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
@@ -73,11 +67,11 @@ final class OdooApiErrorPlugin implements Plugin
 
     private function getFaultResponse(ResponseInterface $response): ?FaultInterface
     {
-        if (false !== mb_strpos($response->getHeaderLine('Content-Type'), 'application/json')) {
+        if (str_contains($response->getHeaderLine('Content-Type'), 'application/json')) {
             return $this->getJsonFaultResponse($response);
         }
 
-        if (false !== mb_strpos($response->getHeaderLine('Content-Type'), 'application/xml')) {
+        if (str_contains($response->getHeaderLine('Content-Type'), 'application/xml')) {
             return $this->getXmlFaultResponse($response);
         }
 

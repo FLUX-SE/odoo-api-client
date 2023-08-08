@@ -13,12 +13,8 @@ use Http\Client\Common\Exception\ClientErrorException;
  */
 final class SelectionTypeDefaultValueAdder extends AbstractModelFixer
 {
-    /** @var RecordListOperationsInterface */
-    private $recordListOperations;
-
-    public function __construct(RecordListOperationsInterface $recordListOperations)
+    public function __construct(private RecordListOperationsInterface $recordListOperations)
     {
-        $this->recordListOperations = $recordListOperations;
     }
 
     protected function doFix(string $modelName, array &$structure): void

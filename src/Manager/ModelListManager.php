@@ -14,20 +14,11 @@ use Symfony\Component\Serializer\Serializer;
 
 final class ModelListManager implements ModelListManagerInterface
 {
-    private Serializer $serializer;
-
-    private RecordListOperationsInterface $recordListOperations;
-
-    private ModelFieldsProviderInterface $modelFieldsProvider;
-
     public function __construct(
-        Serializer $serializer,
-        RecordListOperationsInterface $recordListOperations,
-        ModelFieldsProviderInterface $modelFieldsProvider
+        private Serializer $serializer,
+        private RecordListOperationsInterface $recordListOperations,
+        private ModelFieldsProviderInterface $modelFieldsProvider,
     ) {
-        $this->serializer = $serializer;
-        $this->recordListOperations = $recordListOperations;
-        $this->modelFieldsProvider = $modelFieldsProvider;
     }
 
     public function find(string $className, int $id): ?BaseInterface

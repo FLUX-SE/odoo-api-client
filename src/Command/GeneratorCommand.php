@@ -17,22 +17,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class GeneratorCommand extends Command
 {
-    private ObjectOperationsInterface $objectOperations;
-
-    private OdooModelsStructureConverterInterface $odooModelsStructureConverter;
-
-    private PhpGeneratorInterface $phpClassesGenerator;
-
     public function __construct(
-        ObjectOperationsInterface $objectOperations,
-        OdooModelsStructureConverterInterface $odooModelsStructureConverter,
-        PhpGeneratorInterface $phpClassesGenerator,
+        private ObjectOperationsInterface $objectOperations,
+        private OdooModelsStructureConverterInterface $odooModelsStructureConverter,
+        private PhpGeneratorInterface $phpClassesGenerator,
         string $name = null
     ) {
-        $this->objectOperations = $objectOperations;
-        $this->odooModelsStructureConverter = $odooModelsStructureConverter;
-        $this->phpClassesGenerator = $phpClassesGenerator;
-
         parent::__construct($name);
     }
 
@@ -85,7 +75,7 @@ final class GeneratorCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /** @var string $host */
         $host = $input->getOption('host');

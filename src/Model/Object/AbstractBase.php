@@ -15,7 +15,7 @@ abstract class AbstractBase implements BaseObjectInterface
      * Searchable : yes
      * Sortable : yes
      */
-    protected int|null|false $id;
+    protected int|null|false $id = null;
 
     /**
      * Display Name
@@ -23,7 +23,7 @@ abstract class AbstractBase implements BaseObjectInterface
      * Searchable : no
      * Sortable : no
      */
-    protected string|null $display_name;
+    protected string|null $display_name = null;
 
     /**
      * Last Modified on
@@ -31,7 +31,7 @@ abstract class AbstractBase implements BaseObjectInterface
      * Searchable : no
      * Sortable : no
      */
-    protected ?DateTimeInterface $__last_update;
+    protected ?DateTimeInterface $__last_update = null;
 
     public function getId(): int|null|false
     {

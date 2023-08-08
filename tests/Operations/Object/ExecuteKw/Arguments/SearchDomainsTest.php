@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 class SearchDomainsTest extends TestCase
 {
     /** @var SearchDomainsInterface */
-    private $searchDomains;
+    private SearchDomains $searchDomains;
 
     protected function setUp(): void
     {

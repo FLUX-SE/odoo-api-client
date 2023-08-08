@@ -13,18 +13,10 @@ final class JsonRpcSerializerHelper implements JsonRpcSerializerHelperInterface
 {
     private string $version = '2.0';
 
-    private Serializer $serializer;
-
-    private StreamFactoryInterface $streamFactory;
-
     private int $decodeDepth = 512;
 
-    public function __construct(
-        Serializer $serializer,
-        StreamFactoryInterface $streamFactory
-    ) {
-        $this->serializer = $serializer;
-        $this->streamFactory = $streamFactory;
+    public function __construct(private Serializer $serializer, private StreamFactoryInterface $streamFactory)
+    {
     }
 
     public function serializeRequestBody(RequestBodyInterface $requestBody): StreamInterface

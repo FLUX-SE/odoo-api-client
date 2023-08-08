@@ -12,7 +12,7 @@ use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner;
 class OdooNormalizerTest extends TestCase
 {
     /** @var Serializer  */
-    private $serializer;
+    private Serializer $serializer;
 
     protected function setUp(): void
     {

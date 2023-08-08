@@ -13,20 +13,11 @@ use Webmozart\Assert\Assert;
 
 abstract class AbstractOperations implements OperationsInterface
 {
-    protected OdooApiRequestMakerInterface $apiRequestMaker;
-
-    protected RequestBodyFactoryInterface $requestBodyFactory;
-
-    protected RpcSerializerHelperInterface $rpcSerializerHelper;
-
     public function __construct(
-        OdooApiRequestMakerInterface $apiRequestMaker,
-        RequestBodyFactoryInterface $requestBodyFactory,
-        RpcSerializerHelperInterface $rpcSerializerHelper
+        protected OdooApiRequestMakerInterface $apiRequestMaker,
+        protected RequestBodyFactoryInterface $requestBodyFactory,
+        protected RpcSerializerHelperInterface $rpcSerializerHelper,
     ) {
-        $this->apiRequestMaker = $apiRequestMaker;
-        $this->requestBodyFactory = $requestBodyFactory;
-        $this->rpcSerializerHelper = $rpcSerializerHelper;
     }
 
     public function request(string $method, array $params = []): ResponseInterface

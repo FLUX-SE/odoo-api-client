@@ -8,10 +8,6 @@ use Webmozart\Assert\Assert;
 
 trait ReadOptionsTrait
 {
-    abstract public function addOption(string $name, $option): void;
-
-    abstract public function getOption(string $name);
-
     public function __construct()
     {
         $this->setFields([]);

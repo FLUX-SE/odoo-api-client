@@ -6,16 +6,13 @@ namespace FluxSE\OdooApiClient\Api;
 
 final class JsonFault implements FaultInterface
 {
-    private int $code;
-
     private string $message;
 
     public function __construct(
-        int $code,
+        private int $code,
         string $message,
         array $data
     ) {
-        $this->code = $code;
         $this->message = sprintf(
             '%2$s - %3$s%1$s%4$s%1$s%5$s%1$s%1$sArguments: %6$s%1$s%1$sContext: %7$s%1$s',
             "\n",

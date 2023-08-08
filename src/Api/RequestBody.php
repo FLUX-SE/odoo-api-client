@@ -6,13 +6,10 @@ namespace FluxSE\OdooApiClient\Api;
 
 final class RequestBody implements RequestBodyInterface
 {
-    private string $method;
-
     private array $params = [];
 
-    public function __construct(string $method)
+    public function __construct(private string $method)
     {
-        $this->method = $method;
     }
 
     public function getMethod(): string

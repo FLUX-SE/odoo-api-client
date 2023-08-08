@@ -56,7 +56,7 @@ final class OdooApiClientBuilder implements OdooApiClientBuilderInterface
 
     public function __construct(
         string $baseHostname,
-        string $basePath = OdooApiRequestMakerInterface::BASE_JSONRPC_PATH
+        string $basePath = OdooApiRequestMakerInterface::BASE_JSONRPC_PATH,
     ) {
         $this->baseHostname = rtrim($baseHostname, '/');
         $this->basePath = trim($basePath, '/');
