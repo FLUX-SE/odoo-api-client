@@ -79,7 +79,7 @@ final class GeneratorCommand extends Command
                 'password',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                sprintf('Your Odoo account password (default: %s)', $defaultPassword),
+                sprintf('Your Odoo account password or API key (since Odoo v14, default: %s)', $defaultPassword),
                 $defaultPassword
             )
         ;

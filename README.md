@@ -11,11 +11,11 @@ https://www.odoo.com/documentation/master/developer/reference/external_api.html
 
 This library will allow you to :
 
- * Generate PHP model classes based on the info available into your Odoo database to ease your calls to the API
+ * Generate PHP model classes based on the info available into your own Odoo database to ease your calls to the API
  * Send requests to your Odoo instance through the JSON-RPC or the XML-RPC API
  * Make raw requests like [Ripcord](https://github.com/poef/ripcord) was doing it but using newer libs like :
     * `php-http/httplug` to make http requests
-    * `symfony/serializer` to handle the XML-RPC format and to transform resulting array to dedicated object classes.
+    * `symfony/serializer` to handle the JSON/XML-RPC format and to transform resulting array to dedicated object classes.
 
 ## Installation
 
@@ -26,13 +26,22 @@ Install using Composer :
 ```shell
 composer require flux-se/odoo-api-client php-http/guzzle7-adapter http-interop/http-factory-guzzle
 ```
-> `php-http/guzzle6-adapter` and `http-interop/http-factory-guzzle` are 2 requirements which can be chosen among
+> `php-http/guzzle7-adapter` and `http-interop/http-factory-guzzle` are 2 requirements which can be chosen among
 > [php-http/client-implementation](https://packagist.org/providers/php-http/client-implementation) and [psr/http-factory-implementation](https://packagist.org/providers/psr/http-factory-implementation)
 
 ### Object models generation
 
-Depending on your instance the object models available will be different.
-That's why you can generate model classes using this cli command :
+**First gather required credential and database info described [here](https://www.odoo.com/documentation/master/developer/reference/external_api.html#connection).**
+
+Depending on your instance the object models available will be different,
+that's why this library is allowing you to generate model classes using this cli command :
+
+> This command is using env vars to guess the credentials and database info,
+> you can use those env vars to set your credential globally :
+> * `ODOO_API_HOST`
+> * `ODOO_API_DATABASE`
+> * `ODOO_API_USERNAME`
+> * `ODOO_API_PASSWORD`
 
 ```shell
 #> vendor/bin/odoo-model-classes-generator --help
@@ -47,7 +56,7 @@ Options:
       --host[=HOST]          Your Odoo base host (default: http://localhost:8069) [default: "http://localhost:8069"]
       --database[=DATABASE]  Your Odoo database name (default: odoo-master) [default: "odoo-master"]
       --username[=USERNAME]  Your Odoo account username. (default: admin) [default: "admin"]
-      --password[=PASSWORD]  Your Odoo account password (default: admin) [default: "admin"]
+      --password[=PASSWORD]  Your Odoo account password or API key (since Odoo v14, default: admin) [default: "admin"]
   -h, --help                 Display help for the given command. When no command is given display help for the vendor/bin/odoo-model-classes-generator command
   -q, --quiet                Do not output any message
   -V, --version              Display this application version
@@ -67,19 +76,56 @@ Example :
 
 ## Introduction
 
+This chapter will describe how the two Odoo APIs are working.
+
+### JSON-RPC
+
+The Odoo JSON-RPC API expose 1 main endpoint `/jsonrpc`.
+The body request payload is a JSON object with specific data into it :
+
+```json
+{
+     "jsonrpc": "2.0",
+     "method": 'call',
+     "params": {
+        {
+           "service": 'common',
+           "method": 'login',
+           "args": [
+              'database',
+              'username',
+              'password'
+           ]
+        }
+     },
+     "id": 123456890
+ }
+```
+
+The service param can be set with those 3 values :
+
+ - `db` allowing to manage the postgres database
+ - `common` allowing to authenticate a user or get info about the Odoo installation
+ - `object` allowing operations with all API exposed models
+
+This library help you to use those endpoints using `ext-json` and `HttPlug`, **it also allows you to
+consume Odoo API using PHP classes representation of all installed Odoo Models**.
+
+### XML-RPC
+
 The Odoo XML-RPC API expose 3 main endpoints :
 
- - `/XML-RPC/2/db` allowing to manage the postgres database
- - `/XML-RPC/2/common` allowing to authenticate a user or get info about the Odoo installation
- - `/XML-RPC/2/object` allowing operations with all API exposed models
+ - `/xmlrpc/2/db` allowing to manage the postgres database
+ - `/xmlrpc/2/common` allowing to authenticate a user or get info about the Odoo installation
+ - `/xmlrpc/2/object` allowing operations with all API exposed models
 
-This library help you to use those endpoints using `ext-XML-RPC` and `HttPlug`, **it also allows you to
+This library help you to use those endpoints using `ext-xmlrpc` and `HttPlug`, **it also allows you to
 consume Odoo API using PHP classes representation of all installed Odoo Models**.
 
 The authentication is not standard (compare to other APIs), your username and your password will be used during a call to
-`/XML-RPC/2/common` with the XML-RPC method `authenticate` returning your Odoo user id (`uid`).
+`/xmlrpc/2/common` with the XML-RPC method `authenticate` (or `login`) returning your Odoo user id (`uid`).
 This uid, your password and your Odoo database name are required to make every request calls to the
-`/XML-RPC/2/object` endpoint.
+`/xmlrpc/2/object` endpoint.
 
 ## Usage example
 
@@ -104,12 +150,12 @@ use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
 $host = 'https://myapp.odoo.com';
 $database = 'myapp';
 $username = 'myemail@mydomain.tld';
-$password = 'myOdooPassword';
+$password = 'myOdooUserApiKey';
 
 // 1 - instantiate the Odoo API client builder
 $odooApiClientBuilder = new OdooApiClientBuilder($host);
 
-// 2 - "Object" endpoint XML-RPC "execute_kw" call with method name like "search*" or "read")
+// 2 - service allowing to query Odoo API using `execute_kw` method
 $recordListOperations = $odooApiClientBuilder->buildExecuteKwOperations(
     RecordListOperations::class,
     $database,
@@ -117,16 +163,17 @@ $recordListOperations = $odooApiClientBuilder->buildExecuteKwOperations(
     $password
 );
 
-// 2.1 - Helper class to set parameters to your request
+// 3.1 - Helper class to set parameters to your request
 $searchDomains = new SearchDomains();
 $searchDomains->addCriterion(Criterion::equal('is_company', true));
 // will be translated to : [['is_company', '=', true]]
 
-// 2.2 - Helper class to set options to your request
+// 3.2 - Helper class to set options to your request
 $searchReadOptions = new SearchReadOptions();
 $searchReadOptions->setLimit(1);
 $searchReadOptions->addField('name');
 
+// 3.3 - Search for the first Partner being a company and only return its name 
 $partners = $recordListOperations->search_read('res.partner', $searchDomains, $searchReadOptions);
 
 dump($partners);
@@ -150,6 +197,7 @@ $loader = require_once( __DIR__.'/vendor/autoload.php');
 
 use App\Odoo\Model\Object\Res\Partner;
 use FluxSE\OdooApiClient\Builder\OdooApiClientBuilder;
+use FluxSE\OdooApiClient\Manager\ModelListManager;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
@@ -157,12 +205,12 @@ use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
 $host = 'https://myapp.odoo.com';
 $database = 'myapp';
 $username = 'myemail@mydomain.tld';
-$password = 'myOdooPassword';
+$password = 'myOdooUserApiKey';
 
 // 1 - instantiate the Odoo API client builder
 $odooApiClientBuilder = new OdooApiClientBuilder($host);
 
-// 2 - "Object" endpoint XML-RPC "execute_kw" call with method name like "search*" or "read")
+// 2 - service allowing to query Odoo API using `execute_kw` method
 $recordListOperations = $odooApiClientBuilder->buildExecuteKwOperations(
     RecordListOperations::class,
     $database,
@@ -170,17 +218,18 @@ $recordListOperations = $odooApiClientBuilder->buildExecuteKwOperations(
     $password
 );
 
+// 3 - upper service allowing to return classes instead of raw array data
 $modelListManager = new ModelListManager(
     $odooApiClientBuilder->buildSerializer(),
     $recordListOperations
 );
 
-// 2 - Helper class to set parameters to your request
+// 4.1- Helper class to set parameters to your request
 $searchDomains = new SearchDomains();
 $searchDomains->addCriterion(Criterion::equal('is_company', true));
 // will be translated to : [['is_company', '=', true]]
 
-
+// 4.2 - Search for the first Partner being a company 
 $partner = $modelListManager->findOneBy(Partner::class, $searchDomains);
 
 dump($partner);
@@ -205,6 +254,10 @@ App\Odoo\Model\Object\Res\Partner
 **/
 ```
 
+# Know issues
+
+ * Since Odoo v16 some new fields can produce 500 errors, I try to create issues about them when I get the error, you can found the relates issues here : https://github.com/odoo/odoo/issues?q=is%3Aissue+author%3APrometee+
+
 # Development
 
 ## Using docker
@@ -215,13 +268,15 @@ docker run --rm --pull always -p 8069:8069 --name odoo -e "HOST=host.docker.inte
 ```
 
 The server is fully ready to use when this log line appears
-(v13 could take longer than v14 to reach this line) :
+(Odoo v13 could take longer than upper version to reach this line) :
 
 ```log
 2021-01-01 00:00:00,000 1 INFO odoo-master odoo.modules.loading: Modules loaded.
 ```
 
 Generate the model classes based on the docker Odoo instance :
+
+> This script will use env vars to gather info about (see info [here](#object-models-generation))
 
 ```shell
 bin/odoo-model-classes-generator \
@@ -232,6 +287,8 @@ bin/odoo-model-classes-generator \
 Test the code against the generated classes from your own Odoo instance
 
 ```shell
+vendor/bin/ecs check tests
+vendor/bin/psalm
 vendor/bin/phpunit
 ````
 
