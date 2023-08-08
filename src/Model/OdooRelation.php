@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace FluxSE\OdooApiClient\Model;
 
-use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\Object\AbstractBase;
 
 /**
  * Odoo Response wrapper to handle all
  * Odoo Many2one, One2many or Many2many relations
  * given by an Odoo API response
  */
-final class OdooRelation extends Base
+final class OdooRelation extends AbstractBase
 {
     /**
      * @see https://www.odoo.com/documentation/13.0/reference/orm.html#odoo.models.Model.write
@@ -24,23 +24,15 @@ final class OdooRelation extends Base
     public const COMMAND_REMOVE_ALL = 5;
     public const COMMAND_REPLACE_ALL = 6;
 
-    /** @var int|null */
-    private $command;
-
-    /** @var int|null */
-    private $commandId;
-
-    /** @var BaseInterface|null */
-    private $embed_model;
+    private ?int $command = null;
+    private ?int $commandId = null;
+    private ?BaseInterface $embed_model = null;
 
     /** @var int[] */
-    private $replace_ids = [];
+    private array $replace_ids = [];
 
-    /**
-     * @param int|null|false $id
-     */
     public function __construct(
-        $id = null,
+        int|null|false $id = null,
         ?string $display_name = null
     ) {
         $this->id = $id;

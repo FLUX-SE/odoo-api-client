@@ -5,17 +5,17 @@
 
 ## Odoo API client
 
-This library allow communication trough Odoo XMLRPC API.
+This library allow communication trough Odoo JSON-RPC or XML-RPC API.
 Documentation about it can be found here :
-https://www.odoo.com/documentation/master/webservices/odoo.html
+https://www.odoo.com/documentation/master/developer/reference/external_api.html
 
-This library will allows you to :
+This library will allow you to :
 
  * Generate PHP model classes based on the info available into your Odoo database to ease your calls to the API
- * Send requests to your Odoo instance through the XMLRPC API
+ * Send requests to your Odoo instance through the JSON-RPC or the XML-RPC API
  * Make raw requests like [Ripcord](https://github.com/poef/ripcord) was doing it but using newer libs like :
     * `php-http/httplug` to make http requests
-    * `symfony/serializer` to handle the XMLRPC format and to transform resulting array to dedicated object classes.
+    * `symfony/serializer` to handle the XML-RPC format and to transform resulting array to dedicated object classes.
 
 ## Installation
 
@@ -24,7 +24,7 @@ This library will allows you to :
 Install using Composer :
 
 ```shell
-composer require flux-se/odoo-api-client php-http/guzzle6-adapter http-interop/http-factory-guzzle
+composer require flux-se/odoo-api-client php-http/guzzle7-adapter http-interop/http-factory-guzzle
 ```
 > `php-http/guzzle6-adapter` and `http-interop/http-factory-guzzle` are 2 requirements which can be chosen among
 > [php-http/client-implementation](https://packagist.org/providers/php-http/client-implementation) and [psr/http-factory-implementation](https://packagist.org/providers/psr/http-factory-implementation)
@@ -67,23 +67,23 @@ Example :
 
 ## Introduction
 
-The Odoo XMLRPC API expose 3 main endpoints :
+The Odoo XML-RPC API expose 3 main endpoints :
 
- - `/xmlrpc/2/db` allowing to manage the postgres database
- - `/xmlrpc/2/common` allowing to authenticate a user or get info about the Odoo installation
- - `/xmlrpc/2/object` allowing operations with all API exposed models
+ - `/XML-RPC/2/db` allowing to manage the postgres database
+ - `/XML-RPC/2/common` allowing to authenticate a user or get info about the Odoo installation
+ - `/XML-RPC/2/object` allowing operations with all API exposed models
 
-This library help you to use those endpoints using `ext-xmlrpc` and `HttPlug`, **it also allows you to
+This library help you to use those endpoints using `ext-XML-RPC` and `HttPlug`, **it also allows you to
 consume Odoo API using PHP classes representation of all installed Odoo Models**.
 
 The authentication is not standard (compare to other APIs), your username and your password will be used during a call to
-`/xmlrpc/2/common` with the XMLRPC method `authenticate` returning your Odoo user id (`uid`).
+`/XML-RPC/2/common` with the XML-RPC method `authenticate` returning your Odoo user id (`uid`).
 This uid, your password and your Odoo database name are required to make every request calls to the
-`/xmlrpc/2/object` endpoint.
+`/XML-RPC/2/object` endpoint.
 
 ## Usage example
 
-Using this library you will be able to use two ways of consuming the Odoo XMLRPC API :
+Using this library you will be able to use two ways of consuming the Odoo XML-RPC API :
 
 1. using array
 2. using object model classes
@@ -109,7 +109,7 @@ $password = 'myOdooPassword';
 // 1 - instantiate the Odoo API client builder
 $odooApiClientBuilder = new OdooApiClientBuilder($host);
 
-// 2 - "Object" endpoint XMLRPC "execute_kw" call with method name like "search*" or "read")
+// 2 - "Object" endpoint XML-RPC "execute_kw" call with method name like "search*" or "read")
 $recordListOperations = $odooApiClientBuilder->buildExecuteKwOperations(
     RecordListOperations::class,
     $database,
@@ -162,7 +162,7 @@ $password = 'myOdooPassword';
 // 1 - instantiate the Odoo API client builder
 $odooApiClientBuilder = new OdooApiClientBuilder($host);
 
-// 2 - "Object" endpoint XMLRPC "execute_kw" call with method name like "search*" or "read")
+// 2 - "Object" endpoint XML-RPC "execute_kw" call with method name like "search*" or "read")
 $recordListOperations = $odooApiClientBuilder->buildExecuteKwOperations(
     RecordListOperations::class,
     $database,
