@@ -28,10 +28,10 @@ jobs:
             fail-fast: false
             matrix:
                 odoo: [13, 14, 15, 16]
-                symfony: ["^5.4", "^6.0"]
+                symfony: ["^5.4", "^6.3"]
                 php: [7.4, 8.0]
                 exclude:
-                    - symfony: "^6.0"
+                    - symfony: "^6.3"
                       php: 7.4
         services:
             postgres:
