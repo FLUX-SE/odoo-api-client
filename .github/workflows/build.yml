@@ -30,6 +30,9 @@ jobs:
                 odoo: [13, 14, 15, 16]
                 symfony: ["^5.4", "^6.3"]
                 php: [8.0, 8.1]
+                exclude:
+                    - symfony: "^6.3"
+                      php: 8.0
         services:
             postgres:
                 image: postgres
