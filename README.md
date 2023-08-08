@@ -190,6 +190,19 @@ array:1 [
 **/
 ```
 
+> By default, the **JSON-RPC** API will be used, if you want to use XML-RPC
+> create an Odoo Api Client builder like this :
+> 
+> ```php
+> use FluxSE\OdooApiClient\Api\OdooApiRequestMakerInterface;
+> use FluxSE\OdooApiClient\Builder\OdooApiClientBuilder;
+> 
+> $odooApiClientBuilder = new OdooApiClientBuilder(
+>   $host,
+>   OdooApiRequestMakerInterface::BASE_XMLRPC_PATH
+> );
+> ```
+
 ## Using object model
 
 ```php
@@ -207,7 +220,7 @@ $database = 'myapp';
 $username = 'myemail@mydomain.tld';
 $password = 'myOdooUserApiKey';
 
-// 1 - instantiate the Odoo API client builder
+// 1 - instantiate the Odoo API client builder 
 $odooApiClientBuilder = new OdooApiClientBuilder($host);
 
 // 2 - service allowing to query Odoo API using `execute_kw` method
