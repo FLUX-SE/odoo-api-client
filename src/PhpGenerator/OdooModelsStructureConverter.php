@@ -22,7 +22,7 @@ use function Symfony\Component\String\u;
 final class OdooModelsStructureConverter implements OdooModelsStructureConverterInterface
 {
     /** @var ModelFixerInterface[] */
-    private array $modelFixers;
+    private iterable $modelFixers;
 
     private array $inheritedPropertiesCache = [];
     /** @var array<int, string> **/
@@ -38,7 +38,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         private RecordListOperationsInterface $recordListOperations,
         private InspectionOperationsInterface $inspectionOperations,
         private PhpReservedWordsHelperInterface $phpReservedWordsHelper,
-        array $modelFixers = [],
+        iterable $modelFixers = [],
     ) {
         ksort($modelFixers);
         $this->modelFixers = $modelFixers;
@@ -156,6 +156,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
                 $fieldGetOptions
             );
 
+            reset($this->modelFixers);
             foreach ($this->modelFixers as $modelFixer) {
                 if ($modelFixer->supports($modelName, $this->fields_getCache[$modelName])) {
                     $modelFixer->fix($modelName, $this->fields_getCache[$modelName]);
@@ -348,37 +349,31 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         return $description;
     }
 
-    private function getInheritedFieldMetadata(array $currentItem, string $fieldName): array
+    private function getInheritedFieldMetadata(array $item, string $fieldName): array
     {
-        $modelName = $currentItem['model'];
-
-        $metadata = [
-            'position' => null,
-            'info' => null,
-        ];
-
-        if ($modelName === self::BASE_MODEL_NAME) {
-            $currentItem['inherited_model_ids'] = [$this->getModelIdFromModelName($modelName)];
-        }
-
-        $inheritedModelIds = $currentItem['inherited_model_ids'];
+        $inheritedModelIds = $item['inherited_model_ids'] ?? [];
 
         // Add "base" model id because all models inherit from it
         $inheritedModelIds[] = $this->getModelIdFromModelName(self::BASE_MODEL_NAME);
 
         foreach ($inheritedModelIds as $inheritedModelId) {
             $inheritedModel = $this->modelIdToModelName[$inheritedModelId];
-            $properties = $this->inheritedPropertiesCache[$inheritedModel];
-            if (false === in_array($fieldName, $properties, true)) {
+            $inheritedProperties = $this->inheritedPropertiesCache[$inheritedModel];
+            if (false === in_array($fieldName, $inheritedProperties, true)) {
                 continue;
             }
 
-            $modelInfo = $this->fields_get($inheritedModel);
-            $metadata['position'] = array_search($fieldName, array_keys($modelInfo), true);
-            $metadata['info'] = $modelInfo[$fieldName];
-            break;
+            $inheritedModelInfo = $this->fields_get($inheritedModel);
+
+            return [
+                'position' => array_search($fieldName, array_keys($inheritedModelInfo), true),
+                'info' => $inheritedModelInfo[$fieldName],
+            ];
         }
 
-        return $metadata;
+        return [
+            'position' => null,
+            'info' => null,
+        ];
     }
 }
