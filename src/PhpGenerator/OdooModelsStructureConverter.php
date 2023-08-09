@@ -21,7 +21,7 @@ use function Symfony\Component\String\u;
 
 final class OdooModelsStructureConverter implements OdooModelsStructureConverterInterface
 {
-    /** @var ModelFixerInterface[] */
+    /** @var iterable<ModelFixerInterface> */
     private iterable $modelFixers;
 
     private array $inheritedPropertiesCache = [];
@@ -32,7 +32,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
     private array $modelNameToClass = [];
 
     /**
-     * @param ModelFixerInterface[] $modelFixers
+     * @param iterable<ModelFixerInterface> $modelFixers
      */
     public function __construct(
         private RecordListOperationsInterface $recordListOperations,
@@ -40,7 +40,6 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         private PhpReservedWordsHelperInterface $phpReservedWordsHelper,
         iterable $modelFixers = [],
     ) {
-        ksort($modelFixers);
         $this->modelFixers = $modelFixers;
     }
 
@@ -156,7 +155,6 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
                 $fieldGetOptions
             );
 
-            reset($this->modelFixers);
             foreach ($this->modelFixers as $modelFixer) {
                 if ($modelFixer->supports($modelName, $this->fields_getCache[$modelName])) {
                     $modelFixer->fix($modelName, $this->fields_getCache[$modelName]);
