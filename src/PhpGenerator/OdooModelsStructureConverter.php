@@ -248,14 +248,16 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             'type' => $classType,
             'extends' => $extends,
             'implements' => $implements,
-            'description' => [
+            'phpdoc' => [
                 PhpDocInterface::TYPE_DESCRIPTION => [
                     sprintf('Odoo model : %s', $modelName),
                     '---',
+                    '',
                     sprintf('Name : %s (%s)', $item['name'], $item['model']),
                     sprintf('Transient model : %s', $item['transient'] ? 'yes' : 'no'),
                     sprintf('Modules : %s', $item['modules']),
                     '---',
+                    '',
                     'Info :',
                     $info,
                 ]
@@ -313,11 +315,13 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         $help = $fieldInfo['help'] ?? '';
         if (!empty($help)) {
             $description[] = '---';
+            $description[] = '';
             $description[] = OdooModelsStructureConverterHelper::sanitizeComment($fieldInfo['help'] ?? '');
         }
 
         if (($fieldInfo['type'] ?? '') === 'selection') {
             $description[] = '---';
+            $description[] = '';
             $description[] = 'Selection :';
             $description = array_merge(
                 $description,
@@ -330,6 +334,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             || true === in_array(OdooRelation::class . '[]', $types)
         ) {
             $description[] = '---';
+            $description[] = '';
             $relationField = isset($fieldInfo['relation_field'])
                 ? sprintf(' -> %s', $fieldInfo['relation_field'])
                 : null
@@ -339,6 +344,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         }
 
         $description[] = '---';
+        $description[] = '';
         $searchable = $fieldInfo['searchable'] ?? false;
         $description[] = sprintf('Searchable : %s', $searchable ? 'yes' : 'no');
         $sortable = $fieldInfo['sortable'] ?? false;
