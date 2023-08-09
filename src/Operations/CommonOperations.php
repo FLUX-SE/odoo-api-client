@@ -36,8 +36,6 @@ final class CommonOperations extends AbstractOperations implements CommonOperati
     }
 
     /**
-     *
-     *
      * @throws AuthenticationFailedException
      */
     public function authenticate(
@@ -46,15 +44,23 @@ final class CommonOperations extends AbstractOperations implements CommonOperati
         string $password,
         array $userAgentEnv = []
     ): int {
-        $response = $this->request(__FUNCTION__, [
-                $database,
-                $username,
-                $password,
-                $userAgentEnv,
-        ]);
+        $method = 'login';
+        $params = [
+            $database,
+            $username,
+            $password,
+        ];
+
+        // 'login' doesn't support a 4th argument but 'authenticate' do
+        if ([] !== $userAgentEnv) {
+            $method = __FUNCTION__;
+            $params[] = $userAgentEnv;
+        }
+
+        $response = $this->request($method, $params);
 
         /** @var int|false $body */
-        $body = $this->xmlRpcSerializerHelper->decodeResponseBody(
+        $body = $this->rpcSerializerHelper->decodeResponseBody(
             $response->getBody()
         );
 

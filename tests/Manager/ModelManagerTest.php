@@ -5,7 +5,9 @@ namespace Tests\FluxSE\OdooApiClient\Manager;
 use DateTime;
 use DateTimeInterface;
 use FluxSE\OdooApiClient\Manager\ModelListManager;
+use FluxSE\OdooApiClient\Manager\ModelListManagerInterface;
 use FluxSE\OdooApiClient\Manager\ModelManager;
+use FluxSE\OdooApiClient\Manager\ModelManagerInterface;
 use FluxSE\OdooApiClient\Model\OdooRelation;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Arguments;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
@@ -22,6 +24,8 @@ use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move\Line;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment\Method;
+use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment\Register;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Category;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Product;
@@ -34,29 +38,25 @@ class ModelManagerTest extends TestCase
 {
     use ExecuteKwOperationsTrait;
 
-    /** @var RecordOperationsInterface */
-    private $recordOperations;
+    private RecordOperationsInterface $recordOperations;
 
-    /** @var ModelManager */
-    private $modelManager;
+    private ModelManagerInterface $modelManager;
 
-    /** @var ModelListManager */
-    private $modelListManager;
+    private ModelListManagerInterface $modelListManager;
 
-    /** @var int */
-    private $odooVersion;
+    private int $odooVersion;
 
     protected function setUp(): void
     {
         $this->recordOperations = $this->buildExecuteKwOperations(RecordOperations::class);
         $this->modelManager = new ModelManager(
-            $this->recordOperations->getObjectOperations()->getXmlRpcSerializerHelper()->getSerializer(),
+            $this->recordOperations->getObjectOperations()->getRpcSerializerHelper()->getSerializer(),
             $this->recordOperations
         );
 
         $recordListOperations = $this->buildExecuteKwOperations(RecordListOperations::class);
         $this->modelListManager = new ModelListManager(
-            $recordListOperations->getObjectOperations()->getXmlRpcSerializerHelper()->getSerializer(),
+            $recordListOperations->getObjectOperations()->getRpcSerializerHelper()->getSerializer(),
             $recordListOperations,
             $this->buildModelFieldsProvider()
         );
@@ -139,7 +139,10 @@ class ModelManagerTest extends TestCase
         $category = $this->retrieveFirstCategory();
 
         if ($this->odooVersion <= 15) {
-            /** @psalm-suppress TooFewArguments **/
+            /**
+             * @psalm-suppress TooFewArguments
+             * @phpstan-ignore-next-line
+             */
             $template = new Template(
                 'test',
                 'consu',
@@ -149,7 +152,10 @@ class ModelManagerTest extends TestCase
                 []
             );
         } else {
-            /** @psalm-suppress TooManyArguments **/
+            /**
+             * @psalm-suppress TooManyArguments
+             * @phpstan-ignore-next-line
+             */
             $template = new Template(
                 'test',
                 'consu',
@@ -316,7 +322,7 @@ class ModelManagerTest extends TestCase
         $searchDomains->addCriterion(Criterion::equal('code', 'manual'));
         $searchDomains->addCriterion(Criterion::equal('payment_type', 'inbound'));
         /** @var Payment\Method|null $method */
-        $paymentMethod = $this->modelListManager->findOneBy(Payment\Method::class, $searchDomains);
+        $paymentMethod = $this->modelListManager->findOneBy(Method::class, $searchDomains);
         $this->assertNotNull($paymentMethod);
 
         $paymentRegister = $this->createPaymentRegister($date, $journal, $paymentMethod);
@@ -427,14 +433,14 @@ class ModelManagerTest extends TestCase
         return new Line($emptyMoveRel, $currencyRel, 'product');
     }
 
-    private function createPaymentRegister(DateTimeInterface $date, Journal $journal, Payment\Method $paymentMethod): Payment\Register
+    private function createPaymentRegister(DateTimeInterface $date, Journal $journal, Method $paymentMethod): Register
     {
         $journalRel = new OdooRelation($journal->getId());
         $paymentMethodRel = new OdooRelation($paymentMethod->getId());
 
         if (13 === $this->odooVersion) {
             /** @psalm-suppress TooManyArguments **/
-            return new Payment\Register(
+            return new Register(
                 $date,
                 $journalRel,
                 $paymentMethodRel
@@ -442,7 +448,7 @@ class ModelManagerTest extends TestCase
         }
 
         /** @psalm-suppress TooFewArguments **/
-        $paymentRegister = new Payment\Register($date);
+        $paymentRegister = new Register($date);
         $paymentRegister->setJournalId($journalRel);
         if (14 === $this->odooVersion) {
             /** @psalm-suppress UndefinedMethod **/

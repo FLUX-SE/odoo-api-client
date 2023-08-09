@@ -6,11 +6,8 @@ namespace FluxSE\OdooApiClient\Provider;
 
 final class AccountMoveFieldsProvider implements ModelFieldsProviderInterface
 {
-    private ModelFieldsProviderInterface $decoratedModelFieldsProvider;
-
-    public function __construct(ModelFieldsProviderInterface $decoratedModelFieldsProvider)
+    public function __construct(private ModelFieldsProviderInterface $decoratedModelFieldsProvider)
     {
-        $this->decoratedModelFieldsProvider = $decoratedModelFieldsProvider;
     }
 
     public function provide(string $className, array $context): array

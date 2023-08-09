@@ -8,17 +8,10 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 final class NullableDateTimeDenormalizer implements DenormalizerInterface
 {
-    private DenormalizerInterface $dateTimeNormalizer;
-
-    public function __construct(
-        DenormalizerInterface $dateTimeNormalizer
-    ) {
-        $this->dateTimeNormalizer = $dateTimeNormalizer;
+    public function __construct(private DenormalizerInterface $dateTimeNormalizer)
+    {
     }
 
-    /**
-     * @return null
-     */
     public function denormalize($data, string $type, string $format = null, array $context = [])
     {
         return null;

@@ -13,10 +13,6 @@ use FluxSE\OdooApiClient\Provider\ModelFieldsProviderInterface;
 
 trait ExecuteKwOperationsTrait
 {
-    protected ?OdooApiClientBuilderInterface $odooApiClientBuilder = null;
-
-    protected ?ModelFieldsProviderInterface $modelFieldsProvider = null;
-
     /**
      * @template T of OperationsInterface
      * @param class-string<T> $operationsClass
@@ -24,9 +20,7 @@ trait ExecuteKwOperationsTrait
      */
     protected function buildExecuteKwOperations(string $operationsClass): OperationsInterface
     {
-        $this->buildOdooApiClientBuilder();
-
-        return $this->odooApiClientBuilder->buildExecuteKwOperations(
+        return $this->buildOdooApiClientBuilder()->buildExecuteKwOperations(
             $operationsClass,
             $_ENV['ODOO_API_DATABASE'],
             $_ENV['ODOO_API_USERNAME'],
@@ -36,19 +30,11 @@ trait ExecuteKwOperationsTrait
 
     protected function buildOdooApiClientBuilder(): OdooApiClientBuilderInterface
     {
-        if (null === $this->odooApiClientBuilder) {
-            $this->odooApiClientBuilder = new OdooApiClientBuilder($_ENV['ODOO_API_HOST']);
-        }
-
-        return $this->odooApiClientBuilder;
+        return new OdooApiClientBuilder($_ENV['ODOO_API_HOST']);
     }
 
     protected function buildModelFieldsProvider(): ModelFieldsProviderInterface
     {
-        if (null === $this->modelFieldsProvider) {
-            $this->modelFieldsProvider = new AccountMoveFieldsProvider(new ModelFieldsProvider());
-        }
-
-        return $this->modelFieldsProvider;
+        return new AccountMoveFieldsProvider(new ModelFieldsProvider());
     }
 }

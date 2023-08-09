@@ -8,23 +8,17 @@ use DateTimeInterface;
 
 final class Criterion implements CriterionInterface
 {
-    /** @var string|null */
-    private $fieldName;
+    private ?string $fieldName = null;
 
-    /** @var string|null */
-    private $operator;
+    private ?string $operator = null;
 
-    /** @var array|string|int|float|bool|null */
-    private $value;
+    private bool|float|int|string|array|null $value = null;
 
-    /** @var string|null */
-    private $logic;
+    private ?string $logic = null;
 
-    /** @var CriterionInterface|null */
-    private $c1;
+    private ?CriterionInterface $c1 = null;
 
-    /** @var CriterionInterface|null */
-    private $c2;
+    private ?CriterionInterface $c2 = null;
 
     private function __construct()
     {

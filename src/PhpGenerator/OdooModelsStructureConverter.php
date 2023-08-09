@@ -6,7 +6,7 @@ namespace FluxSE\OdooApiClient\PhpGenerator;
 
 use Exception;
 use FluxSE\OdooApiClient\Model\BaseInterface;
-use FluxSE\OdooApiClient\Model\Object\Base;
+use FluxSE\OdooApiClient\Model\Object\AbstractBase;
 use FluxSE\OdooApiClient\Model\OdooRelation;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\InspectionOperationsInterface;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\FieldsGetOptions;
@@ -21,37 +21,25 @@ use function Symfony\Component\String\u;
 
 final class OdooModelsStructureConverter implements OdooModelsStructureConverterInterface
 {
-    /** @var RecordListOperationsInterface */
-    private $recordListOperations;
-    /** @var InspectionOperationsInterface */
-    private $inspectionOperations;
-    /** @var PhpReservedWordsHelperInterface */
-    private $phpReservedWordsHelper;
-    /** @var ModelFixerInterface[] */
-    private $modelFixers;
+    /** @var iterable<ModelFixerInterface> */
+    private iterable $modelFixers;
 
-    /** @var array */
-    private $inheritedPropertiesCache = [];
+    private array $inheritedPropertiesCache = [];
     /** @var array<int, string> **/
-    private $modelIdToModelName = [];
-    /** @var array */
-    private $fields_getCache = [];
+    private array $modelIdToModelName = [];
+    private array $fields_getCache = [];
     /** @var array<string, string> */
-    private $modelNameToClass = [];
+    private array $modelNameToClass = [];
 
     /**
-     * @param ModelFixerInterface[] $modelFixers
+     * @param iterable<ModelFixerInterface> $modelFixers
      */
     public function __construct(
-        RecordListOperationsInterface $recordListOperations,
-        InspectionOperationsInterface $inspectionOperations,
-        PhpReservedWordsHelperInterface $phpReservedWordsHelper,
-        array $modelFixers = []
+        private RecordListOperationsInterface $recordListOperations,
+        private InspectionOperationsInterface $inspectionOperations,
+        private PhpReservedWordsHelperInterface $phpReservedWordsHelper,
+        iterable $modelFixers = [],
     ) {
-        $this->recordListOperations = $recordListOperations;
-        $this->inspectionOperations = $inspectionOperations;
-        $this->phpReservedWordsHelper = $phpReservedWordsHelper;
-        ksort($modelFixers);
         $this->modelFixers = $modelFixers;
     }
 
@@ -62,8 +50,12 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         $searchReadOptions = new SearchReadOptions();
         $searchReadOptions->setFields([
             'id',
+            'name',
+            'transient',
+            'modules',
             'model',
             'inherited_model_ids',
+            'state',
             'info',
         ]);
 
@@ -75,11 +67,12 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
 
         $this->initConvert($modelList);
 
+        $baseModelClass = $this->getClassNameFormModelName(self::BASE_MODEL_NAME);
         foreach ($modelList as $model) {
             $config[] = $this->convertModel(
                 $modelNamespace,
                 $model,
-                Base::class
+                $modelNamespace . '\\' . $baseModelClass
             );
         }
 
@@ -118,13 +111,11 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
     }
 
     /**
-     *
-     *
      * @throws Exception
      */
     private function getModelIdFromModelName(string $modelName): int
     {
-        $modelId = array_search($modelName, $this->modelIdToModelName);
+        $modelId = array_search($modelName, $this->modelIdToModelName, true);
         if (false === $modelId) {
             throw new Exception(sprintf(
                 'Unable to found the model id of the model named : "%s" !',
@@ -190,12 +181,10 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
 
         foreach ($search_read as $item) {
             // Store properties cache of all inherited models
-            if (false === empty($item['inherited_model_ids'])) {
-                foreach ($item['inherited_model_ids'] as $inheritedModelId) {
-                    $inheritedModel = $this->modelIdToModelName[$inheritedModelId];
-                    $fieldsInfo = $this->fields_get($inheritedModel);
-                    $this->addInheritedModelProperties($inheritedModel, $fieldsInfo);
-                }
+            foreach ($item['inherited_model_ids'] ?? [] as $inheritedModelId) {
+                $inheritedModel = $this->modelIdToModelName[$inheritedModelId];
+                $fieldsInfo = $this->fields_get($inheritedModel);
+                $this->addInheritedModelProperties($inheritedModel, $fieldsInfo);
             }
 
             // Avoid name collisions
@@ -245,7 +234,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         }
 
         if ($modelName === self::BASE_MODEL_NAME) {
-            $extends = null;
+            $extends = AbstractBase::class;
             $implements[] = BaseInterface::class;
         }
 
@@ -259,12 +248,16 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             'type' => $classType,
             'extends' => $extends,
             'implements' => $implements,
-            'description' => [
+            'phpdoc' => [
                 PhpDocInterface::TYPE_DESCRIPTION => [
                     sprintf('Odoo model : %s', $modelName),
                     '---',
-                    sprintf('Name : %s', $item['model']),
+                    '',
+                    sprintf('Name : %s (%s)', $item['name'], $item['model']),
+                    sprintf('Transient model : %s', $item['transient'] ? 'yes' : 'no'),
+                    sprintf('Modules : %s', $item['modules']),
                     '---',
+                    '',
                     'Info :',
                     $info,
                 ]
@@ -281,16 +274,20 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         foreach ($fieldsInfo as $fieldName => $fieldInfo) {
             $types = OdooModelsStructureConverterHelper::transformTypes($fieldInfo);
             $description = $this->buildModelPropertyDescription($fieldInfo, $modelNamespace, $types);
+            $scope = null;
 
             $inheritedFieldMetadata = $this->getInheritedFieldMetadata($item, $fieldName);
             $inheritedFieldInfo = $inheritedFieldMetadata['info'];
             $inheritedFieldPosition = $inheritedFieldMetadata['position'];
             $inheritedRequired = false;
             if (null !== $inheritedFieldInfo) {
-                $inheritedTypes = OdooModelsStructureConverterHelper::transformTypes($inheritedFieldInfo);
-                $inheritedRequired = false === in_array('null', $inheritedTypes);
+                // Sometimes inherited types are not the same as the one declared on the current model
+                // To avoid error we choose to override types with the parent ones
+                $types = OdooModelsStructureConverterHelper::transformTypes($inheritedFieldInfo);
+                $inheritedRequired = false === in_array('null', $types);
                 $inheritedRequired = $inheritedRequired && ($inheritedFieldInfo['required'] ?? false);
                 $inheritedRequired = $inheritedRequired && !($inheritedFieldInfo['default'] ?? null);
+                $scope = 'protected';
             }
 
             if ($fieldName === 'id') {
@@ -298,6 +295,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             }
 
             $properties[] = [
+                'scope' => $scope,
                 'name' => $fieldName,
                 'types' => $types,
                 'default' => $fieldInfo['default'] ?? null,
@@ -322,11 +320,13 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         $help = $fieldInfo['help'] ?? '';
         if (!empty($help)) {
             $description[] = '---';
+            $description[] = '';
             $description[] = OdooModelsStructureConverterHelper::sanitizeComment($fieldInfo['help'] ?? '');
         }
 
         if (($fieldInfo['type'] ?? '') === 'selection') {
             $description[] = '---';
+            $description[] = '';
             $description[] = 'Selection :';
             $description = array_merge(
                 $description,
@@ -339,6 +339,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             || true === in_array(OdooRelation::class . '[]', $types)
         ) {
             $description[] = '---';
+            $description[] = '';
             $relationField = isset($fieldInfo['relation_field'])
                 ? sprintf(' -> %s', $fieldInfo['relation_field'])
                 : null
@@ -348,6 +349,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         }
 
         $description[] = '---';
+        $description[] = '';
         $searchable = $fieldInfo['searchable'] ?? false;
         $description[] = sprintf('Searchable : %s', $searchable ? 'yes' : 'no');
         $sortable = $fieldInfo['sortable'] ?? false;
@@ -356,37 +358,31 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         return $description;
     }
 
-    private function getInheritedFieldMetadata(array $currentItem, string $fieldName): array
+    private function getInheritedFieldMetadata(array $item, string $fieldName): array
     {
-        $modelName = $currentItem['model'];
-
-        $metadata = [
-            'position' => null,
-            'info' => null,
-        ];
-
-        if ($modelName === self::BASE_MODEL_NAME) {
-            return $metadata;
-        }
-
-        $inheritedModelIds = $currentItem['inherited_model_ids'];
+        $inheritedModelIds = $item['inherited_model_ids'] ?? [];
 
         // Add "base" model id because all models inherit from it
         $inheritedModelIds[] = $this->getModelIdFromModelName(self::BASE_MODEL_NAME);
 
         foreach ($inheritedModelIds as $inheritedModelId) {
             $inheritedModel = $this->modelIdToModelName[$inheritedModelId];
-            $properties = $this->inheritedPropertiesCache[$inheritedModel];
-            if (false === in_array($fieldName, $properties)) {
+            $inheritedProperties = $this->inheritedPropertiesCache[$inheritedModel];
+            if (false === in_array($fieldName, $inheritedProperties, true)) {
                 continue;
             }
 
-            $modelInfo = $this->fields_get($inheritedModel);
-            $metadata['position'] = array_search($fieldName, array_keys($modelInfo));
-            $metadata['info'] = $modelInfo[$fieldName];
-            break;
+            $inheritedModelInfo = $this->fields_get($inheritedModel);
+
+            return [
+                'position' => array_search($fieldName, array_keys($inheritedModelInfo), true),
+                'info' => $inheritedModelInfo[$fieldName],
+            ];
         }
 
-        return $metadata;
+        return [
+            'position' => null,
+            'info' => null,
+        ];
     }
 }

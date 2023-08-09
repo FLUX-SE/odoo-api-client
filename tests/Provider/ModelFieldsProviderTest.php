@@ -2,6 +2,7 @@
 
 namespace Tests\FluxSE\OdooApiClient\Provider;
 
+use FluxSE\OdooApiClient\Provider\ModelFieldsProviderInterface;
 use PHPUnit\Framework\TestCase;
 use Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw\ExecuteKwOperationsTrait;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move;
@@ -11,9 +12,11 @@ class ModelFieldsProviderTest extends TestCase
 {
     use ExecuteKwOperationsTrait;
 
+    protected ModelFieldsProviderInterface $modelFieldsProvider;
+
     protected function setUp(): void
     {
-        $this->buildModelFieldsProvider();
+        $this->modelFieldsProvider = $this->buildModelFieldsProvider();
     }
 
     public function testAccountMoveFields(): void

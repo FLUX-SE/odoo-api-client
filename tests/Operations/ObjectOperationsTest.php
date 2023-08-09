@@ -6,12 +6,12 @@ namespace Tests\FluxSE\OdooApiClient\Operations;
 
 use FluxSE\OdooApiClient\Builder\OdooApiClientBuilder;
 use FluxSE\OdooApiClient\Operations\ObjectOperations;
+use FluxSE\OdooApiClient\Operations\ObjectOperationsInterface;
 use PHPUnit\Framework\TestCase;
 
 class ObjectOperationsTest extends TestCase
 {
-    /** @var ObjectOperations */
-    private $objectOperations;
+    private ObjectOperationsInterface $objectOperations;
 
     /**
      *
@@ -27,7 +27,7 @@ class ObjectOperationsTest extends TestCase
         );
     }
 
-    public function testExecute_kw()
+    public function testExecute_kw(): void
     {
         $response = $this->objectOperations->execute_kw(
             'res.partner',

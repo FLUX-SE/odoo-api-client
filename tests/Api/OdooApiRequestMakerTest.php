@@ -5,37 +5,48 @@ declare(strict_types=1);
 namespace Tests\FluxSE\OdooApiClient\Api;
 
 use FluxSE\OdooApiClient\Api\OdooApiRequestMaker;
+use FluxSE\OdooApiClient\Api\OdooApiRequestMakerInterface;
 use FluxSE\OdooApiClient\Api\RequestBody;
 use FluxSE\OdooApiClient\Builder\OdooApiClientBuilder;
-use FluxSE\OdooApiClient\Serializer\XmlRpcSerializerHelperInterface;
+use FluxSE\OdooApiClient\Serializer\RpcSerializerHelperInterface;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Client\ClientExceptionInterface;
 
 class OdooApiRequestMakerTest extends TestCase
 {
-    /** @var OdooApiRequestMaker */
-    private $odooApiRequestMaker;
-    /** @var XmlRpcSerializerHelperInterface */
-    private $xmlRpcSerializerHelper;
+    private OdooApiRequestMakerInterface $odooXmlRpcApiRequestMaker;
 
-    /**
-     *
-     */
+    private OdooApiRequestMakerInterface $odooJsonRpcApiRequestMaker;
+
+    private RpcSerializerHelperInterface $xmlRpcSerializerHelper;
+
+    private RpcSerializerHelperInterface $jsonRpcSerializerHelper;
+
     protected function setUp(): void
     {
-        $odooApiClientBuilder = new OdooApiClientBuilder($_ENV['ODOO_API_HOST']);
-        $this->xmlRpcSerializerHelper = $odooApiClientBuilder->buildXmlRpcSerializerHelper();
-        $this->odooApiRequestMaker = $odooApiClientBuilder->buildApiRequestMaker();
+        $odooXmlApiClientBuilder = new OdooApiClientBuilder($_ENV['ODOO_API_HOST'], OdooApiRequestMakerInterface::BASE_XMLRPC_PATH);
+        $this->xmlRpcSerializerHelper = $odooXmlApiClientBuilder->buildRpcSerializerHelper();
+        $this->odooXmlRpcApiRequestMaker = $odooXmlApiClientBuilder->buildApiRequestMaker();
+
+        $odooJsonApiClientBuilder = new OdooApiClientBuilder($_ENV['ODOO_API_HOST']);
+        $this->jsonRpcSerializerHelper = $odooJsonApiClientBuilder->buildRpcSerializerHelper();
+        $this->odooJsonRpcApiRequestMaker = $odooJsonApiClientBuilder->buildApiRequestMaker();
     }
 
-    /**
-     * @throws ClientExceptionInterface
-     */
-    public function testRequest()
+    public function testXmlRpcRequest(): void
     {
         $requestBody = new RequestBody('about');
         $body = $this->xmlRpcSerializerHelper->serializeRequestBody($requestBody);
-        $response = $this->odooApiRequestMaker->request('/common', $body);
+        $response = $this->odooXmlRpcApiRequestMaker->request('/common', $body);
+
+        $this->assertSame(200, $response->getStatusCode());
+    }
+
+    public function testJsonRpcRequest(): void
+    {
+        $requestBody = new RequestBody('call');
+        $requestBody->setJsonParams('common', 'about', []);
+        $body = $this->jsonRpcSerializerHelper->serializeRequestBody($requestBody);
+        $response = $this->odooJsonRpcApiRequestMaker->request('', $body);
 
         $this->assertSame(200, $response->getStatusCode());
     }

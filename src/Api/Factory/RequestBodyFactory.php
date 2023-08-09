@@ -8,11 +8,8 @@ use FluxSE\OdooApiClient\Api\RequestBodyInterface;
 
 final class RequestBodyFactory implements RequestBodyFactoryInterface
 {
-    private string $className;
-
-    public function __construct(string $className)
+    public function __construct(private string $className)
     {
-        $this->className = $className;
     }
 
     public function create(string $method): RequestBodyInterface

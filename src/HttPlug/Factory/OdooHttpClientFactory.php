@@ -5,29 +5,26 @@ declare(strict_types=1);
 namespace FluxSE\OdooApiClient\HttPlug\Factory;
 
 use FluxSE\OdooApiClient\HttPlug\Plugin\OdooApiErrorPlugin;
-use FluxSE\OdooApiClient\Serializer\XmlRpcSerializerHelperInterface;
+use FluxSE\OdooApiClient\Serializer\RpcSerializerHelperInterface;
 use Http\Client\Common\Plugin;
 use Http\Client\Common\Plugin\ContentTypePlugin;
 use Http\Client\Common\Plugin\ErrorPlugin;
 use Http\Client\Common\Plugin\LoggerPlugin;
 use Http\Client\Common\PluginClient;
-use Http\Discovery\HttpClientDiscovery;
+use Http\Discovery\Psr18ClientDiscovery;
 use Psr\Http\Client\ClientInterface;
 use Symfony\Component\HttpKernel\Log\Logger;
 
 final class OdooHttpClientFactory implements OdooHttpClientFactoryInterface
 {
-    private XmlRpcSerializerHelperInterface $xmlRpcSerializerHelper;
-
-    public function __construct(XmlRpcSerializerHelperInterface $xmlRpcSerializerHelper)
+    public function __construct(private RpcSerializerHelperInterface $rpcSerializerHelper)
     {
-        $this->xmlRpcSerializerHelper = $xmlRpcSerializerHelper;
     }
 
     public function create(): ClientInterface
     {
         return new PluginClient(
-            HttpClientDiscovery::find(),
+            Psr18ClientDiscovery::find(),
             $this->buildPlugins()
         );
     }
@@ -75,12 +72,12 @@ final class OdooHttpClientFactory implements OdooHttpClientFactoryInterface
 
         return new OdooApiErrorPlugin(
             $errorPlugin,
-            $this->xmlRpcSerializerHelper
+            $this->rpcSerializerHelper
         );
     }
 
-    public function getXmlRpcSerializerHelper(): XmlRpcSerializerHelperInterface
+    public function getRpcSerializerHelper(): RpcSerializerHelperInterface
     {
-        return $this->xmlRpcSerializerHelper;
+        return $this->rpcSerializerHelper;
     }
 }

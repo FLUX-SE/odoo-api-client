@@ -5,79 +5,49 @@ declare(strict_types=1);
 namespace FluxSE\OdooApiClient\Model\Object;
 
 use DateTimeInterface;
-use FluxSE\OdooApiClient\Model\BaseInterface;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
-/**
- * Odoo model : base
- * ---
- * Name : base
- * ---
- * Info :
- * Updates the base class to support setting xids directly in create by
- *         providing an "id" key (otherwise stripped by create) during an import
- *         (which should strip 'id' from the input data anyway)
- */
-class Base implements BaseInterface
+abstract class AbstractBase implements BaseObjectInterface
 {
     /**
      * ID
      * ---
      * Searchable : yes
      * Sortable : yes
-     *
-     * @var int|null|false
      */
-    protected $id;
+    protected int|null|false $id = null;
 
     /**
      * Display Name
      * ---
      * Searchable : no
      * Sortable : no
-     *
-     * @var string|null
      */
-    protected $display_name;
+    protected string|null $display_name = null;
 
     /**
      * Last Modified on
      * ---
      * Searchable : no
      * Sortable : no
-     *
-     * @var DateTimeInterface|null
      */
-    protected $__last_update;
+    protected ?DateTimeInterface $__last_update = null;
 
-    /**
-     * @return int|null|false
-     *
-     * @SerializedName("id")
-     */
-    public function getId()
+    public function getId(): int|null|false
     {
         return $this->id;
     }
 
-    /**
-     * @param int|null|false $id
-     */
-    public function setId($id): void
+    public function setId(int|null|false $id): void
     {
         $this->id = $id;
     }
 
-    /**
-     * @SerializedName("display_name")
-     */
     public function getDisplayName(): ?string
     {
         return $this->display_name;
     }
 
-    /**
-     */
     public function setDisplayName(?string $display_name): void
     {
         $this->display_name = $display_name;
@@ -96,12 +66,5 @@ class Base implements BaseInterface
     public function setLastUpdate(?DateTimeInterface $__last_update): void
     {
         $this->__last_update = $__last_update;
-    }
-
-    /**
-     */
-    public static function getOdooModelName(): string
-    {
-        return 'base';
     }
 }

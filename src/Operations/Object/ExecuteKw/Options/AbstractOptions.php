@@ -13,7 +13,7 @@ abstract class AbstractOptions implements OptionsInterface
         return $this->getOptions();
     }
 
-    public function addOption(string $name, $option): void
+    public function addOption(string $name, array|string|bool|int|float|null $option): void
     {
         $this->options[$name] = $option;
     }
@@ -25,13 +25,9 @@ abstract class AbstractOptions implements OptionsInterface
         }
     }
 
-    public function getOption(string $name)
+    public function getOption(string $name): array|string|bool|int|float|null
     {
-        if (isset($this->options[$name])) {
-            return $this->options[$name];
-        }
-
-        return null;
+        return $this->options[$name] ?? null;
     }
 
     public function getOptions(): array

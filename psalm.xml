@@ -11,7 +11,7 @@
         <directory name="tests" />
         <ignoreFiles allowMissingFiles="true">
             <directory name="vendor" />
-            <directory name="tests/TestModel" />
+            <directory name="tests" />
         </ignoreFiles>
     </projectFiles>
 

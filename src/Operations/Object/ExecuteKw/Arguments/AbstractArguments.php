@@ -6,15 +6,14 @@ namespace FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments;
 
 abstract class AbstractArguments implements ArgumentsInterface
 {
-    /** @var array */
-    protected $arguments = [];
+    protected array $arguments = [];
 
     public function toArray(): array
     {
         return array_values($this->arguments);
     }
 
-    public function addArgument($argument): void
+    public function addArgument(array|string|bool|int|float|null $argument): void
     {
         $this->arguments[] = $argument;
     }

@@ -8,33 +8,18 @@ use Psr\Http\Message\ResponseInterface;
 
 final class ObjectOperations extends AbstractOperations implements ObjectOperationsInterface
 {
-    /** @var string */
-    private $database;
-    /** @var string */
-    private $username;
-    /** @var string */
-    private $password;
-    /** @var CommonOperationsInterface */
-    private $commonOperations;
-
-    /** @var int */
-    private $uid;
+    private ?int $uid = null;
 
     public function __construct(
-        string $database,
-        string $username,
-        string $password,
-        CommonOperationsInterface $commonOperations
+        private string $database,
+        private string $username,
+        private string $password,
+        private CommonOperationsInterface $commonOperations
     ) {
-        $this->database = $database;
-        $this->username = $username;
-        $this->password = $password;
-        $this->commonOperations = $commonOperations;
-
         parent::__construct(
             $commonOperations->getApiRequestMaker(),
             $commonOperations->getRequestBodyFactory(),
-            $commonOperations->getXmlRpcSerializerHelper()
+            $commonOperations->getRpcSerializerHelper()
         );
     }
 

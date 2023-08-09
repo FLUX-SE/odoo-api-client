@@ -8,10 +8,7 @@ interface ArgumentsInterface
 {
     public function toArray(): array;
 
-    /**
-     * @param array|string|bool|int|float|null $argument
-     */
-    public function addArgument($argument): void;
+    public function addArgument(array|string|bool|int|float|null $argument): void;
 
     public function getArguments(): array;
 

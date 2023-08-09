@@ -6,7 +6,6 @@ namespace FluxSE\OdooApiClient\PhpGenerator;
 
 use DateTimeInterface;
 use FluxSE\OdooApiClient\Model\OdooRelation;
-use Webmozart\Assert\Assert;
 
 final class OdooModelsStructureConverterHelper
 {
@@ -20,40 +19,16 @@ final class OdooModelsStructureConverterHelper
         $phpTypes = [];
 
         $odooType = $fieldInfo['type'] ?? null;
-        switch ($odooType) {
-            case 'integer':
-            case 'many2one_reference':
-                $phpTypes[] = 'int';
-                break;
-            case 'boolean':
-                $phpTypes[] = 'bool';
-                break;
-            case 'char':
-            case 'html':
-            case 'text':
-            case 'selection':
-                $phpTypes[] = 'string';
-                break;
-            case 'date':
-            case 'datetime':
-                $phpTypes[] = DateTimeInterface::class;
-                break;
-            case 'float':
-            case 'monetary':
-                $phpTypes[] = 'float';
-                break;
-            case 'many2one':
-                $phpTypes[] = OdooRelation::class;
-                break;
-            case 'many2many':
-            case 'one2many':
-                $phpTypes[] = OdooRelation::class . '[]';
-                break;
-            case 'binary':
-            default:
-                $phpTypes[] = 'mixed';
-                break;
-        }
+        $phpTypes[] = match ($odooType) {
+            'integer', 'many2one_reference' => 'int',
+            'boolean' => 'bool',
+            'char', 'html', 'text', 'selection' => 'string',
+            'date', 'datetime' => DateTimeInterface::class,
+            'float', 'monetary' => 'float',
+            'many2one' => OdooRelation::class,
+            'many2many', 'one2many' => OdooRelation::class . '[]',
+            default => 'mixed',
+        };
 
         $required = (bool) ($fieldInfo['required'] ?? false);
         if (false === $required) {

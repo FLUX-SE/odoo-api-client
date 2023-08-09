@@ -12,22 +12,13 @@ use Psr\Http\Message\UriInterface;
 
 final class OdooApiRequestMaker implements OdooApiRequestMakerInterface
 {
-    private ClientInterface $httpClient;
-
-    private RequestFactoryInterface $requestFactory;
-
-    private UriInterface $baseUri;
-
     private ?ResponseInterface $lastResponse = null;
 
     public function __construct(
-        ClientInterface $httpClient,
-        RequestFactoryInterface $requestFactory,
-        UriInterface $baseUri
+        private ClientInterface $httpClient,
+        private RequestFactoryInterface $requestFactory,
+        private UriInterface $baseUri,
     ) {
-        $this->httpClient = $httpClient;
-        $this->requestFactory = $requestFactory;
-        $this->baseUri = $baseUri;
     }
 
 
@@ -66,5 +57,15 @@ final class OdooApiRequestMaker implements OdooApiRequestMakerInterface
     public function setBaseUri(UriInterface $baseUri): void
     {
         $this->baseUri = $baseUri;
+    }
+
+    public function isJsonRpc(): bool
+    {
+        return false !== preg_match('#' . self::BASE_JSONRPC_PATH . '$#', $this->baseUri->getPath());
+    }
+
+    public function isXmlRpc(): bool
+    {
+        return false !== preg_match('#' . self::BASE_XMLRPC_PATH . '$#', $this->baseUri->getPath());
     }
 }

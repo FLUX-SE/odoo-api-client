@@ -12,15 +12,14 @@ class InspectionOperationsTest extends TestCase
 {
     use ExecuteKwOperationsTrait;
 
-    /** @var InspectionOperations */
-    private $inspectionOperations;
+    private InspectionOperations $inspectionOperations;
 
     protected function setUp(): void
     {
         $this->inspectionOperations = $this->buildExecuteKwOperations(InspectionOperations::class);
     }
 
-    public function testFields_get()
+    public function testFields_get(): void
     {
         $result = $this->inspectionOperations->fields_get('ir.model');
         $irModelFields = array_keys($result);

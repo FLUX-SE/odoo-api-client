@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace FluxSE\OdooApiClient\HttPlug\Plugin;
 
 use FluxSE\OdooApiClient\Api\Fault;
-use FluxSE\OdooApiClient\Serializer\XmlRpcSerializerHelperInterface;
+use FluxSE\OdooApiClient\Api\FaultInterface;
+use FluxSE\OdooApiClient\Api\JsonFault;
+use FluxSE\OdooApiClient\Serializer\RpcSerializerHelperInterface;
 use Http\Client\Common\Exception\ClientErrorException;
 use Http\Client\Common\Plugin;
 use Http\Promise\Promise;
@@ -14,16 +16,10 @@ use Psr\Http\Message\ResponseInterface;
 
 final class OdooApiErrorPlugin implements Plugin
 {
-    private Plugin $errorPluginDecorated;
-
-    private XmlRpcSerializerHelperInterface $xmlRpcSerializerHelper;
-
     public function __construct(
-        Plugin $errorPluginDecorated,
-        XmlRpcSerializerHelperInterface $xmlRpcSerializerHelper
+        private Plugin $errorPluginDecorated,
+        private RpcSerializerHelperInterface $rpcSerializerHelper
     ) {
-        $this->errorPluginDecorated = $errorPluginDecorated;
-        $this->xmlRpcSerializerHelper = $xmlRpcSerializerHelper;
     }
 
     public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
@@ -69,11 +65,34 @@ final class OdooApiErrorPlugin implements Plugin
         );
     }
 
-    private function getFaultResponse(ResponseInterface $response): ?Fault
+    private function getFaultResponse(ResponseInterface $response): ?FaultInterface
+    {
+        if (str_contains($response->getHeaderLine('Content-Type'), 'application/json')) {
+            return $this->getJsonFaultResponse($response);
+        }
+
+        if (str_contains($response->getHeaderLine('Content-Type'), 'application/xml')) {
+            return $this->getXmlFaultResponse($response);
+        }
+
+        return null;
+    }
+
+    private function getJsonFaultResponse(ResponseInterface $response): ?FaultInterface
     {
         $body = $response->getBody()->__toString();
-        if (preg_match('#.*<methodResponse>.*<fault>.*#s', $body)) {
-            return $this->xmlRpcSerializerHelper->deserializeResponseBody($response->getBody(), Fault::class);
+        if (preg_match('#[\'"]jsonrpc[\'"]: ?[\'"]2.0[\'"],[^{]+[\'"]error[\'"]:#si', $body)) {
+            return $this->rpcSerializerHelper->deserializeResponseBody($response->getBody(), JsonFault::class);
+        }
+
+        return null;
+    }
+
+    private function getXmlFaultResponse(ResponseInterface $response): ?FaultInterface
+    {
+        $body = $response->getBody()->__toString();
+        if (preg_match('#<methodResponse>.*<fault>#s', $body)) {
+            return $this->rpcSerializerHelper->deserializeResponseBody($response->getBody(), Fault::class);
         }
 
         return null;
