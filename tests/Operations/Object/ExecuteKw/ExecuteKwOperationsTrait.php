@@ -20,7 +20,6 @@ trait ExecuteKwOperationsTrait
      */
     protected function buildExecuteKwOperations(string $operationsClass): OperationsInterface
     {
-
         return $this->buildOdooApiClientBuilder()->buildExecuteKwOperations(
             $operationsClass,
             $_ENV['ODOO_API_DATABASE'],
