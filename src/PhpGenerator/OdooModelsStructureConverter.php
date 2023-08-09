@@ -274,6 +274,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         foreach ($fieldsInfo as $fieldName => $fieldInfo) {
             $types = OdooModelsStructureConverterHelper::transformTypes($fieldInfo);
             $description = $this->buildModelPropertyDescription($fieldInfo, $modelNamespace, $types);
+            $scope = null;
 
             $inheritedFieldMetadata = $this->getInheritedFieldMetadata($item, $fieldName);
             $inheritedFieldInfo = $inheritedFieldMetadata['info'];
@@ -284,6 +285,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
                 $inheritedRequired = false === in_array('null', $inheritedTypes);
                 $inheritedRequired = $inheritedRequired && ($inheritedFieldInfo['required'] ?? false);
                 $inheritedRequired = $inheritedRequired && !($inheritedFieldInfo['default'] ?? null);
+                $scope = 'protected';
             }
 
             if ($fieldName === 'id') {
@@ -291,6 +293,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             }
 
             $properties[] = [
+                'scope' => $scope,
                 'name' => $fieldName,
                 'types' => $types,
                 'default' => $fieldInfo['default'] ?? null,
