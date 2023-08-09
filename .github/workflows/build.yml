@@ -115,10 +115,6 @@ jobs:
                     vendor/bin/ecs check src tests
 
             -
-                name: Run PHPStan
-                run: vendor/bin/phpstan analyse -l max src/
-
-            -
                 name: Wait until odoo is ready
                 run: |
                     while ! docker logs "odoo" 2>&1 | grep -q "odoo.modules.loading: Modules loaded";
@@ -135,6 +131,9 @@ jobs:
                         "Tests\\FluxSE\\OdooApiClient\\TestModel\\Object"
 
             # Need classes from Odoo to be generated for the tests folder
+            -
+                name: Run PHPStan
+                run: vendor/bin/phpstan analyse -l max src/ tests/
             -
                 name: Run Psalm
                 run: vendor/bin/psalm

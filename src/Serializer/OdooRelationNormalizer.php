@@ -21,7 +21,7 @@ final class OdooRelationNormalizer implements NormalizerInterface, NormalizerAwa
         return $data instanceof OdooRelation;
     }
 
-    public function normalize($object, $format = null, array $context = [])
+    public function normalize($object, $format = null, array $context = []): int|array|null|false
     {
         if ($object instanceof OdooRelation) {
             return $this->normalizeRelation($object, $format, $context);
@@ -33,12 +33,7 @@ final class OdooRelationNormalizer implements NormalizerInterface, NormalizerAwa
         ));
     }
 
-    /**
-     * @return int|array|null|false
-     *
-     * @throws ExceptionInterface
-     */
-    private function normalizeRelation(OdooRelation $object, ?string $format = null, array $context = [])
+    private function normalizeRelation(OdooRelation $object, ?string $format = null, array $context = []): int|array|null|false
     {
         if (null === $object->getCommand()) {
             return $object->getId();
@@ -73,10 +68,7 @@ final class OdooRelationNormalizer implements NormalizerInterface, NormalizerAwa
         return $object->getCommandId();
     }
 
-    /**
-     * @return null|BaseInterface|int[]|int $data
-     */
-    private function buildThirdParam(OdooRelation $object)
+    private function buildThirdParam(OdooRelation $object): null|array|BaseInterface|int
     {
         if (in_array($object->getCommand(), [
             OdooRelation::COMMAND_ADD,

@@ -281,8 +281,10 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             $inheritedFieldPosition = $inheritedFieldMetadata['position'];
             $inheritedRequired = false;
             if (null !== $inheritedFieldInfo) {
-                $inheritedTypes = OdooModelsStructureConverterHelper::transformTypes($inheritedFieldInfo);
-                $inheritedRequired = false === in_array('null', $inheritedTypes);
+                // Sometimes inherited types are not the same as the one declared on the current model
+                // To avoid error we choose to override types with the parent ones
+                $types = OdooModelsStructureConverterHelper::transformTypes($inheritedFieldInfo);
+                $inheritedRequired = false === in_array('null', $types);
                 $inheritedRequired = $inheritedRequired && ($inheritedFieldInfo['required'] ?? false);
                 $inheritedRequired = $inheritedRequired && !($inheritedFieldInfo['default'] ?? null);
                 $scope = 'protected';

@@ -38,7 +38,7 @@ final class OdooRelationsNormalizer implements NormalizerInterface, NormalizerAw
     /**
      * OdooRelation[] $object
      */
-    public function normalize($object, $format = null, array $context = [])
+    public function normalize($object, $format = null, array $context = []): array
     {
         if (!is_array($object)) {
             throw new NotNormalizableValueException(sprintf(

@@ -5,7 +5,9 @@ namespace Tests\FluxSE\OdooApiClient\Manager;
 use DateTime;
 use DateTimeInterface;
 use FluxSE\OdooApiClient\Manager\ModelListManager;
+use FluxSE\OdooApiClient\Manager\ModelListManagerInterface;
 use FluxSE\OdooApiClient\Manager\ModelManager;
+use FluxSE\OdooApiClient\Manager\ModelManagerInterface;
 use FluxSE\OdooApiClient\Model\OdooRelation;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Arguments;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
@@ -36,17 +38,13 @@ class ModelManagerTest extends TestCase
 {
     use ExecuteKwOperationsTrait;
 
-    /** @var RecordOperationsInterface */
-    private RecordOperations $recordOperations;
+    private RecordOperationsInterface $recordOperations;
 
-    /** @var ModelManager */
-    private ModelManager $modelManager;
+    private ModelManagerInterface $modelManager;
 
-    /** @var ModelListManager */
-    private ModelListManager $modelListManager;
+    private ModelListManagerInterface $modelListManager;
 
-    /** @var int */
-    private $odooVersion;
+    private int $odooVersion;
 
     protected function setUp(): void
     {
@@ -141,7 +139,10 @@ class ModelManagerTest extends TestCase
         $category = $this->retrieveFirstCategory();
 
         if ($this->odooVersion <= 15) {
-            /** @psalm-suppress TooFewArguments **/
+            /**
+             * @psalm-suppress TooFewArguments
+             * @phpstan-ignore-next-line
+             */
             $template = new Template(
                 'test',
                 'consu',
@@ -151,7 +152,10 @@ class ModelManagerTest extends TestCase
                 []
             );
         } else {
-            /** @psalm-suppress TooManyArguments **/
+            /**
+             * @psalm-suppress TooManyArguments
+             * @phpstan-ignore-next-line
+             */
             $template = new Template(
                 'test',
                 'consu',
