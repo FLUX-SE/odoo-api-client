@@ -3,10 +3,12 @@
 [![Build Status][ico-github-actions]][link-github-actions]
 [![Quality Score][ico-code-quality]][link-code-quality]
 
-## Odoo API client
+# Odoo API client
+
+Odoo (formerly OpenERP) is a Belgian suite of business management software tools (PGI) : https://www.odoo.com/.
 
 This library allow communication trough Odoo JSON-RPC or XML-RPC API.
-Documentation about it can be found here :
+Documentation about it can be found here (for the XML-RPC one, none for the JSON-RPC) :
 https://www.odoo.com/documentation/master/developer/reference/external_api.html
 
 This library will allow you to :
