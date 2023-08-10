@@ -29,10 +29,10 @@ jobs:
             matrix:
                 odoo: [13, 14, 15, 16]
                 symfony: ["^5.4", "^6.3"]
-                php: [8.0, 8.1, 8.2]
+                php: ["8.0", "8.1", "8.2"] # " required to keep the .0
                 exclude:
                     - symfony: "^6.3"
-                      php: 8.0
+                      php: "8.0"
         services:
             postgres:
                 image: postgres
