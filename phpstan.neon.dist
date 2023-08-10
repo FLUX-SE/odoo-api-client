@@ -1,4 +1,5 @@
 parameters:
+    reportUnmatchedIgnoredErrors: false
     checkMissingIterableValueType: false
 
     paths:
