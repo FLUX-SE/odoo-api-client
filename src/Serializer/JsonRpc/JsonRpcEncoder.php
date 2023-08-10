@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace FluxSE\OdooApiClient\Serializer\JsonRpc;
 
-use JsonException;
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
 use Symfony\Component\Serializer\Exception\UnexpectedValueException;
 
@@ -28,9 +27,6 @@ final class JsonRpcEncoder implements EncoderInterface
         return $format === self::FORMAT;
     }
 
-    /**
-     * @throws JsonException
-     */
     public function encode($data, string $format, array $context = []): string
     {
         if (false === is_array($data)) {

@@ -11,7 +11,6 @@
         <directory name="tests" />
         <ignoreFiles allowMissingFiles="true">
             <directory name="vendor" />
-            <directory name="tests" />
         </ignoreFiles>
     </projectFiles>
 
@@ -22,5 +21,15 @@
                 <file name="src/Operations/Object/ExecuteKw/Options/ReadOptionsTrait.php"/>
             </errorLevel>
         </LessSpecificImplementedReturnType>
+        <InvalidExtendClass>
+            <errorLevel type="info">
+                <file name="src/Serializer/OdooNormalizer.php" />
+            </errorLevel>
+        </InvalidExtendClass>
+        <MethodSignatureMismatch>
+            <errorLevel type="info">
+                <file name="src/Serializer/OdooNormalizer.php" />
+            </errorLevel>
+        </MethodSignatureMismatch>
     </issueHandlers>
 </psalm>

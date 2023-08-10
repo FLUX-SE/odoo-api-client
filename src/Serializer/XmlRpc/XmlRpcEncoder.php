@@ -29,7 +29,7 @@ final class XmlRpcEncoder implements EncoderInterface
         return $format === self::FORMAT;
     }
 
-    public function encode($data, string $format, array $context = []): string
+    public function encode(mixed $data, string $format, array $context = []): string
     {
         if (false === is_array($data)) {
             throw new UnexpectedValueException(sprintf(
@@ -55,6 +55,9 @@ final class XmlRpcEncoder implements EncoderInterface
             ]
         );
 
-        return xmlrpc_encode_request($method, $params, $outputOptions);
+        /** @var string $xmlrpc_encode_request psalm bug ? */
+        $xmlrpc_encode_request = xmlrpc_encode_request($method, $params, $outputOptions);
+
+        return $xmlrpc_encode_request;
     }
 }

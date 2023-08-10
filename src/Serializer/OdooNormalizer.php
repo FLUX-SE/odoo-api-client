@@ -5,20 +5,14 @@ declare(strict_types=1);
 namespace FluxSE\OdooApiClient\Serializer;
 
 use FluxSE\OdooApiClient\Model\OdooRelation;
-use Reflection;
 use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 final class OdooNormalizer extends ObjectNormalizer
 {
     public const NORMALIZE_FOR_UPDATE = 'normalize_for_update';
-    /**
-     * @param object $object
-     * @param string $attribute
-     * @param mixed $value
-     * @param string|null $format
-     */
-    protected function setAttributeValue($object, $attribute, $value, $format = null, array $context = []): void
+
+    protected function setAttributeValue(object $object, string $attribute, $value, string $format = null, array $context = []): void
     {
         /**
          * Override to set null when original value is false
@@ -40,14 +34,14 @@ final class OdooNormalizer extends ObjectNormalizer
             return;
         }
 
-        if ($value === $newValue) {
+        if (false === $newValue) {
             return;
         }
 
         parent::setAttributeValue($object, $attribute, null, $format, $context);
     }
 
-    protected function getAttributeValue(object $object, string $attribute, string $format = null, array $context = [])
+    protected function getAttributeValue(object $object, string $attribute, string $format = null, array $context = []): mixed
     {
         /**
          * Specific case of normalized data returned as null instead of being just transformed

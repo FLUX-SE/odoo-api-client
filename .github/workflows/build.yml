@@ -136,7 +136,7 @@ jobs:
                 run: vendor/bin/phpstan analyse -l max src/ tests/
             -
                 name: Run Psalm
-                run: vendor/bin/psalm
+                run: vendor/bin/psalm --show-info=false --output-format=github --php-version=${{ matrix.php }}
             -
                 name: Run PHPUnit
                 run: vendor/bin/phpunit --colors=always

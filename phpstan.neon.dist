@@ -13,3 +13,12 @@ parameters:
         - '/Method FluxSE\\OdooApiClient\\Serializer\\(Json|Xml)Rpc\\(Json|Xml)RpcSerializerHelper::deserializeResponseBody\(\) should return T of object but returns mixed\./'
         - '/Method FluxSE\\OdooApiClient\\Serializer\\(Json|Xml)Rpc\\(Json|Xml)RpcSerializerHelper::decodeResponseBody\(\) should return array\|bool\|int\|string but returns mixed\./'
 
+        -
+            message: '/Class FluxSE\\OdooApiClient\\Serializer\\OdooNormalizer extends \@final class Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer\./'
+            count: 1
+            path: src/Serializer/OdooNormalizer.php
+        -
+            message: '/Method FluxSE\\OdooApiClient\\Serializer\\OdooNormalizer::setAttributeValue\(\) has parameter \$value with no type specified\./'
+            count: 1
+            path: src/Serializer/OdooNormalizer.php
+
