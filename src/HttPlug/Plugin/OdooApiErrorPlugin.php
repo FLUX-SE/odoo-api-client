@@ -22,6 +22,9 @@ final class OdooApiErrorPlugin implements Plugin
     ) {
     }
 
+    /**
+     * @return Promise<ResponseInterface>
+     */
     public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
     {
         $errorNext = function (RequestInterface $request) use ($next, $first) {

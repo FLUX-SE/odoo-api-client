@@ -22,4 +22,12 @@ parameters:
             message: '/Method FluxSE\\OdooApiClient\\Serializer\\OdooNormalizer::setAttributeValue\(\) has parameter \$value with no type specified\./'
             count: 1
             path: src/Serializer/OdooNormalizer.php
+        -
+            message: '/Method FluxSE\\OdooApiClient\\HttPlug\\Plugin\\OdooApiErrorPlugin::handleRequest\(\) has parameter \$(first|next) with generic interface Http\\Promise\\Promise but does not specify its types: T/'
+            count: 2
+            path: src/HttPlug/Plugin/OdooApiErrorPlugin.php
+        -
+            message: '/Parameter #1 \$onFulfilled of method Http\\Promise\\Promise<mixed>::then\(\) expects \(callable\(mixed\): Psr\\Http\\Message\\ResponseInterface\)\|null, Closure\(Psr\\Http\\Message\\ResponseInterface\): Psr\\Http\\Message\\ResponseInterface given\./'
+            count: 1
+            path: src/HttPlug/Plugin/OdooApiErrorPlugin.php
 
