@@ -129,10 +129,26 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
     private function fields_get(string $modelName): array
     {
         if (false === isset($this->fields_getCache[$modelName])) {
+            $fieldGetOptions = new FieldsGetOptions();
+            $fieldGetOptions->setAttributes([
+                'type',
+                'string',
+                'help',
+                'readonly',
+                'relation',
+                'relation_field',
+                'required',
+                'selection',
+                'inherited_model_ids',
+                'searchable',
+                'sortable',
+                'default',
+            ]);
+
             $this->fields_getCache[$modelName] = $this->inspectionOperations->fields_get(
                 $modelName,
                 [],
-                new FieldsGetOptions()
+                $fieldGetOptions
             );
 
             foreach ($this->modelFixers as $modelFixer) {
