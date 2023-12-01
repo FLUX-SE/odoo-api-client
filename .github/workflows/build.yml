@@ -27,12 +27,14 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                odoo: [13, 14, 15, 16]
-                symfony: ["^5.4", "^6.3"]
-                php: ["8.0", "8.1", "8.2"] # " required to keep the .0
+                odoo: [13, 14, 15, 16, 17]
+                symfony: ["^5.4", "^6.4"]
+                php: ["8.0", "8.1", "8.2", "8.3"] # " required to keep the .0
                 exclude:
-                    - symfony: "^6.3"
+                    - symfony: "^6.4"
                       php: "8.0"
+                    - symfony: "^6.4"
+                      php: "8.1"
         services:
             postgres:
                 image: postgres
