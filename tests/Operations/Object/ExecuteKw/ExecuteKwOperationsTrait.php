@@ -10,6 +10,7 @@ use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\OperationsInterface;
 use FluxSE\OdooApiClient\Provider\AccountMoveFieldsProvider;
 use FluxSE\OdooApiClient\Provider\ModelFieldsProvider;
 use FluxSE\OdooApiClient\Provider\ModelFieldsProviderInterface;
+use FluxSE\OdooApiClient\Provider\ProductProductFieldsProvider;
 
 trait ExecuteKwOperationsTrait
 {
@@ -35,6 +36,10 @@ trait ExecuteKwOperationsTrait
 
     protected function buildModelFieldsProvider(): ModelFieldsProviderInterface
     {
-        return new AccountMoveFieldsProvider(new ModelFieldsProvider());
+        return new ProductProductFieldsProvider(
+            new AccountMoveFieldsProvider(
+                new ModelFieldsProvider()
+            )
+        );
     }
 }
