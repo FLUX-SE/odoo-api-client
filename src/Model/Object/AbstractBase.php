@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace FluxSE\OdooApiClient\Model\Object;
 
-use DateTimeInterface;
-use Symfony\Component\Serializer\Annotation\SerializedName;
-
 abstract class AbstractBase implements BaseObjectInterface
 {
     /**
@@ -24,14 +21,6 @@ abstract class AbstractBase implements BaseObjectInterface
      * Sortable : no
      */
     protected string|null $display_name = null;
-
-    /**
-     * Last Modified on
-     * ---
-     * Searchable : no
-     * Sortable : no
-     */
-    protected ?DateTimeInterface $__last_update = null;
 
     public function getId(): int|null|false
     {
@@ -51,20 +40,5 @@ abstract class AbstractBase implements BaseObjectInterface
     public function setDisplayName(?string $display_name): void
     {
         $this->display_name = $display_name;
-    }
-
-    /**
-     * @SerializedName("__last_update")
-     */
-    public function getLastUpdate(): ?DateTimeInterface
-    {
-        return $this->__last_update;
-    }
-
-    /**
-     */
-    public function setLastUpdate(?DateTimeInterface $__last_update): void
-    {
-        $this->__last_update = $__last_update;
     }
 }

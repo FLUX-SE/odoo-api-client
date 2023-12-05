@@ -13,8 +13,4 @@ interface BaseObjectInterface
     public function getDisplayName(): ?string;
 
     public function setDisplayName(?string $display_name): void;
-
-    public function getLastUpdate(): ?DateTimeInterface;
-
-    public function setLastUpdate(?DateTimeInterface $__last_update): void;
 }

@@ -32,7 +32,7 @@ class ModelFieldsProviderTest extends TestCase
         $fields = $this->modelFieldsProvider->provide(Partner::class, []);
 
         $this->assertContains('id', $fields);
-        $this->assertContains('__last_update', $fields);
+        $this->assertContains('email', $fields);
         $this->assertContains('display_name', $fields);
     }
 }
