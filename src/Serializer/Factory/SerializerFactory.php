@@ -22,6 +22,8 @@ use Symfony\Component\PropertyInfo\Extractor\SerializerExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
+use Symfony\Component\Serializer\Mapping\Loader\LoaderInterface;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
@@ -78,7 +80,18 @@ final class SerializerFactory implements SerializerFactoryInterface
 
     public function setupObjectNormalizer(): OdooNormalizer
     {
-        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+        if (class_exists(AttributeLoader::class)) {
+            /** @var LoaderInterface $loader */
+            $loader = new AttributeLoader();
+        } else {
+            /**
+             * @var LoaderInterface $loader
+             * @psalm-suppress TooManyArguments
+             */
+            $loader = new AnnotationLoader(new AnnotationReader());
+        }
+
+        $classMetadataFactory = new ClassMetadataFactory($loader);
         $metadataAwareNameConverter = new MetadataAwareNameConverter(
             $classMetadataFactory,
             new CamelCaseToSnakeCaseNameConverter()

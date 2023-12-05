@@ -19,10 +19,7 @@ interface RpcSerializerHelperInterface
      */
     public function deserializeResponseBody(StreamInterface $body, string $type);
 
-    /**
-     * @return array|integer|string|boolean
-     */
-    public function decodeResponseBody(StreamInterface $body);
+    public function decodeResponseBody(StreamInterface $body): array|int|string|bool;
 
     public function getSerializer(): Serializer;
 }

@@ -30,4 +30,18 @@ parameters:
             message: '/Parameter #1 \$onFulfilled of method Http\\Promise\\Promise<mixed>::then\(\) expects \(callable\(mixed\): Psr\\Http\\Message\\ResponseInterface\)\|null, Closure\(Psr\\Http\\Message\\ResponseInterface\): Psr\\Http\\Message\\ResponseInterface given\./'
             count: 1
             path: src/HttPlug/Plugin/OdooApiErrorPlugin.php
-
+        # SF 6.4 error
+        -
+            message: '/Class Symfony\\Component\\Serializer\\Mapping\\Loader\\AnnotationLoader does not have a constructor and must be instantiated without any parameters\./'
+            count: 1
+            path: src/Serializer/Factory/SerializerFactory.php
+        # Odoo v17
+        # https://github.com/odoo/odoo/issues/144841
+        -
+            message: '/Method Tests\\FluxSE\\OdooApiClient\\TestModel\\Object\\Mail\\Alias::__construct\(\) invoked with 1 parameter, 3 required\./'
+            count: 1
+            path: tests/TestModel/Object/Mail/Alias/Mixin.php
+        -
+            message: '/Parameter #1 \$alias_model_id of method Tests\\FluxSE\\OdooApiClient\\TestModel\\Object\\Mail\\Alias::__construct\(\) expects FluxSE\\OdooApiClient\\Model\\OdooRelation, string given\./'
+            count: 1
+            path: tests/TestModel/Object/Mail/Alias/Mixin.php

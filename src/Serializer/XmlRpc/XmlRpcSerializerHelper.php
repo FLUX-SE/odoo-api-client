@@ -42,7 +42,7 @@ final class XmlRpcSerializerHelper implements XmlRpcSerializerHelperInterface
         );
     }
 
-    public function decodeResponseBody(StreamInterface $body)
+    public function decodeResponseBody(StreamInterface $body): array|int|string|bool
     {
         return $this->serializer->decode(
             $body->__toString(),

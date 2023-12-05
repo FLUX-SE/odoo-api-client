@@ -177,7 +177,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
 
         foreach ($search_read as $item) {
             // Store properties cache of all inherited models
-            foreach ($item['inherited_model_ids'] ?? [] as $inheritedModelId) {
+            foreach ($item['inherited_model_ids'] as $inheritedModelId) {
                 $inheritedModel = $this->modelIdToModelName[$inheritedModelId];
                 $fieldsInfo = $this->fields_get($inheritedModel);
                 $this->addInheritedModelProperties($inheritedModel, $fieldsInfo);
