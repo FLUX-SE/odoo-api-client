@@ -8,6 +8,7 @@ use Exception;
 use FluxSE\OdooApiClient\Model\BaseInterface;
 use FluxSE\OdooApiClient\Model\Object\AbstractBase;
 use FluxSE\OdooApiClient\Model\OdooRelation;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomainsInterface;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\InspectionOperationsInterface;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\FieldsGetOptions;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
@@ -43,7 +44,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         $this->modelFixers = $modelFixers;
     }
 
-    public function convert(string $modelNamespace): array
+    public function convert(string $modelNamespace, SearchDomainsInterface $searchDomains = null): array
     {
         $config = [];
 
@@ -61,7 +62,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
 
         $modelList = $this->recordListOperations->search_read(
             'ir.model',
-            null,
+            $searchDomains,
             $searchReadOptions
         );
 
@@ -107,7 +108,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
             return $this->modelNameToClass[$modelName];
         }
 
-        throw new LogicException('The model name has not been found !');
+        throw new LogicException(sprintf('The model name "%s" has not been found !', $modelName));
     }
 
     /**
@@ -341,7 +342,12 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
                 : null
             ;
             $description[] = sprintf('Relation : %s (%s%s)', $fieldInfo['type'], $fieldInfo['relation'], $relationField);
-            $description[] = sprintf('@see \\%s\\%s', $baseModelNamespace, $this->getClassNameFormModelName($fieldInfo['relation']));
+            try {
+                $relationClassName = $this->getClassNameFormModelName($fieldInfo['relation']);
+                $description[] = sprintf('@see \\%s\\%s', $baseModelNamespace, $relationClassName);
+            } catch (LogicException $e) {
+                $description[] = sprintf('@see %s (not generated)', $fieldInfo['relation']);
+            }
         }
 
         $description[] = '---';

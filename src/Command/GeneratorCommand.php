@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace FluxSE\OdooApiClient\Command;
 
 use FluxSE\OdooApiClient\Api\OdooApiRequestMakerInterface;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
 use FluxSE\OdooApiClient\Operations\ObjectOperationsInterface;
 use FluxSE\OdooApiClient\PhpGenerator\OdooModelsStructureConverterInterface;
 use Http\Discovery\Psr17FactoryDiscovery;
@@ -72,6 +74,25 @@ final class GeneratorCommand extends Command
                 sprintf('Your Odoo account password or API key (since Odoo v14, default: %s)', $defaultPassword),
                 $defaultPassword
             )
+            ->addOption(
+                'only-model',
+                null,
+                InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
+                'Filter the model list with the model you will set in this option.'
+            )
+            ->addOption(
+                'exclude-model',
+                null,
+                InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
+                'Filter the model list excluding the model you will set in this option.'
+            )
+            ->addOption(
+                'password',
+                null,
+                InputOption::VALUE_OPTIONAL,
+                sprintf('Your Odoo account password or API key (since Odoo v14, default: %s)', $defaultPassword),
+                $defaultPassword
+            )
         ;
     }
 
@@ -85,6 +106,10 @@ final class GeneratorCommand extends Command
         $username = $input->getOption('username');
         /** @var string $password */
         $password = $input->getOption('password');
+        /** @var string[] $onlyModels */
+        $onlyModels = $input->getOption('only-model');
+        /** @var string[] $excludeModels */
+        $excludeModels = $input->getOption('exclude-model');
 
         /** @var string $path */
         $path = $input->getArgument('path');
@@ -99,6 +124,17 @@ final class GeneratorCommand extends Command
         $output->writeln(sprintf('Password : %s', $password));
         $output->writeln(sprintf('Base path : %s', $path));
         $output->writeln(sprintf('Base namespace : %s', $namespace));
+
+        $searchDomains = new SearchDomains();
+        if ([] !== $onlyModels) {
+            $output->writeln(sprintf('List only those models : %s', implode(', ', $onlyModels)));
+            $onlyModels[] = 'base';
+            $searchDomains->addCriterion(Criterion::in('model', $onlyModels));
+        }
+        if ([] !== $excludeModels) {
+            $output->writeln(sprintf('Exclude those models : %s', implode(', ', $excludeModels)));
+            $searchDomains->addCriterion(Criterion::not_in('model', $excludeModels));
+        }
         $output->writeln('</comment>');
 
         $this->reconfigureServices(
@@ -109,7 +145,7 @@ final class GeneratorCommand extends Command
         );
 
         $output->write('Converting model structure to a class generator config array ... ');
-        $config = $this->odooModelsStructureConverter->convert($namespace);
+        $config = $this->odooModelsStructureConverter->convert($namespace, $searchDomains);
         $output->writeln('DONE');
 
         $output->write('Generating model classes base on the generated config ... ');
