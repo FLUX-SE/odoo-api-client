@@ -51,21 +51,23 @@ Usage:
   vendor/bin/odoo-model-classes-generator [options] [--] <basePath> <baseNamespace>
 
 Arguments:
-  basePath                   The path where classes will be generated (ex: ./src/OdooModel/Object)
-  baseNamespace              The base namespace of the generated classes (ex: "App\OdooModel\Object")
+  basePath                             The path where classes will be generated (ex: ./src/OdooModel/Object)
+  baseNamespace                        The base namespace of the generated classes (ex: "App\OdooModel\Object")
 
 Options:
-      --host[=HOST]          Your Odoo base host (default: http://localhost:8069) [default: "http://localhost:8069"]
-      --database[=DATABASE]  Your Odoo database name (default: odoo-master) [default: "odoo-master"]
-      --username[=USERNAME]  Your Odoo account username. (default: admin) [default: "admin"]
-      --password[=PASSWORD]  Your Odoo account password or API key (since Odoo v14, default: admin) [default: "admin"]
-  -h, --help                 Display help for the given command. When no command is given display help for the vendor/bin/odoo-model-classes-generator command
-  -q, --quiet                Do not output any message
-  -V, --version              Display this application version
-      --ansi                 Force ANSI output
-      --no-ansi              Disable ANSI output
-  -n, --no-interaction       Do not ask any interactive question
-  -v|vv|vvv, --verbose       Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+      --host[=HOST]                    Your Odoo base host (default: http://localhost:8069) [default: "http://localhost:8069"]
+      --database[=DATABASE]            Your Odoo database name (default: odoo-master) [default: "odoo-master"]
+      --username[=USERNAME]            Your Odoo account username. (default: admin) [default: "admin"]
+      --password[=PASSWORD]            Your Odoo account password or API key (since Odoo v14, default: admin) [default: "admin"]
+      --only-model[=ONLY-MODEL]        Filter the model list with the model you will set in this option. (multiple values allowed)
+      --exclude-model[=EXCLUDE-MODEL]  Filter the model list excluding the model you will set in this option. (multiple values allowed)
+  -h, --help                           Display help for the given command. When no command is given display help for the vendor/bin/odoo-model-classes-generator command
+  -q, --quiet                          Do not output any message
+  -V, --version                        Display this application version
+      --ansi                           Force ANSI output
+      --no-ansi                        Disable ANSI output
+  -n, --no-interaction                 Do not ask any interactive question
+  -v|vv|vvv, --verbose                 Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
 Example :
   ./vendor/bin/odoo-model-classes-generator \
       --host http://localhost:8069 \
