@@ -26,7 +26,10 @@ This library will allow you to :
 Install using Composer :
 
 ```shell
-composer require flux-se/odoo-api-client php-http/guzzle7-adapter http-interop/http-factory-guzzle
+composer require \
+  flux-se/odoo-api-client \
+  php-http/guzzle7-adapter \
+  http-interop/http-factory-guzzle
 ```
 > `php-http/guzzle7-adapter` and `http-interop/http-factory-guzzle` are 2 requirements which can be chosen among
 > [php-http/client-implementation](https://packagist.org/providers/php-http/client-implementation) and [psr/http-factory-implementation](https://packagist.org/providers/psr/http-factory-implementation)
@@ -35,7 +38,7 @@ composer require flux-se/odoo-api-client php-http/guzzle7-adapter http-interop/h
 
 **First gather required credential and database info described [here](https://www.odoo.com/documentation/master/developer/reference/external_api.html#connection).**
 
-Depending on your instance the object models available will be different,
+Depending on your Odoo instance the object models available will be different,
 that's why this library is allowing you to generate model classes using this cli command :
 
 > This command is using env vars to guess the credentials and database info,
@@ -82,6 +85,9 @@ Example :
 
 This chapter will describe how the two Odoo APIs are working.
 
+<details>
+  <summary>JSON-RPC (Click me to see detailed info)</summary>
+
 ### JSON-RPC
 
 The Odoo JSON-RPC API expose 1 main endpoint `/jsonrpc`.
@@ -115,6 +121,11 @@ The service param can be set with those 3 values :
 This library help you to use those endpoints using `ext-json` and `HttPlug`, **it also allows you to
 consume Odoo API using PHP classes representation of all installed Odoo Models**.
 
+</details>
+
+<details>
+  <summary>XML-RPC (Click me to see detailed info)</summary>
+
 ### XML-RPC
 
 The Odoo XML-RPC API expose 3 main endpoints :
@@ -130,6 +141,8 @@ The authentication is not standard (compare to other APIs), your username and yo
 `/xmlrpc/2/common` with the XML-RPC method `authenticate` (or `login`) returning your Odoo user id (`uid`).
 This uid, your password and your Odoo database name are required to make every request calls to the
 `/xmlrpc/2/object` endpoint.
+
+</details>
 
 ## Usage example
 
@@ -209,6 +222,17 @@ array:1 [
 
 ## Using object model
 
+First you can generate classes based on the Odoo instance you have, for example:
+
+```shell
+bin/odoo-model-classes-generator \
+      "./src/Odoo/Model/Object" \
+      "App\\Odoo\\Model\\Object" \
+      --only-model=res.partner
+```
+
+> 💡 Here we are generating only one class, but you can also generate all classes excluding some of them (see info [here](#object-models-generation)).
+
 ```php
 $loader = require_once( __DIR__.'/vendor/autoload.php');
 
@@ -224,10 +248,10 @@ $database = 'myapp';
 $username = 'myemail@mydomain.tld';
 $password = 'myOdooUserApiKey';
 
-// 1 - instantiate the Odoo API client builder 
+// 1 - Instantiate the Odoo API client builder 
 $odooApiClientBuilder = new OdooApiClientBuilder($host);
 
-// 2 - service allowing to query Odoo API using `execute_kw` method
+// 2 - Service allowing to query Odoo API using `execute_kw` method
 $recordListOperations = $odooApiClientBuilder->buildExecuteKwOperations(
     RecordListOperations::class,
     $database,
@@ -235,7 +259,7 @@ $recordListOperations = $odooApiClientBuilder->buildExecuteKwOperations(
     $password
 );
 
-// 3 - upper service allowing to return classes instead of raw array data
+// 3 - Service allowing to return object instead of raw array data
 $modelListManager = new ModelListManager(
     $odooApiClientBuilder->buildSerializer(),
     $recordListOperations
@@ -273,7 +297,8 @@ App\Odoo\Model\Object\Res\Partner
 
 # Know issues
 
- * Since Odoo v16 some new fields can produce 500 errors, I try to create issues about them when I get the error, you can found the relates issues here : https://github.com/odoo/odoo/issues?q=is%3Aissue+author%3APrometee+
+ * Since Odoo v16 some new fields can produce 500 errors, I try to create issues about them when I get the error,
+   you can found the relates issues here : https://github.com/odoo/odoo/issues?q=is%3Aissue+author%3APrometee+
 
 # Development
 
@@ -288,12 +313,12 @@ The server is fully ready to use when this log line appears
 (Odoo v13 could take longer than upper version to reach this line) :
 
 ```log
-2021-01-01 00:00:00,000 1 INFO odoo-master odoo.modules.loading: Modules loaded.
+2030-01-01 00:00:00,000 1 INFO odoo-master odoo.modules.loading: Modules loaded.
 ```
 
 Generate the model classes based on the docker Odoo instance :
 
-> This script will use env vars to gather info about (see info [here](#object-models-generation))
+> This script will use env vars to gather info about the Odoo instance you are targeting (see info [here](#object-models-generation)).
 
 ```shell
 bin/odoo-model-classes-generator \
