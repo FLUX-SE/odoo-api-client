@@ -50,7 +50,7 @@ trait ExecuteKwOperationsTrait
             ],*/
         ];
 
-        foreach ($modelFieldsToRemove as $modelName=>$fieldsToRemove) {
+        foreach ($modelFieldsToRemove as $modelName => $fieldsToRemove) {
             $modelFieldsProvider = new ModelFieldsRemoverProvider(
                 $modelFieldsProvider,
                 $modelName,

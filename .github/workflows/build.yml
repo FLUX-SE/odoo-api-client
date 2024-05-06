@@ -106,10 +106,12 @@ jobs:
                 run: composer install --no-interaction
 
             -
-                name: Run analysis
-                run: |
-                    composer validate --strict
-                    vendor/bin/ecs check src tests
+                name: Composer validate
+                run: composer validate --strict
+
+            -
+                name: ECS check
+                run: vendor/bin/ecs check src tests
 
             -
                 name: Wait until odoo is ready
