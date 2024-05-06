@@ -30,10 +30,10 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
     private array $modelNameToClass = [];
 
     public function __construct(
-        private RecordListOperationsInterface   $recordListOperations,
-        private InspectionOperationsInterface   $inspectionOperations,
+        private RecordListOperationsInterface $recordListOperations,
+        private InspectionOperationsInterface $inspectionOperations,
         private PhpReservedWordsHelperInterface $phpReservedWordsHelper,
-        private ModelFixerInterface             $modelFixer,
+        private ModelFixerInterface $modelFixer,
     ) {
     }
 
