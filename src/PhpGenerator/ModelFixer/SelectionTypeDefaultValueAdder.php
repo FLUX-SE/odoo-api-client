@@ -11,13 +11,13 @@ use Http\Client\Common\Exception\ClientErrorException;
 /**
  * @experimental This class try to get default value of Selection type fields without any context
  */
-final class SelectionTypeDefaultValueAdder extends AbstractModelFixer
+final class SelectionTypeDefaultValueAdder implements ModelFixerInterface
 {
     public function __construct(private RecordListOperationsInterface $recordListOperations)
     {
     }
 
-    protected function doFix(string $modelName, array &$structure): void
+    public function fix(string $modelName, array &$structure): void
     {
         try {
             $arguments = new Arguments();

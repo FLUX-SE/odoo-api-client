@@ -6,9 +6,9 @@ namespace FluxSE\OdooApiClient\PhpGenerator\ModelFixer;
 
 use FluxSE\OdooApiClient\PhpGenerator\OdooModelsStructureConverterInterface;
 
-final class BaseIdFixer extends AbstractModelFixer
+final class BaseIdFixer implements ModelFixerInterface
 {
-    protected function doFix(string $modelName, array &$structure): void
+    public function fix(string $modelName, array &$structure): void
     {
         $structure['id'] = [
             'type' => "integer",

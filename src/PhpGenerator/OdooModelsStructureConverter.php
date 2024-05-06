@@ -22,9 +22,6 @@ use function Symfony\Component\String\u;
 
 final class OdooModelsStructureConverter implements OdooModelsStructureConverterInterface
 {
-    /** @var iterable<ModelFixerInterface> */
-    private iterable $modelFixers;
-
     private array $inheritedPropertiesCache = [];
     /** @var array<int, string> **/
     private array $modelIdToModelName = [];
@@ -32,16 +29,12 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
     /** @var array<string, string> */
     private array $modelNameToClass = [];
 
-    /**
-     * @param iterable<ModelFixerInterface> $modelFixers
-     */
     public function __construct(
-        private RecordListOperationsInterface $recordListOperations,
-        private InspectionOperationsInterface $inspectionOperations,
+        private RecordListOperationsInterface   $recordListOperations,
+        private InspectionOperationsInterface   $inspectionOperations,
         private PhpReservedWordsHelperInterface $phpReservedWordsHelper,
-        iterable $modelFixers = [],
+        private ModelFixerInterface             $modelFixer,
     ) {
-        $this->modelFixers = $modelFixers;
     }
 
     public function convert(string $modelNamespace, SearchDomainsInterface $searchDomains = null): array
@@ -83,7 +76,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
     private function buildClassNameFormModelName(string $modelName): string
     {
         $path = explode('.', $modelName);
-        array_walk($path, function (string &$item) {
+        array_walk($path, function (string &$item): void {
             $u = u($item)->camel()->title();
             $item = $u->toString();
             if ($this->phpReservedWordsHelper->check($item)) {
@@ -152,10 +145,8 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
                 $fieldGetOptions
             );
 
-            foreach ($this->modelFixers as $modelFixer) {
-                if ($modelFixer->supports($modelName, $this->fields_getCache[$modelName])) {
-                    $modelFixer->fix($modelName, $this->fields_getCache[$modelName]);
-                }
+            if ($this->modelFixer->supports($modelName, $this->fields_getCache[$modelName])) {
+                $this->modelFixer->fix($modelName, $this->fields_getCache[$modelName]);
             }
         }
 
