@@ -38,16 +38,16 @@ trait ExecuteKwOperationsTrait
         $modelFieldsProvider = new ModelFieldsProvider();
 
         $modelFieldsToRemove = [
-            'account.move' => [
-                'needed_terms', // @see https://github.com/odoo/odoo/issues/129493
-                'tax_totals', // @see https://github.com/odoo/odoo/issues/129494
-            ],
             'account.move.line' => [
                 'compute_all_tax', // @see https://github.com/odoo/odoo/issues/164139
             ],
+            /*'account.move' => [
+                'needed_terms', // @see https://github.com/odoo/odoo/issues/129493
+                'tax_totals', // @see https://github.com/odoo/odoo/issues/129494
+            ],
             'product.product' => [
                 'product_properties', // @see https://github.com/odoo/odoo/issues/145138
-            ],
+            ],*/
         ];
 
         foreach ($modelFieldsToRemove as $modelName=>$fieldsToRemove) {
