@@ -7,10 +7,9 @@ namespace Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw;
 use FluxSE\OdooApiClient\Builder\OdooApiClientBuilder;
 use FluxSE\OdooApiClient\Builder\OdooApiClientBuilderInterface;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\OperationsInterface;
-use FluxSE\OdooApiClient\Provider\AccountMoveFieldsProvider;
 use FluxSE\OdooApiClient\Provider\ModelFieldsProvider;
 use FluxSE\OdooApiClient\Provider\ModelFieldsProviderInterface;
-use FluxSE\OdooApiClient\Provider\ProductProductFieldsProvider;
+use FluxSE\OdooApiClient\Provider\ModelFieldsRemoverProvider;
 
 trait ExecuteKwOperationsTrait
 {
@@ -36,10 +35,29 @@ trait ExecuteKwOperationsTrait
 
     protected function buildModelFieldsProvider(): ModelFieldsProviderInterface
     {
-        return new ProductProductFieldsProvider(
-            new AccountMoveFieldsProvider(
-                new ModelFieldsProvider()
-            )
-        );
+        $modelFieldsProvider = new ModelFieldsProvider();
+
+        $modelFieldsToRemove = [
+            'account.move' => [
+                'needed_terms', // @see https://github.com/odoo/odoo/issues/129493
+                'tax_totals', // @see https://github.com/odoo/odoo/issues/129494
+            ],
+            'account.move.line' => [
+                'compute_all_tax', // @see https://github.com/odoo/odoo/issues/164139
+            ],
+            'product.product' => [
+                'product_properties', // @see https://github.com/odoo/odoo/issues/145138
+            ],
+        ];
+
+        foreach ($modelFieldsToRemove as $modelName=>$fieldsToRemove) {
+            $modelFieldsProvider = new ModelFieldsRemoverProvider(
+                $modelFieldsProvider,
+                $modelName,
+                $fieldsToRemove,
+            );
+        }
+
+        return $modelFieldsProvider;
     }
 }
