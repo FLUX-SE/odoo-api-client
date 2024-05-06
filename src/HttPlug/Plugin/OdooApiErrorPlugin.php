@@ -27,11 +27,11 @@ final class OdooApiErrorPlugin implements Plugin
      */
     public function handleRequest(RequestInterface $request, callable $next, callable $first): Promise
     {
-        $errorNext = function (RequestInterface $request) use ($next, $first) {
+        $errorNext = function (RequestInterface $request) use ($next, $first): Promise {
             return $this->errorPluginDecorated->handleRequest($request, $next, $first);
         };
 
-        return $errorNext($request)->then(function (ResponseInterface $response) use ($request) {
+        return $errorNext($request)->then(function (ResponseInterface $response) use ($request): ResponseInterface {
             return $this->transformResponseToException($request, $response);
         });
     }

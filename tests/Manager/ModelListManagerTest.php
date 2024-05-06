@@ -6,7 +6,6 @@ namespace Tests\FluxSE\OdooApiClient\Manager;
 
 use FluxSE\OdooApiClient\Manager\ModelListManager;
 use FluxSE\OdooApiClient\Manager\ModelListManagerInterface;
-use FluxSE\OdooApiClient\Manager\ModelManagerInterface;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterface;

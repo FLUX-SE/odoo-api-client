@@ -12,7 +12,7 @@ final class OdooNormalizer extends ObjectNormalizer
 {
     public const NORMALIZE_FOR_UPDATE = 'normalize_for_update';
 
-    protected function setAttributeValue(object $object, string $attribute, $value, string $format = null, array $context = []): void
+    protected function setAttributeValue(object $object, string $attribute, mixed $value, string $format = null, array $context = []): void
     {
         /**
          * Override to set null when original value is false

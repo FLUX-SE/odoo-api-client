@@ -4,7 +4,6 @@ namespace Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments;
 
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
-use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomainsInterface;
 use PHPUnit\Framework\TestCase;
 
 class SearchDomainsTest extends TestCase

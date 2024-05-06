@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FluxSE\OdooApiClient\Api;
 
-use FluxSE\OdooApiClient\Api\OdooApiRequestMaker;
 use FluxSE\OdooApiClient\Api\OdooApiRequestMakerInterface;
 use FluxSE\OdooApiClient\Api\RequestBody;
 use FluxSE\OdooApiClient\Builder\OdooApiClientBuilder;

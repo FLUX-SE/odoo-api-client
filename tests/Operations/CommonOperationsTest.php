@@ -6,7 +6,6 @@ namespace Tests\FluxSE\OdooApiClient\Operations;
 
 use FluxSE\OdooApiClient\Builder\OdooApiClientBuilder;
 use FluxSE\OdooApiClient\Model\Common\Version;
-use FluxSE\OdooApiClient\Operations\CommonOperations;
 use FluxSE\OdooApiClient\Operations\CommonOperationsInterface;
 use PHPUnit\Framework\TestCase;
 
