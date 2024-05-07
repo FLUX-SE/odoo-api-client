@@ -10,7 +10,6 @@ final class Fault implements FaultInterface
     {
     }
 
-
     public function getFaultCode(): int
     {
         return $this->faultCode;

@@ -43,6 +43,13 @@ class ModelListManagerTest extends TestCase
 
         $partner = $this->modelListManager->find(Partner::class, $results[0]['id']);
         $this->assertInstanceOf(Partner::class, $partner);
+        $this->assertEquals($results[0]['id'], $partner->getId());
+    }
+
+    public function testFindByIds(): void
+    {
+        $partners = $this->modelListManager->findByIds(Partner::class, [1]);
+        $this->assertContainsOnlyInstancesOf(Partner::class, $partners);
     }
 
     public function testFindOneBy(): void

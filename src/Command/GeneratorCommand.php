@@ -39,12 +39,12 @@ final class GeneratorCommand extends Command
             ->addArgument(
                 'path',
                 InputArgument::REQUIRED,
-                'The path where classes will be generated (ex: ./src/OdooModel/Object)'
+                'The path where classes will be generated (ex: ./src/Odoo/Model/Object)'
             )
             ->addArgument(
                 'namespace',
                 InputArgument::REQUIRED,
-                'The base namespace of the generated classes (ex: "App\\OdooModel\\Object")'
+                'The base namespace of the generated classes (ex: "App\\Odoo\Model\\Object")'
             )
             ->addOption(
                 'host',

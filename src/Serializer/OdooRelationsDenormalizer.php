@@ -9,9 +9,9 @@ use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 /**
- * [123, "Foo"] ==> new OdooRelation(123, "Foo")
+ * [1, 4] ==> [new OdooRelation(1), new OdooRelation(4)]
  */
-final class OdooRelationDenormalizer implements DenormalizerInterface
+final class OdooRelationsDenormalizer implements DenormalizerInterface
 {
     public function getSupportedTypes(?string $format): array
     {
@@ -28,29 +28,24 @@ final class OdooRelationDenormalizer implements DenormalizerInterface
             return false;
         }
 
-        if (empty($data)) {
-            return false;
-        }
-
-        if (count($data) > 2) {
+        if ($data !== array_filter($data, 'is_int')) {
             return false;
         }
 
         return true;
     }
 
-    public function denormalize($data, $type, $format = null, array $context = []): OdooRelation
+    public function denormalize($data, $type, $format = null, array $context = []): array
     {
         if (false === is_array($data)) {
             throw new InvalidArgumentException('The data should be an array !');
         }
 
-        if (false === is_int($data[0] ?? null)) {
-            throw new InvalidArgumentException(
-                'The first element of the $data array should be an integer value !'
-            );
+        $relations = [];
+        foreach ($data as $id) {
+            $relations[] = new OdooRelation($id);
         }
 
-        return new OdooRelation($data[0], $data[1] ?? null);
+        return $relations;
     }
 }

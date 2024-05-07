@@ -8,6 +8,8 @@ use FluxSE\OdooApiClient\Model\BaseInterface;
 
 interface ModelFieldsProviderInterface
 {
+    public const FIELDS_CONTEXT = 'read_options';
+
     /**
      * @template T of BaseInterface
      * @param class-string<T> $className

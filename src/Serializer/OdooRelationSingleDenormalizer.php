@@ -8,8 +8,16 @@ use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
+/**
+ * 123 ==> new OdooRelation(123)
+ */
 final class OdooRelationSingleDenormalizer implements DenormalizerInterface
 {
+    public function getSupportedTypes(?string $format): array
+    {
+        return [OdooRelation::class => false];
+    }
+
     public function supportsDenormalization($data, $type, $format = null): bool
     {
         if ($type !== OdooRelation::class) {

@@ -33,15 +33,5 @@
                 <file name="src/Serializer/OdooNormalizer.php" />
             </errorLevel>
         </MethodSignatureMismatch>
-        <TooFewArguments>
-            <errorLevel type="info">
-                <file name="tests/TestModel/Object/Mail/Alias/Mixin.php" />
-            </errorLevel>
-        </TooFewArguments>
-        <InvalidArgument>
-            <errorLevel type="info">
-                <file name="tests/TestModel/Object/Mail/Alias/Mixin.php" />
-            </errorLevel>
-        </InvalidArgument>
     </issueHandlers>
 </psalm>

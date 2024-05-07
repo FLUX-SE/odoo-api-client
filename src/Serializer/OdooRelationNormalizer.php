@@ -15,6 +15,11 @@ final class OdooRelationNormalizer implements NormalizerInterface, NormalizerAwa
 {
     use NormalizerAwareTrait;
 
+    public function getSupportedTypes(?string $format): array
+    {
+        return [OdooRelation::class => true];
+    }
+
     public function supportsNormalization($data, $format = null): bool
     {
         return $data instanceof OdooRelation;

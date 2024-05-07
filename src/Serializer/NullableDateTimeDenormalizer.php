@@ -12,6 +12,15 @@ final class NullableDateTimeDenormalizer implements DenormalizerInterface
     {
     }
 
+    public function getSupportedTypes(?string $format): array
+    {
+        return [
+            \DateTimeInterface::class => false,
+            \DateTimeImmutable::class => false,
+            \DateTime::class => false,
+        ];
+    }
+
     public function denormalize($data, string $type, string $format = null, array $context = [])
     {
         return null;

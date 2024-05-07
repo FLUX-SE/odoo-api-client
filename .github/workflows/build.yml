@@ -127,7 +127,21 @@ jobs:
                 run: |
                     bin/odoo-model-classes-generator -vvv \
                         "./tests/TestModel/Object" \
-                        "Tests\\FluxSE\\OdooApiClient\\TestModel\\Object"
+                        "Tests\\FluxSE\\OdooApiClient\\TestModel\\Object" \
+                        --only-model=account.account \
+                        --only-model=account.journal \
+                        --only-model=account.move \
+                        --only-model=account.move.line \
+                        --only-model=account.payment \
+                        --only-model=account.payment.method \
+                        --only-model=account.payment.register \
+                        --only-model=account.tax \
+                        --only-model=product.category \
+                        --only-model=product.product \
+                        --only-model=product.template \
+                        --only-model=res.currency \
+                        --only-model=res.partner \
+                        --only-model=uom.uom
 
             # Need classes from Odoo to be generated for the tests folder
             -

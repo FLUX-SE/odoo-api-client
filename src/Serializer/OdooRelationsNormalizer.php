@@ -15,6 +15,11 @@ final class OdooRelationsNormalizer implements NormalizerInterface, NormalizerAw
 {
     use NormalizerAwareTrait;
 
+    public function getSupportedTypes(?string $format): array
+    {
+        return ['native-array' => true];
+    }
+
     public function supportsNormalization($data, string $format = null, array $context = []): bool
     {
         if (false === is_array($data)) {
@@ -35,9 +40,6 @@ final class OdooRelationsNormalizer implements NormalizerInterface, NormalizerAw
         return false;
     }
 
-    /**
-     * OdooRelation[] $object
-     */
     public function normalize($object, $format = null, array $context = []): array
     {
         if (!is_array($object)) {
@@ -62,10 +64,6 @@ final class OdooRelationsNormalizer implements NormalizerInterface, NormalizerAw
             if (is_array($normalized)) {
                 $relations[] = $normalized;
             }
-        }
-
-        if ([] === $relations) {
-            return [];
         }
 
         return $relations;

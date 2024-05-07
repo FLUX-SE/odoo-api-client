@@ -6,6 +6,8 @@ namespace FluxSE\OdooApiClient\Manager;
 
 use FluxSE\OdooApiClient\Model\BaseInterface;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomainsInterface;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\ReadOptions;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\ReadOptionsInterface;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptionsInterface;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterface;
@@ -21,26 +23,46 @@ final class ModelListManager implements ModelListManagerInterface
     ) {
     }
 
-    public function find(string $className, int $id): ?BaseInterface
-    {
-        $modelName = $this->getModelNameFromClass($className);
-
-        $results = $this->recordListOperations->read($modelName, [$id]);
+    public function find(
+        string $className,
+        int $id,
+        ?ReadOptionsInterface $readOptions = null
+    ): ?BaseInterface {
+        $results = $this->findByIds($className, [$id], $readOptions);
 
         if (count($results) === 0) {
             return null;
         }
 
-        return $this->serializer->denormalize($results[0], $className);
+        return $results[0];
     }
 
-    public function findOneBy(string $className, ?SearchDomainsInterface $searchDomains = null): ?BaseInterface
-    {
-        $searchReadOptions = new SearchReadOptions();
+    public function findByIds(
+        string $className,
+        array $ids,
+        ?ReadOptionsInterface $readOptions = null
+    ): array {
+        $readOptions = $readOptions ?? new ReadOptions();
+
+        $this->processReadOptions($className, $readOptions, [
+            'class' => __CLASS__,
+            'method' => __METHOD__,
+        ]);
+
+        $modelName = $this->getModelNameFromClass($className);
+
+        $results = $this->recordListOperations->read($modelName, $ids, $readOptions);
+
+        return $this->serializer->denormalize($results, sprintf('%s[]', $className));
+    }
+
+    public function findOneBy(
+        string $className,
+        ?SearchDomainsInterface $searchDomains = null,
+        ?SearchReadOptionsInterface $searchReadOptions = null
+    ): ?BaseInterface {
+        $searchReadOptions = $searchReadOptions ?? new SearchReadOptions();
         $searchReadOptions->setLimit(1);
-        $searchReadOptions->setFields($this->modelFieldsProvider->provide($className, [
-            'searchDomains' => $searchDomains,
-        ]));
 
         $results = $this->findBy($className, $searchDomains, $searchReadOptions);
 
@@ -57,6 +79,13 @@ final class ModelListManager implements ModelListManagerInterface
         ?SearchReadOptionsInterface $searchReadOptions = null
     ): array {
         $modelName = $this->getModelNameFromClass($className);
+
+        $searchReadOptions = $searchReadOptions ?? new SearchReadOptions();
+
+        $this->processReadOptions($className, $searchReadOptions, [
+            'class' => __CLASS__,
+            'method' => __METHOD__,
+        ]);
 
         $results = $this->recordListOperations->search_read(
             $modelName,
@@ -93,5 +122,19 @@ final class ModelListManager implements ModelListManagerInterface
     public function getSerializer(): Serializer
     {
         return $this->serializer;
+    }
+
+    /**
+     * @template T of BaseInterface
+     * @param class-string<T> $className
+     */
+    private function processReadOptions(
+        string $className,
+        ReadOptionsInterface $readOptions,
+        array $context = []
+    ): void {
+        $readOptions->setFields($this->modelFieldsProvider->provide($className, $context + [
+            ModelFieldsProviderInterface::FIELDS_CONTEXT => $readOptions->getFields(),
+        ]));
     }
 }

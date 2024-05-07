@@ -12,6 +12,7 @@ use FluxSE\OdooApiClient\Serializer\NullOdooRelationDenormalizer;
 use FluxSE\OdooApiClient\Serializer\OdooNormalizer;
 use FluxSE\OdooApiClient\Serializer\OdooRelationDenormalizer;
 use FluxSE\OdooApiClient\Serializer\OdooRelationNormalizer;
+use FluxSE\OdooApiClient\Serializer\OdooRelationsDenormalizer;
 use FluxSE\OdooApiClient\Serializer\OdooRelationSingleDenormalizer;
 use FluxSE\OdooApiClient\Serializer\OdooRelationsNormalizer;
 use FluxSE\OdooApiClient\Serializer\XmlRpc\XmlRpcDecoder;
@@ -57,6 +58,7 @@ final class SerializerFactory implements SerializerFactoryInterface
         ]);
         return [
             new ArrayDenormalizer(),
+            new OdooRelationsDenormalizer(),
             new NullableDateTimeDenormalizer($dateTimeNormalizer),
             $dateTimeNormalizer,
             new OdooRelationsNormalizer(),

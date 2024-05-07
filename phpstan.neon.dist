@@ -10,8 +10,7 @@ parameters:
         - tests/Manager/ModelManagerTest.php
 
     ignoreErrors:
-        - '/Method FluxSE\\OdooApiClient\\Manager\\ModelListManager::(find|findBy)\(\) should return (array<|\()T of FluxSE\\OdooApiClient\\Model\\BaseInterface(>|\)\|null) but returns mixed\./'
-        - '/Method FluxSE\\OdooApiClient\\Serializer\\(Json|Xml)Rpc\\(Json|Xml)RpcSerializerHelper::deserializeResponseBody\(\) should return T of object but returns mixed\./'
+        - '/Method FluxSE\\OdooApiClient\\Manager\\ModelListManager::(find|findBy|findByIds)\(\) should return (array<|\()T of FluxSE\\OdooApiClient\\Model\\BaseInterface(>|\)\|null) but returns mixed\./'
         - '/Method FluxSE\\OdooApiClient\\Serializer\\(Json|Xml)Rpc\\(Json|Xml)RpcSerializerHelper::decodeResponseBody\(\) should return array\|bool\|int\|string but returns mixed\./'
 
         -
@@ -19,24 +18,12 @@ parameters:
             count: 1
             path: src/Serializer/OdooNormalizer.php
         -
-            message: '/Method FluxSE\\OdooApiClient\\Serializer\\OdooNormalizer::setAttributeValue\(\) has parameter \$value with no type specified\./'
+            message: '/Parameter #1 \$onFulfilled of method Http\\Promise\\Promise<mixed>::then\(\) expects \(callable\(mixed\): Psr\\Http\\Message\\ResponseInterface\)\|null, Closure\(Psr\\Http\\Message\\ResponseInterface\): Psr\\Http\\Message\\ResponseInterface given\./'
             count: 1
-            path: src/Serializer/OdooNormalizer.php
+            path: src/HttPlug/Plugin/OdooApiErrorPlugin.php
+        # Symfony 5.4
+        - '/Method FluxSE\\OdooApiClient\\Serializer\\(Json|Xml)Rpc\\(Json|Xml)RpcSerializerHelper::deserializeResponseBody\(\) should return T of object but returns mixed\./'
         -
             message: '/Method FluxSE\\OdooApiClient\\HttPlug\\Plugin\\OdooApiErrorPlugin::handleRequest\(\) has parameter \$(first|next) with generic interface Http\\Promise\\Promise but does not specify its types: T/'
             count: 2
             path: src/HttPlug/Plugin/OdooApiErrorPlugin.php
-        -
-            message: '/Parameter #1 \$onFulfilled of method Http\\Promise\\Promise<mixed>::then\(\) expects \(callable\(mixed\): Psr\\Http\\Message\\ResponseInterface\)\|null, Closure\(Psr\\Http\\Message\\ResponseInterface\): Psr\\Http\\Message\\ResponseInterface given\./'
-            count: 1
-            path: src/HttPlug/Plugin/OdooApiErrorPlugin.php
-        # Odoo v17
-        # https://github.com/odoo/odoo/issues/144841
-        -
-            message: '/Method Tests\\FluxSE\\OdooApiClient\\TestModel\\Object\\Mail\\Alias::__construct\(\) invoked with 1 parameter, 3 required\./'
-            count: 1
-            path: tests/TestModel/Object/Mail/Alias/Mixin.php
-        -
-            message: '/Parameter #1 \$alias_model_id of method Tests\\FluxSE\\OdooApiClient\\TestModel\\Object\\Mail\\Alias::__construct\(\) expects FluxSE\\OdooApiClient\\Model\\OdooRelation, string given\./'
-            count: 1
-            path: tests/TestModel/Object/Mail/Alias/Mixin.php

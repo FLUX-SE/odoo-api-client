@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace FluxSE\OdooApiClient\Serializer;
 
+use FluxSE\OdooApiClient\Api\FaultInterface;
+use FluxSE\OdooApiClient\Api\RequestBodyInterface;
+use FluxSE\OdooApiClient\Model\BaseInterface;
+use FluxSE\OdooApiClient\Model\Common\Version;
 use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -11,6 +15,16 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 final class OdooNormalizer extends ObjectNormalizer
 {
     public const NORMALIZE_FOR_UPDATE = 'normalize_for_update';
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return [
+            BaseInterface::class => true,
+            RequestBodyInterface::class => true,
+            FaultInterface::class => true,
+            Version::class => true,
+        ];
+    }
 
     protected function setAttributeValue(object $object, string $attribute, mixed $value, string $format = null, array $context = []): void
     {
