@@ -38,7 +38,7 @@
         "symfony/http-kernel": "^5.4|^6.4",
         "php-http/logger-plugin": "^1.1",
         "prometee/php-class-generator": "^1.0",
-        "doctrine/annotations": "^1.13",
+        "doctrine/annotations": "^1.13|^2.0",
         "webmozart/assert": "^1"
     },
     "require-dev": {
