@@ -12,15 +12,18 @@ parameters:
         - identifier: missingType.iterableValue
         - '/Method FluxSE\\OdooApiClient\\Manager\\ModelListManager::(find|findBy|findByIds)\(\) should return (array<|\()T of FluxSE\\OdooApiClient\\Model\\BaseInterface(>|\)\|null) but returns mixed\./'
         - '/Method FluxSE\\OdooApiClient\\Serializer\\(Json|Xml)Rpc\\(Json|Xml)RpcSerializerHelper::decodeResponseBody\(\) should return array\|bool\|int\|string but returns mixed\./'
-
-        -
-            message: '/Class FluxSE\\OdooApiClient\\Serializer\\OdooNormalizer extends \@final class Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer\./'
-            count: 1
-            path: src/Serializer/OdooNormalizer.php
         -
             message: '/Parameter #1 \$onFulfilled of method Http\\Promise\\Promise<mixed>::then\(\) expects \(callable\(mixed\): Psr\\Http\\Message\\ResponseInterface\)\|null, Closure\(Psr\\Http\\Message\\ResponseInterface\): Psr\\Http\\Message\\ResponseInterface given\./'
             count: 1
             path: src/HttPlug/Plugin/OdooApiErrorPlugin.php
+        -
+            message: '/Instantiated class Symfony\\Component\\Serializer\\Mapping\\Loader\\AnnotationLoader not found\./'
+            count: 1
+            path: src/Serializer/Factory/SerializerFactory.php
+        -
+            message: '/Method FluxSE\\OdooApiClient\\Serializer\\OdooNormalizer::normalize\(\) return type with generic class ArrayObject does not specify its types: TKey, TValue/'
+            count: 1
+            path: src/Serializer/OdooNormalizer.php
         # Symfony 5.4
         - '/Method FluxSE\\OdooApiClient\\Serializer\\(Json|Xml)Rpc\\(Json|Xml)RpcSerializerHelper::deserializeResponseBody\(\) should return T of object but returns mixed\./'
         -
