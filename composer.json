@@ -49,7 +49,6 @@
         "http-interop/http-factory-guzzle": "^1.0",
         "symplify/easy-coding-standard": "^12",
         "phpstan/phpstan": "^1",
-        "vimeo/psalm": "^5",
         "rector/rector": "^1.0.4"
     },
     "suggest": {
