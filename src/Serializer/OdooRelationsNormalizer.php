@@ -15,6 +15,8 @@ final class OdooRelationsNormalizer implements NormalizerInterface, NormalizerAw
 {
     use NormalizerAwareTrait;
 
+    public const NORMALIZE_FOR_UPDATE = 'normalize_for_update';
+
     public function getSupportedTypes(?string $format): array
     {
         return ['native-array' => true];
@@ -26,7 +28,7 @@ final class OdooRelationsNormalizer implements NormalizerInterface, NormalizerAw
             return false;
         }
 
-        $normalizeForUpdate = $context[OdooNormalizer::NORMALIZE_FOR_UPDATE] ?? false;
+        $normalizeForUpdate = $context[self::NORMALIZE_FOR_UPDATE] ?? false;
         if (!$normalizeForUpdate) {
             return false;
         }

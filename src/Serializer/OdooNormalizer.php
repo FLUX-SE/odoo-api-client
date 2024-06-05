@@ -14,8 +14,6 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 final class OdooNormalizer extends ObjectNormalizer
 {
-    public const NORMALIZE_FOR_UPDATE = 'normalize_for_update';
-
     public function getSupportedTypes(?string $format): array
     {
         return [

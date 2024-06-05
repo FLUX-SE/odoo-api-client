@@ -4,7 +4,7 @@ namespace Tests\FluxSE\OdooApiClient\Serializer;
 
 use FluxSE\OdooApiClient\Model\OdooRelation;
 use FluxSE\OdooApiClient\Serializer\Factory\SerializerFactory;
-use FluxSE\OdooApiClient\Serializer\OdooNormalizer;
+use FluxSE\OdooApiClient\Serializer\OdooRelationsNormalizer;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Serializer;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner;
@@ -33,7 +33,7 @@ class OdooNormalizerTest extends TestCase
         ]);
 
         $arr = $this->serializer->normalize($object, null, [
-            OdooNormalizer::NORMALIZE_FOR_UPDATE => true,
+            OdooRelationsNormalizer::NORMALIZE_FOR_UPDATE => true,
         ]);
 
         $this->assertEquals([
@@ -55,7 +55,7 @@ class OdooNormalizerTest extends TestCase
         ]);
 
         $arr = $this->serializer->normalize($object, null, [
-            OdooNormalizer::NORMALIZE_FOR_UPDATE => true,
+            OdooRelationsNormalizer::NORMALIZE_FOR_UPDATE => true,
         ]);
 
         $this->assertEquals([
