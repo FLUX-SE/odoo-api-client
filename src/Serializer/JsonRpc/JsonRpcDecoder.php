@@ -33,7 +33,7 @@ final class JsonRpcDecoder implements ContextAwareDecoderInterface
      *
      * @throws JsonException
      */
-    public function decode($data, $format, array $context = [])
+    public function decode(string $data, string $format, array $context = []): mixed
     {
         if ('' === trim($data)) {
             throw new UnexpectedValueException('Invalid JSON data, it can not be empty.');
