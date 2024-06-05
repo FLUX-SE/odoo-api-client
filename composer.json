@@ -60,7 +60,8 @@
         "bin/odoo-model-classes-generator"
     ],
     "autoload": {
-        "psr-4": { "FluxSE\\OdooApiClient\\": "src/" }
+        "psr-4": { "FluxSE\\OdooApiClient\\": "src/" },
+        "files": ["src/functions.php"]
     },
     "autoload-dev": {
         "psr-4": { "Tests\\FluxSE\\OdooApiClient\\": "tests/" }
