@@ -17,10 +17,6 @@ parameters:
             count: 1
             path: src/HttPlug/Plugin/OdooApiErrorPlugin.php
         -
-            message: '/Instantiated class Symfony\\Component\\Serializer\\Mapping\\Loader\\AnnotationLoader not found\./'
-            count: 1
-            path: src/Serializer/Factory/SerializerFactory.php
-        -
             message: '/Method FluxSE\\OdooApiClient\\Serializer\\OdooNormalizer::normalize\(\) return type with generic class ArrayObject does not specify its types: TKey, TValue/'
             count: 1
             path: src/Serializer/OdooNormalizer.php

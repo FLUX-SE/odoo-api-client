@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace FluxSE\OdooApiClient\Serializer\Factory;
 
-use Doctrine\Common\Annotations\AnnotationReader;
 use FluxSE\OdooApiClient\PropertyAccess\OdooPropertyAccessor;
 use FluxSE\OdooApiClient\Serializer\JsonRpc\JsonRpcDecoder;
 use FluxSE\OdooApiClient\Serializer\JsonRpc\JsonRpcEncoder;
@@ -24,7 +23,6 @@ use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\Extractor\SerializerExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
 use Symfony\Component\Serializer\Mapping\Loader\LoaderInterface;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
@@ -85,16 +83,7 @@ final class SerializerFactory implements SerializerFactoryInterface
 
     public function setupObjectNormalizer(): OdooNormalizer
     {
-        if (class_exists(AttributeLoader::class)) {
-            /** @var LoaderInterface $loader */
-            $loader = new AttributeLoader();
-        } else {
-            /**
-             * @var LoaderInterface $loader
-             * @psalm-suppress TooManyArguments
-             */
-            $loader = new AnnotationLoader(new AnnotationReader());
-        }
+        $loader = new AttributeLoader();
 
         $classMetadataFactory = new ClassMetadataFactory($loader);
         $metadataAwareNameConverter = new MetadataAwareNameConverter(
