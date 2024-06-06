@@ -18,7 +18,7 @@ final class NullOdooRelationDenormalizer implements DenormalizerInterface
         return [OdooRelation::class => false];
     }
 
-    public function supportsDenormalization($data, $type, $format = null): bool
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
         if ($type !== OdooRelation::class) {
             return false;
@@ -28,7 +28,7 @@ final class NullOdooRelationDenormalizer implements DenormalizerInterface
         return false === $data;
     }
 
-    public function denormalize($data, $type, $format = null, array $context = [])
+    public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
         if (false === $data) {
             return null;

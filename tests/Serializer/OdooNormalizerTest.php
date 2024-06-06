@@ -4,14 +4,17 @@ namespace Tests\FluxSE\OdooApiClient\Serializer;
 
 use FluxSE\OdooApiClient\Model\OdooRelation;
 use FluxSE\OdooApiClient\Serializer\Factory\SerializerFactory;
-use FluxSE\OdooApiClient\Serializer\OdooNormalizer;
+use FluxSE\OdooApiClient\Serializer\OdooRelationsNormalizer;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Tests\FluxSE\OdooApiClient\Serializer\Model\Foo;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner;
 
 class OdooNormalizerTest extends TestCase
 {
-    /** @var Serializer  */
     private Serializer $serializer;
 
     protected function setUp(): void
@@ -33,7 +36,7 @@ class OdooNormalizerTest extends TestCase
         ]);
 
         $arr = $this->serializer->normalize($object, null, [
-            OdooNormalizer::NORMALIZE_FOR_UPDATE => true,
+            OdooRelationsNormalizer::NORMALIZE_FOR_UPDATE => true,
         ]);
 
         $this->assertEquals([
@@ -55,7 +58,7 @@ class OdooNormalizerTest extends TestCase
         ]);
 
         $arr = $this->serializer->normalize($object, null, [
-            OdooNormalizer::NORMALIZE_FOR_UPDATE => true,
+            OdooRelationsNormalizer::NORMALIZE_FOR_UPDATE => true,
         ]);
 
         $this->assertEquals([
@@ -107,5 +110,15 @@ class OdooNormalizerTest extends TestCase
                 30,
             ],
         ], $arr);
+    }
+
+    public function testDenormalizeFalsePseudoType(): void
+    {
+        // when denormalizing some data into an object where an attribute uses the false pseudo type
+        /** @var Foo $object */
+        $object = $this->serializer->denormalize(['id' => 2], Foo::class);
+
+        // then the attribute that declared false was filled correctly
+        $this->assertEquals(2, $object->getId());
     }
 }

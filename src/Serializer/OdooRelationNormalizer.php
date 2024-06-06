@@ -20,7 +20,7 @@ final class OdooRelationNormalizer implements NormalizerInterface, NormalizerAwa
         return [OdooRelation::class => true];
     }
 
-    public function supportsNormalization($data, $format = null): bool
+    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
         return $data instanceof OdooRelation;
     }

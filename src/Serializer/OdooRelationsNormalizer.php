@@ -6,14 +6,15 @@ namespace FluxSE\OdooApiClient\Serializer;
 
 use FluxSE\OdooApiClient\Model\OdooRelation;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
-use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-final class OdooRelationsNormalizer implements NormalizerInterface, NormalizerAwareInterface, ContextAwareNormalizerInterface
+final class OdooRelationsNormalizer implements NormalizerInterface, NormalizerAwareInterface
 {
     use NormalizerAwareTrait;
+
+    public const NORMALIZE_FOR_UPDATE = 'normalize_for_update';
 
     public function getSupportedTypes(?string $format): array
     {
@@ -26,7 +27,7 @@ final class OdooRelationsNormalizer implements NormalizerInterface, NormalizerAw
             return false;
         }
 
-        $normalizeForUpdate = $context[OdooNormalizer::NORMALIZE_FOR_UPDATE] ?? false;
+        $normalizeForUpdate = $context[self::NORMALIZE_FOR_UPDATE] ?? false;
         if (!$normalizeForUpdate) {
             return false;
         }

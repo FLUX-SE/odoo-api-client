@@ -30,7 +30,7 @@ final class XmlRpcDecoder implements ContextAwareDecoderInterface
     /**
      * @return array|integer|string|boolean
      */
-    public function decode($data, $format, array $context = [])
+    public function decode(string $data, string $format, array $context = []): mixed
     {
         if ('' === trim($data)) {
             throw new UnexpectedValueException('Invalid XML data, it can not be empty.');

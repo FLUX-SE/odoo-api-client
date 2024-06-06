@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FluxSE\OdooApiClient\Serializer\Factory;
 
-use Doctrine\Common\Annotations\AnnotationReader;
+use FluxSE\OdooApiClient\PropertyAccess\OdooPropertyAccessor;
 use FluxSE\OdooApiClient\Serializer\JsonRpc\JsonRpcDecoder;
 use FluxSE\OdooApiClient\Serializer\JsonRpc\JsonRpcEncoder;
 use FluxSE\OdooApiClient\Serializer\NullableDateTimeDenormalizer;
@@ -17,12 +17,13 @@ use FluxSE\OdooApiClient\Serializer\OdooRelationSingleDenormalizer;
 use FluxSE\OdooApiClient\Serializer\OdooRelationsNormalizer;
 use FluxSE\OdooApiClient\Serializer\XmlRpc\XmlRpcDecoder;
 use FluxSE\OdooApiClient\Serializer\XmlRpc\XmlRpcEncoder;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\Extractor\SerializerExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
 use Symfony\Component\Serializer\Mapping\Loader\LoaderInterface;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
@@ -31,6 +32,7 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
 final class SerializerFactory implements SerializerFactoryInterface
@@ -82,16 +84,7 @@ final class SerializerFactory implements SerializerFactoryInterface
 
     public function setupObjectNormalizer(): OdooNormalizer
     {
-        if (class_exists(AttributeLoader::class)) {
-            /** @var LoaderInterface $loader */
-            $loader = new AttributeLoader();
-        } else {
-            /**
-             * @var LoaderInterface $loader
-             * @psalm-suppress TooManyArguments
-             */
-            $loader = new AnnotationLoader(new AnnotationReader());
-        }
+        $loader = new AttributeLoader();
 
         $classMetadataFactory = new ClassMetadataFactory($loader);
         $metadataAwareNameConverter = new MetadataAwareNameConverter(
@@ -99,41 +92,51 @@ final class SerializerFactory implements SerializerFactoryInterface
             new CamelCaseToSnakeCaseNameConverter()
         );
 
+        $odooPropertyAccessor = $this->setupPropertyAccessor();
+
         return new OdooNormalizer(
-            $classMetadataFactory,
-            $metadataAwareNameConverter,
-            null,
-            new PropertyInfoExtractor(
+            new ObjectNormalizer(
+                $classMetadataFactory,
+                $metadataAwareNameConverter,
+                $odooPropertyAccessor,
+                new PropertyInfoExtractor(
+                    [
+                        new ReflectionExtractor(),
+                        new SerializerExtractor($classMetadataFactory),
+                    ],
+                    [
+                        new PhpDocExtractor(),
+                        new ReflectionExtractor(),
+                    ],
+                    [
+                        new PhpDocExtractor(),
+                    ],
+                    [
+                        new ReflectionExtractor(),
+                    ],
+                    [
+                        new ReflectionExtractor(),
+                    ]
+                ),
+                null,
+                null,
                 [
-                    new ReflectionExtractor(),
-                    new SerializerExtractor($classMetadataFactory),
-                ],
-                [
-                    new PhpDocExtractor(),
-                    new ReflectionExtractor(),
-                ],
-                [
-                    new PhpDocExtractor(),
-                ],
-                [
-                    new ReflectionExtractor(),
-                ],
-                [
-                    new ReflectionExtractor(),
+                    // => array to model
+                    AbstractObjectNormalizer::DISABLE_TYPE_ENFORCEMENT => true,
+                    // => model to array
+                    AbstractObjectNormalizer::SKIP_NULL_VALUES => true,
+                    AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+                        return $object->getId() ?? 0;
+                    }
                 ]
-            ),
-            null,
-            null,
-            [
-                // => array to model
-                AbstractObjectNormalizer::DISABLE_TYPE_ENFORCEMENT => true,
-                // => model to array
-                AbstractObjectNormalizer::SKIP_NULL_VALUES => true,
-                AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
-                    return $object->getId() ?? 0;
-                }
-            ]
+            )
         );
+    }
+
+    public function setupPropertyAccessor(): PropertyAccessorInterface
+    {
+        $propertyAccessor = PropertyAccess::createPropertyAccessor();
+        return new OdooPropertyAccessor($propertyAccessor);
     }
 
     public function getDateFormat(): string

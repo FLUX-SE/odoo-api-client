@@ -18,7 +18,7 @@ final class OdooRelationDenormalizer implements DenormalizerInterface
         return [OdooRelation::class => false];
     }
 
-    public function supportsDenormalization($data, $type, $format = null): bool
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
         if ($type !== OdooRelation::class) {
             return false;

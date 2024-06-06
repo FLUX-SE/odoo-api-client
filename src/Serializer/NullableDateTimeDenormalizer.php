@@ -21,12 +21,12 @@ final class NullableDateTimeDenormalizer implements DenormalizerInterface
         ];
     }
 
-    public function denormalize($data, string $type, string $format = null, array $context = [])
+    public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
         return null;
     }
 
-    public function supportsDenormalization($data, string $type, string $format = null): bool
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
         if (!\is_string($data) || '' === trim($data)) {
             return $this->dateTimeNormalizer->supportsDenormalization($data, $type, $format);

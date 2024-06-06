@@ -8,13 +8,17 @@ use FluxSE\OdooApiClient\Api\FaultInterface;
 use FluxSE\OdooApiClient\Api\RequestBodyInterface;
 use FluxSE\OdooApiClient\Model\BaseInterface;
 use FluxSE\OdooApiClient\Model\Common\Version;
-use FluxSE\OdooApiClient\Model\OdooRelation;
-use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\SerializerAwareInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
-final class OdooNormalizer extends ObjectNormalizer
+final class OdooNormalizer implements NormalizerInterface, DenormalizerInterface, SerializerAwareInterface
 {
-    public const NORMALIZE_FOR_UPDATE = 'normalize_for_update';
+    public function __construct(private ObjectNormalizer $decoratedObjectNormalizer)
+    {
+    }
 
     public function getSupportedTypes(?string $format): array
     {
@@ -26,59 +30,28 @@ final class OdooNormalizer extends ObjectNormalizer
         ];
     }
 
-    protected function setAttributeValue(object $object, string $attribute, mixed $value, string $format = null, array $context = []): void
+    public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
-        /**
-         * Override to set null when original value is false
-         *
-         * Because null value is transformed to false by Odoo API
-         * There is no other way to do it simply with any features given by Symfony Serializer
-         */
-
-        parent::setAttributeValue($object, $attribute, $value, $format, $context);
-
-        if (false !== $value) {
-            return;
-        }
-
-        try {
-            $newValue = parent::getAttributeValue($object, $attribute, $format, $context);
-        } catch (NoSuchPropertyException $e) {
-            // ignore not found properties like the setAttributeValue above
-            return;
-        }
-
-        if (false === $newValue) {
-            return;
-        }
-
-        parent::setAttributeValue($object, $attribute, null, $format, $context);
+        return $this->decoratedObjectNormalizer->denormalize($data, $type, $format, $context);
     }
 
-    protected function getAttributeValue(object $object, string $attribute, string $format = null, array $context = []): mixed
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
-        /**
-         * Specific case of normalized data returned as null instead of being just transformed
-         */
-        $value = parent::getAttributeValue($object, $attribute, $format, $context);
+        return $this->decoratedObjectNormalizer->supportsDenormalization($data, $type, $format, $context);
+    }
 
-        $skipNullValue = $context[self::SKIP_NULL_VALUES] ?? $this->defaultContext[self::SKIP_NULL_VALUES] ?? false;
-        if (!$skipNullValue) {
-            return $value;
-        }
+    public function normalize(mixed $object, ?string $format = null, array $context = []): array|string|int|float|bool|\ArrayObject|null
+    {
+        return $this->decoratedObjectNormalizer->normalize($object, $format, $context);
+    }
 
-        if (false === $value instanceof OdooRelation) {
-            return $value;
-        }
+    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
+    {
+        return $this->decoratedObjectNormalizer->supportsNormalization($data, $format, $context);
+    }
 
-        if (null !== $value->getCommand()) {
-            return $value;
-        }
-
-        if (null !== $value->getId()) {
-            return $value;
-        }
-
-        return null;
+    public function setSerializer(SerializerInterface $serializer): void
+    {
+        $this->decoratedObjectNormalizer->setSerializer($serializer);
     }
 }

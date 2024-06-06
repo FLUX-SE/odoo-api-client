@@ -7,7 +7,7 @@ namespace FluxSE\OdooApiClient\Manager;
 use FluxSE\OdooApiClient\Model\BaseInterface;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\OptionsInterface;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordOperationsInterface;
-use FluxSE\OdooApiClient\Serializer\OdooNormalizer;
+use FluxSE\OdooApiClient\Serializer\OdooRelationsNormalizer;
 use LogicException;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -38,7 +38,7 @@ final class ModelManager implements ModelManagerInterface
         }
 
         $normalizedModel = (array) $this->normalizer->normalize($model, null, [
-            OdooNormalizer::NORMALIZE_FOR_UPDATE => true,
+            OdooRelationsNormalizer::NORMALIZE_FOR_UPDATE => true,
         ]);
         return $this->recordOperations->write(
             $model::getOdooModelName(),
