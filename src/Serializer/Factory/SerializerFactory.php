@@ -18,6 +18,7 @@ use FluxSE\OdooApiClient\Serializer\OdooRelationsNormalizer;
 use FluxSE\OdooApiClient\Serializer\XmlRpc\XmlRpcDecoder;
 use FluxSE\OdooApiClient\Serializer\XmlRpc\XmlRpcEncoder;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\Extractor\SerializerExtractor;
@@ -91,13 +92,13 @@ final class SerializerFactory implements SerializerFactoryInterface
             new CamelCaseToSnakeCaseNameConverter()
         );
 
-        $propertyAccessor = PropertyAccess::createPropertyAccessor();
+        $odooPropertyAccessor = $this->setupPropertyAccessor();
 
         return new OdooNormalizer(
             new ObjectNormalizer(
                 $classMetadataFactory,
                 $metadataAwareNameConverter,
-                new OdooPropertyAccessor($propertyAccessor),
+                $odooPropertyAccessor,
                 new PropertyInfoExtractor(
                     [
                         new ReflectionExtractor(),
@@ -130,6 +131,12 @@ final class SerializerFactory implements SerializerFactoryInterface
                 ]
             )
         );
+    }
+
+    public function setupPropertyAccessor(): PropertyAccessorInterface
+    {
+        $propertyAccessor = PropertyAccess::createPropertyAccessor();
+        return new OdooPropertyAccessor($propertyAccessor);
     }
 
     public function getDateFormat(): string
