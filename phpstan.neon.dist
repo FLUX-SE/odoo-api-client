@@ -13,16 +13,15 @@ parameters:
         - '/Method FluxSE\\OdooApiClient\\Manager\\ModelListManager::(find|findBy|findByIds)\(\) should return (array<|\()T of FluxSE\\OdooApiClient\\Model\\BaseInterface(>|\)\|null) but returns mixed\./'
         - '/Method FluxSE\\OdooApiClient\\Serializer\\(Json|Xml)Rpc\\(Json|Xml)RpcSerializerHelper::decodeResponseBody\(\) should return array\|bool\|int\|string but returns mixed\./'
         -
-            message: '/Parameter #1 \$onFulfilled of method Http\\Promise\\Promise<mixed>::then\(\) expects \(callable\(mixed\): Psr\\Http\\Message\\ResponseInterface\)\|null, Closure\(Psr\\Http\\Message\\ResponseInterface\): Psr\\Http\\Message\\ResponseInterface given\./'
-            count: 1
-            path: src/HttPlug/Plugin/OdooApiErrorPlugin.php
-        -
             message: '/Method FluxSE\\OdooApiClient\\Serializer\\OdooNormalizer::normalize\(\) return type with generic class ArrayObject does not specify its types: TKey, TValue/'
             count: 1
             path: src/Serializer/OdooNormalizer.php
-        # Symfony 5.4
-        - '/Method FluxSE\\OdooApiClient\\Serializer\\(Json|Xml)Rpc\\(Json|Xml)RpcSerializerHelper::deserializeResponseBody\(\) should return T of object but returns mixed\./'
+        # Symfony 6.4
         -
-            message: '/Method FluxSE\\OdooApiClient\\HttPlug\\Plugin\\OdooApiErrorPlugin::handleRequest\(\) has parameter \$(first|next) with generic interface Http\\Promise\\Promise but does not specify its types: T/'
-            count: 2
-            path: src/HttPlug/Plugin/OdooApiErrorPlugin.php
+            message: '/Method Symfony\\Component\\Serializer\\Normalizer\\AbstractObjectNormalizer::supportsDenormalization\(\) invoked with 4 parameters, 2-3 required\./'
+            count: 1
+            path: src/Serializer/OdooNormalizer.php
+        -
+            message: '/Method Symfony\\Component\\Serializer\\Normalizer\\AbstractObjectNormalizer::supportsNormalization\(\) invoked with 3 parameters, 1-2 required\./'
+            count: 1
+            path: src/Serializer/OdooNormalizer.php
