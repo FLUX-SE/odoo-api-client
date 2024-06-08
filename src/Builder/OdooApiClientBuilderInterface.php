@@ -6,7 +6,7 @@ namespace FluxSE\OdooApiClient\Builder;
 
 use FluxSE\OdooApiClient\Api\Factory\RequestBodyFactoryInterface;
 use FluxSE\OdooApiClient\Api\OdooApiRequestMakerInterface;
-use FluxSE\OdooApiClient\HttPlug\Factory\OdooHttpClientFactoryInterface;
+use FluxSE\OdooApiClient\HttpClient\Factory\OdooHttpClientFactoryInterface;
 use FluxSE\OdooApiClient\Operations\CommonOperationsInterface;
 use FluxSE\OdooApiClient\Operations\DbOperationsInterface;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\OperationsInterface as ExecuteKwOperationsInterface;
