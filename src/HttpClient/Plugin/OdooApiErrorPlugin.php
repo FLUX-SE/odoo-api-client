@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace FluxSE\OdooApiClient\HttPlug\Plugin;
+namespace FluxSE\OdooApiClient\HttpClient\Plugin;
 
 use FluxSE\OdooApiClient\Api\Fault;
 use FluxSE\OdooApiClient\Api\FaultInterface;

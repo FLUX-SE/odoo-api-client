@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace FluxSE\OdooApiClient\HttPlug\Factory;
+namespace FluxSE\OdooApiClient\HttpClient\Factory;
 
-use FluxSE\OdooApiClient\HttPlug\Plugin\OdooApiErrorPlugin;
+use FluxSE\OdooApiClient\HttpClient\Plugin\OdooApiErrorPlugin;
 use FluxSE\OdooApiClient\Serializer\RpcSerializerHelperInterface;
 use Http\Client\Common\Plugin;
 use Http\Client\Common\Plugin\ContentTypePlugin;
