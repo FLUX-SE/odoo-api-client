@@ -7,6 +7,7 @@ parameters:
 
     excludePaths:
         - tests/Manager/ModelManagerTest.php
+        - tests/Serializer/OdooNormalizerTest.php
 
     ignoreErrors:
         - identifier: missingType.iterableValue

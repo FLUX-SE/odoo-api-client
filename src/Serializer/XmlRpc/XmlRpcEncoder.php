@@ -55,7 +55,7 @@ final class XmlRpcEncoder implements EncoderInterface
             ]
         );
 
-        /** @var string $xmlrpc_encode_request psalm bug ? */
+        /** @var string $xmlrpc_encode_request */
         $xmlrpc_encode_request = \xmlrpc_encode_request($method, $params, $outputOptions);
 
         return $xmlrpc_encode_request;

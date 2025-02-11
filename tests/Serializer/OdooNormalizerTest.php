@@ -156,8 +156,8 @@ class OdooNormalizerTest extends TestCase
         }
 
         return new Partner(
-            $defaultRel,
-            $defaultRel,
+            $payableRel,
+            $receivableRel,
         );
     }
 }

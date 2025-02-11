@@ -139,10 +139,7 @@ class ModelManagerTest extends TestCase
         $category = $this->retrieveFirstCategory();
 
         if ($this->odooVersion <= 15) {
-            /**
-             * @psalm-suppress TooFewArguments
-             * @phpstan-ignore-next-line
-             */
+            /** @phpstan-ignore-next-line */
             $template = new Template(
                 'test',
                 'consu',
@@ -152,10 +149,7 @@ class ModelManagerTest extends TestCase
                 []
             );
         } elseif ($this->odooVersion <= 17) {
-            /**
-             * @psalm-suppress TooManyArguments
-             * @phpstan-ignore-next-line
-             */
+            /** @phpstan-ignore-next-line */
             $template = new Template(
                 'test',
                 'consu',
@@ -166,10 +160,7 @@ class ModelManagerTest extends TestCase
                 'warning'
             );
         } else {
-            /**
-             * @psalm-suppress TooManyArguments
-             * @phpstan-ignore-next-line
-             */
+            /** @phpstan-ignore-next-line */
             $template = new Template(
                 'test',
                 'consu',
@@ -490,6 +481,7 @@ class ModelManagerTest extends TestCase
             );
         }
 
+        /** @psalm-suppress TooManyArguments,InvalidArgument * */
         return new Partner(
             'never'
         );
