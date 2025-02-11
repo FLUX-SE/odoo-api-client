@@ -27,8 +27,8 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                odoo: [13, 14, 15, 16, 17, 18]
-                symfony: ["^6.4", "^7.2"]
+                odoo: [16, 17, 18]
+                symfony: ["^6.4", "^7.1"]
                 php: ["8.1", "8.2", "8.3"] # " required to keep the .0
                 exclude:
                     -
