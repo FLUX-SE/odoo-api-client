@@ -151,7 +151,7 @@ class ModelManagerTest extends TestCase
                 new OdooRelation($uom->getId()),
                 []
             );
-        } else if ($this->odooVersion <= 17) {
+        } elseif ($this->odooVersion <= 17) {
             /**
              * @psalm-suppress TooManyArguments
              * @phpstan-ignore-next-line
