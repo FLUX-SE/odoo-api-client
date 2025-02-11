@@ -27,8 +27,8 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                odoo: [13, 14, 15, 16, 17]
-                symfony: ["^6.4", "^7.1"]
+                odoo: [13, 14, 15, 16, 17, 18]
+                symfony: ["^6.4", "^7.2"]
                 php: ["8.1", "8.2", "8.3"] # " required to keep the .0
                 exclude:
                     -
@@ -52,7 +52,7 @@ jobs:
             ODOO_API_DATABASE: odoo-master
             ODOO_API_USERNAME: admin
             ODOO_API_PASSWORD: admin
-            ODOO_API_INIT_MODULES: l10n_fr,account_accountant
+            ODOO_API_INIT_MODULES: l10n_fr,l10n_fr_account,account_accountant
 
         steps:
 

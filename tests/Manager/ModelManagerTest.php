@@ -78,9 +78,9 @@ class ModelManagerTest extends TestCase
         /** @var Account|null $propertyAccountReceivableId */
         $propertyAccountReceivableId = $this->modelListManager->findOneBy(Account::class, $searchDomains2);
 
-        $partner = new Partner(
-            new OdooRelation($propertyAccountPayableId->getId()),
-            new OdooRelation($propertyAccountReceivableId->getId()),
+        $partner = $this->createPartner(
+            new OdooRelation($propertyAccountPayableId?->getId()),
+            new OdooRelation($propertyAccountReceivableId?->getId()),
         );
         $partner->setName('Test partner');
 
@@ -151,6 +151,20 @@ class ModelManagerTest extends TestCase
                 new OdooRelation($uom->getId()),
                 []
             );
+        } else if ($this->odooVersion <= 17) {
+            /**
+             * @psalm-suppress TooManyArguments
+             * @phpstan-ignore-next-line
+             */
+            $template = new Template(
+                'test',
+                'consu',
+                new OdooRelation($category->getId()),
+                new OdooRelation($uom->getId()),
+                new OdooRelation($uom->getId()),
+                [],
+                'warning'
+            );
         } else {
             /**
              * @psalm-suppress TooManyArguments
@@ -159,6 +173,7 @@ class ModelManagerTest extends TestCase
             $template = new Template(
                 'test',
                 'consu',
+                'no',
                 new OdooRelation($category->getId()),
                 new OdooRelation($uom->getId()),
                 new OdooRelation($uom->getId()),
@@ -187,8 +202,13 @@ class ModelManagerTest extends TestCase
 
         // 1 - Retrieve Accounts
         $searchDomains = new SearchDomains();
-        $searchDomains->addCriterion(Criterion::equal('code', '707100'));
-        $searchDomains->addCriterion(Criterion::equal('company_id', $companyId));
+        if ($this->odooVersion <= 17) {
+            $searchDomains->addCriterion(Criterion::equal('code', '707100'));
+            $searchDomains->addCriterion(Criterion::equal('company_id', $companyId));
+        } else {
+            $searchDomains->addCriterion(Criterion::equal('name', 'Sales of goods'));
+            $searchDomains->addCriterion(Criterion::in('company_ids', [$companyId]));
+        }
         $account = $this->modelListManager->findOneBy(Account::class, $searchDomains);
         $this->assertNotNull($account);
 
@@ -458,5 +478,20 @@ class ModelManagerTest extends TestCase
             $paymentRegister->setPaymentMethodCode($paymentMethod->getCode());
         }
         return $paymentRegister;
+    }
+
+    private function createPartner(OdooRelation $payableRel, OdooRelation $receivableRel): Partner
+    {
+        if ($this->odooVersion <= 17) {
+            /** @psalm-suppress TooManyArguments,InvalidArgument * */
+            return new Partner(
+                $payableRel,
+                $receivableRel,
+            );
+        }
+
+        return new Partner(
+            'never'
+        );
     }
 }

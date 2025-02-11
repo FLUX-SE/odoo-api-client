@@ -6,9 +6,6 @@ use FluxSE\OdooApiClient\Model\OdooRelation;
 use FluxSE\OdooApiClient\Serializer\Factory\SerializerFactory;
 use FluxSE\OdooApiClient\Serializer\OdooRelationsNormalizer;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
-use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Tests\FluxSE\OdooApiClient\Serializer\Model\Foo;
 use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner;
@@ -25,10 +22,7 @@ class OdooNormalizerTest extends TestCase
 
     public function testNormalizeForUpdate(): void
     {
-        $object = new Partner(
-            new OdooRelation(false),
-            new OdooRelation(false),
-        );
+        $object = $this->createPartner(new OdooRelation(false), new OdooRelation(false));
         $object->setMessageIds([
             new OdooRelation(10),
             new OdooRelation(20),
@@ -39,18 +33,22 @@ class OdooNormalizerTest extends TestCase
             OdooRelationsNormalizer::NORMALIZE_FOR_UPDATE => true,
         ]);
 
-        $this->assertEquals([
-            'message_ids' => [],
-            'property_account_payable_id' => false,
-            'property_account_receivable_id' => false,
-        ], $arr);
+        if (method_exists($object, 'getAutopostBills')) {
+            $this->assertEquals([
+                'message_ids' => [],
+                'autopost_bills' => 'never',
+            ], $arr);
+        } else {
+            $this->assertEquals([
+                'message_ids' => [],
+                'property_account_payable_id' => false,
+                'property_account_receivable_id' => false,
+            ], $arr);
+        }
     }
     public function testNormalizeForUpdateWithNullData(): void
     {
-        $object = new Partner(
-            new OdooRelation(null),
-            new OdooRelation(null),
-        );
+        $object = $this->createPartner(new OdooRelation(null), new OdooRelation(null));
         $object->setMessageIds([
             new OdooRelation(10),
             new OdooRelation(20),
@@ -61,16 +59,20 @@ class OdooNormalizerTest extends TestCase
             OdooRelationsNormalizer::NORMALIZE_FOR_UPDATE => true,
         ]);
 
-        $this->assertEquals([
-            'message_ids' => [],
-        ], $arr);
+        if (method_exists($object, 'getAutopostBills')) {
+            $this->assertEquals([
+                'message_ids' => [],
+                'autopost_bills' => 'never',
+            ], $arr);
+        } else {
+            $this->assertEquals([
+                'message_ids' => [],
+            ], $arr);
+        }
     }
     public function testNormalize(): void
     {
-        $object = new Partner(
-            new OdooRelation(false),
-            new OdooRelation(false),
-        );
+        $object = $this->createPartner(new OdooRelation(false), new OdooRelation(false));
         $object->setMessageIds([
             new OdooRelation(10),
             new OdooRelation(20),
@@ -79,22 +81,30 @@ class OdooNormalizerTest extends TestCase
 
         $arr = $this->serializer->normalize($object);
 
-        $this->assertEquals([
-            'message_ids' => [
-                10,
-                20,
-                30,
-            ],
-            'property_account_payable_id' => false,
-            'property_account_receivable_id' => false,
-        ], $arr);
+        if (method_exists($object, 'getAutopostBills')) {
+            $this->assertEquals([
+                'message_ids' => [
+                    10,
+                    20,
+                    30,
+                ],
+                'autopost_bills' => 'never',
+            ], $arr);
+        } else {
+            $this->assertEquals([
+                'message_ids' => [
+                    10,
+                    20,
+                    30,
+                ],
+                'property_account_payable_id' => false,
+                'property_account_receivable_id' => false,
+            ], $arr);
+        }
     }
     public function testNormalizeWithNullData(): void
     {
-        $object = new Partner(
-            new OdooRelation(null),
-            new OdooRelation(null),
-        );
+        $object = $this->createPartner(new OdooRelation(null), new OdooRelation(null));
         $object->setMessageIds([
             new OdooRelation(10),
             new OdooRelation(20),
@@ -103,13 +113,24 @@ class OdooNormalizerTest extends TestCase
 
         $arr = $this->serializer->normalize($object);
 
-        $this->assertEquals([
-            'message_ids' => [
-                10,
-                20,
-                30,
-            ],
-        ], $arr);
+        if (method_exists($object, 'getAutopostBills')) {
+            $this->assertEquals([
+                'message_ids' => [
+                    10,
+                    20,
+                    30,
+                ],
+                'autopost_bills' => 'never',
+            ], $arr);
+        } else {
+            $this->assertEquals([
+                'message_ids' => [
+                    10,
+                    20,
+                    30,
+                ],
+            ], $arr);
+        }
     }
 
     public function testDenormalizeFalsePseudoType(): void
@@ -120,5 +141,23 @@ class OdooNormalizerTest extends TestCase
 
         // then the attribute that declared false was filled correctly
         $this->assertEquals(2, $object->getId());
+    }
+
+    private function createPartner(OdooRelation $payableRel, OdooRelation $receivableRel): Partner
+    {
+        $reflexion = new \ReflectionClass(Partner::class);
+        $constructor = $reflexion->getConstructor();
+        $this->assertNotNull($constructor);
+
+        if (count($constructor->getParameters()) === 1) {
+            return new Partner(
+                'never'
+            );
+        }
+
+        return new Partner(
+            $defaultRel,
+            $defaultRel,
+        );
     }
 }

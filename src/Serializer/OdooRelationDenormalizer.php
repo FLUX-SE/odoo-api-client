@@ -42,15 +42,16 @@ final class OdooRelationDenormalizer implements DenormalizerInterface
     public function denormalize($data, $type, $format = null, array $context = []): OdooRelation
     {
         if (false === is_array($data)) {
-            throw new InvalidArgumentException('The data should be an array !');
+            throw new InvalidArgumentException('The data must be an array!');
         }
 
-        if (false === is_int($data[0] ?? null)) {
+        $id = $data[0] ?? null;
+        if ($id === null || false === is_numeric($id)) {
             throw new InvalidArgumentException(
-                'The first element of the $data array should be an integer value !'
+                'The first element of the $data array must be an integer value!'
             );
         }
 
-        return new OdooRelation($data[0], $data[1] ?? null);
+        return new OdooRelation((int) $id, $data[1] ?? null);
     }
 }
