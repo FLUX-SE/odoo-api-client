@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\FluxSE\OdooApiClient\Manager;
 
 use DateTime;
@@ -313,10 +315,8 @@ class ModelManagerTest extends TestCase
         $this->assertNotNull($move);
         $this->assertEquals('posted', $move->getState());
         if (13 === $this->odooVersion) {
-            /** @psalm-suppress UndefinedMethod */
             $this->assertEquals('not_paid', $move->getInvoicePaymentState());
         } else {
-            /** @psalm-suppress UndefinedMethod */
             $this->assertEquals('not_paid', $move->getPaymentState());
         }
 
@@ -341,13 +341,10 @@ class ModelManagerTest extends TestCase
         if (13 === $this->odooVersion) {
             $paymentRegister->setDisplayName($ref);
         } else {
-            /** @psalm-suppress UndefinedMethod */
             $paymentRegister->setAmount($move->getAmountTotal());
 
-            /** @psalm-suppress UndefinedMethod */
             $paymentRegister->setCommunication($ref);
 
-            /** @psalm-suppress UndefinedMethod */
             $paymentRegister->setCompanyId($move->getCompanyId());
         }
 
@@ -389,7 +386,6 @@ class ModelManagerTest extends TestCase
         $currencyRel = new OdooRelation($currencyId);
 
         if (13 === $this->odooVersion) {
-            /** @psalm-suppress InvalidArgument,TooManyArguments * */
             return new Move(
                 '/', // !important
                 $date,
@@ -401,7 +397,6 @@ class ModelManagerTest extends TestCase
         }
 
         if ($this->odooVersion <= 15) {
-            /** @psalm-suppress TooManyArguments,InvalidArgument * */
             return new Move(
                 $date,
                 'draft',
@@ -413,7 +408,6 @@ class ModelManagerTest extends TestCase
         }
 
 
-        /** @psalm-suppress TooManyArguments,InvalidArgument * */
         return new Move(
             $date,
             'draft',
@@ -430,17 +424,14 @@ class ModelManagerTest extends TestCase
         $currencyRel = new OdooRelation($currencyId);
 
         if (13 === $this->odooVersion) {
-            /** @psalm-suppress TooFewArguments **/
             $moveLine = new Line($emptyMoveRel);
             return $moveLine;
         }
 
         if ($this->odooVersion <= 15) {
-            /** @psalm-suppress TooFewArguments,TooManyArguments * */
             return new Line($emptyMoveRel, $currencyRel);
         }
 
-        /** @psalm-suppress TooManyArguments **/
         return new Line($emptyMoveRel, $currencyRel, 'product');
     }
 
@@ -450,7 +441,6 @@ class ModelManagerTest extends TestCase
         $paymentMethodRel = new OdooRelation($paymentMethod->getId());
 
         if (13 === $this->odooVersion) {
-            /** @psalm-suppress TooManyArguments **/
             return new Register(
                 $date,
                 $journalRel,
@@ -458,14 +448,11 @@ class ModelManagerTest extends TestCase
             );
         }
 
-        /** @psalm-suppress TooFewArguments **/
         $paymentRegister = new Register($date);
         $paymentRegister->setJournalId($journalRel);
         if (14 === $this->odooVersion) {
-            /** @psalm-suppress UndefinedMethod **/
             $paymentRegister->setPaymentMethodId($paymentMethodRel);
         } else {
-            /** @psalm-suppress UndefinedMethod **/
             $paymentRegister->setPaymentMethodCode($paymentMethod->getCode());
         }
         return $paymentRegister;
@@ -474,14 +461,12 @@ class ModelManagerTest extends TestCase
     private function createPartner(OdooRelation $payableRel, OdooRelation $receivableRel): Partner
     {
         if ($this->odooVersion <= 17) {
-            /** @psalm-suppress TooManyArguments,InvalidArgument * */
             return new Partner(
                 $payableRel,
                 $receivableRel,
             );
         }
 
-        /** @psalm-suppress TooManyArguments,InvalidArgument * */
         return new Partner(
             'never'
         );

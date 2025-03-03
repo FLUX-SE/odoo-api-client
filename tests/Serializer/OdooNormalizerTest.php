@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\FluxSE\OdooApiClient\Serializer;
 
 use FluxSE\OdooApiClient\Model\OdooRelation;
