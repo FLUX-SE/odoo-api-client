@@ -196,7 +196,7 @@ class ModelManagerTest extends TestCase
         // 1 - Retrieve Accounts
         $searchDomains = new SearchDomains();
         if ($this->odooVersion <= 17) {
-            $searchDomains->addCriterion(Criterion::equal('code', '707100'));
+            $searchDomains->addCriterion(Criterion::equal('code', '707000'));
             $searchDomains->addCriterion(Criterion::equal('company_id', $companyId));
         } else {
             $searchDomains->addCriterion(Criterion::equal('name', 'Sales of goods'));
