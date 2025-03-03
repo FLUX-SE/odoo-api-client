@@ -57,7 +57,7 @@ final class Criterion implements CriterionInterface
         $c->fieldName = $fieldName;
         $c->operator = $operator;
         $c->value = $value instanceof DateTimeInterface
-            ? $value->format(DateTimeInterface::ISO8601)
+            ? $value->format(DateTimeInterface::ATOM)
             : $value
         ;
 
