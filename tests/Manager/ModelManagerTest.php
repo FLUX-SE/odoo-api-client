@@ -195,11 +195,10 @@ class ModelManagerTest extends TestCase
 
         // 1 - Retrieve Accounts
         $searchDomains = new SearchDomains();
+        $searchDomains->addCriterion(Criterion::equal('name', 'Sales of goods'));
         if ($this->odooVersion <= 17) {
-            $searchDomains->addCriterion(Criterion::equal('code', '707100'));
             $searchDomains->addCriterion(Criterion::equal('company_id', $companyId));
         } else {
-            $searchDomains->addCriterion(Criterion::equal('name', 'Sales of goods'));
             $searchDomains->addCriterion(Criterion::in('company_ids', [$companyId]));
         }
         $account = $this->modelListManager->findOneBy(Account::class, $searchDomains);
