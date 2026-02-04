@@ -45,6 +45,7 @@ final class OdooRelationDenormalizer implements DenormalizerInterface
             throw new InvalidArgumentException('The data must be an array!');
         }
 
+        /** @var int|false|null $id */
         $id = $data[0] ?? null;
         if ($id === null || false === is_numeric($id)) {
             throw new InvalidArgumentException(
@@ -52,6 +53,8 @@ final class OdooRelationDenormalizer implements DenormalizerInterface
             );
         }
 
-        return new OdooRelation((int) $id, $data[1] ?? null);
+        /** @var string|null $displayName */
+        $displayName = $data[1] ?? null;
+        return new OdooRelation($id, $displayName);
     }
 }

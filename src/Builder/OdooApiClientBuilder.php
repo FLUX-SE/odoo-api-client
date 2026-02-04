@@ -28,6 +28,7 @@ use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\UriInterface;
 use Symfony\Component\Serializer\Serializer;
 use UnexpectedValueException;
+use Webmozart\Assert\Assert;
 
 final class OdooApiClientBuilder implements OdooApiClientBuilderInterface
 {
@@ -52,6 +53,7 @@ final class OdooApiClientBuilder implements OdooApiClientBuilderInterface
     /** @var OperationsInterface[] */
     private array $operations = [];
 
+    /** @var array <class-string<ExecuteKwOperationsInterface>, ExecuteKwOperationsInterface> */
     private array $executeKwOperations = [];
 
     public function __construct(
@@ -227,6 +229,7 @@ final class OdooApiClientBuilder implements OdooApiClientBuilderInterface
             $this->executeKwOperations[$className] = $operations;
         }
 
+        Assert::isInstanceOf($operations, $className);
         return $operations;
     }
 

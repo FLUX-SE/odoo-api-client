@@ -27,18 +27,16 @@ final class XmlRpcDecoder implements ContextAwareDecoderInterface
         return $format === self::FORMAT;
     }
 
-    /**
-     * @return array|integer|string|boolean
-     */
-    public function decode(string $data, string $format, array $context = []): mixed
+    public function decode(string $data, string $format, array $context = []): array|bool|int|string
     {
         if ('' === trim($data)) {
             throw new UnexpectedValueException('Invalid XML data, it can not be empty.');
         }
 
+        /** @var string $encoding */
         $encoding = $context[self::CTX_XMLRPC_ENCODING] ?? $this->defaultContext[self::CTX_XMLRPC_ENCODING];
 
-        /** @var array|integer|string|boolean $decoded */
+        /** @var array|int|string|bool $decoded */
         $decoded = xmlrpc_decode($data, $encoding);
         return $decoded;
     }

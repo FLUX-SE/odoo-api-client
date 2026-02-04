@@ -27,7 +27,7 @@ class OdooRelationsNormalizerTest extends TestCase
 
         $arr = $this->serializer->normalize($object);
 
-        $this->assertEquals([
+        self::assertEquals([
             'move_id' => false,
             'currency_id' => false,
             'tax_ids' => [10],
@@ -43,7 +43,7 @@ class OdooRelationsNormalizerTest extends TestCase
             OdooRelationsNormalizer::NORMALIZE_FOR_UPDATE => true,
         ]);
 
-        $this->assertEquals([
+        self::assertEquals([
             'move_id' => false,
             'currency_id' => false,
             'tax_ids' => [],
@@ -59,7 +59,7 @@ class OdooRelationsNormalizerTest extends TestCase
             OdooRelationsNormalizer::NORMALIZE_FOR_UPDATE => true,
         ]);
 
-        $this->assertEquals([
+        self::assertEquals([
             'move_id' => false,
             'currency_id' => false,
             'tax_ids' => [],
@@ -68,7 +68,7 @@ class OdooRelationsNormalizerTest extends TestCase
 
         $arr = $this->serializer->normalize($object);
 
-        $this->assertEquals([
+        self::assertEquals([
             'move_id' => false,
             'currency_id' => false,
             'tax_ids' => [10],

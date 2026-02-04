@@ -1,6 +1,8 @@
 parameters:
     reportUnmatchedIgnoredErrors: false
 
+    level: max
+
     paths:
         - src
         - tests
@@ -17,6 +19,11 @@ parameters:
             message: '/Method FluxSE\\OdooApiClient\\Serializer\\OdooNormalizer::normalize\(\) return type with generic class ArrayObject does not specify its types: TKey, TValue/'
             count: 1
             path: src/Serializer/OdooNormalizer.php
+        -
+            message: '/PHPDoc tag @var with type array\|bool\|int\|string is not subtype of native type array\|null\./'
+            identifier: varTag.nativeType
+            count: 1
+            path: src/Serializer/XmlRpc/XmlRpcDecoder.php
         # Symfony 6.4
         -
             message: '/Method Symfony\\Component\\Serializer\\Normalizer\\AbstractObjectNormalizer::supportsDenormalization\(\) invoked with 4 parameters, 2-3 required\./'

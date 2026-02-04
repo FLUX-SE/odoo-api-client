@@ -23,19 +23,19 @@ class RecordListOperationsTest extends TestCase
     public function testSearch_count(): void
     {
         $count = $this->recordListOperations->search_count('ir.model');
-        $this->assertGreaterThan(0, $count);
+        self::assertGreaterThan(0, $count);
     }
 
     public function testRead(): void
     {
         $result = $this->recordListOperations->read('ir.model', [1]);
-        $this->assertNotEmpty($result);
+        self::assertNotEmpty($result);
     }
 
     public function testSearch(): void
     {
         $result = $this->recordListOperations->search('ir.model');
-        $this->assertNotEmpty($result);
+        self::assertNotEmpty($result);
     }
 
     public function testSearch_read(): void
@@ -50,6 +50,6 @@ class RecordListOperationsTest extends TestCase
             $searchReadOptions
         );
 
-        $this->assertNotEmpty($result);
+        self::assertNotEmpty($result);
     }
 }

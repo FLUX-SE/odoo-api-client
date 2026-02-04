@@ -20,17 +20,25 @@ trait ExecuteKwOperationsTrait
      */
     protected function buildExecuteKwOperations(string $operationsClass): OperationsInterface
     {
+        /** @var string $database */
+        $database = $_ENV['ODOO_API_DATABASE'] ?? '';
+        /** @var string $username */
+        $username = $_ENV['ODOO_API_USERNAME'] ?? '';
+        /** @var string $password */
+        $password = $_ENV['ODOO_API_PASSWORD'] ?? '';
         return $this->buildOdooApiClientBuilder()->buildExecuteKwOperations(
             $operationsClass,
-            $_ENV['ODOO_API_DATABASE'],
-            $_ENV['ODOO_API_USERNAME'],
-            $_ENV['ODOO_API_PASSWORD']
+            $database,
+            $username,
+            $password
         );
     }
 
     protected function buildOdooApiClientBuilder(): OdooApiClientBuilderInterface
     {
-        return new OdooApiClientBuilder($_ENV['ODOO_API_HOST']);
+        /** @var string $host */
+        $host = $_ENV['ODOO_API_HOST'] ?? '';
+        return new OdooApiClientBuilder($host);
     }
 
     protected function buildModelFieldsProvider(): ModelFieldsProviderInterface

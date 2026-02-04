@@ -22,7 +22,7 @@ class OdooPropertyAccessorTest extends TestCase
 
     public function testConstruct(): void
     {
-        $this->assertInstanceOf(OdooPropertyAccessor::class, $this->propertyAccessor);
+        self::assertInstanceOf(OdooPropertyAccessor::class, $this->propertyAccessor);
     }
 
     public function testSetValueFalseValueBecomeNull(): void
@@ -31,7 +31,8 @@ class OdooPropertyAccessorTest extends TestCase
         $object->setActivityState('aString');
         $this->propertyAccessor->setValue($object, 'activityState', false);
 
-        $this->assertEquals(null, $object->getActivityState());
+        self::assertInstanceOf(Foo::class, $object); // Needed for PHPStan :(
+        self::assertEquals(null, $object->getActivityState());
     }
 
     public function testGetValueOdooRelationValueBecomeNull(): void
@@ -40,7 +41,7 @@ class OdooPropertyAccessorTest extends TestCase
         $object->setMoveId(new OdooRelation());
         $value = $this->propertyAccessor->getValue($object, 'moveId');
 
-        $this->assertEquals(new OdooRelation(), $object->getMoveId());
-        $this->assertNull($value);
+        self::assertEquals(new OdooRelation(), $object->getMoveId());
+        self::assertNull($value);
     }
 }

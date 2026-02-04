@@ -9,8 +9,9 @@ final class SearchDomains extends AbstractArguments implements SearchDomainsInte
     use SearchDomainsTrait;
 
     protected function buildCriteria(
-        CriterionInterface $c
+        CriterionInterface $c,
     ): SearchDomainsInterface {
+        /** @var array|bool|float|int|string|null $arg */
         foreach ($c->toArray() as $arg) {
             $this->addArgument($arg);
         }

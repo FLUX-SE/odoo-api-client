@@ -36,12 +36,12 @@ class OdooNormalizerTest extends TestCase
         ]);
 
         if (method_exists($object, 'getAutopostBills')) {
-            $this->assertEquals([
+            self::assertEquals([
                 'message_ids' => [],
                 'autopost_bills' => 'never',
             ], $arr);
         } else {
-            $this->assertEquals([
+            self::assertEquals([
                 'message_ids' => [],
                 'property_account_payable_id' => false,
                 'property_account_receivable_id' => false,
@@ -62,12 +62,12 @@ class OdooNormalizerTest extends TestCase
         ]);
 
         if (method_exists($object, 'getAutopostBills')) {
-            $this->assertEquals([
+            self::assertEquals([
                 'message_ids' => [],
                 'autopost_bills' => 'never',
             ], $arr);
         } else {
-            $this->assertEquals([
+            self::assertEquals([
                 'message_ids' => [],
             ], $arr);
         }
@@ -84,7 +84,7 @@ class OdooNormalizerTest extends TestCase
         $arr = $this->serializer->normalize($object);
 
         if (method_exists($object, 'getAutopostBills')) {
-            $this->assertEquals([
+            self::assertEquals([
                 'message_ids' => [
                     10,
                     20,
@@ -93,7 +93,7 @@ class OdooNormalizerTest extends TestCase
                 'autopost_bills' => 'never',
             ], $arr);
         } else {
-            $this->assertEquals([
+            self::assertEquals([
                 'message_ids' => [
                     10,
                     20,
@@ -116,7 +116,7 @@ class OdooNormalizerTest extends TestCase
         $arr = $this->serializer->normalize($object);
 
         if (method_exists($object, 'getAutopostBills')) {
-            $this->assertEquals([
+            self::assertEquals([
                 'message_ids' => [
                     10,
                     20,
@@ -125,7 +125,7 @@ class OdooNormalizerTest extends TestCase
                 'autopost_bills' => 'never',
             ], $arr);
         } else {
-            $this->assertEquals([
+            self::assertEquals([
                 'message_ids' => [
                     10,
                     20,
@@ -142,14 +142,14 @@ class OdooNormalizerTest extends TestCase
         $object = $this->serializer->denormalize(['id' => 2], Foo::class);
 
         // then the attribute that declared false was filled correctly
-        $this->assertEquals(2, $object->getId());
+        self::assertEquals(2, $object->getId());
     }
 
     private function createPartner(OdooRelation $payableRel, OdooRelation $receivableRel): Partner
     {
         $reflexion = new \ReflectionClass(Partner::class);
         $constructor = $reflexion->getConstructor();
-        $this->assertNotNull($constructor);
+        self::assertNotNull($constructor);
 
         if (count($constructor->getParameters()) === 1) {
             return new Partner(

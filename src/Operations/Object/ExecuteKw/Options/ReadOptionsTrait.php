@@ -15,7 +15,6 @@ trait ReadOptionsTrait
 
     public function getFields(): array
     {
-        /** @var string[] $fields */
         $fields = $this->getOption(ReadOptionsInterface::FIELD_NAME_FIELDS);
 
         Assert::allString($fields, sprintf(

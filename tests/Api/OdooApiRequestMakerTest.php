@@ -22,11 +22,13 @@ class OdooApiRequestMakerTest extends TestCase
 
     protected function setUp(): void
     {
-        $odooXmlApiClientBuilder = new OdooApiClientBuilder($_ENV['ODOO_API_HOST'], OdooApiRequestMakerInterface::BASE_XMLRPC_PATH);
+        /** @var string $baseHostname */
+        $baseHostname = $_ENV['ODOO_API_HOST'] ?? '';
+        $odooXmlApiClientBuilder = new OdooApiClientBuilder($baseHostname, OdooApiRequestMakerInterface::BASE_XMLRPC_PATH);
         $this->xmlRpcSerializerHelper = $odooXmlApiClientBuilder->buildRpcSerializerHelper();
         $this->odooXmlRpcApiRequestMaker = $odooXmlApiClientBuilder->buildApiRequestMaker();
 
-        $odooJsonApiClientBuilder = new OdooApiClientBuilder($_ENV['ODOO_API_HOST']);
+        $odooJsonApiClientBuilder = new OdooApiClientBuilder($baseHostname);
         $this->jsonRpcSerializerHelper = $odooJsonApiClientBuilder->buildRpcSerializerHelper();
         $this->odooJsonRpcApiRequestMaker = $odooJsonApiClientBuilder->buildApiRequestMaker();
     }
@@ -37,7 +39,7 @@ class OdooApiRequestMakerTest extends TestCase
         $body = $this->xmlRpcSerializerHelper->serializeRequestBody($requestBody);
         $response = $this->odooXmlRpcApiRequestMaker->request('/common', $body);
 
-        $this->assertSame(200, $response->getStatusCode());
+        self::assertSame(200, $response->getStatusCode());
     }
 
     public function testJsonRpcRequest(): void
@@ -47,6 +49,6 @@ class OdooApiRequestMakerTest extends TestCase
         $body = $this->jsonRpcSerializerHelper->serializeRequestBody($requestBody);
         $response = $this->odooJsonRpcApiRequestMaker->request('', $body);
 
-        $this->assertSame(200, $response->getStatusCode());
+        self::assertSame(200, $response->getStatusCode());
     }
 }

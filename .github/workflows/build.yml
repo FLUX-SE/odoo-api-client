@@ -150,7 +150,7 @@ jobs:
             # Need classes from Odoo to be generated for the tests folder
             -
                 name: Run PHPStan
-                run: vendor/bin/phpstan analyse -l max src/ tests/
+                run: vendor/bin/phpstan analyse
             -
                 name: Run PHPUnit
                 run: vendor/bin/phpunit --colors=always

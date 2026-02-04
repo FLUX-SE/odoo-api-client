@@ -15,7 +15,6 @@ trait FieldsGetTrait
 
     public function getAttributes(): array
     {
-        /** @var string[] $attributes */
         $attributes = $this->getOption(FieldsGetOptionsInterface::FIELD_NAME_ATTRIBUTES);
 
         Assert::allString($attributes, sprintf(

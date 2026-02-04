@@ -25,6 +25,9 @@ final class InspectionOperations extends AbstractOperations implements Inspectio
             $options
         );
 
-        return $this->getObjectOperations()->decode($response);
+        /** @var array<string, array<string, mixed>> $decode */
+        $decode = $this->getObjectOperations()->decode($response);
+
+        return $decode;
     }
 }

@@ -106,9 +106,9 @@ final class GeneratorCommand extends Command
         $username = $input->getOption('username');
         /** @var string $password */
         $password = $input->getOption('password');
-        /** @var string[] $onlyModels */
+        /** @var array<int, string> $onlyModels */
         $onlyModels = $input->getOption('only-model');
-        /** @var string[] $excludeModels */
+        /** @var array<int, string> $excludeModels */
         $excludeModels = $input->getOption('exclude-model');
 
         /** @var string $path */

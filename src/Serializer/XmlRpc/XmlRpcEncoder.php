@@ -38,6 +38,7 @@ final class XmlRpcEncoder implements EncoderInterface
             ));
         }
 
+        /** @var string|null $method */
         $method = $data['method'] ?? null;
         if (null === $method) {
             throw new UnexpectedValueException('A "method" is required !');

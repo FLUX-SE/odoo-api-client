@@ -29,7 +29,7 @@ class InspectionOperationsTest extends TestCase
             $fieldGetOptions->setAttributes($irModelFields);
 
             $result = $this->inspectionOperations->fields_get($modelName, [], $fieldGetOptions);
-            $this->assertArrayHasKey('id', $result);
+            self::assertArrayHasKey('id', $result);
         }
     }
 }

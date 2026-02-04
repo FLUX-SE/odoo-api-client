@@ -11,7 +11,7 @@ class CriterionOperatorsTest extends TestCase
     {
         $c = Criterion::equal('field1', true);
 
-        $this->assertEquals([
+        self::assertEquals([
             ['field1', '=', true]
         ], $c->toArray());
     }
@@ -20,7 +20,7 @@ class CriterionOperatorsTest extends TestCase
     {
         $c = Criterion::child_of('field1', true);
 
-        $this->assertEquals([
+        self::assertEquals([
             ['field1', 'child_of', true]
         ], $c->toArray());
     }
@@ -29,7 +29,7 @@ class CriterionOperatorsTest extends TestCase
     {
         $c = Criterion::equal_ilike('field1', true);
 
-        $this->assertEquals([
+        self::assertEquals([
             ['field1', '=ilike', true]
         ], $c->toArray());
     }
@@ -38,7 +38,7 @@ class CriterionOperatorsTest extends TestCase
     {
         $c = Criterion::equal_like('field1', true);
 
-        $this->assertEquals([
+        self::assertEquals([
             ['field1', '=like', true]
         ], $c->toArray());
     }
@@ -47,7 +47,7 @@ class CriterionOperatorsTest extends TestCase
     {
         $c = Criterion::greater_than('field1', true);
 
-        $this->assertEquals([
+        self::assertEquals([
             ['field1', '>', true]
         ], $c->toArray());
     }
@@ -56,7 +56,7 @@ class CriterionOperatorsTest extends TestCase
     {
         $c = Criterion::greater_than_equal('field1', true);
 
-        $this->assertEquals([
+        self::assertEquals([
             ['field1', '>=', true]
         ], $c->toArray());
     }
@@ -65,7 +65,7 @@ class CriterionOperatorsTest extends TestCase
     {
         $c = Criterion::ilike('field1', true);
 
-        $this->assertEquals([
+        self::assertEquals([
             ['field1', 'ilike', true]
         ], $c->toArray());
     }
@@ -74,7 +74,7 @@ class CriterionOperatorsTest extends TestCase
     {
         $c = Criterion::in('field1', [true]);
 
-        $this->assertEquals([
+        self::assertEquals([
             ['field1', 'in', [true]]
         ], $c->toArray());
     }
@@ -83,7 +83,7 @@ class CriterionOperatorsTest extends TestCase
     {
         $c = Criterion::less_than('field1', true);
 
-        $this->assertEquals([
+        self::assertEquals([
             ['field1', '<', true]
         ], $c->toArray());
     }
@@ -92,7 +92,7 @@ class CriterionOperatorsTest extends TestCase
     {
         $c = Criterion::less_than_equal('field1', true);
 
-        $this->assertEquals([
+        self::assertEquals([
             ['field1', '<=', true]
         ], $c->toArray());
     }
@@ -101,7 +101,7 @@ class CriterionOperatorsTest extends TestCase
     {
         $c = Criterion::like('field1', true);
 
-        $this->assertEquals([
+        self::assertEquals([
             ['field1', 'like', true]
         ], $c->toArray());
     }
@@ -110,7 +110,7 @@ class CriterionOperatorsTest extends TestCase
     {
         $c = Criterion::not_equal('field1', true);
 
-        $this->assertEquals([
+        self::assertEquals([
             ['field1', '!=', true]
         ], $c->toArray());
     }
@@ -119,7 +119,7 @@ class CriterionOperatorsTest extends TestCase
     {
         $c = Criterion::not_ilike('field1', true);
 
-        $this->assertEquals([
+        self::assertEquals([
             ['field1', 'not ilike', true]
         ], $c->toArray());
     }
@@ -128,7 +128,7 @@ class CriterionOperatorsTest extends TestCase
     {
         $c = Criterion::not_in('field1', [true]);
 
-        $this->assertEquals([
+        self::assertEquals([
             ['field1', 'not in', [true]]
         ], $c->toArray());
     }
@@ -137,7 +137,7 @@ class CriterionOperatorsTest extends TestCase
     {
         $c = Criterion::not_like('field1', true);
 
-        $this->assertEquals([
+        self::assertEquals([
             ['field1', 'not like', true]
         ], $c->toArray());
     }
@@ -146,7 +146,7 @@ class CriterionOperatorsTest extends TestCase
     {
         $c = Criterion::parent_of('field1', true);
 
-        $this->assertEquals([
+        self::assertEquals([
             ['field1', 'parent_of', true]
         ], $c->toArray());
     }
@@ -155,7 +155,7 @@ class CriterionOperatorsTest extends TestCase
     {
         $c = Criterion::unset_equal('field1', true);
 
-        $this->assertEquals([
+        self::assertEquals([
             ['field1', '=?', true]
         ], $c->toArray());
     }

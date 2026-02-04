@@ -127,6 +127,7 @@ final class ModelListManager implements ModelListManagerInterface
     /**
      * @template T of BaseInterface
      * @param class-string<T> $className
+     * @param array<string, mixed> $context
      */
     private function processReadOptions(
         string $className,

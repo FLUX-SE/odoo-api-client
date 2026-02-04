@@ -15,7 +15,9 @@ class CommonOperationsTest extends TestCase
 
     protected function setUp(): void
     {
-        $odooApiClientBuilder = new OdooApiClientBuilder($_ENV['ODOO_API_HOST']);
+        /** @var string $host */
+        $host = $_ENV['ODOO_API_HOST'] ?? '';
+        $odooApiClientBuilder = new OdooApiClientBuilder($host);
 
         $this->commonOperations = $odooApiClientBuilder->buildCommonOperations();
     }
@@ -24,29 +26,35 @@ class CommonOperationsTest extends TestCase
     {
         $version = $this->commonOperations->version();
 
-        $this->assertInstanceOf(Version::class, $version);
+        self::assertInstanceOf(Version::class, $version);
     }
 
     public function testAbout(): void
     {
         $about = $this->commonOperations->about();
-        $this->assertEquals('See http://openerp.com', $about);
+        self::assertEquals('See http://openerp.com', $about);
     }
 
     public function testAboutExtended(): void
     {
         $about = $this->commonOperations->aboutExtended();
-        $this->assertCount(2, $about);
+        self::assertCount(2, $about);
     }
 
     public function testAuthenticate(): void
     {
+        /** @var string $database */
+        $database = $_ENV['ODOO_API_DATABASE'] ?? '';
+        /** @var string $username */
+        $username = $_ENV['ODOO_API_USERNAME'] ?? '';
+        /** @var string $password */
+        $password = $_ENV['ODOO_API_PASSWORD'] ?? '';
         $uid = $this->commonOperations->authenticate(
-            $_ENV['ODOO_API_DATABASE'],
-            $_ENV['ODOO_API_USERNAME'],
-            $_ENV['ODOO_API_PASSWORD']
+            $database,
+            $username,
+            $password
         );
 
-        $this->assertGreaterThan(0, $uid);
+        self::assertGreaterThan(0, $uid);
     }
 }

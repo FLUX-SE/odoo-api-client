@@ -35,14 +35,15 @@ class RecordOperationsTest extends TestCase
         $searchReadOptions = new SearchReadOptions();
         $searchReadOptions->setLimit(1);
 
+        /** @var array[] $results */
         $results = $this->recordListOperations->search_read(
             'uom.uom',
             $searchDomains,
             $searchReadOptions
         );
 
-        $this->assertNotEmpty($results, sprintf(
-            'Unable to find the the uom named "%s" !',
+        self::assertNotEmpty($results, sprintf(
+            'Unable to find the uom named "%s" !',
             $name
         ));
 
@@ -54,13 +55,14 @@ class RecordOperationsTest extends TestCase
         $searchReadOptions = new SearchReadOptions();
         $searchReadOptions->setLimit(1);
 
+        /** @var array[] $results */
         $results = $this->recordListOperations->search_read(
             'product.category',
             null,
             $searchReadOptions
         );
 
-        $this->assertNotEmpty($results, 'Please create at least one category in ODOO !');
+        self::assertNotEmpty($results, 'Please create at least one category in ODOO !');
 
         return $results[0];
     }
@@ -85,6 +87,6 @@ class RecordOperationsTest extends TestCase
 
         $templateId = $this->recordOperations->create('product.template', $template);
 
-        $this->assertGreaterThan(0, $templateId);
+        self::assertGreaterThan(0, $templateId);
     }
 }

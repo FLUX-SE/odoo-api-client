@@ -38,24 +38,27 @@ class ModelListManagerTest extends TestCase
         $searchReadOptions->setOrder('id');
         $results = $this->recordListOperations->search_read(Partner::getOdooModelName(), null, $searchReadOptions);
 
-        $this->assertCount(1, $results);
-        $this->assertArrayHasKey('id', $results[0]);
+        self::assertCount(1, $results);
+        self::assertArrayHasKey(0, $results);
+        self::assertIsArray($results[0]);
+        self::assertArrayHasKey('id', $results[0]);
+        self::assertIsInt($results[0]['id']);
 
         $partner = $this->modelListManager->find(Partner::class, $results[0]['id']);
-        $this->assertInstanceOf(Partner::class, $partner);
-        $this->assertEquals($results[0]['id'], $partner->getId());
+        self::assertInstanceOf(Partner::class, $partner);
+        self::assertEquals($results[0]['id'], $partner->getId());
     }
 
     public function testFindByIds(): void
     {
         $partners = $this->modelListManager->findByIds(Partner::class, [1]);
-        $this->assertContainsOnlyInstancesOf(Partner::class, $partners);
+        self::assertContainsOnlyInstancesOf(Partner::class, $partners);
     }
 
     public function testFindOneBy(): void
     {
         $partner = $this->modelListManager->findOneBy(Partner::class);
-        $this->assertInstanceOf(Partner::class, $partner);
+        self::assertInstanceOf(Partner::class, $partner);
     }
 
     public function testFindBy(): void
@@ -64,6 +67,6 @@ class ModelListManagerTest extends TestCase
         $searchReadOptions->setLimit(2);
 
         $partners = $this->modelListManager->findBy(Partner::class, null, $searchReadOptions);
-        $this->assertContainsOnlyInstancesOf(Partner::class, $partners);
+        self::assertContainsOnlyInstancesOf(Partner::class, $partners);
     }
 }

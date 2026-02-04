@@ -15,7 +15,9 @@ class DbOperationsTest extends TestCase
 
     protected function setUp(): void
     {
-        $odooApiClientBuilder = new OdooApiClientBuilder($_ENV['ODOO_API_HOST']);
+        /** @var string $host */
+        $host = $_ENV['ODOO_API_HOST'] ?? '';
+        $odooApiClientBuilder = new OdooApiClientBuilder($host);
 
         $this->dbOperations = $odooApiClientBuilder->buildDbOperations();
     }
@@ -23,34 +25,36 @@ class DbOperationsTest extends TestCase
     public function testServer_version(): void
     {
         $version = $this->dbOperations->server_version();
-        $this->assertNotEmpty($version);
+        self::assertNotEmpty($version);
     }
 
     public function testDb_exist(): void
     {
-        $exist = $this->dbOperations->db_exist($_ENV['ODOO_API_DATABASE']);
+        /** @var string $database */
+        $database = $_ENV['ODOO_API_DATABASE'] ?? '';
+        $exist = $this->dbOperations->db_exist($database);
 
-        $this->assertTrue($exist);
+        self::assertTrue($exist);
 
         $exist = $this->dbOperations->db_exist('fake_database');
 
-        $this->assertFalse($exist);
+        self::assertFalse($exist);
     }
 
     public function testList(): void
     {
         try {
             $dbs = $this->dbOperations->list();
-            $this->assertNotEmpty($dbs);
+            self::assertNotEmpty($dbs);
         } catch (ClientErrorException $e) {
-            $this->assertStringContainsStringIgnoringCase('Access denied', $e->getMessage());
+            self::assertStringContainsStringIgnoringCase('Access denied', $e->getMessage());
         }
 
         try {
             $dbs = $this->dbOperations->list(true);
-            $this->assertNotEmpty($dbs);
+            self::assertNotEmpty($dbs);
         } catch (ClientErrorException $e) {
-            $this->assertStringContainsStringIgnoringCase('Access denied', $e->getMessage());
+            self::assertStringContainsStringIgnoringCase('Access denied', $e->getMessage());
         }
     }
 
@@ -58,9 +62,9 @@ class DbOperationsTest extends TestCase
     {
         try {
             $countries = $this->dbOperations->list_countries('admin');
-            $this->assertNotEmpty($countries);
+            self::assertNotEmpty($countries);
         } catch (ClientErrorException $e) {
-            $this->assertStringContainsStringIgnoringCase('Access denied', $e->getMessage());
+            self::assertStringContainsStringIgnoringCase('Access denied', $e->getMessage());
         }
     }
 
@@ -68,6 +72,6 @@ class DbOperationsTest extends TestCase
     {
         $languages = $this->dbOperations->list_lang();
 
-        $this->assertNotEmpty($languages);
+        self::assertNotEmpty($languages);
     }
 }

@@ -14,7 +14,7 @@ class CriterionLogicsTest extends TestCase
 
         $c = Criterion::and($c1, $c2);
 
-        $this->assertEquals([
+        self::assertEquals([
             '&',
             ['field1', '=', true],
             ['field2', '=', false],
@@ -28,7 +28,7 @@ class CriterionLogicsTest extends TestCase
 
         $c = Criterion::or($c1, $c2);
 
-        $this->assertEquals([
+        self::assertEquals([
             '|',
             ['field1', '=', true],
             ['field2', '=', false],
@@ -41,7 +41,7 @@ class CriterionLogicsTest extends TestCase
 
         $c = Criterion::not($c1);
 
-        $this->assertEquals([
+        self::assertEquals([
             '!',
             ['field1', '=', true],
         ], $c->toArray());
@@ -61,7 +61,7 @@ class CriterionLogicsTest extends TestCase
 
         $c = Criterion::or($c1, $c2);
 
-        $this->assertEquals([
+        self::assertEquals([
             '|',
             '&',
             ['field1', '=', true],
@@ -92,7 +92,7 @@ class CriterionLogicsTest extends TestCase
         $c0 = Criterion::or($c1, $c2);
         $c = Criterion::or($c0, $c3);
 
-        $this->assertEquals([
+        self::assertEquals([
             '|',
             '|',
             '&',

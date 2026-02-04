@@ -41,6 +41,10 @@ final class OdooRelationsDenormalizer implements DenormalizerInterface
             throw new InvalidArgumentException('The data should be an array !');
         }
 
+        if ($data !== array_filter($data, 'is_int')) {
+            throw new InvalidArgumentException('The data should be an array of integers !');
+        }
+
         $relations = [];
         foreach ($data as $id) {
             $relations[] = new OdooRelation($id);

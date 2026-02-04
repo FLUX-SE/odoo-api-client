@@ -23,16 +23,16 @@ class ModelFieldsProviderTest extends TestCase
     {
         $fields = $this->modelFieldsProvider->provide(Move::class, []);
 
-        $this->assertArrayNotHasKey('needed_terms', $fields);
-        $this->assertArrayNotHasKey('tax_totals', $fields);
+        self::assertArrayNotHasKey('needed_terms', $fields);
+        self::assertArrayNotHasKey('tax_totals', $fields);
     }
 
     public function testResPartnerFields(): void
     {
         $fields = $this->modelFieldsProvider->provide(Partner::class, []);
 
-        $this->assertContains('id', $fields);
-        $this->assertContains('email', $fields);
-        $this->assertContains('display_name', $fields);
+        self::assertContains('id', $fields);
+        self::assertContains('email', $fields);
+        self::assertContains('display_name', $fields);
     }
 }

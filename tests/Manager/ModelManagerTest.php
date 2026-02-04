@@ -90,23 +90,23 @@ class ModelManagerTest extends TestCase
         /** @var Partner|null $savedPartner */
         $savedPartner = $this->modelListManager->find(Partner::class, $partnerId);
 
-        $this->assertInstanceOf(Partner::class, $savedPartner);
+        self::assertInstanceOf(Partner::class, $savedPartner);
 
         $savedPartner->setComment('<p>Test</p>');
 
         $result = $this->modelManager->update($savedPartner);
-        $this->assertTrue($result);
+        self::assertTrue($result);
 
         /** @var Partner|null $updatedPartner */
         $updatedPartner = $this->modelListManager->find(Partner::class, $partnerId);
 
-        $this->assertInstanceOf(Partner::class, $updatedPartner);
+        self::assertInstanceOf(Partner::class, $updatedPartner);
         // test a null field to be null not empty string
-        $this->assertNull($updatedPartner->getParentName());
-        $this->assertEquals($savedPartner->getComment(), $updatedPartner->getComment());
+        self::assertNull($updatedPartner->getParentName());
+        self::assertEquals($savedPartner->getComment(), $updatedPartner->getComment());
 
         $result = $this->modelManager->delete($updatedPartner);
-        $this->assertTrue($result);
+        self::assertTrue($result);
     }
 
     private function retrieveUom(string $name): Uom
@@ -117,7 +117,7 @@ class ModelManagerTest extends TestCase
         /** @var Uom|null $uom */
         $uom = $this->modelListManager->findOneBy(Uom::class, $searchDomains);
 
-        $this->assertNotNull($uom, sprintf(
+        self::assertNotNull($uom, sprintf(
             'Unable to find the the uom named "%s" !',
             $name
         ));
@@ -130,7 +130,7 @@ class ModelManagerTest extends TestCase
         /** @var Category|null $category */
         $category = $this->modelListManager->findOneBy(Category::class);
 
-        $this->assertNotNull($category, 'Please create at least one category in ODOO !');
+        self::assertNotNull($category, 'Please create at least one category in ODOO !');
 
         return $category;
     }
@@ -181,7 +181,7 @@ class ModelManagerTest extends TestCase
 
         $templateId = $this->modelManager->persist($template);
 
-        $this->assertGreaterThan(0, $templateId);
+        self::assertGreaterThan(0, $templateId);
     }
 
     public function testCreateMove(): void
@@ -203,11 +203,11 @@ class ModelManagerTest extends TestCase
             $searchDomains->addCriterion(Criterion::in('company_ids', [$companyId]));
         }
         $account = $this->modelListManager->findOneBy(Account::class, $searchDomains);
-        $this->assertNotNull($account);
+        self::assertNotNull($account);
 
         // 2 - retrieve a Partner
         $partner = $this->modelListManager->findOneBy(Partner::class);
-        $this->assertNotNull($partner);
+        self::assertNotNull($partner);
 
         // 3 - retrieve a sale Journal
         $searchDomains = new SearchDomains();
@@ -215,19 +215,19 @@ class ModelManagerTest extends TestCase
         $searchDomains->addCriterion(Criterion::equal('active', true));
         $searchDomains->addCriterion(Criterion::equal('company_id', $companyId));
         $journal = $this->modelListManager->findOneBy(Journal::class, $searchDomains);
-        $this->assertNotNull($journal);
+        self::assertNotNull($journal);
 
         // 4 - retrieve an active currency
         $searchDomains = new SearchDomains();
         $searchDomains->addCriterion(Criterion::equal('active', true));
         $currency = $this->modelListManager->findOneBy(Currency::class, $searchDomains);
-        $this->assertNotNull($currency);
+        self::assertNotNull($currency);
 
         // 5 - retrieve an active product
         $searchDomains = new SearchDomains();
         $searchDomains->addCriterion(Criterion::equal('active', true));
         $product = $this->modelListManager->findOneBy(Product::class);
-        $this->assertNotNull($product);
+        self::assertNotNull($product);
 
         // 6 - retrieve a tax (here: 20% from French accounting)
         $searchDomains = new SearchDomains();
@@ -236,7 +236,7 @@ class ModelManagerTest extends TestCase
         $searchDomains->addCriterion(Criterion::equal('type_tax_use', 'sale'));
         $searchDomains->addCriterion(Criterion::equal('company_id', $companyId));
         $tax = $this->modelListManager->findOneBy(Tax::class, $searchDomains);
-        $this->assertNotNull($tax);
+        self::assertNotNull($tax);
 
         $partnerRel = new OdooRelation($partner->getId());
         $companyRel = new OdooRelation($companyId);
@@ -272,7 +272,7 @@ class ModelManagerTest extends TestCase
 
         $moveId = $this->modelManager->persist($move);
 
-        $this->assertGreaterThan(0, $moveId);
+        self::assertGreaterThan(0, $moveId);
 
         $arguments = new Arguments();
         $arguments->addArgument($moveId);
@@ -283,9 +283,9 @@ class ModelManagerTest extends TestCase
         );
 
         if (13 === $this->odooVersion) {
-            $this->assertTrue($body);
+            self::assertTrue($body);
         } else {
-            $this->assertFalse($body);
+            self::assertFalse($body);
         }
     }
 
@@ -312,12 +312,12 @@ class ModelManagerTest extends TestCase
         $searchDomains->addCriterion(Criterion::equal('company_id', $companyId));
         /** @var Move|null $move */
         $move = $this->modelListManager->findOneBy(Move::class, $searchDomains);
-        $this->assertNotNull($move);
-        $this->assertEquals('posted', $move->getState());
+        self::assertNotNull($move);
+        self::assertEquals('posted', $move->getState());
         if (13 === $this->odooVersion) {
-            $this->assertEquals('not_paid', $move->getInvoicePaymentState());
+            self::assertEquals('not_paid', $move->getInvoicePaymentState());
         } else {
-            $this->assertEquals('not_paid', $move->getPaymentState());
+            self::assertEquals('not_paid', $move->getPaymentState());
         }
 
         // 2 - Retrieve the right journal
@@ -326,7 +326,7 @@ class ModelManagerTest extends TestCase
         $searchDomains->addCriterion(Criterion::equal('active', true));
         $searchDomains->addCriterion(Criterion::equal('company_id', $companyId));
         $journal = $this->modelListManager->findOneBy(Journal::class, $searchDomains);
-        $this->assertNotNull($journal);
+        self::assertNotNull($journal);
 
         // 3 - Retrieve the paymentMethod
         $searchDomains = new SearchDomains();
@@ -334,7 +334,7 @@ class ModelManagerTest extends TestCase
         $searchDomains->addCriterion(Criterion::equal('payment_type', 'inbound'));
         /** @var Payment\Method|null $method */
         $paymentMethod = $this->modelListManager->findOneBy(Method::class, $searchDomains);
-        $this->assertNotNull($paymentMethod);
+        self::assertNotNull($paymentMethod);
 
         $paymentRegister = $this->createPaymentRegister($date, $journal, $paymentMethod);
         $ref = sprintf('PAY_%d', time());
@@ -355,7 +355,7 @@ class ModelManagerTest extends TestCase
             'active_ids' => [$move->getId()],
         ]);
         $paymentRegisterId = $this->modelManager->persist($paymentRegister, $options);
-        $this->assertGreaterThan(0, $paymentRegisterId);
+        self::assertGreaterThan(0, $paymentRegisterId);
 
         $actionName = 'action_create_payments';
         if (13 === $this->odooVersion) {
@@ -370,10 +370,10 @@ class ModelManagerTest extends TestCase
             $arguments
         );
 
-        $this->assertArrayHasKey('res_model', $data);
-        $this->assertEquals(Payment::getOdooModelName(), $data['res_model']);
-        $this->assertArrayHasKey('res_id', $data);
-        $this->assertIsInt($data['res_id']);
+        self::assertArrayHasKey('res_model', $data);
+        self::assertEquals(Payment::getOdooModelName(), $data['res_model']);
+        self::assertArrayHasKey('res_id', $data);
+        self::assertIsInt($data['res_id']);
     }
 
     private function createMove(

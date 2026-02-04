@@ -48,6 +48,8 @@
         "http-interop/http-factory-guzzle": "^1.0",
         "symplify/easy-coding-standard": "^13",
         "phpstan/phpstan": "^2",
+        "phpstan/phpstan-webmozart-assert": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
         "rector/rector": "^2"
     },
     "suggest": {
@@ -63,6 +65,11 @@
     },
     "autoload-dev": {
         "psr-4": { "Tests\\FluxSE\\OdooApiClient\\": "tests/" }
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        }
     },
     "extra": {
         "branch-alias": {

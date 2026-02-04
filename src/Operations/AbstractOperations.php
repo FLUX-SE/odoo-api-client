@@ -62,7 +62,6 @@ abstract class AbstractOperations implements OperationsInterface
 
     public function decode(ResponseInterface $response): array
     {
-        /** @var array $body */
         $body = $this->rpcSerializerHelper->decodeResponseBody(
             $response->getBody()
         );
@@ -98,7 +97,6 @@ abstract class AbstractOperations implements OperationsInterface
 
     public function deserializeArrayOfString(ResponseInterface $response): array
     {
-        /** @var string[] $body */
         $body = $this->rpcSerializerHelper->decodeResponseBody($response->getBody());
 
         Assert::allString($body, sprintf(
@@ -112,7 +110,6 @@ abstract class AbstractOperations implements OperationsInterface
 
     public function deserializeBoolean(ResponseInterface $response): bool
     {
-        /** @var bool $body */
         $body = $this->rpcSerializerHelper->decodeResponseBody($response->getBody());
 
         Assert::boolean($body, sprintf(
@@ -126,7 +123,6 @@ abstract class AbstractOperations implements OperationsInterface
 
     public function deserializeInteger(ResponseInterface $response): int
     {
-        /** @var int $body */
         $body = $this->rpcSerializerHelper->decodeResponseBody($response->getBody());
 
         Assert::integer($body, sprintf(
@@ -140,7 +136,6 @@ abstract class AbstractOperations implements OperationsInterface
 
     public function deserializeString(ResponseInterface $response): string
     {
-        /** @var string $body */
         $body = $this->rpcSerializerHelper->decodeResponseBody($response->getBody());
 
         Assert::string($body, sprintf(

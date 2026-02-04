@@ -29,19 +29,18 @@ final class JsonRpcDecoder implements ContextAwareDecoderInterface
     }
 
     /**
-     * @return array|integer|string|boolean
-     *
      * @throws JsonException
      */
-    public function decode(string $data, string $format, array $context = []): mixed
+    public function decode(string $data, string $format, array $context = []): array|int|string|bool
     {
         if ('' === trim($data)) {
             throw new UnexpectedValueException('Invalid JSON data, it can not be empty.');
         }
 
+        /** @var int<1, max> $depth */
         $depth = $context[self::CTX_JSONRPC_DECODE_DEPTH] ?? $this->defaultContext[self::CTX_JSONRPC_DECODE_DEPTH];
 
-        /** @var array|integer|string|boolean $decoded */
+        /** @var array{ error?: array|int|string|bool, result?: array|int|string|bool }|integer|string|bool $decoded */
         $decoded = json_decode($data, true, $depth, JSON_THROW_ON_ERROR);
 
         if (isset($decoded['error'])) {
