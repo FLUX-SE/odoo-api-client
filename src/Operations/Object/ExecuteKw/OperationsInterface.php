@@ -18,6 +18,7 @@ interface OperationsInterface
         ?OptionsInterface $options = null
     ): ResponseInterface;
 
+    /** @return string|int|bool|mixed[] */
     public function execute_kw_action(
         string $modelName,
         string $actionName,

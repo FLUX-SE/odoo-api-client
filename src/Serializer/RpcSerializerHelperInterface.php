@@ -19,6 +19,7 @@ interface RpcSerializerHelperInterface
      */
     public function deserializeResponseBody(StreamInterface $body, string $type);
 
+    /** @return mixed[]|int|string|bool */
     public function decodeResponseBody(StreamInterface $body): array|int|string|bool;
 
     public function getSerializer(): Serializer;

@@ -87,6 +87,7 @@ interface CriterionInterface
      */
     public const OPERATOR_GREATER_THAN_EQUAL = '>=';
 
+    /** @return mixed[] */
     public function toArray(): array;
 
     public static function and(CriterionInterface $c1, CriterionInterface $c2): CriterionInterface;

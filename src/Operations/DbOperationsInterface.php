@@ -10,20 +10,25 @@ interface DbOperationsInterface extends OperationsInterface
 
     public function rename(string $masterPassword, string $oldName, string $newName): bool;
 
+    /** @param string[] $databases */
     public function migrate_databases(string $masterPassword, array $databases): bool;
 
     public function server_version(): string;
 
     public function drop(string $masterPassword, string $dbName): bool;
 
+    /** @return string[] */
     public function list_lang(): array;
 
+    /** @return string[] */
     public function list(bool $document = false): array;
 
     public function change_admin_password(string $masterPassword, string $newPassword): bool;
 
+    /** @return string[] */
     public function list_countries(string $masterPassword): array;
 
+    /** @return string[] */
     public function create_database(
         string $masterPassword,
         string $dbName,

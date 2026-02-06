@@ -11,12 +11,14 @@ use Psr\Http\Message\ResponseInterface;
 
 interface OperationsInterface
 {
+    /** @param array<string, mixed> $params */
     public function request(string $method, array $params = []): ResponseInterface;
 
     public function getEndpointPath(): string;
 
     public function getService(): string;
 
+    /** @return mixed[] */
     public function decode(ResponseInterface $response): array;
 
     /**
