@@ -130,8 +130,8 @@ jobs:
                 name: Build Odoo tests model classes
                 run: |
                     bin/odoo-model-classes-generator -vvv \
-                        "./tests/TestModel/Object" \
-                        "Tests\\FluxSE\\OdooApiClient\\TestModel\\Object" \
+                        "./tests/TestModel/V${{ matrix.odoo }}/Object" \
+                        "Tests\\FluxSE\\OdooApiClient\\TestModel\\V${{ matrix.odoo }}\\Object" \
                         --only-model=account.account \
                         --only-model=account.journal \
                         --only-model=account.move \

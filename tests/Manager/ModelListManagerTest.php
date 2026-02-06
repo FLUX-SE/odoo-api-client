@@ -6,12 +6,15 @@ namespace Tests\FluxSE\OdooApiClient\Manager;
 
 use FluxSE\OdooApiClient\Manager\ModelListManager;
 use FluxSE\OdooApiClient\Manager\ModelListManagerInterface;
+use FluxSE\OdooApiClient\Model\BaseInterface;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterface;
 use PHPUnit\Framework\TestCase;
 use Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw\ExecuteKwOperationsTrait;
-use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner;
+use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Res\Partner as PartnerV16;
+use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Res\Partner as PartnerV17;
+use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Res\Partner as PartnerV18;
 
 class ModelListManagerTest extends TestCase
 {
@@ -21,6 +24,8 @@ class ModelListManagerTest extends TestCase
 
     private ModelListManagerInterface $modelListManager;
 
+    private int $odooVersion;
+
     protected function setUp(): void
     {
         $this->recordListOperations = $this->buildExecuteKwOperations(RecordListOperations::class);
@@ -29,14 +34,35 @@ class ModelListManagerTest extends TestCase
             $this->recordListOperations,
             $this->buildModelFieldsProvider()
         );
+
+        $commonOperations = $this->buildOdooApiClientBuilder()->buildCommonOperations();
+        $version = $commonOperations->version();
+        $this->odooVersion = $version->getServerVersionInfo()[0];
+    }
+
+    /**
+     * Get the appropriate Partner class based on Odoo version
+     * @return class-string<BaseInterface>
+     */
+    private function getPartnerClass(): string
+    {
+        /** @var class-string<BaseInterface> $partnerClass */
+        $partnerClass = match (true) {
+            $this->odooVersion <= 16 => PartnerV16::class,
+            $this->odooVersion <= 17 => PartnerV17::class,
+            default => PartnerV18::class,
+        };
+
+        return $partnerClass;
     }
 
     public function testFind(): void
     {
+        $partnerClass = $this->getPartnerClass();
         $searchReadOptions = new SearchReadOptions();
         $searchReadOptions->setLimit(1);
         $searchReadOptions->setOrder('id');
-        $results = $this->recordListOperations->search_read(Partner::getOdooModelName(), null, $searchReadOptions);
+        $results = $this->recordListOperations->search_read($partnerClass::getOdooModelName(), null, $searchReadOptions);
 
         self::assertCount(1, $results);
         self::assertArrayHasKey(0, $results);
@@ -44,29 +70,32 @@ class ModelListManagerTest extends TestCase
         self::assertArrayHasKey('id', $results[0]);
         self::assertIsInt($results[0]['id']);
 
-        $partner = $this->modelListManager->find(Partner::class, $results[0]['id']);
-        self::assertInstanceOf(Partner::class, $partner);
+        $partner = $this->modelListManager->find($partnerClass, $results[0]['id']);
+        self::assertInstanceOf($partnerClass, $partner);
         self::assertEquals($results[0]['id'], $partner->getId());
     }
 
     public function testFindByIds(): void
     {
-        $partners = $this->modelListManager->findByIds(Partner::class, [1]);
-        self::assertContainsOnlyInstancesOf(Partner::class, $partners);
+        $partnerClass = $this->getPartnerClass();
+        $partners = $this->modelListManager->findByIds($partnerClass, [1]);
+        self::assertContainsOnlyInstancesOf($partnerClass, $partners);
     }
 
     public function testFindOneBy(): void
     {
-        $partner = $this->modelListManager->findOneBy(Partner::class);
-        self::assertInstanceOf(Partner::class, $partner);
+        $partnerClass = $this->getPartnerClass();
+        $partner = $this->modelListManager->findOneBy($partnerClass);
+        self::assertInstanceOf($partnerClass, $partner);
     }
 
     public function testFindBy(): void
     {
+        $partnerClass = $this->getPartnerClass();
         $searchReadOptions = new SearchReadOptions();
         $searchReadOptions->setLimit(2);
 
-        $partners = $this->modelListManager->findBy(Partner::class, null, $searchReadOptions);
-        self::assertContainsOnlyInstancesOf(Partner::class, $partners);
+        $partners = $this->modelListManager->findBy($partnerClass, null, $searchReadOptions);
+        self::assertContainsOnlyInstancesOf($partnerClass, $partners);
     }
 }

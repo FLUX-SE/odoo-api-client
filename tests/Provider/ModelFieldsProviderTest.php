@@ -2,11 +2,16 @@
 
 namespace Tests\FluxSE\OdooApiClient\Provider;
 
+use FluxSE\OdooApiClient\Model\BaseInterface;
 use FluxSE\OdooApiClient\Provider\ModelFieldsProviderInterface;
 use PHPUnit\Framework\TestCase;
 use Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw\ExecuteKwOperationsTrait;
-use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move;
-use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner;
+use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Account\Move as MoveV16;
+use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Res\Partner as PartnerV16;
+use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Move as MoveV17;
+use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Res\Partner as PartnerV17;
+use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Account\Move as MoveV18;
+use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Res\Partner as PartnerV18;
 
 class ModelFieldsProviderTest extends TestCase
 {
@@ -14,14 +19,53 @@ class ModelFieldsProviderTest extends TestCase
 
     protected ModelFieldsProviderInterface $modelFieldsProvider;
 
+    private int $odooVersion;
+
     protected function setUp(): void
     {
         $this->modelFieldsProvider = $this->buildModelFieldsProvider();
+
+        $commonOperations = $this->buildOdooApiClientBuilder()->buildCommonOperations();
+        $version = $commonOperations->version();
+        $this->odooVersion = $version->getServerVersionInfo()[0];
+    }
+
+    /**
+     * Get the appropriate Move class based on Odoo version
+     * @return class-string<BaseInterface>
+     */
+    private function getMoveClass(): string
+    {
+        /** @var class-string<BaseInterface> $moveClass */
+        $moveClass = match (true) {
+            $this->odooVersion <= 16 => MoveV16::class,
+            $this->odooVersion <= 17 => MoveV17::class,
+            default => MoveV18::class,
+        };
+
+        return $moveClass;
+    }
+
+    /**
+     * Get the appropriate Partner class based on Odoo version
+     * @return class-string<BaseInterface>
+     */
+    private function getPartnerClass(): string
+    {
+        /** @var class-string<BaseInterface> $partnerClass */
+        $partnerClass = match (true) {
+            $this->odooVersion <= 16 => PartnerV16::class,
+            $this->odooVersion <= 17 => PartnerV17::class,
+            default => PartnerV18::class,
+        };
+
+        return $partnerClass;
     }
 
     public function testAccountMoveFields(): void
     {
-        $fields = $this->modelFieldsProvider->provide(Move::class, []);
+        $moveClass = $this->getMoveClass();
+        $fields = $this->modelFieldsProvider->provide($moveClass, []);
 
         self::assertArrayNotHasKey('needed_terms', $fields);
         self::assertArrayNotHasKey('tax_totals', $fields);
@@ -29,7 +73,8 @@ class ModelFieldsProviderTest extends TestCase
 
     public function testResPartnerFields(): void
     {
-        $fields = $this->modelFieldsProvider->provide(Partner::class, []);
+        $partnerClass = $this->getPartnerClass();
+        $fields = $this->modelFieldsProvider->provide($partnerClass, []);
 
         self::assertContains('id', $fields);
         self::assertContains('email', $fields);

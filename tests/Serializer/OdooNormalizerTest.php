@@ -4,27 +4,58 @@ declare(strict_types=1);
 
 namespace Tests\FluxSE\OdooApiClient\Serializer;
 
+use FluxSE\OdooApiClient\Model\BaseInterface;
 use FluxSE\OdooApiClient\Model\OdooRelation;
 use FluxSE\OdooApiClient\Serializer\Factory\SerializerFactory;
 use FluxSE\OdooApiClient\Serializer\OdooRelationsNormalizer;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Serializer;
 use Tests\FluxSE\OdooApiClient\Serializer\Model\Foo;
-use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner;
+use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Res\Partner as PartnerV16;
+use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Res\Partner as PartnerV17;
+use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Res\Partner as PartnerV18;
 
 class OdooNormalizerTest extends TestCase
 {
     private Serializer $serializer;
 
+    private int $odooVersion;
+
     protected function setUp(): void
     {
         $serializerFactory = new SerializerFactory();
         $this->serializer = $serializerFactory->create();
+
+        // Determine Odoo version from available Partner class
+        if (class_exists(PartnerV16::class)) {
+            $this->odooVersion = 16;
+        } elseif (class_exists(PartnerV17::class)) {
+            $this->odooVersion = 17;
+        } else {
+            $this->odooVersion = 18;
+        }
+    }
+
+    /**
+     * Get the appropriate Partner class based on Odoo version
+     * @return class-string<BaseInterface>
+     */
+    private function getPartnerClass(): string
+    {
+        /** @var class-string<BaseInterface> $partnerClass */
+        $partnerClass = match ($this->odooVersion) {
+            16 => PartnerV16::class,
+            17 => PartnerV17::class,
+            default => PartnerV18::class,
+        };
+
+        return $partnerClass;
     }
 
     public function testNormalizeForUpdate(): void
     {
         $object = $this->createPartner(new OdooRelation(false), new OdooRelation(false));
+        self::assertTrue(method_exists($object, 'setMessageIds'));
         $object->setMessageIds([
             new OdooRelation(10),
             new OdooRelation(20),
@@ -51,6 +82,7 @@ class OdooNormalizerTest extends TestCase
     public function testNormalizeForUpdateWithNullData(): void
     {
         $object = $this->createPartner(new OdooRelation(null), new OdooRelation(null));
+        self::assertTrue(method_exists($object, 'setMessageIds'));
         $object->setMessageIds([
             new OdooRelation(10),
             new OdooRelation(20),
@@ -75,6 +107,7 @@ class OdooNormalizerTest extends TestCase
     public function testNormalize(): void
     {
         $object = $this->createPartner(new OdooRelation(false), new OdooRelation(false));
+        self::assertTrue(method_exists($object, 'setMessageIds'));
         $object->setMessageIds([
             new OdooRelation(10),
             new OdooRelation(20),
@@ -107,6 +140,7 @@ class OdooNormalizerTest extends TestCase
     public function testNormalizeWithNullData(): void
     {
         $object = $this->createPartner(new OdooRelation(null), new OdooRelation(null));
+        self::assertTrue(method_exists($object, 'setMessageIds'));
         $object->setMessageIds([
             new OdooRelation(10),
             new OdooRelation(20),
@@ -145,21 +179,17 @@ class OdooNormalizerTest extends TestCase
         self::assertEquals(2, $object->getId());
     }
 
-    private function createPartner(OdooRelation $payableRel, OdooRelation $receivableRel): Partner
+    private function createPartner(OdooRelation $payableRel, OdooRelation $receivableRel): BaseInterface
     {
-        $reflexion = new \ReflectionClass(Partner::class);
+        $partnerClass = $this->getPartnerClass();
+        $reflexion = new \ReflectionClass($partnerClass);
         $constructor = $reflexion->getConstructor();
         self::assertNotNull($constructor);
 
         if (count($constructor->getParameters()) === 1) {
-            return new Partner(
-                'never'
-            );
+            return new $partnerClass('never');
         }
 
-        return new Partner(
-            $payableRel,
-            $receivableRel,
-        );
+        return new $partnerClass($payableRel, $receivableRel);
     }
 }
