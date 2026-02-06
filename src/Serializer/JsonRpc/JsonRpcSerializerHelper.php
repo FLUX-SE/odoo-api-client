@@ -46,13 +46,16 @@ final class JsonRpcSerializerHelper implements JsonRpcSerializerHelperInterface
 
     public function decodeResponseBody(StreamInterface $body): array|int|string|bool
     {
-        return $this->serializer->decode(
+        /** @var mixed[]|int|string|bool $decoded */
+        $decoded = $this->serializer->decode(
             $body->__toString(),
             JsonRpcDecoder::FORMAT,
             [
                 JsonRpcDecoder::CTX_JSONRPC_DECODE_DEPTH => $this->decodeDepth,
             ]
         );
+
+        return $decoded;
     }
 
     public function getVersion(): string

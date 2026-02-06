@@ -11,7 +11,7 @@ final class SearchDomains extends AbstractArguments implements SearchDomainsInte
     protected function buildCriteria(
         CriterionInterface $c,
     ): SearchDomainsInterface {
-        /** @var array|bool|float|int|string|null $arg */
+        /** @var mixed[]|bool|float|int|string|null $arg */
         foreach ($c->toArray() as $arg) {
             $this->addArgument($arg);
         }

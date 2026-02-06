@@ -36,7 +36,7 @@ final class DbOperations extends AbstractOperations implements DbOperationsInter
     {
         $responseBody = $this->request(__FUNCTION__);
 
-        return $this->decode($responseBody);
+        return $this->deserializeArrayOfString($responseBody);
     }
 
     public function create_database(
@@ -161,6 +161,6 @@ final class DbOperations extends AbstractOperations implements DbOperationsInter
     {
         $responseBody = $this->request(__FUNCTION__, [$masterPassword]);
 
-        return $this->decode($responseBody);
+        return $this->deserializeArrayOfString($responseBody);
     }
 }

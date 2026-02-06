@@ -12,6 +12,7 @@ final class NullableDateTimeDenormalizer implements DenormalizerInterface
     {
     }
 
+    /** @return array<string, bool> */
     public function getSupportedTypes(?string $format): array
     {
         return [
@@ -21,11 +22,13 @@ final class NullableDateTimeDenormalizer implements DenormalizerInterface
         ];
     }
 
+    /** @param array<string, mixed> $context */
     public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
     {
         return null;
     }
 
+    /** @param array<string, mixed> $context */
     public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
         if (!\is_string($data) || '' === trim($data)) {

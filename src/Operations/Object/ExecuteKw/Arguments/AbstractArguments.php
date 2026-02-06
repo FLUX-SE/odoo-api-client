@@ -6,6 +6,7 @@ namespace FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments;
 
 abstract class AbstractArguments implements ArgumentsInterface
 {
+    /** @var mixed[] */
     protected array $arguments = [];
 
     public function toArray(): array

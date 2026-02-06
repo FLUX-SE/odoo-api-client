@@ -33,6 +33,7 @@ abstract class AbstractOperations implements OperationsInterface
         throw new LogicException('The request can\'t be processed because it\'s neither a JSON nor an XML one.');
     }
 
+    /** @param mixed[] $params */
     protected function jsonRpcRequest(string $method, array $params = []): ResponseInterface
     {
         $requestBody = $this->requestBodyFactory->create('call');
@@ -47,6 +48,7 @@ abstract class AbstractOperations implements OperationsInterface
         return $this->apiRequestMaker->request('', $body);
     }
 
+    /** @param mixed[] $params */
     protected function xmlRpcRequest(string $method, array $params = []): ResponseInterface
     {
         $requestBody = $this->requestBodyFactory->create($method);

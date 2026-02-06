@@ -56,7 +56,7 @@ final class OdooModelsStructureConverterHelper
     }
 
     /**
-     * @param array<int, string|array> $selection
+     * @param array<int, string|mixed[]> $selection
      * @param int $deep
      * @return string[]
      */
@@ -64,7 +64,7 @@ final class OdooModelsStructureConverterHelper
     {
         $lines = [];
         $line = '';
-        /** @var array<int, string|array>|string $item */
+        /** @var array<int, string|mixed[]>|string $item */
         foreach ($selection as $i => $item) {
             if (is_array($item)) {
                 $lines = array_merge($lines, self::prettySelection($item, $deep + 1));

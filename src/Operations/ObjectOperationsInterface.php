@@ -9,7 +9,7 @@ use Psr\Http\Message\ResponseInterface;
 interface ObjectOperationsInterface extends OperationsInterface
 {
     /**
-     * @param string[] $arguments
+     * @param mixed[] $arguments
      * @param array<string, mixed> $options
      */
     public function execute_kw(

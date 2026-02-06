@@ -16,6 +16,7 @@ use FluxSE\OdooApiClient\PhpGenerator\ModelFixer\ModelFixerInterface;
 use Prometee\PhpClassGenerator\Builder\ClassBuilderInterface;
 use Prometee\PhpClassGenerator\Helper\PhpReservedWordsHelperInterface;
 use Prometee\PhpClassGenerator\Model\PhpDoc\PhpDocInterface;
+
 use function Symfony\Component\String\u;
 
 final class OdooModelsStructureConverter implements OdooModelsStructureConverterInterface
@@ -159,6 +160,9 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         return $this->fields_getCache[$modelName];
     }
 
+    /**
+     * @param array<string, mixed>[] $search_read
+     */
     private function initConvert(array $search_read): void
     {
         // Store all model name indexed by there id
@@ -188,6 +192,9 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         }
     }
 
+    /**
+     * @param mixed[] $fieldsInfo
+     */
     private function addInheritedModelProperties(string $inheritedModel, array $fieldsInfo): void
     {
         $this->inheritedPropertiesCache[$inheritedModel] = array_keys($fieldsInfo);
@@ -195,6 +202,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
 
     /**
      * @param array<string, mixed> $item
+     * @return array<string, mixed>
      */
     private function convertModel(string $modelNamespace, array $item, string $baseModelClass): array
     {
@@ -349,7 +357,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
         /** @var string $type */
         $type = $fieldInfo['type'] ?? '';
         if ($type === 'selection') {
-            /** @var array<int, string|array> $selection */
+            /** @var array<int, string|mixed[]> $selection */
             $selection = $fieldInfo['selection'] ?? [];
             $description[] = '---';
             $description[] = '';

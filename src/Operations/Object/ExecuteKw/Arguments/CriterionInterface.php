@@ -99,83 +99,41 @@ interface CriterionInterface
      */
     public static function in(string $fieldName, array $value): CriterionInterface;
 
-    /**
-     * @param string|int|float|bool $value
-     */
-    public static function ilike(string $fieldName, $value): CriterionInterface;
+    public static function ilike(string $fieldName, string|int|float|bool $value): CriterionInterface;
+
+    public static function not_like(string $fieldName, string|int|float|bool $value): CriterionInterface;
 
     /**
      * @param string|int|float|bool $value
      */
-    public static function not_like(string $fieldName, $value): CriterionInterface;
+    public static function less_than(string $fieldName, string|int|float|bool $value): CriterionInterface;
+
+    public static function not_equal(string $fieldName, string|int|float|bool $value): CriterionInterface;
 
     /**
-     * @param string|int|float|bool $value
-     */
-    public static function less_than(string $fieldName, $value): CriterionInterface;
-
-    /**
-     * @param string|int|float|bool $value
-     */
-    public static function not_equal(string $fieldName, $value): CriterionInterface;
-
-    /**
-     * @param array<int, string|int|float|bool> $value
+     * @param array<array-key, string|int|float|bool> $value
      */
     public static function not_in(string $fieldName, array $value): CriterionInterface;
 
-    /**
-     * @param string|int|float|bool $value
-     */
-    public static function parent_of(string $fieldName, $value): CriterionInterface;
+    public static function parent_of(string $fieldName, string|int|float|bool $value): CriterionInterface;
 
-    /**
-     * @param string|int|float|bool $value
-     */
-    public static function not_ilike(string $fieldName, $value): CriterionInterface;
+    public static function not_ilike(string $fieldName, string|int|float|bool $value): CriterionInterface;
 
-    /**
-     * @param string|int|float|bool $value
-     */
-    public static function equal_like(string $fieldName, $value): CriterionInterface;
+    public static function equal_like(string $fieldName, string|int|float|bool $value): CriterionInterface;
 
-    /**
-     * @param string|int|float|bool $value
-     */
-    public static function child_of(string $fieldName, $value): CriterionInterface;
+    public static function child_of(string $fieldName, string|int|float|bool $value): CriterionInterface;
 
-    /**
-     * @param string|int|float|bool $value
-     */
-    public static function less_than_equal(string $fieldName, $value): CriterionInterface;
+    public static function less_than_equal(string $fieldName, string|int|float|bool $value): CriterionInterface;
 
-    /**
-     * @param string|int|float|bool $value
-     */
-    public static function equal_ilike(string $fieldName, $value): CriterionInterface;
+    public static function equal_ilike(string $fieldName, string|int|float|bool $value): CriterionInterface;
 
-    /**
-     * @param string|int|float|bool $value
-     */
-    public static function greater_than_equal(string $fieldName, $value): CriterionInterface;
+    public static function greater_than_equal(string $fieldName, string|int|float|bool $value): CriterionInterface;
 
-    /**
-     * @param string|int|float|bool $value
-     */
-    public static function greater_than(string $fieldName, $value): CriterionInterface;
+    public static function greater_than(string $fieldName, string|int|float|bool $value): CriterionInterface;
 
-    /**
-     * @param string|int|float|bool $value
-     */
-    public static function unset_equal(string $fieldName, $value): CriterionInterface;
+    public static function unset_equal(string $fieldName, string|int|float|bool $value): CriterionInterface;
 
-    /**
-     * @param string|int|float|bool $value
-     */
-    public static function equal(string $fieldName, $value): CriterionInterface;
+    public static function equal(string $fieldName, string|int|float|bool $value): CriterionInterface;
 
-    /**
-     * @param string|int|float|bool $value
-     */
-    public static function like(string $fieldName, $value): CriterionInterface;
+    public static function like(string $fieldName, string|int|float|bool $value): CriterionInterface;
 }

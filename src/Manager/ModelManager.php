@@ -21,7 +21,7 @@ final class ModelManager implements ModelManagerInterface
 
     public function persist(BaseInterface $model, ?OptionsInterface $options = null): int
     {
-        /** @var array $normalizedModel */
+        /** @var array<string, mixed> $normalizedModel */
         $normalizedModel = $this->normalizer->normalize($model);
         return $this->recordOperations->create($model::getOdooModelName(), $normalizedModel, $options);
     }
@@ -37,6 +37,7 @@ final class ModelManager implements ModelManagerInterface
             throw new LogicException('The model id should not be false !');
         }
 
+        /** @var array<string, mixed> $normalizedModel */
         $normalizedModel = (array) $this->normalizer->normalize($model, null, [
             OdooRelationsNormalizer::NORMALIZE_FOR_UPDATE => true,
         ]);

@@ -13,11 +13,13 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
  */
 final class OdooRelationSingleDenormalizer implements DenormalizerInterface
 {
+    /** @return array<string, bool> */
     public function getSupportedTypes(?string $format): array
     {
         return [OdooRelation::class => false];
     }
 
+    /** @param array<string, mixed> $context */
     public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
         if ($type !== OdooRelation::class) {
@@ -27,6 +29,7 @@ final class OdooRelationSingleDenormalizer implements DenormalizerInterface
         return is_int($data);
     }
 
+    /** @param array<string, mixed> $context */
     public function denormalize($data, $type, $format = null, array $context = []): OdooRelation
     {
         if (!is_int($data)) {

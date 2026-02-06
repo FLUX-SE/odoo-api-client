@@ -10,11 +10,7 @@ parameters:
     ignoreErrors:
         - '/Method FluxSE\\OdooApiClient\\Manager\\ModelListManager::(find|findBy|findByIds)\(\) should return (array<|\()T of FluxSE\\OdooApiClient\\Model\\BaseInterface(>|\)\|null) but returns mixed\./'
         -
-            message: '/Method FluxSE\\OdooApiClient\\Serializer\\OdooNormalizer::normalize\(\) return type with generic class ArrayObject does not specify its types: TKey, TValue/'
-            count: 1
-            path: src/Serializer/OdooNormalizer.php
-        -
-            message: '/PHPDoc tag @var with type array\|bool\|int\|string is not subtype of native type array\|null\./'
+            message: '/PHPDoc tag @var with type array<mixed>\|bool\|int\|string is not subtype of native type array\|null\./'
             identifier: varTag.nativeType
             count: 1
             path: src/Serializer/XmlRpc/XmlRpcDecoder.php

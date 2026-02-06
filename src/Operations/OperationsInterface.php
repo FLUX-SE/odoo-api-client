@@ -11,7 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 
 interface OperationsInterface
 {
-    /** @param array<string, mixed> $params */
+    /** @param mixed[] $params */
     public function request(string $method, array $params = []): ResponseInterface;
 
     public function getEndpointPath(): string;

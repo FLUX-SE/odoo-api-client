@@ -27,6 +27,7 @@ class RecordOperationsTest extends TestCase
         $this->recordListOperations = $this->buildExecuteKwOperations(RecordListOperations::class);
     }
 
+    /** @return mixed[] */
     private function retrieveUom(string $name): array
     {
         $searchDomains = new SearchDomains();
@@ -35,7 +36,7 @@ class RecordOperationsTest extends TestCase
         $searchReadOptions = new SearchReadOptions();
         $searchReadOptions->setLimit(1);
 
-        /** @var array[] $results */
+        /** @var mixed[][] $results */
         $results = $this->recordListOperations->search_read(
             'uom.uom',
             $searchDomains,
@@ -50,12 +51,13 @@ class RecordOperationsTest extends TestCase
         return $results[0];
     }
 
+    /** @return mixed[] */
     private function retrieveFirstCategory(): array
     {
         $searchReadOptions = new SearchReadOptions();
         $searchReadOptions->setLimit(1);
 
-        /** @var array[] $results */
+        /** @var mixed[][] $results */
         $results = $this->recordListOperations->search_read(
             'product.category',
             null,
