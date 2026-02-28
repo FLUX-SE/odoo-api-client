@@ -21,7 +21,7 @@ final class OdooRelationsNormalizer implements NormalizerInterface, NormalizerAw
         return ['native-array' => false];
     }
 
-    public function supportsNormalization($data, string $format = null, array $context = []): bool
+    public function supportsNormalization($data, ?string $format = null, array $context = []): bool
     {
         if (false === is_array($data)) {
             return false;
