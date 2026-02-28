@@ -12,6 +12,8 @@ use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Move as MoveV17;
 use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Res\Partner as PartnerV17;
 use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Account\Move as MoveV18;
 use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Res\Partner as PartnerV18;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Move as MoveV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Res\Partner as PartnerV19;
 
 class ModelFieldsProviderTest extends TestCase
 {
@@ -40,7 +42,8 @@ class ModelFieldsProviderTest extends TestCase
         $moveClass = match (true) {
             $this->odooVersion <= 16 => MoveV16::class,
             $this->odooVersion <= 17 => MoveV17::class,
-            default => MoveV18::class,
+            $this->odooVersion <= 18 => MoveV18::class,
+            default => MoveV19::class,
         };
 
         return $moveClass;
@@ -56,7 +59,8 @@ class ModelFieldsProviderTest extends TestCase
         $partnerClass = match (true) {
             $this->odooVersion <= 16 => PartnerV16::class,
             $this->odooVersion <= 17 => PartnerV17::class,
-            default => PartnerV18::class,
+            $this->odooVersion <= 18 => PartnerV18::class,
+            default => PartnerV19::class,
         };
 
         return $partnerClass;

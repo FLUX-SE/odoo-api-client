@@ -64,6 +64,20 @@ use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Product\Template as Template
 use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Res\Currency as CurrencyV18;
 use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Res\Partner as PartnerV18;
 use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Uom\Uom as UomV18;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Account as AccountV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Journal as JournalV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Move as MoveV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Move\Line as LineV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Payment as PaymentV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Payment\Method as MethodV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Payment\Register as RegisterV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Tax as TaxV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Product\Category as CategoryV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Product\Product as ProductV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Product\Template as TemplateV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Res\Currency as CurrencyV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Res\Partner as PartnerV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Uom\Uom as UomV19;
 
 class ModelManagerTest extends TestCase
 {
@@ -107,7 +121,8 @@ class ModelManagerTest extends TestCase
         $partnerClass = match (true) {
             $this->odooVersion <= 16 => PartnerV16::class,
             $this->odooVersion <= 17 => PartnerV17::class,
-            default => PartnerV18::class,
+            $this->odooVersion <= 18 => PartnerV18::class,
+            default => PartnerV19::class,
         };
 
         return $partnerClass;
@@ -123,7 +138,8 @@ class ModelManagerTest extends TestCase
         $accountClass = match (true) {
             $this->odooVersion <= 16 => AccountV16::class,
             $this->odooVersion <= 17 => AccountV17::class,
-            default => AccountV18::class,
+            $this->odooVersion <= 18 => AccountV18::class,
+            default => AccountV19::class,
         };
 
         return $accountClass;
@@ -139,7 +155,8 @@ class ModelManagerTest extends TestCase
         $uomClass = match (true) {
             $this->odooVersion <= 16 => UomV16::class,
             $this->odooVersion <= 17 => UomV17::class,
-            default => UomV18::class,
+            $this->odooVersion <= 18 => UomV18::class,
+            default => UomV19::class,
         };
 
         return $uomClass;
@@ -155,7 +172,8 @@ class ModelManagerTest extends TestCase
         $categoryClass = match (true) {
             $this->odooVersion <= 16 => CategoryV16::class,
             $this->odooVersion <= 17 => CategoryV17::class,
-            default => CategoryV18::class,
+            $this->odooVersion <= 18 => CategoryV18::class,
+            default => CategoryV19::class,
         };
 
         return $categoryClass;
@@ -171,7 +189,8 @@ class ModelManagerTest extends TestCase
         $moveClass = match (true) {
             $this->odooVersion <= 16 => MoveV16::class,
             $this->odooVersion <= 17 => MoveV17::class,
-            default => MoveV18::class,
+            $this->odooVersion <= 18 => MoveV18::class,
+            default => MoveV19::class,
         };
 
         return $moveClass;
@@ -187,7 +206,8 @@ class ModelManagerTest extends TestCase
         $journalClass = match (true) {
             $this->odooVersion <= 16 => JournalV16::class,
             $this->odooVersion <= 17 => JournalV17::class,
-            default => JournalV18::class,
+            $this->odooVersion <= 18 => JournalV18::class,
+            default => JournalV19::class,
         };
 
         return $journalClass;
@@ -203,7 +223,8 @@ class ModelManagerTest extends TestCase
         $currencyClass = match (true) {
             $this->odooVersion <= 16 => CurrencyV16::class,
             $this->odooVersion <= 17 => CurrencyV17::class,
-            default => CurrencyV18::class,
+            $this->odooVersion <= 18 => CurrencyV18::class,
+            default => CurrencyV19::class,
         };
 
         return $currencyClass;
@@ -219,7 +240,8 @@ class ModelManagerTest extends TestCase
         $productClass = match (true) {
             $this->odooVersion <= 16 => ProductV16::class,
             $this->odooVersion <= 17 => ProductV17::class,
-            default => ProductV18::class,
+            $this->odooVersion <= 18 => ProductV18::class,
+            default => ProductV19::class,
         };
 
         return $productClass;
@@ -235,7 +257,8 @@ class ModelManagerTest extends TestCase
         $taxClass = match (true) {
             $this->odooVersion <= 16 => TaxV16::class,
             $this->odooVersion <= 17 => TaxV17::class,
-            default => TaxV18::class,
+            $this->odooVersion <= 18 => TaxV18::class,
+            default => TaxV19::class,
         };
 
         return $taxClass;
@@ -251,7 +274,8 @@ class ModelManagerTest extends TestCase
         $methodClass = match (true) {
             $this->odooVersion <= 16 => MethodV16::class,
             $this->odooVersion <= 17 => MethodV17::class,
-            default => MethodV18::class,
+            $this->odooVersion <= 18 => MethodV18::class,
+            default => MethodV19::class,
         };
 
         return $methodClass;
@@ -267,7 +291,8 @@ class ModelManagerTest extends TestCase
         $paymentClass = match (true) {
             $this->odooVersion <= 16 => PaymentV16::class,
             $this->odooVersion <= 17 => PaymentV17::class,
-            default => PaymentV18::class,
+            $this->odooVersion <= 18 => PaymentV18::class,
+            default => PaymentV19::class,
         };
 
         return $paymentClass;
@@ -283,7 +308,8 @@ class ModelManagerTest extends TestCase
         $templateClass = match (true) {
             $this->odooVersion <= 16 => TemplateV16::class,
             $this->odooVersion <= 17 => TemplateV17::class,
-            default => TemplateV18::class,
+            $this->odooVersion <= 18 => TemplateV18::class,
+            default => TemplateV19::class,
         };
 
         return $templateClass;
@@ -299,7 +325,8 @@ class ModelManagerTest extends TestCase
         $lineClass = match (true) {
             $this->odooVersion <= 16 => LineV16::class,
             $this->odooVersion <= 17 => LineV17::class,
-            default => LineV18::class,
+            $this->odooVersion <= 18 => LineV18::class,
+            default => LineV19::class,
         };
 
         return $lineClass;
@@ -315,7 +342,8 @@ class ModelManagerTest extends TestCase
         $registerClass = match (true) {
             $this->odooVersion <= 16 => RegisterV16::class,
             $this->odooVersion <= 17 => RegisterV17::class,
-            default => RegisterV18::class,
+            $this->odooVersion <= 18 => RegisterV18::class,
+            default => RegisterV19::class,
         };
 
         return $registerClass;
@@ -698,17 +726,6 @@ class ModelManagerTest extends TestCase
             );
         }
 
-        if ($this->odooVersion <= 17) {
-            return new $moveClass(
-                $date,
-                'draft',
-                $moveType,
-                $journalRel,
-                'no',
-                $currencyRel,
-            );
-        }
-
         return new $moveClass(
             $date,
             'draft',
@@ -732,10 +749,6 @@ class ModelManagerTest extends TestCase
 
         if ($this->odooVersion <= 15) {
             return new $lineClass($emptyMoveRel, $currencyRel);
-        }
-
-        if ($this->odooVersion <= 17) {
-            return new $lineClass($emptyMoveRel, $currencyRel, 'product');
         }
 
         return new $lineClass($emptyMoveRel, $currencyRel, 'product');

@@ -14,6 +14,7 @@ use Tests\FluxSE\OdooApiClient\Serializer\Model\Foo;
 use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Res\Partner as PartnerV16;
 use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Res\Partner as PartnerV17;
 use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Res\Partner as PartnerV18;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Res\Partner as PartnerV19;
 
 class OdooNormalizerTest extends TestCase
 {
@@ -31,8 +32,10 @@ class OdooNormalizerTest extends TestCase
             $this->odooVersion = 16;
         } elseif (class_exists(PartnerV17::class)) {
             $this->odooVersion = 17;
-        } else {
+        } elseif (class_exists(PartnerV18::class)) {
             $this->odooVersion = 18;
+        } else {
+            $this->odooVersion = 19;
         }
     }
 
@@ -46,7 +49,8 @@ class OdooNormalizerTest extends TestCase
         $partnerClass = match ($this->odooVersion) {
             16 => PartnerV16::class,
             17 => PartnerV17::class,
-            default => PartnerV18::class,
+            18 => PartnerV18::class,
+            default => PartnerV19::class,
         };
 
         return $partnerClass;
