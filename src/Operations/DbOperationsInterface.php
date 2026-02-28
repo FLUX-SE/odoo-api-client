@@ -36,8 +36,8 @@ interface DbOperationsInterface extends OperationsInterface
         string $lang,
         string $serPassword = 'admin',
         string $login = 'admin',
-        string $countryCode = null,
-        string $phone = null
+        ?string $countryCode = null,
+        ?string $phone = null
     ): array;
 
     public function restore(

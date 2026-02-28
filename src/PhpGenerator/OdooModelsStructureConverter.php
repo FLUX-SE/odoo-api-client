@@ -38,7 +38,7 @@ final class OdooModelsStructureConverter implements OdooModelsStructureConverter
     ) {
     }
 
-    public function convert(string $modelNamespace, SearchDomainsInterface $searchDomains = null): array
+    public function convert(string $modelNamespace, ?SearchDomainsInterface $searchDomains = null): array
     {
         $config = [];
 

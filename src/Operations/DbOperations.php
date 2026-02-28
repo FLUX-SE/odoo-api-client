@@ -46,8 +46,8 @@ final class DbOperations extends AbstractOperations implements DbOperationsInter
         string $lang,
         string $serPassword = 'admin',
         string $login = 'admin',
-        string $countryCode = null,
-        string $phone = null
+        ?string $countryCode = null,
+        ?string $phone = null
     ): array {
         $responseBody = $this->request(__FUNCTION__, [
             $masterPassword,

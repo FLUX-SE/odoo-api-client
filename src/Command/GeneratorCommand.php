@@ -23,7 +23,7 @@ final class GeneratorCommand extends Command
         private ObjectOperationsInterface $objectOperations,
         private OdooModelsStructureConverterInterface $odooModelsStructureConverter,
         private PhpGeneratorInterface $phpClassesGenerator,
-        string $name = null
+        ?string $name = null
     ) {
         parent::__construct($name);
     }
