@@ -41,8 +41,8 @@
         "webmozart/assert": "^1"
     },
     "require-dev": {
-        "ext-xmlrpc": "*",
         "ext-json": "*",
+        "phpxmlrpc/polyfill-xmlrpc": "^1.0",
         "phpunit/phpunit": "^10",
         "php-http/guzzle7-adapter": "^1.0",
         "http-interop/http-factory-guzzle": "^1.0",
@@ -53,7 +53,7 @@
         "rector/rector": "^2"
     },
     "suggest": {
-        "ext-xmlrpc": "Needed to support XML-RPC.",
+        "phpxmlrpc/polyfill-xmlrpc": "Needed to support XML-RPC.",
         "ext-json": "Needed to support JSON-RPC."
     },
     "bin": [
