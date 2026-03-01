@@ -17,7 +17,7 @@ interface DbOperationsInterface extends OperationsInterface
 
     public function drop(string $masterPassword, string $dbName): bool;
 
-    /** @return string[] */
+    /** @return mixed[] */
     public function list_lang(): array;
 
     /** @return string[] */
@@ -25,7 +25,7 @@ interface DbOperationsInterface extends OperationsInterface
 
     public function change_admin_password(string $masterPassword, string $newPassword): bool;
 
-    /** @return string[] */
+    /** @return mixed[] */
     public function list_countries(string $masterPassword): array;
 
     /** @return string[] */

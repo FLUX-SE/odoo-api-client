@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace FluxSE\OdooApiClient\Operations;
 
+use Webmozart\Assert\Assert;
+
 final class DbOperations extends AbstractOperations implements DbOperationsInterface
 {
     public function getEndpointPath(): string
@@ -13,30 +15,30 @@ final class DbOperations extends AbstractOperations implements DbOperationsInter
 
     public function list(bool $document = false): array
     {
-        $responseBody = $this->request(__FUNCTION__, [$document]);
+        $response = $this->request(__FUNCTION__, [$document]);
 
-        return $this->deserializeArrayOfString($responseBody);
+        return $this->deserializeArrayOfString($response);
     }
 
     public function server_version(): string
     {
-        $responseBody = $this->request(__FUNCTION__);
+        $response = $this->request(__FUNCTION__);
 
-        return $this->deserializeString($responseBody);
+        return $this->deserializeString($response);
     }
 
     public function db_exist(string $dbName): bool
     {
-        $responseBody = $this->request(__FUNCTION__, [$dbName]);
+        $response = $this->request(__FUNCTION__, [$dbName]);
 
-        return $this->deserializeBoolean($responseBody);
+        return $this->deserializeBoolean($response);
     }
 
     public function list_lang(): array
     {
-        $responseBody = $this->request(__FUNCTION__);
+        $response = $this->request(__FUNCTION__);
 
-        return $this->deserializeArrayOfString($responseBody);
+        return $this->getRpcSerializerHelper()->decodeResponseBody($response->getBody());
     }
 
     public function create_database(
@@ -49,7 +51,7 @@ final class DbOperations extends AbstractOperations implements DbOperationsInter
         ?string $countryCode = null,
         ?string $phone = null
     ): array {
-        $responseBody = $this->request(__FUNCTION__, [
+        $response = $this->request(__FUNCTION__, [
             $masterPassword,
             $dbName,
             $demo,
@@ -60,7 +62,7 @@ final class DbOperations extends AbstractOperations implements DbOperationsInter
             $phone,
         ]);
 
-        return $this->deserializeArrayOfString($responseBody);
+        return $this->deserializeArrayOfString($response);
     }
 
     public function duplicate_database(
@@ -68,25 +70,25 @@ final class DbOperations extends AbstractOperations implements DbOperationsInter
         string $dbOriginalName,
         string $dbName
     ): bool {
-        $responseBody = $this->request(__FUNCTION__, [
+        $response = $this->request(__FUNCTION__, [
             $masterPassword,
             $dbOriginalName,
             $dbName,
         ]);
 
-        return $this->deserializeBoolean($responseBody);
+        return $this->deserializeBoolean($response);
     }
 
     public function drop(
         string $masterPassword,
         string $dbName
     ): bool {
-        $responseBody = $this->request(__FUNCTION__, [
+        $response = $this->request(__FUNCTION__, [
             $masterPassword,
             $dbName,
         ]);
 
-        return $this->deserializeBoolean($responseBody);
+        return $this->deserializeBoolean($response);
     }
 
     public function dump(
@@ -94,13 +96,13 @@ final class DbOperations extends AbstractOperations implements DbOperationsInter
         string $dbName,
         string $format = 'zip'
     ): string {
-        $responseBody = $this->request(__FUNCTION__, [
+        $response = $this->request(__FUNCTION__, [
             $masterPassword,
             $dbName,
             $format,
         ]);
 
-        return $this->deserializeString($responseBody);
+        return $this->deserializeString($response);
     }
 
     public function restore(
@@ -109,14 +111,14 @@ final class DbOperations extends AbstractOperations implements DbOperationsInter
         string $data,
         bool $copy = false
     ): bool {
-        $responseBody = $this->request(__FUNCTION__, [
+        $response = $this->request(__FUNCTION__, [
             $masterPassword,
             $dbName,
             $data,
             $copy,
         ]);
 
-        return $this->deserializeBoolean($responseBody);
+        return $this->deserializeBoolean($response);
     }
 
     public function rename(
@@ -124,43 +126,46 @@ final class DbOperations extends AbstractOperations implements DbOperationsInter
         string $oldName,
         string $newName
     ): bool {
-        $responseBody = $this->request(__FUNCTION__, [
+        $response = $this->request(__FUNCTION__, [
             $masterPassword,
             $oldName,
             $newName,
         ]);
 
-        return $this->deserializeBoolean($responseBody);
+        return $this->deserializeBoolean($response);
     }
 
     public function change_admin_password(
         string $masterPassword,
         string $newPassword
     ): bool {
-        $responseBody = $this->request(__FUNCTION__, [
+        $response = $this->request(__FUNCTION__, [
             $masterPassword,
             $newPassword,
         ]);
 
-        return $this->deserializeBoolean($responseBody);
+        return $this->deserializeBoolean($response);
     }
 
     public function migrate_databases(
         string $masterPassword,
         array $databases
     ): bool {
-        $responseBody = $this->request(__FUNCTION__, [
+        $response = $this->request(__FUNCTION__, [
             $masterPassword,
             $databases,
         ]);
 
-        return $this->deserializeBoolean($responseBody);
+        return $this->deserializeBoolean($response);
     }
 
     public function list_countries(string $masterPassword): array
     {
-        $responseBody = $this->request(__FUNCTION__, [$masterPassword]);
+        $response = $this->request(__FUNCTION__, [$masterPassword]);
 
-        return $this->deserializeArrayOfString($responseBody);
+        $decodeResponseBody = $this->getRpcSerializerHelper()->decodeResponseBody($response->getBody());
+        Assert::isArray($decodeResponseBody);
+
+        return $decodeResponseBody;
     }
 }
