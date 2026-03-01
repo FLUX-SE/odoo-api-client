@@ -5,6 +5,7 @@ namespace Tests\FluxSE\OdooApiClient\Provider;
 use FluxSE\OdooApiClient\Model\BaseInterface;
 use FluxSE\OdooApiClient\Provider\ModelFieldsProviderInterface;
 use PHPUnit\Framework\TestCase;
+use Tests\FluxSE\OdooApiClient\Operations\CommonOperationsTrait;
 use Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw\ExecuteKwOperationsTrait;
 use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Account\Move as MoveV16;
 use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Res\Partner as PartnerV16;
@@ -17,7 +18,8 @@ use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Res\Partner as PartnerV19;
 
 class ModelFieldsProviderTest extends TestCase
 {
-    use ExecuteKwOperationsTrait;
+    use ExecuteKwOperationsTrait,
+        CommonOperationsTrait;
 
     protected ModelFieldsProviderInterface $modelFieldsProvider;
 
@@ -26,10 +28,7 @@ class ModelFieldsProviderTest extends TestCase
     protected function setUp(): void
     {
         $this->modelFieldsProvider = $this->buildModelFieldsProvider();
-
-        $commonOperations = $this->buildOdooApiClientBuilder()->buildCommonOperations();
-        $version = $commonOperations->version();
-        $this->odooVersion = $version->getServerVersionInfo()[0];
+        $this->odooVersion = $this->buildCommonOperations()->version()->getServerVersionInfo()[0];
     }
 
     /**

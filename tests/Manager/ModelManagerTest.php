@@ -21,6 +21,7 @@ use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordOperations;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordOperationsInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Tests\FluxSE\OdooApiClient\Operations\CommonOperationsTrait;
 use Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw\ExecuteKwOperationsTrait;
 use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Account\Account as AccountV16;
 use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Account\Journal as JournalV16;
@@ -81,7 +82,8 @@ use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Uom\Uom as UomV19;
 
 class ModelManagerTest extends TestCase
 {
-    use ExecuteKwOperationsTrait;
+    use ExecuteKwOperationsTrait,
+        CommonOperationsTrait;
 
     private RecordOperationsInterface $recordOperations;
 
@@ -106,9 +108,7 @@ class ModelManagerTest extends TestCase
             $this->buildModelFieldsProvider()
         );
 
-        $commonOperations = $this->buildOdooApiClientBuilder()->buildCommonOperations();
-        $version = $commonOperations->version();
-        $this->odooVersion = $version->getServerVersionInfo()[0];
+        $this->odooVersion = $this->buildCommonOperations()->version()->getServerVersionInfo()[0];
     }
 
     /**

@@ -10,6 +10,7 @@ use FluxSE\OdooApiClient\Serializer\Factory\SerializerFactory;
 use FluxSE\OdooApiClient\Serializer\OdooRelationsNormalizer;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Serializer;
+use Tests\FluxSE\OdooApiClient\Operations\CommonOperationsTrait;
 use Tests\FluxSE\OdooApiClient\Serializer\Model\Foo;
 use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Res\Partner as PartnerV16;
 use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Res\Partner as PartnerV17;
@@ -18,6 +19,7 @@ use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Res\Partner as PartnerV19;
 
 class OdooNormalizerTest extends TestCase
 {
+    use CommonOperationsTrait;
     private Serializer $serializer;
 
     private int $odooVersion;
@@ -26,17 +28,7 @@ class OdooNormalizerTest extends TestCase
     {
         $serializerFactory = new SerializerFactory();
         $this->serializer = $serializerFactory->create();
-
-        // Determine Odoo version from available Partner class
-        if (class_exists(PartnerV16::class)) {
-            $this->odooVersion = 16;
-        } elseif (class_exists(PartnerV17::class)) {
-            $this->odooVersion = 17;
-        } elseif (class_exists(PartnerV18::class)) {
-            $this->odooVersion = 18;
-        } else {
-            $this->odooVersion = 19;
-        }
+        $this->odooVersion = $this->buildCommonOperations()->version()->getServerVersionInfo()[0];
     }
 
     /**

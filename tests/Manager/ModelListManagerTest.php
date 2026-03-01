@@ -11,6 +11,7 @@ use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterface;
 use PHPUnit\Framework\TestCase;
+use Tests\FluxSE\OdooApiClient\Operations\CommonOperationsTrait;
 use Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw\ExecuteKwOperationsTrait;
 use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Res\Partner as PartnerV16;
 use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Res\Partner as PartnerV17;
@@ -19,7 +20,8 @@ use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Res\Partner as PartnerV19;
 
 class ModelListManagerTest extends TestCase
 {
-    use ExecuteKwOperationsTrait;
+    use ExecuteKwOperationsTrait,
+        CommonOperationsTrait;
 
     private RecordListOperationsInterface $recordListOperations;
 
@@ -36,9 +38,7 @@ class ModelListManagerTest extends TestCase
             $this->buildModelFieldsProvider()
         );
 
-        $commonOperations = $this->buildOdooApiClientBuilder()->buildCommonOperations();
-        $version = $commonOperations->version();
-        $this->odooVersion = $version->getServerVersionInfo()[0];
+        $this->odooVersion = $this->buildCommonOperations()->version()->getServerVersionInfo()[0];
     }
 
     /**
