@@ -7,8 +7,6 @@ use FluxSE\OdooApiClient\Provider\ModelFieldsProviderInterface;
 use PHPUnit\Framework\TestCase;
 use Tests\FluxSE\OdooApiClient\Operations\CommonOperationsTrait;
 use Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw\ExecuteKwOperationsTrait;
-use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Account\Move as MoveV16;
-use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Res\Partner as PartnerV16;
 use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Move as MoveV17;
 use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Res\Partner as PartnerV17;
 use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Account\Move as MoveV18;
@@ -39,7 +37,6 @@ class ModelFieldsProviderTest extends TestCase
     {
         /** @var class-string<BaseInterface> $moveClass */
         $moveClass = match (true) {
-            $this->odooVersion <= 16 => MoveV16::class,
             $this->odooVersion <= 17 => MoveV17::class,
             $this->odooVersion <= 18 => MoveV18::class,
             default => MoveV19::class,
@@ -56,7 +53,6 @@ class ModelFieldsProviderTest extends TestCase
     {
         /** @var class-string<BaseInterface> $partnerClass */
         $partnerClass = match (true) {
-            $this->odooVersion <= 16 => PartnerV16::class,
             $this->odooVersion <= 17 => PartnerV17::class,
             $this->odooVersion <= 18 => PartnerV18::class,
             default => PartnerV19::class,

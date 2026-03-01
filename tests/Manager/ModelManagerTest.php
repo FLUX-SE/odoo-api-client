@@ -23,20 +23,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Tests\FluxSE\OdooApiClient\Operations\CommonOperationsTrait;
 use Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw\ExecuteKwOperationsTrait;
-use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Account\Account as AccountV16;
-use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Account\Journal as JournalV16;
-use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Account\Move as MoveV16;
-use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Account\Move\Line as LineV16;
-use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Account\Payment as PaymentV16;
-use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Account\Payment\Method as MethodV16;
-use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Account\Payment\Register as RegisterV16;
-use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Account\Tax as TaxV16;
-use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Product\Category as CategoryV16;
-use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Product\Product as ProductV16;
-use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Product\Template as TemplateV16;
-use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Res\Currency as CurrencyV16;
-use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Res\Partner as PartnerV16;
-use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Uom\Uom as UomV16;
 use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Account as AccountV17;
 use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Journal as JournalV17;
 use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Move as MoveV17;
@@ -119,7 +105,6 @@ class ModelManagerTest extends TestCase
     {
         /** @var class-string<BaseInterface> $partnerClass */
         $partnerClass = match (true) {
-            $this->odooVersion <= 16 => PartnerV16::class,
             $this->odooVersion <= 17 => PartnerV17::class,
             $this->odooVersion <= 18 => PartnerV18::class,
             default => PartnerV19::class,
@@ -136,7 +121,6 @@ class ModelManagerTest extends TestCase
     {
         /** @var class-string<BaseInterface> $accountClass */
         $accountClass = match (true) {
-            $this->odooVersion <= 16 => AccountV16::class,
             $this->odooVersion <= 17 => AccountV17::class,
             $this->odooVersion <= 18 => AccountV18::class,
             default => AccountV19::class,
@@ -153,7 +137,6 @@ class ModelManagerTest extends TestCase
     {
         /** @var class-string<BaseInterface> $uomClass */
         $uomClass = match (true) {
-            $this->odooVersion <= 16 => UomV16::class,
             $this->odooVersion <= 17 => UomV17::class,
             $this->odooVersion <= 18 => UomV18::class,
             default => UomV19::class,
@@ -170,7 +153,6 @@ class ModelManagerTest extends TestCase
     {
         /** @var class-string<BaseInterface> $categoryClass */
         $categoryClass = match (true) {
-            $this->odooVersion <= 16 => CategoryV16::class,
             $this->odooVersion <= 17 => CategoryV17::class,
             $this->odooVersion <= 18 => CategoryV18::class,
             default => CategoryV19::class,
@@ -187,7 +169,6 @@ class ModelManagerTest extends TestCase
     {
         /** @var class-string<BaseInterface> $moveClass */
         $moveClass = match (true) {
-            $this->odooVersion <= 16 => MoveV16::class,
             $this->odooVersion <= 17 => MoveV17::class,
             $this->odooVersion <= 18 => MoveV18::class,
             default => MoveV19::class,
@@ -204,7 +185,6 @@ class ModelManagerTest extends TestCase
     {
         /** @var class-string<BaseInterface> $journalClass */
         $journalClass = match (true) {
-            $this->odooVersion <= 16 => JournalV16::class,
             $this->odooVersion <= 17 => JournalV17::class,
             $this->odooVersion <= 18 => JournalV18::class,
             default => JournalV19::class,
@@ -221,7 +201,6 @@ class ModelManagerTest extends TestCase
     {
         /** @var class-string<BaseInterface> $currencyClass */
         $currencyClass = match (true) {
-            $this->odooVersion <= 16 => CurrencyV16::class,
             $this->odooVersion <= 17 => CurrencyV17::class,
             $this->odooVersion <= 18 => CurrencyV18::class,
             default => CurrencyV19::class,
@@ -238,7 +217,6 @@ class ModelManagerTest extends TestCase
     {
         /** @var class-string<BaseInterface> $productClass */
         $productClass = match (true) {
-            $this->odooVersion <= 16 => ProductV16::class,
             $this->odooVersion <= 17 => ProductV17::class,
             $this->odooVersion <= 18 => ProductV18::class,
             default => ProductV19::class,
@@ -255,7 +233,6 @@ class ModelManagerTest extends TestCase
     {
         /** @var class-string<BaseInterface> $taxClass */
         $taxClass = match (true) {
-            $this->odooVersion <= 16 => TaxV16::class,
             $this->odooVersion <= 17 => TaxV17::class,
             $this->odooVersion <= 18 => TaxV18::class,
             default => TaxV19::class,
@@ -272,7 +249,6 @@ class ModelManagerTest extends TestCase
     {
         /** @var class-string<BaseInterface> $methodClass */
         $methodClass = match (true) {
-            $this->odooVersion <= 16 => MethodV16::class,
             $this->odooVersion <= 17 => MethodV17::class,
             $this->odooVersion <= 18 => MethodV18::class,
             default => MethodV19::class,
@@ -289,7 +265,6 @@ class ModelManagerTest extends TestCase
     {
         /** @var class-string<BaseInterface> $paymentClass */
         $paymentClass = match (true) {
-            $this->odooVersion <= 16 => PaymentV16::class,
             $this->odooVersion <= 17 => PaymentV17::class,
             $this->odooVersion <= 18 => PaymentV18::class,
             default => PaymentV19::class,
@@ -306,7 +281,6 @@ class ModelManagerTest extends TestCase
     {
         /** @var class-string<BaseInterface> $templateClass */
         $templateClass = match (true) {
-            $this->odooVersion <= 16 => TemplateV16::class,
             $this->odooVersion <= 17 => TemplateV17::class,
             $this->odooVersion <= 18 => TemplateV18::class,
             default => TemplateV19::class,
@@ -323,7 +297,6 @@ class ModelManagerTest extends TestCase
     {
         /** @var class-string<BaseInterface> $lineClass */
         $lineClass = match (true) {
-            $this->odooVersion <= 16 => LineV16::class,
             $this->odooVersion <= 17 => LineV17::class,
             $this->odooVersion <= 18 => LineV18::class,
             default => LineV19::class,
@@ -340,7 +313,6 @@ class ModelManagerTest extends TestCase
     {
         /** @var class-string<BaseInterface> $registerClass */
         $registerClass = match (true) {
-            $this->odooVersion <= 16 => RegisterV16::class,
             $this->odooVersion <= 17 => RegisterV17::class,
             $this->odooVersion <= 18 => RegisterV18::class,
             default => RegisterV19::class,
@@ -692,24 +664,6 @@ class ModelManagerTest extends TestCase
         $registerClass = $this->getRegisterClass();
 
         self::assertTrue(method_exists($paymentMethod, 'getCode'));
-        if ($this->odooVersion <= 16) {
-            $paymentRegister = new $registerClass($date);
-            self::assertTrue(method_exists($paymentRegister, 'setJournalId'));
-            $paymentRegister->setJournalId($journalRel);
-            self::assertTrue(method_exists($paymentRegister, 'setPaymentMethodCode'));
-            $paymentRegister->setPaymentMethodCode($paymentMethod->getCode());
-            return $paymentRegister;
-        }
-
-        if ($this->odooVersion <= 17) {
-            $paymentRegister = new $registerClass($date);
-            self::assertTrue(method_exists($paymentRegister, 'setJournalId'));
-            $paymentRegister->setJournalId($journalRel);
-            self::assertTrue(method_exists($paymentRegister, 'setPaymentMethodCode'));
-            $paymentRegister->setPaymentMethodCode($paymentMethod->getCode());
-            return $paymentRegister;
-        }
-
         $paymentRegister = new $registerClass($date);
         self::assertTrue(method_exists($paymentRegister, 'setJournalId'));
         $paymentRegister->setJournalId($journalRel);
@@ -723,10 +677,6 @@ class ModelManagerTest extends TestCase
         $partnerClass = $this->getPartnerClass();
 
         return match (true) {
-            $this->odooVersion <= 16 => new $partnerClass(
-                $payableRel,
-                $receivableRel,
-            ),
             $this->odooVersion <= 17 => new $partnerClass(
                 $payableRel,
                 $receivableRel,

@@ -11,7 +11,6 @@ use FluxSE\OdooApiClient\Serializer\OdooRelationsNormalizer;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Serializer;
 use Tests\FluxSE\OdooApiClient\Operations\CommonOperationsTrait;
-use Tests\FluxSE\OdooApiClient\TestModel\V16\Object\Account\Move\Line as LineV16;
 use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Move\Line as LineV17;
 use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Account\Move\Line as LineV18;
 use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Move\Line as LineV19;
@@ -39,7 +38,6 @@ class OdooRelationsNormalizerTest extends TestCase
     {
         /** @var class-string<BaseInterface> $lineClass */
         $lineClass = match (true) {
-            $this->odooVersion <= 16 => LineV16::class,
             $this->odooVersion <= 17 => LineV17::class,
             $this->odooVersion <= 18 => LineV18::class,
             default => LineV19::class,
