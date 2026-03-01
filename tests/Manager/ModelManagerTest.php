@@ -429,14 +429,6 @@ class ModelManagerTest extends TestCase
 
         // Use versioned classes based on Odoo version
         $template = match (true) {
-            $this->odooVersion <= 16 => new $templateClass(
-                'test',
-                'consu',
-                new OdooRelation($category->getId()),
-                new OdooRelation($uom->getId()),
-                new OdooRelation($uom->getId()),
-                []
-            ),
             $this->odooVersion <= 17 => new $templateClass(
                 'test',
                 'consu',
@@ -444,7 +436,7 @@ class ModelManagerTest extends TestCase
                 new OdooRelation($uom->getId()),
                 new OdooRelation($uom->getId()),
                 [],
-                'warning'
+                'block'
             ),
             $this->odooVersion <= 18 => new $templateClass(
                 'test',
