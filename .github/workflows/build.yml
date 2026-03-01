@@ -80,7 +80,7 @@ jobs:
                 uses: shivammathur/setup-php@v2
                 with:
                     php-version: "${{ matrix.php }}"
-                    extensions: intl, xmlrpc
+                    extensions: intl
                     tools: symfony
                     coverage: none
             -
