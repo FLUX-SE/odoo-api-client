@@ -91,7 +91,7 @@ class OdooRelationsNormalizerTest extends TestCase
 
     private function createLineWithTax(): BaseInterface
     {
-        $lineClass = $this->getLineClass();
+        $lineClass = $this->getAccountMoveLineClass();
         $line = new $lineClass(new OdooRelation(false), new OdooRelation(false), '');
         self::assertTrue(method_exists($line, 'addTaxIds'));
         $line->addTaxIds(new OdooRelation(10));

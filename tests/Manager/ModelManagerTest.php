@@ -64,8 +64,8 @@ class ModelManagerTest extends TestCase
 
     public function testManageProduct(): void
     {
-        $accountClass = $this->getAccountClass();
-        $partnerClass = $this->getPartnerClass();
+        $accountClass = $this->getAccountAccountClass();
+        $partnerClass = $this->getResPartnerClass();
 
         $searchDomains1 = new SearchDomains();
         $searchDomains1->addCriterion(Criterion::equal('code', '411100'));
@@ -109,7 +109,7 @@ class ModelManagerTest extends TestCase
 
     private function retrieveUom(string $name): BaseInterface
     {
-        $uomClass = $this->getUomClass();
+        $uomClass = $this->getUomUomClass();
         $searchDomains = new SearchDomains();
         $searchDomains->addCriterion(Criterion::equal('name', $name));
 
@@ -125,7 +125,7 @@ class ModelManagerTest extends TestCase
 
     private function retrieveFirstCategory(): BaseInterface
     {
-        $categoryClass = $this->getCategoryClass();
+        $categoryClass = $this->getProductCategoryClass();
         $category = $this->modelListManager->findOneBy($categoryClass);
 
         self::assertNotNull($category, 'Please create at least one category in ODOO !');
@@ -138,7 +138,7 @@ class ModelManagerTest extends TestCase
         $uom = $this->retrieveUom('Units');
         $category = $this->retrieveFirstCategory();
 
-        $templateClass = $this->getTemplateClass();
+        $templateClass = $this->getProductTemplateClass();
 
         // Use versioned classes based on Odoo version
         $template = match (true) {
@@ -188,11 +188,11 @@ class ModelManagerTest extends TestCase
         // 1 - retrieve the Company
         $companyId = 1;
 
-        $partnerClass = $this->getPartnerClass();
-        $journalClass = $this->getJournalClass();
-        $currencyClass = $this->getCurrencyClass();
-        $productClass = $this->getProductClass();
-        $taxClass = $this->getTaxClass();
+        $partnerClass = $this->getResPartnerClass();
+        $journalClass = $this->getAccountJournalClass();
+        $currencyClass = $this->getResCurrencyClass();
+        $productClass = $this->getProductProductClass();
+        $taxClass = $this->getAccountTaxClass();
 
         // 2 - retrieve a Partner
         $partner = $this->modelListManager->findOneBy($partnerClass);
@@ -294,9 +294,9 @@ class ModelManagerTest extends TestCase
         // 0 - retrieve the Company
         $companyId = 1;
 
-        $moveClass = $this->getMoveClass();
-        $journalClass = $this->getJournalClass();
-        $methodClass = $this->getPaymentMethodClass();
+        $moveClass = $this->getAccountMoveClass();
+        $journalClass = $this->getAccountJournalClass();
+        $methodClass = $this->getAccountPaymentMethodClass();
 
         // 1 - Retrieve the move to pay
         $searchDomains = new SearchDomains();
@@ -356,7 +356,7 @@ class ModelManagerTest extends TestCase
             $arguments
         );
 
-        $paymentClass = $this->getPaymentClass();
+        $paymentClass = $this->getAccountPaymentClass();
         self::assertIsArray($data);
         self::assertArrayHasKey('res_model', $data);
         self::assertEquals($paymentClass::getOdooModelName(), $data['res_model']);
@@ -373,7 +373,7 @@ class ModelManagerTest extends TestCase
         $journalRel = new OdooRelation($journalId);
         $currencyRel = new OdooRelation($currencyId);
 
-        $moveClass = $this->getMoveClass();
+        $moveClass = $this->getAccountMoveClass();
 
         return new $moveClass(
             $date,
@@ -390,7 +390,7 @@ class ModelManagerTest extends TestCase
         $emptyMoveRel = new OdooRelation();
         $currencyRel = new OdooRelation($currencyId);
 
-        $lineClass = $this->getLineClass();
+        $lineClass = $this->getAccountMoveLineClass();
 
         return new $lineClass($emptyMoveRel, $currencyRel, 'product');
     }
@@ -402,7 +402,7 @@ class ModelManagerTest extends TestCase
     ): BaseInterface {
         $journalRel = new OdooRelation($journal->getId());
 
-        $registerClass = $this->getRegisterClass();
+        $registerClass = $this->getAccountPaymentRegisterClass();
 
         self::assertTrue(method_exists($paymentMethod, 'getCode'));
         $paymentRegister = new $registerClass($date);
@@ -415,7 +415,7 @@ class ModelManagerTest extends TestCase
 
     private function createPartner(OdooRelation $payableRel, OdooRelation $receivableRel): BaseInterface
     {
-        $partnerClass = $this->getPartnerClass();
+        $partnerClass = $this->getResPartnerClass();
 
         return match (true) {
             $this->odooVersion <= 17 => new $partnerClass(

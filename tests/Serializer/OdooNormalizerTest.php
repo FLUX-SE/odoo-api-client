@@ -164,7 +164,7 @@ class OdooNormalizerTest extends TestCase
 
     private function createPartner(OdooRelation $payableRel, OdooRelation $receivableRel): BaseInterface
     {
-        $partnerClass = $this->getPartnerClass();
+        $partnerClass = $this->getResPartnerClass();
         $reflexion = new \ReflectionClass($partnerClass);
         $constructor = $reflexion->getConstructor();
         self::assertNotNull($constructor);

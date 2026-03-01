@@ -45,7 +45,7 @@ class ModelListManagerTest extends TestCase
 
     public function testFind(): void
     {
-        $partnerClass = $this->getPartnerClass();
+        $partnerClass = $this->getResPartnerClass();
         $searchReadOptions = new SearchReadOptions();
         $searchReadOptions->setLimit(1);
         $searchReadOptions->setOrder('id');
@@ -64,21 +64,21 @@ class ModelListManagerTest extends TestCase
 
     public function testFindByIds(): void
     {
-        $partnerClass = $this->getPartnerClass();
+        $partnerClass = $this->getResPartnerClass();
         $partners = $this->modelListManager->findByIds($partnerClass, [1]);
         self::assertContainsOnlyInstancesOf($partnerClass, $partners);
     }
 
     public function testFindOneBy(): void
     {
-        $partnerClass = $this->getPartnerClass();
+        $partnerClass = $this->getResPartnerClass();
         $partner = $this->modelListManager->findOneBy($partnerClass);
         self::assertInstanceOf($partnerClass, $partner);
     }
 
     public function testFindBy(): void
     {
-        $partnerClass = $this->getPartnerClass();
+        $partnerClass = $this->getResPartnerClass();
         $searchReadOptions = new SearchReadOptions();
         $searchReadOptions->setLimit(2);
 

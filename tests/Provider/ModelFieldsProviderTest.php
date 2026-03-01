@@ -33,7 +33,7 @@ class ModelFieldsProviderTest extends TestCase
 
     public function testAccountMoveFields(): void
     {
-        $moveClass = $this->getMoveClass();
+        $moveClass = $this->getAccountMoveClass();
         $fields = $this->modelFieldsProvider->provide($moveClass, []);
 
         self::assertArrayNotHasKey('needed_terms', $fields);
@@ -42,7 +42,7 @@ class ModelFieldsProviderTest extends TestCase
 
     public function testResPartnerFields(): void
     {
-        $partnerClass = $this->getPartnerClass();
+        $partnerClass = $this->getResPartnerClass();
         $fields = $this->modelFieldsProvider->provide($partnerClass, []);
 
         self::assertContains('id', $fields);

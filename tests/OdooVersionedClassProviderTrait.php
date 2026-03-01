@@ -14,156 +14,198 @@ trait OdooVersionedClassProviderTrait
     abstract protected function getOdooVersion(): int;
 
     /** @return class-string<BaseInterface> */
-    protected function getPartnerClass(): string
+    protected function getResPartnerClass(): string
     {
         /** @var class-string<BaseInterface> */
         return match ($this->getOdooVersion()) {
             17 => V17\Res\Partner::class,
             18 => V18\Res\Partner::class,
-            default => V19\Res\Partner::class,
+            19 => V19\Res\Partner::class,
+            default => throw new \InvalidArgumentException(
+                sprintf('No "res.partner" class available for Odoo version %d', $this->getOdooVersion())
+            ),
         };
     }
 
     /** @return class-string<BaseInterface> */
-    protected function getAccountClass(): string
+    protected function getAccountAccountClass(): string
     {
         /** @var class-string<BaseInterface> */
         return match ($this->getOdooVersion()) {
             17 => V17\Account\Account::class,
             18 => V18\Account\Account::class,
-            default => V19\Account\Account::class,
+            19 => V19\Account\Account::class,
+            default => throw new \InvalidArgumentException(
+                sprintf('No "account.account" class available for Odoo version %d', $this->getOdooVersion())
+            ),
         };
     }
 
     /** @return class-string<BaseInterface> */
-    protected function getUomClass(): string
+    protected function getUomUomClass(): string
     {
         /** @var class-string<BaseInterface> */
         return match ($this->getOdooVersion()) {
             17 => V17\Uom\Uom::class,
             18 => V18\Uom\Uom::class,
-            default => V19\Uom\Uom::class,
+            19 => V19\Uom\Uom::class,
+            default => throw new \InvalidArgumentException(
+                sprintf('No "uom.uom" class available for Odoo version %d', $this->getOdooVersion())
+            ),
         };
     }
 
     /** @return class-string<BaseInterface> */
-    protected function getCategoryClass(): string
+    protected function getProductCategoryClass(): string
     {
         /** @var class-string<BaseInterface> */
         return match ($this->getOdooVersion()) {
             17 => V17\Product\Category::class,
             18 => V18\Product\Category::class,
-            default => V19\Product\Category::class,
+            19 => V19\Product\Category::class,
+            default => throw new \InvalidArgumentException(
+                sprintf('No "product.category" class available for Odoo version %d', $this->getOdooVersion())
+            ),
         };
     }
 
     /** @return class-string<BaseInterface> */
-    protected function getMoveClass(): string
+    protected function getAccountMoveClass(): string
     {
         /** @var class-string<BaseInterface> */
         return match ($this->getOdooVersion()) {
             17 => V17\Account\Move::class,
             18 => V18\Account\Move::class,
-            default => V19\Account\Move::class,
+            19 => V19\Account\Move::class,
+            default => throw new \InvalidArgumentException(
+                sprintf('No "account.move" class available for Odoo version %d', $this->getOdooVersion())
+            ),
         };
     }
 
     /** @return class-string<BaseInterface> */
-    protected function getJournalClass(): string
+    protected function getAccountJournalClass(): string
     {
         /** @var class-string<BaseInterface> */
         return match ($this->getOdooVersion()) {
             17 => V17\Account\Journal::class,
             18 => V18\Account\Journal::class,
-            default => V19\Account\Journal::class,
+            19 => V19\Account\Journal::class,
+            default => throw new \InvalidArgumentException(
+                sprintf('No "account.journal" class available for Odoo version %d', $this->getOdooVersion())
+            ),
         };
     }
 
     /** @return class-string<BaseInterface> */
-    protected function getCurrencyClass(): string
+    protected function getResCurrencyClass(): string
     {
         /** @var class-string<BaseInterface> */
         return match ($this->getOdooVersion()) {
             17 => V17\Res\Currency::class,
             18 => V18\Res\Currency::class,
-            default => V19\Res\Currency::class,
+            19 => V19\Res\Currency::class,
+            default => throw new \InvalidArgumentException(
+                sprintf('No "res.currency" class available for Odoo version %d', $this->getOdooVersion())
+            ),
         };
     }
 
     /** @return class-string<BaseInterface> */
-    protected function getProductClass(): string
+    protected function getProductProductClass(): string
     {
         /** @var class-string<BaseInterface> */
         return match ($this->getOdooVersion()) {
             17 => V17\Product\Product::class,
             18 => V18\Product\Product::class,
-            default => V19\Product\Product::class,
+            19 => V19\Product\Product::class,
+            default => throw new \InvalidArgumentException(
+                sprintf('No "product.product" class available for Odoo version %d', $this->getOdooVersion())
+            ),
         };
     }
 
     /** @return class-string<BaseInterface> */
-    protected function getTaxClass(): string
+    protected function getAccountTaxClass(): string
     {
         /** @var class-string<BaseInterface> */
         return match ($this->getOdooVersion()) {
             17 => V17\Account\Tax::class,
             18 => V18\Account\Tax::class,
-            default => V19\Account\Tax::class,
+            19 => V19\Account\Tax::class,
+            default => throw new \InvalidArgumentException(
+                sprintf('No "account.tax" class available for Odoo version %d', $this->getOdooVersion())
+            ),
         };
     }
 
     /** @return class-string<BaseInterface> */
-    protected function getPaymentMethodClass(): string
+    protected function getAccountPaymentMethodClass(): string
     {
         /** @var class-string<BaseInterface> */
         return match ($this->getOdooVersion()) {
             17 => V17\Account\Payment\Method::class,
             18 => V18\Account\Payment\Method::class,
-            default => V19\Account\Payment\Method::class,
+            19 => V19\Account\Payment\Method::class,
+            default => throw new \InvalidArgumentException(
+                sprintf('No "account.payment.method" class available for Odoo version %d', $this->getOdooVersion())
+            ),
         };
     }
 
     /** @return class-string<BaseInterface> */
-    protected function getPaymentClass(): string
+    protected function getAccountPaymentClass(): string
     {
         /** @var class-string<BaseInterface> */
         return match ($this->getOdooVersion()) {
             17 => V17\Account\Payment::class,
             18 => V18\Account\Payment::class,
-            default => V19\Account\Payment::class,
+            19 => V19\Account\Payment::class,
+            default => throw new \InvalidArgumentException(
+                sprintf('No "account.payment" class available for Odoo version %d', $this->getOdooVersion())
+            ),
         };
     }
 
     /** @return class-string<BaseInterface> */
-    protected function getTemplateClass(): string
+    protected function getProductTemplateClass(): string
     {
         /** @var class-string<BaseInterface> */
         return match ($this->getOdooVersion()) {
             17 => V17\Product\Template::class,
             18 => V18\Product\Template::class,
-            default => V19\Product\Template::class,
+            19 => V19\Product\Template::class,
+            default => throw new \InvalidArgumentException(
+                sprintf('No "product.template" class available for Odoo version %d', $this->getOdooVersion())
+            ),
         };
     }
 
     /** @return class-string<BaseInterface> */
-    protected function getLineClass(): string
+    protected function getAccountMoveLineClass(): string
     {
         /** @var class-string<BaseInterface> */
         return match ($this->getOdooVersion()) {
             17 => V17\Account\Move\Line::class,
             18 => V18\Account\Move\Line::class,
-            default => V19\Account\Move\Line::class,
+            19 => V19\Account\Move\Line::class,
+            default => throw new \InvalidArgumentException(
+                sprintf('No "account.move.line" class available for Odoo version %d', $this->getOdooVersion())
+            ),
         };
     }
 
     /** @return class-string<BaseInterface> */
-    protected function getRegisterClass(): string
+    protected function getAccountPaymentRegisterClass(): string
     {
         /** @var class-string<BaseInterface> */
         return match ($this->getOdooVersion()) {
             17 => V17\Account\Payment\Register::class,
             18 => V18\Account\Payment\Register::class,
-            default => V19\Account\Payment\Register::class,
+            19 => V19\Account\Payment\Register::class,
+            default => throw new \InvalidArgumentException(
+                sprintf('No "account.payment.register" class available for Odoo version %d', $this->getOdooVersion())
+            ),
         };
     }
 }
