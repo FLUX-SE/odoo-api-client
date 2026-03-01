@@ -15,6 +15,10 @@ final class OdooPropertyAccessor implements PropertyAccessorInterface
     }
 
     /**
+     * @template T of object|mixed[]
+     *
+     * @param T $objectOrArray
+     *
      * @param-out ($objectOrArray is array ? mixed[] : object|mixed[]) $objectOrArray
      */
     public function setValue(object|array &$objectOrArray, string|PropertyPathInterface $propertyPath, mixed $value): void
