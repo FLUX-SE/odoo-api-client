@@ -577,11 +577,7 @@ class ModelManagerTest extends TestCase
             $arguments
         );
 
-        if (13 === $this->odooVersion) {
-            self::assertTrue($body);
-        } else {
-            self::assertFalse($body);
-        }
+        self::assertFalse($body);
     }
 
     /**
@@ -607,13 +603,8 @@ class ModelManagerTest extends TestCase
         self::assertNotNull($move);
         self::assertTrue(method_exists($move, 'getState'));
         self::assertEquals('posted', $move->getState());
-        if (13 === $this->odooVersion) {
-            self::assertTrue(method_exists($move, 'getInvoicePaymentState'));
-            self::assertEquals('not_paid', $move->getInvoicePaymentState());
-        } else {
-            self::assertTrue(method_exists($move, 'getPaymentState'));
-            self::assertEquals('not_paid', $move->getPaymentState());
-        }
+        self::assertTrue(method_exists($move, 'getPaymentState'));
+        self::assertEquals('not_paid', $move->getPaymentState());
 
         // 2 - Retrieve the right journal
         $searchDomains = new SearchDomains();
@@ -651,9 +642,6 @@ class ModelManagerTest extends TestCase
         self::assertGreaterThan(0, $paymentRegisterId);
 
         $actionName = 'action_create_payments';
-        if (13 === $this->odooVersion) {
-            $actionName = 'create_payments';
-        }
 
         $arguments = new Arguments();
         $arguments->addArgument($paymentRegisterId);
@@ -682,17 +670,6 @@ class ModelManagerTest extends TestCase
 
         $moveClass = $this->getMoveClass();
 
-        if ($this->odooVersion <= 15) {
-            return new $moveClass(
-                $date,
-                'draft',
-                $moveType,
-                $journalRel,
-                $currencyRel,
-                'no_extract_requested'
-            );
-        }
-
         return new $moveClass(
             $date,
             'draft',
@@ -710,10 +687,6 @@ class ModelManagerTest extends TestCase
 
         $lineClass = $this->getLineClass();
 
-        if ($this->odooVersion <= 15) {
-            return new $lineClass($emptyMoveRel, $currencyRel);
-        }
-
         return new $lineClass($emptyMoveRel, $currencyRel, 'product');
     }
 
@@ -723,7 +696,6 @@ class ModelManagerTest extends TestCase
         BaseInterface $paymentMethod
     ): BaseInterface {
         $journalRel = new OdooRelation($journal->getId());
-        $paymentMethodRel = new OdooRelation($paymentMethod->getId());
 
         $registerClass = $this->getRegisterClass();
 
@@ -732,13 +704,8 @@ class ModelManagerTest extends TestCase
             $paymentRegister = new $registerClass($date);
             self::assertTrue(method_exists($paymentRegister, 'setJournalId'));
             $paymentRegister->setJournalId($journalRel);
-            if (14 === $this->odooVersion) {
-                self::assertTrue(method_exists($paymentRegister, 'setPaymentMethodId'));
-                $paymentRegister->setPaymentMethodId($paymentMethodRel);
-            } else {
-                self::assertTrue(method_exists($paymentRegister, 'setPaymentMethodCode'));
-                $paymentRegister->setPaymentMethodCode($paymentMethod->getCode());
-            }
+            self::assertTrue(method_exists($paymentRegister, 'setPaymentMethodCode'));
+            $paymentRegister->setPaymentMethodCode($paymentMethod->getCode());
             return $paymentRegister;
         }
 
