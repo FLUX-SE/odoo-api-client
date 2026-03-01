@@ -10,15 +10,15 @@ use FluxSE\OdooApiClient\Serializer\Factory\SerializerFactory;
 use FluxSE\OdooApiClient\Serializer\OdooRelationsNormalizer;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Serializer;
+use Tests\FluxSE\OdooApiClient\OdooVersionedClassProviderTrait;
 use Tests\FluxSE\OdooApiClient\Operations\CommonOperationsTrait;
 use Tests\FluxSE\OdooApiClient\Serializer\Model\Foo;
-use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Res\Partner as PartnerV17;
-use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Res\Partner as PartnerV18;
-use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Res\Partner as PartnerV19;
 
 class OdooNormalizerTest extends TestCase
 {
-    use CommonOperationsTrait;
+    use CommonOperationsTrait,
+        OdooVersionedClassProviderTrait;
+
     private Serializer $serializer;
 
     private int $odooVersion;
@@ -30,20 +30,9 @@ class OdooNormalizerTest extends TestCase
         $this->odooVersion = $this->buildCommonOperations()->version()->getServerVersionInfo()[0];
     }
 
-    /**
-     * Get the appropriate Partner class based on Odoo version
-     * @return class-string<BaseInterface>
-     */
-    private function getPartnerClass(): string
+    protected function getOdooVersion(): int
     {
-        /** @var class-string<BaseInterface> $partnerClass */
-        $partnerClass = match ($this->odooVersion) {
-            17 => PartnerV17::class,
-            18 => PartnerV18::class,
-            default => PartnerV19::class,
-        };
-
-        return $partnerClass;
+        return $this->odooVersion;
     }
 
     public function testNormalizeForUpdate(): void
@@ -175,7 +164,7 @@ class OdooNormalizerTest extends TestCase
 
     private function createPartner(OdooRelation $payableRel, OdooRelation $receivableRel): BaseInterface
     {
-        $partnerClass = $this->getPartnerClass();
+        $partnerClass = $this->getResPartnerClass();
         $reflexion = new \ReflectionClass($partnerClass);
         $constructor = $reflexion->getConstructor();
         self::assertNotNull($constructor);

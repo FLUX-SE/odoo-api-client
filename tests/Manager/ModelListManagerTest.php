@@ -6,21 +6,19 @@ namespace Tests\FluxSE\OdooApiClient\Manager;
 
 use FluxSE\OdooApiClient\Manager\ModelListManager;
 use FluxSE\OdooApiClient\Manager\ModelListManagerInterface;
-use FluxSE\OdooApiClient\Model\BaseInterface;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptions;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterface;
 use PHPUnit\Framework\TestCase;
+use Tests\FluxSE\OdooApiClient\OdooVersionedClassProviderTrait;
 use Tests\FluxSE\OdooApiClient\Operations\CommonOperationsTrait;
 use Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw\ExecuteKwOperationsTrait;
-use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Res\Partner as PartnerV17;
-use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Res\Partner as PartnerV18;
-use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Res\Partner as PartnerV19;
 
 class ModelListManagerTest extends TestCase
 {
     use ExecuteKwOperationsTrait,
-        CommonOperationsTrait;
+        CommonOperationsTrait,
+        OdooVersionedClassProviderTrait;
 
     private RecordListOperationsInterface $recordListOperations;
 
@@ -40,25 +38,14 @@ class ModelListManagerTest extends TestCase
         $this->odooVersion = $this->buildCommonOperations()->version()->getServerVersionInfo()[0];
     }
 
-    /**
-     * Get the appropriate Partner class based on Odoo version
-     * @return class-string<BaseInterface>
-     */
-    private function getPartnerClass(): string
+    protected function getOdooVersion(): int
     {
-        /** @var class-string<BaseInterface> $partnerClass */
-        $partnerClass = match (true) {
-            $this->odooVersion <= 17 => PartnerV17::class,
-            $this->odooVersion <= 18 => PartnerV18::class,
-            default => PartnerV19::class,
-        };
-
-        return $partnerClass;
+        return $this->odooVersion;
     }
 
     public function testFind(): void
     {
-        $partnerClass = $this->getPartnerClass();
+        $partnerClass = $this->getResPartnerClass();
         $searchReadOptions = new SearchReadOptions();
         $searchReadOptions->setLimit(1);
         $searchReadOptions->setOrder('id');
@@ -77,21 +64,21 @@ class ModelListManagerTest extends TestCase
 
     public function testFindByIds(): void
     {
-        $partnerClass = $this->getPartnerClass();
+        $partnerClass = $this->getResPartnerClass();
         $partners = $this->modelListManager->findByIds($partnerClass, [1]);
         self::assertContainsOnlyInstancesOf($partnerClass, $partners);
     }
 
     public function testFindOneBy(): void
     {
-        $partnerClass = $this->getPartnerClass();
+        $partnerClass = $this->getResPartnerClass();
         $partner = $this->modelListManager->findOneBy($partnerClass);
         self::assertInstanceOf($partnerClass, $partner);
     }
 
     public function testFindBy(): void
     {
-        $partnerClass = $this->getPartnerClass();
+        $partnerClass = $this->getResPartnerClass();
         $searchReadOptions = new SearchReadOptions();
         $searchReadOptions->setLimit(2);
 
