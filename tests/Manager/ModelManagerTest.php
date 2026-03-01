@@ -446,7 +446,7 @@ class ModelManagerTest extends TestCase
                 [],
                 'warning'
             ),
-            default => new $templateClass(
+            $this->odooVersion <= 18 => new $templateClass(
                 'test',
                 'consu',
                 'no',
@@ -455,6 +455,13 @@ class ModelManagerTest extends TestCase
                 new OdooRelation($uom->getId()),
                 [],
                 'warning'
+            ),
+            default => new $templateClass(
+                'test',
+                'consu',
+                'no',
+                new OdooRelation($uom->getId()),
+                []
             ),
         };
 
@@ -473,30 +480,14 @@ class ModelManagerTest extends TestCase
     public function testCreateMove(): void
     {
         $date = new DateTime();
-        // 0 - retrieve the Company
-        $companyId = 2; // FR Company
-        if (13 === $this->odooVersion) {
-            $companyId = 1; // No multiple company created
-        }
+        // 1 - retrieve the Company
+        $companyId = 1;
 
-        $accountClass = $this->getAccountClass();
         $partnerClass = $this->getPartnerClass();
         $journalClass = $this->getJournalClass();
         $currencyClass = $this->getCurrencyClass();
         $productClass = $this->getProductClass();
         $taxClass = $this->getTaxClass();
-
-        // 1 - Retrieve Accounts
-        $searchDomains = new SearchDomains();
-        if ($this->odooVersion <= 17) {
-            $searchDomains->addCriterion(Criterion::equal('code', '707000'));
-            $searchDomains->addCriterion(Criterion::equal('company_id', $companyId));
-        } else {
-            $searchDomains->addCriterion(Criterion::equal('name', 'Sales of goods'));
-            $searchDomains->addCriterion(Criterion::in('company_ids', [$companyId]));
-        }
-        $account = $this->modelListManager->findOneBy($accountClass, $searchDomains);
-        self::assertNotNull($account);
 
         // 2 - retrieve a Partner
         $partner = $this->modelListManager->findOneBy($partnerClass);
@@ -522,11 +513,11 @@ class ModelManagerTest extends TestCase
         $product = $this->modelListManager->findOneBy($productClass);
         self::assertNotNull($product);
 
-        // 6 - retrieve a tax (here: 20% from French accounting)
+        // 6 - retrieve a tax
         $searchDomains = new SearchDomains();
-        $searchDomains->addCriterion(Criterion::equal('amount', 20));
         $searchDomains->addCriterion(Criterion::equal('price_include', false));
         $searchDomains->addCriterion(Criterion::equal('type_tax_use', 'sale'));
+        $searchDomains->addCriterion(Criterion::equal('active', true));
         $searchDomains->addCriterion(Criterion::equal('company_id', $companyId));
         $tax = $this->modelListManager->findOneBy($taxClass, $searchDomains);
         self::assertNotNull($tax);
@@ -543,7 +534,6 @@ class ModelManagerTest extends TestCase
         $move->setRef(sprintf('TEST_I%d', time()));
 
         $productRel = new OdooRelation($product->getId());
-        $accountRel = new OdooRelation($account->getId());
         $taxRel = new OdooRelation($tax->getId());
 
         $line1 = $this->createMoveLine((int) $currency->getId());
@@ -551,8 +541,6 @@ class ModelManagerTest extends TestCase
         $line1->setName('test article');
         self::assertTrue(method_exists($line1, 'setProductId'));
         $line1->setProductId($productRel);
-        self::assertTrue(method_exists($line1, 'setAccountId'));
-        $line1->setAccountId($accountRel);
         self::assertTrue(method_exists($line1, 'setQuantity'));
         $line1->setQuantity(2);
         self::assertTrue(method_exists($line1, 'setPriceUnit'));
@@ -603,10 +591,7 @@ class ModelManagerTest extends TestCase
     {
         $date = new DateTime();
         // 0 - retrieve the Company
-        $companyId = 2; // FR Company
-        if (13 === $this->odooVersion) {
-            $companyId = 1; // No multiple company created
-        }
+        $companyId = 1;
 
         $moveClass = $this->getMoveClass();
         $journalClass = $this->getJournalClass();
@@ -615,9 +600,6 @@ class ModelManagerTest extends TestCase
         // 1 - Retrieve the move to pay
         $searchDomains = new SearchDomains();
         $fieldName = 'payment_state';
-        if (13 === $this->odooVersion) {
-            $fieldName = 'invoice_payment_state';
-        }
         $searchDomains->addCriterion(Criterion::equal('state', 'posted'));
         $searchDomains->addCriterion(Criterion::equal($fieldName, 'not_paid'));
         $searchDomains->addCriterion(Criterion::equal('company_id', $companyId));
@@ -650,19 +632,15 @@ class ModelManagerTest extends TestCase
 
         $paymentRegister = $this->createPaymentRegister($date, $journal, $paymentMethod);
         $ref = sprintf('PAY_%d', time());
-        if (13 === $this->odooVersion) {
-            $paymentRegister->setDisplayName($ref);
-        } else {
-            self::assertTrue(method_exists($paymentRegister, 'setAmount'));
-            self::assertTrue(method_exists($move, 'getAmountTotal'));
-            $paymentRegister->setAmount($move->getAmountTotal());
-            self::assertTrue(method_exists($paymentRegister, 'setCommunication'));
-            $paymentRegister->setCommunication($ref);
-            self::assertTrue(method_exists($paymentRegister, 'setCompanyId'));
-            self::assertTrue(method_exists($move, 'getCompanyId'));
-            $paymentRegister->setCompanyId($move->getCompanyId());
-        }
 
+        self::assertTrue(method_exists($paymentRegister, 'setAmount'));
+        self::assertTrue(method_exists($move, 'getAmountTotal'));
+        $paymentRegister->setAmount($move->getAmountTotal());
+        self::assertTrue(method_exists($paymentRegister, 'setCommunication'));
+        $paymentRegister->setCommunication($ref);
+        self::assertTrue(method_exists($paymentRegister, 'setCompanyId'));
+        self::assertTrue(method_exists($move, 'getCompanyId'));
+        $paymentRegister->setCompanyId($move->getCompanyId());
 
         $options = new Options();
         $options->addOption('context', [
@@ -704,17 +682,6 @@ class ModelManagerTest extends TestCase
 
         $moveClass = $this->getMoveClass();
 
-        if (13 === $this->odooVersion) {
-            return new $moveClass(
-                '/', // !important
-                $date,
-                'draft',
-                $moveType,
-                $journalRel,
-                $currencyRel
-            );
-        }
-
         if ($this->odooVersion <= 15) {
             return new $moveClass(
                 $date,
@@ -743,10 +710,6 @@ class ModelManagerTest extends TestCase
 
         $lineClass = $this->getLineClass();
 
-        if (13 === $this->odooVersion) {
-            return new $lineClass($emptyMoveRel);
-        }
-
         if ($this->odooVersion <= 15) {
             return new $lineClass($emptyMoveRel, $currencyRel);
         }
@@ -763,14 +726,6 @@ class ModelManagerTest extends TestCase
         $paymentMethodRel = new OdooRelation($paymentMethod->getId());
 
         $registerClass = $this->getRegisterClass();
-
-        if (13 === $this->odooVersion) {
-            return new $registerClass(
-                $date,
-                $journalRel,
-                $paymentMethodRel
-            );
-        }
 
         self::assertTrue(method_exists($paymentMethod, 'getCode'));
         if ($this->odooVersion <= 16) {

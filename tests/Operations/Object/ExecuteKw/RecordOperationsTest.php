@@ -12,19 +12,24 @@ use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterfa
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordOperations;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordOperationsInterface;
 use PHPUnit\Framework\TestCase;
+use Tests\FluxSE\OdooApiClient\Operations\CommonOperationsTrait;
 
 class RecordOperationsTest extends TestCase
 {
-    use ExecuteKwOperationsTrait;
+    use ExecuteKwOperationsTrait,
+        CommonOperationsTrait;
 
     private RecordListOperationsInterface $recordListOperations;
 
     private RecordOperationsInterface $recordOperations;
 
+    private int $odooVersion;
+
     protected function setUp(): void
     {
         $this->recordOperations = $this->buildExecuteKwOperations(RecordOperations::class);
         $this->recordListOperations = $this->buildExecuteKwOperations(RecordListOperations::class);
+        $this->odooVersion = $this->buildCommonOperations()->version()->getServerVersionInfo()[0];
     }
 
     /** @return mixed[] */
@@ -86,6 +91,10 @@ class RecordOperationsTest extends TestCase
             'active' => true,
             'default_code' => sprintf('TESTRAW_%d', time()),
         ];
+
+        if ($this->odooVersion >= 19) {
+            unset($template['uom_po_id']);
+        }
 
         $templateId = $this->recordOperations->create('product.template', $template);
 

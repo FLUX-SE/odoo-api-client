@@ -4,22 +4,19 @@ declare(strict_types=1);
 
 namespace Tests\FluxSE\OdooApiClient\Operations;
 
-use FluxSE\OdooApiClient\Builder\OdooApiClientBuilder;
 use FluxSE\OdooApiClient\Model\Common\Version;
 use FluxSE\OdooApiClient\Operations\CommonOperationsInterface;
 use PHPUnit\Framework\TestCase;
 
 class CommonOperationsTest extends TestCase
 {
+    use CommonOperationsTrait;
+
     private CommonOperationsInterface $commonOperations;
 
     protected function setUp(): void
     {
-        /** @var string $host */
-        $host = $_ENV['ODOO_API_HOST'] ?? '';
-        $odooApiClientBuilder = new OdooApiClientBuilder($host);
-
-        $this->commonOperations = $odooApiClientBuilder->buildCommonOperations();
+        $this->commonOperations = $this->buildCommonOperations();
     }
 
     public function testVersion(): void
