@@ -44,13 +44,16 @@ final class XmlRpcSerializerHelper implements XmlRpcSerializerHelperInterface
 
     public function decodeResponseBody(StreamInterface $body): array|int|string|bool
     {
-        return $this->serializer->decode(
+        /** @var mixed[]|int|string|bool $decoded */
+        $decoded = $this->serializer->decode(
             $body->__toString(),
             XmlRpcDecoder::FORMAT,
             [
                 XmlRpcDecoder::CTX_XMLRPC_ENCODING => $this->encoding,
             ]
         );
+
+        return $decoded;
     }
 
     public function getEncoding(): string

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FluxSE\OdooApiClient\Serializer\Factory;
 
+use FluxSE\OdooApiClient\Model\Object\BaseObjectInterface;
 use FluxSE\OdooApiClient\PropertyAccess\OdooPropertyAccessor;
 use FluxSE\OdooApiClient\Serializer\JsonRpc\JsonRpcDecoder;
 use FluxSE\OdooApiClient\Serializer\JsonRpc\JsonRpcEncoder;
@@ -23,6 +24,8 @@ use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\Extractor\SerializerExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
+use Symfony\Component\Serializer\Encoder\DecoderInterface;
+use Symfony\Component\Serializer\Encoder\EncoderInterface;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
 use Symfony\Component\Serializer\Mapping\Loader\LoaderInterface;
@@ -32,6 +35,8 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
@@ -125,7 +130,7 @@ final class SerializerFactory implements SerializerFactoryInterface
                     AbstractObjectNormalizer::DISABLE_TYPE_ENFORCEMENT => true,
                     // => model to array
                     AbstractObjectNormalizer::SKIP_NULL_VALUES => true,
-                    AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+                    AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function (BaseObjectInterface $object) {
                         return $object->getId() ?? 0;
                     }
                 ]

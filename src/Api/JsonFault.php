@@ -8,6 +8,15 @@ final class JsonFault implements FaultInterface
 {
     private string $message;
 
+    /**
+     * @param array{
+     *     name?: string,
+     *     debug?: string,
+     *     message?: string,
+     *     arguments?: mixed[],
+     *     context?: mixed[],
+     * } $data
+     */
     public function __construct(
         private int $code,
         string $message,

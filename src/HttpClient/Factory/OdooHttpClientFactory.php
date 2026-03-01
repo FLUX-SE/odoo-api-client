@@ -36,37 +36,26 @@ final class OdooHttpClientFactory implements OdooHttpClientFactoryInterface
     {
         $plugins = [];
 
-        $loggerPlugin = $this->setupLoggerPlugin();
-        if (null !== $loggerPlugin) {
-            $plugins[] = $loggerPlugin;
-        }
-
-        $contentTypePlugin = $this->setupContentTypePlugin();
-        if (null !== $contentTypePlugin) {
-            $plugins[] = $contentTypePlugin;
-        }
-
-        $errorPlugin = $this->setupErrorPlugin();
-        if (null !== $errorPlugin) {
-            $plugins[] = $errorPlugin;
-        }
+        $plugins[] = $this->setupLoggerPlugin();
+        $plugins[] = $this->setupContentTypePlugin();
+        $plugins[] = $this->setupErrorPlugin();
 
         return $plugins;
     }
 
-    public function setupContentTypePlugin(): ?Plugin
+    public function setupContentTypePlugin(): Plugin
     {
         return new ContentTypePlugin();
     }
 
-    public function setupLoggerPlugin(): ?Plugin
+    public function setupLoggerPlugin(): Plugin
     {
         $logger = new Logger();
 
         return new LoggerPlugin($logger);
     }
 
-    public function setupErrorPlugin(): ?Plugin
+    public function setupErrorPlugin(): Plugin
     {
         $errorPlugin = new ErrorPlugin();
 

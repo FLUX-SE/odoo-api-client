@@ -22,7 +22,7 @@ final class SelectionTypeDefaultValueAdder implements ModelFixerInterface
         try {
             $arguments = new Arguments();
             $arguments->addArgument(array_keys($structure));
-            /** @var array $data */
+            /** @var array<string, string|false> $data */
             $data = $this->recordListOperations->execute_kw_action(
                 $modelName,
                 'default_get',
@@ -32,6 +32,7 @@ final class SelectionTypeDefaultValueAdder implements ModelFixerInterface
             $data = [];
         }
 
+        /** @var array{ type?: string } $fieldInfo */
         foreach ($structure as $fieldName => &$fieldInfo) {
             $type = $fieldInfo['type'] ?? null;
 

@@ -7,7 +7,7 @@ namespace FluxSE\OdooApiClient\PhpGenerator\ModelFixer;
 final class CompositeModelFixer implements ModelFixerInterface
 {
     public function __construct(
-        /** iterable<int, ModelFixerInterface> */
+        /** @var iterable<int, ModelFixerInterface> */
         private iterable $modelFixers,
     ) {
     }

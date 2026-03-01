@@ -10,9 +10,9 @@ use FluxSE\OdooApiClient\Model\OdooRelation;
 final class OdooModelsStructureConverterHelper
 {
     /**
-     * @param array<string, string> $fieldInfo
+     * @param array<string, mixed> $fieldInfo
      *
-     * @return array<int, string>
+     * @return array<array-key, string>
      */
     public static function transformTypes(array $fieldInfo): array
     {
@@ -55,10 +55,16 @@ final class OdooModelsStructureConverterHelper
         return implode("\n", $lines);
     }
 
+    /**
+     * @param array<int, string|mixed[]> $selection
+     * @param int $deep
+     * @return string[]
+     */
     public static function prettySelection(array $selection, int $deep = 0): array
     {
         $lines = [];
         $line = '';
+        /** @var array<int, string|mixed[]>|string $item */
         foreach ($selection as $i => $item) {
             if (is_array($item)) {
                 $lines = array_merge($lines, self::prettySelection($item, $deep + 1));

@@ -6,6 +6,7 @@ namespace FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options;
 
 abstract class AbstractOptions implements OptionsInterface
 {
+    /** @var array<string, mixed[]|string|bool|int|float|null> */
     private array $options = [];
 
     public function toArray(): array

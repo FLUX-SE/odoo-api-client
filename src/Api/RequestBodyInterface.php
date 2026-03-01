@@ -10,10 +10,17 @@ interface RequestBodyInterface
 
     public function setMethod(string $method): void;
 
+    /**
+     * @param mixed[] $params
+     */
     public function setParams(array $params): void;
 
+    /**
+     * @return mixed[]
+     */
     public function getParams(): array;
 
+    /** @param mixed[] $args */
     public function setJsonParams(
         string $service,
         string $method,

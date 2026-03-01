@@ -6,6 +6,9 @@ namespace FluxSE\OdooApiClient\Provider;
 
 final class ModelFieldsRemoverProvider implements ModelFieldsProviderInterface
 {
+    /**
+     * @param string[] $fieldsToRemove
+     */
     public function __construct(
         private ModelFieldsProviderInterface $decoratedModelFieldsProvider,
         private string $modelName,

@@ -51,6 +51,7 @@ interface OdooApiClientBuilderInterface
     /**
      * @template T of ExecuteKwOperationsInterface
      * @param class-string<T> $className
+     *
      * @return T
      */
     public function buildExecuteKwOperations(

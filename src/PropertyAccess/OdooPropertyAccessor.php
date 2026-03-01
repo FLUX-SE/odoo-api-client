@@ -14,7 +14,14 @@ final class OdooPropertyAccessor implements PropertyAccessorInterface
     {
     }
 
-    public function setValue(object|array &$objectOrArray, PropertyPathInterface|string $propertyPath, mixed $value): void
+    /**
+     * @template T of object|mixed[]
+     *
+     * @param T $objectOrArray
+     *
+     * @param-out ($objectOrArray is array ? mixed[] : object|mixed[]) $objectOrArray
+     */
+    public function setValue(object|array &$objectOrArray, string|PropertyPathInterface $propertyPath, mixed $value): void
     {
         /**
          * Override to set null when original value is false
@@ -39,6 +46,9 @@ final class OdooPropertyAccessor implements PropertyAccessorInterface
         $this->decoratedPropertyAccessor->setValue($objectOrArray, $propertyPath, null);
     }
 
+    /**
+     * @param object|mixed[] $objectOrArray
+     */
     public function getValue(object|array $objectOrArray, PropertyPathInterface|string $propertyPath): mixed
     {
         /**
@@ -61,11 +71,17 @@ final class OdooPropertyAccessor implements PropertyAccessorInterface
         return null;
     }
 
+    /**
+     * @param object|mixed[] $objectOrArray
+     */
     public function isWritable(object|array $objectOrArray, PropertyPathInterface|string $propertyPath): bool
     {
         return $this->decoratedPropertyAccessor->isWritable($objectOrArray, $propertyPath);
     }
 
+    /**
+     * @param object|mixed[] $objectOrArray
+     */
     public function isReadable(object|array $objectOrArray, PropertyPathInterface|string $propertyPath): bool
     {
         return $this->decoratedPropertyAccessor->isReadable($objectOrArray, $propertyPath);

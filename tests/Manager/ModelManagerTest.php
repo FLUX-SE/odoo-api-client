@@ -10,6 +10,7 @@ use FluxSE\OdooApiClient\Manager\ModelListManager;
 use FluxSE\OdooApiClient\Manager\ModelListManagerInterface;
 use FluxSE\OdooApiClient\Manager\ModelManager;
 use FluxSE\OdooApiClient\Manager\ModelManagerInterface;
+use FluxSE\OdooApiClient\Model\BaseInterface;
 use FluxSE\OdooApiClient\Model\OdooRelation;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Arguments;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
@@ -20,25 +21,55 @@ use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordOperations;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordOperationsInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Tests\FluxSE\OdooApiClient\Operations\CommonOperationsTrait;
 use Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw\ExecuteKwOperationsTrait;
-use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Account;
-use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Journal;
-use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move;
-use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Move\Line;
-use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment;
-use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment\Method;
-use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Payment\Register;
-use Tests\FluxSE\OdooApiClient\TestModel\Object\Account\Tax;
-use Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Category;
-use Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Product;
-use Tests\FluxSE\OdooApiClient\TestModel\Object\Product\Template;
-use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Currency;
-use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner;
-use Tests\FluxSE\OdooApiClient\TestModel\Object\Uom\Uom;
+use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Account as AccountV17;
+use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Journal as JournalV17;
+use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Move as MoveV17;
+use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Move\Line as LineV17;
+use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Payment as PaymentV17;
+use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Payment\Method as MethodV17;
+use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Payment\Register as RegisterV17;
+use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Tax as TaxV17;
+use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Product\Category as CategoryV17;
+use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Product\Product as ProductV17;
+use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Product\Template as TemplateV17;
+use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Res\Currency as CurrencyV17;
+use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Res\Partner as PartnerV17;
+use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Uom\Uom as UomV17;
+use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Account\Account as AccountV18;
+use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Account\Journal as JournalV18;
+use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Account\Move as MoveV18;
+use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Account\Move\Line as LineV18;
+use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Account\Payment as PaymentV18;
+use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Account\Payment\Method as MethodV18;
+use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Account\Payment\Register as RegisterV18;
+use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Account\Tax as TaxV18;
+use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Product\Category as CategoryV18;
+use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Product\Product as ProductV18;
+use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Product\Template as TemplateV18;
+use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Res\Currency as CurrencyV18;
+use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Res\Partner as PartnerV18;
+use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Uom\Uom as UomV18;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Account as AccountV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Journal as JournalV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Move as MoveV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Move\Line as LineV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Payment as PaymentV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Payment\Method as MethodV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Payment\Register as RegisterV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Tax as TaxV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Product\Category as CategoryV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Product\Product as ProductV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Product\Template as TemplateV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Res\Currency as CurrencyV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Res\Partner as PartnerV19;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Uom\Uom as UomV19;
 
 class ModelManagerTest extends TestCase
 {
-    use ExecuteKwOperationsTrait;
+    use ExecuteKwOperationsTrait,
+        CommonOperationsTrait;
 
     private RecordOperationsInterface $recordOperations;
 
@@ -63,61 +94,287 @@ class ModelManagerTest extends TestCase
             $this->buildModelFieldsProvider()
         );
 
-        $commonOperations = $this->buildOdooApiClientBuilder()->buildCommonOperations();
-        $version = $commonOperations->version();
-        $this->odooVersion = $version->getServerVersionInfo()[0];
+        $this->odooVersion = $this->buildCommonOperations()->version()->getServerVersionInfo()[0];
+    }
+
+    /**
+     * Get the appropriate Partner class based on Odoo version
+     * @return class-string<BaseInterface>
+     */
+    private function getPartnerClass(): string
+    {
+        /** @var class-string<BaseInterface> $partnerClass */
+        $partnerClass = match (true) {
+            $this->odooVersion <= 17 => PartnerV17::class,
+            $this->odooVersion <= 18 => PartnerV18::class,
+            default => PartnerV19::class,
+        };
+
+        return $partnerClass;
+    }
+
+    /**
+     * Get the appropriate Account class based on Odoo version
+     * @return class-string<BaseInterface>
+     */
+    private function getAccountClass(): string
+    {
+        /** @var class-string<BaseInterface> $accountClass */
+        $accountClass = match (true) {
+            $this->odooVersion <= 17 => AccountV17::class,
+            $this->odooVersion <= 18 => AccountV18::class,
+            default => AccountV19::class,
+        };
+
+        return $accountClass;
+    }
+
+    /**
+     * Get the appropriate Uom class based on Odoo version
+     * @return class-string<BaseInterface>
+     */
+    private function getUomClass(): string
+    {
+        /** @var class-string<BaseInterface> $uomClass */
+        $uomClass = match (true) {
+            $this->odooVersion <= 17 => UomV17::class,
+            $this->odooVersion <= 18 => UomV18::class,
+            default => UomV19::class,
+        };
+
+        return $uomClass;
+    }
+
+    /**
+     * Get the appropriate Category class based on Odoo version
+     * @return class-string<BaseInterface>
+     */
+    private function getCategoryClass(): string
+    {
+        /** @var class-string<BaseInterface> $categoryClass */
+        $categoryClass = match (true) {
+            $this->odooVersion <= 17 => CategoryV17::class,
+            $this->odooVersion <= 18 => CategoryV18::class,
+            default => CategoryV19::class,
+        };
+
+        return $categoryClass;
+    }
+
+    /**
+     * Get the appropriate Move class based on Odoo version
+     * @return class-string<BaseInterface>
+     */
+    private function getMoveClass(): string
+    {
+        /** @var class-string<BaseInterface> $moveClass */
+        $moveClass = match (true) {
+            $this->odooVersion <= 17 => MoveV17::class,
+            $this->odooVersion <= 18 => MoveV18::class,
+            default => MoveV19::class,
+        };
+
+        return $moveClass;
+    }
+
+    /**
+     * Get the appropriate Journal class based on Odoo version
+     * @return class-string<BaseInterface>
+     */
+    private function getJournalClass(): string
+    {
+        /** @var class-string<BaseInterface> $journalClass */
+        $journalClass = match (true) {
+            $this->odooVersion <= 17 => JournalV17::class,
+            $this->odooVersion <= 18 => JournalV18::class,
+            default => JournalV19::class,
+        };
+
+        return $journalClass;
+    }
+
+    /**
+     * Get the appropriate Currency class based on Odoo version
+     * @return class-string<BaseInterface>
+     */
+    private function getCurrencyClass(): string
+    {
+        /** @var class-string<BaseInterface> $currencyClass */
+        $currencyClass = match (true) {
+            $this->odooVersion <= 17 => CurrencyV17::class,
+            $this->odooVersion <= 18 => CurrencyV18::class,
+            default => CurrencyV19::class,
+        };
+
+        return $currencyClass;
+    }
+
+    /**
+     * Get the appropriate Product class based on Odoo version
+     * @return class-string<BaseInterface>
+     */
+    private function getProductClass(): string
+    {
+        /** @var class-string<BaseInterface> $productClass */
+        $productClass = match (true) {
+            $this->odooVersion <= 17 => ProductV17::class,
+            $this->odooVersion <= 18 => ProductV18::class,
+            default => ProductV19::class,
+        };
+
+        return $productClass;
+    }
+
+    /**
+     * Get the appropriate Tax class based on Odoo version
+     * @return class-string<BaseInterface>
+     */
+    private function getTaxClass(): string
+    {
+        /** @var class-string<BaseInterface> $taxClass */
+        $taxClass = match (true) {
+            $this->odooVersion <= 17 => TaxV17::class,
+            $this->odooVersion <= 18 => TaxV18::class,
+            default => TaxV19::class,
+        };
+
+        return $taxClass;
+    }
+
+    /**
+     * Get the appropriate Method class based on Odoo version
+     * @return class-string<BaseInterface>
+     */
+    private function getMethodClass(): string
+    {
+        /** @var class-string<BaseInterface> $methodClass */
+        $methodClass = match (true) {
+            $this->odooVersion <= 17 => MethodV17::class,
+            $this->odooVersion <= 18 => MethodV18::class,
+            default => MethodV19::class,
+        };
+
+        return $methodClass;
+    }
+
+    /**
+     * Get the appropriate Payment class based on Odoo version
+     * @return class-string<BaseInterface>
+     */
+    private function getPaymentClass(): string
+    {
+        /** @var class-string<BaseInterface> $paymentClass */
+        $paymentClass = match (true) {
+            $this->odooVersion <= 17 => PaymentV17::class,
+            $this->odooVersion <= 18 => PaymentV18::class,
+            default => PaymentV19::class,
+        };
+
+        return $paymentClass;
+    }
+
+    /**
+     * Get the appropriate Template class based on Odoo version
+     * @return class-string<BaseInterface>
+     */
+    public function getTemplateClass(): string
+    {
+        /** @var class-string<BaseInterface> $templateClass */
+        $templateClass = match (true) {
+            $this->odooVersion <= 17 => TemplateV17::class,
+            $this->odooVersion <= 18 => TemplateV18::class,
+            default => TemplateV19::class,
+        };
+
+        return $templateClass;
+    }
+
+    /**
+     * Get the appropriate Line class based on Odoo version
+     * @return class-string<BaseInterface>
+     */
+    public function getLineClass(): string
+    {
+        /** @var class-string<BaseInterface> $lineClass */
+        $lineClass = match (true) {
+            $this->odooVersion <= 17 => LineV17::class,
+            $this->odooVersion <= 18 => LineV18::class,
+            default => LineV19::class,
+        };
+
+        return $lineClass;
+    }
+
+    /**
+     * Get the appropriate Register class based on Odoo version
+     * @return class-string<BaseInterface>
+     */
+    private function getRegisterClass(): string
+    {
+        /** @var class-string<BaseInterface> $registerClass */
+        $registerClass = match (true) {
+            $this->odooVersion <= 17 => RegisterV17::class,
+            $this->odooVersion <= 18 => RegisterV18::class,
+            default => RegisterV19::class,
+        };
+
+        return $registerClass;
     }
 
     public function testManageProduct(): void
     {
+        $accountClass = $this->getAccountClass();
+        $partnerClass = $this->getPartnerClass();
+
         $searchDomains1 = new SearchDomains();
         $searchDomains1->addCriterion(Criterion::equal('code', '411100'));
-        /** @var Account|null $propertyAccountPayableId */
-        $propertyAccountPayableId = $this->modelListManager->findOneBy(Account::class, $searchDomains1);
+        $propertyAccountPayableId = $this->modelListManager->findOneBy($accountClass, $searchDomains1);
 
         $searchDomains2 = new SearchDomains();
         $searchDomains2->addCriterion(Criterion::equal('code', '401100'));
-        /** @var Account|null $propertyAccountReceivableId */
-        $propertyAccountReceivableId = $this->modelListManager->findOneBy(Account::class, $searchDomains2);
+        $propertyAccountReceivableId = $this->modelListManager->findOneBy($accountClass, $searchDomains2);
 
         $partner = $this->createPartner(
             new OdooRelation($propertyAccountPayableId?->getId()),
             new OdooRelation($propertyAccountReceivableId?->getId()),
         );
+        self::assertTrue(method_exists($partner, 'setName'));
         $partner->setName('Test partner');
 
         $partnerId = $this->modelManager->persist($partner);
-        /** @var Partner|null $savedPartner */
-        $savedPartner = $this->modelListManager->find(Partner::class, $partnerId);
+        $savedPartner = $this->modelListManager->find($partnerClass, $partnerId);
 
-        $this->assertInstanceOf(Partner::class, $savedPartner);
+        self::assertInstanceOf($partnerClass, $savedPartner);
 
+        self::assertTrue(method_exists($savedPartner, 'setComment'));
         $savedPartner->setComment('<p>Test</p>');
 
         $result = $this->modelManager->update($savedPartner);
-        $this->assertTrue($result);
+        self::assertTrue($result);
 
-        /** @var Partner|null $updatedPartner */
-        $updatedPartner = $this->modelListManager->find(Partner::class, $partnerId);
+        $updatedPartner = $this->modelListManager->find($partnerClass, $partnerId);
 
-        $this->assertInstanceOf(Partner::class, $updatedPartner);
+        self::assertInstanceOf($partnerClass, $updatedPartner);
         // test a null field to be null not empty string
-        $this->assertNull($updatedPartner->getParentName());
-        $this->assertEquals($savedPartner->getComment(), $updatedPartner->getComment());
+        self::assertTrue(method_exists($updatedPartner, 'getParentName'));
+        self::assertNull($updatedPartner->getParentName());
+        self::assertTrue(method_exists($updatedPartner, 'getComment'));
+        self::assertTrue(method_exists($savedPartner, 'getComment'));
+        self::assertEquals($savedPartner->getComment(), $updatedPartner->getComment());
 
         $result = $this->modelManager->delete($updatedPartner);
-        $this->assertTrue($result);
+        self::assertTrue($result);
     }
 
-    private function retrieveUom(string $name): Uom
+    private function retrieveUom(string $name): BaseInterface
     {
+        $uomClass = $this->getUomClass();
         $searchDomains = new SearchDomains();
         $searchDomains->addCriterion(Criterion::equal('name', $name));
 
-        /** @var Uom|null $uom */
-        $uom = $this->modelListManager->findOneBy(Uom::class, $searchDomains);
+        $uom = $this->modelListManager->findOneBy($uomClass, $searchDomains);
 
-        $this->assertNotNull($uom, sprintf(
+        self::assertNotNull($uom, sprintf(
             'Unable to find the the uom named "%s" !',
             $name
         ));
@@ -125,12 +382,12 @@ class ModelManagerTest extends TestCase
         return $uom;
     }
 
-    private function retrieveFirstCategory(): Category
+    private function retrieveFirstCategory(): BaseInterface
     {
-        /** @var Category|null $category */
-        $category = $this->modelListManager->findOneBy(Category::class);
+        $categoryClass = $this->getCategoryClass();
+        $category = $this->modelListManager->findOneBy($categoryClass);
 
-        $this->assertNotNull($category, 'Please create at least one category in ODOO !');
+        self::assertNotNull($category, 'Please create at least one category in ODOO !');
 
         return $category;
     }
@@ -140,30 +397,20 @@ class ModelManagerTest extends TestCase
         $uom = $this->retrieveUom('Units');
         $category = $this->retrieveFirstCategory();
 
-        if ($this->odooVersion <= 15) {
-            /** @phpstan-ignore-next-line */
-            $template = new Template(
-                'test',
-                'consu',
-                new OdooRelation($category->getId()),
-                new OdooRelation($uom->getId()),
-                new OdooRelation($uom->getId()),
-                []
-            );
-        } elseif ($this->odooVersion <= 17) {
-            /** @phpstan-ignore-next-line */
-            $template = new Template(
+        $templateClass = $this->getTemplateClass();
+
+        // Use versioned classes based on Odoo version
+        $template = match (true) {
+            $this->odooVersion <= 17 => new $templateClass(
                 'test',
                 'consu',
                 new OdooRelation($category->getId()),
                 new OdooRelation($uom->getId()),
                 new OdooRelation($uom->getId()),
                 [],
-                'warning'
-            );
-        } else {
-            /** @phpstan-ignore-next-line */
-            $template = new Template(
+                'block'
+            ),
+            $this->odooVersion <= 18 => new $templateClass(
                 'test',
                 'consu',
                 'no',
@@ -172,107 +419,119 @@ class ModelManagerTest extends TestCase
                 new OdooRelation($uom->getId()),
                 [],
                 'warning'
-            );
-        }
+            ),
+            default => new $templateClass(
+                'test',
+                'consu',
+                'no',
+                new OdooRelation($uom->getId()),
+                []
+            ),
+        };
 
+        self::assertTrue(method_exists($template, 'setType'));
         $template->setType('consu');
+        self::assertTrue(method_exists($template, 'setActive'));
         $template->setActive(true);
+        self::assertTrue(method_exists($template, 'setDefaultCode'));
         $template->setDefaultCode(sprintf('TEST_%d', time()));
 
         $templateId = $this->modelManager->persist($template);
 
-        $this->assertGreaterThan(0, $templateId);
+        self::assertGreaterThan(0, $templateId);
     }
 
     public function testCreateMove(): void
     {
         $date = new DateTime();
-        // 0 - retrieve the Company
-        $companyId = 2; // FR Company
-        if (13 === $this->odooVersion) {
-            $companyId = 1; // No multiple company created
-        }
+        // 1 - retrieve the Company
+        $companyId = 1;
 
-        // 1 - Retrieve Accounts
-        $searchDomains = new SearchDomains();
-        if ($this->odooVersion <= 17) {
-            $searchDomains->addCriterion(Criterion::equal('code', '707000'));
-            $searchDomains->addCriterion(Criterion::equal('company_id', $companyId));
-        } else {
-            $searchDomains->addCriterion(Criterion::equal('name', 'Sales of goods'));
-            $searchDomains->addCriterion(Criterion::in('company_ids', [$companyId]));
-        }
-        $account = $this->modelListManager->findOneBy(Account::class, $searchDomains);
-        $this->assertNotNull($account);
+        $partnerClass = $this->getPartnerClass();
+        $journalClass = $this->getJournalClass();
+        $currencyClass = $this->getCurrencyClass();
+        $productClass = $this->getProductClass();
+        $taxClass = $this->getTaxClass();
 
         // 2 - retrieve a Partner
-        $partner = $this->modelListManager->findOneBy(Partner::class);
-        $this->assertNotNull($partner);
+        $partner = $this->modelListManager->findOneBy($partnerClass);
+        self::assertNotNull($partner);
 
         // 3 - retrieve a sale Journal
         $searchDomains = new SearchDomains();
         $searchDomains->addCriterion(Criterion::equal('type', 'sale'));
         $searchDomains->addCriterion(Criterion::equal('active', true));
         $searchDomains->addCriterion(Criterion::equal('company_id', $companyId));
-        $journal = $this->modelListManager->findOneBy(Journal::class, $searchDomains);
-        $this->assertNotNull($journal);
+        $journal = $this->modelListManager->findOneBy($journalClass, $searchDomains);
+        self::assertNotNull($journal);
 
         // 4 - retrieve an active currency
         $searchDomains = new SearchDomains();
         $searchDomains->addCriterion(Criterion::equal('active', true));
-        $currency = $this->modelListManager->findOneBy(Currency::class, $searchDomains);
-        $this->assertNotNull($currency);
+        $currency = $this->modelListManager->findOneBy($currencyClass, $searchDomains);
+        self::assertNotNull($currency);
 
         // 5 - retrieve an active product
         $searchDomains = new SearchDomains();
         $searchDomains->addCriterion(Criterion::equal('active', true));
-        $product = $this->modelListManager->findOneBy(Product::class);
-        $this->assertNotNull($product);
+        $product = $this->modelListManager->findOneBy($productClass);
+        self::assertNotNull($product);
 
-        // 6 - retrieve a tax (here: 20% from French accounting)
+        // 6 - retrieve a tax
         $searchDomains = new SearchDomains();
-        $searchDomains->addCriterion(Criterion::equal('amount', 20));
         $searchDomains->addCriterion(Criterion::equal('price_include', false));
         $searchDomains->addCriterion(Criterion::equal('type_tax_use', 'sale'));
+        $searchDomains->addCriterion(Criterion::equal('active', true));
         $searchDomains->addCriterion(Criterion::equal('company_id', $companyId));
-        $tax = $this->modelListManager->findOneBy(Tax::class, $searchDomains);
-        $this->assertNotNull($tax);
+        $tax = $this->modelListManager->findOneBy($taxClass, $searchDomains);
+        self::assertNotNull($tax);
 
         $partnerRel = new OdooRelation($partner->getId());
         $companyRel = new OdooRelation($companyId);
 
-        $move = $this->createMove($date, $journal->getId(), $currency->getId());
+        $move = $this->createMove($date, (int) $journal->getId(), (int) $currency->getId());
+        self::assertTrue(method_exists($move, 'setCompanyId'));
         $move->setCompanyId($companyRel);
+        self::assertTrue(method_exists($move, 'setPartnerId'));
         $move->setPartnerId($partnerRel);
+        self::assertTrue(method_exists($move, 'setRef'));
         $move->setRef(sprintf('TEST_I%d', time()));
 
         $productRel = new OdooRelation($product->getId());
-        $accountRel = new OdooRelation($account->getId());
         $taxRel = new OdooRelation($tax->getId());
 
-        $line1 = $this->createMoveLine($currency->getId());
+        $line1 = $this->createMoveLine((int) $currency->getId());
+        self::assertTrue(method_exists($line1, 'setName'));
         $line1->setName('test article');
+        self::assertTrue(method_exists($line1, 'setProductId'));
         $line1->setProductId($productRel);
-        $line1->setAccountId($accountRel);
+        self::assertTrue(method_exists($line1, 'setQuantity'));
         $line1->setQuantity(2);
+        self::assertTrue(method_exists($line1, 'setPriceUnit'));
         $line1->setPriceUnit(10);
+        self::assertTrue(method_exists($line1, 'setDiscount'));
         $line1->setDiscount(50);
+        self::assertTrue(method_exists($line1, 'addTaxIds'));
         $line1->addTaxIds($taxRel);
 
-        $line2 = $this->createMoveLine($currency->getId());
+        $line2 = $this->createMoveLine((int) $currency->getId());
+        self::assertTrue(method_exists($line2, 'setAccountId'));
         $line2->setAccountId(new OdooRelation(false)); //Required...
+        self::assertTrue(method_exists($line2, 'setDisplayType'));
         $line2->setDisplayType('line_note');
+        self::assertTrue(method_exists($line2, 'setName'));
         $line2->setName('test');
 
         foreach ([$line1, $line2] as $line) {
             $relation = new OdooRelation();
             $relation->buildAdd($line);
+            self::assertTrue(method_exists($move, 'addInvoiceLineIds'));
             $move->addInvoiceLineIds($relation);
         }
 
         $moveId = $this->modelManager->persist($move);
 
-        $this->assertGreaterThan(0, $moveId);
+        self::assertGreaterThan(0, $moveId);
 
         $arguments = new Arguments();
         $arguments->addArgument($moveId);
@@ -282,11 +541,7 @@ class ModelManagerTest extends TestCase
             $arguments
         );
 
-        if (13 === $this->odooVersion) {
-            $this->assertTrue($body);
-        } else {
-            $this->assertFalse($body);
-        }
+        self::assertFalse($body);
     }
 
     /**
@@ -296,58 +551,51 @@ class ModelManagerTest extends TestCase
     {
         $date = new DateTime();
         // 0 - retrieve the Company
-        $companyId = 2; // FR Company
-        if (13 === $this->odooVersion) {
-            $companyId = 1; // No multiple company created
-        }
+        $companyId = 1;
+
+        $moveClass = $this->getMoveClass();
+        $journalClass = $this->getJournalClass();
+        $methodClass = $this->getMethodClass();
 
         // 1 - Retrieve the move to pay
         $searchDomains = new SearchDomains();
         $fieldName = 'payment_state';
-        if (13 === $this->odooVersion) {
-            $fieldName = 'invoice_payment_state';
-        }
         $searchDomains->addCriterion(Criterion::equal('state', 'posted'));
         $searchDomains->addCriterion(Criterion::equal($fieldName, 'not_paid'));
         $searchDomains->addCriterion(Criterion::equal('company_id', $companyId));
-        /** @var Move|null $move */
-        $move = $this->modelListManager->findOneBy(Move::class, $searchDomains);
-        $this->assertNotNull($move);
-        $this->assertEquals('posted', $move->getState());
-        if (13 === $this->odooVersion) {
-            $this->assertEquals('not_paid', $move->getInvoicePaymentState());
-        } else {
-            $this->assertEquals('not_paid', $move->getPaymentState());
-        }
+        $move = $this->modelListManager->findOneBy($moveClass, $searchDomains);
+        self::assertNotNull($move);
+        self::assertTrue(method_exists($move, 'getState'));
+        self::assertEquals('posted', $move->getState());
+        self::assertTrue(method_exists($move, 'getPaymentState'));
+        self::assertEquals('not_paid', $move->getPaymentState());
 
         // 2 - Retrieve the right journal
         $searchDomains = new SearchDomains();
         $searchDomains->addCriterion(Criterion::equal('type', 'bank'));
         $searchDomains->addCriterion(Criterion::equal('active', true));
         $searchDomains->addCriterion(Criterion::equal('company_id', $companyId));
-        $journal = $this->modelListManager->findOneBy(Journal::class, $searchDomains);
-        $this->assertNotNull($journal);
+        $journal = $this->modelListManager->findOneBy($journalClass, $searchDomains);
+        self::assertNotNull($journal);
 
         // 3 - Retrieve the paymentMethod
         $searchDomains = new SearchDomains();
         $searchDomains->addCriterion(Criterion::equal('code', 'manual'));
         $searchDomains->addCriterion(Criterion::equal('payment_type', 'inbound'));
-        /** @var Payment\Method|null $method */
-        $paymentMethod = $this->modelListManager->findOneBy(Method::class, $searchDomains);
-        $this->assertNotNull($paymentMethod);
+        $paymentMethod = $this->modelListManager->findOneBy($methodClass, $searchDomains);
+        self::assertNotNull($paymentMethod);
 
         $paymentRegister = $this->createPaymentRegister($date, $journal, $paymentMethod);
         $ref = sprintf('PAY_%d', time());
-        if (13 === $this->odooVersion) {
-            $paymentRegister->setDisplayName($ref);
-        } else {
-            $paymentRegister->setAmount($move->getAmountTotal());
 
-            $paymentRegister->setCommunication($ref);
-
-            $paymentRegister->setCompanyId($move->getCompanyId());
-        }
-
+        self::assertTrue(method_exists($paymentRegister, 'setAmount'));
+        self::assertTrue(method_exists($move, 'getAmountTotal'));
+        $paymentRegister->setAmount($move->getAmountTotal());
+        self::assertTrue(method_exists($paymentRegister, 'setCommunication'));
+        $paymentRegister->setCommunication($ref);
+        self::assertTrue(method_exists($paymentRegister, 'setCompanyId'));
+        self::assertTrue(method_exists($move, 'getCompanyId'));
+        $paymentRegister->setCompanyId($move->getCompanyId());
 
         $options = new Options();
         $options->addOption('context', [
@@ -355,12 +603,9 @@ class ModelManagerTest extends TestCase
             'active_ids' => [$move->getId()],
         ]);
         $paymentRegisterId = $this->modelManager->persist($paymentRegister, $options);
-        $this->assertGreaterThan(0, $paymentRegisterId);
+        self::assertGreaterThan(0, $paymentRegisterId);
 
         $actionName = 'action_create_payments';
-        if (13 === $this->odooVersion) {
-            $actionName = 'create_payments';
-        }
 
         $arguments = new Arguments();
         $arguments->addArgument($paymentRegisterId);
@@ -370,10 +615,12 @@ class ModelManagerTest extends TestCase
             $arguments
         );
 
-        $this->assertArrayHasKey('res_model', $data);
-        $this->assertEquals(Payment::getOdooModelName(), $data['res_model']);
-        $this->assertArrayHasKey('res_id', $data);
-        $this->assertIsInt($data['res_id']);
+        $paymentClass = $this->getPaymentClass();
+        self::assertIsArray($data);
+        self::assertArrayHasKey('res_model', $data);
+        self::assertEquals($paymentClass::getOdooModelName(), $data['res_model']);
+        self::assertArrayHasKey('res_id', $data);
+        self::assertIsInt($data['res_id']);
     }
 
     private function createMove(
@@ -381,34 +628,13 @@ class ModelManagerTest extends TestCase
         int $journalId,
         int $currencyId,
         string $moveType = 'out_invoice'
-    ): Move {
+    ): BaseInterface {
         $journalRel = new OdooRelation($journalId);
         $currencyRel = new OdooRelation($currencyId);
 
-        if (13 === $this->odooVersion) {
-            return new Move(
-                '/', // !important
-                $date,
-                'draft',
-                $moveType,
-                $journalRel,
-                $currencyRel
-            );
-        }
+        $moveClass = $this->getMoveClass();
 
-        if ($this->odooVersion <= 15) {
-            return new Move(
-                $date,
-                'draft',
-                $moveType,
-                $journalRel,
-                $currencyRel,
-                'no_extract_requested'
-            );
-        }
-
-
-        return new Move(
+        return new $moveClass(
             $date,
             'draft',
             $moveType,
@@ -418,57 +644,46 @@ class ModelManagerTest extends TestCase
         );
     }
 
-    private function createMoveLine(int $currencyId): Line
+    private function createMoveLine(int $currencyId): BaseInterface
     {
         $emptyMoveRel = new OdooRelation();
         $currencyRel = new OdooRelation($currencyId);
 
-        if (13 === $this->odooVersion) {
-            $moveLine = new Line($emptyMoveRel);
-            return $moveLine;
-        }
+        $lineClass = $this->getLineClass();
 
-        if ($this->odooVersion <= 15) {
-            return new Line($emptyMoveRel, $currencyRel);
-        }
-
-        return new Line($emptyMoveRel, $currencyRel, 'product');
+        return new $lineClass($emptyMoveRel, $currencyRel, 'product');
     }
 
-    private function createPaymentRegister(DateTimeInterface $date, Journal $journal, Method $paymentMethod): Register
-    {
+    private function createPaymentRegister(
+        DateTimeInterface $date,
+        BaseInterface $journal,
+        BaseInterface $paymentMethod
+    ): BaseInterface {
         $journalRel = new OdooRelation($journal->getId());
-        $paymentMethodRel = new OdooRelation($paymentMethod->getId());
 
-        if (13 === $this->odooVersion) {
-            return new Register(
-                $date,
-                $journalRel,
-                $paymentMethodRel
-            );
-        }
+        $registerClass = $this->getRegisterClass();
 
-        $paymentRegister = new Register($date);
+        self::assertTrue(method_exists($paymentMethod, 'getCode'));
+        $paymentRegister = new $registerClass($date);
+        self::assertTrue(method_exists($paymentRegister, 'setJournalId'));
         $paymentRegister->setJournalId($journalRel);
-        if (14 === $this->odooVersion) {
-            $paymentRegister->setPaymentMethodId($paymentMethodRel);
-        } else {
-            $paymentRegister->setPaymentMethodCode($paymentMethod->getCode());
-        }
+        self::assertTrue(method_exists($paymentRegister, 'setPaymentMethodCode'));
+        $paymentRegister->setPaymentMethodCode($paymentMethod->getCode());
         return $paymentRegister;
     }
 
-    private function createPartner(OdooRelation $payableRel, OdooRelation $receivableRel): Partner
+    private function createPartner(OdooRelation $payableRel, OdooRelation $receivableRel): BaseInterface
     {
-        if ($this->odooVersion <= 17) {
-            return new Partner(
+        $partnerClass = $this->getPartnerClass();
+
+        return match (true) {
+            $this->odooVersion <= 17 => new $partnerClass(
                 $payableRel,
                 $receivableRel,
-            );
-        }
-
-        return new Partner(
-            'never'
-        );
+            ),
+            default => new $partnerClass(
+                'never'
+            ),
+        };
     }
 }

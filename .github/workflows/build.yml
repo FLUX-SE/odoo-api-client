@@ -27,12 +27,12 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                odoo: [16, 17, 18]
-                symfony: ["^6.4", "^7.1"]
-                php: ["8.1", "8.2", "8.3"] # " required to keep the .0
+                odoo: [17, 18, 19]
+                symfony: ["^6.4", "^7.4"]
+                php: ["8.1", "8.2", "8.3", "8.4"] # " required to keep the .0
                 exclude:
                     -
-                        symfony: ^7.1
+                        symfony: ^7.4
                         php: "8.1"
         services:
             postgres:
@@ -80,7 +80,7 @@ jobs:
                 uses: shivammathur/setup-php@v2
                 with:
                     php-version: "${{ matrix.php }}"
-                    extensions: intl, xmlrpc
+                    extensions: intl
                     tools: symfony
                     coverage: none
             -
@@ -130,8 +130,8 @@ jobs:
                 name: Build Odoo tests model classes
                 run: |
                     bin/odoo-model-classes-generator -vvv \
-                        "./tests/TestModel/Object" \
-                        "Tests\\FluxSE\\OdooApiClient\\TestModel\\Object" \
+                        "./tests/TestModel/V${{ matrix.odoo }}/Object" \
+                        "Tests\\FluxSE\\OdooApiClient\\TestModel\\V${{ matrix.odoo }}\\Object" \
                         --only-model=account.account \
                         --only-model=account.journal \
                         --only-model=account.move \
@@ -150,7 +150,7 @@ jobs:
             # Need classes from Odoo to be generated for the tests folder
             -
                 name: Run PHPStan
-                run: vendor/bin/phpstan analyse -l max src/ tests/
+                run: vendor/bin/phpstan analyse
             -
                 name: Run PHPUnit
                 run: vendor/bin/phpunit --colors=always

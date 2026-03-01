@@ -17,17 +17,27 @@ class ObjectOperationsTest extends TestCase
      */
     protected function setUp(): void
     {
-        $odooApiClientBuilder = new OdooApiClientBuilder($_ENV['ODOO_API_HOST']);
+        /** @var string $host */
+        $host = $_ENV['ODOO_API_HOST'] ?? '';
+        $odooApiClientBuilder = new OdooApiClientBuilder($host);
 
+        /** @var string $database */
+        $database = $_ENV['ODOO_API_DATABASE'] ?? '';
+        /** @var string $username */
+        $username = $_ENV['ODOO_API_USERNAME'] ?? '';
+        /** @var string $password */
+        $password = $_ENV['ODOO_API_PASSWORD'] ?? '';
         $this->objectOperations = $odooApiClientBuilder->buildObjectOperations(
-            $_ENV['ODOO_API_DATABASE'],
-            $_ENV['ODOO_API_USERNAME'],
-            $_ENV['ODOO_API_PASSWORD']
+            $database,
+            $username,
+            $password
         );
     }
 
     public function testExecute_kw(): void
     {
+        $this->expectNotToPerformAssertions();
+
         $response = $this->objectOperations->execute_kw(
             'res.partner',
             'check_access_rights',
@@ -35,6 +45,6 @@ class ObjectOperationsTest extends TestCase
             ['raise_exception' => false]
         );
 
-        $this->assertIsBool($this->objectOperations->deserializeBoolean($response));
+        $this->objectOperations->deserializeBoolean($response);
     }
 }

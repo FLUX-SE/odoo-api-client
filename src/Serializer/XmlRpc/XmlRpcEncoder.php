@@ -14,11 +14,13 @@ final class XmlRpcEncoder implements EncoderInterface
     public const CTX_XMLRPC_ENCODING = 'xmlrpc_encoding';
     public const CTX_XMLRPC_ESCAPING = 'xmlrpc_escaping';
 
+    /** @var array<string, mixed> */
     private array $defaultContext = [
         self::CTX_XMLRPC_ENCODING => 'UTF-8',
         self::CTX_XMLRPC_ESCAPING => 'markup',
     ];
 
+    /** @param array<string, mixed> $defaultContext */
     public function __construct(array $defaultContext = [])
     {
         $this->defaultContext = array_merge($this->defaultContext, $defaultContext);
@@ -29,6 +31,7 @@ final class XmlRpcEncoder implements EncoderInterface
         return $format === self::FORMAT;
     }
 
+    /** @param array<string, mixed> $context */
     public function encode(mixed $data, string $format, array $context = []): string
     {
         if (false === is_array($data)) {
@@ -38,6 +41,7 @@ final class XmlRpcEncoder implements EncoderInterface
             ));
         }
 
+        /** @var string|null $method */
         $method = $data['method'] ?? null;
         if (null === $method) {
             throw new UnexpectedValueException('A "method" is required !');

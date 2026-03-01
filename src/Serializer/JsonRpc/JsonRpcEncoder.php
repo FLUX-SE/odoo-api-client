@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FluxSE\OdooApiClient\Serializer\JsonRpc;
 
+use JsonException;
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
 use Symfony\Component\Serializer\Exception\UnexpectedValueException;
 
@@ -13,10 +14,12 @@ final class JsonRpcEncoder implements EncoderInterface
 
     public const CTX_JSONRPC_VERSION = 'jsonrpc_version';
 
+    /** @var array<string, mixed> */
     private array $defaultContext = [
         self::CTX_JSONRPC_VERSION => '2.0',
     ];
 
+    /** @param array<string, mixed> $defaultContext */
     public function __construct(array $defaultContext = [])
     {
         $this->defaultContext = array_merge($this->defaultContext, $defaultContext);
@@ -27,6 +30,11 @@ final class JsonRpcEncoder implements EncoderInterface
         return $format === self::FORMAT;
     }
 
+    /**
+     * @param array<string, mixed> $context
+     *
+     * @throws JsonException
+     */
     public function encode($data, string $format, array $context = []): string
     {
         if (false === is_array($data)) {

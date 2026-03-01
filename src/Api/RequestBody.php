@@ -6,6 +6,7 @@ namespace FluxSE\OdooApiClient\Api;
 
 final class RequestBody implements RequestBodyInterface
 {
+    /** @var mixed[] */
     private array $params = [];
 
     public function __construct(private string $method)

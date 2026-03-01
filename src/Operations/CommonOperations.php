@@ -59,7 +59,6 @@ final class CommonOperations extends AbstractOperations implements CommonOperati
 
         $response = $this->request($method, $params);
 
-        /** @var int|false $body */
         $body = $this->rpcSerializerHelper->decodeResponseBody(
             $response->getBody()
         );

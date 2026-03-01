@@ -13,6 +13,7 @@ interface ModelFieldsProviderInterface
     /**
      * @template T of BaseInterface
      * @param class-string<T> $className
+     * @param array<string, mixed> $context
      * @return string[]
      */
     public function provide(string $className, array $context): array;

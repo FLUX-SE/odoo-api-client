@@ -8,15 +8,30 @@ use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\OptionsInterface;
 
 interface RecordOperationsInterface extends OperationsInterface
 {
-    public function create(string $modelName, array $model, ?OptionsInterface $options = null): int;
+    /** @param array<string, mixed> $model */
+    public function create(
+        string $modelName,
+        array $model,
+        ?OptionsInterface $options = null
+    ): int;
+
+    /**
+     * @param int[] $ids
+     * @param array<string, mixed> $model
+     */
+    public function write(
+        string $modelName,
+        array $ids,
+        array $model,
+        ?OptionsInterface $options = null
+    ): bool;
 
     /**
      * @param int[] $ids
      */
-    public function write(string $modelName, array $ids, array $model, ?OptionsInterface $options = null): bool;
-
-    /**
-     * @param int[] $ids
-     */
-    public function unlink(string $modelName, array $ids, ?OptionsInterface $options = null): bool;
+    public function unlink(
+        string $modelName,
+        array $ids,
+        ?OptionsInterface $options = null
+    ): bool;
 }

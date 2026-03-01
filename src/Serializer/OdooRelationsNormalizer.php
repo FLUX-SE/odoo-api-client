@@ -16,11 +16,13 @@ final class OdooRelationsNormalizer implements NormalizerInterface, NormalizerAw
 
     public const NORMALIZE_FOR_UPDATE = 'normalize_for_update';
 
+    /** @return array<string, bool> */
     public function getSupportedTypes(?string $format): array
     {
         return ['native-array' => false];
     }
 
+    /** @param array<string, mixed> $context */
     public function supportsNormalization($data, ?string $format = null, array $context = []): bool
     {
         if (false === is_array($data)) {
@@ -41,6 +43,10 @@ final class OdooRelationsNormalizer implements NormalizerInterface, NormalizerAw
         return false;
     }
 
+    /**
+     * @param array<string, mixed> $context
+     * @return mixed[]
+     */
     public function normalize($object, $format = null, array $context = []): array
     {
         if (!is_array($object)) {

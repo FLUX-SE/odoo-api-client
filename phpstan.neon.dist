@@ -1,22 +1,19 @@
 parameters:
     reportUnmatchedIgnoredErrors: false
 
+    level: max
+
     paths:
         - src
         - tests
 
-    excludePaths:
-        - tests/Manager/ModelManagerTest.php
-        - tests/Serializer/OdooNormalizerTest.php
-
     ignoreErrors:
-        - identifier: missingType.iterableValue
         - '/Method FluxSE\\OdooApiClient\\Manager\\ModelListManager::(find|findBy|findByIds)\(\) should return (array<|\()T of FluxSE\\OdooApiClient\\Model\\BaseInterface(>|\)\|null) but returns mixed\./'
-        - '/Method FluxSE\\OdooApiClient\\Serializer\\(Json|Xml)Rpc\\(Json|Xml)RpcSerializerHelper::decodeResponseBody\(\) should return array\|bool\|int\|string but returns mixed\./'
         -
-            message: '/Method FluxSE\\OdooApiClient\\Serializer\\OdooNormalizer::normalize\(\) return type with generic class ArrayObject does not specify its types: TKey, TValue/'
+            message: '/PHPDoc tag @var with type array<mixed>\|bool\|int\|string is not subtype of native type array\|null\./'
+            identifier: varTag.nativeType
             count: 1
-            path: src/Serializer/OdooNormalizer.php
+            path: src/Serializer/XmlRpc/XmlRpcDecoder.php
         # Symfony 6.4
         -
             message: '/Method Symfony\\Component\\Serializer\\Normalizer\\AbstractObjectNormalizer::supportsDenormalization\(\) invoked with 4 parameters, 2-3 required\./'
@@ -26,3 +23,13 @@ parameters:
             message: '/Method Symfony\\Component\\Serializer\\Normalizer\\AbstractObjectNormalizer::supportsNormalization\(\) invoked with 3 parameters, 1-2 required\./'
             count: 1
             path: src/Serializer/OdooNormalizer.php
+        # Versioned test model classes - only one version exists at a time
+        -
+            message: '/Class Tests\\FluxSE\\OdooApiClient\\TestModel\\V([0-9]+)\\Object\\.+ not found\./'
+            identifier: class.notFound
+            paths:
+                - tests/Manager/ModelManagerTest.php
+                - tests/Manager/ModelListManagerTest.php
+                - tests/Provider/ModelFieldsProviderTest.php
+                - tests/Serializer/OdooNormalizerTest.php
+                - tests/Serializer/OdooRelationsNormalizerTest.php

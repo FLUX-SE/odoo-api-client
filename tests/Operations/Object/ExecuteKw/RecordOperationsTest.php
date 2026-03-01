@@ -12,21 +12,27 @@ use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterfa
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordOperations;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordOperationsInterface;
 use PHPUnit\Framework\TestCase;
+use Tests\FluxSE\OdooApiClient\Operations\CommonOperationsTrait;
 
 class RecordOperationsTest extends TestCase
 {
-    use ExecuteKwOperationsTrait;
+    use ExecuteKwOperationsTrait,
+        CommonOperationsTrait;
 
     private RecordListOperationsInterface $recordListOperations;
 
     private RecordOperationsInterface $recordOperations;
 
+    private int $odooVersion;
+
     protected function setUp(): void
     {
         $this->recordOperations = $this->buildExecuteKwOperations(RecordOperations::class);
         $this->recordListOperations = $this->buildExecuteKwOperations(RecordListOperations::class);
+        $this->odooVersion = $this->buildCommonOperations()->version()->getServerVersionInfo()[0];
     }
 
+    /** @return mixed[] */
     private function retrieveUom(string $name): array
     {
         $searchDomains = new SearchDomains();
@@ -35,32 +41,35 @@ class RecordOperationsTest extends TestCase
         $searchReadOptions = new SearchReadOptions();
         $searchReadOptions->setLimit(1);
 
+        /** @var mixed[][] $results */
         $results = $this->recordListOperations->search_read(
             'uom.uom',
             $searchDomains,
             $searchReadOptions
         );
 
-        $this->assertNotEmpty($results, sprintf(
-            'Unable to find the the uom named "%s" !',
+        self::assertNotEmpty($results, sprintf(
+            'Unable to find the uom named "%s" !',
             $name
         ));
 
         return $results[0];
     }
 
+    /** @return mixed[] */
     private function retrieveFirstCategory(): array
     {
         $searchReadOptions = new SearchReadOptions();
         $searchReadOptions->setLimit(1);
 
+        /** @var mixed[][] $results */
         $results = $this->recordListOperations->search_read(
             'product.category',
             null,
             $searchReadOptions
         );
 
-        $this->assertNotEmpty($results, 'Please create at least one category in ODOO !');
+        self::assertNotEmpty($results, 'Please create at least one category in ODOO !');
 
         return $results[0];
     }
@@ -83,8 +92,12 @@ class RecordOperationsTest extends TestCase
             'default_code' => sprintf('TESTRAW_%d', time()),
         ];
 
+        if ($this->odooVersion >= 19) {
+            unset($template['uom_po_id']);
+        }
+
         $templateId = $this->recordOperations->create('product.template', $template);
 
-        $this->assertGreaterThan(0, $templateId);
+        self::assertGreaterThan(0, $templateId);
     }
 }

@@ -15,16 +15,22 @@ final class OdooRelationNormalizer implements NormalizerInterface, NormalizerAwa
 {
     use NormalizerAwareTrait;
 
+    /** @return array<string, bool> */
     public function getSupportedTypes(?string $format): array
     {
         return [OdooRelation::class => true];
     }
 
+    /** @param array<string, mixed> $context */
     public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
         return $data instanceof OdooRelation;
     }
 
+    /**
+     * @param array<string, mixed> $context
+     *@return int|mixed[]|null|false
+     */
     public function normalize($object, $format = null, array $context = []): int|array|null|false
     {
         if ($object instanceof OdooRelation) {
@@ -37,6 +43,10 @@ final class OdooRelationNormalizer implements NormalizerInterface, NormalizerAwa
         ));
     }
 
+    /**
+     * @param array<string, mixed> $context
+     * @return int|mixed[]|null|false
+     */
     private function normalizeRelation(OdooRelation $object, ?string $format = null, array $context = []): int|array|null|false
     {
         if (null === $object->getCommand()) {
@@ -72,6 +82,7 @@ final class OdooRelationNormalizer implements NormalizerInterface, NormalizerAwa
         return $object->getCommandId();
     }
 
+    /** @return null|mixed[]|BaseInterface|int */
     private function buildThirdParam(OdooRelation $object): null|array|BaseInterface|int
     {
         if (in_array($object->getCommand(), [

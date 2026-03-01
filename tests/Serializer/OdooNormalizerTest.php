@@ -4,27 +4,52 @@ declare(strict_types=1);
 
 namespace Tests\FluxSE\OdooApiClient\Serializer;
 
+use FluxSE\OdooApiClient\Model\BaseInterface;
 use FluxSE\OdooApiClient\Model\OdooRelation;
 use FluxSE\OdooApiClient\Serializer\Factory\SerializerFactory;
 use FluxSE\OdooApiClient\Serializer\OdooRelationsNormalizer;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Serializer;
+use Tests\FluxSE\OdooApiClient\Operations\CommonOperationsTrait;
 use Tests\FluxSE\OdooApiClient\Serializer\Model\Foo;
-use Tests\FluxSE\OdooApiClient\TestModel\Object\Res\Partner;
+use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Res\Partner as PartnerV17;
+use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Res\Partner as PartnerV18;
+use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Res\Partner as PartnerV19;
 
 class OdooNormalizerTest extends TestCase
 {
+    use CommonOperationsTrait;
     private Serializer $serializer;
+
+    private int $odooVersion;
 
     protected function setUp(): void
     {
         $serializerFactory = new SerializerFactory();
         $this->serializer = $serializerFactory->create();
+        $this->odooVersion = $this->buildCommonOperations()->version()->getServerVersionInfo()[0];
+    }
+
+    /**
+     * Get the appropriate Partner class based on Odoo version
+     * @return class-string<BaseInterface>
+     */
+    private function getPartnerClass(): string
+    {
+        /** @var class-string<BaseInterface> $partnerClass */
+        $partnerClass = match ($this->odooVersion) {
+            17 => PartnerV17::class,
+            18 => PartnerV18::class,
+            default => PartnerV19::class,
+        };
+
+        return $partnerClass;
     }
 
     public function testNormalizeForUpdate(): void
     {
         $object = $this->createPartner(new OdooRelation(false), new OdooRelation(false));
+        self::assertTrue(method_exists($object, 'setMessageIds'));
         $object->setMessageIds([
             new OdooRelation(10),
             new OdooRelation(20),
@@ -36,12 +61,12 @@ class OdooNormalizerTest extends TestCase
         ]);
 
         if (method_exists($object, 'getAutopostBills')) {
-            $this->assertEquals([
+            self::assertEquals([
                 'message_ids' => [],
                 'autopost_bills' => 'never',
             ], $arr);
         } else {
-            $this->assertEquals([
+            self::assertEquals([
                 'message_ids' => [],
                 'property_account_payable_id' => false,
                 'property_account_receivable_id' => false,
@@ -51,6 +76,7 @@ class OdooNormalizerTest extends TestCase
     public function testNormalizeForUpdateWithNullData(): void
     {
         $object = $this->createPartner(new OdooRelation(null), new OdooRelation(null));
+        self::assertTrue(method_exists($object, 'setMessageIds'));
         $object->setMessageIds([
             new OdooRelation(10),
             new OdooRelation(20),
@@ -62,12 +88,12 @@ class OdooNormalizerTest extends TestCase
         ]);
 
         if (method_exists($object, 'getAutopostBills')) {
-            $this->assertEquals([
+            self::assertEquals([
                 'message_ids' => [],
                 'autopost_bills' => 'never',
             ], $arr);
         } else {
-            $this->assertEquals([
+            self::assertEquals([
                 'message_ids' => [],
             ], $arr);
         }
@@ -75,6 +101,7 @@ class OdooNormalizerTest extends TestCase
     public function testNormalize(): void
     {
         $object = $this->createPartner(new OdooRelation(false), new OdooRelation(false));
+        self::assertTrue(method_exists($object, 'setMessageIds'));
         $object->setMessageIds([
             new OdooRelation(10),
             new OdooRelation(20),
@@ -84,7 +111,7 @@ class OdooNormalizerTest extends TestCase
         $arr = $this->serializer->normalize($object);
 
         if (method_exists($object, 'getAutopostBills')) {
-            $this->assertEquals([
+            self::assertEquals([
                 'message_ids' => [
                     10,
                     20,
@@ -93,7 +120,7 @@ class OdooNormalizerTest extends TestCase
                 'autopost_bills' => 'never',
             ], $arr);
         } else {
-            $this->assertEquals([
+            self::assertEquals([
                 'message_ids' => [
                     10,
                     20,
@@ -107,6 +134,7 @@ class OdooNormalizerTest extends TestCase
     public function testNormalizeWithNullData(): void
     {
         $object = $this->createPartner(new OdooRelation(null), new OdooRelation(null));
+        self::assertTrue(method_exists($object, 'setMessageIds'));
         $object->setMessageIds([
             new OdooRelation(10),
             new OdooRelation(20),
@@ -116,7 +144,7 @@ class OdooNormalizerTest extends TestCase
         $arr = $this->serializer->normalize($object);
 
         if (method_exists($object, 'getAutopostBills')) {
-            $this->assertEquals([
+            self::assertEquals([
                 'message_ids' => [
                     10,
                     20,
@@ -125,7 +153,7 @@ class OdooNormalizerTest extends TestCase
                 'autopost_bills' => 'never',
             ], $arr);
         } else {
-            $this->assertEquals([
+            self::assertEquals([
                 'message_ids' => [
                     10,
                     20,
@@ -142,24 +170,20 @@ class OdooNormalizerTest extends TestCase
         $object = $this->serializer->denormalize(['id' => 2], Foo::class);
 
         // then the attribute that declared false was filled correctly
-        $this->assertEquals(2, $object->getId());
+        self::assertEquals(2, $object->getId());
     }
 
-    private function createPartner(OdooRelation $payableRel, OdooRelation $receivableRel): Partner
+    private function createPartner(OdooRelation $payableRel, OdooRelation $receivableRel): BaseInterface
     {
-        $reflexion = new \ReflectionClass(Partner::class);
+        $partnerClass = $this->getPartnerClass();
+        $reflexion = new \ReflectionClass($partnerClass);
         $constructor = $reflexion->getConstructor();
-        $this->assertNotNull($constructor);
+        self::assertNotNull($constructor);
 
         if (count($constructor->getParameters()) === 1) {
-            return new Partner(
-                'never'
-            );
+            return new $partnerClass('never');
         }
 
-        return new Partner(
-            $payableRel,
-            $receivableRel,
-        );
+        return new $partnerClass($payableRel, $receivableRel);
     }
 }

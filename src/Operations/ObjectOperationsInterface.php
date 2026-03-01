@@ -8,6 +8,10 @@ use Psr\Http\Message\ResponseInterface;
 
 interface ObjectOperationsInterface extends OperationsInterface
 {
+    /**
+     * @param mixed[] $arguments
+     * @param array<string, mixed> $options
+     */
     public function execute_kw(
         string $modelName,
         string $methodName,

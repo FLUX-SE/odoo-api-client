@@ -1,7 +1,6 @@
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE)
 [![Build Status][ico-github-actions]][link-github-actions]
-[![Quality Score][ico-code-quality]][link-code-quality]
 
 # Odoo API client
 
@@ -96,18 +95,18 @@ The body request payload is a JSON object with specific data into it :
 ```json
 {
      "jsonrpc": "2.0",
-     "method": 'call',
-     "params": {
+     "method": "call",
+     "params": [
         {
-           "service": 'common',
-           "method": 'login',
+           "service": "common",
+           "method": "login",
            "args": [
-              'database',
-              'username',
-              'password'
+              "database",
+              "username",
+              "password"
            ]
         }
-     },
+     ],
      "id": 123456890
  }
 ```
@@ -337,8 +336,6 @@ vendor/bin/phpunit
 [ico-version]: https://img.shields.io/packagist/v/flux-se/odoo-api-client.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
 [ico-github-actions]: https://github.com/FLUX-SE/odoo-api-client/workflows/Build/badge.svg
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/FLUX-SE/odoo-api-client.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/flux-se/odoo-api-client
 [link-github-actions]: https://github.com/FLUX-SE/odoo-api-client/actions?query=workflow%3A"Build"
-[link-code-quality]: https://scrutinizer-ci.com/g/FLUX-SE/odoo-api-client

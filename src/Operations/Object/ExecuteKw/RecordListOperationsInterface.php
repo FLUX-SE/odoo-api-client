@@ -11,6 +11,7 @@ use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Options\SearchReadOptionsIn
 
 interface RecordListOperationsInterface extends OperationsInterface
 {
+    /** @return mixed[] */
     public function search(
         string $modelName,
         ?SearchDomainsInterface $searchDomains = null,
@@ -23,6 +24,7 @@ interface RecordListOperationsInterface extends OperationsInterface
         ?SearchOptionsInterface $searchOptions = null
     ): int;
 
+    /** @return mixed[] */
     public function search_read(
         string $modelName,
         ?SearchDomainsInterface $searchDomains = null,
@@ -31,6 +33,8 @@ interface RecordListOperationsInterface extends OperationsInterface
 
     /**
      * @param int[] $ids
+     *
+     * @return mixed[]
      */
     public function read(
         string $modelName,

@@ -17,7 +17,6 @@ trait SearchOptionsTrait
 
     public function getOffset(): int
     {
-        /** @var int $offset */
         $offset = $this->getOption(SearchOptionsInterface::FIELD_NAME_OFFSET);
 
         Assert::integer($offset, 'The offset should be an integer "%s" retrieved !', );
@@ -32,7 +31,6 @@ trait SearchOptionsTrait
 
     public function getLimit(): ?int
     {
-        /** @var int|null $limit */
         $limit = $this->getOption(SearchOptionsInterface::FIELD_NAME_LIMIT);
 
         Assert::nullOrInteger($limit, 'The limit should be an integer or null "%s" retrieved !');
@@ -47,7 +45,6 @@ trait SearchOptionsTrait
 
     public function getOrder(): ?string
     {
-        /** @var string|null $order */
         $order = $this->getOption(SearchOptionsInterface::FIELD_NAME_ORDER);
 
         Assert::nullOrString($order, 'The order should be a string or null "%s" retrieved !');

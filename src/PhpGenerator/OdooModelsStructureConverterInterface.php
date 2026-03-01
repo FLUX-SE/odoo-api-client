@@ -10,5 +10,6 @@ interface OdooModelsStructureConverterInterface
 {
     public const BASE_MODEL_NAME = 'base';
 
-    public function convert(string $modelNamespace, SearchDomainsInterface $searchDomains = null): array;
+    /** @return array<string, mixed>[] */
+    public function convert(string $modelNamespace, ?SearchDomainsInterface $searchDomains = null): array;
 }
