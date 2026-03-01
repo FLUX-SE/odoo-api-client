@@ -11,13 +11,12 @@ use FluxSE\OdooApiClient\Serializer\OdooRelationsNormalizer;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Serializer;
 use Tests\FluxSE\OdooApiClient\Operations\CommonOperationsTrait;
-use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Move\Line as LineV17;
-use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Account\Move\Line as LineV18;
-use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Move\Line as LineV19;
+use Tests\FluxSE\OdooApiClient\TestModel\OdooVersionedClassProviderTrait;
 
 class OdooRelationsNormalizerTest extends TestCase
 {
-    use CommonOperationsTrait;
+    use CommonOperationsTrait,
+        OdooVersionedClassProviderTrait;
 
     private Serializer $serializer;
 
@@ -30,20 +29,9 @@ class OdooRelationsNormalizerTest extends TestCase
         $this->odooVersion = $this->buildCommonOperations()->version()->getServerVersionInfo()[0];
     }
 
-    /**
-     * Get the appropriate Line class based on Odoo version
-     * @return class-string<BaseInterface>
-     */
-    private function getLineClass(): string
+    protected function getOdooVersion(): int
     {
-        /** @var class-string<BaseInterface> $lineClass */
-        $lineClass = match (true) {
-            $this->odooVersion <= 17 => LineV17::class,
-            $this->odooVersion <= 18 => LineV18::class,
-            default => LineV19::class,
-        };
-
-        return $lineClass;
+        return $this->odooVersion;
     }
 
     public function testNormalize(): void

@@ -23,53 +23,13 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Tests\FluxSE\OdooApiClient\Operations\CommonOperationsTrait;
 use Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw\ExecuteKwOperationsTrait;
-use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Account as AccountV17;
-use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Journal as JournalV17;
-use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Move as MoveV17;
-use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Move\Line as LineV17;
-use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Payment as PaymentV17;
-use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Payment\Method as MethodV17;
-use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Payment\Register as RegisterV17;
-use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Account\Tax as TaxV17;
-use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Product\Category as CategoryV17;
-use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Product\Product as ProductV17;
-use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Product\Template as TemplateV17;
-use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Res\Currency as CurrencyV17;
-use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Res\Partner as PartnerV17;
-use Tests\FluxSE\OdooApiClient\TestModel\V17\Object\Uom\Uom as UomV17;
-use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Account\Account as AccountV18;
-use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Account\Journal as JournalV18;
-use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Account\Move as MoveV18;
-use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Account\Move\Line as LineV18;
-use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Account\Payment as PaymentV18;
-use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Account\Payment\Method as MethodV18;
-use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Account\Payment\Register as RegisterV18;
-use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Account\Tax as TaxV18;
-use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Product\Category as CategoryV18;
-use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Product\Product as ProductV18;
-use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Product\Template as TemplateV18;
-use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Res\Currency as CurrencyV18;
-use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Res\Partner as PartnerV18;
-use Tests\FluxSE\OdooApiClient\TestModel\V18\Object\Uom\Uom as UomV18;
-use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Account as AccountV19;
-use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Journal as JournalV19;
-use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Move as MoveV19;
-use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Move\Line as LineV19;
-use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Payment as PaymentV19;
-use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Payment\Method as MethodV19;
-use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Payment\Register as RegisterV19;
-use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Account\Tax as TaxV19;
-use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Product\Category as CategoryV19;
-use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Product\Product as ProductV19;
-use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Product\Template as TemplateV19;
-use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Res\Currency as CurrencyV19;
-use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Res\Partner as PartnerV19;
-use Tests\FluxSE\OdooApiClient\TestModel\V19\Object\Uom\Uom as UomV19;
+use Tests\FluxSE\OdooApiClient\TestModel\OdooVersionedClassProviderTrait;
 
 class ModelManagerTest extends TestCase
 {
     use ExecuteKwOperationsTrait,
-        CommonOperationsTrait;
+        CommonOperationsTrait,
+        OdooVersionedClassProviderTrait;
 
     private RecordOperationsInterface $recordOperations;
 
@@ -97,228 +57,9 @@ class ModelManagerTest extends TestCase
         $this->odooVersion = $this->buildCommonOperations()->version()->getServerVersionInfo()[0];
     }
 
-    /**
-     * Get the appropriate Partner class based on Odoo version
-     * @return class-string<BaseInterface>
-     */
-    private function getPartnerClass(): string
+    protected function getOdooVersion(): int
     {
-        /** @var class-string<BaseInterface> $partnerClass */
-        $partnerClass = match (true) {
-            $this->odooVersion <= 17 => PartnerV17::class,
-            $this->odooVersion <= 18 => PartnerV18::class,
-            default => PartnerV19::class,
-        };
-
-        return $partnerClass;
-    }
-
-    /**
-     * Get the appropriate Account class based on Odoo version
-     * @return class-string<BaseInterface>
-     */
-    private function getAccountClass(): string
-    {
-        /** @var class-string<BaseInterface> $accountClass */
-        $accountClass = match (true) {
-            $this->odooVersion <= 17 => AccountV17::class,
-            $this->odooVersion <= 18 => AccountV18::class,
-            default => AccountV19::class,
-        };
-
-        return $accountClass;
-    }
-
-    /**
-     * Get the appropriate Uom class based on Odoo version
-     * @return class-string<BaseInterface>
-     */
-    private function getUomClass(): string
-    {
-        /** @var class-string<BaseInterface> $uomClass */
-        $uomClass = match (true) {
-            $this->odooVersion <= 17 => UomV17::class,
-            $this->odooVersion <= 18 => UomV18::class,
-            default => UomV19::class,
-        };
-
-        return $uomClass;
-    }
-
-    /**
-     * Get the appropriate Category class based on Odoo version
-     * @return class-string<BaseInterface>
-     */
-    private function getCategoryClass(): string
-    {
-        /** @var class-string<BaseInterface> $categoryClass */
-        $categoryClass = match (true) {
-            $this->odooVersion <= 17 => CategoryV17::class,
-            $this->odooVersion <= 18 => CategoryV18::class,
-            default => CategoryV19::class,
-        };
-
-        return $categoryClass;
-    }
-
-    /**
-     * Get the appropriate Move class based on Odoo version
-     * @return class-string<BaseInterface>
-     */
-    private function getMoveClass(): string
-    {
-        /** @var class-string<BaseInterface> $moveClass */
-        $moveClass = match (true) {
-            $this->odooVersion <= 17 => MoveV17::class,
-            $this->odooVersion <= 18 => MoveV18::class,
-            default => MoveV19::class,
-        };
-
-        return $moveClass;
-    }
-
-    /**
-     * Get the appropriate Journal class based on Odoo version
-     * @return class-string<BaseInterface>
-     */
-    private function getJournalClass(): string
-    {
-        /** @var class-string<BaseInterface> $journalClass */
-        $journalClass = match (true) {
-            $this->odooVersion <= 17 => JournalV17::class,
-            $this->odooVersion <= 18 => JournalV18::class,
-            default => JournalV19::class,
-        };
-
-        return $journalClass;
-    }
-
-    /**
-     * Get the appropriate Currency class based on Odoo version
-     * @return class-string<BaseInterface>
-     */
-    private function getCurrencyClass(): string
-    {
-        /** @var class-string<BaseInterface> $currencyClass */
-        $currencyClass = match (true) {
-            $this->odooVersion <= 17 => CurrencyV17::class,
-            $this->odooVersion <= 18 => CurrencyV18::class,
-            default => CurrencyV19::class,
-        };
-
-        return $currencyClass;
-    }
-
-    /**
-     * Get the appropriate Product class based on Odoo version
-     * @return class-string<BaseInterface>
-     */
-    private function getProductClass(): string
-    {
-        /** @var class-string<BaseInterface> $productClass */
-        $productClass = match (true) {
-            $this->odooVersion <= 17 => ProductV17::class,
-            $this->odooVersion <= 18 => ProductV18::class,
-            default => ProductV19::class,
-        };
-
-        return $productClass;
-    }
-
-    /**
-     * Get the appropriate Tax class based on Odoo version
-     * @return class-string<BaseInterface>
-     */
-    private function getTaxClass(): string
-    {
-        /** @var class-string<BaseInterface> $taxClass */
-        $taxClass = match (true) {
-            $this->odooVersion <= 17 => TaxV17::class,
-            $this->odooVersion <= 18 => TaxV18::class,
-            default => TaxV19::class,
-        };
-
-        return $taxClass;
-    }
-
-    /**
-     * Get the appropriate Method class based on Odoo version
-     * @return class-string<BaseInterface>
-     */
-    private function getMethodClass(): string
-    {
-        /** @var class-string<BaseInterface> $methodClass */
-        $methodClass = match (true) {
-            $this->odooVersion <= 17 => MethodV17::class,
-            $this->odooVersion <= 18 => MethodV18::class,
-            default => MethodV19::class,
-        };
-
-        return $methodClass;
-    }
-
-    /**
-     * Get the appropriate Payment class based on Odoo version
-     * @return class-string<BaseInterface>
-     */
-    private function getPaymentClass(): string
-    {
-        /** @var class-string<BaseInterface> $paymentClass */
-        $paymentClass = match (true) {
-            $this->odooVersion <= 17 => PaymentV17::class,
-            $this->odooVersion <= 18 => PaymentV18::class,
-            default => PaymentV19::class,
-        };
-
-        return $paymentClass;
-    }
-
-    /**
-     * Get the appropriate Template class based on Odoo version
-     * @return class-string<BaseInterface>
-     */
-    public function getTemplateClass(): string
-    {
-        /** @var class-string<BaseInterface> $templateClass */
-        $templateClass = match (true) {
-            $this->odooVersion <= 17 => TemplateV17::class,
-            $this->odooVersion <= 18 => TemplateV18::class,
-            default => TemplateV19::class,
-        };
-
-        return $templateClass;
-    }
-
-    /**
-     * Get the appropriate Line class based on Odoo version
-     * @return class-string<BaseInterface>
-     */
-    public function getLineClass(): string
-    {
-        /** @var class-string<BaseInterface> $lineClass */
-        $lineClass = match (true) {
-            $this->odooVersion <= 17 => LineV17::class,
-            $this->odooVersion <= 18 => LineV18::class,
-            default => LineV19::class,
-        };
-
-        return $lineClass;
-    }
-
-    /**
-     * Get the appropriate Register class based on Odoo version
-     * @return class-string<BaseInterface>
-     */
-    private function getRegisterClass(): string
-    {
-        /** @var class-string<BaseInterface> $registerClass */
-        $registerClass = match (true) {
-            $this->odooVersion <= 17 => RegisterV17::class,
-            $this->odooVersion <= 18 => RegisterV18::class,
-            default => RegisterV19::class,
-        };
-
-        return $registerClass;
+        return $this->odooVersion;
     }
 
     public function testManageProduct(): void
@@ -555,7 +296,7 @@ class ModelManagerTest extends TestCase
 
         $moveClass = $this->getMoveClass();
         $journalClass = $this->getJournalClass();
-        $methodClass = $this->getMethodClass();
+        $methodClass = $this->getPaymentMethodClass();
 
         // 1 - Retrieve the move to pay
         $searchDomains = new SearchDomains();
