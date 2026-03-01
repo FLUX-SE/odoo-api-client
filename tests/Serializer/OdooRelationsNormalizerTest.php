@@ -10,8 +10,8 @@ use FluxSE\OdooApiClient\Serializer\Factory\SerializerFactory;
 use FluxSE\OdooApiClient\Serializer\OdooRelationsNormalizer;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Serializer;
+use Tests\FluxSE\OdooApiClient\OdooVersionedClassProviderTrait;
 use Tests\FluxSE\OdooApiClient\Operations\CommonOperationsTrait;
-use Tests\FluxSE\OdooApiClient\TestModel\OdooVersionedClassProviderTrait;
 
 class OdooRelationsNormalizerTest extends TestCase
 {

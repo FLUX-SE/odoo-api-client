@@ -6,9 +6,9 @@ namespace Tests\FluxSE\OdooApiClient\Provider;
 
 use FluxSE\OdooApiClient\Provider\ModelFieldsProviderInterface;
 use PHPUnit\Framework\TestCase;
+use Tests\FluxSE\OdooApiClient\OdooVersionedClassProviderTrait;
 use Tests\FluxSE\OdooApiClient\Operations\CommonOperationsTrait;
 use Tests\FluxSE\OdooApiClient\Operations\Object\ExecuteKw\ExecuteKwOperationsTrait;
-use Tests\FluxSE\OdooApiClient\TestModel\OdooVersionedClassProviderTrait;
 
 class ModelFieldsProviderTest extends TestCase
 {
