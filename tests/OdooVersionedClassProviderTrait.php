@@ -167,4 +167,3 @@ trait OdooVersionedClassProviderTrait
         };
     }
 }
-
