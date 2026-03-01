@@ -38,7 +38,10 @@ final class DbOperations extends AbstractOperations implements DbOperationsInter
     {
         $response = $this->request(__FUNCTION__);
 
-        return $this->getRpcSerializerHelper()->decodeResponseBody($response->getBody());
+        $decodeResponseBody = $this->getRpcSerializerHelper()->decodeResponseBody($response->getBody());
+        Assert::isArray($decodeResponseBody);
+
+        return $decodeResponseBody;
     }
 
     public function create_database(
