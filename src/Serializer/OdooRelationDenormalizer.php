@@ -56,8 +56,9 @@ final class OdooRelationDenormalizer implements DenormalizerInterface
             );
         }
 
-        /** @var string|null $displayName */
+        /** @var string|false|null $displayName */
         $displayName = $data[1] ?? null;
+        $displayName = false === $displayName ? null : (string) $displayName; // Something false is returned by the API
         return new OdooRelation($id, $displayName);
     }
 }
