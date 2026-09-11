@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FluxSE\OdooApiClient\Command;
 
 use FluxSE\OdooApiClient\Api\OdooApiRequestMakerInterface;
+use FluxSE\OdooApiClient\Operations\Json2\Json2ObjectOperations;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\Criterion;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\Arguments\SearchDomains;
 use FluxSE\OdooApiClient\Operations\ObjectOperationsInterface;
@@ -19,6 +20,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class GeneratorCommand extends Command
 {
+    private const API_RPC = 'rpc';
+
+    private const API_JSON2 = 'json2';
+
     public function __construct(
         private ObjectOperationsInterface $objectOperations,
         private OdooModelsStructureConverterInterface $odooModelsStructureConverter,
@@ -33,7 +38,7 @@ final class GeneratorCommand extends Command
         $defaultHost = $this->getDefaultHost();
         $defaultDatabase = $this->objectOperations->getDatabase();
         $defaultUsername = $this->objectOperations->getUsername();
-        $defaultPassword = $this->objectOperations->getPassword();
+        $defaultApi = $this->isJson2() ? self::API_JSON2 : self::API_RPC;
 
         $this
             ->addArgument(
@@ -45,6 +50,13 @@ final class GeneratorCommand extends Command
                 'namespace',
                 InputArgument::REQUIRED,
                 'The base namespace of the generated classes (ex: "App\\Odoo\Model\\Object")'
+            )
+            ->addOption(
+                'api',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'API protocol: "rpc" (historical default) or "json2" (Odoo 19 opt-in).',
+                $defaultApi
             )
             ->addOption(
                 'host',
@@ -71,8 +83,7 @@ final class GeneratorCommand extends Command
                 'password',
                 null,
                 InputOption::VALUE_OPTIONAL,
-                sprintf('Your Odoo account password or API key (since Odoo v14, default: %s)', $defaultPassword),
-                $defaultPassword
+                'Your Odoo RPC account password or API key. JSON-2 uses ODOO_JSON2_API_KEY only.'
             )
             ->addOption(
                 'only-model',
@@ -86,25 +97,20 @@ final class GeneratorCommand extends Command
                 InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
                 'Filter the model list excluding the model you will set in this option.'
             )
-            ->addOption(
-                'password',
-                null,
-                InputOption::VALUE_OPTIONAL,
-                sprintf('Your Odoo account password or API key (since Odoo v14, default: %s)', $defaultPassword),
-                $defaultPassword
-            )
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var string $api */
+        $api = $input->getOption('api');
         /** @var string $host */
         $host = $input->getOption('host');
         /** @var string $database */
         $database = $input->getOption('database');
         /** @var string $username */
         $username = $input->getOption('username');
-        /** @var string $password */
+        /** @var string|null $password */
         $password = $input->getOption('password');
         /** @var array<int, string> $onlyModels */
         $onlyModels = $input->getOption('only-model');
@@ -116,12 +122,37 @@ final class GeneratorCommand extends Command
         /** @var string $namespace */
         $namespace = $input->getArgument('namespace');
 
+        $expectedApi = $this->isJson2() ? self::API_JSON2 : self::API_RPC;
+        if (!in_array($api, [self::API_RPC, self::API_JSON2], true)) {
+            $output->writeln('<error>Unsupported API protocol. Use "rpc" or "json2".</error>');
+
+            return Command::INVALID;
+        }
+
+        if ($expectedApi !== $api) {
+            $output->writeln(sprintf(
+                '<error>The command was assembled for %s but --api=%s was requested.</error>',
+                $expectedApi,
+                $api,
+            ));
+
+            return Command::INVALID;
+        }
+
+        if (self::API_JSON2 === $api && null !== $password) {
+            $output->writeln(
+                '<error>--password is not accepted with JSON-2; provide ODOO_JSON2_API_KEY securely.</error>',
+            );
+
+            return Command::INVALID;
+        }
+
         $output->writeln('<comment>');
         $output->writeln('Generating Odoo model class from the Odoo instance :');
+        $output->writeln(sprintf('API : %s', $api));
         $output->writeln(sprintf('Host : <href=%1$s>%1$s</>', $host));
         $output->writeln(sprintf('Database : %s', $database));
         $output->writeln(sprintf('Username : %s', $username));
-        $output->writeln(sprintf('Password : %s', $password));
         $output->writeln(sprintf('Base path : %s', $path));
         $output->writeln(sprintf('Base namespace : %s', $namespace));
 
@@ -165,7 +196,7 @@ final class GeneratorCommand extends Command
         string $host,
         string $database,
         string $username,
-        string $password
+        ?string $password
     ): void {
         $defaultHost = $this->getDefaultHost();
         $defaultDatabase = $this->objectOperations->getDatabase();
@@ -175,11 +206,9 @@ final class GeneratorCommand extends Command
         if ($defaultHost !== $host) {
             $odooApiRequestMaker = $this->objectOperations->getApiRequestMaker();
             $uriFactory = Psr17FactoryDiscovery::findUriFactory();
-            $baseUri = $uriFactory->createUri(sprintf(
-                '%s/%s',
-                $host,
-                OdooApiRequestMakerInterface::BASE_JSONRPC_PATH
-            ));
+            $baseUri = $uriFactory->createUri($this->isJson2()
+                ? $host
+                : sprintf('%s/%s', $host, OdooApiRequestMakerInterface::BASE_JSONRPC_PATH));
             $odooApiRequestMaker->setBaseUri($baseUri);
         }
 
@@ -191,7 +220,7 @@ final class GeneratorCommand extends Command
             $this->objectOperations->setUsername($username);
         }
 
-        if ($defaultPassword !== $password) {
+        if (null !== $password && $defaultPassword !== $password) {
             $this->objectOperations->setPassword($password);
         }
     }
@@ -199,9 +228,18 @@ final class GeneratorCommand extends Command
     private function getDefaultHost(): string
     {
         $uri = $this->objectOperations->getApiRequestMaker()->getBaseUri()->__toString();
+        if ($this->isJson2()) {
+            return $uri;
+        }
+
         $pattern = sprintf('#/%s$#', OdooApiRequestMakerInterface::BASE_JSONRPC_PATH);
         $host = preg_replace($pattern, '', $uri);
 
         return (string) $host;
+    }
+
+    private function isJson2(): bool
+    {
+        return $this->objectOperations instanceof Json2ObjectOperations;
     }
 }
