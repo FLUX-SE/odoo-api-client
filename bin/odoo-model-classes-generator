@@ -3,16 +3,14 @@
 
 declare(strict_types=1);
 
-if (is_file(__DIR__.'/../../../autoload.php') === true) {
-    require __DIR__.'/../../../autoload.php';
-} else {
-    require __DIR__ . '/../vendor/autoload.php';
-}
-
+use FluxSE\OdooApiClient\Api\Json2\Json2Connection;
+use FluxSE\OdooApiClient\Builder\Json2\Json2ApiClientBuilder;
 use FluxSE\OdooApiClient\Builder\OdooApiClientBuilder;
 use FluxSE\OdooApiClient\Command\GeneratorCommand;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\InspectionOperations;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\InspectionOperationsInterface;
 use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperations;
+use FluxSE\OdooApiClient\Operations\Object\ExecuteKw\RecordListOperationsInterface;
 use FluxSE\OdooApiClient\PhpGenerator\Builder\SerializableClassBuilder;
 use FluxSE\OdooApiClient\PhpGenerator\ModelFixer\BaseIdFixer;
 use FluxSE\OdooApiClient\PhpGenerator\ModelFixer\CompositeModelFixer;
@@ -22,6 +20,12 @@ use Prometee\PhpClassGenerator\Builder\Model\ModelFactoryBuilder;
 use Prometee\PhpClassGenerator\Builder\View\ViewFactoryBuilder;
 use Prometee\PhpClassGenerator\Helper\PhpReservedWordsHelper;
 use Symfony\Component\Console\Application;
+
+if (is_file(__DIR__ . '/../../../autoload.php') === true) {
+    require __DIR__ . '/../../../autoload.php';
+} else {
+    require __DIR__ . '/../vendor/autoload.php';
+}
 
 $phpGenerator = new OdooPhpClassesGenerator(
     new SerializableClassBuilder(
@@ -35,21 +39,68 @@ $odooApiDatabase = getenv('ODOO_API_DATABASE') ?: 'odoo-master';
 $odooApiUsername = getenv('ODOO_API_USERNAME') ?: 'admin';
 $odooApiPassword = getenv('ODOO_API_PASSWORD') ?: 'admin';
 
-$odooApiClientBuilder = new OdooApiClientBuilder($odooApiHost);
-/** @var RecordListOperations $recordListOperations */
-$recordListOperations = $odooApiClientBuilder->buildExecuteKwOperations(
-    RecordListOperations::class,
-    $odooApiDatabase,
-    $odooApiUsername,
-    $odooApiPassword
-);
-/** @var InspectionOperations $inspectionOperations */
-$inspectionOperations = $odooApiClientBuilder->buildExecuteKwOperations(
-    InspectionOperations::class,
-    $odooApiDatabase,
-    $odooApiUsername,
-    $odooApiPassword
-);
+$requestedApi = 'rpc';
+/** @var list<string> $arguments */
+$arguments = $_SERVER['argv'] ?? [];
+foreach ($arguments as $index => $argument) {
+    if ('--' === $argument) {
+        break;
+    }
+
+    if (str_starts_with($argument, '--api=')) {
+        $requestedApi = substr($argument, strlen('--api='));
+        break;
+    }
+
+    if ('--api' === $argument && isset($arguments[$index + 1])) {
+        $requestedApi = $arguments[$index + 1];
+        break;
+    }
+}
+
+if ('json2' === $requestedApi) {
+    $json2ApiKey = getenv('ODOO_JSON2_API_KEY');
+    $isHelp = in_array('--help', $arguments, true) || in_array('-h', $arguments, true);
+    if (!is_string($json2ApiKey) || '' === $json2ApiKey) {
+        if (!$isHelp) {
+            fwrite(STDERR, "ODOO_JSON2_API_KEY is required when --api=json2 is selected.\n");
+            exit(2);
+        }
+
+        // Help must remain available without requiring or displaying a secret.
+        $json2ApiKey = 'json2-help-only-placeholder';
+    }
+
+    $json2Host = getenv('ODOO_JSON2_HOST') ?: $odooApiHost;
+    $json2Database = getenv('ODOO_JSON2_DATABASE') ?: $odooApiDatabase;
+    $json2Username = getenv('ODOO_JSON2_USERNAME') ?: '';
+    $json2Builder = new Json2ApiClientBuilder(
+        new Json2Connection($json2Host, $json2ApiKey, $json2Database),
+        $json2Username,
+        $json2ApiKey,
+    );
+    $recordListOperations = $json2Builder->buildRecordListOperations();
+    $inspectionOperations = $json2Builder->buildInspectionOperations();
+} else {
+    $odooApiClientBuilder = new OdooApiClientBuilder($odooApiHost);
+    /** @var RecordListOperations $recordListOperations */
+    $recordListOperations = $odooApiClientBuilder->buildExecuteKwOperations(
+        RecordListOperations::class,
+        $odooApiDatabase,
+        $odooApiUsername,
+        $odooApiPassword
+    );
+    /** @var InspectionOperations $inspectionOperations */
+    $inspectionOperations = $odooApiClientBuilder->buildExecuteKwOperations(
+        InspectionOperations::class,
+        $odooApiDatabase,
+        $odooApiUsername,
+        $odooApiPassword
+    );
+}
+
+/** @var RecordListOperationsInterface $recordListOperations */
+/** @var InspectionOperationsInterface $inspectionOperations */
 
 $phpReservedWordsHelper = new PhpReservedWordsHelper();
 $odooModelsStructureConverter = new OdooModelsStructureConverter(
@@ -71,5 +122,5 @@ $command = new GeneratorCommand(
 
 $application->add($command);
 
-$application->setDefaultCommand($command->getName(), true);
+$application->setDefaultCommand((string) $command->getName(), true);
 $application->run();

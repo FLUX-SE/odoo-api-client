@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_json2_fixture,json2.fixture,model_json2_fixture,base.group_user,1,1,1,1
+access_json2_metadata_models,json2 metadata models,base.model_ir_model,account.group_account_manager,1,0,0,0
+access_json2_metadata_fields,json2 metadata fields,base.model_ir_model_fields,account.group_account_manager,1,0,0,0
+access_json2_metadata_modules,json2 metadata modules,base.model_ir_module_module,account.group_account_manager,1,0,0,0
