@@ -57,23 +57,30 @@ jobs:
         steps:
 
             -
+                uses: actions/checkout@v3
+
+            -
                 name: Docker launch Odoo instance
                 run: |
-                    docker run \
+                    odoo_args=()
+                    docker_args=()
+                    if [ "${{ matrix.odoo }}" = "19" ]; then
+                        odoo_args+=(--db-filter="^($ODOO_API_DATABASE|json2_test_ci)$")
+                        docker_args+=(--volume "$PWD/.github/json2/addons:/mnt/extra-addons:ro")
+                    fi
+                    docker run "${docker_args[@]}" \
                         -d \
                         --rm \
-                        -p 8069:8069 \
+                        -p 127.0.0.1:8069:8069 \
                         --network ${{ job.services.postgres.network }} \
                         -e "HOST=postgres" \
                         --name odoo \
+                        --label org.odoo-api-client.ci=true \
                         -t odoo:${{ matrix.odoo }} \
                         -- \
-                            --database "$ODOO_API_DATABASE" --init "$ODOO_API_INIT_MODULES"
+                            --database "$ODOO_API_DATABASE" --init "$ODOO_API_INIT_MODULES" "${odoo_args[@]}"
                     docker ps --all --filter id=odoo --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
                     docker port odoo
-
-            -
-                uses: actions/checkout@v3
 
             -
                 name: Setup PHP
@@ -156,5 +163,13 @@ jobs:
                 run: vendor/bin/phpunit --colors=always
 
             -
+                name: Run JSON-2 integration on the same Odoo instance
+                if: matrix.odoo == 19
+                run: |
+                    python3 -B -m unittest discover -s .github/json2 -p 'test_*.py'
+                    python3 .github/json2/run.py --allow-writes --container odoo
+
+            -
                 name: Remove Odoo instance
+                if: always()
                 run: docker rm -f "odoo"

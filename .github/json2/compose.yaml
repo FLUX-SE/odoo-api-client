@@ -1,0 +1,43 @@
+services:
+  db:
+    image: postgres:16@sha256:f1c3376c26f2609ab9f29f71f824103fe2fcd8ee0346485cb6122a4f93df6f94
+    environment:
+      POSTGRES_USER: odoo
+      POSTGRES_DB: postgres
+      # No published database port; disposable internal network and tmpfs only.
+      POSTGRES_HOST_AUTH_METHOD: trust
+    tmpfs:
+      - /var/lib/postgresql/data
+    networks: [backend]
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U odoo -d postgres]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  odoo:
+    image: odoo:19.0@sha256:a627eda6b4154eead21c4fca55f84f1671d870ca111aa57f93ca305861bc4613
+    depends_on:
+      db:
+        condition: service_healthy
+    entrypoint: [odoo]
+    command:
+      - --db_host=db
+      - --db_user=odoo
+      - --database=json2_test_ci
+      - --db-filter=^json2_test_ci$$
+      - --init=json2_fixture
+      - --without-demo=all
+      - --addons-path=/usr/lib/python3/dist-packages/odoo/addons,/mnt/extra-addons
+      - --max-cron-threads=0
+      - --workers=0
+      - --no-database-list
+      - --log-level=warn
+    ports:
+      - '127.0.0.1::8069'
+    volumes:
+      - ./addons:/mnt/extra-addons:ro
+    networks: [backend, frontend]
+networks:
+  backend:
+    internal: true
+  frontend: {}

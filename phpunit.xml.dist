@@ -17,6 +17,7 @@
         <testsuite name="Odoo API client Test Suite">
             <directory>./tests/</directory>
             <exclude>./tests/TestModel</exclude>
+            <exclude>./tests/Integration/Json2</exclude>
         </testsuite>
     </testsuites>
 </phpunit>
